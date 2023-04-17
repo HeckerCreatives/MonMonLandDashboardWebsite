@@ -1,0 +1,8 @@
+#slider {
+    position: absolute;
+    z-index: 1;
+}
+
+#biglogo {
+    width: 500px;
+}
