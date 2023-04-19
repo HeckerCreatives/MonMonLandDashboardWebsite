@@ -1,0 +1,63 @@
+.arrowright{
+    margin-left: 4rem;
+}
+
+.arrowleft{
+    margin-right: 4rem;
+}
+
+.descriptionholder {
+    background-image: url("../../../assets/games/description holder.png");
+    background-repeat: no-repeat;
+    background-size: 65%;
+    background-position: center center;
+    height: 800px;
+}
+
+.characterholder {
+    background-image: url("../../../assets/games/character holder.png");
+    background-repeat: no-repeat;
+    background-size: 60%;
+    background-position: center center;
+    height: 800px;
+    
+}
+
+.gamesbgcolor {
+    background: #D2EEFF;
+    height: 100vh;
+}
+
+#pearlbadgesize {
+    height: 100px;
+    width: 100px;
+    margin-right: 1rem;
+    margin-left: 1.5rem;
+    padding-bottom: 1rem;
+}
+
+#rubybadgesize {
+    height: 100px;
+    width: 100px;
+    margin-right: 1rem;
+    padding-bottom: 1rem;
+}
+
+#emeraldbadgesize {
+    height: 100px;
+    width: 100px;
+    margin-right: 1rem;
+    padding-bottom: 1rem;
+}
+
+#diamondbadgesize {
+    height: 100px;
+    width: 100px;
+    margin-right: 1.5rem;
+    padding-bottom: 1rem;
+}
+
+.char {
+    height:400px;
+    margin-top: 7rem;
+}

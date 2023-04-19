@@ -1,8 +1,44 @@
-#slider {
-    position: absolute;
-    z-index: 1;
+.slider {
+   height: 100%;
+   width: 50%;
+   background-image: url("../../../assets/header/activity\ slider\ .png");
+   background-position: center center;
+   background-size: cover;
+   border-radius: 50px;
+   position: absolute;  
 }
 
 #biglogo {
-    width: 500px;
+    width: 600px;
+}
+
+#playnow {
+    height: 100px;
+}
+
+.sliderholder {
+    height: 5rem;
+    width: 650px;
+    background-image: url("../../../assets/header/activity slider holder.png");
+    background-position: center center;
+    background-size: cover;
+    border-radius: 50px;
+    position: relative;
+    /* margin: 1rem; */
+    
+}
+
+.text {
+    color: white;
+    padding-left: 30px;
+    font-size: 1.4rem;
+    font-weight: 200;
+    position: absolute;
+    z-index: 1;
+    /* text-align: end; */
+ }
+
+.kahitanu {
+    margin-top: 15vh;
+    margin-bottom: 12vh;
 }

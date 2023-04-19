@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import smalllogo from "../assets/header/small logo for navi.png"
 import joinnow from "../assets/header/join now btn.png"
+import navholder from "../assets/header/navigation holder.png"
 import {
   MDBContainer,
   MDBNavbar,
@@ -25,17 +26,21 @@ const Navbar = ({ links }) => {
     setActive(str);
   };
 
-  return (    
+  return (
     <MDBNavbar
       expand="md"
       dark
-      className="custom-landing-navbar position-fixed"
-      style={{ height: "7rem" }}
-    >      
-    <MDBContainer fluid className="px-0 px-md-0">
-        <MDBNavbarBrand>
-          <img src={smalllogo}></img>
+      className="custom-landing-navbar py-0 m-5 mx-auto fixed-top"      
+    > 
+    <img src={navholder} id="navholder" alt=""></img>     
+    <MDBContainer fluid className="nav px-0 px-md-0">
+
+        <MDBNavbarBrand className="px-5 mb-3">
+        
+        <img src={smalllogo} id="navlogo"></img>
+                
         </MDBNavbarBrand>
+
         <MDBNavbarToggler
           type="button"
           aria-expanded="false"
@@ -53,7 +58,7 @@ const Navbar = ({ links }) => {
           <MDBNavbarNav            
             className={`${
               window.innerWidth > 960
-                ? "d-flex align-items-center justify-content-center"
+                ? "d-flex align-items-center justify-content-start"
                 : "text-center"
             }`}
           >
@@ -66,7 +71,7 @@ const Navbar = ({ links }) => {
                   active
                   aria-current="page"
                   href={link.path}
-                  className={`py-4 px-3 mx-5 custom-link fw-bold`}
+                  className={`custom-link fw-bold p-4 mb-2`}
                   onClick={() => {
                     handleActive(link.path);
                     window.innerWidth <= 900 && setShowNav(!showNav);
@@ -76,8 +81,8 @@ const Navbar = ({ links }) => {
                 </MDBNavbarLink>
               </MDBNavbarItem>
             ))}
-            <MDBNavbarItem>            
-              <img src={joinnow}></img>              
+            <MDBNavbarItem className="p-5 mb-2 ms-auto">            
+              <img src={joinnow} id="joinnow"></img>
             </MDBNavbarItem>
           </MDBNavbarNav>
         </MDBCollapse>

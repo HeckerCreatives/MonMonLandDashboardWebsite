@@ -1,0 +1,10 @@
+.footerbg {
+    background-image: url("../../..//assets/BG/FOOTER\ bg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 1200px;
+}
+
+.socials {
+    margin-right: 1rem;
+}

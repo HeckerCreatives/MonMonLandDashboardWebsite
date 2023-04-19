@@ -7,15 +7,10 @@ import Roadmap from "./roadmap"
 import Subscription from "./subscription"
 import News from "./news"
 import Navbar from "../../component"
-import bgimage from "../../assets/background.png"
 import "./index.css"
 
 const Initial = () => {
     const Links = [
-        {
-            name: "HOME",
-            path: "#home",
-        },
         {
             name: "SUBSCRIPTION",
             path: "#subscription",
@@ -25,35 +20,31 @@ const Initial = () => {
             path: "#games",
         },
         {
-            name: "LATEST NEWS",
-            path: "#home",
+            name: "NEWS",
+            path: "#news",
         },
         {
             name: "ROADMAP",
             path: "#roadmap",
         },
-        {
-            name: "SOCIALS",
-            path: "#footer",
-        },
     ];
     return (
-        <MDBContainer fluid className="bg-image px-0">
-            {/* <img src={bgimage}></img> */}
-            <Navbar links={Links}/>
-            <Header />
+        <div>
+        <div className="bg-image">
+        <MDBContainer fluid className="px-0" >
+        <Navbar links={Links}/> 
+        <Header />       
+        </MDBContainer>
+        </div>        
+        <div>            
             <Subscription/>
             <Games/>
-            {/* <MDBContainer>
-            <Header/>
-            
             <News/>
             <Roadmap/>
-            <Footer/>
-            
-            
-            </MDBContainer>             */}
-        </MDBContainer>
+            <Footer links={Links}/>
+        </div>
+        </div>        
+        
     )
 }
 
