@@ -58,6 +58,10 @@
 }
 
 .char {
-    height:400px;
+    height:350px;
     margin-top: 7rem;
+}
+
+.titlefontsize {
+    font-size: 50px;
 }

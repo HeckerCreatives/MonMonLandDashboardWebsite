@@ -1,5 +1,6 @@
 import React from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBTypography,} from "mdb-react-ui-kit";
+import { MDBContainer, MDBRow, MDBCol, MDBTypography, MDBCarousel,
+    MDBCarouselItem,} from "mdb-react-ui-kit";
 import "./index.css"
 import leftarrow from "../../../assets/games/left arrow.png"
 import rightarrow from "../../../assets/games/right arrow.png"
@@ -8,6 +9,8 @@ import ruby from "../../../assets/subscription/ruby badge png.png"
 import emerald from "../../../assets/subscription/emerald png.png"
 import diamond from "../../../assets/subscription/diamond.png"
 import woodcutting from "../../../assets/character/Wood Cutting.png"
+import crafting from "../../../assets/character/crafting.png"
+import fishing from "../../../assets/character/fishing.png"
 
 
 
@@ -16,7 +19,7 @@ const Games = () => {
         <div className="gamesbgcolor">
         <MDBContainer fluid className="" id="games">
         
-            <MDBTypography className="h2 text-center text-warning fw-bold">
+            <MDBTypography className="p-4 titlefontsize text-center text-warning fw-bold">
                 Games
             </MDBTypography>
             <MDBRow>
@@ -60,12 +63,31 @@ const Games = () => {
                 <MDBContainer fluid className="d-flex flex-column justify-content-center align-items-center mt-5">
 
                         <MDBCol className="mt-5 mb-3">
-                        <img src={woodcutting} alt="..." className="char"/>
+                        <MDBCarousel>
+                        <MDBCarouselItem
+                            className='d-block char w-60'
+                            itemId={1}
+                            src={woodcutting}
+                            alt='...'
+                        />
+                        <MDBCarouselItem
+                            className='d-block char w-60'
+                            itemId={2}
+                            src={crafting}
+                            alt='...'
+                        />
+                        <MDBCarouselItem
+                            className='d-block char w-60'
+                            itemId={3}
+                            src={fishing}
+                            alt='...'
+                        />
+                        </MDBCarousel>
                         </MDBCol>
                     
                     
                     <MDBRow>
-                        <MDBCol className="mt-5">
+                        <MDBCol className="mt-5 p-5">
                         <img src={leftarrow} alt="..." className="arrowleft"/>
                         <img src={rightarrow} alt="..." className="arrowright"/>
                         </MDBCol>

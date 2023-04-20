@@ -1,24 +1,25 @@
 .custom-landing-navbar {
-    /* background-image: url("../assets/header/navigation holder.png");
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat; */
-    /* position: fixed; */
-    width: 80%;
+    background-image: url("../assets/header/navigation holder.png");
+    background-position: top;
+    background-size: 100% 80px;
+    background-repeat: no-repeat;
+    z-index: 1;
+    min-height: 80px;
+    /* width: 80%; */
   }
 
-  .nav {
+  /* .nav {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
-  }
+  } */
 
-  #navholder {
+  /* #navholder {
     height: 80px;
     width: 100%;
-  }
+  } */
   
   /* .custom-link {
     font-size: 1.25rem;
@@ -45,9 +46,30 @@
   } */
   
 #navlogo {
-  height: 55px;
+  height: 50px;
 }
 
 #joinnow {
   height: 40px;
+}
+
+/* style the navbar links */
+.navbar-link {
+  color: #fff; /* set the default color */
+  text-decoration: none; /* remove the underline */
+}
+
+/* add the hover effect */
+.navbar-link:hover {
+  color: #f0fc02; /* change the color on hover and when active */
+  /* background-color: #333;  */
+}
+
+.activenavlink {
+  color: #f00a0a;
+}
+
+.bars {
+  color: #FCF4A0 !important;
+  z-index: 3;
 }

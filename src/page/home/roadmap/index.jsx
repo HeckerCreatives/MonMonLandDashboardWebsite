@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBTypography, MDBCarousel, MDBCarouselItem,MDBCard,MDBCardBody,MDBCardImage,MDBCardText } from "mdb-react-ui-kit";
+import { MDBContainer, MDBRow, MDBCol, MDBTypography,} from "mdb-react-ui-kit";
 import "./index.css"
 import woodcutting from "../../../assets/character/Wood Cutting.png"
 import seemore from "../../../assets/roadmap/see more btn.png"
@@ -8,7 +8,7 @@ const Roadmap = () => {
     return (
         <div className="">
         <MDBContainer fluid  className="d-flex justify-content-center roadmapbgcolor" id="roadmap">
-        <MDBTypography className="h2 text-warning text-center fw-bold">
+        <MDBTypography className="titlefontsize text-warning text-center fw-bold">
             ROADMAP
         </MDBTypography>
         <MDBContainer className="line">

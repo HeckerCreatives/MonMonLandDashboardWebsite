@@ -13,6 +13,7 @@ import {
   MDBCollapse,
   MDBIcon,
   MDBBtn,
+  MDBTypography,
 } from "mdb-react-ui-kit";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
@@ -21,72 +22,78 @@ const Navbar = ({ links }) => {
   const [showNav, setShowNav] = useState(false);
   const [active, setActive] = useState("");
   const navigate = useNavigate();
+  const [currentLink,setCurrentLink] = useState("");
 
   const handleActive = str => {
     setActive(str);
+    setCurrentLink(str);
   };
+
 
   return (
     <MDBNavbar
-      expand="md"
-      dark
-      className="custom-landing-navbar py-0 m-5 mx-auto fixed-top"      
+      expand="lg"
+      className="custom-landing-navbar py-0 m-5 fixed-top"      
     > 
-    <img src={navholder} id="navholder" alt=""></img>     
-    <MDBContainer fluid className="nav px-0 px-md-0">
-
-        <MDBNavbarBrand className="px-5 mb-3">
+    <MDBContainer fluid className="d-sm-flex justify-sm-content-around px-0 px-md-0">
         
-        <img src={smalllogo} id="navlogo"></img>
-                
-        </MDBNavbarBrand>
-
         <MDBNavbarToggler
           type="button"
           aria-expanded="false"
           aria-label="Toggle navigation"
-          className="me-3 py-4"
+          className="ms-3 py-4 bars"
           onClick={() => setShowNav(!showNav)}
         >
-        <MDBIcon fas icon="bars" />
-        </MDBNavbarToggler>
+        {/* <MDBIcon fas icon="bars" /> */}
+        <MDBIcon icon="bars" fas/>
+        </MDBNavbarToggler>   
         
+        <img src={smalllogo} id="navlogo" alt="" className="mx-4 mb-1 pl-5"></img>
+         
         <MDBCollapse
           navbar
           show={showNav}
+          style={{ backgroundColor: "#AD6818" }}
         >
-          <MDBNavbarNav            
+         
+          <MDBNavbarNav 
+          
             className={`${
-              window.innerWidth > 960
+              window.innerWidth > 768
                 ? "d-flex align-items-center justify-content-start"
                 : "text-center"
             }`}
-          >
+          >      
+              
             {links.map((link, index) => (
               <MDBNavbarItem
                 key={`links-${index}`}
-                className={`custom-border`}
+                className={``}
               >
                 <MDBNavbarLink
-                  active
+                  
                   aria-current="page"
                   href={link.path}
-                  className={`custom-link fw-bold p-4 mb-2`}
+                  className={`${currentLink === link.path && "activenavlink"}`}                  
                   onClick={() => {
                     handleActive(link.path);
-                    window.innerWidth <= 900 && setShowNav(!showNav);
+                    window.innerWidth <= 900 && setShowNav(!showNav);                    
                   }}
                 >
-                  <span>{link.name}</span>
+                  <span className={`fw-bold p-4 mb-2 navbar-link ${currentLink === link.path && "activenavlink"}`}>{link.name}</span>
                 </MDBNavbarLink>
               </MDBNavbarItem>
             ))}
-            <MDBNavbarItem className="p-5 mb-2 ms-auto">            
-              <img src={joinnow} id="joinnow"></img>
+            <MDBNavbarItem className="ms-lg-auto text-center px-4">
+                  <MDBNavbarLink>
+                  <img src={joinnow} id="joinnow" alt=""></img>
+                  </MDBNavbarLink>
             </MDBNavbarItem>
+            
           </MDBNavbarNav>
-        </MDBCollapse>
-      </MDBContainer>
+        </MDBCollapse> 
+              
+      </MDBContainer>      
     </MDBNavbar>
     
   );

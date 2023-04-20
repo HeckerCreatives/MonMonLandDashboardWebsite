@@ -7,25 +7,21 @@ import pearl from "../../../assets/subscription/pearl badge.png"
 import "./index.css"
 const Subscription = () => {
     return (
-        <MDBContainer fluid className=" bgcolor d-flex flex-column align-items-center justify-content-center" id="subscription">
-        <MDBRow>
-            <MDBCol className="mt-5 mb-5">
-                <MDBTypography className="h1 text-warning fw-bold">
+        <MDBContainer fluid className="bgcolor d-flex flex-column align-items-center justify-content-center" id="subscription">
+        
+                <MDBTypography className="mt-5 titlefontsize text-warning fw-bold">
                     Subscription
                 </MDBTypography>
-            </MDBCol>
-        </MDBRow>
+           
 
         <MDBRow>
         <MDBCol className="text-center mb-3">
         
-        <MDBCard>
+        <MDBCard className="cardmargin">
         <MDBCardImage src={pearl} position="top" alt="" className="" id="badge"/>
-            <MDBCardBody>
-            
+            <MDBCardBody>            
                 <MDBCardTitle className="fw-bold h2 mt-5">Pearl Subscription</MDBCardTitle>
                     <MDBCardSubTitle className="fw-bold h3 price mb-5">FREE</MDBCardSubTitle>
-                    
             <ul>
                 <li>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id rhoncus neque. Sed a mauris urna. Proin ut lorem eu urna tincidunt interdum. Nullam eu metus vel urna ullamcorper volutpat. Sed consectetur, turpis a feugiat tincidunt, mi quam varius mi, at cursus justo risus ut urna.
@@ -34,7 +30,7 @@ const Subscription = () => {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id rhoncus neque. Sed a mauris urna. Proin ut lorem eu urna tincidunt interdum. Nullam eu metus vel urna ullamcorper volutpat. Sed consectetur, turpis a feugiat tincidunt, mi quam varius mi, at cursus justo risus ut urna.
                 </li>
             </ul>
-            <MDBBtn type="button" className="btn btn-warning" size="lg">SUBSCRIBE NOW</MDBBtn>                
+                <MDBBtn type="button" className="btn btn-warning" size="lg">SUBSCRIBE NOW</MDBBtn>                
                 
             </MDBCardBody>
         </MDBCard>
@@ -42,7 +38,7 @@ const Subscription = () => {
 
         <MDBCol className="text-center mb-3">
         
-        <MDBCard>
+        <MDBCard className="cardmargin">
         <MDBCardImage src={ruby} className="" id="badge" />
         <MDBCardBody>
         
@@ -64,7 +60,7 @@ const Subscription = () => {
         </MDBCol>
         
         <MDBCol className="text-center">
-        <MDBCard>
+        <MDBCard className="cardmargin">
         <MDBCardImage src={emerald} id="badge"/>
             <MDBCardBody>            
                 <MDBCardTitle className="fw-bold h2 mt-5">Emerald Subscription</MDBCardTitle>
@@ -85,7 +81,7 @@ const Subscription = () => {
         </MDBCol>
         
         <MDBCol className="text-center">
-        <MDBCard>
+        <MDBCard className="cardmargin">
         <MDBCardImage src={diamond} id="badge"/>
             <MDBCardBody>
                 <MDBCardTitle className="fw-bold h2 mt-5">Diamond Subscription</MDBCardTitle>

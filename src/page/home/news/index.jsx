@@ -9,7 +9,7 @@ const News = () => {
     
     return (
         <MDBContainer fluid className="newsbgcolor" id="news">
-            <MDBTypography className="h2 text-warning text-center fw-bold">LATEST NEWS</MDBTypography>
+            <MDBTypography className="p-5 titlefontsize text-warning text-center fw-bold">LATEST NEWS</MDBTypography>
             <MDBContainer fluid className="d-flex align-items-center justify-content-center">
                 
                     <MDBCard className="cards m-5">
