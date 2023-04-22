@@ -9,9 +9,12 @@
 .descriptionholder {
     background-image: url("../../../assets/games/description holder.png");
     background-repeat: no-repeat;
-    background-size: 65%;
-    background-position: center center;
-    height: 800px;
+    background-size: 100% 100%;
+    background-position: center;    
+    width: 70%; 
+    height: 90%;
+    margin: 5% auto;
+    position: relative;
 }
 
 .characterholder {
@@ -19,7 +22,7 @@
     background-repeat: no-repeat;
     background-size: 60%;
     background-position: center center;
-    height: 800px;
+    height: 100%;
     
 }
 
@@ -28,33 +31,9 @@
     height: 100vh;
 }
 
-#pearlbadgesize {
+.badgesize {
     height: 100px;
     width: 100px;
-    margin-right: 1rem;
-    margin-left: 1.5rem;
-    padding-bottom: 1rem;
-}
-
-#rubybadgesize {
-    height: 100px;
-    width: 100px;
-    margin-right: 1rem;
-    padding-bottom: 1rem;
-}
-
-#emeraldbadgesize {
-    height: 100px;
-    width: 100px;
-    margin-right: 1rem;
-    padding-bottom: 1rem;
-}
-
-#diamondbadgesize {
-    height: 100px;
-    width: 100px;
-    margin-right: 1.5rem;
-    padding-bottom: 1rem;
 }
 
 .char {
@@ -65,3 +44,46 @@
 .titlefontsize {
     font-size: 50px;
 }
+
+.subs {
+    margin-top: 30%;
+}
+/* @media only screen and (min-width: 1440px) {
+    .gamesdesktopview {
+      display: contents;
+      
+    }
+    .gamesmobileview {
+      display: contents;
+    }
+    .descriptionholder {
+        background-size: 60%;
+    }
+    .substext {
+        justify-self:left;
+        align-self: start;
+    }     
+} */
+
+/* @media only screen and (max-width: 1024px) {
+    .gamesdesktopview {
+      display: contents;
+      
+    }
+    .gamesmobileview {
+        display: none;
+    }
+    .descriptionholder {
+        background-size: 100%;
+        height: 500px;
+    } 
+    .badgesize {
+        height: 80px;
+        width: 80px;
+    }
+    .substext {
+        justify-self:left;
+        align-self: start;
+    }       
+} */
+

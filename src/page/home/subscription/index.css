@@ -8,23 +8,47 @@
 
 #badge {    
     position: absolute;
-    height: 200px;
-    width: 200px;
-    left: 29%;
-    top: -20%;
+    height: 150px;
+    width: 150px;
+    left: 50%; /* move the element to the center of the parent */
+    transform: translateX(-50%);
+    top: -10%;
     z-index: 1;
 }
 
 .bgcolor {
     background: #D2EEFF;
     background: linear-gradient(to top, #D2EEFF 0%, #FFFFFF 100%);
-    height: 100vh;
+    min-width: 100%;
+    min-height: 100vh;
 }
 
 .cardmargin {
-    margin-top: 10rem;
+    margin-top: 6rem;
+    height: 85%;
+    width: 100%;
 }
 
 .titlefontsize {
     font-size: 50px;
 }
+
+@media only screen and (min-width: 1440px) {
+    .desktopview {
+      display: contents;
+    }
+    .mobileview {
+      display: none;
+    }    
+}
+
+@media only screen and (max-width: 1024px) {
+    .desktopview {
+      display: none;
+    }
+    .mobileview {
+        display: contents;
+    }    
+}
+
+/* ------------------------------------------------------ */

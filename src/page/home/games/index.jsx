@@ -11,10 +11,50 @@ import diamond from "../../../assets/subscription/diamond.png"
 import woodcutting from "../../../assets/character/Wood Cutting.png"
 import crafting from "../../../assets/character/crafting.png"
 import fishing from "../../../assets/character/fishing.png"
-
+import Slider from "react-slick";
 
 
 const Games = () => {
+    const settings = {
+        arrows: false,
+        dots: false,
+        infinite: true,
+        autoplay:true ,
+        autoplaySpeed: 3000,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      };
+
+    const contents = [
+        {
+            name: "Wood Cutting",
+            description: "Lorem ipsum is a Latin phrase that is often used as a placeholder text in the design and typesetting industry."
+        },
+        {
+            name: "Crafting",
+            description: "Lorem ipsum is a Latin phrase that is often used as a placeholder text in the design and typesetting industry."
+        },
+        {
+            name: "Fishing",
+            description: "Lorem ipsum is a Latin phrase that is often used as a placeholder text in the design and typesetting industry."
+        },
+        {
+            name: "Fletching",
+            description: "Lorem ipsum is a Latin phrase that is often used as a placeholder text in the design and typesetting industry."
+        },
+        {
+            name: "Harvesting",
+            description: "Lorem ipsum is a Latin phrase that is often used as a placeholder text in the design and typesetting industry."
+        },
+        {
+            name: "Hunting",
+            description: "Lorem ipsum is a Latin phrase that is often used as a placeholder text in the design and typesetting industry."
+        },
+        {
+            name: "Mining",
+            description: "Lorem ipsum is a Latin phrase that is often used as a placeholder text in the design and typesetting industry."
+        },
+    ]  
     return(
         <div className="gamesbgcolor">
         <MDBContainer fluid className="" id="games">
@@ -22,43 +62,67 @@ const Games = () => {
             <MDBTypography className="p-4 titlefontsize text-center text-warning fw-bold">
                 Games
             </MDBTypography>
+
             <MDBRow>
 
-                <MDBCol>
-                <MDBContainer className="d-flex flex-column descriptionholder px-5">
+            
+                           
+            <MDBCol className="col-12 col-lg-6"> 
+                <div className="descriptionholder">
+                <center>
+                <div>
+                <Slider {...settings} className="my-5 mx-5 text-center">
+                    {contents.map((content)=> (
+                    <div>
+                    <MDBTypography className="h2 text-wrap mt-3">{content.name}</MDBTypography>
 
-                <MDBCol className="d-flex flex-column justify-content-center align-items-center">
+                    <MDBTypography className="text-wrap">
+                    {content.description}
+                    </MDBTypography>
 
-                <MDBTypography className="h2 text-center text-wrap mt-3" style={{width: "50%"}}>Wood Cutting</MDBTypography>
-
-                <MDBTypography className="text-wrap text-center" style={{width: "50%"}}>
-                "Lorem ipsum" is a Latin phrase that is often used as a placeholder text in the design and typesetting industry. It is commonly used to demonstrate the visual effects of different typefaces, layouts, and designs without distracting the reader with meaningful content.
-                </MDBTypography>
-
-                <MDBTypography className="text-wrap text-center" style={{width: "50%"}}>
-                "Lorem ipsum" is a Latin phrase that is often used as a placeholder text in the design and typesetting industry. It is commonly used to demonstrate the visual effects of different typefaces, layouts, and designs without distracting the reader with meaningful content.
-                </MDBTypography>
-
-                <MDBTypography className="h2 text-wrap " style={{width: "50%"}}>
-                    Subscription:
-                </MDBTypography>
-
-                <MDBRow>
-                    <MDBCol className="pb-4">
-                    <img src={pearl} id="pearlbadgesize" alt="..."/>
-                    <img src={ruby} id="rubybadgesize" alt="..."/>
-                    <img src={emerald} id="emeraldbadgesize" alt="..."/>
-                    <img src={diamond} id="diamondbadgesize" alt="..."/>
-                    </MDBCol>
-                </MDBRow>
-
-                </MDBCol>
+                    <MDBTypography className="text-wrap">
+                    {content.description}
+                    </MDBTypography>
+                    </div>
+                    ))}
+                                        
+                    </Slider>
+                </div>
                 
-                </MDBContainer>
-                </MDBCol>
+
+                   <div className="subs">
+                   <MDBTypography className="substext h2 text-wrap mt-lg-5">
+                    Subscription:
+                    </MDBTypography>
+                    <br/>
+
+                    <MDBRow className="">
+                        <MDBCol className="mb-lg-0 mb-3">
+                        <img src={pearl}  alt="..." className="badgesize"/>
+                        <img src={ruby} alt="..." className="badgesize"/>
+                        <img src={emerald}  alt="..." className="badgesize"/>
+                        <img src={diamond}  alt="..." className="badgesize"/>
+                        </MDBCol>
+                    </MDBRow>
+                   </div>     
+                    
+                </center>
+                    
+                    
+
+                    
+
+                    
+
+                    
+                    </div>
+                    
+            </MDBCol>
+            
 
                 <MDBCol>
-                <MDBContainer className="d-flex flex-column characterholder">
+                <div className="gamesmobileview">
+                <MDBContainer className="characterholder">
                 
                 <MDBContainer fluid className="d-flex flex-column justify-content-center align-items-center mt-5">
 
@@ -97,8 +161,9 @@ const Games = () => {
                 
                                     
                 </MDBContainer>
-                
+                </div>                
                 </MDBCol>
+
             </MDBRow>
         
         </MDBContainer>

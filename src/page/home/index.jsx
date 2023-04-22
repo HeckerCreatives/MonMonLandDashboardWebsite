@@ -37,11 +37,11 @@ const Initial = () => {
         </MDBContainer>
         </div>        
         <div>            
-            {/* <Subscription/> */}
-            {/* <Games/>
-            <News/>
-            <Roadmap/>
-            <Footer links={Links}/> */}
+            <Subscription/>
+            <Games/>
+            {/* <News/> */}
+            {/* <Roadmap/> */}
+            {/* <Footer links={Links}/> */}
         </div>
         </div>        
         
