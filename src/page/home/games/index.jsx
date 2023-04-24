@@ -23,6 +23,7 @@ const Games = () => {
         autoplaySpeed: 3000,
         slidesToShow: 1,
         slidesToScroll: 1,
+        useTansform: true,
       };
 
     const contents = [
@@ -57,23 +58,24 @@ const Games = () => {
     ]  
     return(
         <div className="gamesbgcolor">
-        <MDBContainer fluid className="" id="games">
+        <MDBContainer fluid  id="games">
         
             <MDBTypography className="p-4 titlefontsize text-center text-warning fw-bold">
                 Games
             </MDBTypography>
 
-            <MDBRow>
+            <MDBRow className="">
 
             
-                           
-            <MDBCol className="col-12 col-lg-6"> 
+           {/* Description holder */}
+            <MDBCol className="col-12 col-xl-6 "> 
                 <div className="descriptionholder">
-                <center>
-                <div>
-                <Slider {...settings} className="my-5 mx-5 text-center">
+                
+                <div className="">
+                    <Slider {...settings} className='text-center fw-bold'>
+                    
                     {contents.map((content)=> (
-                    <div>
+                    <div className="descdiv">
                     <MDBTypography className="h2 text-wrap mt-3">{content.name}</MDBTypography>
 
                     <MDBTypography className="text-wrap">
@@ -85,85 +87,68 @@ const Games = () => {
                     </MDBTypography>
                     </div>
                     ))}
+                                       
                                         
                     </Slider>
                 </div>
                 
 
                    <div className="subs">
-                   <MDBTypography className="substext h2 text-wrap mt-lg-5">
+                   <MDBCol className="">
+                   <MDBTypography className="substext h2 text-wrap">
                     Subscription:
                     </MDBTypography>
-                    <br/>
-
-                    <MDBRow className="">
-                        <MDBCol className="mb-lg-0 mb-3">
-                        <img src={pearl}  alt="..." className="badgesize"/>
-                        <img src={ruby} alt="..." className="badgesize"/>
-                        <img src={emerald}  alt="..." className="badgesize"/>
-                        <img src={diamond}  alt="..." className="badgesize"/>
-                        </MDBCol>
-                    </MDBRow>
-                   </div>     
+                                    
+                    <img src={pearl}  alt="..." className="img-fluid badgesize"/>
+                    <img src={ruby} alt="..." className="img-fluid badgesize"/>
+                    <img src={emerald}  alt="..." className="img-fluid badgesize"/>
+                    <img src={diamond}  alt="..." className="img-fluid badgesize"/>
+                    </MDBCol>
                     
-                </center>
+                    </div>
                     
-                    
-
-                    
-
-                    
-
+                
                     
                     </div>
                     
             </MDBCol>
+            {/* End of Description holder */}
+
+            {/* Character Holder */}
+            <MDBCol className="col-12 col-xl-6">
+            <div className="gamesmobileview">
+            <div className="characterholder text-center">
+            
             
 
-                <MDBCol>
-                <div className="gamesmobileview">
-                <MDBContainer className="characterholder">
-                
-                <MDBContainer fluid className="d-flex flex-column justify-content-center align-items-center mt-5">
-
-                        <MDBCol className="mt-5 mb-3">
-                        <MDBCarousel>
-                        <MDBCarouselItem
-                            className='d-block char w-60'
-                            itemId={1}
-                            src={woodcutting}
-                            alt='...'
-                        />
-                        <MDBCarouselItem
-                            className='d-block char w-60'
-                            itemId={2}
-                            src={crafting}
-                            alt='...'
-                        />
-                        <MDBCarouselItem
-                            className='d-block char w-60'
-                            itemId={3}
-                            src={fishing}
-                            alt='...'
-                        />
-                        </MDBCarousel>
-                        </MDBCol>
+                    <MDBCol className="">
+                    <Slider {...settings}>
                     
-                    
-                    <MDBRow>
-                        <MDBCol className="mt-5 p-5">
-                        <img src={leftarrow} alt="..." className="arrowleft"/>
-                        <img src={rightarrow} alt="..." className="arrowright"/>
-                        </MDBCol>
-                    </MDBRow>
-
-                </MDBContainer>
+                    <div className="chardiv">
+                    <img src={woodcutting} alt="" className="char"/>
+                    </div>
+                    <div className="chardiv">
+                    <img src={fishing} alt="" className="char"/>
+                    </div>
+                    <div className="chardiv">
+                    <img src={crafting} alt="" className="char"/>
+                    </div>
+                                   
+                    </Slider>
+                    </MDBCol>
                 
-                                    
-                </MDBContainer>
-                </div>                
-                </MDBCol>
-
+                
+                
+            <img src={leftarrow} alt="..." className="arrowleft"/>
+            <img src={rightarrow} alt="..." className="arrowright"/>                
+            </div>
+            
+            </div>
+            
+                    
+                          
+            </MDBCol>
+        {/* End of Character Holder */}
             </MDBRow>
         
         </MDBContainer>

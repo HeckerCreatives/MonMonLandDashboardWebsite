@@ -3,66 +3,300 @@
     height: 100vh;
 }
 
-.line {
-    background-image: url("../../../assets/roadmap/line.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    /* background-size: 50vh 50vh; */
-    height: 1200px;
-    margin-top: 10rem;
-    position: absolute;
-    z-index: 99;
-    
-}
 
-.roadmapholder {
-    background-image: url("../../../assets/roadmap/roadmap holder.png") ;
-    background-position: 18%;
-    background-repeat: no-repeat;
-    background-size: 50vh;
-    height: 300px;
-}
-
-.roadmapholderright {
-    background-image: url("../../../assets/roadmap/roadmap holder.png") ;
-    background-position: 18% ;
-    background-repeat: no-repeat;
-    background-size: 50vh;
-    height: 300px;
-    transform: scaleX(-1);
-}
-
-.circle {
-    background-image: url("../../../assets/roadmap/circle.png");
-    background-position: center ;
-    background-repeat: no-repeat;
-    background-size: 5vh;
-}
-
-#woodchar {
-    height: 100px;
-    transform: translateX(80%);
-}
-
-.woodcharbg {
-    background-color: #767676;
-}
-
-.seemorebtn {
-    /* height: 100px; */
-    width: 150px;
-}
-
-.itemposition {
-    transform: translateX(60%);
-}
-
-.itempositionright {
-    transform: translateX(60%) scaleX(-1);
-    /* transform: ; */
-    
-}
 
 .titlefontsize {
     font-size: 50px;
+}
+
+@media (min-width: 426px) and (max-width: 768px) {
+
+    .line {
+        background-image: url("../../../assets/roadmap/line.png");
+        background-position:3%;
+        background-repeat: no-repeat;
+        /* background-size: 50vh 50vh; */
+        height: 1200px;
+        margin-top: 10rem;
+        /* margin-left: 5rem; */
+        position: absolute;
+        z-index: 99;
+        
+    }
+    .circle {
+        background-image: url("../../../assets/roadmap/circle.png");
+        background-position: 1%;
+        background-repeat: no-repeat;
+        background-size: 5vh;
+    }
+
+    .itemposition {
+        transform: translateX(45%) scaleX(-1);
+    }
+    
+    .itempositionright {
+        transform: translateX(45%) scaleX(-1);
+        /* transform: ; */
+        
+    }
+
+    .roadmapholder {
+        background-image: url("../../../assets/roadmap/roadmap holder.png") ;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 55vh;
+        height: 300px;
+        transform: scaleX(-1);
+    }
+    
+    .roadmapholderright {
+        background-image: url("../../../assets/roadmap/roadmap holder.png") ;
+        background-position: center ;
+        background-repeat: no-repeat;
+        background-size: 55vh;
+        height: 300px;
+        transform: scaleX(-1);
+    }
+
+    #woodchar {
+        height: 100px;
+        transform: translateX(0%);
+    }
+    
+    .woodcharbg {
+        background-color: #767676;
+        border-radius: 20px;
+    }
+    
+    .seemorebtn {
+        /* height: 100px; */
+        width: 150px;
+    }
+
+    .itemcolumn {
+        height: 100%;
+        width: 50%;
+        margin-top: 5%;
+    }
+       
+}
+
+@media only screen and (max-width: 425px) {
+
+    .line {
+        background-image: url("../../../assets/roadmap/line.png");
+        background-position:4%;
+        background-repeat: no-repeat;
+        /* background-size: 50vh 50vh; */
+        height: 1200px;
+        margin-top: 10rem;
+        /* margin-left: 5rem; */
+        position: absolute;
+        z-index: 99;
+        
+    }
+    .circle {
+        background-image: url("../../../assets/roadmap/circle.png");
+        background-position: 1%;
+        background-repeat: no-repeat;
+        background-size: 5vh;
+    }
+
+    .itemposition {
+        transform: translateX(0%) scaleX(-1);
+    }
+    
+    .itempositionright {
+        transform: translateX(0%) scaleX(-1);
+        /* transform: ; */
+        
+    }
+
+    .roadmapholder {
+        background-image: url("../../../assets/roadmap/roadmap holder.png") ;
+        background-position: center left;
+        background-repeat: no-repeat;
+        background-size: 85%;
+        height: 310px;
+        transform: scaleX(-1);
+    }
+    
+    .roadmapholderright {
+        background-image: url("../../../assets/roadmap/roadmap holder.png") ;
+        background-position: center left;
+        background-repeat: no-repeat;
+        background-size: 85%;
+        height: 310px;
+        transform: scaleX(-1);
+    }
+
+    #woodchar {
+        height: 100px;
+        transform: translateX(0%);
+    }
+    
+    .woodcharbg {
+        background-color: #767676;
+        border-radius: 20px;
+    }
+    
+    .seemorebtn {
+        /* height: 100px; */
+        width: 145px;
+        margin-bottom: 10px;
+    }
+
+    .itemcolumn {
+        /* height: 50%; */
+        width: 82%;
+        /* padding: 5%; */
+        padding-top: 8%;
+        margin-top: 3%;
+        font-size: small;
+        /* display: flex;
+        justify-content: center;
+        align-items: flex-start; */
+    }
+       
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    .line {
+        background-image: url("../../../assets/roadmap/line.png");
+        background-position:3.5%;
+        background-repeat: no-repeat;
+        /* background-size: 50vh 50vh; */
+        height: 1200px;
+        margin-top: 10rem;
+        /* margin-left: 5rem; */
+        position: absolute;
+        z-index: 99;
+        
+    }
+    .circle {
+        background-image: url("../../../assets/roadmap/circle.png");
+        background-position: 2%;
+        background-repeat: no-repeat;
+        background-size: 5vh;
+    }
+
+    .itemposition {
+        transform: translateX(73%) scaleX(-1);
+    }
+    
+    .itempositionright {
+        transform: translateX(73%) scaleX(-1);
+        /* transform: ; */
+        
+    }
+
+    .roadmapholder {
+        background-image: url("../../../assets/roadmap/roadmap holder.png") ;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 55vh;
+        height: 300px;
+        transform: scaleX(-1);
+    }
+    
+    .roadmapholderright {
+        background-image: url("../../../assets/roadmap/roadmap holder.png") ;
+        background-position: center ;
+        background-repeat: no-repeat;
+        background-size: 55vh;
+        height: 300px;
+        transform: scaleX(-1);
+    }
+
+    #woodchar {
+        height: 100px;
+        transform: translateX(0%);
+    }
+    
+    .woodcharbg {
+        background-color: #767676;
+        border-radius: 20px;
+    }
+    
+    .seemorebtn {
+        /* height: 100px; */
+        width: 150px;
+    }
+
+    .itemcolumn {
+        height: 100%;
+        width: 40%;
+        margin-top: 5%;
+    }
+       
+}
+
+@media only screen and (min-width: 1440px) {
+
+    .line {
+        background-image: url("../../../assets/roadmap/line.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        /* background-size: 50vh 50vh; */
+        height: 1200px;
+        margin-top: 10rem;
+        position: absolute;
+        z-index: 99;
+        
+    }
+    .circle {
+        background-image: url("../../../assets/roadmap/circle.png");
+        background-position: center ;
+        background-repeat: no-repeat;
+        background-size: 5vh;
+    }
+
+    .itemposition {
+        transform: translateX(60%);
+    }
+    
+    .itempositionright {
+        transform: translateX(60%) scaleX(-1);
+        /* transform: ; */
+        
+    }
+
+    .roadmapholder {
+        background-image: url("../../../assets/roadmap/roadmap holder.png") ;
+        background-position: 18%;
+        background-repeat: no-repeat;
+        background-size: 50vh;
+        height: 300px;
+    }
+    
+    .roadmapholderright {
+        background-image: url("../../../assets/roadmap/roadmap holder.png") ;
+        background-position: 18% ;
+        background-repeat: no-repeat;
+        background-size: 50vh;
+        height: 300px;
+        transform: scaleX(-1);
+    }
+
+    #woodchar {
+        height: 100px;
+        transform: translateX(0%);
+    }
+    
+    .woodcharbg {
+        background-color: #767676;
+        border-radius: 20px;
+    }
+    
+    .seemorebtn {
+        /* height: 100px; */
+        width: 150px;
+    }
+
+    .itemcolumn {
+        height: 90%;
+        width: 25%;
+        margin-top: 2%;
+    }   
 }

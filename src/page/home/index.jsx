@@ -39,9 +39,9 @@ const Initial = () => {
         <div>            
             <Subscription/>
             <Games/>
-            {/* <News/> */}
-            {/* <Roadmap/> */}
-            {/* <Footer links={Links}/> */}
+            <News/>
+            <Roadmap/>
+            <Footer links={Links}/>
         </div>
         </div>        
         

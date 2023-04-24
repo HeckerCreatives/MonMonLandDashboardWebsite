@@ -18,10 +18,10 @@ const Footer = ({links}) => {
 
         <MDBContainer fluid className="d-flex flex-column align-items-center justify-content-center">
 
-        <img src={logowhite}/>
+        <img src={logowhite} alt=""/>
         
         <MDBRow>
-            <MDBCol className="d-flex flex-row align-items-center justify-content-center mt-5">
+            <MDBCol className="d-flex flex-row align-items-center justify-content-center mt-5 p-0">
 
             {links.map((link, index) => (
             <MDBNavbarItem key={`links-${index}`} style={{listStyleType:'none'}}>
@@ -29,7 +29,7 @@ const Footer = ({links}) => {
                 active
                 aria-current="page"
                 href={link.path}
-                className={`text-white fw-bold p-5`}
+                className={`text-white fw-bold`}
                 onClick={() => {
                 handleActive(link.path);
                 }}

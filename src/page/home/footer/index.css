@@ -8,3 +8,12 @@
 .socials {
     margin-right: 1rem;
 }
+
+@media only screen and (max-width: 425px) {
+    .socials {
+        margin-right: 2px;
+    }
+    .nav-link {
+        padding: 10px !important;
+    }      
+}

@@ -167,7 +167,7 @@ const Subscription = () => {
         
         </MDBContainer>
         </div>
-        
+        {/* for mobile view */}
         <div className="mobileview">
         <MDBContainer className="">
         <Slider {...settings}>

@@ -14,16 +14,16 @@ const Roadmap = () => {
         <MDBContainer className="line">
         
         <MDBRow className="circle">
-            <MDBCol className="roadmapholder">
+            <MDBCol className="roadmapholder text-center">
 
-            <MDBCol className="d-flex flex-column align-items-center justify-content-center itemposition mt-3" style={{width:"25%"}}>
-            <MDBTypography className="fw-bold text-center text-white" >Lorem Ipsum</MDBTypography>
+            <MDBCol className="itemposition itemcolumn" >
+            <MDBTypography className="fw-bold text-white" >Lorem Ipsum</MDBTypography>
 
-            <MDBCol  className="woodcharbg" style={{width:"75%"}}>
+            <MDBCol  className="woodcharbg">
             <img src={woodcutting} alt="" id="woodchar" />
             </MDBCol>            
 
-            <MDBTypography className="fw-bold text-wrap text-white mt-3" >Lorem Ipsum height of the content inside the section.</MDBTypography>
+            <MDBTypography className="fw-bold text-wrap text-white m-0" >Lorem Ipsum height of the content inside the section.</MDBTypography>
 
             <img src={seemore} alt="" className="seemorebtn"/>
             </MDBCol>
@@ -33,15 +33,15 @@ const Roadmap = () => {
 
         </MDBRow>
         <MDBRow className="circle">
-            <MDBCol className="roadmapholderright">
-            <MDBCol className="d-flex flex-column align-items-center justify-content-center itempositionright mt-3" style={{width:"25%"}}>
-            <MDBTypography className="fw-bold text-center text-white" >Lorem Ipsum</MDBTypography>
+            <MDBCol className="roadmapholderright text-center">
+            <MDBCol className="itempositionright itemcolumn" >
+            <MDBTypography className="fw-bold text-white" >Lorem Ipsum</MDBTypography>
 
-            <MDBCol  className="woodcharbg" style={{width:"75%"}}>
+            <MDBCol  className="woodcharbg">
             <img src={woodcutting} alt="" id="woodchar" />
             </MDBCol>            
 
-            <MDBTypography className="fw-bold text-wrap text-white mt-3" >Lorem Ipsum height of the content inside the section.</MDBTypography>
+            <MDBTypography className="fw-bold text-wrap text-white m-0" >Lorem Ipsum height of the content inside the section.</MDBTypography>
 
             <img src={seemore} alt="" className="seemorebtn"/>
             </MDBCol>
@@ -50,16 +50,16 @@ const Roadmap = () => {
         </MDBRow>
 
         <MDBRow className="circle">
-            <MDBCol className="roadmapholder">
+            <MDBCol className="roadmapholder text-center">
+            
+            <MDBCol className="itemposition itemcolumn" >
+            <MDBTypography className="fw-bold text-white" >Lorem Ipsum</MDBTypography>
 
-            <MDBCol className="d-flex flex-column align-items-center justify-content-center itemposition mt-3" style={{width:"25%"}}>
-            <MDBTypography className="fw-bold text-center text-white" >Lorem Ipsum</MDBTypography>
-
-            <MDBCol  className="woodcharbg" style={{width:"75%"}}>
+            <MDBCol  className="woodcharbg">
             <img src={woodcutting} alt="" id="woodchar" />
             </MDBCol>            
 
-            <MDBTypography className="fw-bold text-wrap text-white mt-3" >Lorem Ipsum height of the content inside the section.</MDBTypography>
+            <MDBTypography className="fw-bold text-wrap text-white m-0" >Lorem Ipsum height of the content inside the section.</MDBTypography>
 
             <img src={seemore} alt="" className="seemorebtn"/>
             </MDBCol>
@@ -68,16 +68,16 @@ const Roadmap = () => {
         </MDBRow>
 
         <MDBRow className="circle">
-            <MDBCol className="roadmapholderright">
+            <MDBCol className="roadmapholderright text-center">
 
-            <MDBCol className="d-flex flex-column align-items-center justify-content-center itempositionright mt-3" style={{width:"25%"}}>
-            <MDBTypography className="fw-bold text-center text-white" >Lorem Ipsum</MDBTypography>
+            <MDBCol className="itempositionright itemcolumn" >
+            <MDBTypography className="fw-bold text-white" >Lorem Ipsum</MDBTypography>
 
-            <MDBCol  className="woodcharbg" style={{width:"75%"}}>
+            <MDBCol  className="woodcharbg">
             <img src={woodcutting} alt="" id="woodchar" />
             </MDBCol>            
 
-            <MDBTypography className="fw-bold text-wrap text-white mt-3" >Lorem Ipsum height of the content inside the section.</MDBTypography>
+            <MDBTypography className="fw-bold text-wrap text-white m-0" >Lorem Ipsum height of the content inside the section.</MDBTypography>
 
             <img src={seemore} alt="" className="seemorebtn"/>
             </MDBCol>

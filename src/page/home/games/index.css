@@ -14,15 +14,17 @@
     width: 70%; 
     height: 90%;
     margin: 5% auto;
-    position: relative;
+    /* position: relative; */
 }
 
 .characterholder {
     background-image: url("../../../assets/games/character holder.png");
     background-repeat: no-repeat;
-    background-size: 60%;
-    background-position: center center;
-    height: 100%;
+    background-size: 100% 100%;
+    background-position: center;
+    height: 70%;
+    width: 70%;
+    margin: 8% auto;
     
 }
 
@@ -32,13 +34,15 @@
 }
 
 .badgesize {
-    height: 100px;
-    width: 100px;
+    height: 25%;
+    width: 25%;
+    /* margin: 0px 8px 0px 15px; */
 }
 
 .char {
-    height:350px;
-    margin-top: 7rem;
+    margin: auto;
+    height: 400px;
+    width: 400px;
 }
 
 .titlefontsize {
@@ -46,9 +50,12 @@
 }
 
 .subs {
-    margin-top: 30%;
+    margin: 12% 12% 0% 13%;    
 }
-/* @media only screen and (min-width: 1440px) {
+
+
+
+@media only screen and (min-width: 1440px) {
     .gamesdesktopview {
       display: contents;
       
@@ -56,16 +63,24 @@
     .gamesmobileview {
       display: contents;
     }
-    .descriptionholder {
-        background-size: 60%;
+    .slick-slide > div {
+        display: grid;
+        place-items: center;
+       
+        margin: 18% 10% 12% 10%;
     }
-    .substext {
-        justify-self:left;
-        align-self: start;
-    }     
-} */
+    /* .slick-slide > .chardiv {
+        display: grid;
+        place-items: center;
+        margin-top: 15%;
+        margin-left: 10%;
+        margin-right: 10%;
+    } */
+    
+       
+}
 
-/* @media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 425px) {
     .gamesdesktopview {
       display: contents;
       
@@ -73,17 +88,111 @@
     .gamesmobileview {
         display: none;
     }
-    .descriptionholder {
-        background-size: 100%;
-        height: 500px;
-    } 
     .badgesize {
-        height: 80px;
-        width: 80px;
+        height: 24%;
+        width: 24%;
     }
-    .substext {
-        justify-self:left;
-        align-self: start;
-    }       
-} */
 
+    .slick-slide > div {
+        display: grid;
+        place-items: center;
+        margin-top: 10%;
+        margin-left: 3%;
+        margin-right: 3%;
+        font-size: small;
+    }
+
+    .descriptionholder {
+        /* background-image: url("../../../assets/games/description holder.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: center;     */
+        width: 90%; 
+        height: 100%;
+        /* margin: 5% auto; */
+        /* position: relative; */
+    }
+
+    .subs {
+        margin: 5% 12% 12% 13%;    
+    }
+          
+}
+
+/* TRBL */
+
+@media (min-width: 426px) and (max-width: 768px) {
+    .gamesdesktopview {
+      display: contents;
+      
+    }
+    .gamesmobileview {
+        display: none;
+    }
+    .badgesize {
+        height: 24%;
+        width: 24%;
+    }
+
+    .slick-slide > div {
+        display: grid;
+        place-items: center;
+        margin-top: 10%;
+        margin-left: 5%;
+        margin-right: 5%;
+        font-size: medium;
+    }
+
+    .descriptionholder {
+        /* background-image: url("../../../assets/games/description holder.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: center;     */
+        width: 70%; 
+        height: 98%;
+        /* margin: 5% auto; */
+        /* position: relative; */
+    }
+    .subs {
+        margin: 10% 12% 0% 13%;
+    }
+          
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .gamesdesktopview {
+      display: contents;
+      
+    }
+    .gamesmobileview {
+        display: none;
+    }
+    .badgesize {
+        height: 24%;
+        width: 24%;
+    }
+
+    .slick-slide > div {
+        display: grid;
+        place-items: center;
+        margin-top: 10%;
+        margin-left: 5%;
+        margin-right: 5%;
+        font-size: medium;
+    }
+
+    .descriptionholder {
+        /* background-image: url("../../../assets/games/description holder.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: center;     */
+        width: 70%; 
+        height: 94%;
+        /* margin: 5% auto; */
+        /* position: relative; */
+    }
+    .subs {
+        margin: 10% 12% 0% 13%;
+    }
+          
+}
