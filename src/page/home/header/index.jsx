@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBTypography,MDBProgress, MDBProgressBar } from "mdb-react-ui-kit";
 import "./index.css";
 import biglogo from "../../../assets/header/big logo.png"
@@ -10,6 +10,50 @@ import Navbar from "../../../component"
 
 
 const Header = () => {
+    const [initialbar, setInitialBar] = useState();
+    const [totalbar, setTotalBar] = useState();
+    const [progress, setProgress] = useState();
+
+    const seperator = (x) => {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+     useEffect(()=> {
+        fetch('http://localhost:4000/gameactivity/6447681e5d356036c58392af/find')
+        .then(result => result.json())
+        .then(data => {
+            setInitialBar(data.initial)
+            setTotalBar(data.total)
+            })
+
+    },[])
+
+    useEffect(()=>{
+        const percentage = (initialbar/totalbar) * 100     
+        setProgress(percentage)
+    },[initialbar, totalbar])
+
+    useEffect(()=>{
+        if(initialbar){
+           setInitialBar(seperator(initialbar))
+        }
+        if(totalbar){
+            setTotalBar(seperator(totalbar))
+         }
+    },[initialbar,totalbar])
+    
+
+
+    
+    
+    
+
+    
+      
+    
+    
+    
+
     return (
         <div className="kahitanu">        
         <MDBContainer fluid className="d-flex text-center justify-content-center align-items-center mb-5" id="home">
@@ -30,10 +74,10 @@ const Header = () => {
                 <MDBCol className="d-flex justify-content-center align-items-center text-center">
                  
                 <MDBProgress height='50' className="innerbar">
-                    <MDBProgressBar className="progressbar" width={30} valuemin={0} valuemax={1000}/>                                      
+                    <MDBProgressBar className="progressbar" width={progress} valuemin={initialbar} valuemax={totalbar}/>                                      
                     
                 </MDBProgress> 
-                <MDBTypography className="text mt-3 fw-bold">330,000/1,000,000</MDBTypography>      
+                <MDBTypography className="text mt-3 fw-bold">{(initialbar)}/{(totalbar)}</MDBTypography>      
                 </MDBCol>
                                 
                 </MDBCol>

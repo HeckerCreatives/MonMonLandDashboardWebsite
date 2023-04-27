@@ -290,13 +290,15 @@
     }
     
     .seemorebtn {
-        /* height: 100px; */
-        width: 150px;
+        /* height: 50%; */
+        width: 100%;
     }
 
     .itemcolumn {
         height: 90%;
         width: 25%;
         margin-top: 2%;
-    }   
+    }
+    
+      
 }
