@@ -49,7 +49,8 @@ const Subscription = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
         adaptiveHeight:false,
-        variableWidth:false
+        variableWidth:false,
+        arrows:false
       };
     
 
@@ -57,7 +58,7 @@ const Subscription = () => {
         <>
         <MDBContainer fluid className="bgcolor" id="subscription">
 
-        <MDBTypography className="mt-5 titlefontsize text-warning fw-bold text-center">
+        <MDBTypography className="mt-5 titlefontsize text-warning fw-bold text-center" style={{marginBottom: "10vh"}}>
             Subscription
         </MDBTypography>
         {/* for desktop */}
@@ -67,54 +68,60 @@ const Subscription = () => {
         <MDBRow>
 
         {subs.map(sub => (
-        <MDBCol className="mb-3">
-        
-        <MDBCard key={sub._id} className="cardmargin col-12" style={{height:"90%"}}>
-        <MDBCardImage src={sub.image} alt=""  id="badge"/>
+        <MDBCol className="">
+            <MDBCard key={sub._id} className="col-12" style={{height:"100%"}}>
+                <MDBCardImage src={sub.image} alt=""  id="badge" style={{marginTop: "5vh"}}/>
             
-            <MDBCardBody className="subsparent">            
-                <MDBCardTitle className="fw-bold h2 mt-5">{sub.title}</MDBCardTitle>
-                    <MDBCardSubTitle className="fw-bold h3 price mb-5">{sub.amount}</MDBCardSubTitle>
-                <ul className="mx-4 p-4">
-                    <li>
-                    {sub.description}
-                    </li>
-                    <li>
-                    {sub.description}
-                    </li>
-                    <li>
-                    {sub.description}
-                    </li>
-                    <li>
-                    {sub.description}
-                    </li>
-                    <li>
-                    {sub.description}
-                    </li>
-                    <li>
-                    {sub.description}
-                    </li>
-                    <li>
-                    {sub.description}
-                    </li>
-                    <li>
-                    {sub.description}
-                    </li>
-                    <li>
-                    {sub.description}
-                    </li>
-                    <li>
-                    {sub.description}
-                    </li>                
-                </ul>                               
-                
-            </MDBCardBody>
-            <MDBContainer>
-            <MDBBtn type="button" className="subsbutton btn btn-warning fw-bold" size="lg"  >SUBSCRIBE NOW</MDBBtn>
-            </MDBContainer>
-            
-            
-        </MDBCard>
+                <MDBCardBody className="subsparent">            
+                    <MDBCardTitle className="fw-bold h2 mt-5">{sub.title}</MDBCardTitle>
+                        <MDBCardSubTitle className="fw-bold h3 price mb-5">{sub.amount}</MDBCardSubTitle>
+                    <ul className="mx-4 ">
+                        <li>
+                        {sub.description}
+                        </li>
+                        <li>
+                        {sub.description}
+                        </li>
+                        <li>
+                        {sub.description}
+                        </li>
+                        <li>
+                        {sub.description}
+                        </li>
+                        <li>
+                        {sub.description}
+                        </li>
+                        <li>
+                        {sub.description}
+                        </li>
+                        <li>
+                        {sub.description}
+                        </li>
+                        <li>
+                        {sub.description}
+                        </li>
+                        <li>
+                        {sub.description}
+                        </li>
+                        <li>
+                        {sub.description}
+                        </li>       
+                        <li>
+                        {sub.description}
+                        </li>       
+                        <li>
+                        {sub.description}
+                        </li>       
+                        <li>
+                        {sub.description}
+                        </li>                   
+                    </ul>                               
+                    
+                </MDBCardBody>
+                <MDBContainer>
+                    <MDBBtn type="button" className="subsbutton btn btn-warning fw-bold" size="lg"  >SUBSCRIBE NOW</MDBBtn>
+                </MDBContainer>
+            </MDBCard>
         </MDBCol>
         ))}
 
@@ -125,61 +132,98 @@ const Subscription = () => {
 
         {/* for mobile view */}
         <div className="mobileview">
-        <MDBContainer className="">
-        <Slider {...settings}>
+            <MDBContainer className="">
+                <Slider {...settings}>
 
-        {/* PEARL */}
-        {subs.map(sub =>(
-        <div className="text-center">
-        <MDBCard className="cardmargin col-12" key={sub._id}>
-        <MDBCardImage src={sub.image} alt="" className="" id="badge"/>
-            <MDBCardBody className="subsparent">            
-                <MDBCardTitle className="fw-bold h2 mt-5">{sub.title}</MDBCardTitle>
-                    <MDBCardSubTitle className="fw-bold h3 price mb-5">{sub.amount}</MDBCardSubTitle>
-            <ul className="mx-4 p-4">
-                <li>
-                {sub.description}
-                </li>
-                <li>
-                {sub.description}
-                </li>
-                <li>
-                {sub.description}
-                </li>
-                <li>
-                {sub.description}
-                </li>
-                <li>
-                {sub.description}
-                </li>
-                <li>
-                {sub.description}
-                </li>
-                <li>
-                {sub.description}
-                </li>
-                <li>
-                {sub.description}
-                </li>
-                <li>
-                {sub.description}
-                </li>
-                <li>
-                {sub.description}
-                </li>
-            </ul>
-                               
-                
-            </MDBCardBody>
-            <MDBContainer>
-            <MDBBtn type="button" className="subsbutton btn btn-warning fw-bold" size="lg">SUBSCRIBE NOW</MDBBtn> 
+                {/* PEARL */}
+                {subs.map(sub =>(
+                    // <div className="text-center rounded bg-light">
+                    //     <center>
+                    //         <img src={sub.image} className="subsbadge"/>
+                    //     </center>
+                    //     <h1 className="fw-bold h2 mt-5">{sub.title}</h1>
+                    //     <h4 className="price">{sub.amount}</h4>
+                    //     <ul className="mx-4 p-4">
+                    //         <li>
+                    //         {sub.description}
+                    //         </li>
+                    //         <li>
+                    //         {sub.description}
+                    //         </li>
+                    //         <li>
+                    //         {sub.description}
+                    //         </li>
+                    //         <li>
+                    //         {sub.description}
+                    //         </li>
+                    //         <li>
+                    //         {sub.description}
+                    //         </li>
+                    //         <li>
+                    //         {sub.description}
+                    //         </li>
+                    //         <li>
+                    //         {sub.description}
+                    //         </li>
+                    //         <li>
+                    //         {sub.description}
+                    //         </li>
+                    //         <li>
+                    //         {sub.description}
+                    //         </li>
+                    //         <li>
+                    //         {sub.description}
+                    //         </li>
+                    //     </ul>
+                    //     <br/>
+                    //     <div className="subsbutton">
+                    //     <MDBBtn type="button" className=" btn btn-warning fw-bold" size="lg">SUBSCRIBE NOW</MDBBtn> 
+                    //     </div>
+                    // </div>
+                    <MDBCard className="text-center" key={sub._id}>
+                        <MDBCardImage src={sub.image} alt="" className="" id="badge" style={{marginTop: "5vh"}}/>
+                            <MDBCardBody className="">            
+                                <MDBCardTitle className="fw-bold h2 mt-5" style={{paddingTop: "5vh"}}>{sub.title}</MDBCardTitle>
+                                    <MDBCardSubTitle className="fw-bold h3 price mb-5">{sub.amount}</MDBCardSubTitle>
+                                        <ul className="mx-4 p-4">
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                        </ul>
+                            </MDBCardBody>
+                            <br></br>
+                            <MDBBtn type="button" className="subsbutton btn btn-warning fw-bold" size="lg">SUBSCRIBE NOW</MDBBtn> 
+                </MDBCard>
+                ))}
+                </Slider>
             </MDBContainer>
-           
-        </MDBCard>
-        </div>
-        ))}
-        </Slider>
-        </MDBContainer> 
         </div>
 
         {/* <MDBModal  show={activeModal} onClick={()=> setActiveModal(null)} tabIndex='-1'>
