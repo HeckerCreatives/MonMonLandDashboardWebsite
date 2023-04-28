@@ -1,5 +1,13 @@
 import React, {useState, useEffect, useRef} from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBTypography,MDBCard,MDBCardBody,MDBCardImage,MDBCardText } from "mdb-react-ui-kit";
+import { MDBContainer, MDBRow, MDBCol, MDBTypography,MDBCard,MDBCardBody,MDBCardImage,MDBCardText,
+  MDBBtn,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter, } from "mdb-react-ui-kit";
 import "./index.css"
 import woodcutting from "../../../assets/character/Wood Cutting.png"
 import crafting from "../../../assets/character/crafting.png"
@@ -7,7 +15,9 @@ import fishing from "../../../assets/character/fishing.png"
 import Slider from "react-slick";
 const News = () => {
   const [news, setNews] = useState([]);
-  
+  const [activeModal, setActiveModal] = useState(null);
+  const [newsdescription, setnewsDescription] = useState('');
+  const [newstitle, setNewsTitle] = useState('');
 
   useEffect(()=>{
     fetch('http://localhost:4000/news/find')
@@ -62,8 +72,12 @@ const News = () => {
         <Slider {...settings}>
           {news.map(balita =>(
           <div>
-          <MDBCard className="cards" key={balita._id}>
-                <MDBCardImage src={balita.image} alt='...' position='top' id="images"/>
+          <MDBCard className="cards" key={balita._id} >
+                <MDBCardImage src={balita.image} alt='...' position='top' id="images" onClick={() => {
+            setActiveModal(true)
+            setnewsDescription(balita.description)
+            setNewsTitle(balita.title)
+          }}/>
                 <MDBCardBody>
                     <MDBCardText className="fw-bold text-center">
                     {balita.title}
@@ -76,40 +90,24 @@ const News = () => {
             </div>
           ))}
           
-
-          {/* <div>
-          <MDBCard className="cards">
-                <MDBCardImage src={fishing} alt='...' position='top' id="images"/>
-                <MDBCardBody>
-                    <MDBCardText className="fw-bold text-center">
-                    Mines are soon to Open
-                    </MDBCardText>
-                </MDBCardBody>
-            </MDBCard>
-          </div>
-          <div>
-          <MDBCard className="cards">
-                <MDBCardImage src={crafting} alt='...' position='top' id="images"/>
-                <MDBCardBody>
-                    <MDBCardText className="fw-bold text-center">
-                    Mines are soon to Open
-                    </MDBCardText>
-                </MDBCardBody>
-            </MDBCard>
-          </div>  
-          <div>
-          <MDBCard className="cards">
-                <MDBCardImage src={fishing} alt='...' position='top' id="images"/>
-                <MDBCardBody>
-                    <MDBCardText className="fw-bold text-center">
-                    Mines are soon to Open
-                    </MDBCardText>
-                </MDBCardBody>
-            </MDBCard>
-          </div> */}
-          
         </Slider>
-        </div>    
+        </div>
+        <MDBModal  show={activeModal} onClick={()=> setActiveModal(null)} tabIndex='-1'>
+            <MDBModalDialog centered>
+            <MDBModalContent>
+                <MDBModalHeader>
+                <MDBModalTitle>{newstitle}</MDBModalTitle>
+                <MDBBtn className='btn-close' color='none' onClick={()=> setActiveModal(null)}></MDBBtn>
+                </MDBModalHeader>
+                <MDBModalBody>{newsdescription}</MDBModalBody>
+                <MDBModalFooter>
+                <MDBBtn color='secondary' onClick={()=> setActiveModal(null)}>
+                    Close
+                </MDBBtn>                
+                </MDBModalFooter>
+            </MDBModalContent>
+            </MDBModalDialog>
+        </MDBModal>    
         </MDBContainer>
     );
 };

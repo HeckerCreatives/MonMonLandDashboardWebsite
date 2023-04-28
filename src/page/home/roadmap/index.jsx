@@ -17,10 +17,13 @@ import seemore from "../../../assets/roadmap/see more btn.png"
 
 const Roadmap = () => {
     const [roadmap, setRoadmap] = useState([])
-    const [basicModal, setBasicModal] = useState(false);
-    const toggleShow = (index) => {        
-        setBasicModal(index);
-      };
+    const [activeModal, setActiveModal] = useState(null);
+    const [roadmapdescription, setRoadmapDescription] = useState('');
+    const [roadmaptitle, setTitle] = useState('');
+
+    // const toggleShow = (index) => {        
+    //     setBasicModal(index);
+    //   };
 
     useEffect(()=>{
         fetch('http://localhost:4000/roadmap/find')
@@ -57,38 +60,37 @@ const Roadmap = () => {
         </MDBCol>            
 
         <MDBTypography className="fw-bold text-wrap text-white m-0" >{roadmaps.description}</MDBTypography>
-        <MDBBtn color="none" onClick={() => toggleShow(index)}>
-        <img src={seemore} alt="" className="seemorebtn"/>
-        </MDBBtn>
-        <MDBModal show={basicModal === index} tabIndex='-1'>
+        
+        <img src={seemore} alt="" className="seemorebtn" 
+        onClick={() => {
+            setTitle(roadmaps.title)
+            setRoadmapDescription(roadmaps.description)
+            setActiveModal(true)
+        }}/>
+        
+        </MDBCol>
+        </MDBCol>
+        
+        </MDBRow>
+        ))}
+        
+        </MDBContainer>
+        <MDBModal  show={activeModal} onClick={()=> setActiveModal(null)} tabIndex='-1'>
             <MDBModalDialog centered>
             <MDBModalContent>
                 <MDBModalHeader>
-                <MDBModalTitle>Modal title</MDBModalTitle>
-                <MDBBtn className='btn-close' color='none' onClick={() => toggleShow(false)}></MDBBtn>
+                <MDBModalTitle>{roadmaptitle}</MDBModalTitle>
+                <MDBBtn className='btn-close' color='none' onClick={()=> setActiveModal(null)}></MDBBtn>
                 </MDBModalHeader>
-                <MDBModalBody>...</MDBModalBody>
-
+                <MDBModalBody>{roadmapdescription}</MDBModalBody>
                 <MDBModalFooter>
-                <MDBBtn color='secondary' onClick={() => toggleShow(false)}>
+                <MDBBtn color='secondary' onClick={()=> setActiveModal(null)}>
                     Close
                 </MDBBtn>                
                 </MDBModalFooter>
             </MDBModalContent>
             </MDBModalDialog>
         </MDBModal>
-        
-        
-        </MDBCol>
-
-
-        </MDBCol>
-        </MDBRow>
-        ))}
-
-        
-
-        </MDBContainer>
         </MDBContainer>
         </div>
         

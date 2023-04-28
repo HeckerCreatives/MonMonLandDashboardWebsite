@@ -58,7 +58,7 @@ const UpdateSubs = () => {
     return (
         <MDBContainer fluid className="d-flex justify-content-center align-items-center">
             <MDBRow>
-                <Link to ="/">
+                <Link to ="/admin/dashboard">
                     <MDBBtn>
                         BACK
                     </MDBBtn>

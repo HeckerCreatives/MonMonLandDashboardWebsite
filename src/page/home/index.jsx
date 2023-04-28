@@ -7,7 +7,7 @@ import Roadmap from "./roadmap"
 import Subscription from "./subscription"
 import News from "./news"
 import Navbar from "../../component"
-import Dashboard from "../dashboard/dashboard"
+
 import "./index.css"
 
 const Initial = () => {
@@ -38,7 +38,7 @@ const Initial = () => {
         </MDBContainer>
         </div>        
         <div>
-            <Dashboard/>            
+                        
             <Subscription/>
             <Games/>
             <News/>

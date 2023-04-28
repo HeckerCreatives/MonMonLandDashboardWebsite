@@ -41,7 +41,7 @@ const UpdateProgressBar = () => {
     return (
         <MDBContainer fluid className="d-flex justify-content-center align-items-center">
         <MDBRow className="my-4">
-        <Link to = "/">
+        <Link to = "/admin/dashboard">
         <MDBBtn>BACK</MDBBtn>
         </Link>
         <MDBCol>
