@@ -1,9 +1,11 @@
 .arrowright{
-    margin-left: 4rem;
+    /* margin-left: 4rem; */
+    margin: 10% auto 0 5%;
 }
 
 .arrowleft{
-    margin-right: 4rem;
+    /* margin-right: 4rem; */
+    margin: 10% 5% 0 auto;
 }
 
 .descriptionholder {
@@ -40,9 +42,9 @@
 }
 
 .char {
-    margin: auto;
-    height: 400px;
-    width: 400px;
+    /* margin: auto; */
+    height: auto;
+    /* width: 100%; */
 }
 
 .titlefontsize {
@@ -50,7 +52,7 @@
 }
 
 .subs {
-    margin: 12% 12% 0% 13%;    
+    margin: 15% 12% 0% 13%;    
 }
 
 
@@ -63,19 +65,22 @@
     .gamesmobileview {
       display: contents;
     }
-    .slick-slide > div {
-        display: grid;
-        place-items: center;
-       
-        margin: 18% 10% 12% 10%;
+
+    .slick-slide  {
+        /* height: 100%; */
+        margin: 10% auto 0 auto;
     }
-    /* .slick-slide > .chardiv {
-        display: grid;
-        place-items: center;
-        margin-top: 15%;
-        margin-left: 10%;
-        margin-right: 10%;
-    } */
+
+    .slick-slide > div{
+        /* height: 100%; */
+        margin: 5% 5% 0 5%;
+    }
+
+    .slick-slide > div > div > img{
+        display: flex !important;
+        height: calc(50vh - 100px);
+        margin: 0% auto 0% auto;
+    }
     
        
 }
@@ -96,7 +101,7 @@
     .slick-slide > div {
         display: grid;
         place-items: center;
-        margin-top: 10%;
+        margin-top: 5%;
         margin-left: 3%;
         margin-right: 3%;
         font-size: small;

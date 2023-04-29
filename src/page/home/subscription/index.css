@@ -5,15 +5,22 @@
 .price {
     color: #FF5722;
 }
+.card {
+    position: relative;
+    /* z-index: -1a; */
+    overflow-y: visible;
+    
+}
 
-#badge {    
-    position: absolute;
+#badge {
+    /* display:inline-block;    */
+    position:absolute !important;
     height: 150px;
     width: 150px;
     left: 50%; /* move the element to the center of the parent */
     transform: translateX(-50%);
     top: -10%;
-    z-index: 1;
+    z-index: 1 !important;
 }
 
 .bgcolor {
@@ -34,6 +41,9 @@
 
 .subsparent {
     position: relative;
+    
+    /* z-index: 2; */
+    
 }
 
 .subsbuttonmobile {
@@ -41,7 +51,7 @@
     right: 0;
     left: 0;
     bottom: 10vw;
-    margin: 0 auto;
+    margin: 0 15% 20px;
     display: inherit !important;
 }
 
@@ -52,18 +62,30 @@
 }
 .slick-track {
     display: flex !important;
+   
 }
 .slick-slide{
     display: block !important;
     float:none !important;
     height: auto !important;
+    margin-top: 1%;
 }
-.slick-slide > div{
+
+/* .slick-list {
+    overflow-y: visible !important;
+    
+} */
+
+.slick-slide > div {
     height: 100% !important;
     display: inherit !important;
+    
+    
 }
 .slick-slide > div > div{
     height: 100% !important;
+    
+    
 }
 
 @media only screen and (min-width: 1187px) {
@@ -81,6 +103,16 @@
     }
     .mobileview {
         display: contents;
+    }
+    #badge {
+        /* display:inline-block;    */
+        position:absolute !important;
+        height: 150px;
+        width: 150px;
+        left: 50%; /* move the element to the center of the parent */
+        transform: translateX(-50%);
+        top: -5%;
+        z-index: 1 !important;
     }   
 }
 

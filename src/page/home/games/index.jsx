@@ -24,6 +24,7 @@ const Games = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
         useTansform: true,
+        // centerPadding: '100px',
       };
 
     const contents = [
@@ -75,14 +76,14 @@ const Games = () => {
                     <Slider {...settings} className='text-center fw-bold'>
                     
                     {contents.map((content)=> (
-                    <div className="descdiv">
-                    <MDBTypography className="h2 text-wrap mt-3">{content.name}</MDBTypography>
+                    <div className="descdiv" >
+                    <MDBTypography className="h2  mt-3" >{content.name}</MDBTypography>
 
-                    <MDBTypography className="text-wrap">
+                    <MDBTypography className="p" >
                     {content.description}
                     </MDBTypography>
 
-                    <MDBTypography className="text-wrap">
+                    <MDBTypography className="p" >
                     {content.description}
                     </MDBTypography>
                     </div>
@@ -124,13 +125,13 @@ const Games = () => {
                     <MDBCol className="">
                     <Slider {...settings}>
                     
-                    <div className="chardiv">
+                    <div className="">
                     <img src={woodcutting} alt="" className="char"/>
                     </div>
-                    <div className="chardiv">
+                    <div className="">
                     <img src={fishing} alt="" className="char"/>
                     </div>
-                    <div className="chardiv">
+                    <div className="">
                     <img src={crafting} alt="" className="char"/>
                     </div>
                                    

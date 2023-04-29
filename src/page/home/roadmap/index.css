@@ -302,3 +302,30 @@
     
       
 }
+
+@media (min-width: 320px) and (max-width: 375px) {
+    .itemcolumn {
+        /* height: 100%;
+        width: 40%;
+        margin-top: 5%; */
+        margin: 75px 0 0 0;
+        padding: 0;
+        width: 70%;
+        font-size: small;
+    }
+    #woodchar {
+        height: 80px;
+        transform: translateX(0%);
+    }
+    
+    .woodcharbg {
+        background-color: #767676;
+        border-radius: 20px;
+    }
+    
+    .seemorebtn {
+        /* height: 100px; */
+        width: 80px;
+        margin-bottom: 10px;
+    }
+}

@@ -6,9 +6,23 @@ import Swal from "sweetalert2"
 const UpdateSubs = () => {
     const [titles, setTitles] = useState('');
     const [amounts, setAmounts] = useState('');
-    const [descriptions, setDescriptions] = useState('');
+    const [descriptions, setDescriptions] = useState("");
     const [badge, setBadge] = useState('');
+    const [addinput, setAddInput] = useState(1)
+    
 
+    const handleAddInput = (e) => {
+        if(addinput >= 1){
+            setAddInput(addinput + 1);
+        }
+        
+    }
+
+    const handleDecreaseInput = () => {
+        if(addinput > 1){
+            setAddInput(addinput - 1);
+           }
+    }
     const handleSelectChange = (event) => {
         const selectedValue = event.target.value;
       
@@ -77,10 +91,19 @@ const UpdateSubs = () => {
         
                     <MDBInput label='Amount' id='form1' type='text' value={amounts} onChange={e => setAmounts(e.target.value)}/>
 
-                    <MDBInput label='Description' id='form1' type='text' value={descriptions} onChange={e => setDescriptions(e.target.value)}/>
-
+                    {Array.from(Array(addinput)).map((c,index)=>{
+                        return <MDBInput label='Description' key={c} type='text' value={descriptions} onChange={e => setDescriptions(e.target.value)}/>
+                    })}
+                    
+                    
                     <MDBBtn type="submit">
                     Submit
+                    </MDBBtn>
+                    <MDBBtn onClick={handleAddInput}>
+                    Add More Description
+                    </MDBBtn>
+                    <MDBBtn onClick={handleDecreaseInput}>
+                    Remove Description
                     </MDBBtn>
                     </form>
                 </MDBCol>

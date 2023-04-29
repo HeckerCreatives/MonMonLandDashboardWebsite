@@ -132,7 +132,7 @@ const Subscription = () => {
 
         {/* for mobile view */}
         <div className="mobileview">
-            <MDBContainer className="">
+            <MDBContainer fluid className="oberplow">
                 <Slider {...settings}>
 
                 {/* PEARL */}
@@ -180,12 +180,110 @@ const Subscription = () => {
                     //     <MDBBtn type="button" className=" btn btn-warning fw-bold" size="lg">SUBSCRIBE NOW</MDBBtn> 
                     //     </div>
                     // </div>
-                    <MDBCard className="text-center" key={sub._id}>
+                    
+                    
+                    <MDBCard className="card text-center" key={sub._id}>
                         <MDBCardImage src={sub.image} alt="" className="" id="badge" style={{marginTop: "5vh"}}/>
                             <MDBCardBody className="">            
                                 <MDBCardTitle className="fw-bold h2 mt-5" style={{paddingTop: "5vh"}}>{sub.title}</MDBCardTitle>
                                     <MDBCardSubTitle className="fw-bold h3 price mb-5">{sub.amount}</MDBCardSubTitle>
                                         <ul className="mx-4 p-4">
+                                        <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                        <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                        <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                        <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
+                                            <li>
+                                            {sub.description}
+                                            </li>
                                             <li>
                                             {sub.description}
                                             </li>
@@ -219,7 +317,10 @@ const Subscription = () => {
                                         </ul>
                             </MDBCardBody>
                             <br></br>
-                            <MDBBtn type="button" className="subsbutton btn btn-warning fw-bold" size="lg">SUBSCRIBE NOW</MDBBtn> 
+                            {/* <MDBContainer> */}
+                            <MDBBtn type="button" className="subsbuttonmobile btn btn-warning fw-bold" size="lg">SUBSCRIBE NOW</MDBBtn> 
+                            {/* </MDBContainer> */}
+                            
                 </MDBCard>
                 ))}
                 </Slider>

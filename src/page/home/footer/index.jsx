@@ -18,10 +18,10 @@ const Footer = ({links}) => {
 
         <MDBContainer fluid className="d-flex flex-column align-items-center justify-content-center">
 
-        <img src={logowhite} alt=""/>
+        <img src={logowhite} alt="" className="img-fluid"/>
         
         <MDBRow>
-            <MDBCol className="d-flex flex-row align-items-center justify-content-center mt-5 p-0">
+            <MDBCol className="d-md-flex flex-md-row align-items-center justify-content-center mt-5 p-0">
 
             {links.map((link, index) => (
             <MDBNavbarItem key={`links-${index}`} style={{listStyleType:'none'}}>
@@ -43,7 +43,7 @@ const Footer = ({links}) => {
         </MDBRow>
         
         <MDBRow>
-            <MDBCol className="mt-4 mb-5">
+            <MDBCol className="mt-4 mb-5 text-center">
             <img src={fb} className="socials"/>
             <img src={discord} className="socials"/>
             <img src={instagram} className="socials"/>
