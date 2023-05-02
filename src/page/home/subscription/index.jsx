@@ -77,7 +77,8 @@ const Subscription = () => {
                         <MDBCardSubTitle className="fw-bold h3 price mb-5">{sub.amount}</MDBCardSubTitle>
                     <ul className="mx-4 ">
                         <li>
-                        {sub.description}
+                        {sub.descriptions[0]
+                        .description}
                         </li>
                         <li>
                         {sub.description}
@@ -189,7 +190,7 @@ const Subscription = () => {
                                     <MDBCardSubTitle className="fw-bold h3 price mb-5">{sub.amount}</MDBCardSubTitle>
                                         <ul className="mx-4 p-4">
                                         <li>
-                                            {sub.description}
+                                            {sub.descriptions.description}
                                             </li>
                                             <li>
                                             {sub.description}

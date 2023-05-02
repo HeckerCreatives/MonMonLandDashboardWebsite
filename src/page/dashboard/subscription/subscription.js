@@ -6,23 +6,26 @@ import Swal from "sweetalert2"
 const UpdateSubs = () => {
     const [titles, setTitles] = useState('');
     const [amounts, setAmounts] = useState('');
-    const [descriptions, setDescriptions] = useState("");
+    const [descriptions, setDescriptions] = useState('');
     const [badge, setBadge] = useState('');
     const [addinput, setAddInput] = useState(1)
     
 
     const handleAddInput = (e) => {
+        e.preventDefault();
         if(addinput >= 1){
             setAddInput(addinput + 1);
         }
         
     }
 
-    const handleDecreaseInput = () => {
+    const handleDecreaseInput = (e) => {
+        e.preventDefault();
         if(addinput > 1){
             setAddInput(addinput - 1);
            }
     }
+
     const handleSelectChange = (event) => {
         const selectedValue = event.target.value;
       
@@ -37,7 +40,16 @@ const UpdateSubs = () => {
         }
       }; 
 
-     
+    useEffect(()=>{
+        fetch(`http://localhost:4000/subscription/${badge}/find`)
+        .then(result => result.json())
+        .then(data => {
+            setTitles(data.title)
+            setAmounts(data.amount)
+            setDescriptions(data.descriptions[0].description)
+        })
+    })
+
     function updatesub (e) {
         e.preventDefault();
         fetch(`http://localhost:4000/subscription/${badge}/update`, {
@@ -48,7 +60,9 @@ const UpdateSubs = () => {
             body: JSON.stringify({
                 title: titles,
                 amount: amounts,
-                description: descriptions
+                descriptions:[{
+                    description: descriptions
+                }] 
             })            
         }).then(result => result.json())
         .then(data => {
@@ -69,6 +83,13 @@ const UpdateSubs = () => {
 			}
         }) 
     }
+
+    const handleInputFields = (e) =>{
+        let text = {};
+        text[e.target.className] = e.target.value;
+        setDescriptions({...descriptions, ...text})
+    }
+
     return (
         <MDBContainer fluid className="d-flex justify-content-center align-items-center">
             <MDBRow>
@@ -92,7 +113,7 @@ const UpdateSubs = () => {
                     <MDBInput label='Amount' id='form1' type='text' value={amounts} onChange={e => setAmounts(e.target.value)}/>
 
                     {Array.from(Array(addinput)).map((c,index)=>{
-                        return <MDBInput label='Description' key={c} type='text' value={descriptions} onChange={e => setDescriptions(e.target.value)}/>
+                        return <MDBInput label='Description' key={c}  type='text' className={index} onChange={e => setDescriptions(e.target.value)}/>
                     })}
                     
                     
