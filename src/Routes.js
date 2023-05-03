@@ -9,7 +9,7 @@ import UpdateProgressBar from "./page/dashboard/progressbar/progressbar";
 import UpdateSubs from "./page/dashboard/subscription/subscription";
 import UpdateNews from "./page/dashboard/news/news";
 import UpdateRoadmap from "./page/dashboard/roadmap/roadmap";
-
+import Login from "./page/login";
 const Routers = () => {
   return (
     <Routes>
@@ -20,6 +20,8 @@ const Routers = () => {
       <Route path="/admin/dashboard/updatenews" element={<UpdateNews />} />
       <Route path="/admin/dashboard/updateroadmap" element={<UpdateRoadmap />} />
       <Route path="/admin/dashboard" element={<Dashboard />} />
+      <Route path="/login" element={<Login />}/>
+
 
       {/* Error 404 */}
       <Route path="*" element={<Error />} />

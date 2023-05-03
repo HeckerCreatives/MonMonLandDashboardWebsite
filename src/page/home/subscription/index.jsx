@@ -81,7 +81,8 @@ const Subscription = () => {
                         .description}
                         </li>
                         <li>
-                        {sub.description}
+                        {sub.descriptions[0]
+                        .description}
                         </li>
                         <li>
                         {sub.description}
