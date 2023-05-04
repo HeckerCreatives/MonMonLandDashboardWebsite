@@ -10,6 +10,7 @@ import UpdateSubs from "./page/dashboard/subscription/subscription";
 import UpdateNews from "./page/dashboard/news/news";
 import UpdateRoadmap from "./page/dashboard/roadmap/roadmap";
 import Login from "./page/login";
+import FullTable from "./component/fulltablelist";
 const Routers = () => {
   return (
     <Routes>
@@ -21,6 +22,7 @@ const Routers = () => {
       <Route path="/admin/dashboard/updateroadmap" element={<UpdateRoadmap />} />
       <Route path="/admin/dashboard" element={<Dashboard />} />
       <Route path="/login" element={<Login />}/>
+      <Route path="/admin/dashboard/fulltable" element={<FullTable />}/>
 
 
       {/* Error 404 */}

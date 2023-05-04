@@ -52,17 +52,7 @@ const Sidebarnav = ({ links, didToggle, setDidToggle }) => {
           <img src={smalllogo} alt="logo" className="img-fluid w-50" />
         </div>
         <div className="text-center pt-3">
-          {/* <MDBBtn
-            color="transparent"
-            className="mb-3 sidebar-arena-btn"
-            onClick={() => navigate("/arena")}
-          >
-            {didToggle ? (
-              <MDBIcon fas icon="warehouse" title="Arena" />
-            ) : (
-              "Arena"
-            )}
-          </MDBBtn> */}
+          
         </div>
       </div>
       <div className="sidebar-body flex-grow-1">
