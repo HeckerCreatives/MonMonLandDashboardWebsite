@@ -7,13 +7,16 @@ import "mdb-react-ui-kit/dist/css/mdb.min.css"; // eslint-disable-next-line
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import ThemeContextWrapper from './component/theme/themewrapper';
 // import 'bootstrap-css-only/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <ThemeContextWrapper>
   <React.StrictMode>
     <App />
   </React.StrictMode>
+  </ThemeContextWrapper>
 );
 
 // If you want to start measuring performance in your app, pass a function

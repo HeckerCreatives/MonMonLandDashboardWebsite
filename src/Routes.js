@@ -11,22 +11,28 @@ import UpdateNews from "./page/dashboard/news/news";
 import UpdateRoadmap from "./page/dashboard/roadmap/roadmap";
 import Login from "./page/login";
 import FullTable from "./component/fulltablelist";
+import AdminDashboard from "./component/dashboard/admin";
 const Routers = () => {
   return (
     <Routes>
+    
       {/* Initial */}
       <Route path="/" element={<Initial />} />
-      <Route path="/admin/dashboard/updateprogressbar" element={<UpdateProgressBar />} />
-      <Route path="/admin/dashboard/updatesubs" element={<UpdateSubs />} />
-      <Route path="/admin/dashboard/updatenews" element={<UpdateNews />} />
-      <Route path="/admin/dashboard/updateroadmap" element={<UpdateRoadmap />} />
-      <Route path="/admin/dashboard" element={<Dashboard />} />
-      <Route path="/login" element={<Login />}/>
-      <Route path="/admin/dashboard/fulltable" element={<FullTable />}/>
 
+      <Route path="/dashboard" element={<Dashboard />}>
+       <Route path="superadmin" element={""}>
+        <Route path="home" element={<AdminDashboard />}/>
+        <Route path="settings">
+          <Route path="updateprogressbar" element={<UpdateProgressBar/>}/>
+          <Route path="updatesubs" element={<UpdateSubs/>}/>
+          <Route path="updatenews" element={<UpdateNews/>}/>
+          <Route path="updateroadmap" element={<UpdateRoadmap/>}/>
+        </Route>
+        
+       </Route> 
+      </Route>
+      
 
-      {/* Error 404 */}
-      <Route path="*" element={<Error />} />
     </Routes>
   );
 };

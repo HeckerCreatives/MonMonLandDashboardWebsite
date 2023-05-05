@@ -55,11 +55,6 @@ const UpdateNews = () => {
     return (
         <MDBContainer fluid className="d-flex justify-content-center align-items-center">
         <MDBRow>
-        <Link to ="/admin/dashboard">
-            <MDBBtn>
-                BACK
-            </MDBBtn>
-        </Link>
         <select onChange={handleSelectChange}>
             <option value="Woodcutting">Woodcutting</option>
             <option value="Mining">Mining</option>

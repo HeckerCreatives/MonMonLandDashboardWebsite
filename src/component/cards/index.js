@@ -11,7 +11,9 @@ import {
 
 const Cards = ({icon,color,texts,title}) => {
     return(
-        <MDBCol md={4} className="my-2 mt-md-2">
+        <MDBCol 
+        md={4} 
+        className="my-2 mt-md-2">
             <MDBCard className={`bg-${color} text-white`}>
                 <MDBCardBody className="pt-0">
                     <span className="d-flex justify-content-between align-items-center mt-4">

@@ -12,3 +12,7 @@ code {
     monospace;
 }
 
+.white-content {
+  background: #141421;
+  color: white;
+}

@@ -7,7 +7,7 @@ import {
 
 const MiniTableList = ({miniThTitle,miniTdText}) => {
     return (
-        <MDBTable>
+        <MDBTable className="my-4 border">
           <MDBTableHead>
           <tr>
               {miniThTitle.map((txthd, i) => (

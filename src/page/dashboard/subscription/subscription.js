@@ -93,11 +93,7 @@ const UpdateSubs = () => {
     return (
         <MDBContainer fluid className="d-flex justify-content-center align-items-center">
             <MDBRow>
-                <Link to ="/admin/dashboard">
-                    <MDBBtn>
-                        BACK
-                    </MDBBtn>
-                </Link>
+                
                 <select onChange={handleSelectChange}>
                     <option value="Pearl">Pearl</option>
                     <option value="Ruby">Ruby</option>

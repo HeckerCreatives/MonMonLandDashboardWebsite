@@ -23,11 +23,11 @@ const Sidebarnav = ({ links, didToggle, setDidToggle }) => {
     return (
       <div
       className={`sidebar-wrapper d-flex flex-column ${
-        window.innerWidth < 768 && didToggle && "overflow-auto"
+        window.innerWidth <= 768 && didToggle && "overflow-auto"
       }`}
       style={{
         width: didToggle
-          ? window.innerWidth < 768
+          ? window.innerWidth <= 768
             ? "0rem"
             : "4.5rem"
           : "20rem",
@@ -106,7 +106,7 @@ const Sidebarnav = ({ links, didToggle, setDidToggle }) => {
                     key={`sub-${i}`}
                     onClick={() => {
                       navigate(sub.path);
-                      window.innerWidth < 768 && setDidToggle(!didToggle);
+                      window.innerWidth <= 768 && setDidToggle(!didToggle);
                     }}
                   >
                     <div className="mx-3">
@@ -130,7 +130,7 @@ const Sidebarnav = ({ links, didToggle, setDidToggle }) => {
           <MDBIcon fas icon="sign-out-alt" size="xl" className="mx-4" /> LOGOUT
         </div>
       </div>
-      {window.innerWidth < 768 && (
+      {window.innerWidth <= 768 && (
         <div
           className="custom-backdrop"
           onClick={() => setDidToggle(!didToggle)}

@@ -55,11 +55,7 @@ const UpdateRoadmap = () => {
     return (
         <MDBContainer fluid className="d-flex justify-content-center align-items-center">
         <MDBRow>
-            <Link to = "/admin/dashboard">
-                <MDBBtn>
-                    BACK
-                </MDBBtn>
-            </Link>
+            
             <select onChange={handleSelectChange}>
             <option value="Roadmap1">Roadmap 1</option>
             <option value="Roadmap2">Roadmap 2</option>

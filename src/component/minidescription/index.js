@@ -12,8 +12,8 @@ import {
 
   const MiniDescription = ({title,text}) => {
     return (
-        <MDBCol>
-            <MDBCard>
+        <MDBCol md={12} className="my-4">
+            <MDBCard className="bg-transparent">
                 <MDBCardBody>
                     <MDBCardTitle>
                         {title}

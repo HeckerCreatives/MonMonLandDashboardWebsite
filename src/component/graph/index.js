@@ -30,10 +30,11 @@ const Graph = ({title,subtitle}) => {
     
     //     setCount(users.map(employees => employees.length));
     // },[])
+    
     return (
-        <MDBCol>
-            <MDBCard>
-                <MDBCardHeader>
+        // <MDBCol md={12} className="my-4">
+            <MDBCard className="bg-transparent">
+                {/* <MDBCardHeader className="p-0"> */}
                     <MDBCardBody>
                         <MDBContainer>
                             <MDBTypography>
@@ -63,9 +64,9 @@ const Graph = ({title,subtitle}) => {
                             width="100%"
                         />
                     </MDBCardBody>
-                </MDBCardHeader>
+                {/* </MDBCardHeader> */}
             </MDBCard>
-        </MDBCol>
+        // </MDBCol>
     )
 }
 

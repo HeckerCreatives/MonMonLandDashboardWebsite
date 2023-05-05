@@ -41,9 +41,7 @@ const UpdateProgressBar = () => {
     return (
         <MDBContainer fluid className="d-flex justify-content-center align-items-center">
         <MDBRow className="my-4">
-        <Link to = "/admin/dashboard">
-        <MDBBtn>BACK</MDBBtn>
-        </Link>
+        
         <MDBCol>
         <form onSubmit={e => update(e)}>
         <MDBInput label='Initial Number' id='form1' type='number' value={initialnum} onChange={e => setInitialNum(e.target.value)}/>
