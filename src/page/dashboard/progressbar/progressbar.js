@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
-import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol } from "mdb-react-ui-kit";
+import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBProgress, MDBProgressBar, MDBTypography, MDBTable, MDBTableHead, MDBTableBody } from "mdb-react-ui-kit";
 import Swal from "sweetalert2"
+import Breadcrumb from "../../../component/breadcrumb";
 const UpdateProgressBar = () => {
     const [initialnum, setInitialNum] = useState("");
     const [totalnum, setTotalNum] = useState("");
@@ -39,23 +40,65 @@ const UpdateProgressBar = () => {
     }
 
     return (
-        <MDBContainer fluid className="d-flex justify-content-center align-items-center">
-        <MDBRow className="my-4">
+        <MDBContainer fluid className="">
+        <Breadcrumb title="Progress Bar" paths={[]}/>
+        <MDBRow className="my-4 align-items-center justify-content-center">
         
-        <MDBCol>
+        <MDBCol md={6}>
         <form onSubmit={e => update(e)}>
-        <MDBInput label='Initial Number' id='form1' type='number' value={initialnum} onChange={e => setInitialNum(e.target.value)}/>
-        
-        <MDBInput label='Total Number' id='form1' type='number' value={totalnum} onChange={e => setTotalNum(e.target.value)}/>
+        <MDBCard className="" alignment="center">
+            <MDBCardBody>
+                <MDBInput label='Initial Number' id='form1' type='number' value={initialnum} onChange={e => setInitialNum(e.target.value)} className="mb-3"/>
+                
+                <MDBInput label='Total Number' id='form1' type='number' value={totalnum} onChange={e => setTotalNum(e.target.value)} className="mb-3"/>
 
-        <MDBBtn type="submit">
-        Submit
-        </MDBBtn>
+                <MDBBtn type="submit">
+                Submit
+                </MDBBtn>
+            </MDBCardBody>
+        </MDBCard>
         </form>
         
-        </MDBCol>
-        
-        </MDBRow>        
+        </MDBCol>      
+
+        </MDBRow>
+        <MDBTypography tag={'h1'} className="text-center">
+            0/0
+        </MDBTypography>
+        <MDBProgress height={25}>
+            <MDBProgressBar width='30' valuemin={0} valuemax={100}/>
+        </MDBProgress> 
+        <MDBRow>
+            <MDBTypography tag='h1' className="mt-4">Ads Income History</MDBTypography>
+            <MDBTable align='middle' className="border mt-4">
+                <MDBTableHead>
+                    <tr>
+                    <th scope='col'>Description</th>
+                    <th scope='col'>Date Created</th>
+                    <th scope='col'>Actions</th>
+                    </tr>
+                </MDBTableHead>
+                <MDBTableBody>
+                    <tr>
+                    <td>
+                        {/* {descriptionlist} */}
+                    </td>
+                    <td>
+                        kunyare date
+                    </td>                    
+                    <td>
+                        <MDBBtn color='link' rounded size='sm'>
+                        Edit
+                        </MDBBtn>
+                        <MDBBtn color='link' rounded size='sm'>
+                        Delete
+                        </MDBBtn>
+                    </td>
+                    </tr>
+                </MDBTableBody>
+                </MDBTable>
+            </MDBRow>
+
         </MDBContainer>
     )
 }

@@ -92,7 +92,7 @@ setTxtTable(
 },[])
 
     return (
-        <MDBContainer>
+        <MDBContainer fluid>
         <Breadcrumb title='Dashboard' paths={[]}/>
         {/* Cards */}
         <MDBRow>

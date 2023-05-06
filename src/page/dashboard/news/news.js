@@ -1,12 +1,37 @@
 import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
-import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol} from "mdb-react-ui-kit";
+import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBTextArea, MDBCardImage, MDBCardText, MDBModal, MDBModalBody,MDBModalDialog,MDBModalContent,MDBModalHeader,MDBModalTitle,MDBModalFooter} from "mdb-react-ui-kit";
 import Swal from "sweetalert2"
+import Breadcrumb from "../../../component/breadcrumb";
+import './news.css'
+import PaginationPager from "../../../component/pagination";
+import CreateNews from "./modal/create";
+import ViewNews from "./modal/view"
+import UpdateNewsModal from "./modal/update"
 
 const UpdateNews = () => {
     const [titles, setTitles] = useState('');
     const [descriptions, setDescriptions] = useState('');
     const [newsid, setNewsId] = useState('')
+    const [news, setNews] = useState([]),
+    [page, setPage] = useState(1),
+    [total, setTotal] = useState(0);
+    const [activeModal, setActiveModal] = useState(null);
+
+    useEffect(() => {
+      let totalPages = Math.floor(news.length / 5);
+      if (news.length % 5 > 0) totalPages += 1;
+      setTotal(totalPages);
+      }, [news]);
+
+    useEffect(()=>{
+      fetch('http://localhost:4000/news/find')
+      .then(result => result.json())
+      .then(data => {
+          setNews(data)
+          
+      })
+    },[])
 
     const handleSelectChange = (event) => {
         const selectedValue = event.target.value;
@@ -20,7 +45,16 @@ const UpdateNews = () => {
         } else if (selectedValue === 'Crafting') {
           setNewsId('6448b32c475b52b170636655');
         }
-      }; 
+      };
+
+      useEffect(()=>{
+        fetch(`http://localhost:4000/news/${newsid}/find`)
+        .then(result => result.json())
+        .then(data => {
+            setTitles(data.title)
+            setDescriptions(data.description)
+        })
+      })
 
       function updatesub (e) {
         e.preventDefault();
@@ -53,27 +87,54 @@ const UpdateNews = () => {
         }) 
     }
     return (
-        <MDBContainer fluid className="d-flex justify-content-center align-items-center">
+        <MDBContainer fluid className="">
+        <Breadcrumb title="News" paths={[]}/>
+          <MDBRow className="p-2 d-flex">
+          <MDBCol >
+          <CreateNews />
+          </MDBCol>
+          </MDBRow>
+
         <MDBRow>
-        <select onChange={handleSelectChange}>
-            <option value="Woodcutting">Woodcutting</option>
-            <option value="Mining">Mining</option>
-            <option value="Fishing">Fishing</option>
-            <option value="Crafting">Crafting</option>
-        </select>
-        <MDBCol>
-        <form onSubmit={e => updatesub(e)}>
-                    
-        <MDBInput label='Title' id='form1' type='text' value={titles} onChange={e => setTitles(e.target.value)}/>
+        {news.map(balita => (
+        <MDBCol>        
+          <MDBCard key={balita._id} className="">
+          <MDBCardImage src={balita.image} className="images"/>
+          <MDBCardBody>
+          <MDBCardText className="fw-bold">
+          {balita.title}
+          </MDBCardText>
 
-        <MDBInput label='Description' id='form1' type='text' value={descriptions} onChange={e => setDescriptions(e.target.value)}/>
-
-        <MDBBtn type="submit">
-        Submit
-        </MDBBtn>
-        </form>
+          <MDBCardText className="fw-bold">
+          {balita.description}
+          </MDBCardText>
+            
+            <ViewNews news={balita}/>
+            <UpdateNewsModal news={balita}/>
+          </MDBCardBody>
+        </MDBCard>
         </MDBCol>
+        ))}
         </MDBRow>
+        <MDBModal  show={activeModal} onClick={()=> setActiveModal(null)} tabIndex='-1'>
+            <MDBModalDialog centered>
+            <MDBModalContent>
+                <MDBModalHeader>
+                {/* <MDBModalTitle>{newstitle}</MDBModalTitle> */}
+                <MDBBtn className='btn-close' color='none' onClick={()=> setActiveModal(null)}></MDBBtn>
+                </MDBModalHeader>
+                {/* <MDBModalBody>{newsdescription}</MDBModalBody> */}
+                <MDBModalFooter>
+                <MDBBtn color='secondary' onClick={()=> setActiveModal(null)}>
+                    Close
+                </MDBBtn>                
+                </MDBModalFooter>
+            </MDBModalContent>
+            </MDBModalDialog>
+        </MDBModal>
+          <PaginationPager
+            total={total} page={page}
+          />
         </MDBContainer>
     )
 }
