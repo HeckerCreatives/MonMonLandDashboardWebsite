@@ -30,7 +30,7 @@ const Sidebarnav = ({ links, didToggle, setDidToggle }) => {
           ? window.innerWidth <= 768
             ? "0rem"
             : "4.5rem"
-          : "20rem",
+          : "16rem",
       }}
     >
       {window.innerWidth > 768 && (

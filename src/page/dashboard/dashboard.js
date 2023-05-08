@@ -4,12 +4,6 @@ import { Link } from "react-router-dom";
 import { MDBContainer, MDBBtn, MDBRow, MDBCol,MDBIcon } from "mdb-react-ui-kit";
 import Sidebarnav from "../../component/sidebarnav";
 import { Outlet } from "react-router-dom";
-import Cards from "../../component/cards";
-import Graph from "../../component/graph";
-import MiniTableList from "../../component/minitablelist";
-import MiniDescription from "../../component/minidescription";
-import FullTable from "../../component/fulltablelist";
-import Breadcrumb from "../../component/breadcrumb";
 // import Navbar from "../../component/navbar";
 import { ThemeContext, themes } from '../../component/theme/themecontext';
 
@@ -79,7 +73,7 @@ const Dashboard = () => {
                 ? window.innerWidth <= 768
                   ? "0rem"
                   : "4.5rem"
-                : "20rem"
+                : "16rem"
               : "0rem",
         }}
         >

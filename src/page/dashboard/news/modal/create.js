@@ -16,6 +16,7 @@ import {
 } from "mdb-react-ui-kit";
 import logo from "../../../../assets/header/big logo.png"
 import Swal from "sweetalert2";
+import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
 const CreateNews = () => {
   const [titles, setTitles] = useState('');
   const [descriptions, setDescriptions] = useState('');
@@ -104,7 +105,7 @@ return (
                       className="img-fluid"
                     />
                   </MDBContainer>
-                  <MDBBtn
+                  {/* <MDBBtn
                     type="button"
                     onClick={() =>
                       document.getElementById("title-image").click()
@@ -113,7 +114,8 @@ return (
                     onChange={e => setDescriptions(e.target.value)}
                   >
                     Upload Image
-                  </MDBBtn>
+                  </MDBBtn> */}
+                  <UploadWidget/>
                   <MDBFile
                     id="title-image"
                     className="d-none"

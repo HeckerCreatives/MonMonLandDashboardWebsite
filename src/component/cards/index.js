@@ -5,7 +5,8 @@ import {
   MDBCol,
   MDBIcon,
   MDBTypography,
-  MDBInput
+  MDBInput,
+  MDBRow
 } from "mdb-react-ui-kit"
 
 
@@ -15,18 +16,26 @@ const Cards = ({icon,color,texts,title}) => {
         md={4} 
         className="my-2 mt-md-2">
             <MDBCard className={`bg-${color} text-white`}>
-                <MDBCardBody className="pt-0">
-                    <span className="d-flex justify-content-between align-items-center mt-4">
-                        <MDBIcon size="2x" icon={icon}>
-
+                <MDBCardBody className="">
+                <MDBRow className="d-flex align-items-center">
+                <MDBCol className="col-4">
+                    <span className="">
+                        <MDBIcon size="3x" icon={icon}>
                         </MDBIcon>
                     </span>
+                </MDBCol>
+                <MDBCol className="col-8 text-end">
                     <MDBTypography tag="h4" className="font-weight-bold mt-2">
                     {title}
                     </MDBTypography>
                     <MDBTypography tag="h5" className="font-weight-bold mt-2">
                     {texts}
                     </MDBTypography>
+                </MDBCol>   
+                    
+                    
+                </MDBRow>
+                    
                 </MDBCardBody>
             </MDBCard>
         </MDBCol>

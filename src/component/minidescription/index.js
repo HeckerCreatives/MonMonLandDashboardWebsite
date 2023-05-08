@@ -13,7 +13,7 @@ import {
   const MiniDescription = ({title,text}) => {
     return (
         <MDBCol md={12} className="my-4">
-            <MDBCard className="bg-transparent">
+            <MDBCard className="shadow-2">
                 <MDBCardBody>
                     <MDBCardTitle>
                         {title}

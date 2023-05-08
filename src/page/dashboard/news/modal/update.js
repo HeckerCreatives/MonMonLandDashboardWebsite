@@ -139,7 +139,7 @@ const UpdateNewsModal = ({ theme, news }) => {
                     style={{ width: "30rem", height: "auto" }}
                   >
                     <img
-                    //   src={image || `${ENDPOINT}/assets/news/${news.image}`}
+                      src={image || `${news.image}`}
                       alt={news.image}
                       className="img-fluid"
                       onChange={e => setImage(e.target.value)}  

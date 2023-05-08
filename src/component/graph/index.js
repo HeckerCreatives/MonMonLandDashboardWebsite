@@ -33,7 +33,7 @@ const Graph = ({title,subtitle}) => {
     
     return (
         // <MDBCol md={12} className="my-4">
-            <MDBCard className="bg-transparent">
+            <MDBCard className="shadow-2">
                 {/* <MDBCardHeader className="p-0"> */}
                     <MDBCardBody>
                         <MDBContainer>

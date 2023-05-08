@@ -6,8 +6,8 @@
     right: 0;
     border-right: 2px solid #58677a;
     transition: width 250ms ease-out;
-    /* background-color: #AD6818; */
-    background-image: url("../../assets/sidebarbg.jpg");
+    background-color: #071251;
+    /* background-image: url("../../assets/sidebarbg.jpg"); */
     background-repeat: repeat;
     z-index: 10 !important;
   }

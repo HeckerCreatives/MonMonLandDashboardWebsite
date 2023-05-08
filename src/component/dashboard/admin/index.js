@@ -114,6 +114,24 @@ setTxtTable(
             title='Credits'
             texts='Madami hehe'
           />
+          <Cards
+            color='danger'
+            icon='hotel'
+            title='Credits'
+            texts='Madami hehe'
+          />
+          <Cards
+            color='success'
+            icon='hotel'
+            title='Credits'
+            texts='Madami hehe'
+          />
+          <Cards
+            color='dark'
+            icon='hotel'
+            title='Credits'
+            texts='Madami hehe'
+          />
         </MDBRow>
         
         
@@ -138,10 +156,10 @@ setTxtTable(
             />
           </MDBCol>
         </MDBRow>
-        <FullTable
+        {/* <FullTable
           txtHeader={txthead}
           txtTable={txttable}
-        /> 
+        />  */}
 
         </MDBContainer>
         
