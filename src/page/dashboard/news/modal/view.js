@@ -48,7 +48,7 @@ const ViewNews = ({ theme, news }) => {
                   style={{ width: "30rem", height: "auto" }}
                 >
                   <img
-                    // src={`${ENDPOINT}/assets/news/${news.image}`}
+                    src={`${news.image}`}
                     alt={news.image}
                     className="img-fluid"
                   />

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBTypography,MDBProgress, MDBProgressBar } from "mdb-react-ui-kit";
+import { MDBContainer, MDBRow, MDBCol, MDBTypography,MDBProgress, MDBProgressBar, MDBBtn } from "mdb-react-ui-kit";
 import "./index.css";
 import biglogo from "../../../assets/header/big logo.png"
 import sliderholder from "../../../assets/header/activity slider holder.png"
@@ -42,16 +42,6 @@ const Header = () => {
          }
     },[initialbar,totalbar])
     
-
-
-    
-    
-    
-
-    
-      
-    
-    
     
 
     return (
@@ -84,8 +74,10 @@ const Header = () => {
                 </MDBRow>
 
                 <MDBRow> 
-                    <MDBCol className="text-center sm-col-12">                
-                        <img src={playnow} id="playnow" alt="" className="img-fluid"></img>
+                    <MDBCol className="text-center">
+                    <MDBBtn color="transparent" className="shadow-0">
+                    <img src={playnow} id="playnow" alt="" className="img-fluid"></img>                    
+                    </MDBBtn>                       
                     </MDBCol>
                 </MDBRow>
         </MDBContainer>

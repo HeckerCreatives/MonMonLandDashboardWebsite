@@ -72,12 +72,8 @@ const News = () => {
         <Slider {...settings}>
           {news.map(balita =>(
           <div>
-          <MDBCard className="cards" key={balita._id} >
-                <MDBCardImage src={balita.image} alt='...' position='top' id="images" onClick={() => {
-            setActiveModal(true)
-            setnewsDescription(balita.description)
-            setNewsTitle(balita.title)
-          }}/>
+          <MDBCard className="cards" key={balita._id} alignment="center">
+                <MDBCardImage src={balita.image} alt='...' position='top' id="images" />
                 <MDBCardBody>
                     <MDBCardText className="fw-bold text-center">
                     {balita.title}
@@ -85,6 +81,13 @@ const News = () => {
                     <MDBCardText className="fw-bold text-center">
                     {balita.description}
                     </MDBCardText>
+                  <MDBBtn onClick={() => {
+                  setActiveModal(true)
+                  setnewsDescription(balita.description)
+                  setNewsTitle(balita.title)
+                  }}>
+                  See More
+                  </MDBBtn>  
                 </MDBCardBody>
             </MDBCard>
             </div>

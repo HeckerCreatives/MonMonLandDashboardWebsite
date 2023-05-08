@@ -13,7 +13,7 @@
 }
 
 #playnow {
-    height: 100px;
+    height: 50px;
 }
 
 .sliderholder {
@@ -54,6 +54,7 @@
 .innerbar {
     background: #FFFFFF;
     background: linear-gradient(to bottom, #FFFFFF 7%, #40290A 8%, #40290A 50%, #40290A 50%, #40290A 92%, #FFFFFF 92%);
+    background-size: 50px;
     border-radius: 50px !important;
     width: 500px;
     /* overflow: hidden; */

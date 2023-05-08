@@ -44,11 +44,11 @@ const Footer = ({links}) => {
         
         <MDBRow>
             <MDBCol className="mt-4 mb-5 text-center">
-            <img src={fb} className="socials"/>
-            <img src={discord} className="socials"/>
-            <img src={instagram} className="socials"/>
-            <img src={twitter} className="socials"/>
-            <img src={telegram} className="socials"/>
+            <img src={fb} className="socials zoom-socials" alt=""/>
+            <img src={discord} className="socials zoom-socials" alt=""/>
+            <img src={instagram} className="socials zoom-socials" alt=""/>
+            <img src={twitter} className="socials zoom-socials" alt=""/>
+            <img src={telegram} className="socials zoom-socials" alt=""/>
             </MDBCol>
         </MDBRow>
         

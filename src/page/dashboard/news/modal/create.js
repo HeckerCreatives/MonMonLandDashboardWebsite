@@ -15,10 +15,13 @@ import {
   MDBTextArea,
 } from "mdb-react-ui-kit";
 import logo from "../../../../assets/header/big logo.png"
+import Swal from "sweetalert2";
 const CreateNews = () => {
-    const [show, setShow] = useState(false);
-    const toggleShow = () => setShow(!show);
-    const [image, setImage] = useState("");
+  const [titles, setTitles] = useState('');
+  const [descriptions, setDescriptions] = useState('');
+  const [show, setShow] = useState(false);
+  const toggleShow = () => setShow(!show);
+  const [image, setImage] = useState("");
   const [file, setFile] = useState();
 
   const handlePreview = e => {
@@ -29,6 +32,36 @@ const CreateNews = () => {
     //   toast.warn("Maximum image size is 25mb");
     }
   };
+
+  function addnews () {
+    fetch(`http://localhost:4000/news/addnews`, {
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          title: titles,
+          description: descriptions,
+          image: image
+      })
+    }).then(result => result.json())
+    .then(data => {
+      if (data) {
+				Swal.fire({
+					title: "Updated Successfully",
+					icon: "success",
+					text: "You Successfully Updated This"
+				})
+				
+			} else {
+				Swal.fire({
+					title: "Update Unsuccessfully",
+					icon: "error",
+					text: "There is an error Updating This"
+				})
+			}
+    })
+  }
 
 return (
     <>
@@ -42,7 +75,7 @@ return (
       <MDBModal show={show} setShow={setShow} tabIndex="-1" staticBackdrop>
         <MDBModalDialog centered size="lg">
           <MDBModalContent className={``}>
-            <form autoComplete="off" >
+            <form autoComplete="off" onSubmit={addnews}>
               <MDBModalHeader>
                 <MDBModalTitle>Create News</MDBModalTitle>
                 <MDBBtn
@@ -58,6 +91,7 @@ return (
                   className={` mb-3`}
                   type="text"
                   name="title"
+                  onChange={e => setTitles(e.target.value)}
                 />
                 <MDBContainer fluid className="px-0 text-center mb-3">
                   <MDBContainer
@@ -76,6 +110,7 @@ return (
                       document.getElementById("title-image").click()
                     }
                     className={` px-5`}
+                    onChange={e => setDescriptions(e.target.value)}
                   >
                     Upload Image
                   </MDBBtn>
@@ -94,6 +129,7 @@ return (
                   rows={10}
                   name="description"
                   style={{ resize: "none", whiteSpace: "pre-line" }}
+                  onChange={e => setDescriptions(e.target.value)}
                 />
               </MDBModalBody>
 

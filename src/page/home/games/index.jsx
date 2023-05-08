@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useRef} from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBTypography, MDBCarousel,
-    MDBCarouselItem,} from "mdb-react-ui-kit";
+    MDBCarouselItem,
+    MDBBtn,} from "mdb-react-ui-kit";
 import "./index.css"
 import leftarrow from "../../../assets/games/left arrow.png"
 import rightarrow from "../../../assets/games/right arrow.png"
@@ -11,19 +12,37 @@ import diamond from "../../../assets/subscription/diamond.png"
 import woodcutting from "../../../assets/character/Wood Cutting.png"
 import crafting from "../../../assets/character/crafting.png"
 import fishing from "../../../assets/character/fishing.png"
+import fletching from "../../../assets/character/fletching.png"
+import harvesting from "../../../assets/character/harvesting.png"
+import hunting from "../../../assets/character/hunting.png"
+import mining from "../../../assets/character/mining.png"
 import Slider from "react-slick";
 
 
 const Games = () => {
+    const sliderRef1 = useRef();
+    const sliderRef2 = useRef();
+
+    const gotoNext = () => {
+        sliderRef1.current.slickNext();
+        sliderRef2.current.slickNext();
+    }
+
+    const gotoPrev = () => {
+        sliderRef1.current.slickPrev();
+        sliderRef2.current.slickPrev();
+    }
+
     const settings = {
         arrows: false,
         dots: false,
+        fade: true,
         infinite: true,
-        autoplay:true ,
-        autoplaySpeed: 3000,
+        // autoplay:true ,
+        // autoplaySpeed: 3000,
         slidesToShow: 1,
         slidesToScroll: 1,
-        useTansform: true,
+        // useTansform: true,
         // centerPadding: '100px',
       };
 
@@ -73,7 +92,7 @@ const Games = () => {
                 <div className="descriptionholder">
                 
                 <div className="">
-                    <Slider {...settings} className='text-center fw-bold'>
+                    <Slider {...settings} className='text-center fw-bold' ref={sliderRef1}>
                     
                     {contents.map((content)=> (
                     <div className="descdiv" >
@@ -123,25 +142,42 @@ const Games = () => {
             
 
                     <MDBCol className="">
-                    <Slider {...settings}>
+                    <Slider {...settings} ref={sliderRef2}>
                     
                     <div className="">
                     <img src={woodcutting} alt="" className="char"/>
                     </div>
                     <div className="">
-                    <img src={fishing} alt="" className="char"/>
+                    <img src={crafting} alt="" className="char"/>
                     </div>
                     <div className="">
-                    <img src={crafting} alt="" className="char"/>
+                    <img src={fishing} alt="" className="char"/>
+                    </div>
+
+                    <div className="">
+                    <img src={fletching} alt="" className="char"/>
+                    </div>
+                    <div className="">
+                    <img src={harvesting} alt="" className="char"/>
+                    </div>
+                    <div className="">
+                    <img src={hunting} alt="" className="char"/>
+                    </div>
+                    <div className="">
+                    <img src={mining} alt="" className="char"/>
                     </div>
                                    
                     </Slider>
                     </MDBCol>
                 
                 
-                
-            <img src={leftarrow} alt="..." className="arrowleft"/>
-            <img src={rightarrow} alt="..." className="arrowright"/>                
+            <MDBBtn color="transparent" className="shadow-0 arrowleft">
+            <img src={leftarrow} alt="..." className="arrowleft" onClick={gotoPrev}/>
+            </MDBBtn>    
+            <MDBBtn color="transparent" className="shadow-0 arrowright">
+            <img src={rightarrow} alt="..." className="arrowright" onClick={gotoNext}/>
+            </MDBBtn>
+                            
             </div>
             
             </div>
@@ -149,9 +185,8 @@ const Games = () => {
                     
                           
             </MDBCol>
-        {/* End of Character Holder */}
-            </MDBRow>
-        
+            {/* End of Character Holder */}
+            </MDBRow> 
         </MDBContainer>
         </div>
         

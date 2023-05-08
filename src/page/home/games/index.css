@@ -66,10 +66,10 @@
       display: contents;
     }
 
-    .slick-slide  {
-        /* height: 100%; */
+    /* .slick-slide  {
+        height: 100%;
         margin: 10% auto 0 auto;
-    }
+    } */
 
     .slick-slide > div{
         /* height: 100%; */

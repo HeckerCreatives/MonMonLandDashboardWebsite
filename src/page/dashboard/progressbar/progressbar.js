@@ -6,9 +6,37 @@ import Breadcrumb from "../../../component/breadcrumb";
 const UpdateProgressBar = () => {
     const [initialnum, setInitialNum] = useState("");
     const [totalnum, setTotalNum] = useState("");
+    const [initialbar, setInitialBar] = useState();
+    const [totalbar, setTotalBar] = useState();
+    const [progress, setProgress] = useState();
 
+    const seperator = (x) => {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    useEffect(()=> {
+        fetch('http://localhost:4000/gameactivity/6447681e5d356036c58392af/find')
+        .then(result => result.json())
+        .then(data => {
+            setInitialBar(data.initial)
+            setTotalBar(data.total)
+            })
+
+    },[])
     
+    useEffect(()=>{
+        const percentage = (initialbar/totalbar) * 100     
+        setProgress(percentage)
+    },[initialbar, totalbar])
 
+    useEffect(()=>{
+        if(initialbar){
+           setInitialBar(seperator(initialbar))
+        }
+        if(totalbar){
+            setTotalBar(seperator(totalbar))
+         }
+    },[initialbar,totalbar])
     function update (e) {
         e.preventDefault();
         fetch('http://localhost:4000/gameactivity/6447681e5d356036c58392af/update', {
@@ -63,10 +91,10 @@ const UpdateProgressBar = () => {
 
         </MDBRow>
         <MDBTypography tag={'h1'} className="text-center">
-            0/0
+            {(initialbar)}/{(totalbar)}
         </MDBTypography>
         <MDBProgress height={25}>
-            <MDBProgressBar width='30' valuemin={0} valuemax={100}/>
+            <MDBProgressBar width={progress} valuemin={0} valuemax={100}/>
         </MDBProgress> 
         <MDBRow>
             <MDBTypography tag='h1' className="mt-4">Ads Income History</MDBTypography>

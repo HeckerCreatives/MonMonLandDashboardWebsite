@@ -17,3 +17,11 @@
         padding: 10px !important;
     }      
 }
+
+.zoom-socials {
+    transition: transform 0.3s ease-in-out;
+}
+
+.zoom-socials:hover {
+    transform: scale(1.2);
+}

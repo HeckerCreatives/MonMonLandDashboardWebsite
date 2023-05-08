@@ -18,6 +18,9 @@ const UpdateNews = () => {
     [total, setTotal] = useState(0);
     const [activeModal, setActiveModal] = useState(null);
 
+    const handlePagination = (data, page, size) =>
+    data.slice((page - 1) * size, size + (page - 1) * size);
+
     useEffect(() => {
       let totalPages = Math.floor(news.length / 5);
       if (news.length % 5 > 0) totalPages += 1;
@@ -56,36 +59,7 @@ const UpdateNews = () => {
         })
       })
 
-      function updatesub (e) {
-        e.preventDefault();
-        fetch(`http://localhost:4000/news/${newsid}/update`, {
-            method:'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                title: titles,
-                description: descriptions
-            })            
-        }).then(result => result.json())
-        .then(data => {
-
-            if (data) {
-				Swal.fire({
-					title: "Updated Successfully",
-					icon: "success",
-					text: "You Successfully Updated This"
-				})
-				
-			} else {
-				Swal.fire({
-					title: "Update Unsuccessfully",
-					icon: "error",
-					text: "There is an error Updating This"
-				})
-			}
-        }) 
-    }
+      
     return (
         <MDBContainer fluid className="">
         <Breadcrumb title="News" paths={[]}/>
@@ -96,7 +70,7 @@ const UpdateNews = () => {
           </MDBRow>
 
         <MDBRow>
-        {news.map(balita => (
+        {handlePagination(news, page, 5)?.map(balita => (
         <MDBCol>        
           <MDBCard key={balita._id} className="">
           <MDBCardImage src={balita.image} className="images"/>
@@ -116,24 +90,9 @@ const UpdateNews = () => {
         </MDBCol>
         ))}
         </MDBRow>
-        <MDBModal  show={activeModal} onClick={()=> setActiveModal(null)} tabIndex='-1'>
-            <MDBModalDialog centered>
-            <MDBModalContent>
-                <MDBModalHeader>
-                {/* <MDBModalTitle>{newstitle}</MDBModalTitle> */}
-                <MDBBtn className='btn-close' color='none' onClick={()=> setActiveModal(null)}></MDBBtn>
-                </MDBModalHeader>
-                {/* <MDBModalBody>{newsdescription}</MDBModalBody> */}
-                <MDBModalFooter>
-                <MDBBtn color='secondary' onClick={()=> setActiveModal(null)}>
-                    Close
-                </MDBBtn>                
-                </MDBModalFooter>
-            </MDBModalContent>
-            </MDBModalDialog>
-        </MDBModal>
+        
           <PaginationPager
-            total={total} page={page}
+            total={total} page={page} setPage={setPage}
           />
         </MDBContainer>
     )
