@@ -18,6 +18,7 @@ const News = () => {
   const [activeModal, setActiveModal] = useState(null);
   const [newsdescription, setnewsDescription] = useState('');
   const [newstitle, setNewsTitle] = useState('');
+  const [imahe, setImahe] = useState('');
 
   useEffect(()=>{
     fetch('http://localhost:4000/news/find')
@@ -79,12 +80,13 @@ const News = () => {
                     {balita.title}
                     </MDBCardText>
                     <MDBCardText className="fw-bold text-center">
-                    {balita.description}
+                    {balita.description.length > 25 ? `${balita.description.substring(0,25)}...`: balita.description}
                     </MDBCardText>
                   <MDBBtn onClick={() => {
                   setActiveModal(true)
                   setnewsDescription(balita.description)
                   setNewsTitle(balita.title)
+                  setImahe(balita.image)
                   }}>
                   See More
                   </MDBBtn>  
@@ -102,7 +104,12 @@ const News = () => {
                 <MDBModalTitle>{newstitle}</MDBModalTitle>
                 <MDBBtn className='btn-close' color='none' onClick={()=> setActiveModal(null)}></MDBBtn>
                 </MDBModalHeader>
-                <MDBModalBody>{newsdescription}</MDBModalBody>
+                <MDBModalBody>
+                <MDBContainer fluid className="d-flex  justify-content-center">
+                        <img alt="" src={imahe}/>
+                    </MDBContainer>
+                {newsdescription}
+                </MDBModalBody>
                 <MDBModalFooter>
                 <MDBBtn color='secondary' onClick={()=> setActiveModal(null)}>
                     Close

@@ -27,7 +27,7 @@ import "./index.css"
 const Subscription = () => {
     const [subs, setSubs] = useState([]);
     const [activeModal, setActiveModal] = useState(null);
-    const [subsdescription, setSubsDescription] = useState('');
+    const [subsdescription, setSubsDescription] = useState([]);
     const [substitle, setSubsTitle] = useState('');
     
     useEffect(()=>{
@@ -37,7 +37,13 @@ const Subscription = () => {
             setSubs(data)
             
         })
-    },[])
+        fetch('http://localhost:4000/subscription/finddesc')
+        .then(result => result.json())
+        .then(data => {
+            setSubsDescription(data)
+            
+        })
+    },)
 
     
 
@@ -69,54 +75,24 @@ const Subscription = () => {
 
         {subs.map(sub => (
         <MDBCol className="">
-            <MDBCard key={sub._id} className="col-12" style={{height:"100%"}}>
-                <MDBCardImage src={sub.image} alt=""  id="badge" style={{marginTop: "5vh"}}/>
+            <MDBCard key={sub._id} className="col-12 align-items-center linya" style={{height:"100%"}}>
+                <MDBCardImage src={pearl} alt=""  id="badge" className="bg-dark"/>
             
                 <MDBCardBody className="subsparent">            
-                    <MDBCardTitle className="fw-bold h2 mt-5">{sub.title}</MDBCardTitle>
-                        <MDBCardSubTitle className="fw-bold h3 price mb-5">{sub.amount}</MDBCardSubTitle>
-                    <ul className="mx-4 ">
-                        <li>
-                        {sub.descriptions}
-                        </li>
-                        <li>
-                        {sub.descriptions}
-                        </li>
-                        <li>
-                        {sub.description}
-                        </li>
-                        <li>
-                        {sub.description}
-                        </li>
-                        <li>
-                        {sub.description}
-                        </li>
-                        <li>
-                        {sub.description}
-                        </li>
-                        <li>
-                        {sub.description}
-                        </li>
-                        <li>
-                        {sub.description}
-                        </li>
-                        <li>
-                        {sub.description}
-                        </li>
-                        <li>
-                        {sub.description}
-                        </li>       
-                        <li>
-                        {sub.description}
-                        </li>       
-                        <li>
-                        {sub.description}
-                        </li>       
-                        <li>
-                        {sub.description}
-                        </li>                   
-                    </ul>                               
+                    <MDBCardTitle className="fw-bold h2 mt-5">{sub.subscriptionName}</MDBCardTitle>
                     
+                        <MDBCardSubTitle className="fw-bold h3 price mb-5">{sub.amount}</MDBCardSubTitle>
+                           
+                        <ul className="mx-4"> 
+                    {subsdescription.map(desc =>(
+                        
+                        <li key={desc.subsId} className="list">
+                            {desc.description}
+                        </li> 
+                        
+                    ))}
+                    </ul>
+                                      
                 </MDBCardBody>
                 <MDBContainer>
                     <MDBBtn type="button" className="subsbutton btn btn-warning fw-bold" size="lg"  >SUBSCRIBE NOW</MDBBtn>

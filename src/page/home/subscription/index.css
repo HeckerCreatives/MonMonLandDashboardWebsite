@@ -1,3 +1,18 @@
+.list {
+    list-style: none; /* Remove default bullets */
+  }
+  
+.list::before {
+    content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
+    color: aqua; /* Change the color */
+    font-weight: bold; /* If you want it to be bold */
+    display:inline-block; /* Needed to add space between the bullet and the text */
+    padding-left: 1em; 
+    text-indent: -.7em;
+    
+  }
+
+/*  */
 .btncolor {
     color: #F09C31;
 }
@@ -8,19 +23,25 @@
 .card {
     position: relative;
     /* z-index: -1a; */
-    overflow-y: visible;
+    /* overflow-y: visible; */
     
 }
-
+.linya {
+    border-top: 3px solid #424143 !important;
+    border-radius: 0 !important;
+}
 #badge {
     /* display:inline-block;    */
-    position:absolute !important;
-    height: 150px;
-    width: 150px;
-    left: 50%; /* move the element to the center of the parent */
-    transform: translateX(-50%);
-    top: -10%;
-    z-index: 1 !important;
+    /* position:absolute !important; */
+    height: 120px;
+    width: 120px;
+    /* background-color: #424242; */
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    /* left: 50%;  */
+    /* transform: translateX(-50%); */
+    /* top: -10%; */
+    /* z-index: 1 !important; */
 }
 
 .bgcolor {
@@ -41,7 +62,6 @@
 
 .subsparent {
     position: relative;
-    
     /* z-index: 2; */
     
 }

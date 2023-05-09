@@ -72,7 +72,7 @@ const UpdateProgressBar = () => {
         <Breadcrumb title="Progress Bar" paths={[]}/>
         <MDBRow className="my-4 align-items-center justify-content-center">
         
-        <MDBCol md={6}>
+        <MDBCol md={6}  className="mt-3">
         <form onSubmit={e => update(e)}>
         <MDBCard className="" alignment="center">
             <MDBCardBody>
@@ -88,14 +88,16 @@ const UpdateProgressBar = () => {
         </form>
         
         </MDBCol>      
-
-        </MDBRow>
-        <MDBTypography tag={'h1'} className="text-center">
-            {(initialbar)}/{(totalbar)}
+        <MDBCol className="mt-3">
+        <MDBTypography tag={'h1'} className="text-center fw-bold">
+            {(initialbar)} / {(totalbar)}
         </MDBTypography>
         <MDBProgress height={25}>
             <MDBProgressBar width={progress} valuemin={0} valuemax={100}/>
         </MDBProgress> 
+        </MDBCol>
+        </MDBRow>
+        
         <MDBRow>
             <MDBTypography tag='h1' className="mt-4">Ads Income History</MDBTypography>
             <MDBTable align='middle' className="border mt-4">

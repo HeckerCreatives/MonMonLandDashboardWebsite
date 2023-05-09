@@ -22,14 +22,14 @@ const UpdateRoadmap = () => {
         }
       };
 
-      useEffect(()=>{
-        fetch(`http://localhost:4000/roadmap/${roadid}/find`)
-        .then(result => result.json())
-        .then(data => {
-            setTitles(data.title)
-            setDescriptions(data.description)
-        })
-      })
+    //   useEffect(()=>{
+    //     fetch(`http://localhost:4000/roadmap/${roadid}/find`)
+    //     .then(result => result.json())
+    //     .then(data => {
+    //         setTitles(data.title)
+    //         setDescriptions(data.description)
+    //     })
+    //   })
 
       function updatesub (e) {
         e.preventDefault();
@@ -64,7 +64,7 @@ const UpdateRoadmap = () => {
     return (
         <MDBContainer fluid className="">
         <Breadcrumb title="Roadmap" paths={[]}/>
-        <MDBCol className="p-2">
+        <MDBCol className="p-2 text-center">
                 <MDBBtn 
                 className="mx-2"
                 onClick={handleSelectChange}
@@ -93,14 +93,14 @@ const UpdateRoadmap = () => {
                 Roadmap 4
                 </MDBBtn>
             </MDBCol>
-        <MDBRow>
-            <MDBCol>
+        <MDBRow className="align-items-center justify-content-center d-flex">
+            <MDBCol  md={6} >
             <form onSubmit={e => updatesub(e)}>
-             <MDBCard>
+             <MDBCard className="">
               <MDBCardBody>
-                <MDBInput label='Title' id='form1' type='text' value={titles} onChange={e => setTitles(e.target.value)} className="mb-3"/>
+                <MDBInput label='Title' id='form1' type='text'  onChange={e => setTitles(e.target.value)} className="mb-3"/>
 
-                <MDBTextArea label='Description' id='form1' rows={5} value={descriptions} onChange={e => setDescriptions(e.target.value)} className="mb-3"/>
+                <MDBTextArea label='Description' id='form1' rows={5}  onChange={e => setDescriptions(e.target.value)} className="mb-3"/>
 
                 <MDBBtn type="submit">
                 Submit

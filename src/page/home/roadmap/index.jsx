@@ -20,6 +20,7 @@ const Roadmap = () => {
     const [activeModal, setActiveModal] = useState(null);
     const [roadmapdescription, setRoadmapDescription] = useState('');
     const [roadmaptitle, setTitle] = useState('');
+    const [roadmapimage, setRoadMapImage] = useState('');
 
     // const toggleShow = (index) => {        
     //     setBasicModal(index);
@@ -59,7 +60,7 @@ const Roadmap = () => {
         <img src={woodcutting} alt="" id="woodchar" />
         </MDBCol>            
 
-        <MDBTypography className="fw-bold text-wrap text-white m-0" >{roadmaps.description}</MDBTypography>
+        <MDBTypography className="fw-bold text-wrap text-white m-0" >{roadmaps.description.length > 50 ? `${roadmaps.description.substring(0,50)}...`: roadmaps.description}</MDBTypography>
         
         <img src={seemore} alt="" className="seemorebtn" 
         onClick={() => {
@@ -82,7 +83,12 @@ const Roadmap = () => {
                 <MDBModalTitle>{roadmaptitle}</MDBModalTitle>
                 <MDBBtn className='btn-close' color='none' onClick={()=> setActiveModal(null)}></MDBBtn>
                 </MDBModalHeader>
-                <MDBModalBody>{roadmapdescription}</MDBModalBody>
+                <MDBModalBody>
+                <MDBContainer fluid className="d-flex  justify-content-center">
+                        <img alt="" src={woodcutting}/>
+                </MDBContainer>
+                {roadmapdescription}
+                </MDBModalBody>
                 <MDBModalFooter>
                 <MDBBtn color='secondary' onClick={()=> setActiveModal(null)}>
                     Close

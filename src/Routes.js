@@ -12,6 +12,7 @@ import UpdateRoadmap from "./page/dashboard/roadmap/roadmap";
 import Login from "./page/login";
 import FullTable from "./component/fulltablelist";
 import AdminDashboard from "./component/dashboard/admin";
+import SignUp from "./page/signupform/signup";
 const Routers = () => {
   return (
     <Routes>
@@ -32,7 +33,7 @@ const Routers = () => {
        </Route> 
       </Route>
       
-
+      <Route path="/signup" element={<SignUp />}/>
     </Routes>
   );
 };

@@ -17,13 +17,13 @@ const UpdateSubs = () => {
         const selectedValue = event.target.value;
       
         if (selectedValue === 'Pearl') {
-          setBadge('6447873aaec1f03c8226297e');
+          setBadge('6459e83eb2030791727ab992');
         } else if (selectedValue === 'Ruby') {
-          setBadge('6448807a475b52b1706365c4');
+          setBadge('6459ea30a5912a22f76d4f99');
         } else if (selectedValue === 'Emerald') {
-          setBadge('6448821a475b52b1706365cb');
+          setBadge('6459ea41a5912a22f76d4f9d');
         } else if (selectedValue === 'Diamond') {
-          setBadge('64488270475b52b1706365d1');
+          setBadge('6459ea58a5912a22f76d4fa1');
         }
         
       }; 
@@ -32,9 +32,17 @@ const UpdateSubs = () => {
         fetch(`http://localhost:4000/subscription/${badge}/find`)
         .then(result => result.json())
         .then(data => {
-            setGetTitles(data.title)
+            setGetTitles(data.subscriptionName)
             setGetAmounts(data.amount)
-            setDescriptionList(data.descriptions)
+        })
+    })
+
+    useEffect(()=>{
+        fetch(`http://localhost:4000/subscription/${badge}/finddesc`)
+        .then(result => result.json())
+        .then(data => {
+            // console.log(data[0].description)
+            setDescriptionList(data[0].description)
         })
     })
 
@@ -46,7 +54,7 @@ const UpdateSubs = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                title: titles,
+                subscriptionName: titles,
                 amount: amounts
             })            
         }).then(result => result.json())
@@ -77,9 +85,7 @@ const UpdateSubs = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                descriptions:[{
-                    description: adddescriptions
-                }] 
+                descriptions: [adddescriptions]
             }) 
         }).then(result => result.json())
         .then(data => {
@@ -105,7 +111,7 @@ const UpdateSubs = () => {
             <Breadcrumb title="Subscription" paths={[]}/>
             <MDBCol className="p-2">
                 <MDBBtn 
-                className="mx-2"
+                className="mx-2 mt-2"
                 onClick={handleSelectChange}
                 value='Pearl'
                 >
@@ -113,20 +119,20 @@ const UpdateSubs = () => {
                 </MDBBtn>
 
                 <MDBBtn 
-                className="mx-2"
+                className="mx-2 mt-2"
                 onClick={handleSelectChange}
                 value='Ruby'>
                 Ruby
                 </MDBBtn>
 
                 <MDBBtn 
-                className="mx-2"
+                className="mx-2 mt-2"
                 onClick={handleSelectChange}
                 value='Emerald'>
                 Emerald
                 </MDBBtn>
                 <MDBBtn 
-                className="mx-2"
+                className="mx-2 mt-2"
                 onClick={handleSelectChange}
                 value='Diamond'>
                 Diamond
@@ -151,7 +157,7 @@ const UpdateSubs = () => {
             
                 <MDBCol md={6}>
                 <form onSubmit={e => updatesub(e)}>
-                    <MDBCard className="h-100" alignment='end'>
+                    <MDBCard className="mt-3 h-100" alignment='end' >
                     <MDBCardBody>
                         <MDBRow>
                             <MDBCol className="mb-3">
@@ -172,7 +178,7 @@ const UpdateSubs = () => {
                 
                 <MDBCol md={6}>
                 <form onSubmit={e => adddescription(e)}>
-                    <MDBCard className="h-100" alignment='end'>
+                    <MDBCard className="mt-3" alignment='end'>
                         <MDBCardBody>
                             <MDBTextArea label={`Description`}  rows={10} className="mb-3"      onChange={e => setAddDescriptions(e.target.value)}/>
                             <MDBBtn type="submit">Add</MDBBtn>
@@ -195,10 +201,10 @@ const UpdateSubs = () => {
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody>
-                    <tr>
-                    <td>
+                    <tr>                    
+                        <td >
                         {descriptionlist}
-                    </td>
+                        </td>                                   
                     <td>
                         kunyare date
                     </td>                    
