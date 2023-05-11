@@ -3,15 +3,25 @@ import { Link } from "react-router-dom";
 import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBTextArea, MDBBadge, MDBTable, MDBTableHead, MDBTableBody, MDBTypography, MDBCardText} from "mdb-react-ui-kit";
 import Swal from "sweetalert2"
 import Breadcrumb from "../../../component/breadcrumb";
+import UpdateDescriptionModal from "./modal/editmodal";
+import PaginationPager from '../../../component/pagination/index'
+
 const UpdateSubs = () => {
     const [titles, setTitles] = useState('');
     const [gettitles, setGetTitles] = useState('');
     const [amounts, setAmounts] = useState('');
     const [getamounts, setGetAmounts] = useState('');
-    const [descriptionlist, setDescriptionList] = useState('');
+    const [descriptionlist, setDescriptionList] = useState([]);
     const [adddescriptions, setAddDescriptions] = useState('');
-    const [badge, setBadge] = useState('');
+    const [badge, setBadge] = useState(''),
+    [page, setPage] = useState(1),
+    [total, setTotal] = useState(0);
     
+    useEffect(() => {
+        let totalPages = Math.floor(descriptionlist.length / 5);
+        if (descriptionlist.length % 5 > 0) totalPages += 1;
+        setTotal(totalPages);
+        }, [descriptionlist]);
 
     const handleSelectChange = (event) => {
         const selectedValue = event.target.value;
@@ -34,17 +44,18 @@ const UpdateSubs = () => {
         .then(data => {
             setGetTitles(data.subscriptionName)
             setGetAmounts(data.amount)
+            // setAddDescriptions(data.description)
         })
-    })
+    },[badge])
 
     useEffect(()=>{
         fetch(`http://localhost:4000/subscription/${badge}/finddesc`)
         .then(result => result.json())
         .then(data => {
-            // console.log(data[0].description)
-            setDescriptionList(data[0].description)
+            // console.log(data)
+            setDescriptionList(data)
         })
-    })
+    },[badge])
 
     function updatesub (e) {
         e.preventDefault();
@@ -55,7 +66,7 @@ const UpdateSubs = () => {
             },
             body: JSON.stringify({
                 subscriptionName: titles,
-                amount: amounts
+                amount: amounts,                
             })            
         }).then(result => result.json())
         .then(data => {
@@ -79,13 +90,13 @@ const UpdateSubs = () => {
 
     function adddescription (e) {
         e.preventDefault();
-        fetch(`http://localhost:4000/subscription/${badge}/update`,{
-            method:'PUT',
+        fetch(`http://localhost:4000/subscription/${badge}/addnewdesc`,{
+            method:'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                descriptions: [adddescriptions]
+                description: adddescriptions
             }) 
         }).then(result => result.json())
         .then(data => {
@@ -151,7 +162,6 @@ const UpdateSubs = () => {
                     </MDBRow>
                 </MDBCardBody>            
             </MDBCard>
-
             
             <MDBRow>
             
@@ -200,27 +210,36 @@ const UpdateSubs = () => {
                     <th scope='col'>Actions</th>
                     </tr>
                 </MDBTableHead>
-                <MDBTableBody>
-                    <tr>                    
+                <MDBTableBody className="">
+                {gettitles ? 
+                <>
+                {descriptionlist.map(data =>(
+                    <tr key={data._id}>                    
                         <td >
-                        {descriptionlist}
+                        {data.description}
                         </td>                                   
                     <td>
-                        kunyare date
+                    {new Date(data.createdAt).toLocaleString()}
                     </td>                    
                     <td>
-                        <MDBBtn color='link' rounded size='sm'>
-                        Edit
-                        </MDBBtn>
-                        <MDBBtn color='link' rounded size='sm'>
+                    <UpdateDescriptionModal descriptionlist={data}/>
+                    <MDBBtn color='link' rounded size='sm'>
                         Delete
-                        </MDBBtn>
+                    </MDBBtn>
                     </td>
-                    </tr>
+                    </tr>                    
+                ))}
+                </>
+                : 
+                <span>No Selected Subscription</span>
+                }
+                                    
                 </MDBTableBody>
                 </MDBTable>
             </MDBRow>
-            
+            <PaginationPager
+            total={total} page={page} setPage={setPage}
+          />
         </MDBContainer>
     )
 }

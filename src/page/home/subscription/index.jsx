@@ -15,7 +15,8 @@ import { MDBContainer,
  MDBModalHeader,
  MDBModalTitle,
  MDBModalBody,
- MDBModalFooter, } from "mdb-react-ui-kit";
+ MDBModalFooter,
+ MDBSpinner, } from "mdb-react-ui-kit";
 import ruby from "../../../assets/subscription/ruby badge png.png"
 import emerald from "../../../assets/subscription/emerald png.png"
 import diamond from "../../../assets/subscription/diamond.png"
@@ -25,25 +26,27 @@ import Slider from "react-slick";
 import "./index.css"
 
 const Subscription = () => {
+    const [isLoading, setIsLoading] = useState(false);
     const [subs, setSubs] = useState([]);
     const [activeModal, setActiveModal] = useState(null);
     const [subsdescription, setSubsDescription] = useState([]);
     const [substitle, setSubsTitle] = useState('');
     
     useEffect(()=>{
+        setIsLoading(true)
         fetch('http://localhost:4000/subscription/find')
         .then(result => result.json())
         .then(data => {
             setSubs(data)
-            
+            setIsLoading(false)
         })
         fetch('http://localhost:4000/subscription/finddesc')
         .then(result => result.json())
         .then(data => {
             setSubsDescription(data)
-            
+            setIsLoading(false)
         })
-    },)
+    },[])
 
     
 
@@ -68,22 +71,25 @@ const Subscription = () => {
             Subscription
         </MDBTypography>
         {/* for desktop */}
-        <div className="desktopview text-center">
+        <div className="desktopview">
         
         <MDBContainer fluid className="d-flex alig-items-center justify-content-center">
         <MDBRow>
-
+        {isLoading ? 
+        <MDBSpinner color="warning"></MDBSpinner>
+        :
+        <>
         {subs.map(sub => (
         <MDBCol className="">
             <MDBCard key={sub._id} className="col-12 align-items-center linya" style={{height:"100%"}}>
-                <MDBCardImage src={pearl} alt=""  id="badge" className="bg-dark"/>
+                <MDBCardImage src={pearl} alt=""  id="badge" className="bg-dark text-center"/>
             
                 <MDBCardBody className="subsparent">            
-                    <MDBCardTitle className="fw-bold h2 mt-5">{sub.subscriptionName}</MDBCardTitle>
+                    <MDBCardTitle className=" text-center fw-bold h2 mt-5">{sub.subscriptionName}</MDBCardTitle>
                     
-                        <MDBCardSubTitle className="fw-bold h3 price mb-5">{sub.amount}</MDBCardSubTitle>
+                        <MDBCardSubTitle className="text-center fw-bold h3 price mb-5">{sub.amount}</MDBCardSubTitle>
                            
-                        <ul className="mx-4"> 
+                    <ul className="mx-4"> 
                     {subsdescription.map(desc =>(
                         
                         <li key={desc.subsId} className="list">
@@ -94,12 +100,15 @@ const Subscription = () => {
                     </ul>
                                       
                 </MDBCardBody>
-                <MDBContainer>
+                <MDBContainer className="text-center">
                     <MDBBtn type="button" className="subsbutton btn btn-warning fw-bold" size="lg"  >SUBSCRIBE NOW</MDBBtn>
                 </MDBContainer>
             </MDBCard>
         </MDBCol>
         ))}
+        </>
+        }
+        
 
         </MDBRow>
         
@@ -108,196 +117,32 @@ const Subscription = () => {
 
         {/* for mobile view */}
         <div className="mobileview">
-            <MDBContainer fluid className="oberplow">
+            <MDBContainer fluid className="">
                 <Slider {...settings}>
 
                 {/* PEARL */}
                 {subs.map(sub =>(
-                    // <div className="text-center rounded bg-light">
-                    //     <center>
-                    //         <img src={sub.image} className="subsbadge"/>
-                    //     </center>
-                    //     <h1 className="fw-bold h2 mt-5">{sub.title}</h1>
-                    //     <h4 className="price">{sub.amount}</h4>
-                    //     <ul className="mx-4 p-4">
-                    //         <li>
-                    //         {sub.description}
-                    //         </li>
-                    //         <li>
-                    //         {sub.description}
-                    //         </li>
-                    //         <li>
-                    //         {sub.description}
-                    //         </li>
-                    //         <li>
-                    //         {sub.description}
-                    //         </li>
-                    //         <li>
-                    //         {sub.description}
-                    //         </li>
-                    //         <li>
-                    //         {sub.description}
-                    //         </li>
-                    //         <li>
-                    //         {sub.description}
-                    //         </li>
-                    //         <li>
-                    //         {sub.description}
-                    //         </li>
-                    //         <li>
-                    //         {sub.description}
-                    //         </li>
-                    //         <li>
-                    //         {sub.description}
-                    //         </li>
-                    //     </ul>
-                    //     <br/>
-                    //     <div className="subsbutton">
-                    //     <MDBBtn type="button" className=" btn btn-warning fw-bold" size="lg">SUBSCRIBE NOW</MDBBtn> 
-                    //     </div>
-                    // </div>
-                    
-                    
-                    <MDBCard className="card text-center" key={sub._id}>
-                        <MDBCardImage src={sub.image} alt="" className="" id="badge" style={{marginTop: "5vh"}}/>
+                  <MDBCol>                   
+                    <MDBCard className="linya align-items-center" key={sub._id}>
+                        <MDBCardImage src={pearl} alt="" className="bg-dark " id="badge"/>
                             <MDBCardBody className="">            
-                                <MDBCardTitle className="fw-bold h2 mt-5" style={{paddingTop: "5vh"}}>{sub.title}</MDBCardTitle>
-                                    <MDBCardSubTitle className="fw-bold h3 price mb-5">{sub.amount}</MDBCardSubTitle>
-                                        <ul className="mx-4 p-4">
-                                        <li>
-                                            {sub.descriptions}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                        <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                        <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                        <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                            <li>
-                                            {sub.description}
-                                            </li>
-                                        </ul>
+                                <MDBCardTitle className="fw-bold h2 mt-5 text-center" >{sub.subscriptionName}</MDBCardTitle>
+                                    <MDBCardSubTitle className="fw-bold h3 price mb-5 text-center">{sub.amount}</MDBCardSubTitle>
+                                <ul className="mx-4"> 
+                                {subsdescription.map(desc =>(
+                                    
+                                    <li key={desc.subsId} className="list">
+                                        {desc.description}
+                                    </li> 
+                                    
+                                ))}
+                                </ul>
                             </MDBCardBody>
                             <br></br>
-                            {/* <MDBContainer> */}
-                            <MDBBtn type="button" className="subsbuttonmobile btn btn-warning fw-bold" size="lg">SUBSCRIBE NOW</MDBBtn> 
-                            {/* </MDBContainer> */}
+                            <MDBBtn type="button" className="subsbuttonmobile btn btn-warning fw-bold " size="lg">SUBSCRIBE NOW</MDBBtn> 
                             
                 </MDBCard>
+                </MDBCol> 
                 ))}
                 </Slider>
             </MDBContainer>

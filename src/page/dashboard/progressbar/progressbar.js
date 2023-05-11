@@ -9,17 +9,19 @@ const UpdateProgressBar = () => {
     const [initialbar, setInitialBar] = useState();
     const [totalbar, setTotalBar] = useState();
     const [progress, setProgress] = useState();
+    const [araw, setAraw] = useState();
 
     const seperator = (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     useEffect(()=> {
-        fetch('http://localhost:4000/gameactivity/6447681e5d356036c58392af/find')
+        fetch('http://localhost:4000/gameactivity/645b2df24bcc633e3ad4bd10/find')
         .then(result => result.json())
         .then(data => {
             setInitialBar(data.initial)
             setTotalBar(data.total)
+            setAraw(data.createdAt)
             })
 
     },[])
@@ -37,9 +39,10 @@ const UpdateProgressBar = () => {
             setTotalBar(seperator(totalbar))
          }
     },[initialbar,totalbar])
+
     function update (e) {
         e.preventDefault();
-        fetch('http://localhost:4000/gameactivity/6447681e5d356036c58392af/update', {
+        fetch('http://localhost:4000/gameactivity/645b2df24bcc633e3ad4bd10/update', {
             method:'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -111,10 +114,10 @@ const UpdateProgressBar = () => {
                 <MDBTableBody>
                     <tr>
                     <td>
-                        {/* {descriptionlist} */}
+                    {(initialbar)} / {(totalbar)}
                     </td>
                     <td>
-                        kunyare date
+                    {new Date(araw).toLocaleString()}
                     </td>                    
                     <td>
                         <MDBBtn color='link' rounded size='sm'>

@@ -10,12 +10,14 @@ import { MDBContainer,
         MDBModalHeader,
         MDBModalTitle,
         MDBModalBody,
-        MDBModalFooter,} from "mdb-react-ui-kit";
+        MDBModalFooter,
+        MDBSpinner,} from "mdb-react-ui-kit";
 import "./index.css"
 import woodcutting from "../../../assets/character/Wood Cutting.png"
 import seemore from "../../../assets/roadmap/see more btn.png"
 
 const Roadmap = () => {
+    const [isLoading, setIsLoading] = useState(false);
     const [roadmap, setRoadmap] = useState([])
     const [activeModal, setActiveModal] = useState(null);
     const [roadmapdescription, setRoadmapDescription] = useState('');
@@ -27,11 +29,12 @@ const Roadmap = () => {
     //   };
 
     useEffect(()=>{
+        setIsLoading(true)
         fetch('http://localhost:4000/roadmap/find')
         .then(result => result.json())
         .then(data => {
             setRoadmap(data)
-            
+            setIsLoading(false)
         })
       },[])
 
@@ -41,11 +44,13 @@ const Roadmap = () => {
         <MDBTypography className="titlefontsize text-warning text-center fw-bold">
             ROADMAP
         </MDBTypography>
-        <MDBContainer className="line">
+        <MDBContainer className="line text-center">
         
-        
+        {isLoading ? <MDBSpinner color="warning"></MDBSpinner> :
+        <>
         {roadmap.map((roadmaps,index) =>(
         <MDBRow className="circle">
+        
         <MDBCol className={`roadmapholder text-center ${
         index === 1 || index === roadmap.length - 1 ? 'roadmapholderright' : index % 2 === 0 ? 'roadmapholder' : 'roadmapholderright'
         }`} key={roadmaps._id}>
@@ -71,10 +76,13 @@ const Roadmap = () => {
         
         </MDBCol>
         </MDBCol>
-        
+       
         </MDBRow>
-        ))}
         
+         
+        ))}
+        </>
+        }
         </MDBContainer>
         <MDBModal  show={activeModal} onClick={()=> setActiveModal(null)} tabIndex='-1'>
             <MDBModalDialog centered>

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBTypography,MDBProgress, MDBProgressBar, MDBBtn } from "mdb-react-ui-kit";
+import { MDBContainer, MDBRow, MDBCol, MDBTypography,MDBProgress, MDBProgressBar, MDBBtn, MDBSpinner } from "mdb-react-ui-kit";
 import "./index.css";
 import biglogo from "../../../assets/header/big logo.png"
 import sliderholder from "../../../assets/header/activity slider holder.png"
@@ -10,6 +10,7 @@ import Navbar from "../../../component"
 
 
 const Header = () => {
+    const [isLoading, setIsLoading] = useState(false)
     const [initialbar, setInitialBar] = useState();
     const [totalbar, setTotalBar] = useState();
     const [progress, setProgress] = useState();
@@ -19,11 +20,13 @@ const Header = () => {
     }
 
      useEffect(()=> {
+        setIsLoading(true)
         fetch('http://localhost:4000/gameactivity/6447681e5d356036c58392af/find')
         .then(result => result.json())
         .then(data => {
             setInitialBar(data.initial)
             setTotalBar(data.total)
+            setIsLoading(false)
             })
 
     },[])
@@ -62,12 +65,17 @@ const Header = () => {
                 </MDBTypography>
                 
                 <MDBCol className="d-flex justify-content-center align-items-center text-center">
-                 
+                {isLoading  ? 
+                <MDBSpinner color="warning"></MDBSpinner>
+                :
+                <>
                 <MDBProgress height='50' className="innerbar">
-                    <MDBProgressBar className="progressbar" width={progress} valuemin={initialbar} valuemax={totalbar}/>                                      
-                    
+                    <MDBProgressBar className="progressbar" width={progress} valuemin={initialbar} valuemax={totalbar}/>                                     
                 </MDBProgress> 
-                <MDBTypography className="text mt-3 fw-bold">{(initialbar)}/{(totalbar)}</MDBTypography>      
+                <MDBTypography className="text mt-3 fw-bold">{(initialbar)}/{(totalbar)}</MDBTypography>
+                </>
+                }
+                                      
                 </MDBCol>
                                 
                 </MDBCol>

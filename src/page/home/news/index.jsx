@@ -7,13 +7,15 @@ import { MDBContainer, MDBRow, MDBCol, MDBTypography,MDBCard,MDBCardBody,MDBCard
   MDBModalHeader,
   MDBModalTitle,
   MDBModalBody,
-  MDBModalFooter, } from "mdb-react-ui-kit";
+  MDBModalFooter,
+  MDBSpinner, } from "mdb-react-ui-kit";
 import "./index.css"
 import woodcutting from "../../../assets/character/Wood Cutting.png"
 import crafting from "../../../assets/character/crafting.png"
 import fishing from "../../../assets/character/fishing.png"
 import Slider from "react-slick";
 const News = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [news, setNews] = useState([]);
   const [activeModal, setActiveModal] = useState(null);
   const [newsdescription, setnewsDescription] = useState('');
@@ -21,11 +23,12 @@ const News = () => {
   const [imahe, setImahe] = useState('');
 
   useEffect(()=>{
+    setIsLoading(true)
     fetch('http://localhost:4000/news/find')
     .then(result => result.json())
     .then(data => {
         setNews(data)
-        
+        setIsLoading(false)
     })
   },[])
 
@@ -67,10 +70,15 @@ const News = () => {
   
 
     return (
-        <MDBContainer fluid className="newsbgcolor" id="news">
+        <MDBContainer fluid className="newsbgcolor text-center" id="news">
             <MDBTypography className="p-5 titlefontsize text-warning text-center fw-bold">LATEST NEWS</MDBTypography>
-        <div >        
+        {isLoading ? <MDBSpinner color="warning"></MDBSpinner>
+        :
+        <div >
+        
         <Slider {...settings}>
+        
+        
           {news.map(balita =>(
           <div>
           <MDBCard className="cards" key={balita._id} alignment="center">
@@ -93,10 +101,10 @@ const News = () => {
                 </MDBCardBody>
             </MDBCard>
             </div>
-          ))}
-          
+          ))}          
         </Slider>
         </div>
+        } 
         <MDBModal  show={activeModal} onClick={()=> setActiveModal(null)} tabIndex='-1'>
             <MDBModalDialog centered>
             <MDBModalContent>

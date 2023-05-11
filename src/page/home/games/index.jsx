@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBTypography, MDBCarousel,
     MDBCarouselItem,
     MDBBtn,} from "mdb-react-ui-kit";
@@ -20,6 +20,7 @@ import Slider from "react-slick";
 
 
 const Games = () => {
+    
     const sliderRef1 = useRef();
     const sliderRef2 = useRef();
 

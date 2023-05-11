@@ -80,7 +80,7 @@ const UpdateNews = () => {
           </MDBCardText>
 
           <MDBCardText className="fw-bold">
-          {balita.description}
+          {balita.description.length > 25 ? `${balita.description.substring(0,25)}...`: balita.description}
           </MDBCardText>
             
             <ViewNews news={balita}/>

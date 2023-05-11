@@ -1,16 +1,16 @@
-.list {
+ul .list {
     list-style: none; /* Remove default bullets */
   }
   
-.list::before {
+ul .list::before {
     content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
     color: aqua; /* Change the color */
     font-weight: bold; /* If you want it to be bold */
-    display:inline-block; /* Needed to add space between the bullet and the text */
-    padding-left: 1em; 
-    text-indent: -.7em;
-    
-  }
+    display: inline-block; /* Needed to add space between the bullet and the text */
+    margin-left: -1.5em;
+    width: 1.5em;
+    margin-top: -5%;
+}
 
 /*  */
 .btncolor {
@@ -30,6 +30,7 @@
     border-top: 3px solid #424143 !important;
     border-radius: 0 !important;
 }
+
 #badge {
     /* display:inline-block;    */
     /* position:absolute !important; */
@@ -70,9 +71,9 @@
     position: absolute !important;
     right: 0;
     left: 0;
-    bottom: 10vw;
-    margin: 0 15% 20px;
-    display: inherit !important;
+    bottom: 0;
+    margin: 0 15% 10px 15%;
+    /* display: inherit !important; */
 }
 
 .subsbutton{
@@ -86,7 +87,7 @@
 }
 .slick-slide{
     display: block !important;
-    float:none !important;
+    float: none !important;
     height: auto !important;
     margin-top: 1%;
 }
@@ -125,14 +126,10 @@
         display: contents;
     }
     #badge {
-        /* display:inline-block;    */
-        position:absolute !important;
-        height: 150px;
-        width: 150px;
-        left: 50%; /* move the element to the center of the parent */
-        transform: translateX(-50%);
-        top: -5%;
-        z-index: 1 !important;
+        height: 120px;
+        width: 120px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;       
     }   
 }
 

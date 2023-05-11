@@ -3,10 +3,18 @@ import { Link } from "react-router-dom";
 import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBTextArea, MDBTable,MDBTableBody,MDBTableHead,MDBTypography} from "mdb-react-ui-kit";
 import Swal from "sweetalert2"
 import Breadcrumb from "../../../component/breadcrumb";
+import PaginationPager from "../../../component/pagination/index"
 const UpdateRoadmap = () => {
     const [titles, setTitles] = useState('');
     const [descriptions, setDescriptions] = useState('')
-    const [roadid, setRoadId] = useState('')
+    const [roadid, setRoadId] = useState(''),
+            [page, setPage] = useState(1),
+            [total, setTotal] = useState(0);
+    useEffect(() => {
+        let totalPages = Math.floor(roadid.length / 5);
+        if (roadid.length % 5 > 0) totalPages += 1;
+        setTotal(totalPages);
+        }, [roadid]);
 
     const handleSelectChange = (event) => {
         const selectedValue = event.target.value;
@@ -141,7 +149,9 @@ const UpdateRoadmap = () => {
                 </MDBTableBody>
                 </MDBTable>
             </MDBRow>
-            
+            <PaginationPager
+                total={total} page={page} setPage={setPage}
+            />
         </MDBContainer>
     )
 }
