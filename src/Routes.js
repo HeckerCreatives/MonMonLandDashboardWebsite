@@ -13,6 +13,7 @@ import Login from "./page/login";
 import FullTable from "./component/fulltablelist";
 import AdminDashboard from "./component/dashboard/admin";
 import SignUp from "./page/signupform/signup";
+import StepVerification from "./page/4stepverification";
 const Routers = () => {
   return (
     <Routes>
@@ -35,6 +36,7 @@ const Routers = () => {
       
       <Route path="/signup" element={<SignUp />}/>
       <Route path="/login" element={<Login />}/>
+      <Route path="/verification" element={<StepVerification />}/>
     </Routes>
   );
 };

@@ -1,6 +1,6 @@
 .sidebg {
     position: relative;
-    background-image: url('../../../assets/BG/HEADER.png');
+    background-image: url('../../assets/BG/HEADER.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center;
@@ -27,7 +27,7 @@
 @media only screen and (max-width: 768px) {
     .sidebg {
         position: relative;
-        background-image: url('../../../assets/BG/FOOTER\ bg.png');
+        background-image: url('../../assets/BG/FOOTER\ bg.png');
         background-size: 100% 100%;
         background-repeat: no-repeat;
         background-position: center;

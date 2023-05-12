@@ -1,0 +1,19 @@
+.receiptborder{
+    border:1px;
+    border-top-style:solid ;
+    border-bottom-style:solid ;
+    
+}
+
+.receiptborder1 {
+    border:1px;
+    border-bottom-style:solid ;
+}
+
+.bluecol {
+    color: #0062FF;
+}
+
+.btnblue {
+    background-color: #0062FF !important;
+}

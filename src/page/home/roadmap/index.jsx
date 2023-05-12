@@ -33,7 +33,7 @@ const Roadmap = () => {
         fetch('http://localhost:4000/roadmap/find')
         .then(result => result.json())
         .then(data => {
-            setRoadmap(data)
+            setRoadmap(data.reverse().slice(0,4))
             setIsLoading(false)
         })
       },[])

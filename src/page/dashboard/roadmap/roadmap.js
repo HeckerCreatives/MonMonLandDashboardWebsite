@@ -7,42 +7,34 @@ import PaginationPager from "../../../component/pagination/index"
 const UpdateRoadmap = () => {
     const [titles, setTitles] = useState('');
     const [descriptions, setDescriptions] = useState('')
+    const [rdlist, setRdList] = useState([]);
     const [roadid, setRoadId] = useState(''),
             [page, setPage] = useState(1),
             [total, setTotal] = useState(0);
+
+    const handlePagination = (data, page, size) =>
+    data.slice((page - 1) * size, size + (page - 1) * size);
+
     useEffect(() => {
-        let totalPages = Math.floor(roadid.length / 5);
-        if (roadid.length % 5 > 0) totalPages += 1;
+        let totalPages = Math.floor(rdlist.length / 5);
+        if (rdlist.length % 5 > 0) totalPages += 1;
         setTotal(totalPages);
-        }, [roadid]);
+        }, [rdlist]);
 
-    const handleSelectChange = (event) => {
-        const selectedValue = event.target.value;
-      
-        if (selectedValue === 'Roadmap1') {
-          setRoadId('6448c1661ced055c414d1bd9');
-        } else if (selectedValue === 'Roadmap2') {
-          setRoadId('6448c2531ced055c414d1bdc');
-        } else if (selectedValue === 'Roadmap3') {
-          setRoadId('6448c3461ced055c414d1bdf');
-        } else if (selectedValue === 'Roadmap4') {
-          setRoadId('6448c35e1ced055c414d1be1');
-        }
-      };
+    
 
-    //   useEffect(()=>{
-    //     fetch(`http://localhost:4000/roadmap/${roadid}/find`)
-    //     .then(result => result.json())
-    //     .then(data => {
-    //         setTitles(data.title)
-    //         setDescriptions(data.description)
-    //     })
-    //   })
+      useEffect(()=>{
+        fetch(`http://localhost:4000/roadmap/find`)
+        .then(result => result.json())
+        .then(data => {
+            setRdList(data)
+        })
+      },[])
 
-      function updatesub (e) {
+      function add (e) {
         e.preventDefault();
-        fetch(`http://localhost:4000/roadmap/${roadid}/update`, {
-            method:'PUT',
+        fetch(`http://localhost:4000/roadmap/addroadmap`, {
+            method:'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -69,41 +61,14 @@ const UpdateRoadmap = () => {
 			}
         }) 
     }
+    const sortedRdList = [...rdlist].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     return (
         <MDBContainer fluid className="">
         <Breadcrumb title="Roadmap" paths={[]}/>
-        <MDBCol className="p-2 text-center">
-                <MDBBtn 
-                className="mx-2"
-                onClick={handleSelectChange}
-                value="Roadmap1"
-                >
-                Roadmap 1
-                </MDBBtn>
-
-                <MDBBtn 
-                className="mx-2"
-                onClick={handleSelectChange}
-                value="Roadmap2">
-                Roadmap 2
-                </MDBBtn>
-
-                <MDBBtn 
-                className="mx-2"
-                onClick={handleSelectChange}
-                value="Roadmap3">
-                Roadmap 3
-                </MDBBtn>
-                <MDBBtn 
-                className="mx-2"
-                onClick={handleSelectChange}
-                value="Roadmap4">
-                Roadmap 4
-                </MDBBtn>
-            </MDBCol>
+        
         <MDBRow className="align-items-center justify-content-center d-flex">
             <MDBCol  md={6} >
-            <form onSubmit={e => updatesub(e)}>
+            <form onSubmit={e => add(e)}>
              <MDBCard className="">
               <MDBCardBody>
                 <MDBInput label='Title' id='form1' type='text'  onChange={e => setTitles(e.target.value)} className="mb-3"/>
@@ -111,7 +76,7 @@ const UpdateRoadmap = () => {
                 <MDBTextArea label='Description' id='form1' rows={5}  onChange={e => setDescriptions(e.target.value)} className="mb-3"/>
 
                 <MDBBtn type="submit">
-                Submit
+                Add Roadmap
                 </MDBBtn>
               </MDBCardBody>
              </MDBCard>           
@@ -124,28 +89,27 @@ const UpdateRoadmap = () => {
             <MDBTable align='middle' className="border mt-4">
                 <MDBTableHead>
                     <tr>
+                    <th scope='col'>Title</th>
                     <th scope='col'>Description</th>
                     <th scope='col'>Date Created</th>
-                    <th scope='col'>Actions</th>
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody>
-                    <tr>
+
+                {handlePagination(sortedRdList, page, 5)?.map(data =>(
+                    <tr key={data._id}>
                     <td>
-                        {/* {descriptionlist} */}
+                        {data.title}
                     </td>
                     <td>
-                        kunyare date
+                        {data.description}
                     </td>                    
                     <td>
-                        <MDBBtn color='link' rounded size='sm'>
-                        Edit
-                        </MDBBtn>
-                        <MDBBtn color='link' rounded size='sm'>
-                        Delete
-                        </MDBBtn>
+                    {new Date(data.createdAt).toLocaleString()}
                     </td>
                     </tr>
+                ))}
+                    
                 </MDBTableBody>
                 </MDBTable>
             </MDBRow>
