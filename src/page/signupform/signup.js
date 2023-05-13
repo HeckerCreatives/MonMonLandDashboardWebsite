@@ -1,8 +1,65 @@
 import { MDBContainer, MDBInput, MDBRow, MDBCol,MDBIcon,MDBTypography,MDBBtn, MDBCard, MDBCardTitle, MDBCardBody, MDBCheckbox } from "mdb-react-ui-kit";
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../assets/header/small logo for navi.png"
 import './signup.css'
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+
 const SignUp = () => {
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [userName, setUserName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')  
+  const [confirmpassword, setconfirmPassword] = useState('')
+  const navigate = useNavigate()
+
+  const roleId = process.env.REACT_APP_PLAYERROLE
+
+  const register = (e) => {
+    e.preventDefault();
+    if(password !== confirmpassword){
+      Swal.fire({
+        title: "Password Not Match",
+        icon: "error",
+        text: "There is an error typing your password"
+      })
+      return 
+    }
+    
+    fetch(`${process.env.REACT_APP_API_URL}user/register`, {
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        roleId: roleId,
+        firstName: firstName,
+        lastName: lastName,
+        userName: userName,
+        email: email,
+        password: password
+      })
+    }).then(result => result.json())
+    .then(data =>{
+      if (data) {        
+				Swal.fire({
+					title: "Registered Successfully",
+					icon: "success",
+					text: "You Successfully Registered"
+				})
+				navigate('/login')
+			} else {
+				Swal.fire({
+          title: "Password Not Match",
+          icon: "error",
+          text: "There is an error typing your password"
+        })
+			}
+    })
+    
+  }
+
     return(
         <MDBContainer 
         fluid 
@@ -34,17 +91,17 @@ const SignUp = () => {
           <MDBTypography className="fw-bold">Create your account in <span className="text-warning">few seconds</span></MDBTypography>
           </MDBCol>
           
-
+          <form  autoComplete="off" onSubmit={register}>
           <MDBCard className="shadow-3 ">
           <MDBCardBody>
-          <form  autoComplete="off">
+          
           {/* <MDBCardTitle tag={'h1'} className="">Sign Up</MDBCardTitle> */}
           <MDBRow>
           <MDBCol lg={6}>
           <MDBTypography className="mb-0">
           Username        
           </MDBTypography>
-          <input className="square border border-dark rounded mb-2 p-1" size='50' style={{width:'100%'}} placeholder="Enter Username here"></input>
+          <input className="square border border-dark rounded mb-2 p-1" onChange={e => setUserName(e.target.value)} style={{width:'100%'}} placeholder="Enter Username here" required></input>
           {/* <MDBInput
             type="text"
             label={<span className="">Enter Username here</span>}
@@ -57,7 +114,7 @@ const SignUp = () => {
           </MDBCol>
           <MDBCol lg={6}>
           <MDBTypography className="mb-0">Email</MDBTypography>
-          <input className="square border border-dark rounded mb-2 p-1" size='50' style={{width:'100%'}} placeholder="Enter E-mail Address here"></input>
+          <input className="square border border-dark rounded mb-2 p-1" onChange={e => setEmail(e.target.value)} style={{width:'100%'}} placeholder="Enter E-mail Address here" type="email" required></input>
           {/* <MDBInput
             type="email"
             label={<span className="">Enter E-mail Address here</span>}
@@ -70,7 +127,7 @@ const SignUp = () => {
           </MDBCol>
           <MDBCol md={6}>
           <MDBTypography className="mb-0">First Name</MDBTypography>
-          <input className="square border border-dark rounded mb-2 p-1" size='50' style={{width:'100%'}} placeholder="Enter First Name here"></input>
+          <input className="square border border-dark rounded mb-2 p-1" onChange={e => setFirstName(e.target.value)} style={{width:'100%'}} placeholder="Enter First Name here" required></input>
           {/* <MDBInput
             type="text"
             label={<span className="">Enter First Name here</span>}
@@ -83,7 +140,7 @@ const SignUp = () => {
           </MDBCol>
           <MDBCol md={6}>
           <MDBTypography className="mb-0">Last Name</MDBTypography>
-          <input className="square border border-dark rounded mb-2 p-1" size='50' style={{width:'100%'}} placeholder="Enter Last Name here"></input>
+          <input className="square border border-dark rounded mb-2 p-1" onChange={e => setLastName(e.target.value)} style={{width:'100%'}} placeholder="Enter Last Name here" required></input>
           {/* <MDBInput
             type="text"
             label={<span className="">Enter Last Name here</span>}
@@ -96,7 +153,7 @@ const SignUp = () => {
           </MDBCol>
           <MDBCol md={6}>
           <MDBTypography className="mb-0">Password</MDBTypography>
-          <input className="square border border-dark rounded mb-2 p-1" size='50' style={{width:'100%'}} placeholder="Enter Password here"></input>
+          <input className="square border border-dark rounded mb-2 p-1" onChange={e => setPassword(e.target.value)} style={{width:'100%'}} placeholder="Enter Password here" type='password' required></input>
           {/* <MDBInput
           //   type={!show.password ? "password" : "text"}
             label={<span className="">Enter Password here</span>}
@@ -109,7 +166,7 @@ const SignUp = () => {
           </MDBCol>
           <MDBCol md={6}>
           <MDBTypography className="mb-0">Confirm Password</MDBTypography>
-          <input className="square border border-dark rounded mb-2 p-1" size='50' style={{width:'100%'}} placeholder="Enter Password here"></input>
+          <input className="square border border-dark rounded mb-2 p-1" onChange={e => setconfirmPassword(e.target.value)} style={{width:'100%'}} placeholder="Confirm Password here" type="password"></input>
           {/* <MDBInput
           //   type={!show.confirm_password ? "password" : "text"}
             label={<span className="">Confirm Password here</span>}
@@ -141,14 +198,14 @@ const SignUp = () => {
           <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Accept our Terms and Condition'/>
           </MDBCol>     
 
-          </form>
+          
           </MDBCardBody>
 
           </MDBCard>
           <MDBRow>
           <MDBCol md={6}>
           <MDBTypography className="mt-3 fw-bold">
-            Already have an account? <span className="text-primary">Login</span>          
+            Already have an account? <a href="https://www.facebook.com/" className="text-primary">Login</a>          
           </MDBTypography>
 
           </MDBCol>
@@ -157,9 +214,9 @@ const SignUp = () => {
               Create Account
           </MDBBtn>
           </MDBCol>
-
+          
           </MDBRow>
-
+          </form>
                   
           
           </MDBContainer>

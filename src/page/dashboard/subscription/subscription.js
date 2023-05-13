@@ -27,19 +27,19 @@ const UpdateSubs = () => {
         const selectedValue = event.target.value;
       
         if (selectedValue === 'Pearl') {
-          setBadge('6459e83eb2030791727ab992');
+          setBadge(process.env.REACT_APP_PEARL);
         } else if (selectedValue === 'Ruby') {
-          setBadge('6459ea30a5912a22f76d4f99');
+          setBadge(process.env.REACT_APP_RUBY);
         } else if (selectedValue === 'Emerald') {
-          setBadge('6459ea41a5912a22f76d4f9d');
+          setBadge(process.env.REACT_APP_EMERALD);
         } else if (selectedValue === 'Diamond') {
-          setBadge('6459ea58a5912a22f76d4fa1');
+          setBadge(process.env.REACT_APP_DIAMOND);
         }
         
       }; 
 
     useEffect(()=>{
-        fetch(`http://localhost:4000/subscription/${badge}/find`)
+        fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/find`)
         .then(result => result.json())
         .then(data => {
             setGetTitles(data.subscriptionName)
@@ -49,17 +49,17 @@ const UpdateSubs = () => {
     },[badge])
 
     useEffect(()=>{
-        fetch(`http://localhost:4000/subscription/${badge}/finddesc`)
+        fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/finddesc`)
         .then(result => result.json())
         .then(data => {
-            // console.log(data)
+            
             setDescriptionList(data)
         })
     },[badge])
 
     function updatesub (e) {
         e.preventDefault();
-        fetch(`http://localhost:4000/subscription/${badge}/update`, {
+        fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/update`, {
             method:'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -90,7 +90,7 @@ const UpdateSubs = () => {
 
     function adddescription (e) {
         e.preventDefault();
-        fetch(`http://localhost:4000/subscription/${badge}/addnewdesc`,{
+        fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/addnewdesc`,{
             method:'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -100,11 +100,12 @@ const UpdateSubs = () => {
             }) 
         }).then(result => result.json())
         .then(data => {
+            console.log(data)
             if (data) {
 				Swal.fire({
-					title: "Updated Successfully",
+					title: "Add Successfully",
 					icon: "success",
-					text: "You Successfully Updated This"
+					text: "Successfully Added"
 				})
 				
 			} else {

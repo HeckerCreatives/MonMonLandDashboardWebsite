@@ -19,7 +19,9 @@ const Dashboard = () => {
 
 
   useEffect(()=>{
-    setLinks([
+    // switch () {
+    //   case "Superadmin":
+      setLinks([
         {
             name: "DASHBOARD",
             path: "/dashboard/superadmin/home",
@@ -51,6 +53,19 @@ const Dashboard = () => {
       },
 
     ])
+    // break;
+    // default: 
+    //  setLinks([
+    //   {
+    //     name: "DASHBOARD",
+    //     path: "/dashboard/user/home",
+    //     icon: "home",
+    //     children: [],
+    //   },
+    //  ])
+    // }
+    
+    
   },[])
 
     return(

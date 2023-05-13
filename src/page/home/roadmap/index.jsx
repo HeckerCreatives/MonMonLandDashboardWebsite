@@ -30,7 +30,7 @@ const Roadmap = () => {
 
     useEffect(()=>{
         setIsLoading(true)
-        fetch('http://localhost:4000/roadmap/find')
+        fetch(`${process.env.REACT_APP_API_URL}roadmap/find`)
         .then(result => result.json())
         .then(data => {
             setRoadmap(data.reverse().slice(0,4))

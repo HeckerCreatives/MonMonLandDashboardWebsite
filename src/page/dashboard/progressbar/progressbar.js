@@ -16,7 +16,7 @@ const UpdateProgressBar = () => {
     }
 
     useEffect(()=> {
-        fetch('http://localhost:4000/gameactivity/645b2df24bcc633e3ad4bd10/find')
+        fetch(`${process.env.REACT_APP_API_URL}gameactivity/${process.env.REACT_APP_PROGRESSID}/find`)
         .then(result => result.json())
         .then(data => {
             setInitialBar(data.initial)
@@ -42,7 +42,7 @@ const UpdateProgressBar = () => {
 
     function update (e) {
         e.preventDefault();
-        fetch('http://localhost:4000/gameactivity/645b2df24bcc633e3ad4bd10/update', {
+        fetch(`${process.env.REACT_APP_API_URL}${process.env.REACT_APP_PROGRESSID}/update`, {
             method:'PUT',
             headers: {
                 'Content-Type': 'application/json'

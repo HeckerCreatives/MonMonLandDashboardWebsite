@@ -37,7 +37,7 @@ const UpdateNewsModal = ({ theme, news }) => {
 
   function updatenews (e) {
     e.preventDefault();
-    fetch(`http://localhost:4000/news/${news._id}/update`, {
+    fetch(`${process.env.REACT_APP_NEWS_URL}${news._id}/update`, {
         method:'PUT',
         headers: {
             'Content-Type': 'application/json'

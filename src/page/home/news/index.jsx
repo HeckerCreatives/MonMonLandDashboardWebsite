@@ -24,7 +24,7 @@ const News = () => {
 
   useEffect(()=>{
     setIsLoading(true)
-    fetch('http://localhost:4000/news/find')
+    fetch(`${process.env.REACT_APP_API_URL}news/find`)
     .then(result => result.json())
     .then(data => {
         setNews(data)

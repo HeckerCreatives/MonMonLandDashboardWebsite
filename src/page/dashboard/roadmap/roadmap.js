@@ -24,7 +24,7 @@ const UpdateRoadmap = () => {
     
 
       useEffect(()=>{
-        fetch(`http://localhost:4000/roadmap/find`)
+        fetch(`${process.env.REACT_APP_API_URL}roadmap/find`)
         .then(result => result.json())
         .then(data => {
             setRdList(data)
@@ -33,7 +33,7 @@ const UpdateRoadmap = () => {
 
       function add (e) {
         e.preventDefault();
-        fetch(`http://localhost:4000/roadmap/addroadmap`, {
+        fetch(`${process.env.REACT_APP_API_URL}roadmap/addroadmap`, {
             method:'POST',
             headers: {
                 'Content-Type': 'application/json'

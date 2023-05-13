@@ -28,7 +28,7 @@ const UpdateNews = () => {
       }, [news]);
 
     useEffect(()=>{
-      fetch('http://localhost:4000/news/find')
+      fetch(`${process.env.REACT_APP_API_URL}news/find`)
       .then(result => result.json())
       .then(data => {
           setNews(data)
@@ -36,28 +36,14 @@ const UpdateNews = () => {
       })
     },[])
 
-    const handleSelectChange = (event) => {
-        const selectedValue = event.target.value;
-      
-        if (selectedValue === 'Woodcutting') {
-          setNewsId('6448b34e475b52b170636657');
-        } else if (selectedValue === 'Mining') {
-          setNewsId('6448b306475b52b170636651');
-        } else if (selectedValue === 'Fishing') {
-          setNewsId('6448b31a475b52b170636653');
-        } else if (selectedValue === 'Crafting') {
-          setNewsId('6448b32c475b52b170636655');
-        }
-      };
-
-      useEffect(()=>{
-        fetch(`http://localhost:4000/news/${newsid}/find`)
-        .then(result => result.json())
-        .then(data => {
-            setTitles(data.title)
-            setDescriptions(data.description)
-        })
-      })
+      // useEffect(()=>{
+      //   fetch(`${process.env.REACT_APP_NEWS_URL}${newsid}/find`)
+      //   .then(result => result.json())
+      //   .then(data => {
+      //       setTitles(data.title)
+      //       setDescriptions(data.description)
+      //   })
+      // })
 
       
     return (

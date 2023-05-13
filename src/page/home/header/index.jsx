@@ -21,7 +21,7 @@ const Header = () => {
 
      useEffect(()=> {
         setIsLoading(true)
-        fetch('http://localhost:4000/gameactivity/6447681e5d356036c58392af/find')
+        fetch(`${process.env.REACT_APP_API_URL}gameactivity/${process.env.REACT_APP_PROGRESSID}/find`)
         .then(result => result.json())
         .then(data => {
             setInitialBar(data.initial)

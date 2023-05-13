@@ -35,7 +35,7 @@ const CreateNews = () => {
   };
 
   function addnews () {
-    fetch(`http://localhost:4000/news/addnews`, {
+    fetch(`${process.env.REACT_APP_NEWS_URL}/addnews`, {
       method:'POST',
       headers: {
         'Content-Type': 'application/json'

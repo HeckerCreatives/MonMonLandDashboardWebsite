@@ -34,13 +34,13 @@ const Subscription = () => {
     
     useEffect(()=>{
         setIsLoading(true)
-        fetch('http://localhost:4000/subscription/find')
+        fetch(`${process.env.REACT_APP_API_URL}subscription/find`)
         .then(result => result.json())
         .then(data => {
             setSubs(data)
             setIsLoading(false)
         })
-        fetch('http://localhost:4000/subscription/finddesc')
+        fetch(`${process.env.REACT_APP_API_URL}subscription/finddesc`)
         .then(result => result.json())
         .then(data => {
             setSubsDescription(data)
