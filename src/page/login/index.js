@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     MDBBtn,
     MDBCard,
@@ -13,7 +13,44 @@ import {
     MDBCheckbox
   } from "mdb-react-ui-kit";
 import logo from "../../assets/header/small logo for navi.png"
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 const Login = () =>{
+  const [email, setEmail]= useState('');
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const login = (e) =>{
+    e.preventDefault()
+    fetch(`${process.env.REACT_APP_API_URL}auth/login`,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+    }).then(result => result.json())
+    .then(data =>{
+      console.log(data)
+      if (data === false) {        
+				Swal.fire({
+          title: "Password Not Match",
+          icon: "error",
+          text: "Incorrect Password"
+        })
+			} else {			
+        localStorage.setItem('auth', JSON.stringify(data))	
+        Swal.fire({
+					title: "Login Successfully",
+					icon: "success",
+					text: `Welcome ${data.firstName}`
+				})
+				navigate('/dashboard/user/home')
+			}
+    })
+  }
   return(
     <MDBContainer
     fluid
@@ -48,14 +85,14 @@ const Login = () =>{
       <MDBTypography >No account yet? <a href="https://www.facebook.com/">Register now</a></MDBTypography>
       </MDBCol>
       
-
+        <form onSubmit={login}>
         <MDBCard className="">
           <MDBCardBody>
             <MDBRow className="d-flex align-items-center">
               
               <MDBCol>
               <MDBTypography className="mb-0">
-              Username        
+              Username/Email        
               </MDBTypography>
                 <MDBInput 
                 label={
@@ -64,7 +101,9 @@ const Login = () =>{
                   </span>
                 } 
                 type="text"
-                className="" 
+                className=""
+                onChange={e => setEmail(e.target.value)} 
+                required
                 />
                 </MDBCol>                
                 <MDBRow className="mx-0 my-3">
@@ -72,7 +111,7 @@ const Login = () =>{
                   <MDBTypography className="mb-0">
                   Password        
                   </MDBTypography>
-                    <MDBInput label={<span className="">Password</span>} type="password"/>
+                    <MDBInput label={<span className="">Password</span>} type="password" onChange={e => setPassword(e.target.value)} required/>
                   </MDBCol>
                 </MDBRow>
                 <MDBCol>
@@ -89,6 +128,7 @@ const Login = () =>{
           Login to dashboard
         </MDBBtn>
         </MDBTypography>
+        </form>
         </MDBContainer>
       </MDBCol>
     </MDBRow>

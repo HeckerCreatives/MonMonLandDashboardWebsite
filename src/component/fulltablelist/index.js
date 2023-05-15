@@ -10,17 +10,18 @@ import {
     MDBCol
 } from 'mdb-react-ui-kit';
 import Sidebarnav from "../../component/sidebarnav";
+import "./table.css"
 const FullTable = ({txtHeader, txtTable}) => {
     
 
     return (
     <MDBContainer fluid>
          
-    <MDBContainer fluid className="p-0 my-4 border">
-    <MDBBtn rounded size="sm" className="m-1">filter</MDBBtn>
-    <MDBBtn rounded size="sm" className="m-1">filter</MDBBtn>
-    <MDBTable striped>
-      <MDBTableHead>
+    <MDBContainer fluid className="p-0 my-4 ">
+    {/* <MDBBtn rounded size="sm" className="m-1">filter</MDBBtn>
+    <MDBBtn rounded size="sm" className="m-1">filter</MDBBtn> */}
+    <MDBTable >
+      <MDBTableHead className="head">
       <tr>
         {txtHeader.map((txthd, i) => (
         

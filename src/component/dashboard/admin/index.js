@@ -50,46 +50,7 @@ const AdminDashboard = () => {
       )
     },[])
 
-const [txthead, setTxtHead] = useState([]),
-    [txttable, setTxtTable] = useState([]);
 
-useEffect(()=>{
-setTxtHead([
-  {
-    title:'Wan two tree'
-  },
-  {
-    title:'Wan two tree'
-  },
-  {
-    title:'Wan two tree'
-  }, ]
-)
-setTxtTable(
-[
-  [
-    'row 1, col 1',
-    'row 1, col 2',
-    'row 1, col 3',
-  ],
-  [
-    'row 1, col 1',
-    'row 1, col 2',
-    'row 1, col 3',
-  ],
-  [
-    'row 1, col 1',
-    'row 1, col 2',
-    'row 1, col 3',
-  ],
-  [
-    'row 1, col 1',
-    'row 1, col 2',
-    'row 1, col 3',
-  ],
-]
-)
-},[])
 
     return (
         <MDBContainer fluid>

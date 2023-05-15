@@ -7,7 +7,7 @@ import Cards from "../../../component/cards";
 
 const UserDashboard = () => {
     return(
-        <MDBContainer>
+        <MDBContainer fluid>
         <Breadcrumb title='Dashboard' paths={[]}/>
         {/* Cards */}
         <MDBRow>

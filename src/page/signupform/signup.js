@@ -14,7 +14,7 @@ const SignUp = () => {
   const [confirmpassword, setconfirmPassword] = useState('')
   const navigate = useNavigate()
 
-  const roleId = process.env.REACT_APP_PLAYERROLE
+  const roleId = process.env.REACT_APP_ADMINROLE
 
   const register = (e) => {
     e.preventDefault();
