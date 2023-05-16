@@ -16,7 +16,7 @@ const Dashboard = () => {
   const auth = JSON.parse(localStorage.getItem("auth"))
   const [darkMode, setDarkMode] = React.useState(true);
   // const userRole = "Superadmin" 
-  console.log(auth)  
+  // console.log(auth)  
 
   
     let link;
@@ -45,11 +45,7 @@ const Dashboard = () => {
             {
               name: "Email Unverified",
               path: "/dashboard/superadmin/manageplayers/emailunverified",
-            },
-            {
-              name: "Mobile Unverified",
-              path: "/dashboard/superadmin/manageplayers/mobileunverified",
-            },
+            },            
             {
               name: "With Balance",
               path: "/dashboard/superadmin/manageplayers/withbalance",

@@ -2,12 +2,16 @@ import { MDBBtn, MDBCol, MDBContainer, MDBIcon, MDBInput, MDBRow, MDBTable, MDBT
 import React, {useState, useEffect} from "react";
 import Breadcrumb from "../../../component/breadcrumb";
 import FullTable from "../../../component/fulltablelist";
-
+import { Link } from "react-router-dom";
+// import ManageDashboard from "../../../component/dashboard/admin/manageplayer/managedashboard"
 
 
 const ActiveUsers = () => {
-    const [txthead, setTxtHead] = useState([]),
-    [txttable, setTxtTable] = useState([]);
+  const [userDetails, setUserDetails] = useState([]);
+  const [username, setUsername] = useState('');
+  const [txthead, setTxtHead] = useState([]),
+        [txttable, setTxtTable] = useState([]);
+
 
 useEffect(()=>{
 setTxtHead(
@@ -16,7 +20,7 @@ setTxtHead(
     title:'User'
   },
   {
-    title:'Email-Phone'
+    title:'Email'
   },
   {
     title:'Country'
@@ -33,54 +37,71 @@ setTxtHead(
 
 ]
 )
-setTxtTable(
-[
-  [
-    'row 1, col 1',
-    'row 1, col 2',
-    'row 1, col 3',
-    'row 1, col 3',
-    'row 1, col 3',
-    <MDBBtn outline>
-      <MDBIcon fas icon="desktop" />
-      &nbsp; Details
-    </MDBBtn>,
-  ],
-  [
-    'row 1, col 1',
-    'row 1, col 2',
-    'row 1, col 3',
-    'row 1, col 3',
-    'row 1, col 3',
-    <MDBBtn outline>
-      <MDBIcon fas icon="desktop" />
-      &nbsp; Details
-    </MDBBtn>,
-  ],
-  [
-    'row 1, col 1',
-    'row 1, col 2',
-    'row 1, col 3',
-    'row 1, col 3',
-    'row 1, col 3',
-    <MDBBtn outline>
-      <MDBIcon fas icon="desktop" />
-      &nbsp; Details
-    </MDBBtn>,
-  ],
-  [
-    'row 1, col 1',
-    'row 1, col 2',
-    'row 1, col 3',
-    'row 1, col 3',
-    'row 1, col 3',
-    <MDBBtn outline>
-      <MDBIcon fas icon="desktop" />
-      &nbsp; Details
-    </MDBBtn>,
-  ],
-]
-)
+
+// setTxtTable(
+// [
+//   [
+//     'row 1, col 1',
+//     'row 1, col 2',
+//     'row 1, col 3',
+//     'row 1, col 3',
+//     'row 1, col 3',
+//     <Link to = "/dashboard/superadmin/manageplayers/usersdetails">
+//       <MDBBtn outline>
+//       <MDBIcon fas icon="desktop" />
+//       &nbsp; Details
+//     </MDBBtn>
+//     </Link>,
+//   ],
+//   [
+//     'row 1, col 1',
+//     'row 1, col 2',
+//     'row 1, col 3',
+//     'row 1, col 3',
+//     'row 1, col 3',
+//     <Link to = "/dashboard/superadmin/manageplayers/usersdetails">
+//       <MDBBtn outline>
+//       <MDBIcon fas icon="desktop" />
+//       &nbsp; Details
+//     </MDBBtn>
+//     </Link>,
+//   ],
+//   [
+//     'row 1, col 1',
+//     'row 1, col 2',
+//     'row 1, col 3',
+//     'row 1, col 3',
+//     'row 1, col 3',
+//     <Link to = "/dashboard/superadmin/manageplayers/usersdetails">
+//       <MDBBtn outline>
+//       <MDBIcon fas icon="desktop" />
+//       &nbsp; Details
+//     </MDBBtn>
+//     </Link>,
+//   ],
+//   [
+//     'row 1, col 1',
+//     'row 1, col 2',
+//     'row 1, col 3',
+//     'row 1, col 3',
+//     'row 1, col 3',
+//     <Link to = "/dashboard/superadmin/manageplayers/usersdetails">
+//       <MDBBtn outline>
+//       <MDBIcon fas icon="desktop" />
+//       &nbsp; Details
+//     </MDBBtn>
+//     </Link>,
+//   ],
+// ]
+// )
+
+fetch(`${process.env.REACT_APP_API_URL}manage/activeuser`)
+.then(result => result.json())
+.then(data => {
+  setTxtTable(data)
+})
+
+
 },[])
 
 

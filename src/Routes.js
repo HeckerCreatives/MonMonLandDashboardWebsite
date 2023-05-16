@@ -20,8 +20,9 @@ import BannedUsers from "./page/dashboard/manageplayers/bannedusers";
 import PaidUsers from "./page/dashboard/manageplayers/paidusers";
 import AllUsers from "./page/dashboard/manageplayers/allusers";
 import EmailUnverified from "./page/dashboard/manageplayers/emailunverified";
-import MobileUnverified from "./page/dashboard/manageplayers/mobileunverified";
+// import MobileUnverified from "./page/dashboard/manageplayers/mobileunverified";
 import WithBalance from "./page/dashboard/manageplayers/withbalance";
+import ManageDashboard from "./component/dashboard/admin/manageplayer/managedashboard";
 
 const Routers = () => {
   return (
@@ -38,11 +39,14 @@ const Routers = () => {
           <Route path="activeplayers" element={<ActiveUsers/>}/>
           <Route path="bannedplayers" element={<BannedUsers/>}/>
           <Route path="emailunverified" element={<EmailUnverified/>}/>
-          <Route path="mobileunverified" element={<MobileUnverified/>}/>
+          {/* <Route path="mobileunverified" element={<MobileUnverified/>}/> */}
           <Route path="withbalance" element={<WithBalance/>}/>
           <Route path="paidusers" element={<PaidUsers/>}/>
           <Route path="allusers" element={<AllUsers/>}/>
+          <Route path="usersdetails/:userId" element={<ManageDashboard/>}/>                           
         </Route>
+        
+
         <Route path="settings">
           <Route path="updateprogressbar" element={<UpdateProgressBar/>}/>
           <Route path="updatesubs" element={<UpdateSubs/>}/>

@@ -2,7 +2,7 @@ import { MDBCol, MDBContainer, MDBIcon, MDBInput, MDBRow, MDBBtn } from "mdb-rea
 import React, {useState, useEffect} from "react";
 import Breadcrumb from "../../../component/breadcrumb";
 import FullTable from "../../../component/fulltablelist";
-
+import { Link } from "react-router-dom";
 const BannedUsers = () => {
     const [txthead, setTxtHead] = useState([]),
     [txttable, setTxtTable] = useState([]);
@@ -14,7 +14,7 @@ setTxtHead(
     title:'User'
   },
   {
-    title:'Email-Phone'
+    title:'Email'
   },
   {
     title:'Country'
@@ -31,54 +31,12 @@ setTxtHead(
 
 ]
 )
-setTxtTable(
-[
-  [
-    'row 1, col 1',
-    'row 1, col 2',
-    'row 1, col 3',
-    'row 1, col 3',
-    'row 1, col 3',
-    <MDBBtn outline>
-      <MDBIcon fas icon="desktop" />
-      &nbsp; Details
-    </MDBBtn>,
-  ],
-  [
-    'row 1, col 1',
-    'row 1, col 2',
-    'row 1, col 3',
-    'row 1, col 3',
-    'row 1, col 3',
-    <MDBBtn outline>
-      <MDBIcon fas icon="desktop" />
-      &nbsp; Details
-    </MDBBtn>,
-  ],
-  [
-    'row 1, col 1',
-    'row 1, col 2',
-    'row 1, col 3',
-    'row 1, col 3',
-    'row 1, col 3',
-    <MDBBtn outline>
-      <MDBIcon fas icon="desktop" />
-      &nbsp; Details
-    </MDBBtn>,
-  ],
-  [
-    'row 1, col 1',
-    'row 1, col 2',
-    'row 1, col 3',
-    'row 1, col 3',
-    'row 1, col 3',
-    <MDBBtn outline>
-      <MDBIcon fas icon="desktop" />
-      &nbsp; Details
-    </MDBBtn>,
-  ],
-]
-)
+
+fetch(`${process.env.REACT_APP_API_URL}manage/banneduser`)
+.then(result => result.json())
+.then(data =>{
+  setTxtTable(data)
+})
 },[])
 
 
