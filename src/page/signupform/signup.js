@@ -1,9 +1,9 @@
 import { MDBContainer, MDBInput, MDBRow, MDBCol,MDBIcon,MDBTypography,MDBBtn, MDBCard, MDBCardTitle, MDBCardBody, MDBCheckbox } from "mdb-react-ui-kit";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../assets/header/small logo for navi.png"
 import './signup.css'
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState('')
@@ -12,9 +12,22 @@ const SignUp = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')  
   const [confirmpassword, setconfirmPassword] = useState('')
+  const [user, setUser] = useState("")
+  const [referrer, setReferrer] = useState('');
   const navigate = useNavigate()
+  const {userId} = useParams();
+  const roleId = process.env.REACT_APP_AGENTROLE
 
-  const roleId = process.env.REACT_APP_ADMINROLE
+  useEffect(()=> {
+    if (userId) {
+      const validateReferrer = async () =>{
+       const user = await fetch(`${process.env.REACT_APP_API_URL}user/find/${userId}`)
+        setUser(user)
+        setReferrer(user.userName)
+      }
+      validateReferrer()
+    }
+  },[userId])
 
   const register = (e) => {
     e.preventDefault();
@@ -34,6 +47,7 @@ const SignUp = () => {
       },
       body: JSON.stringify({
         roleId: roleId,
+        referrerId: referrer,
         firstName: firstName,
         lastName: lastName,
         userName: userName,
@@ -57,7 +71,6 @@ const SignUp = () => {
         })
 			}
     })
-    
   }
 
     return(
@@ -190,7 +203,7 @@ const SignUp = () => {
               required
             /> */}
           </MDBTypography>
-          <input className="square border border-dark rounded mb-2 p-1" size='50' style={{width:'100%'}} placeholder="Enter Referral here"></input>
+          <input className="square border border-dark rounded mb-2 p-1" size='50' style={{width:'100%'}} value={referrer} disabled={referrer ? false: true} readOnly></input>
           </MDBCol>         
 
           </MDBRow>

@@ -100,7 +100,7 @@ const UpdateSubs = () => {
             }) 
         }).then(result => result.json())
         .then(data => {
-            console.log(data)
+            // console.log(data)
             if (data) {
 				Swal.fire({
 					title: "Add Successfully",

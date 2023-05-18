@@ -8,32 +8,30 @@ import {
   MDBInput,
   MDBRow
 } from "mdb-react-ui-kit"
+import "./index.css"
 
-
-const Cards = ({icon,color,texts,title}) => {
+const Cards = ({icon,texts,title, showviewbtn, url, style, cardstyle, textstyle}) => {
     return(
-        <MDBCol 
-        md={4} 
+        <MDBCol          
         className="my-2 mt-md-2">
-            <MDBCard className={`bg-${color} text-white`}>
-                <MDBCardBody className="">
-                <MDBRow className="d-flex align-items-center">
-                <MDBCol className="col-4">
-                    <span className="">
-                        <MDBIcon size="3x" icon={icon}>
-                        </MDBIcon>
-                    </span>
-                </MDBCol>
-                <MDBCol className="col-8 text-end">
-                    <MDBTypography tag="h4" className="font-weight-bold mt-2">
+            <MDBCard className={``} style={cardstyle}>
+                <MDBCardBody className="">                
+                <MDBRow className="">
+                <MDBCol className="">
+                    <div className="d-flex justify-content-between">
+                    <div style={style}>
+                    <MDBIcon size="2x" icon={icon} color="white">
+                    </MDBIcon>
+                    </div>                        
+                    { showviewbtn && <a href={url} className={``}>View All</a>} 
+                    </div>
+                    <MDBTypography tag="p">
                     {title}
                     </MDBTypography>
-                    <MDBTypography tag="h5" className="font-weight-bold mt-2">
+                    <MDBTypography tag="h5" style={textstyle}>
                     {texts}
                     </MDBTypography>
-                </MDBCol>   
-                    
-                    
+                </MDBCol>
                 </MDBRow>
                     
                 </MDBCardBody>

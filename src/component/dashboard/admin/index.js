@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { MDBContainer, MDBBtn, MDBRow, MDBCol,MDBIcon } from "mdb-react-ui-kit";
+import { MDBContainer, MDBBtn, MDBRow, MDBCol,MDBIcon, MDBCard, MDBCardBody, MDBTypography } from "mdb-react-ui-kit";
 import Cards from "../../cards/index";
 import Graph from "../../graph";
 import MiniTableList from "../../minitablelist";
@@ -11,7 +11,11 @@ import Breadcrumb from "../../breadcrumb";
 const AdminDashboard = () => {
     const [minithtitle, setMiniThTitle] = useState([]),
     [minitdtext, setMiniTdText] = useState([]);
-
+    const [viewdetails, setviewdetails] = useState(true)
+    const [users, setUsers] = useState([]);
+    const [activeusers, setActiveUsers] = useState([]);
+    const [banusers, setBanUsers] = useState([]);
+    const [paidusers, setPaidUsers] = useState([]);
   useEffect(()=>{
       setMiniThTitle([
         {
@@ -50,62 +54,164 @@ const AdminDashboard = () => {
       )
     },[])
 
+  useEffect(()=> {
+    fetch(`${process.env.REACT_APP_API_URL}manage/alluser`)
+    .then(result => result.json())
+    .then(data => {
+        setUsers(data)
+        
+    }) 
+    fetch(`${process.env.REACT_APP_API_URL}manage/activeuser`)
+    .then(result => result.json())
+    .then(data => {
+      setActiveUsers(data)
+    }) 
+    fetch(`${process.env.REACT_APP_API_URL}manage/banneduser`)
+    .then(result => result.json())
+    .then(data =>{
+      setBanUsers(data)
+    })
+    fetch(`${process.env.REACT_APP_API_URL}manage/paiduser`)
+    .then(result => result.json())
+    .then(data =>{
+      setPaidUsers(data)
+    })
+  },[])
 
+  const handleview = () => {
+    if (viewdetails) {
+      setviewdetails(false)
+    } else {
+      setviewdetails(true)
+    }
+    
+  }  
 
     return (
         <MDBContainer fluid>
         <Breadcrumb title='Dashboard' paths={[]}/>
         {/* Cards */}
+        
+        <MDBCard className="off"  style={{width:"50%", transform: 'translate(50%, 0%)'}}>       
+        
+        <MDBCardBody>
+        <MDBCol className="d-flex justify-content-between m-2">
+        <MDBTypography className="fw-bold">Summarize User Details</MDBTypography>
+        {viewdetails ? 
+        <MDBBtn onClick={handleview} style={{}}>View Details</MDBBtn>
+        :
+        <MDBBtn onClick={handleview}>Hide Details</MDBBtn>
+        }
+        </MDBCol>
         <MDBRow>
+          <MDBCol >
           <Cards
+            textstyle={{color: "#991FDD"}}
+            cardstyle={{background: "#F2FFEB"}}
+            style={{background: "#991FDD", padding: "10px", borderRadius: "5px"}}
             color='primary'
-            icon='hotel'
-            title='Players'
-            texts='Madami hehe'
+            icon='users'
+            title='Total Users'
+            texts={users.length}
           />
+          </MDBCol>
+          <MDBCol >
           <Cards
-            color='danger'
-            icon='dollar'
-            title='Sales'
-            texts='Madami hehe'
-          />
-          <Cards
-            color='warning'
-            icon='hotel'
-            title='Credits'
-            texts='Madami hehe'
-          />
-          <Cards
-            color='danger'
-            icon='hotel'
-            title='Credits'
-            texts='Madami hehe'
-          />
-          <Cards
+            textstyle={{color: "#71A92F"}}
+            cardstyle={{background: "#DDFFF9"}}
+            style={{background: "#71A92F", padding: "10px", borderRadius: "5px"}}
             color='success'
-            icon='hotel'
-            title='Credits'
-            texts='Madami hehe'
+            icon='user'
+            title='Active Users'
+            texts={activeusers.length}
+          />
+          </MDBCol>
+          <MDBCol >
+          <Cards
+            textstyle={{color: "#05C7B9"}}
+            cardstyle={{background: "#E9F5FF"}}
+            style={{background: "#05C7B9", padding: "10px", borderRadius: "5px"}}
+            color='warning'
+            icon='user-alt-slash'
+            title='Inactive Users'
+            texts={banusers.length}
+          />
+          </MDBCol>
+          <MDBCol >
+          <Cards
+            textstyle={{color: "#09BCED"}}
+            cardstyle={{background: "#F6EEFF"}}
+            style={{background: "#09BCED", padding: "10px", borderRadius: "5px"}}
+            color='success'
+            icon='hand-holding-usd'
+            title='Paid Users'
+            texts={paidusers.length}
+          />
+          </MDBCol>
+        </MDBRow>
+        </MDBCardBody>
+          
+        </MDBCard>
+        { viewdetails ?
+          null
+          :          
+          <MDBRow className="mt-3">        
+        <MDBTypography className="fw-bold">User Full Details</MDBTypography>              
+          <Cards
+            textstyle={{color: "#991FDD"}}
+            cardstyle={{background: "#F2FFEB"}}
+            style={{background: "#991FDD", padding: "10px", borderRadius: "5px"}}
+            showviewbtn={true}
+            url="/dashboard/superadmin/manageplayers/allusers"
+            color='primary'
+            icon='users'
+            title='Total Users'
+          />       
+          <Cards
+            textstyle={{color: "#71A92F"}}
+            cardstyle={{background: "#DDFFF9"}}
+            style={{background: "#71A92F", padding: "10px", borderRadius: "5px"}}
+            showviewbtn={true}
+            url="/dashboard/superadmin/manageplayers/activeplayers"
+            color='success'
+            icon='user'
+            title='Active Users'
           />
           <Cards
-            color='dark'
-            icon='hotel'
-            title='Credits'
-            texts='Madami hehe'
+            textstyle={{color: "#05C7B9"}}
+            cardstyle={{background: "#E9F5FF"}}
+            style={{background: "#05C7B9", padding: "10px", borderRadius: "5px"}}
+            showviewbtn={true}
+            url="/dashboard/superadmin/manageplayers/activeplayers"
+            color='warning'
+            icon='user-alt-slash'
+            title='Inactive Users'
+          />
+          <Cards
+            textstyle={{color: "#09BCED"}}
+            cardstyle={{background: "#F6EEFF"}}
+            style={{background: "#09BCED", padding: "10px", borderRadius: "5px"}}
+            showviewbtn={true}
+            url="/dashboard/superadmin/manageplayers/paidusers"
+            color='success'
+            icon='hand-holding-usd'
+            title='Paid Users'
           />
         </MDBRow>
+        }
         
-        
-        <MDBRow>
+
+
+        {/* <MDBRow>
           <MDBCol lg={6} md={12} className="my-4">
-            {/* Graph */}
+            
             <Graph
               title='Registers'
               subtitle='*Number of Registers (Monthly)'
             />        
           </MDBCol>
           <MDBCol lg={6}>
-            {/* Minitable */}
+            
             <MiniTableList 
               miniThTitle={minithtitle}
               miniTdText={minitdtext}
@@ -116,7 +222,7 @@ const AdminDashboard = () => {
               text='Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
             />
           </MDBCol>
-        </MDBRow>
+        </MDBRow> */}
         {/* <FullTable
           txtHeader={txthead}
           txtTable={txttable}
