@@ -6,16 +6,29 @@ import MiniTableList from "../../minitablelist";
 import MiniDescription from "../../minidescription";
 import FullTable from "../../fulltablelist";
 import Breadcrumb from "../../breadcrumb";
+import { useNavigate } from "react-router-dom";
 
 
 const AdminDashboard = () => {
     const [minithtitle, setMiniThTitle] = useState([]),
     [minitdtext, setMiniTdText] = useState([]);
+    const auth = JSON.parse(localStorage.getItem("auth"))
     const [viewdetails, setviewdetails] = useState(true)
     const [users, setUsers] = useState([]);
     const [activeusers, setActiveUsers] = useState([]);
     const [banusers, setBanUsers] = useState([]);
     const [paidusers, setPaidUsers] = useState([]);
+    const navigate = useNavigate()
+    
+  useEffect(() => {
+      if (auth) {
+        if (auth.roleId.display_name !== "Administrator") {
+          localStorage.removeItem("auth");
+          navigate("/sessions/login");
+        }
+      }
+    }, [auth, navigate]);
+
   useEffect(()=>{
       setMiniThTitle([
         {
@@ -98,17 +111,18 @@ const AdminDashboard = () => {
         <MDBCol className="d-flex justify-content-between m-2">
         <MDBTypography className="fw-bold">Summarize User Details</MDBTypography>
         {viewdetails ? 
-        <MDBBtn onClick={handleview} style={{}}>View Details</MDBBtn>
+        <MDBBtn onClick={handleview}>View Details</MDBBtn>
         :
-        <MDBBtn onClick={handleview}>Hide Details</MDBBtn>
+        <MDBBtn onClick={handleview} style={{}}>Hide Details</MDBBtn>
         }
         </MDBCol>
         <MDBRow>
           <MDBCol >
           <Cards
-            textstyle={{color: "#991FDD"}}
+            textstyle={{color: "#991FDD", fontWeight: "bold", fontSize: "25px"}}
+            titlestyle={{color: "black", marginTop:"10px",marginBottom:"0px"}}
             cardstyle={{background: "#F2FFEB"}}
-            style={{background: "#991FDD", padding: "10px", borderRadius: "5px"}}
+            iconstyle={{background: "#991FDD", padding: "10px", borderRadius: "5px"}}
             color='primary'
             icon='users'
             title='Total Users'
@@ -117,9 +131,10 @@ const AdminDashboard = () => {
           </MDBCol>
           <MDBCol >
           <Cards
-            textstyle={{color: "#71A92F"}}
+            textstyle={{color: "#71A92F", fontWeight: "bold", fontSize: "25px"}}
+            titlestyle={{color: "black", marginTop:"10px",marginBottom:"0px"}}
             cardstyle={{background: "#DDFFF9"}}
-            style={{background: "#71A92F", padding: "10px", borderRadius: "5px"}}
+            iconstyle={{background: "#71A92F", padding: "10px", borderRadius: "5px"}}
             color='success'
             icon='user'
             title='Active Users'
@@ -128,9 +143,10 @@ const AdminDashboard = () => {
           </MDBCol>
           <MDBCol >
           <Cards
-            textstyle={{color: "#05C7B9"}}
+            textstyle={{color: "#05C7B9", fontWeight: "bold", fontSize: "25px"}}
+            titlestyle={{color: "black", marginTop:"10px",marginBottom:"0px"}}
             cardstyle={{background: "#E9F5FF"}}
-            style={{background: "#05C7B9", padding: "10px", borderRadius: "5px"}}
+            iconstyle={{background: "#05C7B9", padding: "10px", borderRadius: "5px"}}
             color='warning'
             icon='user-alt-slash'
             title='Inactive Users'
@@ -139,9 +155,10 @@ const AdminDashboard = () => {
           </MDBCol>
           <MDBCol >
           <Cards
-            textstyle={{color: "#09BCED"}}
+            textstyle={{color: "#09BCED", fontWeight: "bold", fontSize: "25px"}}
+            titlestyle={{color: "black", marginTop:"10px",marginBottom:"0px"}}
             cardstyle={{background: "#F6EEFF"}}
-            style={{background: "#09BCED", padding: "10px", borderRadius: "5px"}}
+            iconstyle={{background: "#09BCED", padding: "10px", borderRadius: "5px"}}
             color='success'
             icon='hand-holding-usd'
             title='Paid Users'
@@ -159,8 +176,9 @@ const AdminDashboard = () => {
         <MDBTypography className="fw-bold">User Full Details</MDBTypography>              
           <Cards
             textstyle={{color: "#991FDD"}}
+            titlestyle={{color: "black", marginTop:"10px",marginBottom:"0px"}}
             cardstyle={{background: "#F2FFEB"}}
-            style={{background: "#991FDD", padding: "10px", borderRadius: "5px"}}
+            iconstyle={{background: "#991FDD", padding: "10px", borderRadius: "5px"}}
             showviewbtn={true}
             url="/dashboard/superadmin/manageplayers/allusers"
             color='primary'
@@ -169,8 +187,9 @@ const AdminDashboard = () => {
           />       
           <Cards
             textstyle={{color: "#71A92F"}}
+            titlestyle={{color: "black", marginTop:"10px",marginBottom:"0px"}}
             cardstyle={{background: "#DDFFF9"}}
-            style={{background: "#71A92F", padding: "10px", borderRadius: "5px"}}
+            iconstyle={{background: "#71A92F", padding: "10px", borderRadius: "5px"}}
             showviewbtn={true}
             url="/dashboard/superadmin/manageplayers/activeplayers"
             color='success'
@@ -179,8 +198,9 @@ const AdminDashboard = () => {
           />
           <Cards
             textstyle={{color: "#05C7B9"}}
+            titlestyle={{color: "black", marginTop:"10px",marginBottom:"0px"}}
             cardstyle={{background: "#E9F5FF"}}
-            style={{background: "#05C7B9", padding: "10px", borderRadius: "5px"}}
+            iconstyle={{background: "#05C7B9", padding: "10px", borderRadius: "5px"}}
             showviewbtn={true}
             url="/dashboard/superadmin/manageplayers/activeplayers"
             color='warning'
@@ -189,8 +209,9 @@ const AdminDashboard = () => {
           />
           <Cards
             textstyle={{color: "#09BCED"}}
+            titlestyle={{color: "black", marginTop:"10px",marginBottom:"0px"}}
             cardstyle={{background: "#F6EEFF"}}
-            style={{background: "#09BCED", padding: "10px", borderRadius: "5px"}}
+            iconstyle={{background: "#09BCED", padding: "10px", borderRadius: "5px"}}
             showviewbtn={true}
             url="/dashboard/superadmin/manageplayers/paidusers"
             color='success'

@@ -9,6 +9,10 @@ const Sidebarnav = ({ links, didToggle, setDidToggle }) => {
   const navigate = useNavigate();
   const activePath = window.location.pathname;
 
+  const handleLogout = () => {
+    localStorage.removeItem('auth')
+    window.location.replace("/login");    
+  }
   const checkActive = (link) => {
     let newStyle = "";
     if (link.children.length === 0) {
@@ -125,7 +129,7 @@ const Sidebarnav = ({ links, didToggle, setDidToggle }) => {
         <div
           title="Logout"
           className="pe-5 py-0 fs-6 shadow-0 text-white fw-bold sidebar-logout-btn"
-          // onClick={handleLogout}
+          onClick={handleLogout}
         >
           <MDBIcon fas icon="sign-out-alt" size="xl" className="mx-4" /> LOGOUT
         </div>

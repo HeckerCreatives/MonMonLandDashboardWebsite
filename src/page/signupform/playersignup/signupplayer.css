@@ -1,0 +1,37 @@
+.sidebg {
+    position: relative;
+    background-image: url('../../../assets/BG/HEADER.png');
+    /* background-size: 100% 100%; */
+    /* background-repeat: no-repeat; */
+    background-position: center;
+    object-fit: cover;
+}
+
+.sidebg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(12, 91, 60, 0.5); /* Change the color and opacity as desired */
+    z-index: 1;
+}
+
+.sidebg .text {
+    position: relative;    
+    z-index: 2; /* Bring the text in front of the background */
+    
+}
+/* Your other CSS styles for .sidebg */
+
+@media only screen and (max-width: 768px) {
+    .sidebg {
+        position: relative;
+        background-image: url('../../../assets/BG/FOOTER\ bg.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 50%;
+    }
+}

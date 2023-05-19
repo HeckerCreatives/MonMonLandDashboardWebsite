@@ -160,40 +160,86 @@ console.log(userdetail)
         <MDBTypography className="mt-3">User Detail - {userdetail.userName}</MDBTypography>
             <MDBRow>
                 <Cards
-                color='primary'
-                icon='hotel'
-                title='Players'
-                texts='Madami hehe'
+                itemcol={`d-flex align-items-center gap-3`}
+                textstyle={{color: "white"}}
+                titlestyle={{color: "white", marginTop:"10px",marginBottom:"0px"}}
+                cardstyle={{background: "#342EAD"}}
+                iconstyle={{background: "#4943B5", padding: "10px", borderRadius: "5px"}}
+                icon='money-bill-alt'
+                title={`${userdetail.balance}`}
+                texts='Balance'
                 />
                 <Cards
-                color='primary'
-                icon='hotel'
-                title='Players'
-                texts='Madami hehe'
+                itemcol={`d-flex align-items-center gap-3`}
+                textstyle={{color: "white"}}
+                titlestyle={{color: "white", marginTop:"10px",marginBottom:"0px"}}
+                cardstyle={{background: "#4634FF"}}
+                iconstyle={{background: "#5949FF", padding: "10px", borderRadius: "5px"}}                
+                icon='wallet'
+                title='0'
+                texts='Deposits'
                 />
                 <Cards
-                color='primary'
-                icon='hotel'
-                title='Players'
-                texts='Madami hehe'
+                itemcol={`d-flex align-items-center gap-3`}
+                textstyle={{color: "white"}}
+                titlestyle={{color: "white", marginTop:"10px",marginBottom:"0px"}}
+                cardstyle={{background: "#127681"}}
+                iconstyle={{background: "#2A848E", padding: "10px", borderRadius: "5px"}}
+                icon='wallet'
+                title='0'
+                texts='Withdrawals'
                 />
                 <Cards
-                color='primary'
-                icon='hotel'
-                title='Players'
-                texts='Madami hehe'
+                itemcol={`d-flex align-items-center gap-3`}
+                textstyle={{color: "white"}}
+                titlestyle={{color: "white", marginTop:"10px",marginBottom:"0px"}}
+                cardstyle={{background: "#035AA6"}}
+                iconstyle={{background: "#1D6BAF", padding: "10px", borderRadius: "5px"}}
+                icon='exchange-alt'
+                title='0'
+                texts='Transactions'
+                />
+            </MDBRow>
+            <MDBRow>
+                <Cards
+                itemcol={`d-flex align-items-center gap-3`}
+                textstyle={{color: "white"}}
+                titlestyle={{color: "white", marginTop:"10px",marginBottom:"0px"}}
+                cardstyle={{background: "#035AA6"}}
+                iconstyle={{background: "#1D6BAF", padding: "10px", borderRadius: "5px"}}
+                icon='money-bill-alt'
+                title={`${userdetail.balance}`}
+                texts='More Cards info here soon'
                 />
                 <Cards
-                color='primary'
-                icon='hotel'
-                title='Players'
-                texts='Madami hehe'
+                itemcol={`d-flex align-items-center gap-3`}
+                textstyle={{color: "white"}}
+                titlestyle={{color: "white", marginTop:"10px",marginBottom:"0px"}}
+                cardstyle={{background: "#0779E4"}}
+                iconstyle={{background: "#2087E7", padding: "10px", borderRadius: "5px"}}                
+                icon='wallet'
+                title='0'
+                texts='More Cards info here soon'
                 />
                 <Cards
-                color='primary'
-                icon='hotel'
-                title='Players'
-                texts='Madami hehe'
+                itemcol={`d-flex align-items-center gap-3`}
+                textstyle={{color: "white"}}
+                titlestyle={{color: "white", marginTop:"10px",marginBottom:"0px"}}
+                cardstyle={{background: "#10375C"}}
+                iconstyle={{background: "#284B6D", padding: "10px", borderRadius: "5px"}}
+                icon='wallet'
+                title='0'
+                texts='More Cards info here soon'
+                />
+                <Cards
+                itemcol={`d-flex align-items-center gap-3`}
+                textstyle={{color: "white"}}
+                titlestyle={{color: "white", marginTop:"10px",marginBottom:"0px"}}
+                cardstyle={{background: "#4F8A8B"}}
+                iconstyle={{background: "#619697", padding: "10px", borderRadius: "5px"}}
+                icon='exchange-alt'
+                title='0'
+                texts='More Cards info here soon'
                 />
             </MDBRow>
             <div className="d-flex flex-wrap gap-3 mt-3">

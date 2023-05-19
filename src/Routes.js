@@ -23,17 +23,18 @@ import EmailUnverified from "./page/dashboard/manageplayers/emailunverified";
 // import MobileUnverified from "./page/dashboard/manageplayers/mobileunverified";
 import WithBalance from "./page/dashboard/manageplayers/withbalance";
 import ManageDashboard from "./component/dashboard/admin/manageplayer/managedashboard";
+import SignUpPlayer from "./page/signupform/playersignup/signupplayer";
 
 const Routers = () => {
   return (
     <Routes>
-    
+      <Route path="*" element={<Error/>}/>
       {/* Initial */}
       <Route path="/" element={<Initial />} />
 
       <Route path="/dashboard" element={<Dashboard />}>
        
-        <Route path="superadmin" element={""}>
+        <Route path="Administrator" element={""}>
         <Route path="home" element={<AdminDashboard />}/>
         <Route path="manageplayers">
           <Route path="activeplayers" element={<ActiveUsers/>}/>
@@ -55,14 +56,17 @@ const Routers = () => {
         </Route>        
         </Route>  
 
-        <Route path="user" element={""}>
+        <Route path="Agent" element={""}>
             <Route path="home" element={<UserDashboard/>}/>
         </Route>
       </Route>
       
       
-      
-      <Route path="/signup" element={<SignUp />}/>
+      <Route path="referral">
+        <Route path="agent/:userId/register" element={<SignUp />}/>
+        <Route path="player/:userId/register" element={<SignUpPlayer />}/>
+      </Route>
+      {/* <Route path="/signup" element={<SignUp />}/> */}
       <Route path="/login" element={<Login />}/>
       <Route path="/verification" element={<StepVerification />}/>
     </Routes>

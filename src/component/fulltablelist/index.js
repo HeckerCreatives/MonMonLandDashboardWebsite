@@ -43,7 +43,7 @@ const FullTable = ({txtHeader, txtTable}) => {
           <td>{new Date(txttd.createdAt).toLocaleString()}</td>
           <td>₱ {txttd.balance}</td>
           <td>
-            <Link to = {`/dashboard/superadmin/manageplayers/usersdetails/${txttd._id}`}>
+            <Link to = {`/dashboard/Administrator/manageplayers/usersdetails/${txttd._id}`}>
             <MDBBtn outline>
             <MDBIcon fas icon="desktop" />
             &nbsp; Details

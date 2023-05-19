@@ -1,11 +1,11 @@
 import { MDBContainer, MDBInput, MDBRow, MDBCol,MDBIcon,MDBTypography,MDBBtn, MDBCard, MDBCardTitle, MDBCardBody, MDBCheckbox } from "mdb-react-ui-kit";
 import React, { useEffect, useState } from "react";
-import logo from "../../assets/header/small logo for navi.png"
-import './signup.css'
+import logo from "../../../assets/header/small logo for navi.png"
+import './signupplayer.css'
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
 
-const SignUp = () => {
+const SignUpPlayer = () => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [userName, setUserName] = useState('')
@@ -16,7 +16,7 @@ const SignUp = () => {
   const [referrer, setReferrer] = useState('');
   const navigate = useNavigate()
   const { userId } = useParams();
-  const roleId = process.env.REACT_APP_AGENTROLE
+  const roleId = process.env.REACT_APP_PLAYERROLE
   const auth = JSON.parse(localStorage.getItem("auth"))
   useEffect(()=> {
     if (userId) {
@@ -39,7 +39,7 @@ const SignUp = () => {
       window.location.href = `/dashboard/${auth.roleId?.display_name}/home`
     }
   },[auth])
-  
+
   // console.log(referrer)
   const register = (e) => {
     e.preventDefault();
@@ -256,4 +256,4 @@ const SignUp = () => {
     )
 }
 
-export default SignUp;
+export default SignUpPlayer;

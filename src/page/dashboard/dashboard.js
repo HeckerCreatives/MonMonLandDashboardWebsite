@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import './dashboard.css'
-import { Link, json } from "react-router-dom";
+import { Link, json, useNavigate } from "react-router-dom";
 import { MDBContainer, MDBBtn, MDBRow, MDBCol,MDBIcon } from "mdb-react-ui-kit";
 import Sidebarnav from "../../component/sidebarnav";
 import { Outlet } from "react-router-dom";
 // import Navbar from "../../component/navbar";
 import { ThemeContext, themes } from '../../component/theme/themecontext';
+import ReferralButton from "../../component/dashboard/referral/referral";
 
 
 const Dashboard = () => {
@@ -15,17 +16,17 @@ const Dashboard = () => {
   );
   const auth = JSON.parse(localStorage.getItem("auth"))
   const [darkMode, setDarkMode] = React.useState(true);
-  // const userRole = "Superadmin" 
-  // console.log(auth)  
+  const navigate = useNavigate() 
+
 
   
     let link;
-    switch (auth.roleId.display_name) {
+    switch (auth.roleId?.display_name) {
       case "Administrator":
       link = [
         {
             name: "Dashboard",
-            path: "/dashboard/superadmin/home",
+            path: "/dashboard/Administrator/home",
             icon: "home",
             children: [],
         },
@@ -36,27 +37,27 @@ const Dashboard = () => {
           children: [
             {
               name: "Active Users",
-              path: "/dashboard/superadmin/manageplayers/activeplayers",
+              path: "/dashboard/Administrator/manageplayers/activeplayers",
             },
             {
               name: "Banned Users",
-              path: "/dashboard/superadmin/manageplayers/bannedplayers",
+              path: "/dashboard/Administrator/manageplayers/bannedplayers",
             },
             {
               name: "Email Unverified",
-              path: "/dashboard/superadmin/manageplayers/emailunverified",
+              path: "/dashboard/Administrator/manageplayers/emailunverified",
             },            
             {
               name: "With Balance",
-              path: "/dashboard/superadmin/manageplayers/withbalance",
+              path: "/dashboard/Administrator/manageplayers/withbalance",
             },
             {
               name: "Paid Users",
-              path: "/dashboard/superadmin/manageplayers/paidusers",
+              path: "/dashboard/Administrator/manageplayers/paidusers",
             },
             {
               name: "All Users",
-              path: "/dashboard/superadmin/manageplayers/allusers",
+              path: "/dashboard/Administrator/manageplayers/allusers",
             },
           ],
         },
@@ -67,19 +68,19 @@ const Dashboard = () => {
           children: [
             {
               name: "Update Progress Bar",
-              path: "/dashboard/superadmin/settings/updateprogressbar",
+              path: "/dashboard/Administrator/settings/updateprogressbar",
             },
             {
               name: "Update Subscription Info",
-              path: "/dashboard/superadmin/settings/updatesubs",
+              path: "/dashboard/Administrator/settings/updatesubs",
             },
             {
               name: "Update News Info",
-              path: "/dashboard/superadmin/settings/updatenews",
+              path: "/dashboard/Administrator/settings/updatenews",
             },
             {
               name: "Update Roadmap Info",
-              path: "/dashboard/superadmin/settings/updateroadmap",
+              path: "/dashboard/Administrator/settings/updateroadmap",
             },
           ],
       },
@@ -89,7 +90,17 @@ const Dashboard = () => {
      link = [
       {
         name: "DASHBOARD",
-        path: "/dashboard/user/home",
+        path: "/dashboard/Player/home",
+        icon: "home",
+        children: [],
+      },
+     ];
+     break;
+     case "Agent": 
+     link = [
+      {
+        name: "DASHBOARD",
+        path: "/dashboard/Agent/home",
         icon: "home",
         children: [],
       },
@@ -103,8 +114,8 @@ const Dashboard = () => {
 
     return(
       <>
-        {/* <Navbar/> */}
-        <MDBContainer fluid className="">
+        {auth ? 
+          <MDBContainer fluid className="">
         
         <Sidebarnav
           links={link}
@@ -138,6 +149,7 @@ const Dashboard = () => {
           )}
         
           <div style={{float:'right'}}>
+          <ReferralButton auth={auth}/>
           <ThemeContext.Consumer>
               {({ changeTheme }) => (
                 <MDBBtn
@@ -161,6 +173,10 @@ const Dashboard = () => {
 
         </main>                    
         </MDBContainer>
+        :
+          navigate("/")
+        }
+        
         </>
     )
 }

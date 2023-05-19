@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     MDBBtn,
     MDBCard,
@@ -18,7 +18,15 @@ import { useNavigate } from "react-router-dom";
 const Login = () =>{
   const [email, setEmail]= useState('');
   const [password, setPassword] = useState("");
+  const auth = JSON.parse(localStorage.getItem("auth"))
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(auth){
+      
+      window.location.href = `/dashboard/${auth.roleId?.display_name}/home`
+    }
+  },[auth])
 
   const login = (e) =>{
     e.preventDefault()
@@ -46,8 +54,11 @@ const Login = () =>{
 					title: "Login Successfully",
 					icon: "success",
 					text: `Welcome ${data.firstName}`
-				})
-				navigate('/dashboard/user/home')
+				}).then(result => {
+          if(result.isConfirmed)
+          window.location.reload()
+        })
+        				
 			}
     })
   }
@@ -82,7 +93,7 @@ const Login = () =>{
       <img src={logo} alt=""/>
       <MDBTypography className="mb-0 mt-4">Welcome back,</MDBTypography>
       <MDBTypography className="mb-0">Please sign in to your account</MDBTypography>
-      <MDBTypography >No account yet? <a href="https://www.facebook.com/">Register now</a></MDBTypography>
+      <MDBTypography >No account yet? <a href={`/referral/player/${process.env.REACT_APP_PLAYERID}/register`}>Register now</a></MDBTypography>
       </MDBCol>
       
         <form onSubmit={login}>
