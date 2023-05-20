@@ -14,13 +14,13 @@ import {
   } from "mdb-react-ui-kit";
 import logo from "../../assets/header/small logo for navi.png"
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 const Login = () =>{
   const [email, setEmail]= useState('');
   const [password, setPassword] = useState("");
   const auth = JSON.parse(localStorage.getItem("auth"))
   const navigate = useNavigate();
-
+  // const {userId} = useParams();
   useEffect(()=>{
     if(auth){
       
@@ -41,20 +41,32 @@ const Login = () =>{
       })
     }).then(result => result.json())
     .then(data =>{
-      console.log(data)
+      console.log(data.isVerified)
       if (data === false) {        
 				Swal.fire({
           title: "Password Not Match",
           icon: "error",
           text: "Incorrect Password"
         })
-			} else {			
-        localStorage.setItem('auth', JSON.stringify(data))	
+			} 
+      if(!data.isVerified) {
+        localStorage.setItem('auth', JSON.stringify(data))
         Swal.fire({
 					title: "Login Successfully",
 					icon: "success",
 					text: `Welcome ${data.firstName}`
 				}).then(result => {
+          if(result.isConfirmed)
+          navigate(`/verification/${data._id}`)
+        })
+      } else {			
+        localStorage.setItem('auth', JSON.stringify(data))	
+        Swal.fire({
+					title: "Login Successfully",
+					icon: "success",
+					text: `Welcome ${data.firstName}`
+				})
+        .then(result => {
           if(result.isConfirmed)
           window.location.reload()
         })

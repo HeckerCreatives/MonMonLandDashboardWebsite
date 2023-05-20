@@ -68,7 +68,7 @@ const Routers = () => {
       </Route>
       {/* <Route path="/signup" element={<SignUp />}/> */}
       <Route path="/login" element={<Login />}/>
-      <Route path="/verification" element={<StepVerification />}/>
+      <Route path="/verification/:userId" element={<StepVerification />}/>
     </Routes>
   );
 };

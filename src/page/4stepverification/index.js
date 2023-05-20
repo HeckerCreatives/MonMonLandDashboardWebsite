@@ -13,9 +13,8 @@ const StepVerification = () => {
 
   // state for data
   const [formData, setFormData] = useState({
-    username:'',
-    email:'',
-    password:'',
+    subsid:'',
+    
   })
   
   const nextStep = () => {
@@ -27,14 +26,26 @@ const StepVerification = () => {
   }
 
   const handleInputData = input => e => {
-    const {value} = e.target
+    const { value } = e.target
     setFormData(prevState => ({
       ...prevState,
-      [input]:value
+      subsid : {...prevState.subsid, [input]: value},
+      // subsamount : {...prevState.subsamount, [input]:value}
     }))    
   }
   
   switch(step){
+    // case 1:
+    //   return(
+    //     <>
+    //     <MDBContainer fluid className="d-flex align-items-center justify-content-center topbg">
+    //     <img src={logo} alt="" className="img-fluid img"/>         
+    //     </MDBContainer>
+    //     <MDBTypography tag='h1' className="fw-bold text-black text-center p-3">4-Step Verification</MDBTypography>
+    //     <VerificationProgress/>        
+    //     <EmailVerification nextStep={nextStep}/>        
+    //     </>
+    //   );
     case 1:
       return(
         <>
@@ -42,9 +53,11 @@ const StepVerification = () => {
         <img src={logo} alt="" className="img-fluid img"/>         
         </MDBContainer>
         <MDBTypography tag='h1' className="fw-bold text-black text-center p-3">4-Step Verification</MDBTypography>
-        <VerificationProgress/>        
-        <EmailVerification nextStep={nextStep}/>        
+        <VerificationProgress/>         
+        <ChooseSubscription nextStep={nextStep} prevStep={prevStep} handleFormData={handleInputData} values={formData}/>
+        
         </>
+        
       );
     case 2:
       return(
@@ -54,22 +67,8 @@ const StepVerification = () => {
         </MDBContainer>
         <MDBTypography tag='h1' className="fw-bold text-black text-center p-3">4-Step Verification</MDBTypography>
         <VerificationProgress/>         
-        <ChooseSubscription nextStep={nextStep} prevStep={prevStep}/>
-        
-        </>
-        
-      );
-    case 3:
-      return(
-        <>
-        <MDBContainer fluid className="d-flex align-items-center justify-content-center topbg">
-        <img src={logo} alt="" className="img-fluid img"/>         
-        </MDBContainer>
-        <MDBTypography tag='h1' className="fw-bold text-black text-center p-3">4-Step Verification</MDBTypography>
-        <VerificationProgress/>         
-        <SubscriptionReceipt/>        
-        </>
-        
+        <SubscriptionReceipt handleFormData={handleInputData} values={formData}/>       
+        </>        
       );
     // case 4:
     //   return(
