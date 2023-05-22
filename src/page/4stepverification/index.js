@@ -53,7 +53,7 @@ const StepVerification = () => {
         <img src={logo} alt="" className="img-fluid img"/>         
         </MDBContainer>
         <MDBTypography tag='h1' className="fw-bold text-black text-center p-3">4-Step Verification</MDBTypography>
-        <VerificationProgress/>         
+        <VerificationProgress currentStep={2}/>         
         <ChooseSubscription nextStep={nextStep} prevStep={prevStep} handleFormData={handleInputData} values={formData}/>
         
         </>
@@ -66,7 +66,7 @@ const StepVerification = () => {
         <img src={logo} alt="" className="img-fluid img"/>         
         </MDBContainer>
         <MDBTypography tag='h1' className="fw-bold text-black text-center p-3">4-Step Verification</MDBTypography>
-        <VerificationProgress/>         
+        <VerificationProgress currentStep={3}/>         
         <SubscriptionReceipt handleFormData={handleInputData} values={formData}/>       
         </>        
       );

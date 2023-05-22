@@ -25,7 +25,7 @@ const Login = () =>{
     if(auth){
       
       window.location.href = `/dashboard/${auth.roleId?.display_name}/home`
-    }
+    } 
   },[auth])
 
   const login = (e) =>{
