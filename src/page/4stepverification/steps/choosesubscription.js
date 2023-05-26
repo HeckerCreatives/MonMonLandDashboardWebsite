@@ -1,12 +1,12 @@
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardText, MDBCol, MDBContainer, MDBTypography } from "mdb-react-ui-kit";
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState } from "react";
 import './choosesubscription.css'
 import Swal from "sweetalert2";
 
 const ChooseSubscription = ({nextStep, handleFormData, values}) => {
     
-    const [bgColor, setBgColor] = useState('');
-    const [selected, setSelected] = useState(false);
+    // const [bgColor, setBgColor] = useState('');
+    // const [selected, setSelected] = useState(false);
     
     const [badge, setBadge] = useState('');
 
@@ -31,6 +31,8 @@ const ChooseSubscription = ({nextStep, handleFormData, values}) => {
         .then(data => {
         })
     },[badge])
+
+    
 
     const handleSubmit = (e) =>{
         e.preventDefault()

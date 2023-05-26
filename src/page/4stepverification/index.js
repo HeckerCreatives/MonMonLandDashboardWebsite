@@ -2,7 +2,7 @@ import { MDBContainer, MDBInput, MDBRow, MDBCol,MDBIcon,MDBTypography,MDBBtn, MD
 import React, { useState } from "react";
 import ChooseSubscription from "./steps/choosesubscription";
 import SubscriptionReceipt from "./steps/subscriptionreceipt";
-// import WelcomePage from "./steps/Welcomepage";
+import ChoosePayment from "./steps/paymentmethod";
 import EmailVerification from "./steps/emailverification";
 import './index.css'
 import logo from '../../assets/footer/logo white.png'
@@ -67,13 +67,20 @@ const StepVerification = () => {
         </MDBContainer>
         <MDBTypography tag='h1' className="fw-bold text-black text-center p-3">4-Step Verification</MDBTypography>
         <VerificationProgress currentStep={3}/>         
+        <ChoosePayment handleFormData={handleInputData} values={formData}/>       
+        </>        
+      );
+    case 3:
+      return(
+        <>
+        <MDBContainer fluid className="d-flex align-items-center justify-content-center topbg">
+        <img src={logo} alt="" className="img-fluid img"/>         
+        </MDBContainer>
+        <MDBTypography tag='h1' className="fw-bold text-black text-center p-3">4-Step Verification</MDBTypography>
+        <VerificationProgress currentStep={3}/>         
         <SubscriptionReceipt handleFormData={handleInputData} values={formData}/>       
         </>        
       );
-    // case 4:
-    //   return(
-    //     <WelcomePage/>
-    //   );
     default:
       return(
         <MDBContainer>

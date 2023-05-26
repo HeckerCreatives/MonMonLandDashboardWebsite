@@ -24,12 +24,19 @@ const VerificationProgress = ({currentStep}) => {
                 <MDBTypography>
                 {currentStep === 3 ? <MDBIcon fas icon="circle"  className="color m-1"/> : 
                 <MDBIcon far icon="circle" className="m-1"/>} 
-                Subscription Receipt
+                Payment Method
                 </MDBTypography>            
             </MDBCol>
             <MDBCol>
                 <MDBTypography>
                 {currentStep === 4 ? <MDBIcon fas icon="circle"  className="color m-1"/> : 
+                <MDBIcon far icon="circle" className="m-1"/>} 
+                Subscription Receipt
+                </MDBTypography>            
+            </MDBCol>
+            <MDBCol>
+                <MDBTypography>
+                {currentStep === 5 ? <MDBIcon fas icon="circle"  className="color m-1"/> : 
                 <MDBIcon far icon="circle" className="m-1"/>} 
                 Confirm
                 </MDBTypography>
