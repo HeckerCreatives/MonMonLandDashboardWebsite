@@ -308,10 +308,11 @@
         /* height: 100%;
         width: 40%;
         margin-top: 5%; */
-        margin: 75px 0 0 0;
-        padding: 0;
-        width: 70%;
+        margin: 50px 0 0 0;
+        /* padding: 0; */
+        /* width: 70%; */
         font-size: small;
+        word-break: break-all;
     }
     #woodchar {
         height: 80px;
@@ -321,6 +322,7 @@
     .woodcharbg {
         background-color: #767676;
         border-radius: 20px;
+
     }
     
     .seemorebtn {
@@ -329,3 +331,16 @@
         margin-bottom: 10px;
     }
 }
+
+/* @media (max-width: 375px) {
+    .modal-dialog {
+      max-width: 80%;
+      margin: 10% auto;
+    }
+    
+    .modal-body {
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+  } */
+  

@@ -118,12 +118,11 @@ const Games = () => {
                    <MDBCol className="">
                    <MDBTypography className="substext h2 text-wrap">
                     Subscription:
-                    </MDBTypography>
-                                    
-                    <img src={pearl}  alt="..." className="img-fluid badgesize"/>
-                    <img src={ruby} alt="..." className="img-fluid badgesize"/>
-                    <img src={emerald}  alt="..." className="img-fluid badgesize"/>
-                    <img src={diamond}  alt="..." className="img-fluid badgesize"/>
+                    </MDBTypography>                                    
+                    <img src={pearl}  alt="..." className="badgeholder img-fluid badgesize"/>
+                    <img src={ruby} alt="..." className="badgeholder img-fluid badgesize"/>
+                    <img src={emerald}  alt="..." className="badgeholder img-fluid badgesize"/>
+                    <img src={diamond}  alt="..." className="badgeholder img-fluid badgesize"/>
                     </MDBCol>
                     
                     </div>

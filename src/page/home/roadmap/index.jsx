@@ -41,13 +41,21 @@ const Roadmap = () => {
     return (
         <div className="">
         <MDBContainer fluid  className="d-flex justify-content-center roadmapbgcolor" id="roadmap">
-        <MDBTypography className="titlefontsize text-warning text-center fw-bold">
-            ROADMAP
-        </MDBTypography>
-        <MDBContainer className="line text-center">
         
-        {isLoading ? <MDBSpinner color="warning"></MDBSpinner> :
+        {isLoading ?
+        <div className="text-center">
+        <MDBTypography className="titlefontsize text-warning fw-bold">
+        ROADMAP        
+        </MDBTypography> 
+        <MDBSpinner color="warning"></MDBSpinner>
+        </div> 
+        :
         <>
+        <MDBTypography className="titlefontsize text-warning text-center fw-bold">
+        ROADMAP        
+        </MDBTypography>
+        <MDBContainer className="line text-center">                
+        
         {roadmap.map((roadmaps,index) =>(
         <MDBRow className="circle">
         
@@ -81,9 +89,12 @@ const Roadmap = () => {
         
          
         ))}
+        
+        
+        </MDBContainer>
         </>
         }
-        </MDBContainer>
+        
         <MDBModal  show={activeModal} onClick={()=> setActiveModal(null)} tabIndex='-1'>
             <MDBModalDialog centered>
             <MDBModalContent>

@@ -81,7 +81,7 @@ const Subscription = () => {
         <>
         {subs.map(sub => (
         <MDBCol className="">
-            <MDBCard key={sub._id} className="col-12 align-items-center linya" style={{height:"100%"}}>
+            <MDBCard key={sub._id} className="col-12 align-items-center linya" style={{height:"100%", width: "100%"}}>
                 <MDBCardImage src={pearl} alt=""  id="badge" className="bg-dark text-center"/>
             
                 <MDBCardBody className="subsparent">            

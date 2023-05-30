@@ -9,7 +9,7 @@
 }
 
 .descriptionholder {
-    background-image: url("../../../assets/games/description holder.png");
+    background-image: url("../../../assets/games/base.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position: center;    
@@ -17,6 +17,13 @@
     height: 90%;
     margin: 5% auto;
     /* position: relative; */
+}
+
+.badgeholder {
+    background-image: url("../../../assets/games/box.png");
+    background-repeat: no-repeat;
+    background-size: 95% 95%;
+    background-position: center;
 }
 
 .characterholder {
