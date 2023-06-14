@@ -67,7 +67,7 @@ const Roadmap = () => {
         index === 1 || index === roadmap.length - 1 ? 'itempositionright' : index % 2 === 0 ? 'itemposition' : 'itempositionright'
         }`} >
         
-        <MDBTypography className="fw-bold text-white" >{roadmaps.title}</MDBTypography>
+        <MDBTypography className="fw-bold text-white" >{roadmaps.title.length > 50 ? `${roadmaps.title.substring(0,50)}...`: roadmaps.title}</MDBTypography>
 
         <MDBCol  className="woodcharbg">
         <img src={woodcutting} alt="" id="woodchar" />
