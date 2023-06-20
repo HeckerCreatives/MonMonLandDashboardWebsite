@@ -71,7 +71,7 @@ const Dashboard = () => {
                   name: "All Users",
                   path: "/dashboard/Administrator/manageaccount/manageplayers/allusers",
                 },
-              ]
+              ],
             },
             
           ],
@@ -96,6 +96,10 @@ const Dashboard = () => {
             {
               name: "Update Roadmap Info",
               path: "/dashboard/Administrator/settings/updateroadmap",
+            },
+            {
+              name: "Games",
+              path: "/dashboard/Administrator/settings/updategames",
             },
           ],
       },
@@ -151,7 +155,7 @@ const Dashboard = () => {
               : "0rem",
         }}
         >
-        <TopNavbar/>
+        <TopNavbar auth={auth}/>
         <div className="pt-2">
           {window.innerWidth <= 768 && (
           <MDBIcon

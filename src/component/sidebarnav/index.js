@@ -9,10 +9,10 @@ const Sidebarnav = ({ links, didToggle, setDidToggle }) => {
   const navigate = useNavigate();
   const activePath = window.location.pathname;
 
-  const handleLogout = () => {
-    localStorage.removeItem('auth')
-    window.location.replace("/login");    
-  }
+  // const handleLogout = () => {
+  //   localStorage.removeItem('auth')
+  //   window.location.replace("/login");    
+  // }
   
   // const checkActive = (link) => {
   //   let newStyle = "";
@@ -29,20 +29,27 @@ const Sidebarnav = ({ links, didToggle, setDidToggle }) => {
     let newStyle = "";
     if (link.children.length === 0) {
       newStyle = activePath === link.path ? "sidebar-active-link" : "";
+      
     } else {
       const newarray = link.children.map((l) => l.path);
-      newStyle = newarray.includes(activePath) ? "sidebar-active-link-2" : "";
-      // Check if any sub-children are active
-      if (newStyle) {
+      newStyle = newarray.includes(activePath) ? "sidebar-active-link-2" : "";     
+      console.log(link.children[2].children)
+      
+      if(!newStyle){
         link.children.forEach((child) => {
-          if (child.children) {
+          if(child.children){
             const nestedArray = child.children.map((nested) => nested.path);
             newStyle = nestedArray.includes(activePath) ? "sidebar-active-link-2" : "";
           }
-        });
-      }
+      });
+
+    } 
     }
+
     return newStyle;
+
+    
+    
   };
   
     return (
@@ -87,6 +94,9 @@ const Sidebarnav = ({ links, didToggle, setDidToggle }) => {
               onClick={() => {
                 if (link.name !== toggled) {
                   setToggled(link.name);
+                  link.children?.length !== 0 && setDidToggle(false);
+                } else if (link.children.name !== toggled){
+                  setToggled(link.children.name);
                   link.children?.length !== 0 && setDidToggle(false);
                 } else {
                   setToggled("");
@@ -134,52 +144,53 @@ const Sidebarnav = ({ links, didToggle, setDidToggle }) => {
                       window.innerWidth <= 768 && setDidToggle(!didToggle);
                     }}
                   >
-                    <div className="mx-3">
+                    {sub.children ? ( <div className="mx-3">
+                      <MDBIcon fas icon="angle-down" size="sm" />
+                    </div> ) : ( <div className="mx-3">
                       <MDBIcon fas icon="angle-right" size="sm" />
-                    </div>
+                    </div> ) }
                     <div className="flex-grow-1 sidebar-sublink-header-title">
                       {sub.name}
                     </div>
-                    
-                    {sub.children && ( // Check if the sub-link has children
-                      <div className="mx-3">
-                        <MDBIcon fas icon="angle-down" size="sm" />
-                      </div>
-                    )}
 
-                    {sub.children && (
-                    <div className={`sidebar-sub-link ${
-                      toggled === sub.name && "sidebar-sub-link-active"
-                    }`}>                      
-                      {sub.path === "" &&                      
-                        sub.children.map((nestedSub, j) => (
-                        <div
-                          className={`d-flex align-items-center py-1 my-1 sidebar-link-header ms-4 ${
-                            activePath === nestedSub.path && "sidebar-active-link"
-                          }`}
-                          key={`nestedSub-${j}`}
-                          onClick={() => {
-                            navigate(nestedSub.path);
-                            window.innerWidth <= 768 && setDidToggle(!didToggle);
-                          }}
-                        >
-                          <div className="mx-3">
-                            <MDBIcon fas icon="angle-right" size="sm" />
-                          </div>
-                          <div className="flex-grow-1 sidebar-sublink-header-title">
-                            {nestedSub.name}
-                          </div>
-                        </div>
-                      ))}
+            
+
+                    <div
+                      className={`sidebar-sub-link ${
+                        toggled === sub.name && "sidebar-sub-link-active"
+                      }`}
+                    >
+                      {sub.path === "" &&
+                        sub.children.map((subchild, i) => (
+                         
+                          <div
+                            className={`d-flex align-items-center py-1 my-1 sidebar-link-header ms-3 ${
+                              activePath === subchild.path && "sidebar-active-link"
+                            }`}
+                            key={`subchild-${i}`}
+                            onClick={() => {
+                              navigate(subchild.path);
+                              window.innerWidth <= 768 && setDidToggle(!didToggle);
+                            }}
+                          >                          
+                            {subchild.children ? ( <div className="mx-3">
+                              <MDBIcon fas icon="angle-down" size="sm" />
+                            </div> ) : ( <div className="mx-3">
+                              <MDBIcon fas icon="angle-right" size="sm" />
+                            </div> ) }
+                            <div className="flex-grow-1 sidebar-sublink-header-title">
+                              {subchild.name}
+                            </div>
+                          </div>                  
+                        ))}
                     </div>
-                    )}
                   </div>                  
                 ))}
             </div>
           </div>
         ))}
       </div>
-      <div className="sidebar-footer py-3">
+      {/* <div className="sidebar-footer py-3">
         <div
           title="Logout"
           className="pe-5 py-0 fs-6 shadow-0 text-white fw-bold sidebar-logout-btn"
@@ -187,7 +198,7 @@ const Sidebarnav = ({ links, didToggle, setDidToggle }) => {
         >
           <MDBIcon fas icon="sign-out-alt" size="xl" className="mx-4" /> LOGOUT
         </div>
-      </div>
+      </div> */}
       {window.innerWidth <= 768 && (
         <div
           className="custom-backdrop"
