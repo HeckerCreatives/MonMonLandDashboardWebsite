@@ -24,6 +24,8 @@ import EmailUnverified from "./page/dashboard/manageplayers/emailunverified";
 import WithBalance from "./page/dashboard/manageplayers/withbalance";
 import ManageDashboard from "./component/dashboard/admin/manageplayer/managedashboard";
 import SignUpPlayer from "./page/signupform/playersignup/signupplayer";
+import CreateAdminAccount from "./page/dashboard/manageaccount/admin";
+import CreateCSRAccount from "./page/dashboard/manageaccount/csr";
 
 const Routers = () => {
   return (
@@ -36,6 +38,9 @@ const Routers = () => {
        
         <Route path="Administrator" element={""}>
         <Route path="home" element={<AdminDashboard />}/>
+        <Route path="manageaccount">
+        <Route path="createadminacc" element={<CreateAdminAccount/>}/>
+        <Route path="createcsracc" element={<CreateCSRAccount/>}/>
         <Route path="manageplayers">
           <Route path="activeplayers" element={<ActiveUsers/>}/>
           <Route path="bannedplayers" element={<BannedUsers/>}/>
@@ -45,6 +50,7 @@ const Routers = () => {
           <Route path="paidusers" element={<PaidUsers/>}/>
           <Route path="allusers" element={<AllUsers/>}/>
           <Route path="usersdetails/:userId" element={<ManageDashboard/>}/>                           
+        </Route>
         </Route>
         
 

@@ -1,0 +1,31 @@
+.topnavbg {
+    position: relative;
+    background-image: url('../../assets/BG/HEADER.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 145px;
+}
+
+.topnavbg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(142, 108, 81, 0.8); /* Change the color and opacity as desired */
+    z-index: 1;
+}
+
+.topnavbgcolor {
+    position: absolute;
+    width: 100%;
+    background-color: rgba(28, 21, 16, .8);
+    z-index: 2;
+}
+
+.topnavbgcolor .text {
+    position: relative;    
+    z-index: 3; /* Bring the text in front of the background */
+}

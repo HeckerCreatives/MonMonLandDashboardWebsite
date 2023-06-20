@@ -1,6 +1,6 @@
 import React , { useState }from "react";
 import './index.css'
-import smalllogo from "../../assets/header/small logo for navi.png"
+import smalllogo from "../../assets/header/big logo.png"
 import { MDBBtn, MDBIcon } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +13,18 @@ const Sidebarnav = ({ links, didToggle, setDidToggle }) => {
     localStorage.removeItem('auth')
     window.location.replace("/login");    
   }
+  
+  // const checkActive = (link) => {
+  //   let newStyle = "";
+  //   if (link.children.length === 0) {
+  //     newStyle = activePath === link.path ? "sidebar-active-link" : "";
+  //   } else {
+  //     const newarray = link.children.map((l) => l.path);
+  //     newStyle = newarray.includes(activePath) ? "sidebar-active-link-2" : "";
+  //   }
+  //   return newStyle;
+  // };
+  
   const checkActive = (link) => {
     let newStyle = "";
     if (link.children.length === 0) {
@@ -20,10 +32,19 @@ const Sidebarnav = ({ links, didToggle, setDidToggle }) => {
     } else {
       const newarray = link.children.map((l) => l.path);
       newStyle = newarray.includes(activePath) ? "sidebar-active-link-2" : "";
+      // Check if any sub-children are active
+      if (newStyle) {
+        link.children.forEach((child) => {
+          if (child.children) {
+            const nestedArray = child.children.map((nested) => nested.path);
+            newStyle = nestedArray.includes(activePath) ? "sidebar-active-link-2" : "";
+          }
+        });
+      }
     }
     return newStyle;
   };
-
+  
     return (
       <div
       className={`sidebar-wrapper d-flex flex-column ${
@@ -34,7 +55,7 @@ const Sidebarnav = ({ links, didToggle, setDidToggle }) => {
           ? window.innerWidth <= 768
             ? "0rem"
             : "4.5rem"
-          : "16rem",
+          : "17rem",
       }}
     >
       {window.innerWidth > 768 && (
@@ -119,7 +140,40 @@ const Sidebarnav = ({ links, didToggle, setDidToggle }) => {
                     <div className="flex-grow-1 sidebar-sublink-header-title">
                       {sub.name}
                     </div>
-                  </div>
+                    
+                    {sub.children && ( // Check if the sub-link has children
+                      <div className="mx-3">
+                        <MDBIcon fas icon="angle-down" size="sm" />
+                      </div>
+                    )}
+
+                    {sub.children && (
+                    <div className={`sidebar-sub-link ${
+                      toggled === sub.name && "sidebar-sub-link-active"
+                    }`}>                      
+                      {sub.path === "" &&                      
+                        sub.children.map((nestedSub, j) => (
+                        <div
+                          className={`d-flex align-items-center py-1 my-1 sidebar-link-header ms-4 ${
+                            activePath === nestedSub.path && "sidebar-active-link"
+                          }`}
+                          key={`nestedSub-${j}`}
+                          onClick={() => {
+                            navigate(nestedSub.path);
+                            window.innerWidth <= 768 && setDidToggle(!didToggle);
+                          }}
+                        >
+                          <div className="mx-3">
+                            <MDBIcon fas icon="angle-right" size="sm" />
+                          </div>
+                          <div className="flex-grow-1 sidebar-sublink-header-title">
+                            {nestedSub.name}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    )}
+                  </div>                  
                 ))}
             </div>
           </div>
@@ -145,3 +199,4 @@ const Sidebarnav = ({ links, didToggle, setDidToggle }) => {
 }
 
 export default Sidebarnav;
+

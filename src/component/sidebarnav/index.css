@@ -6,7 +6,7 @@
     right: 0;
     border-right: 2px solid #58677a;
     transition: width 250ms ease-out;
-    background-color: #071251;
+    background-color: #A57552;
     /* background-image: url("../../assets/sidebarbg.jpg"); */
     background-repeat: repeat;
     z-index: 10 !important;
@@ -35,7 +35,7 @@
   }
   
   .sidebar-header {
-    /* background-color: #AD6818; */
+    background-color: #E6CFBE;
   }
   
   .sidebar-body {
@@ -72,16 +72,16 @@
   .sidebar-active-link {
     background-image: linear-gradient(to right, transparent, #e5aa4527);
     border-right: 0.35rem solid #e5aa45;
-    color: #2856eb !important;
+    color: #E5AA45 !important;
   }
   
   .sidebar-active-link-2 {
-    color: #2856eb !important;
+    color: #E5AA45 !important;
   }
   
   .sidebar-link-header:hover {
     background-image: linear-gradient(to right, transparent, #e5aa4527);
-    color: #2856eb !important;
+    color: #E5AA45 !important;
   }
   
   .sidebar-link-header-title {

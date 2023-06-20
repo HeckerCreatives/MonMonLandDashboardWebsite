@@ -7,7 +7,7 @@ import { Outlet } from "react-router-dom";
 // import Navbar from "../../component/navbar";
 import { ThemeContext, themes } from '../../component/theme/themecontext';
 import ReferralButton from "../../component/dashboard/referral/referral";
-
+import TopNavbar from "../../component/topnavbar";
 
 const Dashboard = () => {
   // const [links, setLinks] = useState([]);
@@ -31,34 +31,49 @@ const Dashboard = () => {
             children: [],
         },
         {
-          name: "Manage Players",
+          name: "Manage Accounts",
           path: "",
           icon: "users",
           children: [
             {
-              name: "Active Users",
-              path: "/dashboard/Administrator/manageplayers/activeplayers",
+              name: "Admin",
+              path: "/dashboard/Administrator/manageaccount/createadminacc",
             },
             {
-              name: "Banned Users",
-              path: "/dashboard/Administrator/manageplayers/bannedplayers",
+              name: "CSR",
+              path: "/dashboard/Administrator/manageaccount/createcsracc",
             },
             {
-              name: "Email Unverified",
-              path: "/dashboard/Administrator/manageplayers/emailunverified",
-            },            
-            {
-              name: "With Balance",
-              path: "/dashboard/Administrator/manageplayers/withbalance",
+              name: "Manage Users",
+              path: "",
+              children: [
+                {
+                  name: "Active Users",
+                  path: "/dashboard/Administrator/manageaccount/manageplayers/activeplayers",
+                },
+                {
+                  name: "Banned Users",
+                  path: "/dashboard/Administrator/manageaccount/manageplayers/bannedplayers",
+                },
+                {
+                  name: "Email Unverified",
+                  path: "/dashboard/Administrator/manageaccount/manageplayers/emailunverified",
+                },            
+                {
+                  name: "With Balance",
+                  path: "/dashboard/Administrator/manageaccount/manageplayers/withbalance",
+                },
+                {
+                  name: "Paid Users",
+                  path: "/dashboard/Administrator/manageaccount/manageplayers/paidusers",
+                },
+                {
+                  name: "All Users",
+                  path: "/dashboard/Administrator/manageaccount/manageplayers/allusers",
+                },
+              ]
             },
-            {
-              name: "Paid Users",
-              path: "/dashboard/Administrator/manageplayers/paidusers",
-            },
-            {
-              name: "All Users",
-              path: "/dashboard/Administrator/manageplayers/allusers",
-            },
+            
           ],
         },
         {
@@ -115,7 +130,7 @@ const Dashboard = () => {
     return(
       <>
         {auth ? 
-          <MDBContainer fluid className="">
+          <MDBContainer fluid className="p-0">
         
         <Sidebarnav
           links={link}
@@ -132,10 +147,11 @@ const Dashboard = () => {
                 ? window.innerWidth <= 768
                   ? "0rem"
                   : "4.5rem"
-                : "16rem"
+                : "17rem"
               : "0rem",
         }}
         >
+        <TopNavbar/>
         <div className="pt-2">
           {window.innerWidth <= 768 && (
           <MDBIcon
@@ -148,7 +164,7 @@ const Dashboard = () => {
           />
           )}
         
-          <div style={{float:'right'}}>
+          {/* <div style={{float:'right'}}>
           <ReferralButton auth={auth}/>
           <ThemeContext.Consumer>
               {({ changeTheme }) => (
@@ -163,7 +179,7 @@ const Dashboard = () => {
                 </MDBBtn>
               )}
             </ThemeContext.Consumer>
-          </div>
+          </div> */}
         </div>
         
         

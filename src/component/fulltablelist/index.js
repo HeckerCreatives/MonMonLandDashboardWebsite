@@ -12,20 +12,24 @@ import {
 import Sidebarnav from "../../component/sidebarnav";
 import "./table.css"
 import { Link } from "react-router-dom";
-const FullTable = ({txtHeader, txtTable}) => {
+const FullTable = ({txtHeader, txtTable , button, btn1text, btn2text,btn1onclick}) => {
     
 
     return (
     <MDBContainer fluid>
          
     <MDBContainer fluid className="p-0 my-4">
-    {/* <MDBBtn rounded size="sm" className="m-1">filter</MDBBtn>
-    <MDBBtn rounded size="sm" className="m-1">filter</MDBBtn> */}
-    <MDBTable >
+    {button  && 
+    <><MDBBtn outline color='dark' size="sm" className="rounded m-1" onClick={btn1onclick}>
+    <MDBIcon fas icon="plus" />
+    &nbsp; {btn1text}</MDBBtn>
+    <MDBBtn size="sm" className="rounded m-1 btn-danger">{btn2text}</MDBBtn>
+    </>}
+    <MDBTable className="mt-2">
       <MDBTableHead className="head">
-      <tr>
+      <tr >
         {txtHeader.map((txthd, i) => (        
-            <th scope='col' key={i}>{txthd.title}</th>        
+            <th className="fw-bold" scope='col' key={i}>{txthd.title}</th>        
         ))}
      </tr>
       </MDBTableHead>

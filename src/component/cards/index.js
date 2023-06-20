@@ -10,11 +10,11 @@ import {
 } from "mdb-react-ui-kit"
 import "./index.css"
 
-const Cards = ({icon,texts,title, showviewbtn, url, iconstyle, cardstyle, textstyle, titlestyle,itemcol}) => {
+const Cards = ({icon,texts,title, showviewbtn, url, iconstyle, cardstyle, textstyle, titlestyle,itemcol,cardclassname}) => {
     return(
         <MDBCol          
         className="my-2 mt-md-2">
-            <MDBCard className={``} style={cardstyle}>
+            <MDBCard className={cardclassname} style={cardstyle}>
                 <MDBCardBody className="">                
                 <MDBRow className="">
                 <MDBCol className={itemcol}>

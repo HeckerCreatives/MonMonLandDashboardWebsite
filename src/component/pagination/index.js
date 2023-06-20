@@ -11,11 +11,11 @@ const PaginationPager = ({ setPage, page, total }) => {
   };
 
   return (
-    <MDBCol className="text-end d-flex align-items-center justify-content-end mt-4">
+    <MDBCol className="text-end d-flex align-items-center justify-content-center mt-4">
       <ul className="pagination">
         <li className={`me-1 page-item  `}>
           <MDBBtn
-            // color={theme.color}
+            style={{background:'#ECCC99'}}
             className={`py-1 page-link `}
             onClick={() => handlePage(false)}
             disabled={page <= 1}
@@ -25,7 +25,7 @@ const PaginationPager = ({ setPage, page, total }) => {
         </li>
         <li className="me-1">
           <MDBBtn
-            // color={theme.color}
+            style={{background:'#ECCC99'}}
             className={`py-1 page-link  text-lowercase`}
             disabled
           >
@@ -34,7 +34,7 @@ const PaginationPager = ({ setPage, page, total }) => {
         </li>
         <li className="page-item">
           <MDBBtn
-            // color={theme.color}
+            style={{background:'#ECCC99'}}
             className={` py-1 page-link  `}
             onClick={() => handlePage(true)}
             disabled={page >= total}

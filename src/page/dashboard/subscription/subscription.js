@@ -240,7 +240,7 @@ const UpdateSubs = () => {
             </MDBRow>
             <PaginationPager
             total={total} page={page} setPage={setPage}
-          />
+            />
         </MDBContainer>
     )
 }

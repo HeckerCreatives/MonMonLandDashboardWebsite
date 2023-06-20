@@ -20,7 +20,6 @@
 .sidebg .text {
     position: relative;    
     z-index: 2; /* Bring the text in front of the background */
-    
 }
 /* Your other CSS styles for .sidebg */
 
