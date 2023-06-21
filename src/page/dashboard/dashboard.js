@@ -13,6 +13,9 @@ const Dashboard = () => {
   // const [links, setLinks] = useState([]);
   const [didToggle, setDidToggle] = useState(
     window.innerWidth > 768 ? false : true
+  ),
+  [didToggle1, setDidToggle1] = useState(
+    window.innerWidth > 768 ? false : true
   );
   const auth = JSON.parse(localStorage.getItem("auth"))
   const [darkMode, setDarkMode] = React.useState(true);
@@ -140,6 +143,8 @@ const Dashboard = () => {
           links={link}
           didToggle={didToggle}
           setDidToggle={setDidToggle}
+          didToggle1={didToggle1}
+          setDidToggle1={setDidToggle1}
         />
         
         <main
@@ -147,7 +152,7 @@ const Dashboard = () => {
         style={{
           paddingLeft:
             window.innerWidth > 768
-              ? didToggle
+              ? didToggle && didToggle1
                 ? window.innerWidth <= 768
                   ? "0rem"
                   : "4.5rem"
@@ -168,7 +173,7 @@ const Dashboard = () => {
           />
           )}
         
-          {/* <div style={{float:'right'}}>
+          <div style={{float:'right'}}>
           <ReferralButton auth={auth}/>
           <ThemeContext.Consumer>
               {({ changeTheme }) => (
@@ -183,7 +188,7 @@ const Dashboard = () => {
                 </MDBBtn>
               )}
             </ThemeContext.Consumer>
-          </div> */}
+          </div>
         </div>
         
         

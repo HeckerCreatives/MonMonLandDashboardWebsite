@@ -24,8 +24,8 @@ import ruby from "../../../../assets/subscription/ruby badge png.png"
 import emerald from "../../../../assets/subscription/emerald png.png"
 import diamond from "../../../../assets/subscription/diamond.png"
 import Swal from "sweetalert2";
-import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
-import { scale } from "@cloudinary/url-gen/actions/resize";
+import UploadWidget from "../../../../component/uploadwidget/uploadwidet"
+import "./create.css"
 const CreateGames = () => {
   const [titles, setTitles] = useState('');
   const [descriptions, setDescriptions] = useState('');
@@ -102,8 +102,15 @@ return (
                 <MDBCard style={{background: "#EDCAB4",}}>
                 <MDBCardBody> 
                 <MDBRow>
-                <MDBCol>
-                    <MDBBtn style={{background: "#80C548"}}>
+                <MDBCol className="d-flex align-items-center flex-column justify-content-center">
+                  <form id="form-file-upload">
+                    <label id="label-file-upload">
+                    <div>
+                    <p>Drag files to upload</p>
+                    </div>
+                    </label>
+                  </form>
+                    <MDBBtn className="mt-2" style={{background: "#80C548"}}>
                     Choose File
                     </MDBBtn>
                 </MDBCol>

@@ -78,7 +78,11 @@
   .sidebar-active-link-2 {
     color: #E5AA45 !important;
   }
-  
+
+  .sidebar-active-link-3 {
+    color: #E5AA45 !important;
+  }
+
   .sidebar-link-header:hover {
     background-image: linear-gradient(to right, transparent, #e5aa4527);
     color: #E5AA45 !important;

@@ -9,12 +9,24 @@ import {
     MDBListGroup,
     MDBListGroupItem
 } from "mdb-react-ui-kit";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./index.css"
 import Swal from "sweetalert2";
 const TopNavbar = ({auth}) => {
     const [visibility, setVisibility] = useState(false),
+    [word, setword] = useState(""),
     navigate = useNavigate();
+    const location = useLocation();
+  
+  useEffect(() => {
+    const pathParts = location.pathname.split('/');
+    const Word = pathParts[3];
+    const splitWords = Word
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/\b\w/g, (match) => match.toUpperCase());
+    
+    setword(splitWords);
+  }, [location.pathname]);
 
     const handleLogout = () => {
       
@@ -61,7 +73,7 @@ const TopNavbar = ({auth}) => {
         >        
         <MDBRow className="topnavbgcolor m-0">
         <MDBCol className="text d-flex justify-content-between align-items-center">
-        Manage Account
+        {word}
         <div className="dropdown">
         <MDBCol className="dropdown text d-flex justify-content-end align-items-center" onClick={() => setVisibility(!visibility)}>        
         <MDBIcon fas icon="user-circle" size="lg"/>
