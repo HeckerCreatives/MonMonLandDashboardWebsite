@@ -16,6 +16,12 @@ const Dashboard = () => {
   ),
   [didToggle1, setDidToggle1] = useState(
     window.innerWidth > 768 ? false : true
+  ),
+  [didToggle2, setDidToggle2] = useState(
+    window.innerWidth > 768 ? false : true
+  ),
+  [didToggle3, setDidToggle3] = useState(
+    window.innerWidth > 768 ? false : true
   );
   const auth = JSON.parse(localStorage.getItem("auth"))
   const [darkMode, setDarkMode] = React.useState(true);
@@ -85,25 +91,50 @@ const Dashboard = () => {
           icon: "cog",
           children: [
             {
-              name: "Update Progress Bar",
-              path: "/dashboard/Administrator/settings/updateprogressbar",
-            },
-            {
-              name: "Update Subscription Info",
-              path: "/dashboard/Administrator/settings/updatesubs",
-            },
-            {
-              name: "Update News Info",
-              path: "/dashboard/Administrator/settings/updatenews",
-            },
-            {
-              name: "Update Roadmap Info",
-              path: "/dashboard/Administrator/settings/updateroadmap",
-            },
-            {
-              name: "Games",
-              path: "/dashboard/Administrator/settings/updategames",
-            },
+              name: "Landing Page",
+              path: "",
+              children: [
+                {
+                  name: "Header",
+                  path: "/dashboard/Administrator/settings/updateprogressbar",
+                },
+                {
+                  name: "Subscription",
+                  path: "",
+                  children: [
+                    {
+                      name: "Pearl",
+                      path: "/dashboard/Administrator/settings/updatesubs",
+                    },
+                    {
+                      name: "Ruby",
+                      path: "/dashboard/Administrator/settings/updatesubs",
+                    },
+                    {
+                      name: "Emerald",
+                      path: "/dashboard/Administrator/settings/updatesubs",
+                    },
+                    {
+                      name: "Diamond",
+                      path: "/dashboard/Administrator/settings/updatesubs",
+                    }
+                  ]
+                },
+                {
+                  name: "Games",
+                  path: "/dashboard/Administrator/settings/updategames",
+                },
+                {
+                  name: "News",
+                  path: "/dashboard/Administrator/settings/updatenews",
+                },
+                {
+                  name: "Roadmap",
+                  path: "/dashboard/Administrator/settings/updateroadmap",
+                },
+                
+              ]
+            }
           ],
       },
     ];
@@ -145,6 +176,10 @@ const Dashboard = () => {
           setDidToggle={setDidToggle}
           didToggle1={didToggle1}
           setDidToggle1={setDidToggle1}
+          didToggle2={didToggle2}
+          setDidToggle2={setDidToggle2}
+          didToggle3={didToggle3}
+          setDidToggle3={setDidToggle3}
         />
         
         <main
@@ -152,7 +187,7 @@ const Dashboard = () => {
         style={{
           paddingLeft:
             window.innerWidth > 768
-              ? didToggle && didToggle1
+              ? didToggle && didToggle1  && didToggle2  && didToggle3
                 ? window.innerWidth <= 768
                   ? "0rem"
                   : "4.5rem"

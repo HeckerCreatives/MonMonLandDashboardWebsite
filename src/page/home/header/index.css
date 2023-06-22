@@ -56,7 +56,7 @@
     background: linear-gradient(to bottom, #FFFFFF 7%, #40290A 8%, #40290A 50%, #40290A 50%, #40290A 92%, #FFFFFF 92%);
     background-size: 50px;
     border-radius: 50px !important;
-    width: 500px;
+    width: 100%;
     /* overflow: hidden; */
 }
 
@@ -74,4 +74,22 @@
     /* color: black; */
     -webkit-text-stroke: 1px black;
 }
-  
+
+@media only screen and (min-width: 1440px) {
+    .progressbar {
+        background: #FFBF0F;
+        background: linear-gradient(to bottom, #FFBF0F 0%, #FFFFFF 7%, #F19D31 8%, #D07104 90%, #9C4B0C 100%);
+        border-radius: 0px;
+        height: 42px;
+        margin-top: 4px;
+    }
+    
+    .innerbar {
+        background: #FFFFFF;
+        background: linear-gradient(to bottom, #FFFFFF 7%, #40290A 8%, #40290A 50%, #40290A 50%, #40290A 92%, #FFFFFF 92%);
+        background-size: 50px;
+        border-radius: 50px !important;
+        width: 500px;
+        /* overflow: hidden; */
+    }
+}

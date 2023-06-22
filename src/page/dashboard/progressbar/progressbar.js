@@ -70,7 +70,11 @@ const UpdateProgressBar = () => {
 					title: "Updated Successfully",
 					icon: "success",
 					text: "You Successfully Updated This"
-				})
+				}).then(result => {
+                    if(result.isConfirmed){
+                        window.location.reload()
+                    }
+                })
 				
 			} else {
 				Swal.fire({
@@ -100,7 +104,11 @@ const UpdateProgressBar = () => {
 					title: "Updated Successfully",
 					icon: "success",
 					text: "You Successfully Updated This"
-				})
+				}).then(result => {
+                    if(result.isConfirmed){
+                        window.location.reload()
+                    }
+                })
 				
 			} else {
 				Swal.fire({
@@ -121,10 +129,10 @@ const UpdateProgressBar = () => {
         <MDBTypography tag={'h3'} className=" fw-bold">
             Progress Bar
         </MDBTypography>
-        <MDBTypography tag={'h5'} className=" fw-bold">
+        <MDBTypography tag={'h5'} className="fw-bold">
             {(initialbar)} / {(totalbar)}
         </MDBTypography>
-        <MDBProgress height={50} className="innerbar">
+        <MDBProgress height='50' className="innerbar" >
             <MDBProgressBar className="progressbar" width={progress} valuemin={initialbar} valuemax={totalbar}/>
         </MDBProgress> 
         </MDBCol>
@@ -180,8 +188,9 @@ const UpdateProgressBar = () => {
         </MDBRow>
         
         <MDBRow>
+        <MDBCol>
             <MDBTypography tag='h3' className="mt-4">Progress Bar History</MDBTypography>
-            <MDBTable align='middle' className="border mt-4">
+            <MDBTable align='middle' className="border mt-4" responsive>
                 <MDBTableHead className="head">
                     <tr >
                     <th className="fw-bold" scope='col'>Progress Bar Value</th>
@@ -210,6 +219,7 @@ const UpdateProgressBar = () => {
                     </tr>
                 </MDBTableBody>
                 </MDBTable>
+                </MDBCol>
             </MDBRow>
             <PaginationPager
                 total={total} page={page} setPage={setPage}

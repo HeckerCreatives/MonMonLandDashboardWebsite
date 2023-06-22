@@ -23,6 +23,7 @@ import pearl from "../../../../assets/subscription/pearl badge.png"
 import ruby from "../../../../assets/subscription/ruby badge png.png"
 import emerald from "../../../../assets/subscription/emerald png.png"
 import diamond from "../../../../assets/subscription/diamond.png"
+import free from "../../../../assets/subscription/Free icon.png"
 import Swal from "sweetalert2";
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet"
 import "./create.css"
@@ -102,7 +103,7 @@ return (
                 <MDBCard style={{background: "#EDCAB4",}}>
                 <MDBCardBody> 
                 <MDBRow>
-                <MDBCol className="d-flex align-items-center flex-column justify-content-center">
+                <MDBCol className="d-flex align-items-center flex-column justify-content-center" lg={4}>
                   <form id="form-file-upload">
                     <label id="label-file-upload">
                     <div>
@@ -113,9 +114,9 @@ return (
                     <MDBBtn className="mt-2" style={{background: "#80C548"}}>
                     Choose File
                     </MDBBtn>
-                </MDBCol>
-                    <MDBCol>
-                    <MDBCardText className="text-color mb-0 fw-bold">
+                    </MDBCol>
+                    <MDBCol lg={8}>
+                    <MDBCardText className="text-color mt-3 mb-0 fw-bold">
                     Game Title :
                     </MDBCardText>
                     <input className="square bordercolor rounded mb-2 p-1"  style={{width:'100%'}}  required></input>
@@ -123,6 +124,11 @@ return (
                     Select Subscriptions :
                     </MDBCardText>
                     <MDBRow>
+                        <MDBCol className="text-color fw-bold align-items-center d-flex justify-content-center flex-column">
+                        <img src={free} alt="" style={{height: "60px", width: "60px"}}/>
+                        <label>Free</label>
+                        <input type="checkbox" style={{transform: "scale(1.5)"}}/>
+                        </MDBCol>
                         <MDBCol className="text-color fw-bold align-items-center d-flex justify-content-center flex-column">
                         <img src={pearl} alt="" style={{height: "60px", width: "60px"}}/>
                         <label>Pearl</label>

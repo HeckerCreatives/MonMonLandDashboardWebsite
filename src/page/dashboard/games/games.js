@@ -33,7 +33,7 @@ const UpdateGames = () => {
         </MDBRow>
         <MDBRow>
         <MDBCol>
-            <MDBTable align='middle' className="border mt-4">
+            <MDBTable align='middle' className="border mt-4" responsive>
                 <MDBTableHead className="head">
                     <tr >
                     <th className="fw-bold" scope='col'>Title</th>
