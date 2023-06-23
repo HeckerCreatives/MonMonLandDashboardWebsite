@@ -19,7 +19,7 @@ const UploadWidget = ({setImgUrl}) => {
         })
     },[setImgUrl])
     return (
-        <MDBBtn onClick={() => widgetRef.current.open()} style={{background: "#80C548"}}>
+        <MDBBtn className="mt-2" onClick={() => widgetRef.current.open()} style={{background: "#80C548"}} type="button">
             Upload Image
         </MDBBtn>
     )

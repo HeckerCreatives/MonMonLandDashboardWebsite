@@ -23,8 +23,8 @@ const CreateNews = () => {
   const [show, setShow] = useState(false);
   const toggleShow = () => setShow(!show);
   const [image, setImage] = useState("");
+  const [previewUrl, setPreviewUrl] = useState("");
   const [file, setFile] = useState();
-
   // const handlePreview = e => {
   //   if (e.target.files[0].size / 1024 <= 25000) {
   //     setFile(e.target.files[0]);
@@ -34,8 +34,24 @@ const CreateNews = () => {
   //   }
   // };
 
-  function addnews () {
-    fetch(`${process.env.REACT_APP_NEWS_URL}/addnews`, {
+  const handleImagePreview = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        setPreviewUrl(reader.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
+  function addnews (e) {
+    e.preventDefault()
+    // const {title, description} = e.target
+    fetch(`${process.env.REACT_APP_API_URL}news/addnews`, {
       method:'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -52,7 +68,11 @@ const CreateNews = () => {
 					title: "Updated Successfully",
 					icon: "success",
 					text: "You Successfully Updated This"
-				})
+				}).then(result1 => {
+          if(result1.isConfirmed){
+            window.location.reload()
+          }
+        })
 				
 			} else {
 				Swal.fire({
@@ -66,6 +86,7 @@ const CreateNews = () => {
   const handleImgUrl = (url) => {
     // Use the uploaded image URL in the parent component or pass it to another component
     setImage(url);
+    setPreviewUrl(url)
   };
 return (
     <>
@@ -103,7 +124,7 @@ return (
                     style={{ width: "30rem", height: "auto" }}
                   >
                     <img
-                      src={image || logo}
+                      src={previewUrl || logo}
                       alt="preview"
                       className="img-fluid"
                     />
@@ -122,7 +143,7 @@ return (
                   <MDBFile
                     id="title-image"
                     className="d-none"
-                    // onChange={handlePreview}
+                    onChange={handleImagePreview}
                   />
                 </MDBContainer>
                 <MDBTextArea

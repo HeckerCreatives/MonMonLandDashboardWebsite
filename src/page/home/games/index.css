@@ -22,8 +22,9 @@
 .badgeholder {
     background-image: url("../../../assets/games/box.png");
     background-repeat: no-repeat;
-    background-size: 95% 95%;
+    background-size: 100% 100%;
     background-position: center;
+    margin: 1px;
 }
 
 .characterholder {
@@ -43,8 +44,8 @@
 }
 
 .badgesize {
-    height: 25%;
-    width: 25%;
+    height: 100px;
+    width: 100px;
     /* margin: 0px 8px 0px 15px; */
 }
 

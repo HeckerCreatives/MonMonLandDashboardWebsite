@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBTypography, MDBCarousel,
     MDBCarouselItem,
     MDBBtn,} from "mdb-react-ui-kit";
@@ -9,18 +9,13 @@ import pearl from "../../../assets/subscription/pearl badge.png"
 import ruby from "../../../assets/subscription/ruby badge png.png"
 import emerald from "../../../assets/subscription/emerald png.png"
 import diamond from "../../../assets/subscription/diamond.png"
-import woodcutting from "../../../assets/character/Wood Cutting.png"
-import crafting from "../../../assets/character/crafting.png"
-import fishing from "../../../assets/character/fishing.png"
-import fletching from "../../../assets/character/fletching.png"
-import harvesting from "../../../assets/character/harvesting.png"
-import hunting from "../../../assets/character/hunting.png"
-import mining from "../../../assets/character/mining.png"
+import free from "../../../assets/subscription/Free icon.png"
 import Slider from "react-slick";
 
 
 const Games = () => {
-    
+    const [games, setGames] = useState([]);
+    const [id, setId] = useState([]);
     const sliderRef1 = useRef();
     const sliderRef2 = useRef();
 
@@ -47,36 +42,24 @@ const Games = () => {
         // centerPadding: '100px',
       };
 
-    const contents = [
-        {
-            name: "Wood Cutting",
-            description: "Lorem ipsum is a Latin phrase that is often used as a placeholder text in the design and typesetting industry."
-        },
-        {
-            name: "Crafting",
-            description: "Lorem ipsum is a Latin phrase that is often used as a placeholder text in the design and typesetting industry."
-        },
-        {
-            name: "Fishing",
-            description: "Lorem ipsum is a Latin phrase that is often used as a placeholder text in the design and typesetting industry."
-        },
-        {
-            name: "Fletching",
-            description: "Lorem ipsum is a Latin phrase that is often used as a placeholder text in the design and typesetting industry."
-        },
-        {
-            name: "Harvesting",
-            description: "Lorem ipsum is a Latin phrase that is often used as a placeholder text in the design and typesetting industry."
-        },
-        {
-            name: "Hunting",
-            description: "Lorem ipsum is a Latin phrase that is often used as a placeholder text in the design and typesetting industry."
-        },
-        {
-            name: "Mining",
-            description: "Lorem ipsum is a Latin phrase that is often used as a placeholder text in the design and typesetting industry."
-        },
-    ]  
+      useEffect(() => {
+        fetch(`${process.env.REACT_APP_API_URL}games/find`)
+          .then(response => response.json())
+          .then(result => {       
+            setGames(result)
+            setId(result._id)
+          });
+      }, []);
+      
+
+    const keywordImages = {
+        Free: free,
+        Diamond: diamond,
+        Pearl: pearl,
+        Ruby: ruby,
+        Emerald: emerald
+      };
+
     return(
         <div className="gamesbgcolor">
         <MDBContainer fluid  id="games">
@@ -93,39 +76,51 @@ const Games = () => {
                 <div className="descriptionholder">
                 
                 <div className="">
-                    <Slider {...settings} className='text-center fw-bold' ref={sliderRef1}>
+                    <Slider {...settings} className=' fw-bold' ref={sliderRef1}>
                     
-                    {contents.map((content)=> (
-                    <div className="descdiv" >
-                    <MDBTypography className="h2  mt-3" >{content.name}</MDBTypography>
+                    {games.map((content)=> (
+                    <div key={content._id} className="descdiv" >
+                    
+                    <MDBTypography className="h2 text-center mt-3" >{content.gametitle}</MDBTypography>
 
-                    <MDBTypography className="p" >
+                    <MDBTypography className="p text-center" >
                     {content.description}
                     </MDBTypography>
 
-                    <MDBTypography className="p" >
-                    {content.description}
-                    </MDBTypography>
-                    </div>
-                    ))}
-                                       
-                                        
-                    </Slider>
-                </div>
-                
-
-                   <div className="subs">
+                    <div className="subs">
                    <MDBCol className="">
                    <MDBTypography className="substext h2 text-wrap">
                     Subscription:
-                    </MDBTypography>                                    
-                    <img src={pearl}  alt="..." className="badgeholder img-fluid badgesize"/>
-                    <img src={ruby} alt="..." className="badgeholder img-fluid badgesize"/>
-                    <img src={emerald}  alt="..." className="badgeholder img-fluid badgesize"/>
-                    <img src={diamond}  alt="..." className="badgeholder img-fluid badgesize"/>
-                    </MDBCol>
-                    
+                    </MDBTypography>
+                    <div className="d-flex align-items-center justify-content-center">
+                    {content.selectsubscription.map((keyword) => (
+                            <div key={`keyword-${id}`} className="badgeholder">
+                            {keywordImages.hasOwnProperty(keyword) && (
+                                <img
+                                src={keywordImages[keyword]}
+                                alt=""
+                                className="img-fluid badgesize"
+                                />
+                            )}
+                            </div>
+                        ))}
                     </div>
+                        
+                    
+                    </MDBCol>                    
+                    </div>
+
+                    </div>
+                    
+                    ))}
+                                      
+                                        
+                    </Slider>
+                   
+                </div>
+                
+
+                   
                     
                 
                     
@@ -143,30 +138,11 @@ const Games = () => {
 
                     <MDBCol className="">
                     <Slider {...settings} ref={sliderRef2}>
-                    
-                    <div className="">
-                    <img src={woodcutting} alt="" className="char"/>
-                    </div>
-                    <div className="">
-                    <img src={crafting} alt="" className="char"/>
-                    </div>
-                    <div className="">
-                    <img src={fishing} alt="" className="char"/>
-                    </div>
-
-                    <div className="">
-                    <img src={fletching} alt="" className="char"/>
-                    </div>
-                    <div className="">
-                    <img src={harvesting} alt="" className="char"/>
-                    </div>
-                    <div className="">
-                    <img src={hunting} alt="" className="char"/>
-                    </div>
-                    <div className="">
-                    <img src={mining} alt="" className="char"/>
-                    </div>
-                                   
+                    {games.map(game =>(
+                        <div key={game._id} className="">
+                        <img src={game.image} alt="" className="char"/>
+                        </div>
+                    ))}     
                     </Slider>
                     </MDBCol>
                 

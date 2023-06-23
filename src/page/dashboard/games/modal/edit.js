@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {
   MDBBtn,
+  MDBCard,
+  MDBCardBody,
+  MDBCardText,
+  MDBCol,
   MDBContainer,
   MDBFile,
   MDBIcon,
@@ -12,89 +16,89 @@ import {
   MDBModalFooter,
   MDBModalHeader,
   MDBModalTitle,
+  MDBRow,
   MDBTextArea,
 } from "mdb-react-ui-kit";
+import pearl from "../../../../assets/subscription/pearl badge.png"
+import ruby from "../../../../assets/subscription/ruby badge png.png"
+import emerald from "../../../../assets/subscription/emerald png.png"
+import diamond from "../../../../assets/subscription/diamond.png"
+import free from "../../../../assets/subscription/Free icon.png"
 import Swal from "sweetalert2";
-import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
-
-const UpdateGames = ({ theme, games }) => {
+import UploadWidget from "../../../../component/uploadwidget/uploadwidet"
+import "./create.css"
+const UpdateGames = ({games}) => {
+  const [titles, setTitles] = useState('');
+  const [descriptions, setDescriptions] = useState('');
+  const [subscription, setSubscription] = useState([]);
   const [show, setShow] = useState(false);
   const toggleShow = () => setShow(!show);
   const [image, setImage] = useState("");
-  const [file, setFile] = useState("");
-  const [titles, setTitles] = useState('');
-  const [descriptions, setDescriptions] = useState('');
+  // const [isChecked, setIsChecked] = useState(false);
+  // const defaultimg = process.env.REACT_APP_GAMEDEFAULTIMG;
+  
+  console.log(games._id)
+  function updategame (e) {
+    e.preventDefault()
+    fetch(`${process.env.REACT_APP_API_URL}games/${games._id}/update`, {
+      method:'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          gametitle: titles ? titles : games.gametitle,
+          description: descriptions ? descriptions : games.description ,
+          image: image ? image : games.image,
+          selectsubscription: subscription,
+      })
+    }).then(result => result.json())
+    .then(data => {
+      if (data) {
+				Swal.fire({
+					title: "Updated Successfully",
+					icon: "success",
+					text: "You Successfully Updated This"
+				}).then(ok => {
+          if(ok.isConfirmed){
+            window.location.reload()
+          }
+        })
+				
+			} else {
+				Swal.fire({
+					title: "Update Unsuccessfully",
+					icon: "error",
+					text: "There is an error Updating This"
+				})
+			}
+    })
+  }
 
-  const handlePreview = e => {
-    setFile(e.target.files[0]);
-    setImage(URL.createObjectURL(e.target.files[0]));
+  const handleCheckboxChange = (event) => {
+    const labelText = event.target.previousSibling.textContent; // Get the label text next to the checkbox
+
+    if (event.target.checked) {
+      // If checkbox is checked, add the label text to the subscription array
+      setSubscription((prevSubscription) => [...prevSubscription, labelText]);
+    } else {
+      // If checkbox is unchecked, remove the label text from the subscription array
+      setSubscription((prevSubscription) =>
+        prevSubscription.filter((item) => item !== labelText)
+      );
+    }
   };
 
-//   function updatenews (e) {
-//     e.preventDefault();
-//     fetch(`${process.env.REACT_APP_NEWS_URL}${news._id}/update`, {
-//         method:'PUT',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({
-//             title: titles,
-//             description: descriptions,
-//             image: image
-//         })            
-//     }).then(result => result.json())
-//     .then(data => {
+  useEffect(() => {
+    const selectedSubscriptions = games.selectsubscription || []; // Assuming games.selectsubscription is an array
+    setSubscription(selectedSubscriptions);
+  }, [games.selectsubscription]);
 
-//         if (data) {
-//           Swal.fire({
-//             title: "Updated Successfully",
-//             icon: "success",
-//             text: "You Successfully Updated This"
-//           })
-//           // window.location.reload()
-//         } else {
-//           Swal.fire({
-//             title: "Update Unsuccessfully",
-//             icon: "error",
-//             text: "There is an error Updating This"
-//           })
-//         }
-//     }) 
-// }
-//   const handleSubmit = e => {
-//     e.preventDefault();
 
-//     const { title, description } = e.target;
-
-//     if (file) {
-//       const reader = new FileReader();
-
-//       reader.onload = e =>
-//         dispatch(
-//           UPLOAD({
-//             path: `news`,
-//             base64: reader.result.split(",")[1],
-//             name: file.name,
-//           })
-//         );
-
-//       reader.readAsDataURL(file);
-//     }
-
-//     dispatch(
-//       UPDATE({
-//         id: news._id,
-//         data: {
-//           title: title.value,
-//           description: description.value,
-//           image: file ? file.name : news.image,
-//         },
-//       })
-//     );
-//     setShow(false);
-//   };
-
-  return (
+  const handleImgUrl = (url) => {
+    // Use the uploaded image URL in the parent component or pass it to another component
+    setImage(url);
+  };
+return (
     <>
       <MDBBtn
         outline
@@ -103,16 +107,14 @@ const UpdateGames = ({ theme, games }) => {
         color='dark'
       >
         {/* <MDBIcon fas icon="plus" /> */}
-        &nbsp;Edit Game
+        &nbsp; Edit Game
       </MDBBtn>
       <MDBModal show={show} setShow={setShow} tabIndex="-1" staticBackdrop>
         <MDBModalDialog centered size="lg">
           <MDBModalContent className={``}>
-            <form autoComplete="off" >
+            <form autoComplete="off" onSubmit={updategame}>
               <MDBModalHeader style={{background:"#A57552"}}>
-                <MDBModalTitle className="text-light">
-                  Update <b>{String(games.gametitle).toUpperCase()}</b>
-                </MDBModalTitle>
+                <MDBModalTitle className="text-light">Edit {games.gametitle}</MDBModalTitle>
                 <MDBBtn
                   className="btn-close"
                   color="none"
@@ -121,61 +123,108 @@ const UpdateGames = ({ theme, games }) => {
                 ></MDBBtn>
               </MDBModalHeader>
               <MDBModalBody>
-                <MDBInput
-                  label={<span className={``}>Game Title</span>}
-                  className={` mb-3`}
-                  defaultValue={games.gametitle}
-                  type="text"
-                  name="title"
-                  onChange={e => setTitles(e.target.value)}
-                />
-                <MDBContainer fluid className="px-0 text-center mb-3">
-                  <MDBContainer
-                    className="my-2"
-                    style={{ width: "30rem", height: "auto" }}
-                  >
-                    <img
-                      src={image || `${games.image}`}
-                      alt={games.image}
-                      className="img-fluid"
-                      onChange={e => setImage(e.target.value)}  
-                    />
-                  </MDBContainer>
-                  {/* <MDBBtn
-                    type="button"
-                    onClick={() =>
-                      document.getElementById("update-image").click()
-                    }
-                    className={` px-5`}
-                  >
-                    Upload Image                    
-                  </MDBBtn> */}
-                  <UploadWidget/>
-                  {/* <MDBFile
-                    id="update-image"
-                    className="d-none"
-                    onChange={handlePreview}
-                  /> */}
-                </MDBContainer>
-                <MDBTextArea
-                  label={
-                    <span className={``}>Game Description</span>
-                  }
-                  className={` mb-3`}
-                  rows={10}
-                  defaultValue={games.description}
-                  name="description"
-                  style={{ resize: "none", whiteSpace: "pre-line" }}
-                  onChange={e => setDescriptions(e.target.value)}
-                />
+
+                <MDBCardText className="text-dark mb-0 fw-bold">Game Information</MDBCardText>
+                <MDBCard style={{background: "#EDCAB4",}}>
+                <MDBCardBody> 
+                <MDBRow>
+                <MDBCol className="d-flex align-items-center flex-column justify-content-center" lg={4}>
+                
+                <img
+                  src={image ? image : games.image}
+                  alt="preview"
+                  className="img-fluid"
+                />                 
+                    <UploadWidget setImgUrl={handleImgUrl}/>
+                    </MDBCol>
+                    <MDBCol lg={8}>
+                    <MDBCardText className="text-color mt-3 mb-0 fw-bold">
+                    Game Title :
+                    </MDBCardText>
+                    <input className="square bordercolor rounded mb-2 p-1" defaultValue={games.gametitle} style={{width:'100%'}} onChange={e => setTitles(e.target.value)}></input>
+                    <MDBCardText className="text-color mb-0 fw-bold">
+                    Select Subscriptions :
+                    </MDBCardText>
+                    <MDBRow>
+                        <MDBCol className="text-color fw-bold align-items-center d-flex justify-content-center flex-column">
+                        <img src={free} alt="" style={{height: "60px", width: "60px"}}/>
+                        <label className="d-flex flex-column align-items-center justify-content-center">
+                        <span className="pb-2">Free</span>
+                        <input 
+                        type="checkbox"  
+                        checked={subscription.includes("Free")}
+                        onChange={handleCheckboxChange} 
+                        style={{transform: "scale(1.5)"}}/>                        
+                        </label>
+                        </MDBCol>
+                        <MDBCol className="text-color fw-bold align-items-center d-flex justify-content-center flex-column">
+                        <img src={pearl} alt="" style={{height: "60px", width: "60px"}}/>
+                        <label className="d-flex flex-column align-items-center justify-content-center">
+                        <span className="pb-2">Pearl</span>
+                        <input 
+                        type="checkbox"
+                        checked={subscription.includes("Pearl")}  
+                        onChange={handleCheckboxChange} 
+                        style={{transform: "scale(1.5)"}}/>                        
+                        </label>
+                        </MDBCol>
+                        <MDBCol className="text-color fw-bold align-items-center d-flex justify-content-center flex-column">
+                        <img src={ruby} alt="" style={{height: "60px", width: "60px"}}/>
+                        <label className="d-flex flex-column align-items-center justify-content-center">
+                        <span className="pb-2">Ruby</span>
+                        <input 
+                        type="checkbox"  
+                        checked={subscription.includes("Ruby")} 
+                        onChange={handleCheckboxChange} 
+                        style={{transform: "scale(1.5)"}}/>
+                        </label>
+                        </MDBCol>
+                        <MDBCol className="text-color fw-bold align-items-center d-flex justify-content-center flex-column">
+                        <img src={emerald} alt="" style={{height: "60px", width: "60px"}}/>
+                        <label className="d-flex flex-column align-items-center justify-content-center">
+                        <span className="pb-2">Emerald</span>
+                        <input 
+                        type="checkbox" 
+                        checked={subscription.includes("Emerald")}  
+                        onChange={handleCheckboxChange} 
+                        style={{transform: "scale(1.5)"}}/>
+                        
+                        </label>
+                        </MDBCol>
+                        <MDBCol className="text-color fw-bold align-items-center d-flex justify-content-center flex-column">
+                        <img src={diamond} alt="" style={{height: "60px", width: "60px"}}/>
+                        <label className="d-flex flex-column align-items-center justify-content-center">
+                        <span className="pb-2">Diamond</span>
+                        <input 
+                        type="checkbox"  
+                        checked={subscription.includes("Diamond")} 
+                        onChange={handleCheckboxChange} 
+                        style={{transform: "scale(1.5)"}}/>                        
+                        </label>
+                        </MDBCol>
+                    </MDBRow>
+                    </MDBCol>
+                </MDBRow>
+                </MDBCardBody>                
+                </MDBCard>
+
+
+
+                <MDBCardText className="mt-5 text-dark mb-0 fw-bold">Description</MDBCardText>
+                <MDBCard style={{background: "#EDCAB4",}}>
+                <MDBCardBody> 
+                <textarea rows="5" className="rounded" name="description" defaultValue={games.description} style={{width:'100%',resize: "none"}} onChange={e => setDescriptions(e.target.value)}></textarea>
+                </MDBCardBody>                
+                </MDBCard>
+                
               </MDBModalBody>
 
               <MDBModalFooter>
                 <MDBBtn className='text-dark' type="button" color="light" onClick={toggleShow}>
-                  Close
+                Cancel
                 </MDBBtn>
                 <MDBBtn type="submit" className={``}>
-                  Save changes
+                 Update Game
                 </MDBBtn>
               </MDBModalFooter>
             </form>
