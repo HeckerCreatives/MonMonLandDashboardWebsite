@@ -11,7 +11,6 @@ import {
   MDBModalTitle,
   MDBTypography,
 } from "mdb-react-ui-kit";
-// import { ENDPOINT } from "../../../../../components/utilities";
 
 const ViewNews = ({ theme, news }) => {
   const [show, setShow] = useState(false);

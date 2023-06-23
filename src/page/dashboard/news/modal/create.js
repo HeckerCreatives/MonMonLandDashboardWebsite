@@ -25,14 +25,14 @@ const CreateNews = () => {
   const [image, setImage] = useState("");
   const [file, setFile] = useState();
 
-  const handlePreview = e => {
-    if (e.target.files[0].size / 1024 <= 25000) {
-      setFile(e.target.files[0]);
-      setImage(URL.createObjectURL(e.target.files[0]));
-    } else {
-    //   toast.warn("Maximum image size is 25mb");
-    }
-  };
+  // const handlePreview = e => {
+  //   if (e.target.files[0].size / 1024 <= 25000) {
+  //     setFile(e.target.files[0]);
+  //     setImage(URL.createObjectURL(e.target.files[0]));
+  //   } else {
+  //   //   toast.warn("Maximum image size is 25mb");
+  //   }
+  // };
 
   function addnews () {
     fetch(`${process.env.REACT_APP_NEWS_URL}/addnews`, {
@@ -63,7 +63,10 @@ const CreateNews = () => {
 			}
     })
   }
-
+  const handleImgUrl = (url) => {
+    // Use the uploaded image URL in the parent component or pass it to another component
+    setImage(url);
+  };
 return (
     <>
       <MDBBtn
@@ -115,11 +118,11 @@ return (
                   >
                     Upload Image
                   </MDBBtn> */}
-                  <UploadWidget/>
+                  <UploadWidget setImgUrl={handleImgUrl}/>
                   <MDBFile
                     id="title-image"
                     className="d-none"
-                    onChange={handlePreview}
+                    // onChange={handlePreview}
                   />
                 </MDBContainer>
                 <MDBTextArea

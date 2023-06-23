@@ -83,7 +83,7 @@ return (
         color='dark'
       >
         <MDBIcon fas icon="plus" />
-        &nbsp;&nbsp; Add Games
+        &nbsp; Add Games
       </MDBBtn>
       <MDBModal show={show} setShow={setShow} tabIndex="-1" staticBackdrop>
         <MDBModalDialog centered size="lg">
@@ -111,7 +111,7 @@ return (
                     </div>
                     </label>
                   </form>
-                    <MDBBtn className="mt-2" style={{background: "#80C548"}}>
+                    <MDBBtn className="mt-2" style={{background: "#80C548"}} type="button">
                     Choose File
                     </MDBBtn>
                     </MDBCol>

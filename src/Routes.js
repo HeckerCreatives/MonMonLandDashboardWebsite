@@ -26,7 +26,7 @@ import ManageDashboard from "./component/dashboard/admin/manageplayer/managedash
 import SignUpPlayer from "./page/signupform/playersignup/signupplayer";
 import CreateAdminAccount from "./page/dashboard/manageaccount/admin";
 import CreateCSRAccount from "./page/dashboard/manageaccount/csr";
-import UpdateGames from "./page/dashboard/games/games";
+import Games from "./page/dashboard/games/games";
 
 const Routers = () => {
   return (
@@ -60,7 +60,7 @@ const Routers = () => {
           <Route path="updatesubs" element={<UpdateSubs/>}/>
           <Route path="updatenews" element={<UpdateNews/>}/>
           <Route path="updateroadmap" element={<UpdateRoadmap/>}/>
-          <Route path="updategames" element={<UpdateGames/>}/>
+          <Route path="updategames" element={<Games/>}/>
         </Route>        
         </Route>  
 
