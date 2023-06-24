@@ -12,15 +12,14 @@ import {
   MDBModalFooter,
   MDBModalHeader,
   MDBModalTitle,
-  MDBTextArea,
+  MDBCardText,
+  MDBCard,
+  MDBCardBody,
+  MDBRow,
+  MDBCol,
 } from "mdb-react-ui-kit";
 import Swal from "sweetalert2";
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
-// import { ENDPOINT } from "../../../../../components/utilities";
-// import { useDispatch } from "react-redux";
-// import { UPLOAD } from "../../../../../redux/slices/auth";
-// import { toast } from "react-toastify";
-// import { UPDATE } from "../../../../../redux/slices/news";
 
 const UpdateNewsModal = ({ theme, news }) => {
   const [show, setShow] = useState(false);
@@ -43,9 +42,9 @@ const UpdateNewsModal = ({ theme, news }) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            title: titles,
-            description: descriptions,
-            image: image
+            title: titles ? titles : news.title,
+            description: descriptions ? descriptions : news.description,
+            image: image ? image : news.image
         })            
     }).then(result => result.json())
     .then(data => {
@@ -55,8 +54,11 @@ const UpdateNewsModal = ({ theme, news }) => {
             title: "Updated Successfully",
             icon: "success",
             text: "You Successfully Updated This"
+          }).then(result1 => {
+            if(result1.isConfirmed){
+              window.location.reload()
+            }
           })
-          // window.location.reload()
         } else {
           Swal.fire({
             title: "Update Unsuccessfully",
@@ -98,87 +100,72 @@ const UpdateNewsModal = ({ theme, news }) => {
 //     );
 //     setShow(false);
 //   };
-
+const handleImgUrl = (url) => {
+  // Use the uploaded image URL in the parent component or pass it to another component
+  setImage(url);
+};
   return (
     <>
       <MDBBtn
         onClick={toggleShow}
-        color="secondary"
-        className="me-2"
+        outline
+        color="dark"
+        className="mx-2"
         title="Update"
-        size="sm"
+        // size="sm"
       >
-        <MDBIcon far icon="edit" />
+      Edit
+        {/* <MDBIcon far icon="edit" /> */}
       </MDBBtn>
       <MDBModal show={show} setShow={setShow} tabIndex="-1" staticBackdrop>
         <MDBModalDialog centered size="lg">
           <MDBModalContent className={``}>
             <form autoComplete="off" onSubmit={updatenews}>
-              <MDBModalHeader>
-                <MDBModalTitle>
+              <MDBModalHeader style={{background:"#A57552"}}>
+                <MDBModalTitle className="text-light">
                   Update <b>{String(news.title).toUpperCase()}</b>
                 </MDBModalTitle>
                 <MDBBtn
                   className="btn-close"
                   color="none"
                   onClick={toggleShow}
+                  type="button"
                 ></MDBBtn>
               </MDBModalHeader>
               <MDBModalBody>
-                <MDBInput
-                  label={<span className={``}>News Title</span>}
-                  className={` mb-3`}
-                  defaultValue={news.title}
-                  type="text"
-                  name="title"
-                  onChange={e => setTitles(e.target.value)}
-                />
-                <MDBContainer fluid className="px-0 text-center mb-3">
-                  <MDBContainer
-                    className="my-2"
-                    style={{ width: "30rem", height: "auto" }}
-                  >
-                    <img
-                      src={image || `${news.image}`}
-                      alt={news.image}
-                      className="img-fluid"
-                      onChange={e => setImage(e.target.value)}  
-                    />
-                  </MDBContainer>
-                  {/* <MDBBtn
-                    type="button"
-                    onClick={() =>
-                      document.getElementById("update-image").click()
-                    }
-                    className={` px-5`}
-                  >
-                    Upload Image                    
-                  </MDBBtn> */}
-                  <UploadWidget/>
-                  {/* <MDBFile
-                    id="update-image"
-                    className="d-none"
-                    onChange={handlePreview}
-                  /> */}
-                </MDBContainer>
-                <MDBTextArea
-                  label={
-                    <span className={``}>News Description</span>
-                  }
-                  className={` mb-3`}
-                  rows={10}
-                  defaultValue={news.description}
-                  name="description"
-                  style={{ resize: "none", whiteSpace: "pre-line" }}
-                  onChange={e => setDescriptions(e.target.value)}
-                />
+              <MDBCardText className="text-dark mb-0 fw-bold">News Information</MDBCardText>
+                <MDBCard style={{background: "#EDCAB4",}}>
+                <MDBCardBody> 
+                <MDBRow>
+                <MDBCol className="d-flex align-items-center flex-column justify-content-center" lg={4}>
+                 
+                <img
+                  src={image ? image : news.image}
+                  alt="preview"
+                  className="img-fluid"
+                />                  
+                    <UploadWidget setImgUrl={handleImgUrl}/>
+                    </MDBCol>
+                  <MDBCol>
+                  <MDBCardText className="text-color mb-0 fw-bold">
+                    News Title :
+                  </MDBCardText>
+                    <input className="square bordercolor rounded mb-2 p-1" defaultValue={news.title} style={{width:'100%'}} onChange={e => setTitles(e.target.value)} required></input>
+                  <MDBCardText className="text-color mb-0 fw-bold">
+                   Description :
+                  </MDBCardText>
+                  <textarea rows="5" className="rounded" name="description" defaultValue={news.description} style={{width:'100%',resize: "none"}} required onChange={e => setDescriptions(e.target.value)}></textarea>
+                  </MDBCol>
+                </MDBRow>
+                </MDBCardBody>
+                </MDBCard>
               </MDBModalBody>
 
               <MDBModalFooter>
-                <MDBBtn type="button" color="danger" onClick={toggleShow}>
+                <MDBBtn className={`text-dark fw-bold`} type="button" style={{background:"#DCE3E8"}} onClick={toggleShow}>
                   Close
                 </MDBBtn>
-                <MDBBtn type="submit" className={``}>
+                <MDBBtn type="submit" className={`fw-bold`}>
                   Save changes
                 </MDBBtn>
               </MDBModalFooter>

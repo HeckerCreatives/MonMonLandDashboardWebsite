@@ -1,6 +1,15 @@
 import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
-import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBTextArea, MDBCardImage, MDBCardText, MDBModal, MDBModalBody,MDBModalDialog,MDBModalContent,MDBModalHeader,MDBModalTitle,MDBModalFooter} from "mdb-react-ui-kit";
+import { 
+  MDBContainer, 
+  MDBBtn, 
+  MDBInput, 
+  MDBRow, 
+  MDBCol, 
+  MDBTable,
+  MDBTableHead,
+  MDBTableBody
+} from "mdb-react-ui-kit";
 import Swal from "sweetalert2"
 import Breadcrumb from "../../../component/breadcrumb";
 import './news.css'
@@ -32,54 +41,80 @@ const UpdateNews = () => {
       .then(result => result.json())
       .then(data => {
           setNews(data)
-          
       })
     },[])
 
-      // useEffect(()=>{
-      //   fetch(`${process.env.REACT_APP_NEWS_URL}${newsid}/find`)
-      //   .then(result => result.json())
-      //   .then(data => {
-      //       setTitles(data.title)
-      //       setDescriptions(data.description)
-      //   })
-      // })
+    const deleteitem = (id) => {
+        Swal.fire({
+        icon: "warning",
+        title: `Are you sure to delete this?`,
+        text: "You won't be able to revert this",
+        showDenyButton: true,
+        confirmButtonText: "Delete",
+        denyButtonText: "Cancel",
+        }).then(result1 => {
+            if(result1.isConfirmed){
+                fetch(`${process.env.REACT_APP_API_URL}news/${id}/destroy`,{
+                    method: "DELETE",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(result => result.json())
+                .then(data => {
+                    if(data){
+                    window.location.reload()
+                    }
+                })
+                
+            }
+        })        
+    }
 
       
     return (
         <MDBContainer fluid className="">
-        <Breadcrumb title="News" paths={[]}/>
+        <Breadcrumb title="Landing Page News" paths={[]}/>
           <MDBRow className="p-2 d-flex">
           <MDBCol >
           <CreateNews />
           </MDBCol>
           </MDBRow>
-
-        <MDBRow>
-        {handlePagination(news, page, 5)?.map(balita => (
-        <MDBCol>        
-          <MDBCard key={balita._id} className="">
-          <MDBCardImage src={balita.image} className="images"/>
-          <MDBCardBody>
-          <MDBCardText className="fw-bold">
-          {balita.title}
-          </MDBCardText>
-
-          <MDBCardText className="fw-bold">
-          {balita.description.length > 25 ? `${balita.description.substring(0,25)}...`: balita.description}
-          </MDBCardText>
-            
-            <ViewNews news={balita}/>
-            <UpdateNewsModal news={balita}/>
-          </MDBCardBody>
-        </MDBCard>
+          <MDBRow>
+        <MDBCol>
+            <MDBTable align='middle' className="border mt-4" responsive>
+                <MDBTableHead className="head text-center">
+                    <tr >
+                    <th className="fw-bold" scope='col'>Title</th>
+                    <th className="fw-bold" scope='col'>Image</th>
+                    <th className="fw-bold" scope='col'>Description</th>
+                    <th className="fw-bold" scope='col'>Date</th>
+                    <th className="fw-bold" scope='col'>Action</th>
+                    </tr>
+                </MDBTableHead>
+                <MDBTableBody className="text-center">
+                {news.map((balita, i) =>(
+                <tr key={`balita-${i}`}>
+                <td>{balita.title}</td>
+                <td>
+                    <img src={balita.image} alt="" style={{height:"50px", width:"50px"}}/>
+                </td>                
+                <td>{balita.description.length > 25 ? `${balita.description.substring(0,25)}...`: balita.description}</td>
+                <td>{new Date(balita.createdAt).toLocaleString()}</td>
+                <td>
+                    <ViewNews news={balita}/>
+                    <UpdateNewsModal news={balita}/>
+                    <MDBBtn className="mx-2 fw-bold" type="button" outline color="dark" onClick={() => deleteitem(balita._id)}>Delete</MDBBtn>
+                </td>
+                </tr>
+                ))}
+                    
+                </MDBTableBody>
+                </MDBTable>
         </MDBCol>
-        ))}
         </MDBRow>
-        
-          <PaginationPager
-            total={total} page={page} setPage={setPage}
-          />
+            <PaginationPager
+                total={total} page={page} setPage={setPage}
+            />
         </MDBContainer>
     )
 }

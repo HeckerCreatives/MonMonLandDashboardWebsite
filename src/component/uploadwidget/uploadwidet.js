@@ -12,7 +12,6 @@ const UploadWidget = ({setImgUrl}) => {
             cloudName: 'dykvp9i3v',
             uploadPreset: 'diev5gl7'
         }, function(error, result){
-            console.log(result.info.url)
             if(result.event === 'success'){
                 setImgUrl(result.info.url)
             }

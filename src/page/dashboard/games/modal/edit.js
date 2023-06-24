@@ -37,7 +37,6 @@ const UpdateGames = ({games}) => {
   // const [isChecked, setIsChecked] = useState(false);
   // const defaultimg = process.env.REACT_APP_GAMEDEFAULTIMG;
   
-  console.log(games._id)
   function updategame (e) {
     e.preventDefault()
     fetch(`${process.env.REACT_APP_API_URL}games/${games._id}/update`, {

@@ -40,6 +40,31 @@ const Games = () => {
         Emerald: emerald
       };
 
+      const deleteitem = (id) => {
+        Swal.fire({
+        icon: "warning",
+        title: `Are you sure to delete this?`,
+        text: "You won't be able to revert this",
+        showDenyButton: true,
+        confirmButtonText: "Delete",
+        denyButtonText: "Cancel",
+        }).then(result1 => {
+            if(result1.isConfirmed){
+                fetch(`${process.env.REACT_APP_API_URL}games/${id}/destroy`,{
+                    method: "DELETE",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(result => result.json())
+                .then(data => {
+                    if(data){
+                    window.location.reload()
+                    }
+                })
+                
+            }
+        })        
+    }
     return (
         <MDBContainer fluid className="">
         <Breadcrumb title="Landing Page Games" paths={[]}/>
@@ -90,7 +115,12 @@ const Games = () => {
                 <td>
                     <ViewGames games={game}/>
                     <UpdateGames games={game}/>
-                    <MDBBtn className="mx-2 fw-bold" outline color="dark">Delete</MDBBtn>
+                    <MDBBtn 
+                    className="mx-2 fw-bold" 
+                    outline color="dark" 
+                    onClick={() => deleteitem(game._id)}>
+                    Delete
+                    </MDBBtn>
                 </td>
                 </tr>
                 ))}

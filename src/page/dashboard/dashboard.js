@@ -104,19 +104,23 @@ const Dashboard = () => {
                   children: [
                     {
                       name: "Pearl",
-                      path: "/dashboard/Administrator/settings/updatesubs",
+                      path: "/dashboard/Administrator/settings/updatesubs/pearl",
                     },
                     {
                       name: "Ruby",
-                      path: "/dashboard/Administrator/settings/updatesubs",
+                      path: "/dashboard/Administrator/settings/updatesubs/ruby",
                     },
                     {
                       name: "Emerald",
-                      path: "/dashboard/Administrator/settings/updatesubs",
+                      path: "/dashboard/Administrator/settings/updatesubs/emerald",
                     },
                     {
                       name: "Diamond",
-                      path: "/dashboard/Administrator/settings/updatesubs",
+                      path: "/dashboard/Administrator/settings/updatesubs/diamond",
+                    },
+                    {
+                      name: "Free",
+                      path: "/dashboard/Administrator/settings/updatesubs/free",
                     }
                   ]
                 },

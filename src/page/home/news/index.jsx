@@ -10,9 +10,6 @@ import { MDBContainer, MDBRow, MDBCol, MDBTypography,MDBCard,MDBCardBody,MDBCard
   MDBModalFooter,
   MDBSpinner, } from "mdb-react-ui-kit";
 import "./index.css"
-import woodcutting from "../../../assets/character/Wood Cutting.png"
-import crafting from "../../../assets/character/crafting.png"
-import fishing from "../../../assets/character/fishing.png"
 import Slider from "react-slick";
 const News = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -31,14 +28,14 @@ const News = () => {
         setIsLoading(false)
     })
   },[])
-
+  
     const settings = {
         className: "center",
         arrows: false,
         centerMode: true,
         infinite: true,
         centerPadding: "60px",
-        slidesToShow: 3,
+        slidesToShow: news.length >= 3 ? 3 : news.length,
         speed: 500,
         focusOnSelect: true,
         responsive: [
@@ -74,7 +71,7 @@ const News = () => {
             <MDBTypography className="p-5 titlefontsize text-warning text-center fw-bold">LATEST NEWS</MDBTypography>
         {isLoading ? <MDBSpinner color="warning"></MDBSpinner>
         :
-        <div >
+        <div className="center">
         
         <Slider {...settings}>
         
@@ -87,7 +84,7 @@ const News = () => {
                     <MDBCardText className="fw-bold text-center">
                     {balita.title}
                     </MDBCardText>
-                    <MDBCardText className="fw-bold text-center">
+                    <MDBCardText className="text-center">
                     {balita.description.length > 25 ? `${balita.description.substring(0,25)}...`: balita.description}
                     </MDBCardText>
                   <MDBBtn onClick={() => {
@@ -115,11 +112,11 @@ const News = () => {
                 <MDBModalBody>
                 <MDBContainer fluid className="d-flex  justify-content-center">
                         <img alt="" src={imahe}/>
-                    </MDBContainer>
+                </MDBContainer>
                 {newsdescription}
                 </MDBModalBody>
                 <MDBModalFooter>
-                <MDBBtn color='secondary' onClick={()=> setActiveModal(null)}>
+                <MDBBtn color='secondary' type="button" onClick={()=> setActiveModal(null)}>
                     Close
                 </MDBBtn>                
                 </MDBModalFooter>

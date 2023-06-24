@@ -13,6 +13,11 @@ import {
   MDBModalHeader,
   MDBModalTitle,
   MDBTextArea,
+  MDBCardText,
+  MDBCard,
+  MDBCardBody,
+  MDBRow,
+  MDBCol,
 } from "mdb-react-ui-kit";
 import logo from "../../../../assets/header/big logo.png"
 import Swal from "sweetalert2";
@@ -91,80 +96,69 @@ const CreateNews = () => {
 return (
     <>
       <MDBBtn
+        outline
+        color="dark"
         onClick={toggleShow}
-        className={` fs-6 text-capitalize`}
-      >
-        <MDBIcon far icon="plus-square" />
-        &nbsp;&nbsp;Create News
+        className={`fs-6 text-capitalize`}
+      >        
+        Add News
+        &nbsp;&nbsp;<MDBIcon far icon="plus-square" />
       </MDBBtn>
       <MDBModal show={show} setShow={setShow} tabIndex="-1" staticBackdrop>
         <MDBModalDialog centered size="lg">
           <MDBModalContent className={``}>
             <form autoComplete="off" onSubmit={addnews}>
-              <MDBModalHeader>
-                <MDBModalTitle>Create News</MDBModalTitle>
+              <MDBModalHeader style={{background:"#A57552"}}>
+                <MDBModalTitle className="text-light">Add News</MDBModalTitle>
                 <MDBBtn
                   className="btn-close"
                   color="none"
                   onClick={toggleShow}
+                  type="button"
                 ></MDBBtn>
               </MDBModalHeader>
               <MDBModalBody>
-                <MDBInput
-                  required
-                  label={<span className={``}>News Title</span>}
-                  className={` mb-3`}
-                  type="text"
-                  name="title"
-                  onChange={e => setTitles(e.target.value)}
-                />
-                <MDBContainer fluid className="px-0 text-center mb-3">
-                  <MDBContainer
-                    className="my-2"
-                    style={{ width: "30rem", height: "auto" }}
-                  >
-                    <img
-                      src={previewUrl || logo}
-                      alt="preview"
-                      className="img-fluid"
-                    />
-                  </MDBContainer>
-                  {/* <MDBBtn
-                    type="button"
-                    onClick={() =>
-                      document.getElementById("title-image").click()
-                    }
-                    className={` px-5`}
-                    onChange={e => setDescriptions(e.target.value)}
-                  >
-                    Upload Image
-                  </MDBBtn> */}
-                  <UploadWidget setImgUrl={handleImgUrl}/>
-                  <MDBFile
-                    id="title-image"
-                    className="d-none"
-                    onChange={handleImagePreview}
-                  />
-                </MDBContainer>
-                <MDBTextArea
-                  label={
-                    <span className={``}>News Description</span>
-                  }
-                  required
-                  className={` mb-3`}
-                  rows={10}
-                  name="description"
-                  style={{ resize: "none", whiteSpace: "pre-line" }}
-                  onChange={e => setDescriptions(e.target.value)}
-                />
+              <MDBCardText className="text-dark mb-0 fw-bold">News Information</MDBCardText>
+                <MDBCard style={{background: "#EDCAB4",}}>
+                <MDBCardBody> 
+                <MDBRow>
+                <MDBCol className="d-flex align-items-center flex-column justify-content-center" lg={4}>
+                {image ? 
+                <img
+                  src={image}
+                  alt="preview"
+                  className="img-fluid"
+                /> : 
+                <form id="form-file-upload">
+                  <label id="label-file-upload">
+                  <div>
+                  <p>Drag files to upload</p>
+                  </div>
+                  </label>
+                </form> }                  
+                    <UploadWidget setImgUrl={handleImgUrl}/>
+                    </MDBCol>
+                  <MDBCol>
+                  <MDBCardText className="text-color mb-0 fw-bold">
+                    News Title :
+                  </MDBCardText>
+                    <input className="square bordercolor rounded mb-2 p-1"  style={{width:'100%'}} onChange={e => setTitles(e.target.value)} required></input>
+                  <MDBCardText className="text-color mb-0 fw-bold">
+                   Description :
+                  </MDBCardText>
+                  <textarea rows="5" className="rounded" name="description" style={{width:'100%',resize: "none"}} required onChange={e => setDescriptions(e.target.value)}></textarea>
+                  </MDBCol>
+                </MDBRow>
+                </MDBCardBody>
+                </MDBCard>
               </MDBModalBody>
 
               <MDBModalFooter>
-                <MDBBtn type="button" color="danger" onClick={toggleShow}>
-                  Close
+                <MDBBtn className='text-dark' type="button" color="light" onClick={toggleShow}>
+                  Cancel
                 </MDBBtn>
                 <MDBBtn type="submit" className={``}>
-                  Save changes
+                  Add News
                 </MDBBtn>
               </MDBModalFooter>
             </form>

@@ -19,19 +19,22 @@ const ViewNews = ({ theme, news }) => {
     <>
       <MDBBtn
         onClick={toggleShow}
-        color="info"
-        className="me-2"
+        outline
+        color="dark"
+        className="mx-2"
         title="View"
-        size="sm"
+        // size="sm"
       >
-        <MDBIcon far icon="eye" />
+      View
+        {/* <MDBIcon far icon="eye" />
+         */}
       </MDBBtn>
 
       <MDBModal show={show} setShow={setShow} tabIndex="-1" staticBackdrop>
         <MDBModalDialog centered size="lg">
           <MDBModalContent className={``}>
-            <MDBModalHeader>
-              <MDBModalTitle>
+            <MDBModalHeader style={{background:"#A57552"}}>
+              <MDBModalTitle className="text-light">
                 View <b>{String(news.title).toUpperCase()}</b>
               </MDBModalTitle>
               <MDBBtn

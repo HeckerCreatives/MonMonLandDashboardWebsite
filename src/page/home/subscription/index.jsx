@@ -82,22 +82,25 @@ const Subscription = () => {
         {subs.map(sub => (
         <MDBCol className="">
             <MDBCard key={sub._id} className="col-12 align-items-center linya" style={{height:"100%", width: "100%"}}>
-                <MDBCardImage src={pearl} alt=""  id="badge" className="bg-dark text-center"/>
+                <MDBCardImage src={sub.image} alt=""  id="badge" className="bg-dark text-center"/>
             
                 <MDBCardBody className="subsparent">            
                     <MDBCardTitle className=" text-center fw-bold h2 mt-5">{sub.subscriptionName}</MDBCardTitle>
                     
                         <MDBCardSubTitle className="text-center fw-bold h3 price mb-5">{sub.amount}</MDBCardSubTitle>
                            
-                    <ul className="mx-4"> 
-                    {subsdescription.map(desc =>(
-                        
-                        <li key={desc.subsId} className="list">
-                            {desc.description}
-                        </li> 
-                        
-                    ))}
-                    </ul>
+                        <ul className="mx-4">
+                        {subsdescription.map(desc => {
+                            if (desc.subsId === sub._id) {
+                            return (
+                                <li key={desc._id} className="list">
+                                {desc.description}
+                                </li>
+                            );
+                            }
+                            return null;
+                        })}
+                        </ul>
                                       
                 </MDBCardBody>
                 <MDBContainer className="text-center">

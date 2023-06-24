@@ -61,8 +61,6 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
   };
 
 
-console.log(toggled1)
-console.log(toggled2)
     return (
       <>
       <div

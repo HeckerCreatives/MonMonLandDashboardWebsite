@@ -47,8 +47,11 @@ const UpdateDescriptionModal = ({descriptionlist}) => {
               title: "Updated Successfully",
               icon: "success",
               text: "You Successfully Updated This"
+            }).then(ok => {
+              if(ok.isConfirmed){
+                window.location.reload()
+              }
             })
-            // window.location.reload()
           } else {
             Swal.fire({
               title: "Update Unsuccessfully",
@@ -64,7 +67,7 @@ const UpdateDescriptionModal = ({descriptionlist}) => {
         <MDBBtn
           onClick={toggleShow}
           color="secondary"
-          className="me-2"
+          className="mx-2"
           title="Update"
           size="sm"
         >
@@ -74,45 +77,24 @@ const UpdateDescriptionModal = ({descriptionlist}) => {
           <MDBModalDialog centered size="lg">
             <MDBModalContent className={``}>
               <form autoComplete="off" onSubmit={updatedescription}>
-                <MDBModalHeader>
-                  <MDBModalTitle>
+                <MDBModalHeader style={{background:"#A57552"}}>
+                  <MDBModalTitle className="text-light">
                     Update Description
                   </MDBModalTitle>
                   <MDBBtn
                     className="btn-close"
                     color="none"
                     onClick={toggleShow}
+                    type="button"
                   ></MDBBtn>
                 </MDBModalHeader>
                 <MDBModalBody>
-                  {/* <MDBInput
-                    label={<span className={``}>Description</span>}
-                    className={` mb-3`}
-                    defaultValue={''}
-                    type="text"
-                    name="title"
-                    onChange={e => setTitles(e.target.value)}
-                  /> */}
-                  {/* <MDBContainer fluid className="px-0 text-center mb-3">
-                    <MDBContainer
-                      className="my-2"
-                      style={{ width: "30rem", height: "auto" }}
-                    >
-                      <img
-                        src={image || `${news.image}`}
-                        alt={news.image}
-                        className="img-fluid"
-                        onChange={e => setImage(e.target.value)}  
-                      />
-                    </MDBContainer>
-                    
-                  </MDBContainer> */}
                   <MDBTextArea
                     label={
                       <span className={``}>News Description</span>
                     }
                     className={` mb-3`}
-                    rows={10}
+                    rows={5}
                     defaultValue={descriptionlist.description}
                     name="description"
                     style={{ resize: "none", whiteSpace: "pre-line" }}
@@ -121,7 +103,7 @@ const UpdateDescriptionModal = ({descriptionlist}) => {
                 </MDBModalBody>
   
                 <MDBModalFooter>
-                  <MDBBtn type="button" color="danger" onClick={toggleShow}>
+                  <MDBBtn type="button" color="secondary" onClick={toggleShow}>
                     Close
                   </MDBBtn>
                   <MDBBtn type="submit" className={``}>

@@ -27,6 +27,13 @@ import SignUpPlayer from "./page/signupform/playersignup/signupplayer";
 import CreateAdminAccount from "./page/dashboard/manageaccount/admin";
 import CreateCSRAccount from "./page/dashboard/manageaccount/csr";
 import Games from "./page/dashboard/games/games";
+import UpdatePearl from "./page/dashboard/subscription/subs/pearl";
+import UpdateFree from "./page/dashboard/subscription/subs/free";
+import UpdateRuby from "./page/dashboard/subscription/subs/ruby";
+import UpdateEmerald from "./page/dashboard/subscription/subs/emerald";
+import UpdateDiamond from "./page/dashboard/subscription/subs/diamond";
+
+
 
 const Routers = () => {
   return (
@@ -57,7 +64,13 @@ const Routers = () => {
 
         <Route path="settings">
           <Route path="updateprogressbar" element={<UpdateProgressBar/>}/>
-          <Route path="updatesubs" element={<UpdateSubs/>}/>
+          <Route path="updatesubs">
+            <Route path="pearl"element={<UpdatePearl/>}/>
+            <Route path="ruby"element={<UpdateRuby/>}/>
+            <Route path="emerald"element={<UpdateEmerald/>}/>
+            <Route path="diamond"element={<UpdateDiamond/>}/>
+            <Route path="free"element={<UpdateFree/>}/>
+          </Route>
           <Route path="updatenews" element={<UpdateNews/>}/>
           <Route path="updateroadmap" element={<UpdateRoadmap/>}/>
           <Route path="updategames" element={<Games/>}/>

@@ -1,19 +1,19 @@
-#form-file-upload {
-    height: 11rem;
-    width: 20rem;
+.form-file-upload {
+    /* height: 16rem; */
+    width: 25rem;
     max-width: 100%;
     text-align: center;
-    position: relative;
+    /* position: relative; */
 }
 
-#label-file-upload {
+.label-file-upload {
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     border-width: 2px;
     border-radius: 1rem;
-    border-style: dashed;
+    /* border-style: dashed; */
     border-color: #cbd5e1;
     background-color: #f8fafc;
 }
