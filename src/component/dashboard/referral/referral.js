@@ -39,6 +39,7 @@ const ReferralButton = ({auth}) => {
             size="sm"
             color="transparent"
             className="shadow-0"
+            // style={{ float: 'right' }}
             >
             <MDBIcon icon="link" size="lg" />
             </MDBBtn>

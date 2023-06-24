@@ -199,36 +199,8 @@ const Dashboard = () => {
               : "0rem",
         }}
         >
-        <TopNavbar auth={auth}/>
-        <div className="pt-2">
-          {window.innerWidth <= 768 && (
-          <MDBIcon
-            fas
-            icon="bars"
-            size="2x"
-            className="side-menu-toggle"
-            role="button"
-            onClick={() => setDidToggle(!didToggle)}
-          />
-          )}
-        
-          <div style={{float:'right'}}>
-          <ReferralButton auth={auth}/>
-          <ThemeContext.Consumer>
-              {({ changeTheme }) => (
-                <MDBBtn
-                  color="link"
-                  onClick={() => {
-                    setDarkMode(!darkMode);
-                    changeTheme(darkMode ? themes.light : themes.dark);
-                  }}
-                >
-                  <i className={darkMode ? 'fas fa-sun' : 'fas fa-moon'}></i>
-                </MDBBtn>
-              )}
-            </ThemeContext.Consumer>
-          </div>
-        </div>
+        <TopNavbar auth={auth} didToggle={didToggle}
+          setDidToggle={setDidToggle}/>
         
         
         <MDBContainer fluid className="px-0">
