@@ -1,4 +1,4 @@
-import React , { useState }from "react";
+import React , { useEffect, useState }from "react";
 import './index.css'
 import smalllogo from "../../assets/header/big logo.png"
 import { MDBBtn, MDBIcon } from "mdb-react-ui-kit";
@@ -12,22 +12,8 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
   const navigate = useNavigate();
   const activePath = window.location.pathname;
 
-  // const handleLogout = () => {
-  //   localStorage.removeItem('auth')
-  //   window.location.replace("/login");    
-  // }
-  
-  // const checkActive = (link) => {
-  //   let newStyle = "";
-  //   if (link.children.length === 0) {
-  //     newStyle = activePath === link.path ? "sidebar-active-link" : "";
-  //   } else {
-  //     const newarray = link.children.map((l) => l.path);
-  //     newStyle = newarray.includes(activePath) ? "sidebar-active-link-2" : "";
-  //   }
-  //   return newStyle;
-  // };
-  
+
+
   const checkActive = (link) => {
     let newStyle = "";
     if (link.children.length === 0) {
@@ -154,7 +140,7 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
                   <div
                     className={`d-flex  py-1 my-1 sidebar-link-header ms-3 ${
                       activePath === sub.path && "sidebar-active-link" 
-                    }${checkActive(link)}`}
+                    } `}
                     key={`sub-${i}`}
                     onClick={() => {
                       if (sub.name !== toggled1) {
@@ -171,10 +157,10 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
                             setDidToggle1(!didToggle1);
                     }}
                     >
-                    {/* <div className="mx-3">
+                    <div className="mx-3">
                       <MDBIcon fas icon={"angle-right"} size="sm" />
-                    </div> */}
-                    <div
+                    </div>
+                    {/* <div
                       className={`mx-3 ${link.children.length === 0 && "opacity-0"}`}
                     >
                       {sub.name === toggled1 && sub.children ? (
@@ -182,99 +168,108 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
                       ) : (
                         <MDBIcon fas icon="angle-right" size="lg" />
                       )}
-                    </div>
+                    </div> */}
                     <div className="flex-grow-1 sidebar-sublink-header-title">
-                      {sub.name}
-                      {/* subchild */}
-                      <div
-                          className={`sidebar-sub-link ${
-                            toggled1 === sub.name && "sidebar-sub-link-active"
-                          }`}
-                        >
-                        {sub.path === "" &&
-                          sub.children.map((subchild, i) => (
-                        <div
-                        className={`d-flex py-1 my-1 sidebar-link-header ms-3 ${
-                          activePath === subchild.path && "sidebar-active-link"
-                        }`}
-                        key={`subchild-${i}`}
-                        onClick={() => {
-                          if (subchild.name !== toggled2) {
-                                setToggled2(subchild.name);
-                                subchild.children?.length !== 0 && setDidToggle2(false);
-                              } else {
-                                setToggled2("");
-                                subchild.children?.length !== 0 && setDidToggle2(false);
-                              }
-                              
-
-                              subchild.path !== "" && navigate(subchild.path);
-                              subchild.path !== "" &&
-                                window.innerWidth < 768 &&
-                                setDidToggle2(!didToggle2);
-                        }}
-                        >
-                        {/* <div className="mx-3">
-                          <MDBIcon fas icon={"angle-right"} size="sm" />
-                        </div> */}
-                        <div
-                        className={`mx-3 ${link.children.length === 0 && "opacity-0"}`}
-                        >
-                          {subchild.name === toggled2 && subchild.children ? (
-                            <MDBIcon fas icon="angle-down" size="lg" />
-                          ) : (
-                            <MDBIcon fas icon="angle-right" size="lg" />
-                          )}
-                        </div>
-                        <div className="flex-grow-1 sidebar-sublink-header-title">
-                          {subchild.name}
-
-                          {/* subchild-child */}
-                        <div
-                          className={`sidebar-sub-link ${
-                          toggled2 === subchild.name && "sidebar-sub-link-active"
-                          }`}
-                          >
-                            {subchild.path === "" &&
-                            subchild.children.map((subchilds, i) => (
-                              
-                              <div
-                                className={`d-flex align-items-center py-1 my-1 sidebar-link-header ms-3 ${
-                                  activePath === subchilds.path && "sidebar-active-link"
-                                }`}
-                                key={`subchilds-${i}`}
-                                onClick={() => {
-                                    subchilds.path !== "" && navigate(subchilds.path);
-                                    subchilds.path !== "" &&
-                                      window.innerWidth < 768 &&
-                                      setDidToggle3(!didToggle3)
-                                }}
-                              >
-                                <div className="mx-3">
-                                  <MDBIcon fas icon="angle-right" size="sm" />
-                                </div>
-                                <div className="flex-grow-1 sidebar-sublink-header-title">
-                                  {subchilds.name}
-                                </div>
-                              </div>
-                            
-                            ))}
-                            </div>
-                        {/* end subchild-child */}
-                        </div>
-
-                        
-                        </div>            
-                        ))}            
-                        </div>
-                       {/* end of subchild */}
-                    </div>                    
-                  </div>
-                                         
+                      {sub.name}                      
+                    </div>           
+                  </div>              
                 ))}
+                {/* subchild */}
+            {link.children.map((sub)=>(
+              
+              <div
+                className={`sidebar-sub-link ${
+                  toggled1 === sub.name && "sidebar-sub-link-active"
+                }`}
+              >
+              {sub.path === "" &&
+                sub.children.map((subchild, i) => (
+              <div
+              className={`d-flex py-1 my-1 sidebar-link-header ms-3 ${
+                activePath === subchild.path && "sidebar-active-link"
+              }`}
+              key={`subchild-${i}`}
+              onClick={() => {
+                if (subchild.name !== toggled2) {
+                      setToggled2(subchild.name);
+                      subchild.children?.length !== 0 && setDidToggle2(false);
+                    } else {
+                      setToggled2("");
+                      subchild.children?.length !== 0 && setDidToggle2(false);
+                    }
+                    
+
+                    subchild.path !== "" && navigate(subchild.path);
+                    subchild.path !== "" &&
+                      window.innerWidth < 768 &&
+                      setDidToggle2(!didToggle2);
+              }}
+              >
+              <div className="mx-3">
+                <MDBIcon fas icon={"angle-right"} size="sm" />
+              </div>
+              {/* <div
+              className={`mx-3 ${link.children.length === 0 && "opacity-0"}`}
+              >
+                {subchild.name === toggled2 && subchild.children ? (
+                  <MDBIcon fas icon="angle-down" size="lg" />
+                ) : (
+                  <MDBIcon fas icon="angle-right" size="lg" />
+                )}
+              </div> */}
+              <div className="flex-grow-1 sidebar-sublink-header-title">
+                {subchild.name}
+              </div>
+              
+              </div>            
+              ))}
+                     {/* subchild-child */}
+            {link.children.map((sub)=>
+              sub.children &&
+              sub.children.map((subchild)=>
+            <div
+            className={`sidebar-sub-link ${
+            toggled2 === subchild.name && "sidebar-sub-link-active"
+            }`}
+            >
+              {subchild.path === "" &&
+              subchild.children.map((subchilds, i) => (
                 
+                <div
+                  className={`d-flex align-items-center py-1 my-1 sidebar-link-header ms-3 ${
+                    activePath === subchilds.path && "sidebar-active-link"
+                  }`}
+                  key={`subchilds-${i}`}
+                  onClick={() => {
+                      subchilds.path !== "" && navigate(subchilds.path);
+                      subchilds.path !== "" &&
+                        window.innerWidth < 768 &&
+                        setDidToggle3(!didToggle3)
+                  }}
+                >
+                  <div className="mx-3">
+                    <MDBIcon fas icon="angle-right" size="sm" />
+                  </div>
+                  <div className="flex-grow-1 sidebar-sublink-header-title">
+                    {subchilds.name}
+                  </div>
+                </div>
+              
+              ))}
+              </div>
+              )
+            )}  
+            {/* end subchild-child */}     
+            </div>
+            
+            ))}            
+            {/* end of subchild */}
             </div>
             {/* end link child */}
+
+            
+
+            
 
             {/* End of parent */}
           </div>

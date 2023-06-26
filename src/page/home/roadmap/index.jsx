@@ -11,7 +11,10 @@ import { MDBContainer,
         MDBModalTitle,
         MDBModalBody,
         MDBModalFooter,
-        MDBSpinner,} from "mdb-react-ui-kit";
+        MDBSpinner,
+        MDBCard,
+        MDBCardBody,
+        MDBCardText,} from "mdb-react-ui-kit";
 import "./index.css"
 import woodcutting from "../../../assets/character/Wood Cutting.png"
 import seemore from "../../../assets/roadmap/see more btn.png"
@@ -98,15 +101,23 @@ const Roadmap = () => {
         <MDBModal  show={activeModal} onClick={()=> setActiveModal(null)} tabIndex='-1'>
             <MDBModalDialog centered>
             <MDBModalContent>
-                <MDBModalHeader>
-                <MDBModalTitle>{roadmaptitle}</MDBModalTitle>
-                <MDBBtn className='btn-close' color='none' onClick={()=> setActiveModal(null)}></MDBBtn>
+                <MDBModalHeader style={{background:"#A57552"}}>
+                <MDBModalTitle className="text-light">{roadmaptitle}</MDBModalTitle>
+                {/* <MDBBtn className='btn-close' color='none' onClick={()=> setActiveModal(null)}></MDBBtn> */}
                 </MDBModalHeader>
                 <MDBModalBody>
-                <MDBContainer fluid className="d-flex  justify-content-center">
-                        <img alt="" src={woodcutting}/>
-                </MDBContainer>
-                {roadmapdescription}
+                <MDBCard  style={{background: "#EDCAB4",}}>
+                    <MDBCardBody className="d-flex  justify-content-center">
+                    <img alt="" src={woodcutting}/>
+                    </MDBCardBody>
+                </MDBCard>
+                <MDBCardText className="text-dark mt-3 mb-0 fw-bold">Description</MDBCardText>
+                <MDBCard style={{background: "#EDCAB4",}}>
+                    <MDBCardBody>                    
+                    {roadmapdescription}
+                    </MDBCardBody>
+                </MDBCard>
+                
                 </MDBModalBody>
                 <MDBModalFooter>
                 <MDBBtn color='secondary' onClick={()=> setActiveModal(null)}>

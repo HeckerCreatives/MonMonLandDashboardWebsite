@@ -5,8 +5,8 @@ import { MDBContainer, MDBBtn, MDBRow, MDBCol,MDBIcon } from "mdb-react-ui-kit";
 import Sidebarnav from "../../component/sidebarnav";
 import { Outlet } from "react-router-dom";
 // import Navbar from "../../component/navbar";
-import { ThemeContext, themes } from '../../component/theme/themecontext';
-import ReferralButton from "../../component/dashboard/referral/referral";
+// import { ThemeContext, themes } from '../../component/theme/themecontext';
+// import ReferralButton from "../../component/dashboard/referral/referral";
 import TopNavbar from "../../component/topnavbar";
 
 const Dashboard = () => {
@@ -24,7 +24,7 @@ const Dashboard = () => {
     window.innerWidth > 768 ? false : true
   );
   const auth = JSON.parse(localStorage.getItem("auth"))
-  const [darkMode, setDarkMode] = React.useState(true);
+  // const [darkMode, setDarkMode] = React.useState(true);
   const navigate = useNavigate() 
 
 

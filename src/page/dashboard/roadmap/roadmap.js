@@ -4,6 +4,8 @@ import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol, MDBCard, MDBCardBody, M
 import Swal from "sweetalert2"
 import Breadcrumb from "../../../component/breadcrumb";
 import PaginationPager from "../../../component/pagination/index"
+import ViewRoadmap from "./modal/view";
+import UpdateRoadmapSlot from "./modal/edit";
 const UpdateRoadmap = () => {
     const [titles, setTitles] = useState('');
     const [descriptions, setDescriptions] = useState('')
@@ -21,7 +23,6 @@ const UpdateRoadmap = () => {
         setTotal(totalPages);
         }, [rdlist]);
 
-    
 
       useEffect(()=>{
         fetch(`${process.env.REACT_APP_API_URL}roadmap/find`)
@@ -61,51 +62,56 @@ const UpdateRoadmap = () => {
 			}
         }) 
     }
-    const sortedRdList = [...rdlist].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    const sortedList = rdlist.sort((a, b) => a._id.localeCompare(b._id));
+
     return (
         <MDBContainer fluid className="">
         <Breadcrumb title="Roadmap" paths={[]}/>
-        
-        <MDBRow className="align-items-center justify-content-center d-flex">
-            <MDBCol  md={6} >
-            <form onSubmit={e => add(e)}>
-             <MDBCard className="">
-              <MDBCardBody>
-                <MDBInput label='Title' id='form1' type='text'  onChange={e => setTitles(e.target.value)} className="mb-3"/>
-
-                <MDBTextArea label='Description' id='form1' rows={5}  onChange={e => setDescriptions(e.target.value)} className="mb-3"/>
-
-                <MDBBtn type="submit">
-                Add Roadmap
-                </MDBBtn>
-              </MDBCardBody>
-             </MDBCard>           
-            
-            </form>
-            </MDBCol>
-        </MDBRow>
         <MDBRow>
-            <MDBTypography tag='h1' className="mt-4">Roadmap List</MDBTypography>
-            <MDBTable align='middle' className="border mt-4">
-                <MDBTableHead>
+            <MDBTypography tag='h3' className="fw-bold mt-4">Roadmap List</MDBTypography>
+            <MDBTable align='middle' className="text-center border mt-4" responsive>
+                <MDBTableHead className="head text-center">
                     <tr>
+                    <th scope='col'>Slot</th>
                     <th scope='col'>Title</th>
+                    <th scope='col'>Image</th>
                     <th scope='col'>Description</th>
                     <th scope='col'>Date Created</th>
+                    <th scope='col'>Action</th>
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody>
 
-                {handlePagination(sortedRdList, page, 5)?.map(data =>(
+                {handlePagination(sortedList, page, 5)?.map(data =>(
                     <tr key={data._id}>
                     <td>
-                        {data.title}
+                    {data._id === process.env.REACT_APP_ROADMAPSLOT1 ? 1 :
+                    data._id === process.env.REACT_APP_ROADMAPSLOT2 ? 2 :
+                    data._id === process.env.REACT_APP_ROADMAPSLOT3 ? 3 :
+                    data._id === process.env.REACT_APP_ROADMAPSLOT4 ? 4 :
+                    null}
+                    </td>
+                    
+                    <td>
+                        {data.title.length > 25 ? `${data.title.substring(0,25)}...`: data.title}
                     </td>
                     <td>
-                        {data.description}
+                    <img
+                        src={data.image}
+                        alt=""
+                        style={{ height: "50px", width: "50px"}}
+                    />
+                    </td>
+                    <td>
+                        {data.description.length > 25 ? `${data.description.substring(0,25)}...`: data.description}
                     </td>                    
                     <td>
                     {new Date(data.createdAt).toLocaleString()}
+                    </td>
+                    <td>
+                    <ViewRoadmap roadmap={data}/>
+                    <UpdateRoadmapSlot roadmap={data}/>
                     </td>
                     </tr>
                 ))}

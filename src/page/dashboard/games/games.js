@@ -96,7 +96,8 @@ const Games = () => {
                 <td>
                     <img src={game.image} alt="" style={{height:"50px", width:"50px"}}/>
                 </td>
-                <td className="d-flex align-items-center justify-content-center"> 
+                <td> 
+                <div className="d-flex align-items-center justify-content-center">
                 {game.selectsubscription.map((keyword, j) => (                   
                 <div key={`keyword-${j}`} >
                     {/* {keyword} */}
@@ -109,6 +110,7 @@ const Games = () => {
                     )}
                 </div>               
                 ))}
+                </div>
                 </td>
                 <td>{game.description.length > 25 ? `${game.description.substring(0,25)}...`: game.description}</td>
                 <td>{new Date(game.createdAt).toLocaleString()}</td>
