@@ -30,7 +30,6 @@ import UploadWidget from "../../../../component/uploadwidget/uploadwidet"
 const UpdateRoadmapSlot = ({roadmap}) => {
   const [titles, setTitles] = useState('');
   const [descriptions, setDescriptions] = useState('');
-  const [subscription, setSubscription] = useState([]);
   const [show, setShow] = useState(false);
   const toggleShow = () => setShow(!show);
   const [image, setImage] = useState("");
@@ -39,16 +38,15 @@ const UpdateRoadmapSlot = ({roadmap}) => {
   
   function updategame (e) {
     e.preventDefault()
-    fetch(`${process.env.REACT_APP_API_URL}games/${roadmap._id}/update`, {
+    fetch(`${process.env.REACT_APP_API_URL}roadmap/${roadmap._id}/update`, {
       method:'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-          gametitle: titles ? titles : roadmap.gametitle,
+          title: titles ? titles : roadmap.title,
           description: descriptions ? descriptions : roadmap.description ,
           image: image ? image : roadmap.image,
-          selectsubscription: subscription,
       })
     }).then(result => result.json())
     .then(data => {
@@ -72,25 +70,6 @@ const UpdateRoadmapSlot = ({roadmap}) => {
 			}
     })
   }
-
-  const handleCheckboxChange = (event) => {
-    const labelText = event.target.previousSibling.textContent; // Get the label text next to the checkbox
-
-    if (event.target.checked) {
-      // If checkbox is checked, add the label text to the subscription array
-      setSubscription((prevSubscription) => [...prevSubscription, labelText]);
-    } else {
-      // If checkbox is unchecked, remove the label text from the subscription array
-      setSubscription((prevSubscription) =>
-        prevSubscription.filter((item) => item !== labelText)
-      );
-    }
-  };
-
-  useEffect(() => {
-    const selectedSubscriptions = roadmap.selectsubscription || []; // Assuming roadmap.selectsubscription is an array
-    setSubscription(selectedSubscriptions);
-  }, [roadmap.selectsubscription]);
 
 
   const handleImgUrl = (url) => {

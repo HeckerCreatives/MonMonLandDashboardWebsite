@@ -145,130 +145,118 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
                     onClick={() => {
                       if (sub.name !== toggled1) {
                             setToggled1(sub.name);
-                            sub.children?.length !== 0 && setDidToggle1(false);
+                            // sub.children?.length !== 0 && setDidToggle1(false);
                           } else {
                             setToggled1("");
-                            sub.children?.length !== 0 && setDidToggle1(false);
+                            // sub.children?.length !== 0 && setDidToggle1(false);
                           }
                           
                           sub.path !== "" && navigate(sub.path);
-                          sub.path !== "" &&
-                            window.innerWidth < 768 &&
-                            setDidToggle1(!didToggle1);
+                          // sub.path !== "" &&
+                          //   window.innerWidth < 768 &&
+                          //   setDidToggle1(!didToggle1);
                     }}
                     >
                     <div className="mx-3">
                       <MDBIcon fas icon={"angle-right"} size="sm" />
                     </div>
-                    {/* <div
-                      className={`mx-3 ${link.children.length === 0 && "opacity-0"}`}
-                    >
-                      {sub.name === toggled1 && sub.children ? (
-                        <MDBIcon fas icon="angle-down" size="lg" />
-                      ) : (
-                        <MDBIcon fas icon="angle-right" size="lg" />
-                      )}
-                    </div> */}
                     <div className="flex-grow-1 sidebar-sublink-header-title">
-                      {sub.name}                      
+                      {sub.name}                                          
                     </div>           
                   </div>              
                 ))}
-                {/* subchild */}
-            {link.children.map((sub)=>(
-              
-              <div
-                className={`sidebar-sub-link ${
-                  toggled1 === sub.name && "sidebar-sub-link-active"
-                }`}
-              >
-              {sub.path === "" &&
-                sub.children.map((subchild, i) => (
-              <div
-              className={`d-flex py-1 my-1 sidebar-link-header ms-3 ${
-                activePath === subchild.path && "sidebar-active-link"
-              }`}
-              key={`subchild-${i}`}
-              onClick={() => {
-                if (subchild.name !== toggled2) {
-                      setToggled2(subchild.name);
-                      subchild.children?.length !== 0 && setDidToggle2(false);
-                    } else {
-                      setToggled2("");
-                      subchild.children?.length !== 0 && setDidToggle2(false);
-                    }
-                    
 
-                    subchild.path !== "" && navigate(subchild.path);
-                    subchild.path !== "" &&
-                      window.innerWidth < 768 &&
-                      setDidToggle2(!didToggle2);
-              }}
-              >
-              <div className="mx-3">
-                <MDBIcon fas icon={"angle-right"} size="sm" />
-              </div>
-              {/* <div
-              className={`mx-3 ${link.children.length === 0 && "opacity-0"}`}
-              >
-                {subchild.name === toggled2 && subchild.children ? (
-                  <MDBIcon fas icon="angle-down" size="lg" />
-                ) : (
-                  <MDBIcon fas icon="angle-right" size="lg" />
-                )}
-              </div> */}
-              <div className="flex-grow-1 sidebar-sublink-header-title">
-                {subchild.name}
-              </div>
+              {/* subchild */}
+              {link.children.map((sub)=>(
+              <div
+                        className={`sidebar-sub-link ${
+                          toggled1 === sub.name && "sidebar-sub-link-active"
+                        }`}
+                      >
+                      {sub.path === "" &&
+                        sub.children.map((subchild, i) => (
+                      <div
+                      className={`d-flex py-1 my-1 sidebar-link-header ms-3 ${
+                        activePath === subchild.path && "sidebar-active-link"
+                      }`}
+                      key={`subchild-${i}`}
+                      onClick={() => {
+                        if (subchild.name !== toggled2) {
+                              setToggled2(subchild.name);
+                              // subchild.children?.length !== 0 && setDidToggle2(false);
+                            } else {
+                              setToggled2("");
+                              // subchild.children?.length !== 0 && setDidToggle2(false);
+                            }
+                            
+
+                            subchild.path !== "" && navigate(subchild.path);
+                            // subchild.path !== "" &&
+                            //   window.innerWidth < 768 &&
+                            //   setDidToggle2(!didToggle2);
+                      }}
+                      >
+                      <div className="mx-3">
+                        <MDBIcon fas icon={"angle-right"} size="sm" />
+                      </div>
+                      <div className="flex-grow-1 sidebar-sublink-header-title">
+                        {subchild.name}
+
+                      
+                      </div>
+                      
+                      </div>
+                                  
+                      ))}
+                {/* subchild-child */}
+              {link.children.map((sub) =>
+                      sub.children &&
+                      sub.children.map((subchild) =>
+                      <div
+                      className={`sidebar-sub-link-1 ${
+                      toggled2 === subchild.name && "sidebar-sub-link-active"
+                      }`}
+                      >
+                      {subchild.path === "" &&
+                      subchild.children.map((subchilds, i) => (
+                        
+                      <div
+                        className={`d-flex align-items-center py-1 my-1 sidebar-link-header ms-3 ${
+                          activePath === subchilds.path && "sidebar-active-link"
+                        }`}
+                        key={`subchilds-${i}`}
+                        onClick={() => {
+                            subchilds.path !== "" && navigate(subchilds.path);
+                            console.log(toggled)
+                            console.log(toggled1)
+                            console.log(toggled2)
+                            // subchilds.path !== "" &&
+                            //   window.innerWidth < 768 &&
+                            //   setDidToggle3(!didToggle3)
+                        }}
+                      >
+                      <div className="mx-3">
+                        <MDBIcon fas icon="angle-right" size="sm" />
+                      </div>
+                      <div className="flex-grow-1 sidebar-sublink-header-title">
+                        {subchilds.name}
+                      </div>
+                    </div>
               
-              </div>            
-              ))}
-                     {/* subchild-child */}
-            {link.children.map((sub)=>
-              sub.children &&
-              sub.children.map((subchild)=>
-            <div
-            className={`sidebar-sub-link ${
-            toggled2 === subchild.name && "sidebar-sub-link-active"
-            }`}
-            >
-              {subchild.path === "" &&
-              subchild.children.map((subchilds, i) => (
-                
-                <div
-                  className={`d-flex align-items-center py-1 my-1 sidebar-link-header ms-3 ${
-                    activePath === subchilds.path && "sidebar-active-link"
-                  }`}
-                  key={`subchilds-${i}`}
-                  onClick={() => {
-                      subchilds.path !== "" && navigate(subchilds.path);
-                      subchilds.path !== "" &&
-                        window.innerWidth < 768 &&
-                        setDidToggle3(!didToggle3)
-                  }}
-                >
-                  <div className="mx-3">
-                    <MDBIcon fas icon="angle-right" size="sm" />
-                  </div>
-                  <div className="flex-grow-1 sidebar-sublink-header-title">
-                    {subchilds.name}
-                  </div>
-                </div>
+                    ))}
+                    </div>
+                      ))}
+                    {/* end subchild-child */} 
+              </div> 
+             ))}
+              {/* end of subchild */} 
               
-              ))}
-              </div>
-              )
-            )}  
-            {/* end subchild-child */}     
-            </div>
-            
-            ))}            
-            {/* end of subchild */}
             </div>
             {/* end link child */}
 
-            
+                   
 
+                      
             
 
             {/* End of parent */}

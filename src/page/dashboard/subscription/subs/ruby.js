@@ -206,26 +206,21 @@ const UpdateRuby = () => {
                         
             <MDBRow>
             <MDBCol className="d-lg-flex justify-content-lg-end mb-3 mb-lg-0">
-            <form onSubmit={e => updatesubsimage(e)} className="form-file-upload">
-                    <MDBCol >
+            <form onSubmit={e => updatesubsimage(e)}>
+                    <MDBCol className="form-file-upload">
                         <div className="label-file-upload">
                         <img src={image ? image : pearldata.image} alt="" className="label-file-upload"/>                    
-                        </div>
-                        <MDBCol>
-                    {/* <div className="text-center"> */}
-                        <UploadWidget setImgUrl={handleImgUrl}/>
-                        <MDBBtn 
-                        outline color="dark" 
-                        type="submit" 
-                        className="mx-1">
-                        Save
-                        </MDBBtn>
-                        {/* </div> */}
-                    </MDBCol>                                                             
+                        </div>                                        
                     </MDBCol>
-                    
-                    
-                    
+                    <div className="text-center">
+                    <UploadWidget setImgUrl={handleImgUrl}/>
+                    <MDBBtn 
+                    outline color="dark" 
+                    type="submit" 
+                    className="mx-1">
+                    Save
+                    </MDBBtn>
+                    </div>
             </form>
             </MDBCol>
                 

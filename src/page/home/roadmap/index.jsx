@@ -40,7 +40,7 @@ const Roadmap = () => {
             setIsLoading(false)
         })
       },[])
-
+      const sortedList = roadmap.sort((a, b) => a._id.localeCompare(b._id));
     return (
         <div className="">
         <MDBContainer fluid  className="d-flex justify-content-center roadmapbgcolor" id="roadmap">
@@ -59,7 +59,7 @@ const Roadmap = () => {
         </MDBTypography>
         <MDBContainer className="line text-center">                
         
-        {roadmap.map((roadmaps,index) =>(
+        {sortedList.map((roadmaps,index) =>(
         <MDBRow className="circle">
         
         <MDBCol className={`roadmapholder text-center ${
@@ -73,7 +73,7 @@ const Roadmap = () => {
         <MDBTypography className="fw-bold text-white" >{roadmaps.title.length > 50 ? `${roadmaps.title.substring(0,50)}...`: roadmaps.title}</MDBTypography>
 
         <MDBCol  className="woodcharbg">
-        <img src={woodcutting} alt="" id="woodchar" />
+        <img src={roadmaps.image} alt="" id="woodchar" />
         </MDBCol>            
 
         <MDBTypography className="fw-bold text-wrap text-white m-0" >{roadmaps.description.length > 50 ? `${roadmaps.description.substring(0,50)}...`: roadmaps.description}</MDBTypography>
@@ -82,6 +82,7 @@ const Roadmap = () => {
         onClick={() => {
             setTitle(roadmaps.title)
             setRoadmapDescription(roadmaps.description)
+            setRoadMapImage(roadmaps.image)
             setActiveModal(true)
         }}/>
         
@@ -108,7 +109,7 @@ const Roadmap = () => {
                 <MDBModalBody>
                 <MDBCard  style={{background: "#EDCAB4",}}>
                     <MDBCardBody className="d-flex  justify-content-center">
-                    <img alt="" src={woodcutting}/>
+                    <img alt="" src={roadmapimage}/>
                     </MDBCardBody>
                 </MDBCard>
                 <MDBCardText className="text-dark mt-3 mb-0 fw-bold">Description</MDBCardText>

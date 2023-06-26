@@ -6,7 +6,7 @@ import Breadcrumb from "../../../component/breadcrumb";
 import PaginationPager from "../../../component/pagination/index"
 
 const UpdateProgressBar = () => {
-    const [initialnum, setInitialNum] = useState();
+    const [list, setlist] = useState("");
     const [totalnum, setTotalNum] = useState();
     const [initialbar, setInitialBar] = useState();
     const [totalbar, setTotalBar] = useState();
@@ -16,11 +16,10 @@ const UpdateProgressBar = () => {
             [total, setTotal] = useState(0);
 
     useEffect(() => {
-        let totalPages = Math.floor(araw.length / 5);
-        if (araw.length % 5 > 0) totalPages += 1;
+        let totalPages = Math.floor(list.length / 5);
+        if (list.length % 5 > 0) totalPages += 1;
         setTotal(totalPages);
-        }, [araw]);
-
+        }, [list]);
     const seperator = (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
@@ -29,6 +28,7 @@ const UpdateProgressBar = () => {
         fetch(`${process.env.REACT_APP_API_URL}gameactivity/${process.env.REACT_APP_PROGRESSID}/find`)
         .then(result => result.json())
         .then(data => {
+            console.log(data)
             setInitialBar(data.initial)
             setTotalBar(data.total)
             setAraw(data.createdAt)
@@ -201,22 +201,20 @@ const UpdateProgressBar = () => {
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody>
-                    <tr>
+                {/* {list.map((lists)=>(
+                    <tr key={lists._id}>
                     <td>
-                    {(initialbar)} / {(totalbar)}
+                    {lists.initial} / {lists.total}
                     </td>
                     <td>
-                    {new Date(araw).toLocaleString()}
-                    </td>                    
-                    {/* <td>
-                        <MDBBtn color='link' rounded size='sm'>
-                        Edit
-                        </MDBBtn>
-                        <MDBBtn color='link' rounded size='sm'>
-                        Delete
-                        </MDBBtn>
-                    </td> */}
+                    {new Date(lists.createdAt).toLocaleString()}
+                    </td>
+                    <td>
+                    {lists.createdby}
+                    </td>
                     </tr>
+                ))} */}
+                    
                 </MDBTableBody>
                 </MDBTable>
                 </MDBCol>
