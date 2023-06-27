@@ -180,7 +180,7 @@ const AdminDashboard = () => {
             cardstyle={{background: "#F2FFEB"}}
             iconstyle={{background: "#991FDD", padding: "10px", borderRadius: "5px"}}
             showviewbtn={true}
-            url="/dashboard/superadmin/manageplayers/allusers"
+            url="/dashboard/Administrator/manageaccount/manageplayers/allusers"
             color='primary'
             icon='users'
             title='Total Users'
@@ -191,7 +191,7 @@ const AdminDashboard = () => {
             cardstyle={{background: "#DDFFF9"}}
             iconstyle={{background: "#71A92F", padding: "10px", borderRadius: "5px"}}
             showviewbtn={true}
-            url="/dashboard/superadmin/manageplayers/activeplayers"
+            url="/dashboard/Administrator/manageaccount/manageplayers/activeplayers"
             color='success'
             icon='user'
             title='Active Users'
@@ -213,7 +213,7 @@ const AdminDashboard = () => {
             cardstyle={{background: "#F6EEFF"}}
             iconstyle={{background: "#09BCED", padding: "10px", borderRadius: "5px"}}
             showviewbtn={true}
-            url="/dashboard/superadmin/manageplayers/paidusers"
+            url="/dashboard/Administrator/manageaccount/manageplayers/paidusers"
             color='success'
             icon='hand-holding-usd'
             title='Paid Users'
