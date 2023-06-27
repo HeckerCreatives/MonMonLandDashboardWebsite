@@ -7,11 +7,12 @@ import PaginationPager from "../../../component/pagination/index"
 
 const UpdateProgressBar = () => {
     const [list, setlist] = useState("");
-    const [totalnum, setTotalNum] = useState();
-    const [initialbar, setInitialBar] = useState();
-    const [totalbar, setTotalBar] = useState();
-    const [progress, setProgress] = useState();
-    const [araw, setAraw] = useState(''),
+    const [totalnum, setTotalNum] = useState("");
+    const [initialbar, setInitialBar] = useState("");
+    const auth = JSON.parse(localStorage.getItem("auth"))
+    const [totalbar, setTotalBar] = useState("");
+    const [progress, setProgress] = useState("");
+    const [history, setHistory] = useState([]),
             [page, setPage] = useState(1),
             [total, setTotal] = useState(0);
 
@@ -28,12 +29,15 @@ const UpdateProgressBar = () => {
         fetch(`${process.env.REACT_APP_API_URL}gameactivity/${process.env.REACT_APP_PROGRESSID}/find`)
         .then(result => result.json())
         .then(data => {
-            console.log(data)
             setInitialBar(data.initial)
             setTotalBar(data.total)
-            setAraw(data.createdAt)
             })
-
+        
+        fetch(`${process.env.REACT_APP_API_URL}gameactivity/history`)
+        .then(result => result.json())
+        .then(data => {
+            setHistory(data)
+        })
     },[])
     
     useEffect(()=>{
@@ -53,14 +57,18 @@ const UpdateProgressBar = () => {
     const updateinitial = async (e) => {
        e.preventDefault();
        const { initial } = e.target
+       const value = "Initial"
        await fetch(`${process.env.REACT_APP_API_URL}gameactivity/${process.env.REACT_APP_PROGRESSID}/update`, {
             method:'PUT',
             headers: {
                 'Content-Type': 'application/json'
               },
             body: JSON.stringify({
-                initial: initial.value
-                // total: totalnum
+                initial: initial.value,
+                barId: process.env.REACT_APP_PROGRESSID,
+                value: value,
+                enteredamount: initial.value,
+                createdby: auth.userName
             })
         }).then(result => result.json())
         .then(data => {
@@ -88,14 +96,18 @@ const UpdateProgressBar = () => {
 
     function updatetargetvalue (e) {
         e.preventDefault();
+        const value = "Target"
         fetch(`${process.env.REACT_APP_API_URL}gameactivity/${process.env.REACT_APP_PROGRESSID}/update`, {
             method:'PUT',
             headers: {
                 'Content-Type': 'application/json'
               },
             body: JSON.stringify({
-                // initial: initialnum
-                total: totalnum
+                total: totalnum,
+                barId: process.env.REACT_APP_PROGRESSID,
+                value: value,
+                enteredamount: totalnum,
+                createdby: auth.userName
             })
         }).then(result => result.json())
         .then(data => {
@@ -201,19 +213,25 @@ const UpdateProgressBar = () => {
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody>
-                {/* {list.map((lists)=>(
+                {history.map((lists)=>(
                     <tr key={lists._id}>
                     <td>
-                    {lists.initial} / {lists.total}
+                    {(initialbar)} / {(totalbar)}
                     </td>
                     <td>
                     {new Date(lists.createdAt).toLocaleString()}
                     </td>
                     <td>
+                    {lists.value}
+                    </td>
+                    <td>
+                    {seperator(lists.enteredamount)}
+                    </td>
+                    <td>
                     {lists.createdby}
                     </td>
                     </tr>
-                ))} */}
+                ))}
                     
                 </MDBTableBody>
                 </MDBTable>

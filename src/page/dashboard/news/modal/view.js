@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import {
   MDBBtn,
+  MDBCard,
+  MDBCardBody,
   MDBContainer,
   MDBIcon,
   MDBModal,
@@ -44,25 +46,33 @@ const ViewNews = ({ theme, news }) => {
               ></MDBBtn>
             </MDBModalHeader>
             <MDBModalBody>
-              <MDBContainer fluid className="px-0 text-center mb-3">
-                <MDBContainer
-                  className="my-2"
-                  style={{ width: "30rem", height: "auto" }}
+              <MDBCard className="px-0 text-center mb-3" style={{background: "#EDCAB4",}}>
+                <MDBCardBody
+                  className="d-flex justify-content-center"
+                  // style={{ width: "30rem", height: "auto" }}
                 >
                   <img
                     src={`${news.image}`}
                     alt={news.image}
                     className="img-fluid"
                   />
-                </MDBContainer>
-              </MDBContainer>
-              <MDBTypography
+                </MDBCardBody>
+              </MDBCard>
+              <MDBCard className="px-0 text-center mb-3" style={{background: "#EDCAB4",}}>
+                <MDBCardBody
+                  className="d-flex justify-content-center"
+                  // style={{ width: "30rem", height: "auto" }}
+                >
+                <MDBTypography
                 tag="p"
                 style={{ whiteSpace: "pre-wrap" }}
                 className="text-start"
-              >
+                >
                 {news.description}
               </MDBTypography>
+                </MDBCardBody>
+                </MDBCard>
+              
             </MDBModalBody>
           </MDBModalContent>
         </MDBModalDialog>

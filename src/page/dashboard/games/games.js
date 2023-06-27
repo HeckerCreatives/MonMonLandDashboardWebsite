@@ -70,9 +70,6 @@ const Games = () => {
         <Breadcrumb title="Landing Page Games" paths={[]}/>
         <MDBRow>
             <MDBCol>
-                <MDBInput/>
-            </MDBCol>
-            <MDBCol>
                 <CreateGames/>
             </MDBCol>
         </MDBRow>

@@ -105,15 +105,23 @@ const News = () => {
         <MDBModal  show={activeModal} onClick={()=> setActiveModal(null)} tabIndex='-1'>
             <MDBModalDialog centered>
             <MDBModalContent>
-                <MDBModalHeader>
-                <MDBModalTitle>{newstitle}</MDBModalTitle>
-                <MDBBtn className='btn-close' color='none' onClick={()=> setActiveModal(null)}></MDBBtn>
+                <MDBModalHeader style={{background:"#A57552"}}>
+                <MDBModalTitle className="text-light">{newstitle}</MDBModalTitle>
+                {/* <MDBBtn className='btn-close' color='none' onClick={()=> setActiveModal(null)}></MDBBtn> */}
                 </MDBModalHeader>
                 <MDBModalBody>
-                <MDBContainer fluid className="d-flex  justify-content-center">
-                        <img alt="" src={imahe}/>
-                </MDBContainer>
-                {newsdescription}
+                <MDBCard  className="d-flex justify-content-center" style={{background: "#EDCAB4",}}>
+                    <MDBCardBody>
+                    <img alt="" src={imahe}/>
+                    </MDBCardBody>                    
+                </MDBCard>
+                <MDBCardText className="text-dark mt-3 mb-0 fw-bold">Description</MDBCardText>
+                <MDBCard style={{background: "#EDCAB4",}}>
+                    <MDBCardBody >
+                    {newsdescription}
+                    </MDBCardBody>                    
+                </MDBCard>
+                
                 </MDBModalBody>
                 <MDBModalFooter>
                 <MDBBtn color='secondary' type="button" onClick={()=> setActiveModal(null)}>

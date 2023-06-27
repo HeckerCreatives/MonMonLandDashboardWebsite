@@ -9,6 +9,9 @@ import { MDBBtn, MDBCol, MDBContainer, MDBIcon, MDBInput, MDBRow,
   MDBCard,
   MDBCardBody,
   MDBCardTitle,
+  MDBTable,
+  MDBTableHead,
+  MDBTableBody,
   MDBCardText, } from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
 import Breadcrumb from "../../../../component/breadcrumb";
@@ -18,59 +21,155 @@ import { Link } from "react-router-dom";
 // import ManageDashboard from "../../../component/dashboard/admin/manageplayer/managedashboard"
 import "./index.css"
 import PaginationPager from "../../../../component/pagination";
-
+import Swal from "sweetalert2";
+import UpdateAdminAccount from "./modal/edit";
 const CreateAdminAccount = () => {
-  const [txthead, setTxtHead] = useState([]),
-        [txttable, setTxtTable] = useState([]);
+  const [confirmpass, setConfirmPass] = useState(""),
+        [adminaccounts, setAdminAcc] = useState([]),
+        [checkedItems, setCheckedItems] = useState([]),
+        [todayjoin, setTodaysJoin] = useState([]);
+        // [txttable, setTxtTable] = useState([]);
   const [centredModal, setCentredModal] = useState(false);
+  const auth = JSON.parse(localStorage.getItem("auth"))
   const toggleShow = () => setCentredModal(!centredModal),
   [page, setPage] = useState(1),
   [total, setTotal] = useState(0);
     
     useEffect(() => {
-        let totalPages = Math.floor(txttable.length / 5);
-        if (txttable.length % 5 > 0) totalPages += 1;
+        let totalPages = Math.floor(adminaccounts.length / 5);
+        if (adminaccounts.length % 5 > 0) totalPages += 1;
         setTotal(totalPages);
-        }, [txttable]);
+        }, [adminaccounts]);
 
-useEffect(()=>{
-setTxtHead(
-[
-  {
-    title:'Select'
-  },
-  {
-    title:'Date Created'
-  },
-  {
-    title:'Username'
-  },
-  {
-    title:'Password'
-  },
-  {
-    title:'Email'
-  },
-  {
-    title:'Phone'
-  },
-  {
-    title:'Action'
-  },
+    useEffect(()=>{
+    fetch(`${process.env.REACT_APP_API_URL}user/find`)
+    .then(result => result.json())
+    .then(data => {
+      const today = new Date().toLocaleDateString();
+      const filteradmin = data.filter(e => e.roleId.display_name === "Administrator" && e.banned === false)
+      const todays = filteradmin.filter(e => {
+        const createdAtDate = new Date(e.createdAt).toLocaleDateString();
+        return createdAtDate === today;
+      });
+      console.log(todays)
+      setAdminAcc(filteradmin)
+      setTodaysJoin(todays)
+    })
+    },[])
 
-]
-)
+    const handleCheckboxChange = (itemId) => {
+      if (checkedItems.includes(itemId)) {
+        // Item is already checked, remove it from the array
+        setCheckedItems(checkedItems.filter((id) => id !== itemId));
+      } else {
+        // Item is not checked, add it to the array
+        setCheckedItems([...checkedItems, itemId]);
+      }
+    };
+    
+    const createadmin = (e) => {
+      e.preventDefault()
+      const {firstName,lastName,userName, email, password, phone} = e.target
+      if(password.value === confirmpass){
+        fetch(`${process.env.REACT_APP_API_URL}user/register`,{
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            roleId: process.env.REACT_APP_ADMINROLE,
+            referrerId: auth.referrerId,
+            firstName: firstName.value,
+            lastName: lastName.value,
+            userName: userName.value,
+            email: email.value,
+            phone: phone.value,
+            password: password.value,
+          })
+        }).then(result => result.json())
+        .then(data => {
+          if (data) {
+            Swal.fire({
+              title: "Admin Account Created Successfully",
+              icon: "success",
+              text: "You Successfully Created An Admin Account"
+            }).then(result1 => {
+              if(result1.isConfirmed){
+                window.location.reload()
+              }
+            })
+            
+          } else {
+            Swal.fire({
+              title: "Unsuccessfull",
+              icon: "error",
+              text: "There is an error Creating Account"
+            })
+          }
+        })
+      } else {
+        Swal.fire({
+          title: "Password not Match",
+          icon: "error",
+          text: "Check Your Password"
+        })
+      }
+      
+    }
 
-// fetch(`${process.env.REACT_APP_API_URL}manage/activeuser`)
-// .then(result => result.json())
-// .then(data => {
-//   setTxtTable(data)
-// })
+    const deleteitem = (id) => {
+      Swal.fire({
+      icon: "warning",
+      title: `Are you sure to delete this?`,
+      text: "You won't be able to revert this",
+      showDenyButton: true,
+      confirmButtonText: "Delete",
+      denyButtonText: "Cancel",
+      }).then(result1 => {
+          if(result1.isConfirmed){
+              fetch(`${process.env.REACT_APP_API_URL}user/${id}/destroy`,{
+                  method: "DELETE",
+                  headers: {
+                      'Content-Type': 'application/json'
+                  }
+              }).then(result => result.json())
+              .then(data => {
+                  if(data){
+                  window.location.reload()
+                  }
+              })
+              
+          }
+      })        
+  }
 
-
-},[])
-
-
+  const deleteItems = () => {
+    Swal.fire({
+      icon: "warning",
+      title: "Are you sure to delete these items?",
+      text: "You won't be able to revert this",
+      showDenyButton: true,
+      confirmButtonText: "Delete",
+      denyButtonText: "Cancel",
+    }).then((result1) => {
+      if (result1.isConfirmed) {
+        // Delete multiple items by sending the array of IDs
+        fetch(`${process.env.REACT_APP_API_URL}user/destroymultiple`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ids: checkedItems }),
+        })
+          .then((result) => result.json())
+          .then((data) => {
+            if (data) {
+              window.location.reload();
+            }
+          });
+      }
+    });
+  };
     return(
       <>
         
@@ -91,7 +190,7 @@ setTxtHead(
         <MDBRow>
         <MDBCol md={6}>
         <Cards 
-        title="0" 
+        title={adminaccounts.length}
         texts="Total Joinings" 
         icon="user-plus"
         cardstyle={{padding: "0px",}} 
@@ -103,7 +202,7 @@ setTxtHead(
         </MDBCol>
         <MDBCol md={6}>
         <Cards 
-        title="0" 
+        title={todayjoin.length} 
         texts="Todays Joinings" 
         icon="user-friends" 
         cardclassname={'shadow-3'}
@@ -113,15 +212,57 @@ setTxtHead(
         />
         </MDBCol>
         </MDBRow>        
-        
-        <FullTable 
-        txtHeader={txthead} 
-        txtTable={txttable} 
-        button={true} 
-        btn1text="Create Admin Account" 
-        btn2text="Delete Selected"
-        btn1onclick={toggleShow}    
-        />
+        <MDBBtn className=" mt-1 mx-2 fw-bold" type="button" outline color="dark" onClick={toggleShow}>
+        <MDBIcon far icon="plus" size="lg"/>
+        &nbsp; Create Admin Account
+        </MDBBtn>
+        <MDBBtn className="mt-1 mx-2 fw-bold" 
+        type="button" 
+        color="danger"
+        onClick={deleteItems}
+        disabled={checkedItems.length === 0}
+        >Delete</MDBBtn>
+        <MDBTable align='middle' className="border mt-4" responsive>
+                <MDBTableHead className="head text-center">
+                    <tr >
+                    <th className="fw-bold" scope='col'>Select</th>
+                    <th className="fw-bold" scope='col'>Date Created</th>
+                    <th className="fw-bold" scope='col'>Username</th>
+                    <th className="fw-bold" scope='col'>Password</th>
+                    <th className="fw-bold" scope='col'>Email</th>
+                    <th className="fw-bold" scope='col'>Phone</th>
+                    <th className="fw-bold" scope='col'>Action</th>
+                    </tr>
+                </MDBTableHead>
+                <MDBTableBody className="text-center">
+                {adminaccounts ?
+                  <>
+                {adminaccounts.map((acc, i) =>(
+                <tr key={`acc-${i}`}>
+                <td>
+                  <input type="checkbox"
+                  checked={checkedItems.includes(acc._id)}
+                  onChange={() => handleCheckboxChange(acc._id)} 
+                  ></input>
+                </td>
+                <td>{new Date(acc.createdAt).toLocaleString()}</td>
+                <td>
+                {acc.userName}
+                </td>                
+                <td>{acc.password}</td>
+                <td>{acc.email}</td>
+                <td>{acc.phone}</td>                
+                <td>
+                    <UpdateAdminAccount account={acc}/>
+                    <MDBBtn className="mx-2 fw-bold" type="button" outline color="dark" onClick={() => deleteitem(acc._id)}>Delete</MDBBtn>
+                </td>
+                </tr>
+                ))}
+                </> 
+                 : <span>No Data</span>}
+                   
+                </MDBTableBody>
+                </MDBTable>
         <PaginationPager
             total={total} page={page} setPage={setPage}
         />
@@ -130,9 +271,10 @@ setTxtHead(
         <MDBModal tabIndex='-1' show={centredModal} setShow={setCentredModal}>
         <MDBModalDialog centered size="lg">
           <MDBModalContent>
+            <form autoComplete="off" onSubmit={e => createadmin(e)}>
             <MDBModalHeader style={{background:"#A57552"}}>
               <MDBModalTitle className="text-light">Create an Admin Account</MDBModalTitle>
-              <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn>
+              {/* <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn> */}
             </MDBModalHeader>
             <MDBModalBody>
             <MDBCardText className="text-dark mb-0 fw-bold">
@@ -143,15 +285,15 @@ setTxtHead(
               <MDBCardText className="text-color mb-0 fw-bold" >
                 Username:
               </MDBCardText>
-              <input className="square bordercolor rounded mb-2 p-1"  style={{width:'100%'}}  required></input>
+              <input name="userName" className="square bordercolor rounded mb-2 p-1"  style={{width:'100%'}}  required></input>
               <MDBCardText className="text-color mb-0 fw-bold">
                 Password:
               </MDBCardText>
-              <input className="square bordercolor rounded mb-2 p-1"  style={{width:'100%'}}  required></input>
+              <input name="password" type="password" className="square bordercolor rounded mb-2 p-1"  style={{width:'100%'}}  required></input>
               <MDBCardText className="text-color mb-0 fw-bold">
                 Confirm Password:
               </MDBCardText>
-              <input className="square bordercolor rounded mb-2 p-1"  style={{width:'100%'}}  required></input>
+              <input  className="square bordercolor rounded mb-2 p-1" type="password" style={{width:'100%'}} onChange={e => setConfirmPass(e.target.value)}  required></input>
               </MDBCardBody>
             </MDBCard>
             <MDBCardText className="mt-5 text-dark mb-0 fw-bold">
@@ -160,22 +302,31 @@ setTxtHead(
             <MDBCard style={{background: "#EDCAB4"}}>
               <MDBCardBody>
               <MDBCardText className="text-color mb-0 fw-bold">
+                Fisrt Name:
+              </MDBCardText>
+              <input name="firstName" className="square bordercolor rounded mb-2 p-1"  style={{width:'100%'}}  required></input>
+              <MDBCardText className="text-color mb-0 fw-bold">
+                Last Name:
+              </MDBCardText>
+              <input name="lastName" className="square bordercolor rounded mb-2 p-1"  style={{width:'100%'}}  required></input>
+              <MDBCardText className="text-color mb-0 fw-bold">
                 Email:
               </MDBCardText>
-              <input className="square bordercolor rounded mb-2 p-1"  style={{width:'100%'}}  required></input>
+              <input name="email" className="square bordercolor rounded mb-2 p-1"  style={{width:'100%'}}  required></input>
               <MDBCardText className="text-color mb-0 fw-bold">
                Phone:
               </MDBCardText>
-              <input className="square bordercolor rounded mb-2 p-1"  style={{width:'100%'}}  required></input>
+              <input name="phone" className="square bordercolor rounded mb-2 p-1"  style={{width:'100%'}}  required></input>
               </MDBCardBody>
             </MDBCard>
             </MDBModalBody>
             <MDBModalFooter>
-              <MDBBtn color='secondary' onClick={toggleShow}>
+              <MDBBtn type="button" color='secondary' onClick={toggleShow}>
                 Cancel
               </MDBBtn>
-              <MDBBtn>Create Account</MDBBtn>
+              <MDBBtn type="submit">Create Account</MDBBtn>
             </MDBModalFooter>
+            </form>
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>

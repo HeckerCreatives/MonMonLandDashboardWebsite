@@ -164,12 +164,9 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
                       <MDBIcon fas icon={"angle-right"} size="sm" />
                     </div>
                     <div className="flex-grow-1 sidebar-sublink-header-title">
-                      {sub.name}                                          
-                    </div>           
-                  </div>              
-                ))}
-                {/* subchild */}
-            {link.children.map((sub)=>(
+                      {sub.name}
+                      {/* subchild */}
+            {/* {link.children.map((sub)=>( */}
               
               <div
                 className={`sidebar-sub-link ${
@@ -310,8 +307,12 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
             {/* end subchild-child */}     
             </div>
             
-            ))}            
-            {/* end of subchild */}
+            {/* ))}             */}
+            {/* end of subchild */}                                          
+                    </div>                               
+                  </div>              
+                ))}
+                
             </div>
             {/* end link child */}
 

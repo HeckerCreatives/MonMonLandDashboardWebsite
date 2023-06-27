@@ -132,7 +132,7 @@ return (
                 <form id="form-file-upload">
                   <label id="label-file-upload">
                   <div>
-                  <p>Drag files to upload</p>
+                  {/* <p>Drag files to upload</p> */}
                   </div>
                   </label>
                 </form> }                  
