@@ -9,7 +9,7 @@ import "./pearl.css"
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet"
 const UpdateFree = () => {
     const [titles, setTitles] = useState('');
-    const [pearldata, setPearlData] = useState("");
+    const [freedata, setFreeData] = useState("");
     const [amounts, setAmounts] = useState('');
     const [descriptionlist, setDescriptionList] = useState([]);
     const [adddescriptions, setAddDescriptions] = useState('');
@@ -17,7 +17,7 @@ const UpdateFree = () => {
     const badge = process.env.REACT_APP_FREE,
     [page, setPage] = useState(1),
     [total, setTotal] = useState(0);
-    
+
     useEffect(() => {
         let totalPages = Math.floor(descriptionlist.length / 5);
         if (descriptionlist.length % 5 > 0) totalPages += 1;
@@ -28,7 +28,7 @@ const UpdateFree = () => {
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/find`)
         .then(result => result.json())
         .then(data => {
-            setPearlData(data)
+            setFreeData(data)
         })
     },[badge])
 
@@ -48,7 +48,7 @@ const UpdateFree = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                subscriptionName: titles ? titles : pearldata.subscriptionName,
+                subscriptionName: titles ? titles : freedata.subscriptionName,
             })            
         }).then(result => result.json())
         .then(data => {
@@ -81,7 +81,7 @@ const UpdateFree = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                amount: amounts ? amounts : pearldata.amount,
+                amount: amounts ? amounts : freedata.amount,
             })            
         }).then(result => result.json())
         .then(data => {
@@ -113,7 +113,7 @@ const UpdateFree = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                image: image ? image : pearldata.image,
+                image: image ? image : freedata.image,
             })            
         }).then(result => result.json())
         .then(data => {
@@ -209,7 +209,7 @@ const UpdateFree = () => {
             <form onSubmit={e => updatesubsimage(e)}>
                     <MDBCol className="form-file-upload">
                         <div className="label-file-upload">
-                        <img src={image ? image : pearldata.image} alt="" className="label-file-upload"/>                    
+                        <img src={image ? image : freedata.image} alt="" className="label-file-upload"/>                    
                         </div>                                        
                     </MDBCol>
                     <div className="text-center">
@@ -235,7 +235,7 @@ const UpdateFree = () => {
                     </MDBCardText>
                     </div>
                     <div className="mx-1">
-                    <MDBInput type="text" label={pearldata.subscriptionName} onChange={e => setTitles(e.target.value)}/>
+                    <MDBInput type="text" label={freedata.subscriptionName} onChange={e => setTitles(e.target.value)}/>
                     </div>
                     <div className="mx-1">
                     <MDBBtn outline color="dark" type="submit">update</MDBBtn>
@@ -253,7 +253,7 @@ const UpdateFree = () => {
                     </MDBCardText>
                     </div>
                     <div className="mx-1">
-                    <MDBInput type="text" label={pearldata.amount} onChange={e => setAmounts(e.target.value)}/>
+                    <MDBInput type="text" label={freedata.amount} onChange={e => setAmounts(e.target.value)}/>
                     </div>                        
                     <div className="mx-1">
                     <MDBBtn outline color="dark" type="submit">update</MDBBtn> 
@@ -273,7 +273,7 @@ const UpdateFree = () => {
             
             <form onSubmit={e => adddescription(e)}>
             <MDBCol className="mb-3 d-flex align-items-center">
-            <MDBInput className="mx-1" type="text" maxLength="150" onChange={e => setAddDescriptions(e.target.value)} style={{width: "500px"}}/>
+            <MDBInput className="mx-1" type="text" maxLength="150" onChange={e => setAddDescriptions(e.target.value)} style={{width: "100%"}}/>
 
             <MDBBtn className="mx-1" outline color="dark" type="submit">
             <MDBIcon fas icon="plus"/>
@@ -284,7 +284,7 @@ const UpdateFree = () => {
 
             </MDBRow>
             <MDBCol>
-            <MDBTable align='middle' className="border mt-4 ">
+            <MDBTable align='middle' className="border mt-4 " responsive>
                 <MDBTableHead className="head">
                     <tr>
                     <th className="fw-bold" scope='col'>Perks</th>

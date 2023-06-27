@@ -107,6 +107,13 @@
     white-space: nowrap;
     transition: height 150ms ease-in-out !important;
   }
+
+  .sidebar-sub-link-1 {
+    height: 0 !important;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: height 150ms ease-in-out !important;
+  }
   
   .sidebar-sub-link-active {
     height: fit-content !important;

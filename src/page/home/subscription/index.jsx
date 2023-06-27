@@ -48,7 +48,7 @@ const Subscription = () => {
         })
     },[])
 
-    
+    const sortedList = subs.sort((a, b) => a._id.localeCompare(b._id));
 
     const settings = {
         className: "",
@@ -79,7 +79,7 @@ const Subscription = () => {
         <MDBSpinner color="warning"></MDBSpinner>
         :
         <>
-        {subs.map(sub => (
+        {sortedList.map(sub => (
         <MDBCol className="">
             <MDBCard key={sub._id} className="col-12 align-items-center linya" style={{height:"100%", width: "100%"}}>
                 <MDBCardImage src={sub.image} alt=""  id="badge" className="bg-dark text-center"/>

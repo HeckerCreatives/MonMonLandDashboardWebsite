@@ -146,16 +146,16 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
                     onClick={() => {
                       if (sub.name !== toggled1) {
                             setToggled1(sub.name);
-                            sub.children?.length !== 0 && setDidToggle1(false);
+                            // sub.children?.length !== 0 && setDidToggle1(false);
                           } else {
                             setToggled1("");
-                            sub.children?.length !== 0 && setDidToggle1(false);
+                            // sub.children?.length !== 0 && setDidToggle1(false);
                           }
                           
                           sub.path !== "" && navigate(sub.path);
-                          sub.path !== "" &&
-                            window.innerWidth < 768 &&
-                            setDidToggle1(!didToggle1);
+                          // sub.path !== "" &&
+                          //   window.innerWidth < 768 &&
+                          //   setDidToggle1(!didToggle1);
                     }}
                     >
               
@@ -163,17 +163,8 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
                     <div className="mx-3">
                       <MDBIcon fas icon={"angle-right"} size="sm" />
                     </div>
-                    {/* <div
-                      className={`mx-3 ${link.children.length === 0 && "opacity-0"}`}
-                    >
-                      {sub.name === toggled1 && sub.children ? (
-                        <MDBIcon fas icon="angle-down" size="lg" />
-                      ) : (
-                        <MDBIcon fas icon="angle-right" size="lg" />
-                      )}
-                    </div> */}
                     <div className="flex-grow-1 sidebar-sublink-header-title">
-                      {sub.name}                      
+                      {sub.name}                                          
                     </div>           
                   </div>              
                 ))}
@@ -324,8 +315,9 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
             </div>
             {/* end link child */}
 
-            
+                   
 
+                      
             
 
             {/* End of parent */}
