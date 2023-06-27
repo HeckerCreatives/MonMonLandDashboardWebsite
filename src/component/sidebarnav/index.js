@@ -77,7 +77,7 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
             didToggle && didToggle1 && didToggle2 && didToggle3 &&"sidebar-toggle-rotate"
           }`}
         >
-          <MDBIcon fas icon="angle-left" size="lg" />
+          <MDBIcon fas icon="angle-left" size="lg" /> 
         </div>
       )}
 
@@ -92,6 +92,7 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
       <div className="sidebar-body flex-grow-1">
         {links.map((link, i) => (
           <div key={`link-${i}`}>
+           
             <div
               onClick={() => {
                 if (link.name !== toggled) {
@@ -157,6 +158,8 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
                             setDidToggle1(!didToggle1);
                     }}
                     >
+              
+                      
                     <div className="mx-3">
                       <MDBIcon fas icon={"angle-right"} size="sm" />
                     </div>
@@ -182,6 +185,7 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
                   toggled1 === sub.name && "sidebar-sub-link-active"
                 }`}
               >
+            
               {sub.path === "" &&
                 sub.children.map((subchild, i) => (
               <div
@@ -205,36 +209,22 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
                       setDidToggle2(!didToggle2);
               }}
               >
+             
               <div className="mx-3">
-                <MDBIcon fas icon={"angle-right"} size="sm" />
-              </div>
-              {/* <div
-              className={`mx-3 ${link.children.length === 0 && "opacity-0"}`}
-              >
-                {subchild.name === toggled2 && subchild.children ? (
-                  <MDBIcon fas icon="angle-down" size="lg" />
-                ) : (
-                  <MDBIcon fas icon="angle-right" size="lg" />
-                )}
-              </div> */}
-              <div className="flex-grow-1 sidebar-sublink-header-title">
+                <div>
+                <MDBIcon fas icon={"angle-right"} size="sm" className="pe-2"/>
                 {subchild.name}
-              </div>
-              
-              </div>            
-              ))}
-                     {/* subchild-child */}
-            {link.children.map((sub)=>
-              sub.children &&
-              sub.children.map((subchild)=>
-            <div
-            className={`sidebar-sub-link ${
-            toggled2 === subchild.name && "sidebar-sub-link-active"
-            }`}
-            >
-              {subchild.path === "" &&
+                </div>
+
+                <div hidden={subchild.name==="Subscription"?false:true}
+                className={`sidebar-sub-link ${
+                  toggled2 === subchild.name && "sidebar-sub-link-active"
+                  }`}>
+           
+                  {/* ----------------------------- */}
+                  {subchild.path === "" &&
               subchild.children.map((subchilds, i) => (
-                
+            
                 <div
                   className={`d-flex align-items-center py-1 my-1 sidebar-link-header ms-3 ${
                     activePath === subchilds.path && "sidebar-active-link"
@@ -247,16 +237,83 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
                         setDidToggle3(!didToggle3)
                   }}
                 >
+
+          
                   <div className="mx-3">
                     <MDBIcon fas icon="angle-right" size="sm" />
                   </div>
                   <div className="flex-grow-1 sidebar-sublink-header-title">
                     {subchilds.name}
                   </div>
+
                 </div>
+               
               
               ))}
+              {/* --------------------------------- */}
+                  </div>
+
               </div>
+          
+              {/* <div
+              className={`mx-3 ${link.children.length === 0 && "opacity-0"}`}
+              >
+                {subchild.name === toggled2 && subchild.children ? (
+                  <MDBIcon fas icon="angle-down" size="lg" />
+                ) : (
+                  <MDBIcon fas icon="angle-right" size="lg" />
+                )}
+              </div> */}
+              <div className="flex-grow-1 sidebar-sublink-header-title">
+             
+              </div>
+              
+              </div>            
+              ))}
+            
+                
+            {link.children.map((sub)=> 
+              sub.children &&
+              sub.children.map((subchild)=>
+            <div
+            className={`sidebar-sub-link ${
+            toggled2 === subchild.name && "sidebar-sub-link-active"
+            }`}
+            > 
+           
+                
+              {/* {subchild.path === "" &&
+              subchild.children.map((subchilds, i) => (
+            
+                <div
+                  className={`d-flex align-items-center py-1 my-1 sidebar-link-header ms-3 ${
+                    activePath === subchilds.path && "sidebar-active-link"
+                  }`}
+                  key={`subchilds-${i}`}
+                  onClick={() => {
+                      subchilds.path !== "" && navigate(subchilds.path);
+                      subchilds.path !== "" &&
+                        window.innerWidth < 768 &&
+                        setDidToggle3(!didToggle3)
+                  }}
+                >
+
+          
+                  <div className="mx-3">
+                    <MDBIcon fas icon="angle-right" size="sm" />
+                  </div>
+                  <div className="flex-grow-1 sidebar-sublink-header-title">
+                    {subchilds.name}
+                  </div>
+
+                </div>
+               
+              
+              ))}
+        */}
+              </div>
+
+              // --
               )
             )}  
             {/* end subchild-child */}     

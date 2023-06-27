@@ -98,6 +98,14 @@ const Dashboard = () => {
                   name: "Header",
                   path: "/dashboard/Administrator/settings/updateprogressbar",
                 },
+
+                //  {
+                //   name: "Subscription",
+                //   path: "",
+                //   children: [{name: 'test'}]
+                //   },
+
+                // --
                 {
                   name: "Subscription",
                   path: "",
