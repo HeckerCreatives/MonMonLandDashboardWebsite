@@ -27,13 +27,13 @@ const Graph = ({ users }) => {
             // Set the static data for the current date based on the active filter
             switch (activeFilter) {
               case "Payin":
-                staticData[i] = 5; // Sample data for Payin
+                staticData[i] = 1000; // Sample data for Payin
                 break;
               case "Payout":
-                staticData[i] = 3; // Sample data for Payout
+                staticData[i] = 1050; // Sample data for Payout
                 break;
               case "User":
-                staticData[i] = 2; // Sample data for User
+                staticData[i] = 1400; // Sample data for User
                 break;
               default:
                 staticData[i] = 0;
