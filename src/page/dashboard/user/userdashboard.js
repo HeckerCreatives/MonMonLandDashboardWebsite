@@ -1,87 +1,137 @@
-import { MDBCol, MDBContainer, MDBRow } from "mdb-react-ui-kit";
-import React, {useEffect} from "react";
+import React, {useState, useEffect} from "react";
+import { MDBContainer, MDBBtn, MDBRow, MDBCol,MDBIcon, MDBCard, MDBCardBody, MDBTypography } from "mdb-react-ui-kit";
+import DashCard from "../../../component/cards/dashcard";
+import Graph from "../../../component/graph";
 import Breadcrumb from "../../../component/breadcrumb";
-import Cards from "../../../component/cards";
 import { useNavigate } from "react-router-dom";
 
 
-
-const UserDashboard = () => {
+const UsernDashboard = () => {
+    const [minithtitle, setMiniThTitle] = useState([]),
+    [minitdtext, setMiniTdText] = useState([]);
     const auth = JSON.parse(localStorage.getItem("auth"))
+    const [viewdetails, setviewdetails] = useState(true)
+    const [users, setUsers] = useState([]);
+    const [activeusers, setActiveUsers] = useState([]);
+    const [inactiveusers, setInActiveUsers] = useState([]);
+    const [banusers, setBanUsers] = useState([]);
+    const [paidusers, setPaidUsers] = useState([]);
     const navigate = useNavigate()
     
-    useEffect(() => {
-        if (auth) {
-          if (auth.roleId.display_name !== "Agent") {
-            localStorage.removeItem("auth");
-            navigate("/login");
-          }
+  useEffect(() => {
+      if (auth) {
+        if (auth.roleId.display_name !== "Agent") {
+          localStorage.removeItem("auth");
+          navigate("/sessions/login");
         }
-      }, [auth, navigate]);
+      }
+    }, [auth, navigate]);
 
-    return(
+
+  useEffect(()=> {
+    fetch(`${process.env.REACT_APP_API_URL}user/find`)
+    .then(result => result.json())
+    .then(data => {
+      const active = data.filter(e => e.isVerified === true)
+      const inactive = data.filter(e => e.isVerified === false)
+      setUsers(data)
+      setActiveUsers(active)
+      setInActiveUsers(inactive)        
+    })    
+  },[]) 
+
+    return (
         <MDBContainer fluid>
         <Breadcrumb title='Dashboard' paths={[]}/>
         {/* Cards */}
+        <MDBRow className="my-2">
+          <MDBCol className="my-2">
+            <DashCard 
+              colSpan="4"
+              icon={`dollar-sign`}
+              thtitle={`Total Pay-in`}
+              cardtoptext={`1000`}
+              txtsup={`USDT`} 
+              td1={true}
+              td1txttop={`300`}
+              td1txtbot={`Ruby`} 
+              td2={true}
+              td2txttop={`400`}
+              td2txtbot={`Emerald`} 
+              td3={true}
+              td3txttop={`300`}
+              td3txtbot={`Diamond`}
+              />
+          </MDBCol>
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`dollar-sign`}
+              thtitle={`Total Pay-out`}
+              cardtoptext={`1050`}
+              txtsup={`USDT`}  
+              td1={true}
+              td1txttop={`300`}
+              td1txtbot={`Pending`} 
+              td2={true}
+              td2txttop={`350`}
+              td2txtbot={`Approved`} 
+              td3={true}
+              td3txttop={`400`}
+              td3txtbot={`Reject`}
+              />
+          </MDBCol>
+          
+        </MDBRow>
         <MDBRow>
-        <Cards
-            textstyle={{color: "white"}}
-            titlestyle={{color: "white", marginTop:"10px",marginBottom:"0px"}}
-            cardstyle={{background: "#035AA6"}}
-            iconstyle={{background: "#1D6BAF", padding: "10px", borderRadius: "5px"}}
-            icon='users'
-            title='Total Players'
-            texts='0'
-        />
-        <Cards
-            textstyle={{color: "white"}}
-            titlestyle={{color: "white", marginTop:"10px",marginBottom:"0px"}}
-            cardstyle={{background: "#0779E4"}}
-            iconstyle={{background: "#2087E7", padding: "10px", borderRadius: "5px"}}
-            icon='user'
-            title='Active Players'
-            texts='0'
-        />
-        <Cards
-            textstyle={{color: "white"}}
-            titlestyle={{color: "white", marginTop:"10px",marginBottom:"0px"}}
-            cardstyle={{background: "#10375C"}}
-            iconstyle={{background: "#284B6D", padding: "10px", borderRadius: "5px"}}
-            icon='user-alt-slash'
-            title='Inactive Players'
-            texts='0'
-        />
-        <Cards
-            textstyle={{color: "white"}}
-                titlestyle={{color: "white", marginTop:"10px",marginBottom:"0px"}}
-                cardstyle={{background: "#4F8A8B"}}
-                iconstyle={{background: "#619697", padding: "10px", borderRadius: "5px"}}
-            icon='wallet'
-            title='Paid Players'
-            texts='0'
-        />
-        <Cards
-            textstyle={{color: "white"}}
-            titlestyle={{color: "white", marginTop:"10px",marginBottom:"0px"}}
-            cardstyle={{background: "#0779E4"}}
-            iconstyle={{background: "#2087E7", padding: "10px", borderRadius: "5px"}}
-            icon='wallet'
-            title='Withdrawals'
-            texts='0'
-        />
-        <Cards
-            textstyle={{color: "white"}}
-            titlestyle={{color: "white", marginTop:"10px",marginBottom:"0px"}}
-            cardstyle={{background: "#10375C"}}
-            iconstyle={{background: "#284B6D", padding: "10px", borderRadius: "5px"}}
-            icon='exchange'
-            title='Transaction'
-            texts='0'
-        />
+        <MDBCol className="my-2">
+            <DashCard 
+              colSpan="4"
+              icon={`user`} 
+              thtitle={`Total User`} 
+              cardtoptext={`1400`}
+              td1={true}
+              td1txttop={`300`}
+              td1txtbot={`Pearl`} 
+              td2={true}
+              td2txttop={`400`}
+              td2txtbot={`Ruby`} 
+              td3={true}
+              td3txttop={`350`}
+              td3txtbot={`Emerald`}
+              td4={true}
+              td4txttop={`350`}
+              td4txtbot={`Diamond`}
+              />
+          </MDBCol>
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`user`}
+              thtitle={`Total Member`}
+              cardtoptext={users ? users.length : 0}
+              td1={true}
+              td1txttop={activeusers ? activeusers.length : 0}
+              td1txtbot={`Active`} 
+              td2={true}
+              td2txttop={inactiveusers ? inactiveusers.length : 0}
+              td2txtbot={`Inactive`}
+              />
+          </MDBCol>
+        </MDBRow>
+        <MDBRow>
+          <MDBCol>
+            <Graph
+              users={users}
+            />
+          </MDBCol>          
         </MDBRow>
         
+        
+
         </MDBContainer>
+        
     )
 }
 
-export default UserDashboard;
+export default UsernDashboard;
