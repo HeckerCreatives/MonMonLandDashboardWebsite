@@ -46,7 +46,6 @@
 .badgesize {
     height: 100px;
     width: 100px;
-    /* margin: 0px 8px 0px 15px; */
 }
 
 .char {
@@ -102,8 +101,8 @@
         display: none;
     }
     .badgesize {
-        height: 24%;
-        width: 24%;
+        height: 100px;
+        width: 100px;
     }
 
     .slick-slide > div {

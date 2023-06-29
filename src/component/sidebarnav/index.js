@@ -139,7 +139,7 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
               {link.path === "" &&
                 link.children.map((sub, i) => (
                   <div
-                    className={`d-flex  py-1 my-1 sidebar-link-header ms-3 ${
+                    className={`d-flex  py-1 my-1 sidebar-link-header ms-5 ${
                       activePath === sub.path && "sidebar-active-link" 
                     } `}
                     key={`sub-${i}`}

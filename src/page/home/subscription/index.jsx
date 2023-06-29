@@ -135,7 +135,7 @@ const Subscription = () => {
                                 {subsdescription.map(desc =>(
                                     
                                     <li key={desc.subsId} className="list">
-                                        {desc.description}
+                                        {desc.description.length > 200 ? `${desc.description.substring(0,200)}...`: desc.description}
                                     </li> 
                                     
                                 ))}

@@ -80,12 +80,16 @@ const Games = () => {
                     
                     {games.map((content)=> (
                     <div key={content._id} className="descdiv" >
-                    
+                    <div>
                     <MDBTypography className="h2 text-center mt-3" >{content.gametitle}</MDBTypography>
-
-                    <MDBTypography className="p text-center" >
+                    </div>
+                    
+                    <div>
+                    <MDBTypography className="p text-center p-3">
                     {content.description}
                     </MDBTypography>
+                    </div>    
+                    
 
                     <div className="subs">
                    <MDBCol className="">
@@ -105,8 +109,6 @@ const Games = () => {
                             </div>
                         ))}
                     </div>
-                        
-                    
                     </MDBCol>                    
                     </div>
 

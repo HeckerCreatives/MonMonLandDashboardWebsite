@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { MDBContainer, MDBBtn, MDBRow, MDBCol,MDBIcon, MDBCard, MDBCardBody, MDBTypography } from "mdb-react-ui-kit";
-import Cards from "../../cards/index";
+import DashCard from "../../cards/dashcard";
 import Graph from "../../graph";
 import MiniTableList from "../../minitablelist";
 import MiniDescription from "../../minidescription";
@@ -16,6 +16,7 @@ const AdminDashboard = () => {
     const [viewdetails, setviewdetails] = useState(true)
     const [users, setUsers] = useState([]);
     const [activeusers, setActiveUsers] = useState([]);
+    const [inactiveusers, setInActiveUsers] = useState([]);
     const [banusers, setBanUsers] = useState([]);
     const [paidusers, setPaidUsers] = useState([]);
     const navigate = useNavigate()
@@ -29,225 +30,107 @@ const AdminDashboard = () => {
       }
     }, [auth, navigate]);
 
-  useEffect(()=>{
-      setMiniThTitle([
-        {
-          title:'Wan two tree'
-        },
-        {
-          title:'Wan two tree'
-        },
-        {
-          title:'Wan two tree'
-        }, ]
-      )
-      setMiniTdText(
-      [
-        [
-          'wantawsan',
-          'two taw san',
-          'isa dalawa',
-        ],
-        [
-          'row 2, col 1',
-          'row 2, col 2',
-          'row 2, col 3',
-        ],
-        [
-          'row 3, col 1',
-          'row 3, col 2',
-          'row 3, col 3',
-        ],
-        [
-          'row 4, col 1',
-          'row 4, col 2',
-          'row 4, col 3',
-        ],
-      ]
-      )
-    },[])
 
   useEffect(()=> {
-    fetch(`${process.env.REACT_APP_API_URL}manage/alluser`)
+    fetch(`${process.env.REACT_APP_API_URL}user/find`)
     .then(result => result.json())
     .then(data => {
-        setUsers(data)
-        
-    }) 
-    fetch(`${process.env.REACT_APP_API_URL}manage/activeuser`)
-    .then(result => result.json())
-    .then(data => {
-      setActiveUsers(data)
-    }) 
-    fetch(`${process.env.REACT_APP_API_URL}manage/banneduser`)
-    .then(result => result.json())
-    .then(data =>{
-      setBanUsers(data)
-    })
-    fetch(`${process.env.REACT_APP_API_URL}manage/paiduser`)
-    .then(result => result.json())
-    .then(data =>{
-      setPaidUsers(data)
-    })
-  },[])
-
-  const handleview = () => {
-    if (viewdetails) {
-      setviewdetails(false)
-    } else {
-      setviewdetails(true)
-    }
-    
-  }  
+      const active = data.filter(e => e.isVerified === true)
+      const inactive = data.filter(e => e.isVerified === false)
+      setUsers(data)
+      setActiveUsers(active)
+      setInActiveUsers(inactive)        
+    })    
+  },[]) 
 
     return (
         <MDBContainer fluid>
         <Breadcrumb title='Dashboard' paths={[]}/>
         {/* Cards */}
-        
-        <MDBCard className="off"  style={{width:"50%", transform: 'translate(50%, 0%)'}}>       
-        
-        <MDBCardBody>
-        <MDBCol className="d-flex justify-content-between m-2">
-        <MDBTypography className="fw-bold">Summarize User Details</MDBTypography>
-        {viewdetails ? 
-        <MDBBtn onClick={handleview}>View Details</MDBBtn>
-        :
-        <MDBBtn onClick={handleview} style={{}}>Hide Details</MDBBtn>
-        }
-        </MDBCol>
-        <MDBRow>
-          <MDBCol >
-          <Cards
-            textstyle={{color: "#991FDD", fontWeight: "bold", fontSize: "25px"}}
-            titlestyle={{color: "black", marginTop:"10px",marginBottom:"0px"}}
-            cardstyle={{background: "#F2FFEB"}}
-            iconstyle={{background: "#991FDD", padding: "10px", borderRadius: "5px"}}
-            color='primary'
-            icon='users'
-            title='Total Users'
-            texts={users.length}
-          />
+        <MDBRow className="my-2">
+          <MDBCol className="my-2">
+            <DashCard 
+              colSpan="4"
+              icon={`dollar-sign`}
+              thtitle={`Total Pay-in`}
+              cardtoptext={`1000`}
+              txtsup={`USDT`} 
+              td1={true}
+              td1txttop={`300`}
+              td1txtbot={`Ruby`} 
+              td2={true}
+              td2txttop={`400`}
+              td2txtbot={`Emerald`} 
+              td3={true}
+              td3txttop={`300`}
+              td3txtbot={`Diamond`}
+              />
           </MDBCol>
-          <MDBCol >
-          <Cards
-            textstyle={{color: "#71A92F", fontWeight: "bold", fontSize: "25px"}}
-            titlestyle={{color: "black", marginTop:"10px",marginBottom:"0px"}}
-            cardstyle={{background: "#DDFFF9"}}
-            iconstyle={{background: "#71A92F", padding: "10px", borderRadius: "5px"}}
-            color='success'
-            icon='user'
-            title='Active Users'
-            texts={activeusers.length}
-          />
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`dollar-sign`}
+              thtitle={`Total Pay-out`}
+              cardtoptext={`1050`}
+              txtsup={`USDT`}  
+              td1={true}
+              td1txttop={`300`}
+              td1txtbot={`Pending`} 
+              td2={true}
+              td2txttop={`350`}
+              td2txtbot={`Approved`} 
+              td3={true}
+              td3txttop={`400`}
+              td3txtbot={`Reject`}
+              />
           </MDBCol>
-          <MDBCol >
-          <Cards
-            textstyle={{color: "#05C7B9", fontWeight: "bold", fontSize: "25px"}}
-            titlestyle={{color: "black", marginTop:"10px",marginBottom:"0px"}}
-            cardstyle={{background: "#E9F5FF"}}
-            iconstyle={{background: "#05C7B9", padding: "10px", borderRadius: "5px"}}
-            color='warning'
-            icon='user-alt-slash'
-            title='Inactive Users'
-            texts={banusers.length}
-          />
-          </MDBCol>
-          <MDBCol >
-          <Cards
-            textstyle={{color: "#09BCED", fontWeight: "bold", fontSize: "25px"}}
-            titlestyle={{color: "black", marginTop:"10px",marginBottom:"0px"}}
-            cardstyle={{background: "#F6EEFF"}}
-            iconstyle={{background: "#09BCED", padding: "10px", borderRadius: "5px"}}
-            color='success'
-            icon='hand-holding-usd'
-            title='Paid Users'
-            texts={paidusers.length}
-          />
-          </MDBCol>
-        </MDBRow>
-        </MDBCardBody>
           
-        </MDBCard>
-        { viewdetails ?
-          null
-          :          
-          <MDBRow className="mt-3">        
-        <MDBTypography className="fw-bold">User Full Details</MDBTypography>              
-          <Cards
-            textstyle={{color: "#991FDD"}}
-            titlestyle={{color: "black", marginTop:"10px",marginBottom:"0px"}}
-            cardstyle={{background: "#F2FFEB"}}
-            iconstyle={{background: "#991FDD", padding: "10px", borderRadius: "5px"}}
-            showviewbtn={true}
-            url="/dashboard/Administrator/manageaccount/manageplayers/allusers"
-            color='primary'
-            icon='users'
-            title='Total Users'
-          />       
-          <Cards
-            textstyle={{color: "#71A92F"}}
-            titlestyle={{color: "black", marginTop:"10px",marginBottom:"0px"}}
-            cardstyle={{background: "#DDFFF9"}}
-            iconstyle={{background: "#71A92F", padding: "10px", borderRadius: "5px"}}
-            showviewbtn={true}
-            url="/dashboard/Administrator/manageaccount/manageplayers/activeplayers"
-            color='success'
-            icon='user'
-            title='Active Users'
-          />
-          <Cards
-            textstyle={{color: "#05C7B9"}}
-            titlestyle={{color: "black", marginTop:"10px",marginBottom:"0px"}}
-            cardstyle={{background: "#E9F5FF"}}
-            iconstyle={{background: "#05C7B9", padding: "10px", borderRadius: "5px"}}
-            showviewbtn={true}
-            url="/dashboard/superadmin/manageplayers/activeplayers"
-            color='warning'
-            icon='user-alt-slash'
-            title='Inactive Users'
-          />
-          <Cards
-            textstyle={{color: "#09BCED"}}
-            titlestyle={{color: "black", marginTop:"10px",marginBottom:"0px"}}
-            cardstyle={{background: "#F6EEFF"}}
-            iconstyle={{background: "#09BCED", padding: "10px", borderRadius: "5px"}}
-            showviewbtn={true}
-            url="/dashboard/Administrator/manageaccount/manageplayers/paidusers"
-            color='success'
-            icon='hand-holding-usd'
-            title='Paid Users'
-          />
         </MDBRow>
-        }
-        
-
-
-        {/* <MDBRow>
-          <MDBCol lg={6} md={12} className="my-4">
-            
+        <MDBRow>
+        <MDBCol className="my-2">
+            <DashCard 
+              colSpan="4"
+              icon={`user`} 
+              thtitle={`Total User`} 
+              cardtoptext={`1400`}
+              td1={true}
+              td1txttop={`300`}
+              td1txtbot={`Pearl`} 
+              td2={true}
+              td2txttop={`400`}
+              td2txtbot={`Ruby`} 
+              td3={true}
+              td3txttop={`350`}
+              td3txtbot={`Emerald`}
+              td4={true}
+              td4txttop={`350`}
+              td4txtbot={`Diamond`}
+              />
+          </MDBCol>
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`user`}
+              thtitle={`Total Member`}
+              cardtoptext={users ? users.length : 0}
+              td1={true}
+              td1txttop={activeusers ? activeusers.length : 0}
+              td1txtbot={`Active`} 
+              td2={true}
+              td2txttop={inactiveusers ? inactiveusers.length : 0}
+              td2txtbot={`Inactive`}
+              />
+          </MDBCol>
+        </MDBRow>
+        <MDBRow>
+          <MDBCol>
             <Graph
-              title='Registers'
-              subtitle='*Number of Registers (Monthly)'
-            />        
-          </MDBCol>
-          <MDBCol lg={6}>
-            
-            <MiniTableList 
-              miniThTitle={minithtitle}
-              miniTdText={minitdtext}
+              users={users}
             />
-
-            <MiniDescription
-              title='Example Halimbawa'
-              text='Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
-            />
-          </MDBCol>
-        </MDBRow> */}
-        {/* <FullTable
-          txtHeader={txthead}
-          txtTable={txttable}
-        />  */}
+          </MDBCol>          
+        </MDBRow>
+        
+        
 
         </MDBContainer>
         

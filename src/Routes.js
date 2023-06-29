@@ -32,7 +32,7 @@ import UpdateFree from "./page/dashboard/subscription/subs/free";
 import UpdateRuby from "./page/dashboard/subscription/subs/ruby";
 import UpdateEmerald from "./page/dashboard/subscription/subs/emerald";
 import UpdateDiamond from "./page/dashboard/subscription/subs/diamond";
-
+import SubAdminDashboard from "./page/dashboard/subadmin/dashboard";
 
 
 const Routers = () => {
@@ -74,11 +74,57 @@ const Routers = () => {
           <Route path="updatenews" element={<UpdateNews/>}/>
           <Route path="updateroadmap" element={<UpdateRoadmap/>}/>
           <Route path="updategames" element={<Games/>}/>
-        </Route>        
+        </Route>
+
         </Route>  
+        <Route path="SubAdministrator" element={""}>
+        <Route path="home" element={<SubAdminDashboard />}/>
+        <Route path="manageaccount">
+        {/* <Route path="createadminacc" element={<CreateAdminAccount/>}/> */}
+        <Route path="createcsracc" element={<CreateCSRAccount/>}/>
+        <Route path="manageplayers">
+          <Route path="activeplayers" element={<ActiveUsers/>}/>
+          <Route path="bannedplayers" element={<BannedUsers/>}/>
+          <Route path="emailunverified" element={<EmailUnverified/>}/>
+          {/* <Route path="mobileunverified" element={<MobileUnverified/>}/> */}
+          <Route path="withbalance" element={<WithBalance/>}/>
+          <Route path="paidusers" element={<PaidUsers/>}/>
+          <Route path="allusers" element={<AllUsers/>}/>
+          <Route path="usersdetails/:userId" element={<ManageDashboard/>}/>                           
+        </Route>
+        </Route>
+        
+
+        <Route path="settings">
+          <Route path="updateprogressbar" element={<UpdateProgressBar/>}/>
+          <Route path="updatesubs">
+            <Route path="pearl"element={<UpdatePearl/>}/>
+            <Route path="ruby"element={<UpdateRuby/>}/>
+            <Route path="emerald"element={<UpdateEmerald/>}/>
+            <Route path="diamond"element={<UpdateDiamond/>}/>
+            <Route path="free"element={<UpdateFree/>}/>
+          </Route>
+          <Route path="updatenews" element={<UpdateNews/>}/>
+          <Route path="updateroadmap" element={<UpdateRoadmap/>}/>
+          <Route path="updategames" element={<Games/>}/>
+        </Route>        
+        </Route>
 
         <Route path="Agent" element={""}>
             <Route path="home" element={<UserDashboard/>}/>
+            <Route path="settings">
+          <Route path="updateprogressbar" element={<UpdateProgressBar/>}/>
+          <Route path="updatesubs">
+            <Route path="pearl"element={<UpdatePearl/>}/>
+            <Route path="ruby"element={<UpdateRuby/>}/>
+            <Route path="emerald"element={<UpdateEmerald/>}/>
+            <Route path="diamond"element={<UpdateDiamond/>}/>
+            <Route path="free"element={<UpdateFree/>}/>
+          </Route>
+          <Route path="updatenews" element={<UpdateNews/>}/>
+          <Route path="updateroadmap" element={<UpdateRoadmap/>}/>
+          <Route path="updategames" element={<Games/>}/>
+        </Route>
         </Route>
       </Route>
       

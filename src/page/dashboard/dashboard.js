@@ -52,102 +52,248 @@ const Dashboard = () => {
               name: "CSR",
               path: "/dashboard/Administrator/manageaccount/createcsracc",
             },
-            {
-              name: "Manage Users",
-              path: "",
-              children: [
-                {
-                  name: "Active Users",
-                  path: "/dashboard/Administrator/manageaccount/manageplayers/activeplayers",
-                },
-                {
-                  name: "Banned Users",
-                  path: "/dashboard/Administrator/manageaccount/manageplayers/bannedplayers",
-                },
-                {
-                  name: "Email Unverified",
-                  path: "/dashboard/Administrator/manageaccount/manageplayers/emailunverified",
-                },            
-                {
-                  name: "With Balance",
-                  path: "/dashboard/Administrator/manageaccount/manageplayers/withbalance",
-                },
-                {
-                  name: "Paid Users",
-                  path: "/dashboard/Administrator/manageaccount/manageplayers/paidusers",
-                },
-                {
-                  name: "All Users",
-                  path: "/dashboard/Administrator/manageaccount/manageplayers/allusers",
-                },
-              ],
-            },
+            // {
+            //   name: "Manage Users",
+            //   path: "",
+            //   children: [
+            //     {
+            //       name: "Active Users",
+            //       path: "/dashboard/Administrator/manageaccount/manageplayers/activeplayers",
+            //     },
+            //     {
+            //       name: "Banned Users",
+            //       path: "/dashboard/Administrator/manageaccount/manageplayers/bannedplayers",
+            //     },
+            //     {
+            //       name: "Email Unverified",
+            //       path: "/dashboard/Administrator/manageaccount/manageplayers/emailunverified",
+            //     },            
+            //     {
+            //       name: "With Balance",
+            //       path: "/dashboard/Administrator/manageaccount/manageplayers/withbalance",
+            //     },
+            //     {
+            //       name: "Paid Users",
+            //       path: "/dashboard/Administrator/manageaccount/manageplayers/paidusers",
+            //     },
+            //     {
+            //       name: "All Users",
+            //       path: "/dashboard/Administrator/manageaccount/manageplayers/allusers",
+            //     },
+            //   ],
+            // },
             
           ],
         },
         {
-          name: "Settings",
+          name: "Upgrade Subs",
+          path: "",
+          icon: "arrow-alt-circle-up",
+          children: [],
+        },
+        {
+          name: "Payout",
+          path: "",
+          icon: "money-bill-alt",
+          children: [],
+        },
+        {
+          name: "Tools",
           path: "",
           icon: "cog",
           children: [
             {
-              name: "Landing Page",
-              path: "",
-              children: [
-                {
-                  name: "Header",
-                  path: "/dashboard/Administrator/settings/updateprogressbar",
-                },
-
-                //  {
-                //   name: "Subscription",
-                //   path: "",
-                //   children: [{name: 'test'}]
-                //   },
-
-                // --
-                {
-                  name: "Subscription",
-                  path: "",
-                  children: [
-                    {
-                      name: "Pearl",
-                      path: "/dashboard/Administrator/settings/updatesubs/pearl",
-                    },
-                    {
-                      name: "Ruby",
-                      path: "/dashboard/Administrator/settings/updatesubs/ruby",
-                    },
-                    {
-                      name: "Emerald",
-                      path: "/dashboard/Administrator/settings/updatesubs/emerald",
-                    },
-                    {
-                      name: "Diamond",
-                      path: "/dashboard/Administrator/settings/updatesubs/diamond",
-                    },
-                    {
-                      name: "Free",
-                      path: "/dashboard/Administrator/settings/updatesubs/free",
-                    }
-                  ]
-                },
-                {
-                  name: "Games",
-                  path: "/dashboard/Administrator/settings/updategames",
-                },
-                {
-                  name: "News",
-                  path: "/dashboard/Administrator/settings/updatenews",
-                },
-                {
-                  name: "Roadmap",
-                  path: "/dashboard/Administrator/settings/updateroadmap",
-                },
-                
-              ]
-            }
+              name: "Header",
+              path: "/dashboard/Administrator/settings/updateprogressbar",
+            },                
+            {
+              name: "Games",
+              path: "/dashboard/Administrator/settings/updategames",
+            },
+            {
+              name: "News",
+              path: "/dashboard/Administrator/settings/updatenews",
+            },
+            {
+              name: "Roadmap",
+              path: "/dashboard/Administrator/settings/updateroadmap",
+            },
           ],
+      },
+      {
+        name: "Subscription",
+        path: "",
+        icon: "dice-d6",
+        children: [
+          {
+            name: "Pearl",
+            path: "/dashboard/Administrator/settings/updatesubs/pearl",
+          },
+          {
+            name: "Ruby",
+            path: "/dashboard/Administrator/settings/updatesubs/ruby",
+          },
+          {
+            name: "Emerald",
+            path: "/dashboard/Administrator/settings/updatesubs/emerald",
+          },
+          {
+            name: "Diamond",
+            path: "/dashboard/Administrator/settings/updatesubs/diamond",
+          },
+          // {
+          //   name: "Free",
+          //   path: "/dashboard/Administrator/settings/updatesubs/free",
+          // }
+        ]
+      },
+      {
+        name: "User Logs",
+        path: "",
+        icon: "user",
+        children: [
+          {
+            name: "Admin",
+            path: "/dashboard/Administrator/manageaccount/createadminacc",
+          },
+          {
+            name: "CSR",
+            path: "/dashboard/Administrator/manageaccount/createcsracc",
+          },
+        ],
+      },
+    ];
+    break;
+    case "SubAdministrator":
+      link = [
+        {
+            name: "Dashboard",
+            path: "/dashboard/SubAdministrator/home",
+            icon: "home",
+            children: [],
+        },
+        {
+          name: "Manage CSR",
+          path: "/dashboard/SubAdministrator/manageaccount/createcsracc",
+          icon: "users",
+          children: [
+            // {
+            //   name: "Admin",
+            //   path: "/dashboard/SubAdministrator/manageaccount/createadminacc",
+            // },
+            // {
+            //   name: "CSR",
+            //   path: "/dashboard/SubAdministrator/manageaccount/createcsracc",
+            // },
+            // {
+            //   name: "Manage Users",
+            //   path: "",
+            //   children: [
+            //     {
+            //       name: "Active Users",
+            //       path: "/dashboard/SubAdministrator/manageaccount/manageplayers/activeplayers",
+            //     },
+            //     {
+            //       name: "Banned Users",
+            //       path: "/dashboard/SubAdministrator/manageaccount/manageplayers/bannedplayers",
+            //     },
+            //     {
+            //       name: "Email Unverified",
+            //       path: "/dashboard/SubAdministrator/manageaccount/manageplayers/emailunverified",
+            //     },            
+            //     {
+            //       name: "With Balance",
+            //       path: "/dashboard/SubAdministrator/manageaccount/manageplayers/withbalance",
+            //     },
+            //     {
+            //       name: "Paid Users",
+            //       path: "/dashboard/SubAdministrator/manageaccount/manageplayers/paidusers",
+            //     },
+            //     {
+            //       name: "All Users",
+            //       path: "/dashboard/SubAdministrator/manageaccount/manageplayers/allusers",
+            //     },
+            //   ],
+            // },
+            
+          ],
+        },
+        {
+          name: "Upgrade Subs",
+          path: "",
+          icon: "arrow-alt-circle-up",
+          children: [],
+        },
+        {
+          name: "Payout",
+          path: "",
+          icon: "money-bill-alt",
+          children: [],
+        },
+        {
+          name: "Tools",
+          path: "",
+          icon: "cog",
+          children: [
+            {
+              name: "Header",
+              path: "/dashboard/SubAdministrator/settings/updateprogressbar",
+            },                
+            {
+              name: "Games",
+              path: "/dashboard/SubAdministrator/settings/updategames",
+            },
+            {
+              name: "News",
+              path: "/dashboard/SubAdministrator/settings/updatenews",
+            },
+            {
+              name: "Roadmap",
+              path: "/dashboard/SubAdministrator/settings/updateroadmap",
+            },
+          ],
+      },
+      {
+        name: "Subscription",
+        path: "",
+        icon: "dice-d6",
+        children: [
+          {
+            name: "Pearl",
+            path: "/dashboard/SubAdministrator/settings/updatesubs/pearl",
+          },
+          {
+            name: "Ruby",
+            path: "/dashboard/SubAdministrator/settings/updatesubs/ruby",
+          },
+          {
+            name: "Emerald",
+            path: "/dashboard/SubAdministrator/settings/updatesubs/emerald",
+          },
+          {
+            name: "Diamond",
+            path: "/dashboard/SubAdministrator/settings/updatesubs/diamond",
+          },
+          // {
+          //   name: "Free",
+          //   path: "/dashboard/SubAdministrator/settings/updatesubs/free",
+          // }
+        ]
+      },
+      {
+        name: "CSR Logs",
+        path: "/dashboard/SubAdministrator/manageaccount/createcsracc",
+        icon: "user",
+        children: [
+          // {
+          //   name: "Admin",
+          //   path: "/dashboard/SubAdministrator/manageaccount/createadminacc",
+          // },
+          // {
+          //   name: "CSR",
+          //   path: "/dashboard/SubAdministrator/manageaccount/createcsracc",
+          // },
+        ],
       },
     ];
     break;
@@ -169,6 +315,68 @@ const Dashboard = () => {
         icon: "home",
         children: [],
       },
+      {
+        name: "Upgrade Subs",
+        path: "",
+        icon: "arrow-alt-circle-up",
+        children: [],
+      },
+      {
+        name: "Payout",
+        path: "",
+        icon: "money-bill-alt",
+        children: [],
+      },
+      {
+        name: "Tools",
+        path: "",
+        icon: "cog",
+        children: [
+          {
+            name: "Header",
+            path: "/dashboard/Agent/settings/updateprogressbar",
+          },                
+          {
+            name: "Games",
+            path: "/dashboard/Agent/settings/updategames",
+          },
+          {
+            name: "News",
+            path: "/dashboard/Agent/settings/updatenews",
+          },
+          {
+            name: "Roadmap",
+            path: "/dashboard/Agent/settings/updateroadmap",
+          },
+        ],
+    },
+    {
+      name: "Subscription",
+      path: "",
+      icon: "dice-d6",
+      children: [
+        {
+          name: "Pearl",
+          path: "/dashboard/Agent/settings/updatesubs/pearl",
+        },
+        {
+          name: "Ruby",
+          path: "/dashboard/Agent/settings/updatesubs/ruby",
+        },
+        {
+          name: "Emerald",
+          path: "/dashboard/Agent/settings/updatesubs/emerald",
+        },
+        {
+          name: "Diamond",
+          path: "/dashboard/Agent/settings/updatesubs/diamond",
+        },
+        // {
+        //   name: "Free",
+        //   path: "/dashboard/Agent/settings/updatesubs/free",
+        // }
+      ]
+    },
      ];
      break;
      default:

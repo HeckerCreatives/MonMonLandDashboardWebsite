@@ -46,12 +46,11 @@ const CreateAdminAccount = () => {
     .then(result => result.json())
     .then(data => {
       const today = new Date().toLocaleDateString();
-      const filteradmin = data.filter(e => e.roleId.display_name === "Administrator" && e.banned === false)
+      const filteradmin = data.filter(e => e.roleId.display_name === "SubAdministrator" && e.banned === false)
       const todays = filteradmin.filter(e => {
         const createdAtDate = new Date(e.createdAt).toLocaleDateString();
         return createdAtDate === today;
       });
-      console.log(todays)
       setAdminAcc(filteradmin)
       setTodaysJoin(todays)
     })
@@ -77,7 +76,7 @@ const CreateAdminAccount = () => {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            roleId: process.env.REACT_APP_ADMINROLE,
+            roleId: process.env.REACT_APP_SUBADMINROLE,
             referrerId: auth.referrerId,
             firstName: firstName.value,
             lastName: lastName.value,
