@@ -97,7 +97,13 @@ const TopNavbar = ({auth, didToggle, setDidToggle}) => {
         )}
       </div>: null}
       
-      {word}
+      { window.innerWidth > 375 ? 
+      <div>
+        {word}
+      </div>
+      :
+      null  
+      }
       <div className="d-flex">
       <ReferralButton auth={auth} />
           <ThemeContext.Consumer>
@@ -117,10 +123,12 @@ const TopNavbar = ({auth, didToggle, setDidToggle}) => {
           </ThemeContext.Consumer>      
       <div className="dropdown">
       
-        <MDBCol className="dropdown text d-flex justify-content-end align-items-center" onClick={() => setVisibility(!visibility)}>
+        <MDBCol className="dropdown text d-lg-flex justify-content-end align-items-center" onClick={() => setVisibility(!visibility)}>
           <MDBIcon fas icon="user-circle" size="lg" />
+          <div className="d-lg-block d-none">
           &nbsp;{auth.userName}
-          &nbsp;<MDBIcon fas icon="angle-down" size="lg" />
+          </div>
+          {/* &nbsp;<MDBIcon fas icon="angle-down" size="lg" /> */}
         </MDBCol>
         <div className={`custom-dropdown-content ${visibility ? 'd-block' : 'd-none'}`}>
           <MDBListGroup>

@@ -33,7 +33,7 @@ import UpdateRuby from "./page/dashboard/subscription/subs/ruby";
 import UpdateEmerald from "./page/dashboard/subscription/subs/emerald";
 import UpdateDiamond from "./page/dashboard/subscription/subs/diamond";
 import SubAdminDashboard from "./page/dashboard/subadmin/dashboard";
-
+import UpgradeSubscriptionManual from "./page/dashboard/upgradesubs";
 
 const Routers = () => {
   return (
@@ -61,6 +61,9 @@ const Routers = () => {
         </Route>
         </Route>
         
+        <Route path="upgradesubscription">
+        <Route path="manual" element={<UpgradeSubscriptionManual/>}/>
+        </Route>
 
         <Route path="settings">
           <Route path="updateprogressbar" element={<UpdateProgressBar/>}/>

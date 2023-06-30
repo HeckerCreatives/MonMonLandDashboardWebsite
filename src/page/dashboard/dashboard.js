@@ -86,10 +86,15 @@ const Dashboard = () => {
           ],
         },
         {
-          name: "Upgrade Subs",
+          name: "Upgrade Subscription",
           path: "",
           icon: "arrow-alt-circle-up",
-          children: [],
+          children: [
+            {
+              name: "Manual",
+              path: "/dashboard/Administrator/upgradesubscription/manual"
+            }
+          ],
         },
         {
           name: "Payout",
@@ -219,7 +224,7 @@ const Dashboard = () => {
           ],
         },
         {
-          name: "Upgrade Subs",
+          name: "Upgrade Subscription",
           path: "",
           icon: "arrow-alt-circle-up",
           children: [],
@@ -316,7 +321,7 @@ const Dashboard = () => {
         children: [],
       },
       {
-        name: "Upgrade Subs",
+        name: "Upgrade Subscription",
         path: "",
         icon: "arrow-alt-circle-up",
         children: [],
