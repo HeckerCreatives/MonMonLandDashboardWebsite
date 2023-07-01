@@ -34,6 +34,12 @@ import UpdateEmerald from "./page/dashboard/subscription/subs/emerald";
 import UpdateDiamond from "./page/dashboard/subscription/subs/diamond";
 import SubAdminDashboard from "./page/dashboard/subadmin/dashboard";
 import UpgradeSubscriptionManual from "./page/dashboard/upgradesubs";
+import SubAdminUpgradeSubscriptionManual from "./page/dashboard/subadmin/upgradesubs";
+import Home from "./component/minichatapp/Home";
+import ChatPage from "./component/minichatapp/ChatPage";
+import socketIO from "socket.io-client"
+
+const socket = socketIO.connect("http://localhost:4000")
 
 const Routers = () => {
   return (
@@ -97,6 +103,7 @@ const Routers = () => {
         </Route>
         </Route>
         
+        <Route path="upgradesubscription" element={<SubAdminUpgradeSubscriptionManual/>}/>
 
         <Route path="settings">
           <Route path="updateprogressbar" element={<UpdateProgressBar/>}/>
@@ -131,7 +138,9 @@ const Routers = () => {
         </Route>
       </Route>
       
-      
+      {/* <Route path="/" element={<Home socket={socket}/>}></Route> */}
+      <Route path="/chat" element={<ChatPage socket={socket}/>}></Route>
+
       <Route path="referral">
         <Route path="agent/:userId/register" element={<SignUp />}/>
         <Route path="player/:userId/register" element={<SignUpPlayer />}/>

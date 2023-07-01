@@ -41,37 +41,38 @@ const Login = () =>{
       })
     }).then(result => result.json())
     .then(data =>{
-      console.log(data.isVerified)
       if (data === false) {        
 				Swal.fire({
-          title: "Password Not Match",
-          icon: "error",
-          text: "Incorrect Password"
+          title: "Authentication Failed",
+          icon: "info",
+          text: "Please Check your username and password"
         })
-			} 
-      if(!data.isVerified) {
-        localStorage.setItem('auth', JSON.stringify(data))
-        Swal.fire({
-					title: "Login Successfully",
-					icon: "success",
-					text: `Welcome ${data.firstName}`
-				}).then(result => {
-          if(result.isConfirmed)
-          navigate(`/verification/${data._id}`)
-        })
-      } else {			
-        localStorage.setItem('auth', JSON.stringify(data))	
-        Swal.fire({
-					title: "Login Successfully",
-					icon: "success",
-					text: `Welcome ${data.firstName}`
-				})
-        .then(result => {
-          if(result.isConfirmed)
-          window.location.reload()
-        })
-        				
-			}
+			} else {
+        if(!data.isVerified) {
+          localStorage.setItem('auth', JSON.stringify(data))
+          Swal.fire({
+            title: "Login Successfully",
+            icon: "success",
+            text: `Welcome ${data.firstName}`
+          }).then(result => {
+            if(result.isConfirmed)
+            navigate(`/verification/${data._id}`)
+          })
+        } else {			
+          localStorage.setItem('auth', JSON.stringify(data))	
+          Swal.fire({
+            title: "Login Successfully",
+            icon: "success",
+            text: `Welcome ${data.firstName}`
+          })
+          .then(result => {
+            if(result.isConfirmed)
+            window.location.reload()
+          })
+                  
+        }
+      }  
+      
     })
   }
   return(
@@ -146,7 +147,7 @@ const Login = () =>{
 
         
         <MDBTypography className="d-flex align-items-center justify-content-end mt-4">
-          <a href="https://www.facebook.com/">Recover password</a>
+          <a href="https://www.google.com/">Recover password</a>
           <MDBBtn className='ms-3' type="submit">
           Login to dashboard
         </MDBBtn>

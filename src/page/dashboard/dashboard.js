@@ -225,7 +225,7 @@ const Dashboard = () => {
         },
         {
           name: "Upgrade Subscription",
-          path: "",
+          path: "/dashboard/SubAdministrator/upgradesubscription",
           icon: "arrow-alt-circle-up",
           children: [],
         },
