@@ -29,7 +29,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, user}) => {
 
         <div className='message__container'>
           {messages.map(message => (
-            message.name === user.userName ? (
+            message.name ===   user.userName ? (
               <div className="message__chats" key={message.id}>
             <p className='sender__name'>You</p>
             <div className='message__sender'>

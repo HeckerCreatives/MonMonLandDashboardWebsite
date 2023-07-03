@@ -4,15 +4,15 @@ import React, {useState} from 'react'
 const ChatFooter = ({socket, user}) => {
     const [message, setMessage] = useState("")
     const [image, setImage] = useState(null);
-    const handleTyping = () => socket.emit("typing",`${user.userName} is typing`)
+    const handleTyping = () => socket.emit("typing",`${ user.userName } is typing`)
 
     const handleSendMessage = (e) => {
         e.preventDefault()
-        if(message.trim() && user.userName) {
+        if(message.trim() && user.userName ) {
         socket.emit("message", 
             {
             text: message, 
-            name: user.userName, 
+            name:  user.userName , 
             id: `${socket.id}${Math.random()}`,
             socketID: socket.id
             }
@@ -37,7 +37,7 @@ const ChatFooter = ({socket, user}) => {
           socket.emit("message", 
             {
             text: message, 
-            name: user.userName, 
+            name:  user.userName , 
             id: `${socket.id}${Math.random()}`,
             socketID: socket.id,
             image: dataURL

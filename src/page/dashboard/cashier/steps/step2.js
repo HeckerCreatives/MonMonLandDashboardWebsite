@@ -22,7 +22,7 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle}) => {
                             <MDBCol className="">
                             <MDBCardText className="d-flex fw-bold" >
                             Cashier Status: 
-                            &nbsp;<span style={{ color: user.status === 'Close' ? 'red' : user.status === 'Open' ? 'green' : 'blue' }}>{user.status}</span>
+                            &nbsp;<span style={{ color: user ? user.status : null === 'Close' ? 'red' : user ? user.status : null === 'Open' ? 'green' : 'blue' }}> {user ? user.status : null}</span>
                             </MDBCardText>
                             <MDBCardText className="text-mute">Transaction Number: DSSA235SD15S3A
                             &nbsp;<MDBIcon far icon="copy" />
