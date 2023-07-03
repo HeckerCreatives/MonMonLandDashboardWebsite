@@ -1,8 +1,9 @@
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardText, MDBCol, MDBInput, MDBRow, MDBCollapse} from "mdb-react-ui-kit";
 import React from "react";
 
-const Step1 = ({user, toggle, settoggle, setstep2toggle, socket}) => {
+const CashierStep1 = ({user, toggle, settoggle, setstep2toggle, socket}) => {
     const userName = user.userName;
+
     const handleSubmit = (e) => {
         e.preventDefault()
         setstep2toggle()
@@ -44,8 +45,8 @@ const Step1 = ({user, toggle, settoggle, setstep2toggle, socket}) => {
        </MDBCollapse>
 
         
-        </>
+        </> 
     )
 }
 
-export default Step1;
+export default CashierStep1;

@@ -23,7 +23,7 @@ import pearl from "../../../../assets/subscription/pearl badge.png"
 import ruby from "../../../../assets/subscription/ruby badge png.png"
 import emerald from "../../../../assets/subscription/emerald png.png"
 import diamond from "../../../../assets/subscription/diamond.png"
-import free from "../../../../assets/subscription/Free icon.png"
+// import free from "../../../../assets/subscription/Free icon.png"
 import Swal from "sweetalert2";
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet"
 import "./create.css"
@@ -144,18 +144,7 @@ return (
                     <MDBCardText className="text-color mb-0 fw-bold">
                     Select Subscriptions :
                     </MDBCardText>
-                    <MDBRow>
-                        <MDBCol className="text-color fw-bold align-items-center d-flex justify-content-center flex-column">
-                        <img src={free} alt="" style={{height: "60px", width: "60px"}}/>
-                        <label className="d-flex flex-column align-items-center justify-content-center">
-                        <span className="pb-2">Free</span>
-                        <input 
-                        type="checkbox"  
-                        checked={subscription.includes("Free")}
-                        onChange={handleCheckboxChange} 
-                        style={{transform: "scale(1.5)"}}/>                        
-                        </label>
-                        </MDBCol>
+                    <MDBRow>                        
                         <MDBCol className="text-color fw-bold align-items-center d-flex justify-content-center flex-column">
                         <img src={pearl} alt="" style={{height: "60px", width: "60px"}}/>
                         <label className="d-flex flex-column align-items-center justify-content-center">

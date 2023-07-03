@@ -300,6 +300,7 @@ const Dashboard = () => {
           // },
         ],
       },
+      
     ];
     break;
     case "Player": 
@@ -416,7 +417,7 @@ const Dashboard = () => {
                 ? window.innerWidth <= 768
                   ? "0rem"
                   : "4.5rem"
-                : "17rem"
+                : "17.5rem"
               : "0rem",
         }}
         >

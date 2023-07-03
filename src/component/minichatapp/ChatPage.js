@@ -24,12 +24,14 @@ const ChatPage = ({socket, user}) => {
     lastMessageRef.current?.scrollIntoView({behavior: 'smooth'});
   }, [messages]);
 
+ 
+
   return (
     <div className="chat">
       <ChatBar  socket={socket}/>
       <div className='chat__main'>
         <ChatBody user={user} messages={messages} typingStatus={typingStatus} lastMessageRef={lastMessageRef}/>
-        <ChatFooter socket={socket} user={user}/>
+        <ChatFooter socket={socket} user={user} />
       </div>
     </div>
   )

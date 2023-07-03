@@ -37,6 +37,7 @@ import UpgradeSubscriptionManual from "./page/dashboard/upgradesubs";
 import SubAdminUpgradeSubscriptionManual from "./page/dashboard/subadmin/upgradesubs";
 import Home from "./component/minichatapp/Home";
 import ChatPage from "./component/minichatapp/ChatPage";
+import AvailableCashiers from "./page/dashboard/cashier";
 import socketIO from "socket.io-client"
 
 const socket = socketIO.connect("http://localhost:4000")
@@ -104,7 +105,7 @@ const Routers = () => {
         </Route>
         
         <Route path="upgradesubscription" element={<SubAdminUpgradeSubscriptionManual/>}/>
-
+        
         <Route path="settings">
           <Route path="updateprogressbar" element={<UpdateProgressBar/>}/>
           <Route path="updatesubs">
@@ -148,6 +149,7 @@ const Routers = () => {
       {/* <Route path="/signup" element={<SignUp />}/> */}
       <Route path="/login" element={<Login />}/>
       <Route path="/verification/:userId" element={<StepVerification />}/>
+      <Route path="/cashiers" element={<AvailableCashiers/>}/>
     </Routes>
   );
 };

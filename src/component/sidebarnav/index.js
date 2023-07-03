@@ -58,7 +58,7 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
           ? window.innerWidth <= 768
             ? "0rem"
             : "4.5rem"
-          : "17rem",
+          : "17.8rem",
       }}
     >
       {window.innerWidth > 768 && (

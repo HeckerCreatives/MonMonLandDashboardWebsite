@@ -14,6 +14,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
     const [games, setGames] = useState([]),
             [checkedItems, setCheckedItems] = useState([]),
             [page, setPage] = useState(1),
+            [user, setUser] = useState([]),
             [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
     const [toggle, settoggle] = useState(false)        
@@ -33,8 +34,11 @@ const SubAdminUpgradeSubscriptionManual = () => {
         .then(response => response.json())
         .then(result => {
             setGames(result)
+            const filter = result.filter(e => e.userId._id === auth._id)
+            setUser(filter)
+            // console.log(filter)
         })
-    },[])
+    },[auth])
 
     const handleCheckboxChange = (itemId) => {
         if (checkedItems.includes(itemId)) {
