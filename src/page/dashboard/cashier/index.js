@@ -13,6 +13,7 @@ const AvailableCashiers = () => {
 
     const [games, setGames] = useState([]),
             [checkedItems, setCheckedItems] = useState([]),
+            [recipientId, setRecipientId] = useState(""),
             [page, setPage] = useState(1),
             [user, setUser] = useState([]),
             [total, setTotal] = useState(0);
@@ -38,6 +39,25 @@ const AvailableCashiers = () => {
             setUser(filter)
         })
     },[auth])
+    // console.log(recipientId)
+    
+    const buybtn = (id) => {
+        
+        if(auth){
+        setRecipientId(id)
+        toggleShow2()
+        } else {
+        Swal.fire({
+            title: "You need to Login first",
+            icon: "info",
+            text: `you need to login`
+            }).then(result => {
+            if(result.isConfirmed)
+            window.location.href = `/login`
+            }) ;
+        }
+    }
+      
 
     return (
         <MDBContainer fluid className="">
@@ -50,12 +70,10 @@ const AvailableCashiers = () => {
         </MDBRow> */}
         <MDBRow>
         <MDBCol>
+        
+        
         { step2toggle ? 
-        <CashierStep2 user={auth} step2toggle={step2toggle} setstep2toggle={toggleShow2}/>
-        :
-        <>
-        {toggle ? 
-        <CashierStep1 user={auth} socket={socket} toggle={toggle} settoggle={toggleShow} setstep2toggle={toggleShow2}/>
+        <CashierStep2 user={auth} step2toggle={step2toggle} setstep2toggle={toggleShow2} recipientId={recipientId}/>
         :
             <MDBTable align='middle' className="border mt-4" responsive>
                 <MDBTableHead className="head text-center">
@@ -91,7 +109,7 @@ const AvailableCashiers = () => {
                 <MDBBtn 
                 className="mx-2 fw-bold" 
                 outline color="dark" 
-                onClick={settoggle}
+                onClick={() => buybtn(game.userId._id)}
                 >
                 Buy
                 </MDBBtn>
@@ -102,8 +120,7 @@ const AvailableCashiers = () => {
                 </MDBTableBody>
             </MDBTable>
         }
-        </>
-        }
+        
         
         </MDBCol>
         </MDBRow>

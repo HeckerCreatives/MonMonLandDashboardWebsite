@@ -3,14 +3,14 @@ import {useNavigate} from "react-router-dom"
 
 const ChatBody = ({messages, typingStatus, lastMessageRef, user}) => { 
   const navigate = useNavigate()
-  
+  const buy = localStorage.getItem("buy")
 
   const handleLeaveChat = () => {
     // localStorage.removeItem("userName")
     // navigate("/")
     window.location.reload()
   }
-  
+  // console.log(messages)
   return (
     <>
       <header className='chat__mainHeader'>
@@ -26,23 +26,23 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, user}) => {
       </div>
       </header>
 
-
+    
         <div className='message__container'>
           {messages.map(message => (
-            message.name ===   user.userName ? (
-              <div className="message__chats" key={message.id}>
+            message.recipientId !== user._id ? (
+              <div className="message__chats" key={message.senderId}>
             <p className='sender__name'>You</p>
             <div className='message__sender'>
-                <p>{message.text}</p>
-                <img src={message.image} alt=''/>
+                <p>{message.message}</p>
+                <img src={message.data.image} alt='' className='message__sender'/>
             </div>
           </div>
             ) : (
-              <div className="message__chats" key={message.id}>
-            <p>{message.name}</p>
+              <div className="message__chats" key={message.recipientId}>
+            <p>{message.data.name}</p>
             <div className='message__recipient'>
-                <p>{message.text}</p>
-                <img src={message.image} alt=''/>
+                <p>{message.message}</p>
+                <img src={message.data.image} alt=''/>
             </div>
           </div>
             )

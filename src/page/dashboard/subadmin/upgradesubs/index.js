@@ -15,6 +15,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
             [checkedItems, setCheckedItems] = useState([]),
             [page, setPage] = useState(1),
             [user, setUser] = useState([]),
+            [buyer, setBuyer] = useState([]),
             [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
     const [toggle, settoggle] = useState(false)        
@@ -23,6 +24,18 @@ const SubAdminUpgradeSubscriptionManual = () => {
     const [step2toggle, setstep2toggle] = useState(false)        
     const toggleShow2= () => setstep2toggle(!step2toggle);
 
+    function generateRandomString() {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let randomString = '';
+    
+      for (let i = 0; i < 12; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        randomString += characters[randomIndex];
+      }
+    
+      return randomString;
+    }
+    
     useEffect(() => {
         let totalPages = Math.floor(games.length / 5);
         if (games.length % 5 > 0) totalPages += 1;
@@ -112,38 +125,22 @@ const SubAdminUpgradeSubscriptionManual = () => {
     })
     }
 
-    const open = (ID) => {
+    const buy = () => {
         // e.preventDefault()
-        const stats = "Open"
-        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/update/${ID}`, {
-          method:'PUT',
+        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
+          method:'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-              status: stats
+            transactionnumber: generateRandomString()
           })
         }).then(result => result.json())
         .then(data => {
-          if (data) {
-                    Swal.fire({
-                        title: "Cashier Updated Successfully",
-                        icon: "success",
-                        text: "You Successfully Updated a Cashier"
-                    }).then(ok => {
-              if(ok.isConfirmed){
-                window.location.reload()
-              }
-            })
-                    
-                } else {
-                    Swal.fire({
-                        title: "Cashier Update Unsuccessfully",
-                        icon: "error",
-                        text: "There is an error Updating the Account"
-                    })
-                }
+         setBuyer(data)
+         
         })
+        toggleShow2()
         }
 
     return (
@@ -173,12 +170,10 @@ const SubAdminUpgradeSubscriptionManual = () => {
         </MDBRow>
         <MDBRow>
         <MDBCol>
-        { step2toggle ? 
-        <Step2 user={auth} step2toggle={step2toggle} setstep2toggle={toggleShow2}/>
-        :
+        
         <>
-        {toggle ? 
-        <Step1 user={auth} socket={socket} toggle={toggle} settoggle={toggleShow} setstep2toggle={toggleShow2}/>
+        { step2toggle ? 
+          <Step2 user={auth} step2toggle={step2toggle} setstep2toggle={toggleShow2} Buyer={buyer}/>
         :
             <MDBTable align='middle' className="border mt-4" responsive>
                 <MDBTableHead className="head text-center">
@@ -223,7 +218,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 <MDBBtn 
                 className="mx-2 fw-bold" 
                 outline color="dark" 
-                onClick={settoggle}
+                onClick={buy}
                 >
                 Buy
                 </MDBBtn>
@@ -238,7 +233,6 @@ const SubAdminUpgradeSubscriptionManual = () => {
             </MDBTable>
         }
         </>
-        }
         
         </MDBCol>
         </MDBRow>

@@ -1,58 +1,58 @@
 import { MDBIcon } from 'mdb-react-ui-kit';
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
-const ChatFooter = ({socket, user}) => {
+const ChatFooter = ({socket, user,recipientId}) => {
     const [message, setMessage] = useState("")
     const [image, setImage] = useState(null);
     const handleTyping = () => socket.emit("typing",`${ user.userName } is typing`)
-
-    const handleSendMessage = (e) => {
-        e.preventDefault()
-        if(message.trim() && user.userName ) {
-        socket.emit("message", 
-            {
-            text: message, 
-            name:  user.userName , 
-            id: `${socket.id}${Math.random()}`,
-            socketID: socket.id
-            }
-        )
-        }
-        setMessage("")
-    }
-
+    // const cashier = recipientId;
+    
     const handleImageUpload = (e) => {
       const file = e.target.files[0];
       if (file) {
         setImage(file);
       }
     };
+
+    
   
-    const handleImageSend = () => {
-      if (image) {
+    const handleSend = (e) => {
+      e.preventDefault();
+      
+      if (message.trim()) {
+        const messageData = {
+          name: user.userName,
+          id: `${socket.id}${Math.random()}`,
+          socketID: socket.id && localStorage.setItem("buy", socket.id),
+          image: image ? URL.createObjectURL(image) : null,
+                    
+        };        
+        socket.emit('privateChat', {message, recipientId: recipientId,
+          senderId: user._id, data: messageData});
+        setMessage('');
+        setImage(null);
+      } else if (image) {
         const reader = new FileReader();
         reader.onload = function (e) {
           const dataURL = e.target.result;
-          socket.emit('image message', dataURL);
-          socket.emit("message", 
-            {
-            text: message, 
-            name:  user.userName , 
+          const messageData = {
+            name: user.userName,
             id: `${socket.id}${Math.random()}`,
             socketID: socket.id,
             image: dataURL
-            }
-        )
-          // handleImageMessage(dataURL);
+          };
+          socket.emit('privateChat', {message: message, recipientId: recipientId,
+            senderId: user._id, data: messageData});
+          setMessage('');
           setImage(null);
         };
         reader.readAsDataURL(image);
       }
     };
-
+    
   return (
     <div className='chat__footer'>
-        <form className='form' onSubmit={handleSendMessage}>
+        <form className='form' onSubmit={handleSend}>
           <input 
             type="text" 
             placeholder='Write message' 
@@ -63,23 +63,19 @@ const ChatFooter = ({socket, user}) => {
             />
             {/* <MDBIcon fas icon="plus" /> */}
             <input type="file" accept="image/*" onChange={handleImageUpload}/>
-            <button className="sendBtn">
-            <MDBIcon fas icon="paper-plane"/>
-            &nbsp; SEND</button>
-
             {image && (
-            <div className="selectedImage">
-              <img src={URL.createObjectURL(image)} alt="selected" />
+            <div className="message__sender">
+              <img src={URL.createObjectURL(image)} alt="selected"/>
               <button className="cancelBtn" onClick={() => setImage(null)}>
                 Cancel
               </button>
-              
-              <button className="sendImageBtn" onClick={handleImageSend}>
-              <MDBIcon fas icon="paper-plane" />
-              Send Image
-              </button>
             </div>
-          )}
+            )}
+            <button type='submit' className="sendBtn">
+            <MDBIcon fas icon="paper-plane"/>
+            &nbsp; SEND</button>
+
+            
         </form>
      </div>
   )

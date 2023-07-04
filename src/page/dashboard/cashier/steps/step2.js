@@ -1,11 +1,13 @@
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardText, MDBCol, MDBInput, MDBRow, MDBCollapse,MDBIcon} from "mdb-react-ui-kit";
-import React from "react";
+import React, { useEffect } from "react";
 // import Home from "../../../../../component/minichatapp/Home";
 import ChatPage from "../../../../component/minichatapp/ChatPage";
 import socketIO from "socket.io-client"
+import Swal from "sweetalert2";
+// const socket = socketIO.connect("https://monmontestserver-lotk.onrender.com");
+const socket = socketIO.connect("http://localhost:4000")
+const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId}) => {
 
-const socket = socketIO.connect("https://monmontestserver-lotk.onrender.com");
-const CashierStep2 = ({user, step2toggle, setstep2toggle}) => {
 
     return(
         <>
@@ -85,7 +87,7 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle}) => {
             <MDBCardBody>
                 <MDBRow>
                     <MDBCol>
-                        <ChatPage socket={socket} user={user}/>
+                        <ChatPage socket={socket} user={user} recipientId={recipientId}/>
                     </MDBCol>
                 </MDBRow>
             </MDBCardBody>
