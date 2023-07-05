@@ -1,11 +1,11 @@
 import { MDBIcon } from 'mdb-react-ui-kit';
 import React, {useState, useEffect} from 'react'
 
-const ChatFooter = ({socket, user,recipientId}) => {
+const ChatFooter = ({socket, user, recipientId, setMessages}) => {
     const [message, setMessage] = useState("")
     const [image, setImage] = useState(null);
     const handleTyping = () => socket.emit("typing",`${ user.userName } is typing`)
-    // const cashier = recipientId;
+    
     
     const handleImageUpload = (e) => {
       const file = e.target.files[0];
@@ -14,6 +14,62 @@ const ChatFooter = ({socket, user,recipientId}) => {
       }
     };
 
+    const sendMessage = (e) => {
+      e.preventDefault();
+      if (message.trim()) {
+        const messageData = {
+          name: user.userName,
+          message: message,
+          image: image ? URL.createObjectURL(image) : null ,
+        };
+    
+        socket.emit("private message", {
+          content: messageData,
+          to: recipientId,
+        });
+    
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            content: messageData,
+            fromSelf: true,
+          },
+        ]);
+    
+        setMessage("");
+        setImage(null);
+      } else if (image) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const dataURL = e.target.result;   
+          const messageData = {
+            name: user.userName,
+            message: message,
+            image: dataURL ,
+          };
+      
+          socket.emit("private message", {
+            content: messageData,
+            to: recipientId,
+          });
+      
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            {
+              content: messageData,
+              fromSelf: true,
+            },
+          ]);
+      
+          setMessage("");
+          setImage(null);
+        };
+    
+        reader.readAsDataURL(image);
+      }
+    };
+    
+    
     
   
     const handleSend = (e) => {
@@ -27,8 +83,11 @@ const ChatFooter = ({socket, user,recipientId}) => {
           image: image ? URL.createObjectURL(image) : null,
                     
         };        
-        socket.emit('privateChat', {message, recipientId: recipientId,
-          senderId: user._id, data: messageData});
+        socket.emit('privateChat', {message: message, recipientId: recipientId,
+          senderId: socket.id, data: messageData});
+          console.log(recipientId)  
+          // console.log(senderId)  
+
         setMessage('');
         setImage(null);
       } else if (image) {
@@ -42,7 +101,7 @@ const ChatFooter = ({socket, user,recipientId}) => {
             image: dataURL
           };
           socket.emit('privateChat', {message: message, recipientId: recipientId,
-            senderId: user._id, data: messageData});
+            senderId: socket.id, data: messageData});
           setMessage('');
           setImage(null);
         };
@@ -52,7 +111,7 @@ const ChatFooter = ({socket, user,recipientId}) => {
     
   return (
     <div className='chat__footer'>
-        <form className='form' onSubmit={handleSend}>
+        <form className='form' onSubmit={sendMessage}>
           <input 
             type="text" 
             placeholder='Write message' 
@@ -81,4 +140,4 @@ const ChatFooter = ({socket, user,recipientId}) => {
   )
 }
 
-export default ChatFooter
+export default ChatFooter;

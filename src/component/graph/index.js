@@ -10,7 +10,7 @@ import {
 } from "mdb-react-ui-kit";
 import Chart from "react-apexcharts";
 
-const Graph = ({ users }) => {
+const Graph = ({ users, payin }) => {
   const [dates, setDates] = useState([]);
   const [count, setCount] = useState([]);
   const [filterOption, setFilterOption] = useState("Today"); // Default filter option
@@ -18,34 +18,7 @@ const Graph = ({ users }) => {
   const allUser = users;
   
   useEffect(() => {
-    const getFilteredStaticData = (filterOption) => {
-        const currentDate = new Date().toDateString();
-        let staticData = [];
-      
-        for (let i = 0; i < dates.length; i++) {
-          if (dates[i] === currentDate) {
-            // Set the static data for the current date based on the active filter
-            switch (activeFilter) {
-              case "Payin":
-                staticData[i] = 1000; // Sample data for Payin
-                break;
-              case "Payout":
-                staticData[i] = 1050; // Sample data for Payout
-                break;
-              case "User":
-                staticData[i] = 1400; // Sample data for User
-                break;
-              default:
-                staticData[i] = 0;
-                break;
-            }
-          } else {
-            staticData[i] = 0;
-          }
-        }
-      
-        return applyFilter(staticData, filterOption);
-      };
+   
 
     if(activeFilter === "Members"){
         const thisYear = allUser.filter(
@@ -72,18 +45,59 @@ const Graph = ({ users }) => {
           );
       
           setCount(users.map((employees) => employees.length));
-    } else if (activeFilter === "Payin") {
-        const payinData = getFilteredStaticData("Payin", filterOption);
-        setCount(payinData);
-      } else if (activeFilter === "Payout") {
-        const payoutData = getFilteredStaticData("Payout", filterOption);
-        setCount(payoutData);
-      } else if (activeFilter === "User") {
-        const userData = getFilteredStaticData("User", filterOption);
-        setCount(userData);
-      }
+      } else if (activeFilter === "Payin") {
+        const thisYear = payin.filter(
+          (data) =>
+            new Date().getFullYear() === new Date(data.createdAt).getFullYear()
+        );
+    
+        const thisMonth = thisYear.filter(
+          (data) => new Date().getMonth() === new Date(data.createdAt).getMonth()
+        );
+    
+        const dates = Array.from(
+          new Set(thisMonth.map((data) => new Date(data.createdAt).toDateString()))
+        );
+    
+        setDates(dates);
+    
+        const filteredData = applyFilter(thisMonth, filterOption);
+    
+        const users = dates.map((data) =>
+          filteredData.filter(
+            (user) => new Date(user.createdAt).toDateString() === data
+          )
+        );
+    
+        setCount(users.map((employees) => employees.length));
+        } else if (activeFilter === "User") {
+          const thisYear = payin.filter(
+            (data) =>
+              new Date().getFullYear() === new Date(data.createdAt).getFullYear()
+          );
       
-  }, [allUser, filterOption, activeFilter,]);
+          const thisMonth = thisYear.filter(
+            (data) => new Date().getMonth() === new Date(data.createdAt).getMonth()
+          );
+      
+          const dates = Array.from(
+            new Set(thisMonth.map((data) => new Date(data.createdAt).toDateString()))
+          );
+      
+          setDates(dates);
+      
+          const filteredData = applyFilter(thisMonth, filterOption);
+      
+          const users = dates.map((data) =>
+            filteredData.filter(
+              (user) => new Date(user.createdAt).toDateString() === data
+            )
+          );
+      
+          setCount(users.map((employees) => employees.length));
+          }
+      
+  }, [allUser, filterOption, activeFilter, payin]);
 
   
   const applyFilter = (data, option) => {

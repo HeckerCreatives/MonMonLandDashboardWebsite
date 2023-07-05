@@ -38,13 +38,13 @@ const AvailableCashiers = () => {
             const filter = result.filter(e => e.userId._id === auth._id)
             setUser(filter)
         })
-    },[auth])
+    },[])
     // console.log(recipientId)
     
     const buybtn = (id) => {
         
         if(auth){
-        setRecipientId(id)
+        setRecipientId(socket.id)
         toggleShow2()
         } else {
         Swal.fire({

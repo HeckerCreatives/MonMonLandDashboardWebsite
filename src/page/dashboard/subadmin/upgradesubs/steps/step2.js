@@ -27,19 +27,19 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer}) => {
     const handleCheckboxChange = (checkboxName) => {
         if (checkboxName === 'ruby') {
         setSubscriptionId(process.env.REACT_APP_RUBY)
-        setPrice("$20")
+        setPrice("20")
         setRubyChecked(true);
         setEmeraldChecked(false);
         setDiamondChecked(false);
         } else if (checkboxName === 'emerald') {
         setSubscriptionId(process.env.REACT_APP_EMERALD)
-        setPrice("$45")
+        setPrice("45")
         setRubyChecked(false);
         setEmeraldChecked(true);
         setDiamondChecked(false);
         } else if (checkboxName === 'diamond') {
         setSubscriptionId(process.env.REACT_APP_DIAMOND)
-        setPrice("$100")  
+        setPrice("100")  
         setRubyChecked(false);
         setEmeraldChecked(false);
         setDiamondChecked(true);
@@ -227,7 +227,7 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer}) => {
                                 </div>
 
                                 <div className="offset-2 col-lg-10 mt-2">
-                                <MDBCardText className="text-mute">Subscription Price : {price}</MDBCardText>
+                                <MDBCardText className="text-mute">Subscription Price : {price ? "$"+price: ""}</MDBCardText>
                                 </div>
                                 <div className="d-flex justify-content-end mt-4">
                                 <MDBBtn className="mx-2" type="submit">Upgrade Subscription</MDBBtn>
@@ -269,7 +269,7 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer}) => {
                     {data.subscriptionlevel?.subscriptionName}
                 </td>
                 <td>
-                    {data.price}
+                    {`$${data.price}`}
                 </td>
                 <td>
                     {data.clientusername}

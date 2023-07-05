@@ -49,7 +49,6 @@ const CreateCSRAccount = () => {
         const createdAtDate = new Date(e.createdAt).toLocaleDateString();
         return createdAtDate === today;
       });
-      console.log(todays)
       setCsrAcc(filtercsr)
       setTodaysJoin(todays)
     })

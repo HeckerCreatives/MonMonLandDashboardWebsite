@@ -6,33 +6,66 @@ import ChatFooter from './ChatFooter'
 
 const ChatPage = ({socket, user, recipientId}) => { 
   const [messages, setMessages] = useState([])
-  
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [typingStatus, setTypingStatus] = useState("")
   const lastMessageRef = useRef(null);
   
-  // console.log(messages)
+  console.log(users)
   useEffect(() => {
     // Listen for the "privateChatResponse" event
     socket.on("privateChatResponse", ({ senderId, message, data }) => {
+      console.log(message, senderId)
       setMessages((prevMessages) => [...prevMessages, { senderId, message, data }]);
     });
   }, [socket]);
 
-  // useEffect(()=> {
-  //   socket.on("typingResponse", data => setTypingStatus(data))
-  // }, [socket])
+  useEffect(() => {
+    if (socket) {
+      // Listen for the "newUserResponse" event from the server
+      socket.on('newUserResponse', (updatedUsers) => {
+        setUsers(updatedUsers);
+      });
+    }
+  }, [socket]);
 
   useEffect(() => {
     // 👇️ scroll to bottom every time messages change
     lastMessageRef.current?.scrollIntoView({behavior: 'smooth'});
   }, [messages]);
 
+
+  useEffect(() => {
+    // Add event listener for "private message" event
+    socket.on("private message", ({ content, from, to }) => {
+      for (let i = 0; i < users.length; i++) {
+        const user = users[i];
+        const fromSelf = socket.id === from;
+        if (user.socket.id === (fromSelf ? to : from)) {
+          user.messages.push({
+            content,
+            fromSelf,
+          });
+          if (user !== recipientId) {
+            user.hasNewMessages = true;
+          }
+          break;
+        }
+      }
+    });
+
+    // Clean up the event listener on component unmount
+    return () => {
+      socket.off("private message");
+    };
+  }, [recipientId,socket,users]);
+
   return (
     <div className="chat">
       <ChatBar socket={socket}/>
       <div className='chat__main'>
         <ChatBody user={user} messages={messages} typingStatus={typingStatus} lastMessageRef={lastMessageRef}/>
-        <ChatFooter socket={socket} user={user} recipientId={recipientId}/>
+        <ChatFooter socket={socket} user={user} recipientId={recipientId} setMessages={setMessages}/>
       </div>
     </div>
   )

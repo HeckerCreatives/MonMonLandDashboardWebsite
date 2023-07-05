@@ -27,7 +27,6 @@ const ViewCashier = ({ theme, id, checkedItems}) => {
     fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findone/${id}`)
     .then(response => response.json())
     .then(result => {
-      console.log(result)
       setuser(result)
     })
     } else {
