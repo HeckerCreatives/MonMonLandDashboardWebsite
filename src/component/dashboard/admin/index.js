@@ -54,17 +54,18 @@ const AdminDashboard = () => {
     fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
     .then(result => result.json())
     .then(data => {
-      // const cashier = data.filter(e => e.cashier === auth.userName)
-      const ruby = data.filter(e => e.subscriptionlevel?.subscriptionName
+      const finaldata = data.filter(e => e.transactionnumber && e.clientusername)
+      const ruby = finaldata.filter(e => e.subscriptionlevel?.subscriptionName
       === "Ruby")
-      const emerald = data.filter(e => e.subscriptionlevel?.subscriptionName
+      const emerald = finaldata.filter(e => e.subscriptionlevel?.subscriptionName
       === "Emerald")
-      const diamond = data.filter(e => e.subscriptionlevel?.subscriptionName
+      const diamond = finaldata.filter(e => e.subscriptionlevel?.subscriptionName
       === "Diamond")  
-      setPaidUsers(data)
+      setPaidUsers(finaldata)
       setRuby(ruby)
       setEmerald(emerald)
       setDiamond(diamond)
+      // console.log(cashier)
     })
   },[])
 
