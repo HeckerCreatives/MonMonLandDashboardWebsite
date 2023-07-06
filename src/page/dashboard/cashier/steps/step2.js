@@ -2,10 +2,12 @@ import { MDBBtn, MDBCard, MDBCardBody, MDBCardText, MDBCol, MDBInput, MDBRow, MD
 import React, { useEffect } from "react";
 // import Home from "../../../../../component/minichatapp/Home";
 import ChatPage from "../../../../component/minichatapp/ChatPage";
-import socketIO from "socket.io-client"
+import io from "socket.io-client"
 import Swal from "sweetalert2";
-const socket = socketIO.connect("https://monmontestserver-lotk.onrender.com");
+// const socket = socketIO.connect("https://monmontestserver-lotk.onrender.com");
 // const socket = socketIO.connect("http://localhost:4000")
+// const socket = io("http://localhost:4000");
+const socket = io("https://monmontestserver-lotk.onrender.com");
 const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId}) => {
 
 

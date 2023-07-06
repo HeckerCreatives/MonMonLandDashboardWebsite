@@ -20,52 +20,64 @@ const ChatPage = ({socket, user, recipientId}) => {
     });
   }, [socket]);
 
-  useEffect(() => {
-    if (socket) {
-      // Listen for the "newUserResponse" event from the server
-      socket.on('newUserResponse', (updatedUsers) => {
-        setUsers(updatedUsers);
-      });
-    }
-  }, [socket]);
+  // useEffect(() => {
+  //   if (socket) {
+  //     // Listen for the "newUserResponse" event from the server
+  //     socket.on('newUserResponse', (updatedUsers) => {
+  //       setUsers(updatedUsers);
+  //     });
+  //   }
+  // }, [socket]);
 
   useEffect(() => {
     // 👇️ scroll to bottom every time messages change
+    // initReactiveProperties()
     lastMessageRef.current?.scrollIntoView({behavior: 'smooth'});
   }, [messages]);
 
 
   useEffect(() => {
-    // Add event listener for "private message" event
-    socket.on("private message", ({ content, from, to }) => {
-      for (let i = 0; i < users.length; i++) {
-        const user = users[i];
-        const fromSelf = socket.id === from;
-        if (user.socket.id === (fromSelf ? to : from)) {
-          user.messages.push({
-            content,
-            fromSelf,
-          });
-          if (user !== recipientId) {
-            user.hasNewMessages = true;
+    const handlePrivateMessage = ({ content, from, to }) => {
+      setUsers((prevUsers) => {
+        const updatedUsers = [...prevUsers];
+  
+        for (let i = 0; i < updatedUsers.length; i++) {
+          const user = updatedUsers[i];
+          const fromSelf = user.userID === from;
+  
+          if (user.userID === (fromSelf ? to : from)) {
+            user.messages.push({
+              content,
+              fromSelf,
+            });
+  
+            if (user !== recipientId) {
+              user.hasNewMessages = true;
+            }
+  
+            break;
           }
-          break;
         }
-      }
-    });
-
+  
+        return updatedUsers;
+      });
+    };
+  
+    // Add event listener for "private message" event
+    socket.on("private message", handlePrivateMessage);
+  
     // Clean up the event listener on component unmount
     return () => {
-      socket.off("private message");
+      socket.off("private message", handlePrivateMessage);
     };
-  }, [recipientId,socket,users]);
+  }, [recipientId, socket]);
 
   return (
     <div className="chat">
       <ChatBar socket={socket}/>
       <div className='chat__main'>
-        <ChatBody user={user} messages={messages} typingStatus={typingStatus} lastMessageRef={lastMessageRef}/>
-        <ChatFooter socket={socket} user={user} recipientId={recipientId} setMessages={setMessages}/>
+        <ChatBody user={user} messages={users} typingStatus={typingStatus} lastMessageRef={lastMessageRef}/>
+        <ChatFooter socket={socket} user={user} recipientId={recipientId} setMessages={setUsers}/>
       </div>
     </div>
   )

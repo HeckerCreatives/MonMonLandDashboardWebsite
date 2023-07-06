@@ -1,7 +1,7 @@
 import { MDBIcon } from 'mdb-react-ui-kit';
 import React, {useState, useEffect} from 'react'
 
-const ChatFooter = ({socket, user, recipientId, setMessages}) => {
+const ChatFooter = ({socket, user, recipientId, setMessages, selecteduser}) => {
     const [message, setMessage] = useState("")
     const [image, setImage] = useState(null);
     const handleTyping = () => socket.emit("typing",`${ user.userName } is typing`)
@@ -19,6 +19,7 @@ const ChatFooter = ({socket, user, recipientId, setMessages}) => {
       if (message.trim()) {
         const messageData = {
           name: user.userName,
+          userID: socket.id,
           message: message,
           image: image ? URL.createObjectURL(image) : null ,
         };
@@ -44,6 +45,7 @@ const ChatFooter = ({socket, user, recipientId, setMessages}) => {
           const dataURL = e.target.result;   
           const messageData = {
             name: user.userName,
+            userID: socket.id,
             message: message,
             image: dataURL ,
           };

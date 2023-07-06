@@ -30,7 +30,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, user}) => {
         <div className='message__container'>
           {messages.map(message => (
             message.content.name === user.userName ? (
-              <div className="message__chats" key={message.senderId}>
+              <div className="message__chats" key={message.userID}>
             <p className='sender__name'>You</p>
             <div className='message__sender'>
                 <p>{message.content.message}</p>
@@ -38,7 +38,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, user}) => {
             </div>
           </div>
             ) : (
-              <div className="message__chats" key={message.recipientId}>
+              <div className="message__chats" key={message.userID}>
             <p>{message.content.name}</p>
             <div className='message__recipient'>
                 <p>{message.content.message}</p>

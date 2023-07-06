@@ -5,9 +5,9 @@ import Breadcrumb from "../../../component/breadcrumb";
 import PaginationPager from "../../../component/pagination/index"
 import CashierStep1 from "./steps/step1";
 import CashierStep2 from "./steps/step2";
-import socketIO from "socket.io-client"
+import io from "socket.io-client"
 
-const socket = socketIO.connect("http://localhost:4000")
+const socket = io("http://localhost:4000")
 
 const AvailableCashiers = () => {
 
@@ -35,13 +35,13 @@ const AvailableCashiers = () => {
         .then(response => response.json())
         .then(result => {
             setGames(result)
-            const filter = result.filter(e => e.userId._id === auth._id)
-            setUser(filter)
+            // const filter = result.filter(e => e.userId._id === auth._id)
+            // setUser(filter)
         })
     },[])
-    // console.log(recipientId)
+    console.log(recipientId)
     
-    const buybtn = (id) => {
+    const buybtn = () => {
         
         if(auth){
         setRecipientId(socket.id)
@@ -109,7 +109,7 @@ const AvailableCashiers = () => {
                 <MDBBtn 
                 className="mx-2 fw-bold" 
                 outline color="dark" 
-                onClick={() => buybtn(game.userId._id)}
+                onClick={buybtn}
                 >
                 Buy
                 </MDBBtn>
