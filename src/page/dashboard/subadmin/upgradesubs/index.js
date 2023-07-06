@@ -7,7 +7,7 @@ import Step1 from "./steps/step1";
 import Step2 from "./steps/step2";
 import socketIO from "socket.io-client"
 
-const socket = socketIO.connect("http://localhost:4000")
+const socket = socketIO.connect(process.env.REACT_APP_API_URL)
 
 const SubAdminUpgradeSubscriptionManual = () => {
 

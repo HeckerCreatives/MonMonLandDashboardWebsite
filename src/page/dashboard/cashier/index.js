@@ -7,8 +7,8 @@ import CashierStep1 from "./steps/step1";
 import CashierStep2 from "./steps/step2";
 import io from "socket.io-client"
 
-// const socket = io("http://localhost:4000")
-const socket = io("https://monmontestserver-lotk.onrender.com");
+const socket = io(process.env.REACT_APP_API_URL)
+// const socket = io("https://monmontestserver-lotk.onrender.com");
 const AvailableCashiers = () => {
 
     const [games, setGames] = useState([]),

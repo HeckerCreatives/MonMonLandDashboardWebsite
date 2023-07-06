@@ -4,9 +4,9 @@ import ruby from "../../../../../assets/subscription/ruby badge png.png"
 import emerald from "../../../../../assets/subscription/emerald png.png"
 import diamond from "../../../../../assets/subscription/diamond.png"
 import ChatPage from "../../../../../component/minichatapp/ChatPage";
-import socketIO from "socket.io-client"
+import io from "socket.io-client"
 import Swal from "sweetalert2"
-const socket = socketIO.connect("https://monmontestserver-lotk.onrender.com");
+const socket = io(process.env.REACT_APP_API_URL);
 const Step2 = ({user, step2toggle, setstep2toggle, Buyer}) => {
   const [rubyChecked, setRubyChecked] = useState(false);
   const [emeraldChecked, setEmeraldChecked] = useState(false);

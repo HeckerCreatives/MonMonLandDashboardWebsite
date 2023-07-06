@@ -4,10 +4,7 @@ import React, { useEffect } from "react";
 import ChatPage from "../../../../component/minichatapp/ChatPage";
 import io from "socket.io-client"
 import Swal from "sweetalert2";
-// const socket = socketIO.connect("https://monmontestserver-lotk.onrender.com");
-// const socket = socketIO.connect("http://localhost:4000")
-// const socket = io("http://localhost:4000");
-const socket = io("https://monmontestserver-lotk.onrender.com");
+const socket = io(process.env.REACT_APP_API_URL);
 const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId}) => {
 
 
