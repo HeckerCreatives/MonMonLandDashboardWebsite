@@ -31,7 +31,12 @@ const AvailableCashiers = () => {
         }, [games]);
 
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`)
+        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
         .then(response => response.json())
         .then(result => {
             setGames(result)
