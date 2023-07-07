@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState,useContext} from "react";
 import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBTypography, } from "mdb-react-ui-kit";
 import Swal from "sweetalert2"
 import Breadcrumb from "../../../../component/breadcrumb";
@@ -6,16 +6,19 @@ import PaginationPager from "../../../../component/pagination/index"
 import Step1 from "./steps/step1";
 import Step2 from "./steps/step2";
 import socketIO from "socket.io-client"
-
+import DataContext from "../../../../component/datacontext";
 const socket = socketIO.connect(process.env.REACT_APP_API_URL)
 
 const SubAdminUpgradeSubscriptionManual = () => {
-
+  const [username, setUsername] = useState(''); // Add this
+    const [room, setRoom] = useState(''); // Add this
+    const [cashier, setCashier] = useState(''); // Add this
+    // const { buyer } = useContext(DataContext);
+    const [buyer, setBuyer] = useState([]);
     const [games, setGames] = useState([]),
             [checkedItems, setCheckedItems] = useState([]),
             [page, setPage] = useState(1),
             [user, setUser] = useState([]),
-            [buyer, setBuyer] = useState([]),
             [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
     const [toggle, settoggle] = useState(false)        
@@ -23,6 +26,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
 
     const [step2toggle, setstep2toggle] = useState(false)        
     const toggleShow2= () => setstep2toggle(!step2toggle);
+    // console.log(buyer)
 
     function generateRandomString() {
       const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -51,9 +55,10 @@ const SubAdminUpgradeSubscriptionManual = () => {
         })
         .then(response => response.json())
         .then(result => {
-            setGames(result)
+            
             const filter = result.filter(e => e.userId._id === auth._id)
             setUser(filter)
+            setGames(filter)
             // console.log(filter)
         })
     },[auth])
@@ -130,21 +135,26 @@ const SubAdminUpgradeSubscriptionManual = () => {
     })
     }
 
-    const buy = () => {
+    const buy = (user) => {
         // e.preventDefault()
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
-          method:'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            transactionnumber: generateRandomString()
-          })
-        }).then(result => result.json())
-        .then(data => {
-         setBuyer(data)
-         
-        })
+                method:'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    transactionnumber: generateRandomString()
+                })
+                }).then(result => result.json())
+                .then(data => {
+                    console.log(data)
+                setBuyer(data)
+                
+            })
+        setCashier(user)        
+        setUsername(auth.userName)
+        setRoom(user.userId.userName)
+        socket.emit('join_room', { username: auth.userName, room: user.userId.userName });
         toggleShow2()
         }
 
@@ -178,7 +188,15 @@ const SubAdminUpgradeSubscriptionManual = () => {
         
         <>
         { step2toggle ? 
-          <Step2 user={auth} step2toggle={step2toggle} setstep2toggle={toggleShow2} Buyer={buyer}/>
+          <Step2 
+          user={cashier} 
+          step2toggle={step2toggle} 
+          setstep2toggle={toggleShow2} 
+          Buyer={buyer}
+          room={room}
+          buyer={username} 
+          socket={socket}   
+          />
         :
             <MDBTable align='middle' className="border mt-4" responsive>
                 <MDBTableHead className="head text-center">
@@ -223,9 +241,9 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 <MDBBtn 
                 className="mx-2 fw-bold" 
                 outline color="dark" 
-                onClick={buy}
+                onClick={() => buy(game)}
                 >
-                Buy
+                Transact
                 </MDBBtn>
                 </td>
                 </tr>

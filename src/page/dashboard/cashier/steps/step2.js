@@ -4,10 +4,9 @@ import React, { useEffect } from "react";
 import ChatPage from "../../../../component/minichatapp/ChatPage";
 import io from "socket.io-client"
 import Swal from "sweetalert2";
-const socket = io(process.env.REACT_APP_API_URL);
-const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId}) => {
+const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buyer, socket}) => {
 
-
+    
     return(
         <>
         <MDBCollapse show={step2toggle}>       
@@ -17,7 +16,7 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId}) => {
                     <MDBCardBody>
                         <MDBRow>
                             <MDBCol className="">
-                            <MDBCardText className="fw-bold">Cashier Username: {user.userName}</MDBCardText>
+                            <MDBCardText className="fw-bold">Cashier Username: {user.userId.userName}</MDBCardText>
                             <MDBCardText className="text-mute">Created Time:</MDBCardText>
                             </MDBCol>
                             <MDBCol className="">
@@ -55,10 +54,10 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId}) => {
                                 <MDBCardText className="fw-bold">Payment Details</MDBCardText>
                                 </div>
                                 <div className="offset-2 col-lg-10">
-                                <MDBCardText className="text-mute">Payment Gateway :</MDBCardText>
+                                <MDBCardText className="text-mute">Payment Gateway : {user.paymentmethod}</MDBCardText>
                                 </div>                            
                                 <div className="offset-2 col-lg-10">
-                                <MDBCardText className="text-mute">Account Number :
+                                <MDBCardText className="text-mute">Account Number : {user.paymentdetail}
                                 &nbsp;<MDBIcon far icon="copy" />
                                 </MDBCardText>
                                 </div>                 
@@ -86,7 +85,7 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId}) => {
             <MDBCardBody>
                 <MDBRow>
                     <MDBCol>
-                        <ChatPage socket={socket} user={user} recipientId={recipientId}/>
+                        <ChatPage socket={socket} recipientId={recipientId} room={room} buyer={buyer}/>
                     </MDBCol>
                 </MDBRow>
             </MDBCardBody>

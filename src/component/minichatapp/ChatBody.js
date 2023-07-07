@@ -1,9 +1,15 @@
 import React from 'react'
 import {useNavigate} from "react-router-dom"
 
-const ChatBody = ({messages, typingStatus, lastMessageRef, user}) => { 
+const ChatBody = ({messages, typingStatus, lastMessageRef, buyer}) => { 
   const navigate = useNavigate()
   const buy = localStorage.getItem("buy")
+
+  // dd/mm/yyyy, hh:mm:ss
+  function formatDateFromTimestamp(timestamp) {
+    const date = new Date(timestamp);
+    return date.toLocaleString();
+  }
 
   const handleLeaveChat = () => {
     // localStorage.removeItem("userName")
@@ -28,21 +34,23 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, user}) => {
 
     
         <div className='message__container'>
-          {messages.map(message => (
-            message.content.name === user.userName ? (
-              <div className="message__chats" key={message.userID}>
+          {messages.map((message,i) => (
+            message.username === buyer ? (
+              <div className="message__chats" key={i}>
             <p className='sender__name'>You</p>
             <div className='message__sender'>
-                <p>{message.content.message}</p>
-                <img src={message.content.image} alt='' className='message__sender'/>
+                <p>{formatDateFromTimestamp(message.__createdtime__)}</p>
+                <p>{message.message}</p>
+                <img src={message.image} alt='' className='message__sender'/>
             </div>
           </div>
             ) : (
-              <div className="message__chats" key={message.userID}>
-            <p>{message.content.name}</p>
+              <div className="message__chats" key={i}>
+            <p>{message.username}</p>
             <div className='message__recipient'>
-                <p>{message.content.message}</p>
-                <img src={message.content.image} alt=''/>
+                <p>{formatDateFromTimestamp(message.__createdtime__)}</p>
+                <p>{message.message}</p>
+                <img src={message.image} alt=''/>
             </div>
           </div>
             )

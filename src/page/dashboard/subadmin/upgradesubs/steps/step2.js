@@ -4,10 +4,8 @@ import ruby from "../../../../../assets/subscription/ruby badge png.png"
 import emerald from "../../../../../assets/subscription/emerald png.png"
 import diamond from "../../../../../assets/subscription/diamond.png"
 import ChatPage from "../../../../../component/minichatapp/ChatPage";
-import io from "socket.io-client"
 import Swal from "sweetalert2"
-const socket = io(process.env.REACT_APP_API_URL);
-const Step2 = ({user, step2toggle, setstep2toggle, Buyer}) => {
+const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room}) => {
   const [rubyChecked, setRubyChecked] = useState(false);
   const [emeraldChecked, setEmeraldChecked] = useState(false);
   const [diamondChecked, setDiamondChecked] = useState(false);
@@ -19,7 +17,7 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer}) => {
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
         .then(response => response.json())
         .then(result => {
-            const data = result.filter(e => e.cashier === user.userName)
+            const data = result.filter(e => e.cashier === user.userId.userName)
             setHistory(data)
         })
     },[])
@@ -132,7 +130,7 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer}) => {
                     <MDBCardBody>
                         <MDBRow>
                             <MDBCol className="">
-                            <MDBCardText className="fw-bold">Cashier Username: {user.userName}</MDBCardText>
+                            <MDBCardText className="fw-bold">Cashier Username: {user.userId.userName}</MDBCardText>
                             <MDBCardText className="text-mute">Created Time: {new Date(Buyer.createdAt).toLocaleString()}</MDBCardText>
                             </MDBCol>
                             <MDBCol className="">
@@ -178,10 +176,10 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer}) => {
                                 <MDBCardText className="fw-bold">Payment Details</MDBCardText>
                                 </div>
                                 <div className="offset-2 col-lg-10">
-                                <MDBCardText className="text-mute">Payment Gateway :</MDBCardText>
+                                <MDBCardText className="text-mute">Payment Gateway : {user.paymentmethod}</MDBCardText>
                                 </div>                            
                                 <div className="offset-2 col-lg-10">
-                                <MDBCardText className="text-mute">Account Number :</MDBCardText>
+                                <MDBCardText className="text-mute">Account Number : {user.paymentdetail}</MDBCardText>
                                 </div>                 
                             </MDBCol>
                         </MDBRow>
@@ -295,7 +293,7 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer}) => {
             <MDBCardBody>
                 <MDBRow>
                     <MDBCol>
-                        <ChatPage socket={socket} user={user}/>
+                        <ChatPage socket={socket} user={user} buyer={buyer} room={room}/>
                     </MDBCol>
                 </MDBRow>
             </MDBCardBody>

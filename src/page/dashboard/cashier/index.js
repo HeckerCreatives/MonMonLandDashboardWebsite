@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBTypography, } from "mdb-react-ui-kit";
 import Swal from "sweetalert2"
 import Breadcrumb from "../../../component/breadcrumb";
@@ -6,16 +6,17 @@ import PaginationPager from "../../../component/pagination/index"
 import CashierStep1 from "./steps/step1";
 import CashierStep2 from "./steps/step2";
 import io from "socket.io-client"
-
+import DataContext from "../../../component/datacontext";
 const socket = io(process.env.REACT_APP_API_URL)
 // const socket = io("https://monmontestserver-lotk.onrender.com");
 const AvailableCashiers = () => {
-
+    const [username, setUsername] = useState(''); // Add this
+    const [room, setRoom] = useState(''); // Add this
+    const [cashier, setCashier] = useState(''); // Add this
+    const {buyer, setBuyer } = useContext(DataContext);
     const [games, setGames] = useState([]),
-            [checkedItems, setCheckedItems] = useState([]),
             [recipientId, setRecipientId] = useState(""),
             [page, setPage] = useState(1),
-            [user, setUser] = useState([]),
             [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
     const [toggle, settoggle] = useState(false)        
@@ -23,6 +24,18 @@ const AvailableCashiers = () => {
 
     const [step2toggle, setstep2toggle] = useState(false)        
     const toggleShow2= () => setstep2toggle(!step2toggle);
+
+    function generateRandomString() {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let randomString = '';
+      
+        for (let i = 0; i < 12; i++) {
+          const randomIndex = Math.floor(Math.random() * characters.length);
+          randomString += characters[randomIndex];
+        }
+      
+        return randomString;
+      }
 
     useEffect(() => {
         let totalPages = Math.floor(games.length / 5);
@@ -40,27 +53,71 @@ const AvailableCashiers = () => {
         .then(response => response.json())
         .then(result => {
             setGames(result)
+            // console.log(result)
             // const filter = result.filter(e => e.userId._id === auth._id)
             // setUser(filter)
         })
     },[])
-    console.log(recipientId)
     
-    const buybtn = () => {
-        
-        if(auth){
-        setRecipientId(socket.id)
-        toggleShow2()
-        } else {
-        Swal.fire({
-            title: "You need to Login first",
-            icon: "info",
-            text: `you need to login`
+    useEffect(()=>{
+        socket.on('room_full', (data) => {
+            // Handle the room_full event here
+            console.log(data.message);
+            // You can display an error message to the user or perform any other action
+            Swal.fire({
+                icon: "info",
+                title: "Queing",
+                text: "Need to wait",
+                confirmButtonText: "Ok",
             }).then(result => {
-            if(result.isConfirmed)
-            window.location.href = `/login`
-            }) ;
+                if(result.isConfirmed){
+                    window.location.href = "/cashiers"
+                }
+            })
+        })
+    },[])
+
+    const buybtn = (user) => {
+        setCashier(user)
+        if(auth){
+            // fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
+            // method:'POST',
+            // headers: {
+            //     'Content-Type': 'application/json'
+            // },
+            // body: JSON.stringify({
+            //     transactionnumber: generateRandomString()
+            // })
+            // }).then(result => result.json())
+            // .then(data => {
+            //     console.log(data)
+            // setBuyer(data)
+            // })        
+        setUsername(auth.userName)
+        setRoom(user.userId.userName)
+        toggleShow2()
+        socket.emit('join_room', { username: auth.userName, room: user.userId.userName });
+        } else {
+            // fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
+            //     method:'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify({
+            //         transactionnumber: generateRandomString()
+            //     })
+            //     }).then(result => result.json())
+            //     .then(data => {
+            //         console.log(data)
+            //     setBuyer(data)
+                
+            // })
+        setUsername("Guest")
+        setRoom(user.userId.userName)
+        toggleShow2()
+        socket.emit('join_room', { username: "Guest", room: user.userId.userName });
         }
+        
     }
       
 
@@ -68,17 +125,19 @@ const AvailableCashiers = () => {
         <MDBContainer fluid className="">
         {/* <Breadcrumb title="Cashiers" paths={[]}/> */}
         <MDBTypography className="fw-bold">Cashier List</MDBTypography>
-        {/* <MDBRow>
-            <MDBCol>
-            
-            </MDBCol>
-        </MDBRow> */}
         <MDBRow>
         <MDBCol>
-        
-        
         { step2toggle ? 
-        <CashierStep2 user={auth} step2toggle={step2toggle} setstep2toggle={toggleShow2} recipientId={recipientId}/>
+        <CashierStep2         
+        user={cashier} 
+        step2toggle={step2toggle} 
+        setstep2toggle={toggleShow2} 
+        recipientId={recipientId}
+        data={buyer}
+        room={room}
+        buyer={username} 
+        socket={socket}   
+        />
         :
             <MDBTable align='middle' className="border mt-4" responsive>
                 <MDBTableHead className="head text-center">
@@ -114,7 +173,7 @@ const AvailableCashiers = () => {
                 <MDBBtn 
                 className="mx-2 fw-bold" 
                 outline color="dark" 
-                onClick={buybtn}
+                onClick={() =>buybtn(game)}
                 >
                 Buy
                 </MDBBtn>

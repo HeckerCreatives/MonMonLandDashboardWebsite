@@ -1,7 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import { Route, Routes } from "react-router-dom";
 import Error from "./page/404";
-
 //Home
 import Initial from "./page/home";
 import Dashboard from "./page/dashboard/dashboard"
@@ -149,6 +148,7 @@ const Routers = () => {
       {/* <Route path="/signup" element={<SignUp />}/> */}
       <Route path="/login" element={<Login />}/>
       <Route path="/verification/:userId" element={<StepVerification />}/>
+      
       <Route path="/cashiers" element={<AvailableCashiers/>}/>
     </Routes>
   );
