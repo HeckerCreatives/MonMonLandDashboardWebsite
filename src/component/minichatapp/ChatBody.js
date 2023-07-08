@@ -21,14 +21,11 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer}) => {
     <>
       <header className='chat__mainHeader'>
       <div>
-      <h4>Payment to be made: Timer Here </h4>
-      </div>
-      <div>
       <p>Please make a payment within 60:00 mins. otherwise, the order will be cancelled</p>
       </div>
-      <div>
-      <button className='btn-primary'>Done Transaction</button>
-      <button className='btn-danger'>Cancel Order</button>
+      <div className='mx-2'>
+      <button className='btn-primary mb-1 rounded'>Done Transaction</button>
+      <button className='btn-danger rounded'>Cancel Order</button>
       </div>
       </header>
 
@@ -41,7 +38,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer}) => {
             <div className='message__sender'>
                 <p>{formatDateFromTimestamp(message.__createdtime__)}</p>
                 <p>{message.message}</p>
-                <img src={message.image} alt='' className='message__sender'/>
+                <img src={message.image} alt='' className='img-fluid message__sender'/>
             </div>
           </div>
             ) : (
@@ -50,7 +47,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer}) => {
             <div className='message__recipient'>
                 <p>{formatDateFromTimestamp(message.__createdtime__)}</p>
                 <p>{message.message}</p>
-                <img src={message.image} alt=''/>
+                <img src={message.image} alt='' className='message__recipient img-fluid'/>
             </div>
           </div>
             )

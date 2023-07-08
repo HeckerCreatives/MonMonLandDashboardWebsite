@@ -11,39 +11,35 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
         <>
         <MDBCollapse show={step2toggle}>       
         <MDBRow>
-            <MDBCol lg={6}>
-                <MDBCard className="h-100">
+            <MDBCol lg={6} className="mb-lg-0 mb-5">
+                <MDBCard className="h-100 mb-lg-0 mb-sm-5">
                     <MDBCardBody>
-                        <MDBRow>
-                            <MDBCol className="">
-                            <MDBCardText className="fw-bold">Cashier Username: {user.userId.userName}</MDBCardText>
-                            <MDBCardText className="text-mute">Created Time:</MDBCardText>
+                        <MDBRow >
+                            <MDBCol className="text-center">
+                            <MDBCardText className="fw-bold">Cashier: {user.userId.userName}</MDBCardText>                            
                             </MDBCol>
-                            <MDBCol className="">
-                            <MDBCardText className="d-flex fw-bold" >
-                            Cashier Status: 
+                            
+                            <MDBCol className="text-center">
+                            <MDBCardText className="fw-bold" >
+                            Status: 
                             &nbsp;<span style={{ color: user ? user.status : null === 'Close' ? 'red' : user ? user.status : null === 'Open' ? 'green' : 'blue' }}> {user ? user.status : null}</span>
-                            </MDBCardText>
-                            <MDBCardText className="text-mute">Transaction Number: DSSA235SD15S3A
-                            &nbsp;<MDBIcon far icon="copy" />
-                            </MDBCardText>                             
+                            </MDBCardText>                           
                             </MDBCol>
                         </MDBRow>
-
+                        <br/>
                         <MDBRow>
-                            <MDBCol className="d-flex justify-content-between text-center mt-2">
+                            <MDBCol className="d-flex justify-content-between align-items-center mt-2">
                             <div>
                             <MDBCardText className="text-mute">Number of Transaction</MDBCardText>
-                            <MDBCardText className="fw-bold">100</MDBCardText>
-
+                            <MDBCardText className="fw-bold">{user.numberoftransaction}</MDBCardText>
                             </div>                            
                             <div>
                             <MDBCardText className="text-mute">Payment Limit</MDBCardText>
-                            <MDBCardText className="fw-bold">100000 USDT</MDBCardText>
+                            <MDBCardText className="fw-bold">{user.paymentlimit} USDT</MDBCardText>
                             </div>                            
                             <div>
                             <MDBCardText className="text-mute">Quantity</MDBCardText>
-                            <MDBCardText className="fw-bold">123456 USDT</MDBCardText>
+                            <MDBCardText className="fw-bold">{user.paymentcollected} USDT</MDBCardText>
                             </div>                            
                             </MDBCol>
                         </MDBRow>
@@ -71,7 +67,9 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
                                 </div> 
                                 <div className="p-3">
                                 <MDBCardText tag="p" className="d-flex">Please make a payment within 60:00 mins. otherwise, the order will be cancelled
+                                <div className="d-flex align-items-center">
                                 <MDBBtn className="mx-3" color="danger">Cancel Order</MDBBtn>
+                                </div>
                                 </MDBCardText>
                                 </div>               
                             </MDBCol>
@@ -83,11 +81,12 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
             <MDBCol>
             <MDBCard>
             <MDBCardBody>
-                <MDBRow>
+            <ChatPage socket={socket} recipientId={recipientId} room={room} buyer={buyer}/>
+                {/* <MDBRow>
                     <MDBCol>
-                        <ChatPage socket={socket} recipientId={recipientId} room={room} buyer={buyer}/>
+                        
                     </MDBCol>
-                </MDBRow>
+                </MDBRow> */}
             </MDBCardBody>
         </MDBCard>
             </MDBCol>

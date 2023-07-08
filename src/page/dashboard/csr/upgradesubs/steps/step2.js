@@ -22,6 +22,7 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room,})
         if (history.length % 2 > 0) totalPages += 1;
         setTotal(totalPages);
     }, [history]);
+
     useEffect(()=> {
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
         .then(response => response.json())
@@ -304,11 +305,12 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room,})
             <MDBCol>
             <MDBCard className="h-100">
             <MDBCardBody>
-                <MDBRow>
+            <ChatPage socket={socket} user={user} buyer={buyer} room={room}/>
+                {/* <MDBRow>
                     <MDBCol>
-                        <ChatPage socket={socket} user={user} buyer={buyer} room={room}/>
+                        
                     </MDBCol>
-                </MDBRow>
+                </MDBRow> */}
             </MDBCardBody>
         </MDBCard>
             </MDBCol>

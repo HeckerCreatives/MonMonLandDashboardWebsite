@@ -3,13 +3,13 @@ import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol, MDBTable, MDBTableHead,
 import Swal from "sweetalert2"
 import Breadcrumb from "../../../../component/breadcrumb";
 import PaginationPager from "../../../../component/pagination/index"
-import Step1 from "./steps/step1";
+// import Step1 from "./steps/step1";
 import Step2 from "./steps/step2";
 import socketIO from "socket.io-client"
 // import DataContext from "../../../../component/datacontext";
 const socket = socketIO.connect(process.env.REACT_APP_API_URL)
 
-const SubAdminUpgradeSubscriptionManual = () => {
+const CsrUpgradeSubscriptionManual = () => {
   const [username, setUsername] = useState(''); // Add this
     const [room, setRoom] = useState(''); // Add this
     const [cashier, setCashier] = useState(''); // Add this
@@ -195,7 +195,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
             </MDBTable>
             <PaginationPager
             total={total} page={page} setPage={setPage}/>
-        </>  
+            </>  
         }
         
         
@@ -208,4 +208,4 @@ const SubAdminUpgradeSubscriptionManual = () => {
     )
 }
 
-export default SubAdminUpgradeSubscriptionManual;
+export default CsrUpgradeSubscriptionManual;

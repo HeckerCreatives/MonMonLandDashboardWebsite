@@ -73,27 +73,48 @@ const ChatFooter = ({socket, buyer, room}) => {
   return (
     <div className='chat__footer'>
         <form className='form' onSubmit={sendMessage}>
-          <input 
+        <div className="d-flex align-items-start ">
+        {image && (
+          <>
+            <div className='mx-3 imagee'>
+              <img src={URL.createObjectURL(image)} alt="selected" className="img-fluid imagee"/>              
+            </div>
+            <div className=''>
+            <button className="cancelBtn" onClick={() => setImage(null)}>
+              <MDBIcon fas icon="times-circle" size='xl' />
+              </button>
+            </div>
+          </>
+          )}
+                   
+        </div>
+        <input         
             type="text" 
             placeholder='Write message' 
-            className='message' 
+            className='message mx-3' 
             value={message} 
             onChange={e => setMessage(e.target.value)}
             // onKeyDown={handleTyping}
+            /> 
+        <div className="d-flex align-items-end">
+        <label htmlFor="fileInput" className='mx-2'>
+            <button type="button" className='sendBtn rounded' onClick={() =>document.getElementById('fileInput').click()}>
+            <MDBIcon fas icon="plus" size='xl'/>
+            </button>              
+            </label>
+            <input
+              id="fileInput"
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={handleImageUpload}
             />
-            {/* <MDBIcon fas icon="plus" /> */}
-            <input type="file" accept="image/*" onChange={handleImageUpload}/>
-            {image && (
-            <div className="message__sender">
-              <img src={URL.createObjectURL(image)} alt="selected"/>
-              <button className="cancelBtn" onClick={() => setImage(null)}>
-                Cancel
-              </button>
-            </div>
-            )}
-            <button type='submit' className="sendBtn">
-            <MDBIcon fas icon="paper-plane"/>
-            &nbsp; SEND</button>
+            
+            <button type='submit' className="sendBtn mx-2 rounded">
+            <MDBIcon fas icon="paper-plane" size='xl'/>
+            </button>
+        </div>  
+            
 
             
         </form>

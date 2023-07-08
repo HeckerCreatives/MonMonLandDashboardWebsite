@@ -6,14 +6,14 @@ import PaginationPager from "../../../component/pagination/index"
 import CashierStep1 from "./steps/step1";
 import CashierStep2 from "./steps/step2";
 import io from "socket.io-client"
-import DataContext from "../../../component/datacontext";
+// import DataContext from "../../../component/datacontext";
 const socket = io(process.env.REACT_APP_API_URL)
 // const socket = io("https://monmontestserver-lotk.onrender.com");
 const AvailableCashiers = () => {
     const [username, setUsername] = useState(''); // Add this
     const [room, setRoom] = useState(''); // Add this
     const [cashier, setCashier] = useState(''); // Add this
-    const {buyer, setBuyer } = useContext(DataContext);
+    // const {buyer, setBuyer } = useContext(DataContext);
     const [games, setGames] = useState([]),
             [recipientId, setRecipientId] = useState(""),
             [page, setPage] = useState(1),
@@ -133,12 +133,13 @@ const AvailableCashiers = () => {
         step2toggle={step2toggle} 
         setstep2toggle={toggleShow2} 
         recipientId={recipientId}
-        data={buyer}
+        // data={buyer}
         room={room}
         buyer={username} 
         socket={socket}   
         />
         :
+        <>
             <MDBTable align='middle' className="border mt-4" responsive>
                 <MDBTableHead className="head text-center">
                     <tr >
@@ -183,14 +184,16 @@ const AvailableCashiers = () => {
                 </>
                 </MDBTableBody>
             </MDBTable>
+            <PaginationPager
+                total={total} page={page} setPage={setPage}
+            />
+            </>
         }
         
         
         </MDBCol>
         </MDBRow>
-            <PaginationPager
-                total={total} page={page} setPage={setPage}
-            />
+            
         </MDBContainer>
     )
 }

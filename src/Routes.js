@@ -38,6 +38,8 @@ import Home from "./component/minichatapp/Home";
 import ChatPage from "./component/minichatapp/ChatPage";
 import AvailableCashiers from "./page/dashboard/cashier";
 import socketIO from "socket.io-client"
+import CsrDashboard from "./page/dashboard/csr/dashboard";
+import CsrUpgradeSubscriptionManual from "./page/dashboard/csr/upgradesubs";
 
 const socket = socketIO.connect("http://localhost:4000")
 
@@ -121,7 +123,7 @@ const Routers = () => {
         </Route>
 
         <Route path="Agent" element={""}>
-            <Route path="home" element={<UserDashboard/>}/>
+            <Route path="home" element={<CsrDashboard/>}/>
             <Route path="settings">
           <Route path="updateprogressbar" element={<UpdateProgressBar/>}/>
           <Route path="updatesubs">
@@ -131,10 +133,16 @@ const Routers = () => {
             <Route path="diamond"element={<UpdateDiamond/>}/>
             <Route path="free"element={<UpdateFree/>}/>
           </Route>
+          
           <Route path="updatenews" element={<UpdateNews/>}/>
           <Route path="updateroadmap" element={<UpdateRoadmap/>}/>
           <Route path="updategames" element={<Games/>}/>
         </Route>
+        <Route path="upgradesubscription" element={<CsrUpgradeSubscriptionManual/>}/>
+        </Route>
+
+        <Route path="Player" element={""}>
+            <Route path="home" element={<UserDashboard/>}/>
         </Route>
       </Route>
       
