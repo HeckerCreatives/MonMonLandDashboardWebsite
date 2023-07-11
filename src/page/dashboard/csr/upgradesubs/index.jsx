@@ -19,6 +19,7 @@ const CsrUpgradeSubscriptionManual = () => {
             [checkedItems, setCheckedItems] = useState([]),
             [page, setPage] = useState(1),
             [user, setUser] = useState([]),
+            [notif, setNotif] = useState([]),
             [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
     const [toggle, settoggle] = useState(false)        
@@ -63,16 +64,10 @@ const CsrUpgradeSubscriptionManual = () => {
         })
     },[])
 
-    const handleCheckboxChange = (itemId) => {
-        if (checkedItems.includes(itemId)) {
-          // Item is already checked, remove it from the array
-          setCheckedItems(checkedItems.filter((id) => id !== itemId));
-        } else {
-          // Item is not checked, add it to the array
-          setCheckedItems([...checkedItems, itemId]);
-        }
-    };
+    
 
+    
+    console.log(notif)
     const buy = (user) => {
         // e.preventDefault()
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
@@ -95,32 +90,11 @@ const CsrUpgradeSubscriptionManual = () => {
         socket.emit('join_room', { username: auth.userName, room: user.userId.userName });
         toggleShow2()
         }
-
     return (
         <MDBContainer fluid className="">
         <Breadcrumb title="Upgrade Subscription" paths={[]}/>
         <MDBTypography className="fw-bold">Manual</MDBTypography>
-        <MDBRow>
-            <MDBCol>
-            {/* <CreateCashier/>
-            <ViewCashier 
-            checkedItems={checkedItems.length === 0 || checkedItems.length > 1}
-            id={checkedItems}
-            />
-            <UpdateCashier 
-            checkedItems={checkedItems.length === 0 || checkedItems.length > 1}
-            id={checkedItems}    
-            /> */}
-            {/* <MDBBtn
-                className='mt-1 mx-2 fw-bold' 
-                color='danger'
-                onClick={deleteItems}
-                disabled={checkedItems.length === 0}
-            >
-                Delete
-            </MDBBtn> */}
-            </MDBCol>
-        </MDBRow>
+        <MDBTypography className="fw-bold">{notif}</MDBTypography>
         <MDBRow>
         <MDBCol>
         
@@ -133,7 +107,8 @@ const CsrUpgradeSubscriptionManual = () => {
           Buyer={buyer}
           room={room}
           buyer={username} 
-          socket={socket}  
+          socket={socket}
+          setNotif={setNotif}
           />
         :
         <>

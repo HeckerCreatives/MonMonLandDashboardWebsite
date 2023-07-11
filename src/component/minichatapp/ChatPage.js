@@ -4,12 +4,14 @@ import ChatBody from './ChatBody'
 import ChatFooter from './ChatFooter'
 
 
-const ChatPage = ({socket, room, buyer}) => { 
+const ChatPage = ({socket, room, buyer, setNotif, notif}) => { 
   const [messagesRecieved, setMessagesReceived] = useState([]);
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [typingStatus, setTypingStatus] = useState("")
   const lastMessageRef = useRef(null);
+
+  notif = setNotif
   
   // Runs whenever a socket event is recieved from the server
   useEffect(() => {

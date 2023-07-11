@@ -79,39 +79,12 @@ const AvailableCashiers = () => {
 
     const buybtn = (user) => {
         setCashier(user)
-        if(auth){
-            // fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
-            // method:'POST',
-            // headers: {
-            //     'Content-Type': 'application/json'
-            // },
-            // body: JSON.stringify({
-            //     transactionnumber: generateRandomString()
-            // })
-            // }).then(result => result.json())
-            // .then(data => {
-            //     console.log(data)
-            // setBuyer(data)
-            // })        
+        if(auth){        
         setUsername(auth.userName)
         setRoom(user.userId.userName)
         toggleShow2()
         socket.emit('join_room', { username: auth.userName, room: user.userId.userName });
         } else {
-            // fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
-            //     method:'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify({
-            //         transactionnumber: generateRandomString()
-            //     })
-            //     }).then(result => result.json())
-            //     .then(data => {
-            //         console.log(data)
-            //     setBuyer(data)
-                
-            // })
         setUsername("Guest")
         setRoom(user.userId.userName)
         toggleShow2()

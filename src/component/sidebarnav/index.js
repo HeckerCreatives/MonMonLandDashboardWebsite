@@ -77,7 +77,7 @@ const Sidebarnav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1,
             didToggle && didToggle1 && didToggle2 && didToggle3 &&"sidebar-toggle-rotate"
           }`}
         >
-          <MDBIcon fas icon="angle-left" size="lg" /> 
+          <MDBIcon fas icon="angle-left" size="lg" />
         </div>
       )}
 

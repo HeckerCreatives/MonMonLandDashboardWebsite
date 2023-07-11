@@ -7,7 +7,7 @@ import ChatPage from "../../../../../component/minichatapp/ChatPage";
 import Swal from "sweetalert2"
 import { handlePagination } from "../../../../../component/utils";
 import PaginationPager from "../../../../../component/pagination/index"
-const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room,}) => {
+const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room, setNotif}) => {
   const [rubyChecked, setRubyChecked] = useState(false);
   const [emeraldChecked, setEmeraldChecked] = useState(false);
   const [diamondChecked, setDiamondChecked] = useState(false);
@@ -305,7 +305,7 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room,})
             <MDBCol>
             <MDBCard className="h-100">
             <MDBCardBody>
-            <ChatPage socket={socket} user={user} buyer={buyer} room={room}/>
+            <ChatPage socket={socket} user={user} buyer={buyer} room={room} notif={setNotif}/>
                 {/* <MDBRow>
                     <MDBCol>
                         
