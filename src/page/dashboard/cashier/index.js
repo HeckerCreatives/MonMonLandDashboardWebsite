@@ -17,6 +17,7 @@ const AvailableCashiers = () => {
     const [games, setGames] = useState([]),
             [recipientId, setRecipientId] = useState(""),
             [page, setPage] = useState(1),
+            [status, setStatus] = useState(""),
             [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
     const [toggle, settoggle] = useState(false)        
@@ -62,7 +63,9 @@ const AvailableCashiers = () => {
     useEffect(()=>{
         socket.on('room_full', (data) => {
             // Handle the room_full event here
-            console.log(data.message);
+            if(data){
+            setStatus(data.message);
+            }
             // You can display an error message to the user or perform any other action
             Swal.fire({
                 icon: "info",
@@ -76,7 +79,7 @@ const AvailableCashiers = () => {
             })
         })
     },[])
-
+    console.log(status)
     const buybtn = (user) => {
         setCashier(user)
         if(auth){        
@@ -140,7 +143,7 @@ const AvailableCashiers = () => {
                 <td>{game.numberoftransaction}</td>
                 <td>{game.paymentlimit}</td>
                 <td style={{ color: game.status === 'Close' ? 'red' : game.status === 'Open' ? 'green' : 'blue' }}>
-                {game.status}
+                {status}
                 </td>
 
                 <td>

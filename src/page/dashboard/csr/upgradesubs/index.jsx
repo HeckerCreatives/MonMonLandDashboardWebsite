@@ -1,13 +1,13 @@
 import React, {useEffect, useState,useContext} from "react";
-import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBTypography, } from "mdb-react-ui-kit";
+import { MDBContainer, MDBBtn, MDBBadge, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBTypography, } from "mdb-react-ui-kit";
 import Swal from "sweetalert2"
 import Breadcrumb from "../../../../component/breadcrumb";
 import PaginationPager from "../../../../component/pagination/index"
 // import Step1 from "./steps/step1";
 import Step2 from "./steps/step2";
-import socketIO from "socket.io-client"
+import io from "socket.io-client"
 // import DataContext from "../../../../component/datacontext";
-const socket = socketIO.connect(process.env.REACT_APP_API_URL)
+const socket = io(process.env.REACT_APP_API_URL)
 
 const CsrUpgradeSubscriptionManual = () => {
   const [username, setUsername] = useState(''); // Add this
@@ -19,7 +19,7 @@ const CsrUpgradeSubscriptionManual = () => {
             [checkedItems, setCheckedItems] = useState([]),
             [page, setPage] = useState(1),
             [user, setUser] = useState([]),
-            [notif, setNotif] = useState([]),
+            [notif, setNotif] = useState(""),
             [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
     const [toggle, settoggle] = useState(false)        
@@ -64,7 +64,21 @@ const CsrUpgradeSubscriptionManual = () => {
         })
     },[])
 
+    useEffect(() => {
+        setUsername(auth.userName)
+        setRoom(auth.userName)   
+        socket.emit('join_room', { username: auth.userName, room: auth.userName}); 
+        // Add event listener for 'receive_message'
+        socket.on('receive_notification', (data) => {
+            setNotif(data.message); // You can handle the received data here
+        });
     
+        // Cleanup the socket connection on component unmount
+        return () => {
+            socket.off('receive_notification');
+        };
+        
+      }, [socket, setNotif]);
 
     
     console.log(notif)
@@ -84,17 +98,14 @@ const CsrUpgradeSubscriptionManual = () => {
                 setBuyer(data)
                 
             })
-        setCashier(user)        
-        setUsername(auth.userName)
-        setRoom(user.userId.userName)
-        socket.emit('join_room', { username: auth.userName, room: user.userId.userName });
+        setCashier(user)
         toggleShow2()
-        }
+    }
     return (
         <MDBContainer fluid className="">
         <Breadcrumb title="Upgrade Subscription" paths={[]}/>
         <MDBTypography className="fw-bold">Manual</MDBTypography>
-        <MDBTypography className="fw-bold">{notif}</MDBTypography>
+        <MDBTypography className=" text-center text-success fw-bold">{notif}</MDBTypography>
         <MDBRow>
         <MDBCol>
         
@@ -108,7 +119,7 @@ const CsrUpgradeSubscriptionManual = () => {
           room={room}
           buyer={username} 
           socket={socket}
-          setNotif={setNotif}
+        //   setNotif={setNotif}
           />
         :
         <>
@@ -158,6 +169,10 @@ const CsrUpgradeSubscriptionManual = () => {
                 onClick={() => buy(game)}
                 >
                 Transact
+                {notif && 
+                <MDBBadge color='danger' className='ms-2'>
+                1
+                </MDBBadge>}
                 </MDBBtn>
                 </td>
                 </tr>

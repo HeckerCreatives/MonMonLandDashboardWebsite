@@ -5,20 +5,7 @@ import ChatPage from "../../../../component/minichatapp/ChatPage";
 import io from "socket.io-client"
 import Swal from "sweetalert2";
 const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buyer, socket}) => {
-    const [notif, setNotif] = useState([])
     
-    useEffect(() => {
-
-        // Add event listener for 'receive_message'
-        socket.on('receive_notification', (data) => {
-            setNotif(data.message); // You can handle the received data here
-        });
-    
-        // Cleanup the socket connection on component unmount
-        return () => {
-            socket.off('receive_notification');
-        };
-      }, [socket, setNotif]);
     
     return(
         <>
@@ -94,7 +81,7 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
             <MDBCol>
             <MDBCard>
             <MDBCardBody>
-            <ChatPage socket={socket} recipientId={recipientId} room={room} buyer={buyer} setNotif={notif}/>
+            <ChatPage socket={socket} recipientId={recipientId} room={room} buyer={buyer}/>
                 {/* <MDBRow>
                     <MDBCol>
                         

@@ -7,7 +7,7 @@ import ChatPage from "../../../../../component/minichatapp/ChatPage";
 import Swal from "sweetalert2"
 import { handlePagination } from "../../../../../component/utils";
 import PaginationPager from "../../../../../component/pagination/index"
-const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room, setNotif}) => {
+const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room}) => {
   const [rubyChecked, setRubyChecked] = useState(false);
   const [emeraldChecked, setEmeraldChecked] = useState(false);
   const [diamondChecked, setDiamondChecked] = useState(false);
@@ -149,7 +149,7 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room, s
                             <MDBCardText className="d-flex fw-bold" >
                             Cashier Status: 
                             &nbsp;<span style={{ color: user.status === 'Close' ? 'red' : user.status === 'Open' ? 'green' : 'blue' }}>{user.status}</span>
-                            <MDBBtn className="mx-2" outline color="dark" size="sm">Open</MDBBtn>
+                            <MDBBtn className="mx-2" outline color="dark" size="sm">{user.status}</MDBBtn>
                                 <MDBBtn
                                 type="button"
                                 className="mx-2" 
@@ -288,10 +288,6 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room, s
                 ))}
                 </>
                 : null}
-                
-                                
-                
-                    
                 </MDBTableBody>
                             </MDBTable>
                             <PaginationPager
@@ -305,7 +301,7 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room, s
             <MDBCol>
             <MDBCard className="h-100">
             <MDBCardBody>
-            <ChatPage socket={socket} user={user} buyer={buyer} room={room} notif={setNotif}/>
+            <ChatPage socket={socket} user={user} buyer={buyer} room={room}/>
                 {/* <MDBRow>
                     <MDBCol>
                         
