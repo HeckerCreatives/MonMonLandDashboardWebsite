@@ -143,7 +143,7 @@ const AvailableCashiers = () => {
                 <td>{game.numberoftransaction}</td>
                 <td>{game.paymentlimit}</td>
                 <td style={{ color: game.status === 'Close' ? 'red' : game.status === 'Open' ? 'green' : 'blue' }}>
-                {status}
+                {game.status}
                 </td>
 
                 <td>

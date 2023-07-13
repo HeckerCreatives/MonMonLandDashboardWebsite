@@ -68,7 +68,11 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
                                 <div className="p-3">
                                 <MDBCardText tag="p" className="d-flex">Please make a payment within 60:00 mins. otherwise, the order will be cancelled
                                 <div className="d-flex align-items-center">
-                                <MDBBtn className="mx-3" color="danger">Cancel Order</MDBBtn>
+                                <MDBBtn 
+                                className="mx-3" 
+                                color="danger"
+                                onClick={() => window.location.href = "/cashiers"}
+                                >Cancel Order</MDBBtn>
                                 </div>
                                 </MDBCardText>
                                 </div>               

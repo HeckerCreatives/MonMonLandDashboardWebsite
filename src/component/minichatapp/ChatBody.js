@@ -1,7 +1,7 @@
 import React from 'react'
 import {useNavigate} from "react-router-dom"
 
-const ChatBody = ({messages, typingStatus, lastMessageRef, buyer}) => { 
+const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room}) => { 
   const navigate = useNavigate()
   const buy = localStorage.getItem("buy")
 
@@ -11,12 +11,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer}) => {
     return date.toLocaleString();
   }
 
-  const handleLeaveChat = () => {
-    // localStorage.removeItem("userName")
-    // navigate("/")
-    window.location.reload()
-  }
-  // console.log(messages)
+  
   return (
     <>
       <header className='chat__mainHeader'>
@@ -32,13 +27,13 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer}) => {
     
         <div className='message__container'>
           {messages.map((message,i) => (
-            message.username === buyer ? (
+            message.username === room ? (
               <div className="message__chats" key={i}>
             <p className='sender__name'>You</p>
             <div className='message__sender'>
                 <p>{formatDateFromTimestamp(message.__createdtime__)}</p>
                 <p>{message.message}</p>
-                <img src={message.image} alt='' className='img-fluid message__sender'/>
+                <img src={message.image} alt='' className='img-fluid'/>
             </div>
           </div>
             ) : (
@@ -47,7 +42,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer}) => {
             <div className='message__recipient'>
                 <p>{formatDateFromTimestamp(message.__createdtime__)}</p>
                 <p>{message.message}</p>
-                <img src={message.image} alt='' className='message__recipient img-fluid'/>
+                <img src={message.image} alt='' className='img-fluid'/>
             </div>
           </div>
             )

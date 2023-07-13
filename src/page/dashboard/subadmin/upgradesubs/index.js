@@ -1,13 +1,13 @@
 import React, {useEffect, useState,useContext} from "react";
-import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBTypography, } from "mdb-react-ui-kit";
+import { MDBContainer, MDBBtn, MDBBadge, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBTypography, } from "mdb-react-ui-kit";
 import Swal from "sweetalert2"
 import Breadcrumb from "../../../../component/breadcrumb";
 import PaginationPager from "../../../../component/pagination/index"
 import Step1 from "./steps/step1";
 import Step2 from "./steps/step2";
-import socketIO from "socket.io-client"
+import io from "socket.io-client"
 // import DataContext from "../../../../component/datacontext";
-const socket = socketIO.connect(process.env.REACT_APP_API_URL)
+const socket = io(process.env.REACT_APP_API_URL)
 
 const SubAdminUpgradeSubscriptionManual = () => {
   const [username, setUsername] = useState(''); // Add this
@@ -18,6 +18,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
     const [games, setGames] = useState([]),
             [checkedItems, setCheckedItems] = useState([]),
             [page, setPage] = useState(1),
+            [notif, setNotif] = useState(""),
             [user, setUser] = useState([]),
             [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
@@ -59,29 +60,37 @@ const SubAdminUpgradeSubscriptionManual = () => {
             const filter = result.filter(e => e.userId._id === auth._id)
             setUser(filter)
             setGames(filter)
-            // console.log(filter)
         })
     },[])
 
-    const handleCheckboxChange = (itemId) => {
-        if (checkedItems.includes(itemId)) {
-          // Item is already checked, remove it from the array
-          setCheckedItems(checkedItems.filter((id) => id !== itemId));
-        } else {
-          // Item is not checked, add it to the array
-          setCheckedItems([...checkedItems, itemId]);
-        }
-    };
+    useEffect(() => {
+        setUsername(auth.userName)
+        setRoom(auth.userName)   
+        socket.emit('join_room', { username: auth.userName, room: auth.userName});
+        // Add event listener for 'receive_message'
+        socket.on('receive_notification', (data) => {
+            setNotif(data.message); // You can handle the received data here
+        });
+    
+        // Cleanup the socket connection on component unmount
+        return () => {
+            socket.off('receive_notification');
+        };
+        
+      }, []);
 
     const buy = (user) => {
         // e.preventDefault()
+        const stats = "Processing"
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
                 method:'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    transactionnumber: generateRandomString()
+                    transactionnumber: generateRandomString(),
+                    cashierId: user._id, 
+                    stats: stats,
                 })
                 }).then(result => result.json())
                 .then(data => {
@@ -90,9 +99,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 
             })
         setCashier(user)        
-        setUsername(auth.userName)
-        setRoom(user.userId.userName)
-        socket.emit('join_room', { username: auth.userName, room: user.userId.userName });
+        
         toggleShow2()
         }
 
@@ -100,27 +107,8 @@ const SubAdminUpgradeSubscriptionManual = () => {
         <MDBContainer fluid className="">
         <Breadcrumb title="Upgrade Subscription" paths={[]}/>
         <MDBTypography className="fw-bold">Manual</MDBTypography>
-        <MDBRow>
-            <MDBCol>
-            {/* <CreateCashier/>
-            <ViewCashier 
-            checkedItems={checkedItems.length === 0 || checkedItems.length > 1}
-            id={checkedItems}
-            />
-            <UpdateCashier 
-            checkedItems={checkedItems.length === 0 || checkedItems.length > 1}
-            id={checkedItems}    
-            /> */}
-            {/* <MDBBtn
-                className='mt-1 mx-2 fw-bold' 
-                color='danger'
-                onClick={deleteItems}
-                disabled={checkedItems.length === 0}
-            >
-                Delete
-            </MDBBtn> */}
-            </MDBCol>
-        </MDBRow>
+        <MDBTypography className=" text-center text-success fw-bold">{notif}</MDBTypography>
+       
         <MDBRow>
         <MDBCol>
         
@@ -153,13 +141,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 <MDBTableBody className="text-center">                
                 <>
                 {games.map((game,i) =>(
-                <tr key={`game-${i}`}>
-                {/* <td>
-                  <input type="checkbox"
-                  checked={checkedItems.includes(game._id)}
-                  onChange={() => handleCheckboxChange(game._id)} 
-                  ></input>
-                </td> */}
+                <tr key={`game-${i}`}>                
                 <td>{new Date(game.createdAt).toLocaleString()}</td>
                 <td>
                     {game.userId.userName}
@@ -183,6 +165,10 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 onClick={() => buy(game)}
                 >
                 Transact
+                {notif && 
+                <MDBBadge color='danger' className='ms-2'>
+                1
+                </MDBBadge>}
                 </MDBBtn>
                 </td>
                 </tr>

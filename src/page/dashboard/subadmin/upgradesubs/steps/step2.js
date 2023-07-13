@@ -22,6 +22,7 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room,})
         if (history.length % 2 > 0) totalPages += 1;
         setTotal(totalPages);
     }, [history]);
+
     useEffect(()=> {
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
         .then(response => response.json())
@@ -29,6 +30,7 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room,})
             const data = result.filter(e => e.cashier === user.userId.userName)
             setHistory(data)
         })
+        
     },[])
 
     const handleCheckboxChange = (checkboxName) => {
@@ -54,6 +56,7 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room,})
     };
 
     const cancelorder = (id) => {
+        const stats = "Open"
     Swal.fire({
         icon: "warning",
         title: "Are you sure to delete these items?",
@@ -67,7 +70,11 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room,})
                     method: "DELETE",
                     headers: {
                         'Content-Type': 'application/json'
-                    }
+                    },
+                    body: JSON.stringify({
+                    cashierId: user._id,
+                    stats: stats,
+                    })
                 }).then(result => result.json())
                 .then(data => {
                     if(data){
@@ -83,6 +90,7 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room,})
     const upgradebuyer = (e) => {
         e.preventDefault();
         const {username} = e.target
+        const stats = "Open"
         Swal.fire({
             icon: "warning",
             title: "Are you sure this is the right user?",
@@ -105,7 +113,8 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room,})
                         cashier: user.userId.userName,
                         subscriptionlevel: subscriptionId,
                         price: price,
-                        clientusername: username.value
+                        clientusername: username.value,
+                        stats: stats,
                     })
                 }).then(data =>{
                     if (data) {
@@ -141,24 +150,28 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room,})
                     <MDBCardBody>
                         <MDBRow>
                             <MDBCol className="">
-                            <MDBCardText className="fw-bold">Cashier Username: {user.userId.userName}</MDBCardText>
+                            <MDBCardText className="fw-bold mt-2">Cashier Username: {user.userId.userName}</MDBCardText>
                             <MDBCardText className="text-mute">Created Time: {new Date(Buyer.createdAt).toLocaleString()}</MDBCardText>
                             </MDBCol>
                             <MDBCol className="">
-                            <MDBCardText className="d-flex fw-bold" >
-                            Cashier Status: 
+                            <MDBCardText className="d-flex fw-bold mt-2 align-items-center" >
+                            <span>Cashier Status:</span>
                             &nbsp;<span style={{ color: user.status === 'Close' ? 'red' : user.status === 'Open' ? 'green' : 'blue' }}>{user.status}</span>
-                            <MDBBtn className="mx-2" outline color="dark" size="sm">Open</MDBBtn>
-                                <MDBBtn
+                            <div>
+                            <MDBBtn className="mx-2" outline color="dark" size="sm">Open</MDBBtn>                                
+                            </div> 
+                            <div>
+                            <MDBBtn
                                 type="button"
                                 className="mx-2" 
                                 outline color="dark" size="sm" 
                                 onClick={() => cancelorder(Buyer._id)}>
                                 Close
-                                </MDBBtn> 
+                                </MDBBtn>                               
+                            </div> 
                             </MDBCardText>
-                            <MDBCardText className="text-mute">Transaction Number: {Buyer.transactionnumber}
-                            &nbsp;<MDBIcon far icon="copy" />
+                            <MDBCardText className="text-mute">Transaction Number: &nbsp;{Buyer.transactionnumber}
+                            &nbsp; <MDBIcon far icon="copy" />
                             </MDBCardText>                             
                             </MDBCol>
                         </MDBRow>
@@ -166,9 +179,8 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room,})
                         <MDBRow>
                             <MDBCol className="d-flex justify-content-between text-center mt-2">
                             <div>
-                            <MDBCardText className="text-mute">Number of Transaction</MDBCardText>
+                            <MDBCardText className="text-mute">No. of Transaction</MDBCardText>
                             <MDBCardText className="fw-bold">{user.numberoftransaction}</MDBCardText>
-
                             </div>                            
                             <div>
                             <MDBCardText className="text-mute">Payment Limit</MDBCardText>
@@ -201,14 +213,16 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room,})
                                 <div>
                                 <MDBCardText className="fw-bold">Subscription Details</MDBCardText>
                                 </div>
-                                <div className="offset-2 col-lg-10">
-                                <MDBCardText className="text-mute d-flex">Enter Subscriber Username :
+                                <div className="offset-lg-2 col-lg-10">
+                                <MDBCardText className="text-mute d-flex mt-2">Enter Subscriber Username :
                                 &nbsp; <MDBInput size="sm" name="username"/>
                                 </MDBCardText>                                
                                 </div>
 
-                                <div className="offset-2 col-lg-10 mt-2">
-                                <MDBCardText className="text-mute d-flex">Select Subscription Level :
+                                <div className="offset-lg-2 col-lg-10 mt-2">
+                                <MDBCardText className="text-mute">Select Subscription Level :                                
+                                </MDBCardText>
+                                <MDBCol className="d-flex offset-3">
                                 <div className="mx-2 d-flex justify-content-center align-items-center flex-column">
                                 <img src={ruby} alt="" style={{height: "60px", width: "60px"}}/>
                                 <label className="d-flex justify-content-center align-items-center flex-column">
@@ -232,16 +246,23 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room,})
                                 <input type="checkbox" checked={diamondChecked} onChange={() => handleCheckboxChange('diamond')} className="mx-2"/>                        
                                 </label>
                                 </div>
-                                </MDBCardText>
+                                </MDBCol>
+                                
                                 </div>
 
-                                <div className="offset-2 col-lg-10 mt-2">
+                                <div className="offset-lg-2 col-lg-10 mt-3">
                                 <MDBCardText className="text-mute">Subscription Price : {price ? "$"+price: ""}</MDBCardText>
                                 </div>
-                                <div className="d-flex justify-content-end mt-4">
-                                <MDBBtn className="mx-2" type="submit">Upgrade Subscription</MDBBtn>
-                                <MDBBtn className="mx-2" color="danger" type="button" onClick={() => cancelorder(Buyer._id)}>Cancel Order</MDBBtn>
-                                </div>                  
+                                <div className="d-flex justify-content-end mt-2">
+                                <div className="">
+                                <MDBBtn className="mx-2 mt-2" type="submit">Upgrade Subscription</MDBBtn>
+                                </div>
+                                <div className="">
+                                <MDBBtn className="mx-2 mt-2" color="danger" type="button" onClick={() => cancelorder(Buyer._id)}>Cancel Order</MDBBtn>
+                                </div>
+                                </div>
+                                
+                                                  
                             </MDBCol>
                             </form>
                         </MDBRow>
@@ -306,7 +327,7 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room,})
             <MDBCardBody>
                 <MDBRow>
                     <MDBCol>
-                        <ChatPage socket={socket} user={user} buyer={buyer} room={room}/>
+                        <ChatPage socket={socket} buyer={buyer} room={room}/>
                     </MDBCol>
                 </MDBRow>
             </MDBCardBody>

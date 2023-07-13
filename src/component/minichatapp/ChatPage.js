@@ -38,7 +38,7 @@ const ChatPage = ({socket, room, buyer, setNotif}) => {
     <div className="chat">
       {/* <ChatBar socket={socket}/> */}
       <div className='chat__main'>
-        <ChatBody buyer={buyer} messages={messagesRecieved} lastMessageRef={lastMessageRef}/>
+        <ChatBody room={room} buyer={buyer} messages={messagesRecieved} lastMessageRef={lastMessageRef}/>
         <ChatFooter socket={socket} buyer={buyer} room={room}/>
       </div>
     </div>
