@@ -84,6 +84,7 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room}) 
     const upgradebuyer = (e) => {
         e.preventDefault();
         const {username} = e.target
+        const stats = "Open"
         Swal.fire({
             icon: "warning",
             title: "Are you sure this is the right user?",
@@ -106,7 +107,8 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room}) 
                         cashier: user.userId.userName,
                         subscriptionlevel: subscriptionId,
                         price: price,
-                        clientusername: username.value
+                        clientusername: username.value,
+                        stats: stats,
                     })
                 }).then(data =>{
                     if (data) {
@@ -142,11 +144,11 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room}) 
                     <MDBCardBody>
                         <MDBRow>
                             <MDBCol className="">
-                            <MDBCardText className="fw-bold">Cashier Username: {user.userId.userName}</MDBCardText>
+                            <MDBCardText className="fw-bold mt-2">Cashier Username: {user.userId.userName}</MDBCardText>
                             <MDBCardText className="text-mute">Created Time: {new Date(Buyer.createdAt).toLocaleString()}</MDBCardText>
                             </MDBCol>
                             <MDBCol className="">
-                            <MDBCardText className="d-flex fw-bold" >
+                            <MDBCardText className="d-flex fw-bold mt-2" >
                             Cashier Status: 
                             &nbsp;<span style={{ color: user.status === 'Close' ? 'red' : user.status === 'Open' ? 'green' : 'blue' }}>{user.status}</span>
                             <MDBBtn className="mx-2" outline color="dark" size="sm">{user.status}</MDBBtn>
@@ -167,7 +169,7 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room}) 
                         <MDBRow>
                             <MDBCol className="d-flex justify-content-between text-center mt-2">
                             <div>
-                            <MDBCardText className="text-mute">Number of Transaction</MDBCardText>
+                            <MDBCardText className="text-mute">No. of Transaction</MDBCardText>
                             <MDBCardText className="fw-bold">{user.numberoftransaction}</MDBCardText>
 
                             </div>                            
@@ -202,13 +204,13 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room}) 
                                 <div>
                                 <MDBCardText className="fw-bold">Subscription Details</MDBCardText>
                                 </div>
-                                <div className="offset-2 col-lg-10">
+                                <div className="offset-lg-2 col-lg-10">
                                 <MDBCardText className="text-mute d-flex">Enter Subscriber Username :
                                 &nbsp; <MDBInput size="sm" name="username"/>
                                 </MDBCardText>                                
                                 </div>
 
-                                <div className="offset-2 col-lg-10 mt-2">
+                                <div className="offset-lg-2 col-lg-10 mt-2">
                                 <MDBCardText className="text-mute d-flex">Select Subscription Level :
                                 <div className="mx-2 d-flex justify-content-center align-items-center flex-column">
                                 <img src={ruby} alt="" style={{height: "60px", width: "60px"}}/>
@@ -236,7 +238,7 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room}) 
                                 </MDBCardText>
                                 </div>
 
-                                <div className="offset-2 col-lg-10 mt-2">
+                                <div className="offset-lg-2 col-lg-10 mt-2">
                                 <MDBCardText className="text-mute">Subscription Price : {price ? "$"+price: ""}</MDBCardText>
                                 </div>
                                 <div className="d-flex justify-content-end mt-4">

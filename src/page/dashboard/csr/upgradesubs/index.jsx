@@ -84,13 +84,16 @@ const CsrUpgradeSubscriptionManual = () => {
     console.log(notif)
     const buy = (user) => {
         // e.preventDefault()
+        const stats = "Processing"
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
                 method:'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    transactionnumber: generateRandomString()
+                    transactionnumber: generateRandomString(),
+                    cashierId: user._id, 
+                    stats: stats,
                 })
                 }).then(result => result.json())
                 .then(data => {
