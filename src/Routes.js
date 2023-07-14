@@ -48,7 +48,7 @@ const Routers = () => {
     <Routes>
       <Route path="*" element={<Error/>}/>
       {/* Initial */}
-      <Route path="/" element={<Initial />} />
+      <Route path="/home" element={<Initial />} />
 
       <Route path="/dashboard" element={<Dashboard />}>
        
@@ -157,7 +157,7 @@ const Routers = () => {
       <Route path="/login" element={<Login />}/>
       <Route path="/verification/:userId" element={<StepVerification />}/>
       
-      <Route path="/cashiers" element={<AvailableCashiers/>}/>
+      <Route path="/" element={<AvailableCashiers/>}/>
     </Routes>
   );
 };
