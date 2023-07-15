@@ -37,11 +37,11 @@ import SubAdminUpgradeSubscriptionManual from "./page/dashboard/subadmin/upgrade
 import Home from "./component/minichatapp/Home";
 import ChatPage from "./component/minichatapp/ChatPage";
 import AvailableCashiers from "./page/dashboard/cashier";
-import socketIO from "socket.io-client"
+// import socketIO from "socket.io-client"
 import CsrDashboard from "./page/dashboard/csr/dashboard";
 import CsrUpgradeSubscriptionManual from "./page/dashboard/csr/upgradesubs";
 
-const socket = socketIO.connect("http://localhost:4000")
+// const socket = socketIO.connect(process.env.REACT_APP_API_URL)
 
 const Routers = () => {
   return (
@@ -147,7 +147,7 @@ const Routers = () => {
       </Route>
       
       {/* <Route path="/" element={<Home socket={socket}/>}></Route> */}
-      <Route path="/chat" element={<ChatPage socket={socket}/>}></Route>
+      {/* <Route path="/chat" element={<ChatPage socket={socket}/>}></Route> */}
 
       <Route path="referral">
         <Route path="agent/:userId/register" element={<SignUp />}/>

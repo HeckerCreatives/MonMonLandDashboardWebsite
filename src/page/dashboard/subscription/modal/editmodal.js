@@ -31,7 +31,7 @@ const UpdateDescriptionModal = ({descriptionlist}) => {
   
     function updatedescription (e) {
       e.preventDefault();
-      fetch(`http://localhost:4000/subscription/${descriptionlist._id}/updatedesc`, {
+      fetch(`${process.env.REACT_APP_API_URL}subscription/${descriptionlist._id}/updatedesc`, {
           method:'PUT',
           headers: {
               'Content-Type': 'application/json'
