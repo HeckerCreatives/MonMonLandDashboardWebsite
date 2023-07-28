@@ -64,22 +64,37 @@ const AvailableCashiers = () => {
         socket.on('room_full', (data) => {
             // Handle the room_full event here
             if(data){
-            setStatus(data.message);
-            }
             // You can display an error message to the user or perform any other action
             Swal.fire({
                 icon: "info",
                 title: "Queing",
-                text: "Need to wait",
+                text: data.message,
                 confirmButtonText: "Ok",
             }).then(result => {
                 if(result.isConfirmed){
-                    window.location.href = "/cashiers"
+                    window.location.href = "/"
                 }
             })
+            }
+            
+        })
+
+        socket.on('room_not_allowed', (data)=> {
+            if(data){
+                Swal.fire({
+                    icon: "info",
+                    title: "Admin is Out",
+                    text: data.message,
+                    confirmButtonText: "Ok",
+                }).then(result => {
+                    if(result.isConfirmed){
+                        window.location.href = "/"
+                    }
+                })
+            }
         })
     },[])
-    console.log(status)
+
     const buybtn = (user) => {
         setCashier(user)
         if(auth){        
