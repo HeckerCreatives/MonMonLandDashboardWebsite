@@ -51,14 +51,14 @@ const Subscription = () => {
     const sortedList = subs.sort((a, b) => a._id.localeCompare(b._id));
 
     const settings = {
-        className: "",
+        className: "h100",
         dots: true,
         infinite: true,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
         adaptiveHeight: false,
-        variableWidth:false,
+        variableWidth: false,
         arrows:false
       };
     
@@ -67,7 +67,9 @@ const Subscription = () => {
         <>
         <MDBContainer fluid className="bgcolor" id="subscription">
 
-        <MDBTypography className="mt-5 titlefontsize text-warning fw-bold text-center" style={{marginBottom: "10vh"}}>
+        <MDBTypography 
+        className="mt-5 titlefontsize text-warning fw-bold text-center" 
+        style={{marginBottom: "10vh"}}>
             Subscription
         </MDBTypography>
         {/* for desktop */}
@@ -126,7 +128,7 @@ const Subscription = () => {
             {/* PEARL */}
             {sortedList.map(sub =>(  
              
-             <MDBCard className="linya align-items-center" key={sub._id}>
+            <MDBCard className="linya align-items-center" key={sub._id}>
             <div className="d-flex justify-content-center">
                 <MDBCardImage src={sub.image} alt="" className="bg-dark" id="badge"/>
             </div>
