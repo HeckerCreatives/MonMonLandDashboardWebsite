@@ -78,16 +78,16 @@
         margin: 10% auto 0 auto;
     } */
 
-    .slick-slide > div{
-        /* height: 100%; */
+    /* .slick-slide > div{
+        height: 100%;
         margin: 5% 5% 0 5%;
-    }
+    } */
 
-    .slick-slide > div > div > img{
+    /* .slick-slide > div > div > img{
         display: flex !important;
         height: calc(50vh - 100px);
         margin: 0% auto 0% auto;
-    }
+    } */
     
        
 }
@@ -105,14 +105,14 @@
         width: 100px;
     }
 
-    .slick-slide > div {
+    /* .slick-slide > div {
         display: grid;
         place-items: center;
         margin-top: 5%;
         margin-left: 3%;
         margin-right: 3%;
         font-size: small;
-    }
+    } */
 
     .descriptionholder {
         /* background-image: url("../../../assets/games/description holder.png");
@@ -146,14 +146,14 @@
         width: 24%;
     }
 
-    .slick-slide > div {
+    /* .slick-slide > div {
         display: grid;
         place-items: center;
         margin-top: 10%;
         margin-left: 5%;
         margin-right: 5%;
         font-size: medium;
-    }
+    } */
 
     .descriptionholder {
         /* background-image: url("../../../assets/games/description holder.png");
@@ -184,14 +184,14 @@
         width: 24%;
     }
 
-    .slick-slide > div {
+    /* .slick-slide > div {
         display: grid;
         place-items: center;
         margin-top: 10%;
         margin-left: 5%;
         margin-right: 5%;
         font-size: medium;
-    }
+    } */
 
     .descriptionholder {
         /* background-image: url("../../../assets/games/description holder.png");

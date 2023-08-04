@@ -13,23 +13,23 @@ const CashierStep1 = ({user, toggle, settoggle, setstep2toggle, socket}) => {
         window.location.href = `/login`
       }) ;
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        if(user){
-        setstep2toggle()
-        socket.emit("newUser", {userName, socketID: socket.id})
-        } else {
-            Swal.fire({
-                title: "You need to Login first",
-                icon: "info",
-                text: `you need to login`
-              }).then(result => {
-                if(result.isConfirmed)
-                window.location.href = `/login`
-              }) ;
-        }
+    // const handleSubmit = (e) => {
+    //     e.preventDefault()
+    //     if(user){
+    //     setstep2toggle()
+    //     socket.emit("newUser", {userName, socketID: socket.id})
+    //     } else {
+    //         Swal.fire({
+    //             title: "You need to Login first",
+    //             icon: "info",
+    //             text: `you need to login`
+    //           }).then(result => {
+    //             if(result.isConfirmed)
+    //             window.location.href = `/login`
+    //           }) ;
+    //     }
         
-    }
+    // }
 
     return(
         <>
@@ -56,7 +56,7 @@ const CashierStep1 = ({user, toggle, settoggle, setstep2toggle, socket}) => {
                         <MDBCardText>I want to buy</MDBCardText>
                         <MDBInput />
                         <MDBInput disabled/>
-                        <MDBBtn onClick={handleSubmit}>Buy</MDBBtn>
+                        {/* <MDBBtn onClick={handleSubmit}>Buy</MDBBtn> */}
                         <MDBBtn onClick={settoggle}>Cancel</MDBBtn>
                     </MDBCol>
                 </MDBRow>

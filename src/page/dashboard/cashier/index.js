@@ -6,9 +6,7 @@ import PaginationPager from "../../../component/pagination/index"
 import CashierStep1 from "./steps/step1";
 import CashierStep2 from "./steps/step2";
 import io from "socket.io-client"
-// import DataContext from "../../../component/datacontext";
 const socket = io(process.env.REACT_APP_API_URL)
-// const socket = io("https://monmontestserver-lotk.onrender.com");
 const AvailableCashiers = () => {
     const [username, setUsername] = useState(''); // Add this
     const [room, setRoom] = useState(''); // Add this
@@ -54,9 +52,6 @@ const AvailableCashiers = () => {
         .then(response => response.json())
         .then(result => {
             setGames(result)
-            // console.log(result)
-            // const filter = result.filter(e => e.userId._id === auth._id)
-            // setUser(filter)
         })
     },[])
     
