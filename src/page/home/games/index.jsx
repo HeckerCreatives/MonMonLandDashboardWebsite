@@ -5,6 +5,7 @@ import { MDBContainer, MDBRow, MDBCol, MDBTypography, MDBCarousel,
 import "./index.css"
 import leftarrow from "../../../assets/games/left arrow.png"
 import rightarrow from "../../../assets/games/right arrow.png"
+import desc from "../../../assets/games/base.png"
 import pearl from "../../../assets/subscription/pearl badge.png"
 import ruby from "../../../assets/subscription/ruby badge png.png"
 import emerald from "../../../assets/subscription/emerald png.png"
@@ -34,12 +35,9 @@ const Games = () => {
         dots: false,
         fade: true,
         infinite: true,
-        // autoplay:true ,
-        // autoplaySpeed: 3000,
         slidesToShow: 1,
         slidesToScroll: 1,
-        // useTansform: true,
-        // centerPadding: '100px',
+        // adaptiveHeight: true
       };
 
       useEffect(() => {
@@ -72,27 +70,27 @@ const Games = () => {
 
             
            {/* Description holder */}
-            <MDBCol className="col-12 col-xl-6 "> 
-                <div className="descriptionholder">
+            <MDBCol className="col-12 col-xl-6"> 
+                <div className="descriptionholder">                
+                <div className="descdiv">
                 
-                <div className="">
-                    <Slider {...settings} className=' fw-bold' ref={sliderRef1}>
+                    <Slider {...settings} className='fw-bold' ref={sliderRef1}>
                     
                     {games.map((content)=> (
-                    <div key={content._id} className="descdiv" >
-                    <div>
+                    <div key={content._id} className="" >
+                    <div className="mx-4">
                     <MDBTypography className="h2 text-center mt-3" >{content.gametitle}</MDBTypography>
                     </div>
                     
-                    <div>
-                    <MDBTypography className="p text-center p-3">
+                    <div className="mx-3">
+                    <MDBTypography className="p text-center p-3 custom-text-size">
                     {content.description}
                     </MDBTypography>
                     </div>    
                     
 
-                    <div className="subs">
-                   <MDBCol className="">
+                   <div className="">
+                   <MDBCol className="mx-3 p-3">
                    <MDBTypography className="substext h2 text-wrap">
                     Subscription:
                     </MDBTypography>
@@ -103,7 +101,7 @@ const Games = () => {
                                 <img
                                 src={keywordImages[keyword]}
                                 alt=""
-                                className="img-fluid badgesize"
+                                className="badgesize"
                                 />
                             )}
                             </div>
@@ -120,19 +118,15 @@ const Games = () => {
                     </Slider>
                    
                 </div>
-                
+                <img src={desc} alt="" className="descriptionholder"/>
 
-                   
-                    
-                
-                    
-                    </div>
+                </div>
                     
             </MDBCol>
             {/* End of Description holder */}
 
             {/* Character Holder */}
-            <MDBCol className="col-12 col-xl-6">
+            {/* <MDBCol className="col-12 col-xl-6">
             <div className="gamesmobileview">
             <div className="characterholder text-center">
             
@@ -162,7 +156,7 @@ const Games = () => {
             
                     
                           
-            </MDBCol>
+            </MDBCol> */}
             {/* End of Character Holder */}
             </MDBRow> 
         </MDBContainer>

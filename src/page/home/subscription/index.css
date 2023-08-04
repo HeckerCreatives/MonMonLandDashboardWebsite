@@ -103,7 +103,7 @@ ul .list::before {
 
 .slick-slide > div {
     height: 100% !important;
-    font-size: small; 
+    font-size: smaller; 
 }
 
 /* .slick-slide > div > div {
