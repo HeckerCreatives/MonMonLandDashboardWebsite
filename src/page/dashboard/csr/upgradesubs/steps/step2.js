@@ -64,18 +64,15 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room}) 
         denyButtonText: "Cancel",
         }).then(result => {
             if(result.isConfirmed){
-                const stats = "Open"
                 fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/${id}/destroybuyer`,{
                     method: "DELETE",
                     headers: {
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({stats: stats, cashierId: user._id})
+                    }
                 }).then(result => result.json())
                 .then(data => {
                     if(data){
                     setstep2toggle()
-                    console.log(data)
                     }
                 })
             }
@@ -307,7 +304,11 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room}) 
             <MDBCard className="h-100">
             <MDBCardBody>
             <ChatPage socket={socket} user={user} buyer={buyer} room={room}/>
-                
+                {/* <MDBRow>
+                    <MDBCol>
+                        
+                    </MDBCol>
+                </MDBRow> */}
             </MDBCardBody>
         </MDBCard>
             </MDBCol>

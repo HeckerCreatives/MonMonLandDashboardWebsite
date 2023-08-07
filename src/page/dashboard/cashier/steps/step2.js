@@ -2,6 +2,8 @@ import { MDBBtn, MDBCard, MDBCardBody, MDBCardText, MDBCol, MDBInput, MDBRow, MD
 import React, { useEffect , useState} from "react";
 // import Home from "../../../../../component/minichatapp/Home";
 import ChatPage from "../../../../component/minichatapp/ChatPage";
+import io from "socket.io-client"
+import Swal from "sweetalert2";
 const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buyer, socket}) => {
     
     

@@ -1,58 +1,53 @@
 import React, {useEffect, useState,useContext} from "react";
-import { MDBContainer, MDBBtn, MDBBadge, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBInput,  MDBCard, MDBCardBody, MDBCardText, MDBIcon} from "mdb-react-ui-kit";
+import { MDBContainer, MDBBtn, MDBBadge, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBTypography, } from "mdb-react-ui-kit";
 import Swal from "sweetalert2"
 import Breadcrumb from "../../../../component/breadcrumb";
 import PaginationPager from "../../../../component/pagination/index"
-import ruby from "../../../../assets/subscription/ruby badge png.png"
-import emerald from "../../../../assets/subscription/emerald png.png"
-import diamond from "../../../../assets/subscription/diamond.png"
-import ChatPage from "../../../../component/minichatapp/ChatPage";
-import { handlePagination } from "../../../../component/utils"
+import Step1 from "./steps/step1";
+import Step2 from "./steps/step2";
 import io from "socket.io-client"
+// import DataContext from "../../../../component/datacontext";
 const socket = io(process.env.REACT_APP_API_URL)
 
 const SubAdminUpgradeSubscriptionManual = () => {
-    const [rubyChecked, setRubyChecked] = useState(false);
-    const [emeraldChecked, setEmeraldChecked] = useState(false);
-    const [diamondChecked, setDiamondChecked] = useState(false);
-    const [subscriptionId, setSubscriptionId] = useState("");
-    const [Buyer, setBuyer] = useState([]);
-    const [price, setPrice] = useState("");
-    const [user, setUser] = useState([]);
-    const [history, setHistory] = useState("");
-    const [page, setPage] = useState(1),
-          [total, setTotal] = useState(0);
+  const [username, setUsername] = useState(''); // Add this
+    const [room, setRoom] = useState(''); // Add this
+    const [cashier, setCashier] = useState(''); // Add this
+    // const { buyer } = useContext(DataContext);
+    const [buyer, setBuyer] = useState([]);
+    const [games, setGames] = useState([]),
+            [checkedItems, setCheckedItems] = useState([]),
+            [page, setPage] = useState(1),
+            [notif, setNotif] = useState(""),
+            [user, setUser] = useState([]),
+            [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
-  
-      useEffect(() => {
-          let totalPages = Math.floor(history.length / 2);
-          if (history.length % 2 > 0) totalPages += 1;
-          setTotal(totalPages);
-      }, [history]);
-  
-      useEffect(()=> {
-          fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
-          .then(response => response.json())
-          .then(result => {
-              const data = result.filter(e => e.cashier === auth.userName)
-              setHistory(data)
-          })
-          
-      },[])
-  
-      function generateRandomString() {
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        let randomString = '';
-      
-        for (let i = 0; i < 12; i++) {
-          const randomIndex = Math.floor(Math.random() * characters.length);
-          randomString += characters[randomIndex];
-        }
-      
-        return randomString;
-      }
+    const [toggle, settoggle] = useState(false)        
+    const toggleShow = () => settoggle(!toggle);
 
-      useEffect(()=>{
+    const [step2toggle, setstep2toggle] = useState(false)        
+    const toggleShow2= () => setstep2toggle(!step2toggle);
+    // console.log(buyer)
+
+    function generateRandomString() {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let randomString = '';
+    
+      for (let i = 0; i < 12; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        randomString += characters[randomIndex];
+      }
+    
+      return randomString;
+    }
+    
+    useEffect(() => {
+        let totalPages = Math.floor(games.length / 5);
+        if (games.length % 5 > 0) totalPages += 1;
+        setTotal(totalPages);
+        }, [games]);
+
+    useEffect(()=>{
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`, {
           method: "GET",
           headers: {
@@ -61,123 +56,31 @@ const SubAdminUpgradeSubscriptionManual = () => {
         })
         .then(response => response.json())
         .then(result => {
-            const filter = result.filter(e => e.userId._id === auth._id)            
-            setUser(filter[0])            
+            
+            const filter = result.filter(e => e.userId._id === auth._id)
+            setUser(filter)
+            setGames(filter)
         })
-        
-        },[])
-  
-      const cancelorder = (id) => {
-          const stats = "Open"
-      Swal.fire({
-          icon: "warning",
-          title: "Are you sure to delete these items?",
-          text: "You won't be able to revert this",
-          showDenyButton: true,
-          confirmButtonText: "Delete",
-          denyButtonText: "Cancel",
-          }).then(result => {
-              if(result.isConfirmed){
-                  fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/${id}/destroybuyer`,{
-                      method: "DELETE",
-                      headers: {
-                          'Content-Type': 'application/json'
-                      },
-                      body: JSON.stringify({
-                      cashierId: user._id,
-                      stats: stats,
-                      })
-                  }).then(result => result.json())
-                  .then(data => {
-                      if(data){
-                      window.location.reload()
-                      }
-                  })
-              }
-          })     
-      
-      //        
-      }
-  
-      const upgradebuyer = (e) => {
-          e.preventDefault();
-          const {username} = e.target
-          const stats = "Open"
-          Swal.fire({
-              icon: "warning",
-              title: "Are you sure this is the right user?",
-              text: "You won't be able to revert this",
-              showDenyButton: true,
-              confirmButtonText: "Confirm",
-              denyButtonText: "Cancel",
-          }).then(result =>{
-              if(result.isConfirmed){
-                  fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/updatebuyer/${Buyer._id}`,{
-                      method: "PUT",
-                      headers: {
-                          'Content-Type': 'application/json'
-                      },
-                      body: JSON.stringify({
-                          username: username.value,
-                          subscription: subscriptionId,
-                          cashierId: user._id,
-                          amount: price,
-                          cashier: user.userId.userName,
-                          subscriptionlevel: subscriptionId,
-                          price: price,
-                          clientusername: username.value,
-                          stats: stats,
-                      })
-                  }).then(data =>{
-                      if (data) {
-                      Swal.fire({
-                          title: "User Upgraded Successfully",
-                          icon: "success",
-                          text: "You Successfully Upgraded a User"
-                      }).then(ok => {
-                      if(ok.isConfirmed){
-                          window.location.reload()
-                      }
-                      })
-                          
-                      } else {
-                          Swal.fire({
-                              title: "User Upgraded Unsuccessfully",
-                              icon: "error",
-                              text: "There is an error Upgrading the Account"
-                          })
-                      }
-                  })
-              }
-          })
-          
-      }
-      const goonline = () => {
-        socket.emit('join_room', { username: auth.userName, room: auth.userName});
-      }
-      const handleCheckboxChange = (checkboxName) => {
-        if (checkboxName === 'ruby') {
-        setSubscriptionId(process.env.REACT_APP_RUBY)
-        setPrice("20")
-        setRubyChecked(true);
-        setEmeraldChecked(false);
-        setDiamondChecked(false);
-        } else if (checkboxName === 'emerald') {
-        setSubscriptionId(process.env.REACT_APP_EMERALD)
-        setPrice("45")
-        setRubyChecked(false);
-        setEmeraldChecked(true);
-        setDiamondChecked(false);
-        } else if (checkboxName === 'diamond') {
-        setSubscriptionId(process.env.REACT_APP_DIAMOND)
-        setPrice("100")  
-        setRubyChecked(false);
-        setEmeraldChecked(false);
-        setDiamondChecked(true);
-        }
-      }
+    },[])
 
-      const buy = (id) => {
+    useEffect(() => {
+        setUsername(auth.userName)
+        setRoom(auth.userName)   
+        socket.emit('join_room', { username: auth.userName, room: auth.userName});
+        // Add event listener for 'receive_message'
+        socket.on('receive_notification', (data) => {
+            setNotif(data.message); // You can handle the received data here
+        });
+    
+        // Cleanup the socket connection on component unmount
+        return () => {
+            socket.off('receive_notification');
+        };
+        
+      }, []);
+
+    const buy = (user) => {
+        // e.preventDefault()
         const stats = "Processing"
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
                 method:'POST',
@@ -186,214 +89,109 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 },
                 body: JSON.stringify({
                     transactionnumber: generateRandomString(),
-                    cashierId: id, 
+                    cashierId: user._id, 
                     stats: stats,
                 })
                 }).then(result => result.json())
                 .then(data => {
+                    // console.log(data)
                 setBuyer(data)
                 
             })
-            
+        setCashier(user)        
         
-    }
-      return(
-          <>
-          <MDBRow>
-              <MDBCol lg={6}>
-                  <MDBCard className="h-100">
-                      <MDBCardBody>
-                          <MDBRow>
-                              <MDBCol className="">
-                              <MDBCardText className="fw-bold mt-2">Cashier Username: {auth.userName}</MDBCardText>
-                              <MDBCardText className="text-mute">Created Time: {new Date(Buyer.createdAt).toLocaleString()}</MDBCardText>
-                              </MDBCol>
-                              <MDBCol className="">
-                              <MDBCardText className="d-flex fw-bold mt-2 align-items-center" >
-                              <span>Cashier Status:</span>
-                              &nbsp;<span style={{ color: user.status === 'Close' ? 'red' : user.status === 'Open' ? 'green' : 'blue' }}>{user.status}</span>
-                              <div>
-                              <MDBBtn 
-                              className="mx-2" 
-                              outline color="dark" 
-                              size="sm"
-                              onClick={() => buy(auth._id)}  
-                              >Create
-                              </MDBBtn>                                
-                              </div> 
-                              <div>
-                              <MDBBtn
-                                  type="button"
-                                  className="mx-2" 
-                                  outline color="dark" size="sm" 
-                                  onClick={goonline}>
-                                  Go Online
-                                  </MDBBtn>                               
-                              </div> 
-                              </MDBCardText>
-                              <MDBCardText className="text-mute">Transaction Number: &nbsp;{Buyer.transactionnumber}
-                              &nbsp; <MDBIcon far icon="copy" />
-                              </MDBCardText>                             
-                              </MDBCol>
-                          </MDBRow>
-  
-                          <MDBRow>
-                              <MDBCol className="d-flex justify-content-between text-center mt-2">
-                              <div>
-                              <MDBCardText className="text-mute">No. of Transaction</MDBCardText>
-                              <MDBCardText className="fw-bold">{user.numberoftransaction}</MDBCardText>
-                              </div>                            
-                              <div>
-                              <MDBCardText className="text-mute">Payment Limit</MDBCardText>
-                              <MDBCardText className="fw-bold">{user.paymentlimit} USDT</MDBCardText>
-                              </div>                            
-                              <div>
-                              <MDBCardText className="text-mute">Quantity</MDBCardText>
-                              <MDBCardText className="fw-bold">{user.paymentcollected} USDT</MDBCardText>
-                              </div>                            
-                              </MDBCol>
-                          </MDBRow>
-                          <hr/>
-                          <MDBRow>
-                              <MDBCol className="mt-2">
-                                  <div>
-                                  <MDBCardText className="fw-bold">Payment Details</MDBCardText>
-                                  </div>
-                                  <div className="offset-2 col-lg-10">
-                                  <MDBCardText className="text-mute">Payment Gateway : {user.paymentmethod}</MDBCardText>
-                                  </div>                            
-                                  <div className="offset-2 col-lg-10">
-                                  <MDBCardText className="text-mute">Account Number : {user.paymentdetail}</MDBCardText>
-                                  </div>                 
-                              </MDBCol>
-                          </MDBRow>
-                          <hr/>
-                          <MDBRow>
-                              <form autoComplete="off" onSubmit={upgradebuyer}>
-                              <MDBCol className="mt-2">
-                                  <div>
-                                  <MDBCardText className="fw-bold">Subscription Details</MDBCardText>
-                                  </div>
-                                  <div className="offset-lg-2 col-lg-10">
-                                  <MDBCardText className="text-mute d-flex mt-2">Enter Subscriber Username :
-                                  &nbsp; <MDBInput size="sm" name="username"/>
-                                  </MDBCardText>                                
-                                  </div>
-  
-                                  <div className="offset-lg-2 col-lg-10 mt-2">
-                                  <MDBCardText className="text-mute">Select Subscription Level :                                
-                                  </MDBCardText>
-                                  <MDBCol className="d-flex offset-3">
-                                  <div className="mx-2 d-flex justify-content-center align-items-center flex-column">
-                                  <img src={ruby} alt="" style={{height: "60px", width: "60px"}}/>
-                                  <label className="d-flex justify-content-center align-items-center flex-column">
-                                  <span className="pb-2">Ruby</span>
-                                  <input type="checkbox" checked={rubyChecked} onChange={() => handleCheckboxChange('ruby')} className="mx-2"/>                        
-                                  </label>
-                                  </div>
-  
-                                  <div className="mx-2 d-flex justify-content-center align-items-center flex-column">
-                                  <img src={emerald} alt="" style={{height: "60px", width: "60px"}}/>
-                                  <label className="d-flex justify-content-center align-items-center flex-column">
-                                  <span className="pb-2">Emerald</span>
-                                  <input type="checkbox" checked={emeraldChecked} onChange={() => handleCheckboxChange('emerald')} className="mx-2"/>                        
-                                  </label>
-                                  </div>
-  
-                                  <div className="mx-2 d-flex justify-content-center align-items-center flex-column">
-                                  <img src={diamond} alt="" style={{height: "60px", width: "60px"}}/>
-                                  <label className="d-flex justify-content-center align-items-center flex-column">
-                                  <span className="pb-2">Diamond</span>
-                                  <input type="checkbox" checked={diamondChecked} onChange={() => handleCheckboxChange('diamond')} className="mx-2"/>                        
-                                  </label>
-                                  </div>
-                                  </MDBCol>
-                                  
-                                  </div>
-  
-                                  <div className="offset-lg-2 col-lg-10 mt-3">
-                                  <MDBCardText className="text-mute">Subscription Price : {price ? "$"+price: ""}</MDBCardText>
-                                  </div>
-                                  <div className="d-flex justify-content-end mt-2">
-                                  <div className="">
-                                  <MDBBtn className="mx-2 mt-2" type="submit">Upgrade Subscription</MDBBtn>
-                                  </div>
-                                  <div className="">
-                                  <MDBBtn className="mx-2 mt-2" color="danger" type="button" onClick={() => cancelorder(Buyer._id)}>Cancel Order</MDBBtn>
-                                  </div>
-                                  </div>
-                                  
-                                                    
-                              </MDBCol>
-                              </form>
-                          </MDBRow>
-                          <hr/>
-                          <MDBRow>
-                              <MDBCol>
-                              <div>
-                              <MDBCardText className="fw-bold">Payment History</MDBCardText>
-                              </div>
-                              <MDBTable align='middle' className="border mt-4" responsive>
-                  <MDBTableHead className="head text-center">
-                      <tr >
-                      <th className="fw-bold" scope='col'>Date Created</th>
-                      <th className="fw-bold" scope='col'>Cashier Username</th>
-                      <th className="fw-bold" scope='col'>Transaction Number</th>
-                      <th className="fw-bold" scope='col'>Subscription Level</th>
-                      <th className="fw-bold" scope='col'>Price</th>
-                      <th className="fw-bold" scope='col'>Client Username</th>
-                      </tr>
-                  </MDBTableHead>
-                  <MDBTableBody className="text-center">                
-                  {history ? 
-                      <>
-                  {handlePagination(history, page, 2)?.map((data,i) =>(
-                  <tr key={`game-${i}`}>
-                  <td>{new Date(data.createdAt).toLocaleString()}</td>
-                  <td>
-                      {data.cashier}
-                  </td>
-                  <td>
-                      {data.transactionnumber}
-                  </td>
-                  <td>
-                      {data.subscriptionlevel?.subscriptionName}
-                  </td>
-                  <td>
-                      {`$${data.price}`}
-                  </td>
-                  <td>
-                      {data.clientusername}
-                  </td>                
-                  </tr>
-                  ))}
-                  </>
-                  : null}
-                      
-                  </MDBTableBody>
-                              </MDBTable>
-                              <PaginationPager
-                              total={total} page={page} setPage={setPage}/>
-                              </MDBCol>
-                          </MDBRow>
-                      </MDBCardBody>
-                  </MDBCard>
-              </MDBCol>
-  
-              <MDBCol>
-              <MDBCard className="h-100">
-              <MDBCardBody>
-                  <MDBRow>
-                      <MDBCol>
-                          <ChatPage socket={socket} buyer={auth.userName} room={auth.userName}/>
-                      </MDBCol>
-                  </MDBRow>
-              </MDBCardBody>
-          </MDBCard>
-              </MDBCol>
-          </MDBRow> 
-          </>
-      )
+        toggleShow2()
+        }
+
+    return (
+        <MDBContainer fluid className="">
+        <Breadcrumb title="Upgrade Subscription" paths={[]}/>
+        <MDBTypography className="fw-bold">Manual</MDBTypography>
+        <MDBTypography className=" text-center text-success fw-bold">{notif}</MDBTypography>
+       
+        <MDBRow>
+        <MDBCol>
+        
+        <>
+        { step2toggle ? 
+          <Step2 
+          user={cashier} 
+          step2toggle={step2toggle} 
+          setstep2toggle={toggleShow2} 
+          Buyer={buyer}
+          room={room}
+          buyer={username} 
+          socket={socket}  
+          />
+        :
+        <>
+            <MDBTable align='middle' className="border mt-4" responsive>
+                <MDBTableHead className="head text-center">
+                    <tr >
+                    {/* <th className="fw-bold" scope='col'>Select</th> */}
+                    <th className="fw-bold" scope='col'>Date Created</th>
+                    <th className="fw-bold" scope='col'>Username</th>
+                    <th className="fw-bold" scope='col'>Payment Method</th>
+                    <th className="fw-bold" scope='col'>Number of Transaction</th>
+                    <th className="fw-bold" scope='col'>Payment Limit</th>
+                    <th className="fw-bold" scope='col'>Status</th>
+                    <th className="fw-bold" scope='col'>Action</th>
+                    </tr>
+                </MDBTableHead>
+                <MDBTableBody className="text-center">                
+                <>
+                {games.map((game,i) =>(
+                <tr key={`game-${i}`}>                
+                <td>{new Date(game.createdAt).toLocaleString()}</td>
+                <td>
+                    {game.userId.userName}
+                </td>
+                <td> 
+                <div className="d-flex flex-column align-items-center justify-content-center">
+                <span>{game.paymentmethod}</span>
+                <span>{game.paymentdetail}</span>
+                </div>
+                </td>
+                <td>{game.numberoftransaction}</td>
+                <td>{game.paymentcollected ? game.paymentcollected : 0}/{game.paymentlimit}</td>
+                <td style={{ color: game.status === 'Close' ? 'red' : game.status === 'Open' ? 'green' : 'blue' }}>
+                {game.status}
+                </td>
+
+                <td>
+                <MDBBtn 
+                className="mx-2 fw-bold" 
+                outline color="dark" 
+                onClick={() => buy(game)}
+                >
+                Transact
+                {notif && 
+                <MDBBadge color='danger' className='ms-2'>
+                1
+                </MDBBadge>}
+                </MDBBtn>
+                </td>
+                </tr>
+                ))}
+                </>
+                                
+                
+                    
+                </MDBTableBody>
+            </MDBTable>
+            <PaginationPager
+            total={total} page={page} setPage={setPage}/>
+        </>  
+        }
+        
+        
+        </>
+        
+        </MDBCol>
+        </MDBRow>
+            
+        </MDBContainer>
+    )
 }
 
 export default SubAdminUpgradeSubscriptionManual;

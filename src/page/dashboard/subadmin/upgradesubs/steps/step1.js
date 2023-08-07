@@ -2,13 +2,13 @@ import { MDBBtn, MDBCard, MDBCardBody, MDBCardText, MDBCol, MDBInput, MDBRow, MD
 import React from "react";
 
 const Step1 = ({user, toggle, settoggle, setstep2toggle, socket}) => {
-    // const userName = user.userName;
-    // const handleSubmit = (e) => {
-    //     e.preventDefault()
-    //     setstep2toggle()
-    //     // localStorage.setItem("userName", user.userName)
-    //     socket.emit("newUser", {userName, socketID: socket.id})
-    // }
+    const userName = user.userName;
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        setstep2toggle()
+        // localStorage.setItem("userName", user.userName)
+        socket.emit("newUser", {userName, socketID: socket.id})
+    }
 
     return(
         <>
@@ -35,7 +35,7 @@ const Step1 = ({user, toggle, settoggle, setstep2toggle, socket}) => {
                         <MDBCardText>I want to buy</MDBCardText>
                         <MDBInput />
                         <MDBInput disabled/>
-                        {/* <MDBBtn onClick={handleSubmit}>Buy</MDBBtn> */}
+                        <MDBBtn onClick={handleSubmit}>Buy</MDBBtn>
                         <MDBBtn onClick={settoggle}>Cancel</MDBBtn>
                     </MDBCol>
                 </MDBRow>

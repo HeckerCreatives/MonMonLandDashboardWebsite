@@ -23,14 +23,9 @@ const ChatPage = ({socket, room, buyer, setNotif}) => {
         },
       ]);
     });
-    
-    window.addEventListener('load', function() {
-      socket.emit('leave_room', {username: buyer, room: room})
-    });
-    
+
 	// Remove event listener on component unmount
     return () => socket.off('receive_message');
-
   }, [socket]);
 
   useEffect(() => {

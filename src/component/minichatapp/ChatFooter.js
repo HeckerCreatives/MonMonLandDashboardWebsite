@@ -1,6 +1,6 @@
 import { MDBIcon } from 'mdb-react-ui-kit';
 import React, {useState, useEffect} from 'react'
-import UploadWidget from "../uploadwidget/uploadwidet"
+
 const ChatFooter = ({socket, buyer, room}) => {
     const [message, setMessage] = useState("")
     const [image, setImage] = useState(null);
@@ -11,33 +11,25 @@ const ChatFooter = ({socket, buyer, room}) => {
         setImage(file);
       }
     };
-
-    const handleImgUrl = (url) => {
-      // Use the uploaded image URL in the parent component or pass it to another component
-      setImage(url);
-    };
-
     const __createdtime__ = Date.now();
     
     const sendMessage = (e) => {
       e.preventDefault();
-      if (message.trim()) {        
+      if (message !== '') {        
         // Send message to server. We can't specify who we send the message to from the frontend. We can only send to server. Server can then send message to rest of users in room
-        socket.emit('send_message', { username: buyer, room: room, message: message, __createdtime__, image: image ? image : null});
+        socket.emit('send_message', { username: buyer, room: room, message: message, __createdtime__, image: image ? URL.createObjectURL(image) : null});
         setMessage('');
         setImage(null);
-      } 
-      // else if (image) {
-      //       const reader = new FileReader();
-      //       reader.onload = function (e) {
-      //         const dataURL = e.target.result;
-      //         socket.emit('send_message', { username: buyer, room: room, message: message, __createdtime__, image: dataURL});
-      //         console.log(dataURL)
-      //         setMessage('');
-      //         setImage(null);
-      //       };
-      //       reader.readAsDataURL(image);
-      //     }
+      } else if (image) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              const dataURL = e.target.result;
+              socket.emit('send_message', { username: buyer, room: room, message: message, __createdtime__, image: dataURL});
+              setMessage('');
+              setImage(null);
+            };
+            reader.readAsDataURL(image);
+          }
     };
     
     
@@ -85,7 +77,7 @@ const ChatFooter = ({socket, buyer, room}) => {
         {image && (
           <>
             <div className='mx-3 imagee'>
-              <img src={image} alt="selected" className="img-fluid imagee"/>              
+              <img src={URL.createObjectURL(image)} alt="selected" className="img-fluid imagee"/>              
             </div>
             <div className=''>
             <button className="cancelBtn" onClick={() => setImage(null)}>
@@ -105,7 +97,7 @@ const ChatFooter = ({socket, buyer, room}) => {
             // onKeyDown={handleTyping}
             /> 
         <div className="d-flex align-items-end">
-        {/* <label htmlFor="fileInput" className='mx-2'>
+        <label htmlFor="fileInput" className='mx-2'>
             <button type="button" className='sendBtn rounded' onClick={() =>document.getElementById('fileInput').click()}>
             <MDBIcon fas icon="plus" size='xl'/>
             </button>              
@@ -116,8 +108,8 @@ const ChatFooter = ({socket, buyer, room}) => {
               accept="image/*"
               style={{ display: "none" }}
               onChange={handleImageUpload}
-            /> */}
-            <UploadWidget setImgUrl={handleImgUrl}/>
+            />
+            
             <button type='submit' className="sendBtn mx-2 rounded">
             <MDBIcon fas icon="paper-plane" size='xl'/>
             </button>
