@@ -82,10 +82,10 @@ const News = () => {
                 <MDBCardImage src={balita.image} alt='...' position='top' id="images" />
                 <MDBCardBody>
                     <MDBCardText className="fw-bold text-center">
-                    {balita.title}
+                    {balita.title.length > 70 ? `${balita.title.substring(0,70)}...`: balita.title}
                     </MDBCardText>
                     <MDBCardText className="text-center">
-                    {balita.description.length > 25 ? `${balita.description.substring(0,25)}...`: balita.description}
+                    {balita.description.length > 70 ? `${balita.description.substring(0,70)}...`: balita.description}
                     </MDBCardText>
                   <MDBBtn onClick={() => {
                   setActiveModal(true)
@@ -118,7 +118,9 @@ const News = () => {
                 <MDBCardText className="text-dark mt-3 mb-0 fw-bold">Description</MDBCardText>
                 <MDBCard style={{background: "#EDCAB4",}}>
                     <MDBCardBody >
-                    {newsdescription}
+                    {newsdescription.split('\n').map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
+                    ))}
                     </MDBCardBody>                    
                 </MDBCard>
                 

@@ -6,10 +6,13 @@
    background-size: cover;
    border-radius: 50px;
    position: absolute;  
+   z-index: 2;
 }
 
 #biglogo {
     width: 600px;
+    position: relative;
+    z-index: 2;
 }
 
 #playnow {
@@ -25,6 +28,7 @@
     border-radius: 50px;
     position: relative;
     /* margin: 1rem; */
+    z-index: 2;
     
 }
 
@@ -34,7 +38,7 @@
     font-size: 1.4rem;
     font-weight: 200;
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     /* text-align: end; */
  }
 
@@ -43,12 +47,28 @@
     margin-bottom: 12vh;
 }
 
+.dahonleft {
+    position: absolute;
+    top: -0.9%;
+    left: -1%;
+    z-index: 2;
+}
+
+.dahonright {
+    position: absolute;
+    top: -0.9%;
+    right: -1%;
+    z-index: 2;
+}
+
 .progressbar {
     background: #FFBF0F;
     background: linear-gradient(to bottom, #FFBF0F 0%, #FFFFFF 7%, #F19D31 8%, #D07104 90%, #9C4B0C 100%);
     border-radius: 0px;
     height: 42px;
     margin-top: 4px;
+    position: relative;
+    z-index: 2;
 }
 
 .innerbar {
@@ -57,6 +77,8 @@
     background-size: 50px;
     border-radius: 50px !important;
     width: 100%;
+    position: relative;
+    z-index: 2;
     /* overflow: hidden; */
 }
 
@@ -67,7 +89,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     color: #fff;
-    
+    z-index: 2;
   }
 
 .stroke {
@@ -93,3 +115,81 @@
         /* overflow: hidden; */
     }
 }
+
+.cloudC {
+    position: absolute;
+    z-index: 1;
+}
+  
+.cloudB {
+    position: absolute;
+    margin-right: 100px;
+    z-index: 1;
+}
+  
+.cloudA {
+    position: absolute;
+    margin-left: 500px;
+    z-index: 1;
+}
+
+/* KEYFRAMES */
+
+@-webkit-keyframes animateCloud {
+    0% {
+        margin-left: -1500px;
+    }
+    100% {
+        margin-left: 100%;
+    }
+  }
+  
+  @-moz-keyframes animateCloud {
+    0% {
+        margin-left: -1500px;
+    }
+    100% {
+        margin-left: 100%;
+    }
+  }
+  
+  @keyframes animateCloud {
+    0% {
+        margin-left: -1500px;
+    }
+    100% {
+        margin-left: 100%;
+    }
+  }
+  
+  /* ANIMATIONS */
+  
+  .x1 {
+  -webkit-animation: animateCloud 35s linear infinite;
+  -moz-animation: animateCloud 35s linear infinite;
+  animation: animateCloud 35s linear infinite;
+  
+  -webkit-transform: scale(0.65);
+  -moz-transform: scale(0.65);
+  transform: scale(0.65);
+  }
+  
+  .x2 {
+  -webkit-animation: animateCloud 30s linear infinite;
+  -moz-animation: animateCloud 30s linear infinite;
+  animation: animateCloud 30s linear infinite;
+  
+  -webkit-transform: scale(0.65);
+  -moz-transform: scale(0.65);
+  transform: scale(0.65);
+  }
+  
+  .x3 {
+  -webkit-animation: animateCloud 30s linear infinite;
+  -moz-animation: animateCloud 30s linear infinite;
+  animation: animateCloud 30s linear infinite;
+  
+  -webkit-transform: scale(0.65);
+  -moz-transform: scale(0.65);
+  transform: scale(0.65);
+  }

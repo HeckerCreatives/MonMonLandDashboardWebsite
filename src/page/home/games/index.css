@@ -102,25 +102,26 @@
     }
 
     .holdersize {
-        width: 70%; 
-        height: 70%; 
+        width: 90%; 
+        height: 90%; 
     }
 
     .descdiv {
         position:absolute;
         top: 0; /* You can adjust this value to position the slider vertically */
-        left: 20%; /* You can adjust this value to position the slider horizontally */
+        left: 6%; /* You can adjust this value to position the slider horizontally */
         /* right: 10px;
         bottom: 10px;
         margin-left: 10%;
         margin-right: 10%; */
-        width: 60%;
+        width: 90%;
         height: 100%;
         z-index: 2; 
     }
 
     .custom-text-size {
-        font-size:smaller;
+        font-size:large;
+        text-align:justify;
     }
 
     /* .slick-slide  {

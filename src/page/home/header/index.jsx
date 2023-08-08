@@ -2,11 +2,11 @@ import React, {useState, useEffect} from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBTypography,MDBProgress, MDBProgressBar, MDBBtn, MDBSpinner } from "mdb-react-ui-kit";
 import "./index.css";
 import biglogo from "../../../assets/header/big logo2.gif"
-import sliderholder from "../../../assets/header/activity slider holder.png"
-import slider from "../../../assets/header/activity slider .png"
-import playnow from "../../../assets/header/play now btn.png"
-import Navbar from "../../../component"
-
+import dahonleft from "../../../assets/BG/leaves Left.png"
+import dahonright from "../../../assets/BG/leaves Right.png"
+import cloudA from "../../../assets/BG/cloud A.png"
+import cloudB from "../../../assets/BG/cloud B.png"
+import cloudC from "../../../assets/BG/cloud C.png"
 
 
 const Header = () => {
@@ -48,20 +48,34 @@ const Header = () => {
     
 
     return (
-        <div className="kahitanu">        
+        <div className="kahitanu">
+                
         <MDBContainer fluid className="d-flex text-center justify-content-center align-items-center mb-5" id="home">
-
+        <div className="dahonleft">
+        <img src={dahonleft} alt=""/>
+        </div>
+        <div className="dahonright">
+        <img src={dahonright} alt=""/>
+        </div>
         <MDBContainer fluid className="">
+        <img src={cloudA} alt="" className="cloudA x1"/>
             <MDBRow>
-                <MDBCol className="mt-5 mb-3 sm-col-12 text-center">
+                <MDBCol className="mt-5 mb-3 sm-col-12 text-center">                
                     <img src={biglogo} id="biglogo" className="img-fluid" alt=""></img>
+                    <div>
+                    <img src={cloudB} alt="" className="cloudB x2"/>
+                </div>
+                    
                 </MDBCol>
+                <div>
+                <img src={cloudC} alt="" className="cloudC x3"/>
+                </div>
             </MDBRow>
-
+            
             <MDBRow>
                 <MDBCol className=" mt-5 mb-5">
-                <MDBTypography className=" h1 fw-bold text-center text-white">
-                    <p className="stroke">Game Activity</p>
+                <MDBTypography className="position-relative h1 fw-bold text-center text-white">
+                    <p className="stroke ">Game Activity</p>
                 </MDBTypography>
                 
                 <MDBCol className="d-flex justify-content-center align-items-center text-center">

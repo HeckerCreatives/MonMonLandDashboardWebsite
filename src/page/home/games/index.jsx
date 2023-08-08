@@ -72,7 +72,7 @@ const Games = () => {
 
             
            {/* Description holder */}
-            <MDBCol className="col-12 col-xl-6"> 
+            <MDBCol className="col-12 col-xl-5 offset-xl-1"> 
                 <div className="descriptionholder">
                 <div className="text-center">
                     <img src={desc} alt="" className="holdersize"/>                                
@@ -87,7 +87,7 @@ const Games = () => {
                 </div>
                 
                 <div className="mx-3">
-                <MDBTypography className="p text-center p-3 custom-text-size">
+                <MDBTypography className="p p-3 px-xl-5 custom-text-size">
                 {content.description.split('\n').map((paragraph, index) => (
                     <p key={index}>{paragraph}</p>
                     ))}
@@ -97,7 +97,7 @@ const Games = () => {
 
                 <div className="">
                 <MDBCol className="mx-3 p-3">
-                <MDBTypography className="h4 text-wrap">
+                <MDBTypography className="h4 px-4 text-wrap">
                 Subscription:
                 </MDBTypography>
                 <div className="d-flex align-items-center justify-content-center">
@@ -130,7 +130,7 @@ const Games = () => {
             {/* End of Description holder */}
 
             {/* Character Holder */}
-            <MDBCol className="col-12 col-xl-6">
+            <MDBCol className="col-12 col-xl-5">
             <div className="gamesmobileview">
             <div className="characterholder text-center"> 
             <div>
