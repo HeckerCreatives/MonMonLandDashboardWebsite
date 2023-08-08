@@ -20,6 +20,13 @@
     font-size: 50px;
 }
 
-.slick-center > div {
+/* .slick-center > div {
     transform: scale(1.1);
- }
+ } */
+
+.seamless {
+    background-image: url("../../../assets/BG/BG\ seemless.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+}

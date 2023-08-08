@@ -134,7 +134,7 @@ const Subscription = () => {
             </div>
             <MDBCardBody className="">            
                 <MDBCardTitle className="fw-bold h2 mt-5 text-center" >{sub.subscriptionName}</MDBCardTitle>
-                    <MDBCardSubTitle className="fw-bold h3 price mb-5 text-center">{sub.amount}</MDBCardSubTitle>
+                    <MDBCardSubTitle className="fw-bold h3 price mb-5 text-center">{`${sub.amount}`}</MDBCardSubTitle>
                 <ul className="mx-4"> 
                 {subsdescription.map(desc => {
                     

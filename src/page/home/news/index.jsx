@@ -110,7 +110,7 @@ const News = () => {
                 {/* <MDBBtn className='btn-close' color='none' onClick={()=> setActiveModal(null)}></MDBBtn> */}
                 </MDBModalHeader>
                 <MDBModalBody>
-                <MDBCard  className="d-flex justify-content-center" style={{background: "#EDCAB4",}}>
+                <MDBCard  className="d-flex justify-content-center seamless" >
                     <MDBCardBody>
                     <img alt="" src={imahe}/>
                     </MDBCardBody>                    

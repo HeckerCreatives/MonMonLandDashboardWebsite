@@ -84,7 +84,7 @@ const Header = () => {
                 <MDBRow> 
                     <MDBCol className="text-center">
                     <MDBBtn color="transparent" className="shadow-0">
-                    <img src={playnow} id="playnow" alt="" className="img-fluid"></img>                    
+                    {/* <img src={playnow} id="playnow" alt="" className="img-fluid"></img>                     */}
                     </MDBBtn>                       
                     </MDBCol>
                 </MDBRow>

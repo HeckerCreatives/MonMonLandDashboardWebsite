@@ -54,7 +54,7 @@
 .chardiv {
     position:absolute;
     top: 5%; /* You can adjust this value to position the slider vertically */
-    left: 27.5%; /* You can adjust this value to position the slider horizontally */
+    left: 27.3%; /* You can adjust this value to position the slider horizontally */
     /* right: 10px;
     bottom: 10px;
     margin-left: 10%;
@@ -75,7 +75,7 @@
 }
 
 .charsize {
-    height: 404px;
+    height: 100%;
     width: 100%;
 }
 
@@ -118,6 +118,11 @@
         height: 100%;
         z-index: 2; 
     }
+
+    .custom-text-size {
+        font-size:medium;
+    }
+
     /* .slick-slide  {
         height: 100%;
         margin: 10% auto 0 auto;

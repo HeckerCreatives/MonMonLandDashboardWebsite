@@ -73,7 +73,7 @@ const Games = () => {
             
            {/* Description holder */}
             <MDBCol className="col-12 col-xl-6"> 
-                <div className="descriptionholder  text-center">
+                <div className="descriptionholder">
                 <div className="text-center">
                     <img src={desc} alt="" className="holdersize"/>                                
                 </div>
@@ -88,7 +88,9 @@ const Games = () => {
                 
                 <div className="mx-3">
                 <MDBTypography className="p text-center p-3 custom-text-size">
-                {content.description}
+                {content.description.split('\n').map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
+                    ))}
                 </MDBTypography>
                 </div>    
                 
