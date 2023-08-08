@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import smalllogo from "../assets/header/small logo for navi.png"
-import joinnow from "../assets/header/join now btn.png"
+import playnow from "../assets/header/play now btn.png"
 import navholder from "../assets/header/navigation holder.png"
 import {
   MDBContainer,
@@ -86,7 +86,7 @@ const Navbar = ({ links }) => {
             ))}
             <MDBNavbarItem className="ms-lg-auto text-center px-4">
                   <MDBNavbarLink>
-                  {/* <img src={joinnow} id="joinnow" alt=""></img> */}
+                  <img src={playnow} id="joinnow" alt="" className="zoom-playnow mb-2"></img>
                   </MDBNavbarLink>
             </MDBNavbarItem>
             

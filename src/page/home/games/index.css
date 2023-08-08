@@ -53,13 +53,13 @@
 
 .chardiv {
     position:absolute;
-    top: 4%; /* You can adjust this value to position the slider vertically */
-    left: 20%; /* You can adjust this value to position the slider horizontally */
+    top: 5%; /* You can adjust this value to position the slider vertically */
+    left: 27.5%; /* You can adjust this value to position the slider horizontally */
     /* right: 10px;
     bottom: 10px;
     margin-left: 10%;
     margin-right: 10%; */
-    width: 60%;
+    width: 45%;
     height: 100%;
     z-index: 2;  
 }
@@ -75,8 +75,8 @@
 }
 
 .charsize {
-    height: auto;
-    width: 60%;
+    height: 404px;
+    width: 100%;
 }
 
 .titlefontsize {

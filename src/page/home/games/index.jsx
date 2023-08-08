@@ -141,17 +141,15 @@ const Games = () => {
                 <div key={game._id} className="d-flex justify-content-center">
                 <img src={game.image} alt="" className="charsize"/>
                 </div>
-            ))}     
+            ))}
+                 
             </Slider>
-
-            <div className="">
             <MDBBtn color="transparent" className="shadow-0 arrowleft" onClick={gotoPrev}>
             <img src={leftarrow} alt="..." className="arrowleft" />
             </MDBBtn>    
             <MDBBtn color="transparent" className="shadow-0 arrowright" onClick={gotoNext}>
             <img src={rightarrow} alt="..." className="arrowright" />
             </MDBBtn>
-            </div>
             
 
             </div>

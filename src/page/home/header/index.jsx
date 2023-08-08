@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBTypography,MDBProgress, MDBProgressBar, MDBBtn, MDBSpinner } from "mdb-react-ui-kit";
 import "./index.css";
-import biglogo from "../../../assets/header/big logo.png"
+import biglogo from "../../../assets/header/big logo2.gif"
 import sliderholder from "../../../assets/header/activity slider holder.png"
 import slider from "../../../assets/header/activity slider .png"
 import playnow from "../../../assets/header/play now btn.png"

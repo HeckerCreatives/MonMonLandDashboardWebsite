@@ -73,3 +73,11 @@
   color: #FCF4A0 !important;
   z-index: 3;
 }
+
+.zoom-playnow {
+  transition: transform 0.3s ease-in-out;
+}
+
+.zoom-playnow:hover {
+  transform: scale(1.1);
+}
