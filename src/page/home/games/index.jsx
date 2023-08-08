@@ -62,7 +62,7 @@ const Games = () => {
 
     return(
         <div className="gamesbgcolor">
-        <MDBContainer fluid  id="games">
+        <MDBContainer fluid  id="games" className="pt-5">
         
             <MDBTypography className="p-4 titlefontsize text-center text-warning fw-bold">
                 Games

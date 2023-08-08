@@ -43,7 +43,7 @@ const Roadmap = () => {
       const sortedList = roadmap.sort((a, b) => a._id.localeCompare(b._id));
     return (
         <div className="">
-        <MDBContainer fluid  className="d-flex justify-content-center roadmapbgcolor" id="roadmap">
+        <MDBContainer fluid  className="d-flex justify-content-center roadmapbgcolor pt-5" id="roadmap">
         
         {isLoading ?
         <div className="text-center">

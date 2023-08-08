@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import smalllogo from "../assets/header/small logo for navi.png"
 import playnow from "../assets/header/play now btn.png"
 import navholder from "../assets/header/navigation holder.png"
+import { useActiveLinkObserver } from "./utils";
 import {
   MDBContainer,
   MDBNavbar,
@@ -23,6 +24,11 @@ const Navbar = ({ links }) => {
   const [active, setActive] = useState("");
   const navigate = useNavigate();
   const [currentLink,setCurrentLink] = useState("");
+
+  const newsLink = useActiveLinkObserver("home#news");
+  const gameLink = useActiveLinkObserver("games");
+  const subscriptionlink = useActiveLinkObserver("subscription");
+  const roadmaplink = useActiveLinkObserver("roadmap");
 
   const handleActive = str => {
     setActive(str);
@@ -74,7 +80,7 @@ const Navbar = ({ links }) => {
                   
                   aria-current="page"
                   href={link.path}
-                  className={`${currentLink === link.path && "activenavlink"}`}                  
+                  className={`${currentLink === link.path && "activenavlink" && newsLink.isIntersecting ? 'activenavlink' : ''}`}                  
                   onClick={() => {
                     handleActive(link.path);
                     window.innerWidth <= 900 && setShowNav(!showNav);                    

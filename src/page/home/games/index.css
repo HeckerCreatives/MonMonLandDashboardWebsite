@@ -53,7 +53,7 @@
 
 .chardiv {
     position:absolute;
-    top: 5%; /* You can adjust this value to position the slider vertically */
+    top: -0.8%; /* You can adjust this value to position the slider vertically */
     left: 27.3%; /* You can adjust this value to position the slider horizontally */
     /* right: 10px;
     bottom: 10px;
@@ -109,18 +109,18 @@
     .descdiv {
         position:absolute;
         top: 0; /* You can adjust this value to position the slider vertically */
-        left: 25%; /* You can adjust this value to position the slider horizontally */
+        left: 20%; /* You can adjust this value to position the slider horizontally */
         /* right: 10px;
         bottom: 10px;
         margin-left: 10%;
         margin-right: 10%; */
-        width: 50%;
+        width: 60%;
         height: 100%;
         z-index: 2; 
     }
 
     .custom-text-size {
-        font-size:medium;
+        font-size:smaller;
     }
 
     /* .slick-slide  {
