@@ -27,7 +27,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room}) => {
     
         <div className='message__container'>
           {messages.map((message,i) => (
-            message.username === room ? (
+            message.username === buyer ? (
               <div className="message__chats" key={i}>
             <p className='sender__name'>You</p>
             <div className='message__sender'>

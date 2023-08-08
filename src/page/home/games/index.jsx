@@ -5,6 +5,8 @@ import { MDBContainer, MDBRow, MDBCol, MDBTypography, MDBCarousel,
 import "./index.css"
 import leftarrow from "../../../assets/games/left arrow.png"
 import rightarrow from "../../../assets/games/right arrow.png"
+import desc from "../../../assets/games/base.png"
+import char from "../../../assets/games/character holder.png"
 import pearl from "../../../assets/subscription/pearl badge.png"
 import ruby from "../../../assets/subscription/ruby badge png.png"
 import emerald from "../../../assets/subscription/emerald png.png"
@@ -30,16 +32,14 @@ const Games = () => {
     }
 
     const settings = {
+        // className: "hw90",
         arrows: false,
         dots: false,
         fade: true,
         infinite: true,
-        // autoplay:true ,
-        // autoplaySpeed: 3000,
         slidesToShow: 1,
         slidesToScroll: 1,
-        // useTansform: true,
-        // centerPadding: '100px',
+        // adaptiveHeight: true
       };
 
       useEffect(() => {
@@ -68,65 +68,61 @@ const Games = () => {
                 Games
             </MDBTypography>
 
-            <MDBRow className="">
+            <MDBRow className="align-items-center">
 
             
            {/* Description holder */}
-            <MDBCol className="col-12 col-xl-6 "> 
-                <div className="descriptionholder">
+            <MDBCol className="col-12 col-xl-6"> 
+                <div className="descriptionholder  text-center">
+                <div className="text-center">
+                    <img src={desc} alt="" className="holdersize"/>                                
+                </div>
+                <div className="descdiv">
+                <Slider {...settings} className=' fw-bold' ref={sliderRef1}>
                 
-                <div className="">
-                    <Slider {...settings} className=' fw-bold' ref={sliderRef1}>
-                    
-                    {games.map((content)=> (
-                    <div key={content._id} className="descdiv" >
-                    <div>
-                    <MDBTypography className="h2 text-center mt-3" >{content.gametitle}</MDBTypography>
-                    </div>
-                    
-                    <div>
-                    <MDBTypography className="p text-center p-3">
-                    {content.description}
-                    </MDBTypography>
-                    </div>    
-                    
-
-                    <div className="subs">
-                   <MDBCol className="">
-                   <MDBTypography className="substext h2 text-wrap">
-                    Subscription:
-                    </MDBTypography>
-                    <div className="d-flex align-items-center justify-content-center">
-                    {content.selectsubscription.map((keyword) => (
-                            <div key={`keyword-${id}`} className="badgeholder">
-                            {keywordImages.hasOwnProperty(keyword) && (
-                                <img
-                                src={keywordImages[keyword]}
-                                alt=""
-                                className="img-fluid badgesize"
-                                />
-                            )}
-                            </div>
-                        ))}
-                    </div>
-                    </MDBCol>                    
-                    </div>
-
-                    </div>
-                    
-                    ))}
-                                      
-                                        
-                    </Slider>
-                   
+                {games.map((content)=> (
+                <div key={content._id} className="" >
+                <div className="mx-4">
+                <MDBTypography className="h2 text-center mt-3" >{content.gametitle}</MDBTypography>
                 </div>
                 
-
-                   
-                    
+                <div className="mx-3">
+                <MDBTypography className="p text-center p-3 custom-text-size">
+                {content.description}
+                </MDBTypography>
+                </div>    
                 
-                    
-                    </div>
+
+                <div className="">
+                <MDBCol className="mx-3 p-3">
+                <MDBTypography className="h4 text-wrap">
+                Subscription:
+                </MDBTypography>
+                <div className="d-flex align-items-center justify-content-center">
+                {content.selectsubscription.map((keyword) => (
+                        <div key={`keyword-${id}`} className="badgeholder">
+                        {keywordImages.hasOwnProperty(keyword) && (
+                            <img
+                            src={keywordImages[keyword]}
+                            alt=""
+                            className="badgesize"
+                            />
+                        )}
+                        </div>
+                    ))}
+                </div>
+                </MDBCol>                    
+                </div>
+
+                </div>
+                
+                ))}
+                                    
+                </Slider>
+                </div>
+               
+                
+                </div>
                     
             </MDBCol>
             {/* End of Description holder */}
@@ -134,27 +130,31 @@ const Games = () => {
             {/* Character Holder */}
             <MDBCol className="col-12 col-xl-6">
             <div className="gamesmobileview">
-            <div className="characterholder text-center">
-            
+            <div className="characterholder text-center"> 
+            <div>
+                <img src={char} alt="" className="charholdersize"/>
+            </div>
+
+            <div className="chardiv">
+            <Slider {...settings} ref={sliderRef2} >
+            {games.map(game =>(
+                <div key={game._id} className="d-flex justify-content-center">
+                <img src={game.image} alt="" className="charsize"/>
+                </div>
+            ))}     
+            </Slider>
+
+            <div className="">
+            <MDBBtn color="transparent" className="shadow-0 arrowleft" onClick={gotoPrev}>
+            <img src={leftarrow} alt="..." className="arrowleft" />
+            </MDBBtn>    
+            <MDBBtn color="transparent" className="shadow-0 arrowright" onClick={gotoNext}>
+            <img src={rightarrow} alt="..." className="arrowright" />
+            </MDBBtn>
+            </div>
             
 
-                    <MDBCol className="">
-                    <Slider {...settings} ref={sliderRef2}>
-                    {games.map(game =>(
-                        <div key={game._id} className="">
-                        <img src={game.image} alt="" className="char"/>
-                        </div>
-                    ))}     
-                    </Slider>
-                    </MDBCol>
-                
-                
-            <MDBBtn color="transparent" className="shadow-0 arrowleft">
-            <img src={leftarrow} alt="..." className="arrowleft" onClick={gotoPrev}/>
-            </MDBBtn>    
-            <MDBBtn color="transparent" className="shadow-0 arrowright">
-            <img src={rightarrow} alt="..." className="arrowright" onClick={gotoNext}/>
-            </MDBBtn>
+            </div>
                             
             </div>
             

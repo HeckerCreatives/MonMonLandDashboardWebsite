@@ -24,25 +24,19 @@ ul .list::before {
     position: relative;
     /* z-index: -1a; */
     /* overflow-y: visible; */
-    
+    height: 100% !important;    
 }
+
 .linya {
     border-top: 3px solid #424143 !important;
-    border-radius: 0 !important;
+    border-radius: 5px !important;
 }
 
 #badge {
-    /* display:inline-block;    */
-    /* position:absolute !important; */
     height: 120px;
     width: 120px;
-    /* background-color: #424242; */
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-    /* left: 50%;  */
-    /* transform: translateX(-50%); */
-    /* top: -10%; */
-    /* z-index: 1 !important; */
 }
 
 .bgcolor {
@@ -64,7 +58,6 @@ ul .list::before {
 .subsparent {
     position: relative;
     /* z-index: 2; */
-    
 }
 
 .subsbuttonmobile {
@@ -81,33 +74,45 @@ ul .list::before {
     bottom: 0;
     margin-bottom: 5vh;
 }
+
 .slick-track {
     display: flex !important;
-   
+    align-items: stretch;
 }
-.slick-slide{
-    display: block !important;
-    float: none !important;
+  
+/* .slick-slide {
+    height: inherit !important;
+} */
+
+/* .h100 {
+    height: 650px !important;   
+} */
+
+.slick-slide {
+    /* display: block !important; */
+    /* float: none !important; */
     height: auto !important;
     margin-top: 1%;
 }
 
-/* .slick-list {
-    overflow-y: visible !important;
-    
-} */
+.slick-list {
+    /* overflow-y: visible !important;     */
+    height: 100% !important;
+    /* padding: 10%; */
+}
 
 .slick-slide > div {
     height: 100% !important;
-    display: inherit !important;
-    
-    
+    font-size: smaller; 
 }
-.slick-slide > div > div{
+
+/* .slick-slide > div > div {
     height: 100% !important;
-    
-    
-}
+} */
+
+/* .slick-slide > div > div > div {
+    height: 100% !important;
+} */
 
 @media only screen and (min-width: 1187px) {
     .desktopview {

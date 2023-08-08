@@ -51,14 +51,14 @@ const Subscription = () => {
     const sortedList = subs.sort((a, b) => a._id.localeCompare(b._id));
 
     const settings = {
-        className: "",
+        className: "h100",
         dots: true,
         infinite: true,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        adaptiveHeight:false,
-        variableWidth:false,
+        adaptiveHeight: false,
+        variableWidth: false,
         arrows:false
       };
     
@@ -67,7 +67,9 @@ const Subscription = () => {
         <>
         <MDBContainer fluid className="bgcolor" id="subscription">
 
-        <MDBTypography className="mt-5 titlefontsize text-warning fw-bold text-center" style={{marginBottom: "10vh"}}>
+        <MDBTypography 
+        className="mt-5 titlefontsize text-warning fw-bold text-center" 
+        style={{marginBottom: "10vh"}}>
             Subscription
         </MDBTypography>
         {/* for desktop */}
@@ -120,35 +122,48 @@ const Subscription = () => {
 
         {/* for mobile view */}
         <div className="mobileview">
-            <MDBContainer fluid className="">
-                <Slider {...settings}>
+        <MDBCol>
+        <Slider {...settings}>
 
-                {/* PEARL */}
-                {subs.map(sub =>(
-                  <MDBCol>                   
-                    <MDBCard className="linya align-items-center" key={sub._id}>
-                        <MDBCardImage src={sub.image} alt="" className="bg-dark " id="badge"/>
-                            <MDBCardBody className="">            
-                                <MDBCardTitle className="fw-bold h2 mt-5 text-center" >{sub.subscriptionName}</MDBCardTitle>
-                                    <MDBCardSubTitle className="fw-bold h3 price mb-5 text-center">{sub.amount}</MDBCardSubTitle>
-                                <ul className="mx-4"> 
-                                {subsdescription.map(desc =>(
-                                    
-                                    <li key={desc.subsId} className="list">
-                                        {desc.description.length > 200 ? `${desc.description.substring(0,200)}...`: desc.description}
-                                    </li> 
-                                    
-                                ))}
-                                </ul>
-                            </MDBCardBody>
-                            <br></br>
-                            <MDBBtn type="button" className="subsbuttonmobile btn btn-warning fw-bold " size="lg">SUBSCRIBE NOW</MDBBtn> 
-                            
-                </MDBCard>
-                </MDBCol> 
-                ))}
-                </Slider>
-            </MDBContainer>
+            {/* PEARL */}
+            {sortedList.map(sub =>(  
+             
+            <MDBCard className="linya align-items-center" key={sub._id}>
+            <div className="d-flex justify-content-center">
+                <MDBCardImage src={sub.image} alt="" className="bg-dark" id="badge"/>
+            </div>
+            <MDBCardBody className="">            
+                <MDBCardTitle className="fw-bold h2 mt-5 text-center" >{sub.subscriptionName}</MDBCardTitle>
+                    <MDBCardSubTitle className="fw-bold h3 price mb-5 text-center">{sub.amount}</MDBCardSubTitle>
+                <ul className="mx-4"> 
+                {subsdescription.map(desc => {
+                    
+                    if (desc.subsId === sub._id) {
+                    return (
+                        <li key={desc._id} className="list">
+                        {desc.description.length > 200 ? `${desc.description.substring(0,200)}...`: desc.description}
+                        </li>
+                    );
+                    }
+                    return null;
+                    
+                })}
+                </ul>
+            </MDBCardBody>
+            <br/>
+            <MDBBtn 
+            type="button" 
+            className="subsbuttonmobile btn btn-warning fw-bold " 
+            size="lg">
+            SUBSCRIBE NOW
+            </MDBBtn> 
+                        
+            </MDBCard> 
+                                           
+                        
+            ))}
+            </Slider>
+        </MDBCol>        
         </div>
 
         {/* <MDBModal  show={activeModal} onClick={()=> setActiveModal(null)} tabIndex='-1'>
