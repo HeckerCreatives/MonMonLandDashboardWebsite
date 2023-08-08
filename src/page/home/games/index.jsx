@@ -141,7 +141,7 @@ const Games = () => {
             <Slider {...settings} ref={sliderRef2} >
             {games.map(game =>(
                 <div key={game._id} className="d-flex justify-content-center">
-                <img src={game.image} alt="" className="charsize"/>
+                    <img src={game.image} alt="" className="charsize"/>
                 </div>
             ))}
                  
