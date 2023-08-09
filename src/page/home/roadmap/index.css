@@ -1,6 +1,6 @@
 .roadmapbgcolor {
     background: #D2EEFF;
-    height: 100vh;
+    height: 100vh !important;
 }
 
 .zoom-roadmap {
@@ -328,7 +328,7 @@
         word-break: break-all;
     }
     #woodchar {
-        height: 80px;
+        height: 50px;
         transform: translateX(0%);
     }
     

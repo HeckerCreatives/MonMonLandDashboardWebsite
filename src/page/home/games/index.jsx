@@ -60,7 +60,7 @@ const Games = () => {
 
     return(
         <div className="gamesbgcolor">
-        <MDBContainer fluid  id="games" className="h-75 pt-5">
+        <MDBContainer fluid  id="games" className="pt-5">
         
             <MDBTypography className="p-4 titlefontsize text-center text-warning fw-bold">
                 Games
@@ -72,14 +72,18 @@ const Games = () => {
            {/* Description holder */}
             <MDBCol className="col-12 col-xl-5 offset-xl-1"> 
                 <div className="descriptionholder">
-                <div className="text-center">
-                    <img src={desc} alt="" className="holdersize"/>                                
+                <div className="d-none d-lg-block text-center">
+                <img src={desc} alt="" className="holdersize"/>                       
                 </div>
                 <div className="descdiv">
+                <div className="d-lg-none d-block text-center">
+                <img src={desc} alt="" className="descriptionholdermobile"/>                       
+                </div>
                 <Slider {...settings} className=' fw-bold' ref={sliderRef1}>
                 
                 {games.map((content)=> (
                 <div key={content._id} className="" >
+                
                 <div className="mx-4">
                 <MDBTypography className="h2 text-center" >{content.gametitle}</MDBTypography>
                 </div>

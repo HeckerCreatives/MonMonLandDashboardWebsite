@@ -2,7 +2,7 @@
     background-image: url("../../..//assets/BG/FOOTER\ bg.png");
     background-size: cover;
     background-repeat: no-repeat;
-    height: 1200px;
+    height: 125vh !important;
 }
 
 .socials {
@@ -16,6 +16,12 @@
     .nav-link {
         padding: 10px !important;
     }      
+    .footerbg {
+        background-image: url("../../..//assets/BG/FOOTER\ bg.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 150vh !important;
+    }
 }
 
 .zoom-socials {

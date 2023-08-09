@@ -78,10 +78,14 @@
     transform: scale(1.1);
 }
 
-@media only screen and (max-width: 425px) {
+@media (min-width: 320px) and (max-width: 425px) {
     
     .newsbgcolor {
         background: #D2EEFF;
-        height:80vh;
+        height:80vh !important;
+    }
+
+    .titlefontsize {
+        font-size: 40px;
     }
 }

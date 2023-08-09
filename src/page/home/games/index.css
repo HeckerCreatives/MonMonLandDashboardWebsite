@@ -8,10 +8,12 @@
     margin: 10% 5% 0 auto;
 }
 
-.descriptionholder {
-    position: relative;
+.descriptionholdermobile {
+    position: absolute;
     width: 100%; 
-    height: 100%;   
+    height: 100%;
+    top: 4%; 
+    left: 1%;   
 }
 
 .holdersize {
@@ -20,13 +22,7 @@
 }
 
 .descdiv {
-    position:absolute;
-    top: 0; /* You can adjust this value to position the slider vertically */
-    left: 0; /* You can adjust this value to position the slider horizontally */
-    /* right: 10px;
-    bottom: 10px;
-    margin-left: 10%;
-    margin-right: 10%; */
+    position: relative;    
     width: 100%;
     height: 100%;
     z-index: 2; 
@@ -66,7 +62,8 @@
 
 
 .gamesbgcolor {
-    background: #D2EEFF;    
+    background: #D2EEFF;
+    height: 90vh !important;    
 }
 
 .badgesize {
@@ -104,9 +101,20 @@
       display: contents;
     }
 
+    .gamesbgcolor {
+        background: #D2EEFF;
+        height: 100vh !important;    
+    }
+
     .holdersize {
         width: 90%; 
         height: 90%; 
+    }
+
+    .descriptionholder {
+        position: relative;    
+        width: 100%;
+        height: 100%;
     }
 
     .descdiv {
@@ -146,7 +154,7 @@
        
 }
 
-@media only screen and (max-width: 425px) {
+@media (min-width: 320px) and (max-width: 425px) {
     .gamesdesktopview {
       display: contents;
       
@@ -167,6 +175,11 @@
         /* position: absolute; */
         top: 70%;
         left: 1%;
+    }
+
+    .gamesbgcolor {
+        background: #D2EEFF;
+        height: 75vh !important;    
     }
 
     .slick-track {
@@ -200,9 +213,7 @@
         margin-bottom: 2%;
     }
 
-    .subs {
-        margin: 5% 12% 12% 13%;    
-    }
+    
           
 }
 
