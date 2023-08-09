@@ -95,6 +95,8 @@
 .stroke {
     /* color: black; */
     -webkit-text-stroke: 1px black;
+    position: relative;
+    z-index: 2;
 }
 
 @media only screen and (min-width: 1440px) {
@@ -175,9 +177,9 @@
   }
   
   .x2 {
-  -webkit-animation: animateCloud 30s linear infinite;
-  -moz-animation: animateCloud 30s linear infinite;
-  animation: animateCloud 30s linear infinite;
+  -webkit-animation: animateCloud 45s linear infinite;
+  -moz-animation: animateCloud 45s linear infinite;
+  animation: animateCloud 45s linear infinite;
   
   -webkit-transform: scale(0.65);
   -moz-transform: scale(0.65);
@@ -185,9 +187,9 @@
   }
   
   .x3 {
-  -webkit-animation: animateCloud 30s linear infinite;
-  -moz-animation: animateCloud 30s linear infinite;
-  animation: animateCloud 30s linear infinite;
+  -webkit-animation: animateCloud 55s linear infinite;
+  -moz-animation: animateCloud 55s linear infinite;
+  animation: animateCloud 55s linear infinite;
   
   -webkit-transform: scale(0.65);
   -moz-transform: scale(0.65);

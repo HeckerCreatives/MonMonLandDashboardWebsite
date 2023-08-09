@@ -8,10 +8,9 @@ import rightarrow from "../../../assets/games/right arrow.png"
 import desc from "../../../assets/games/base.png"
 import char from "../../../assets/games/character holder.png"
 import pearl from "../../../assets/subscription/pearl badge.png"
-import ruby from "../../../assets/subscription/ruby badge png.png"
-import emerald from "../../../assets/subscription/emerald png.png"
+import ruby from "../../../assets/subscription/ruby badge.png"
+import emerald from "../../../assets/subscription/emerald.png"
 import diamond from "../../../assets/subscription/diamond.png"
-import free from "../../../assets/subscription/Free icon.png"
 import Slider from "react-slick";
 
 
@@ -53,7 +52,6 @@ const Games = () => {
       
 
     const keywordImages = {
-        Free: free,
         Diamond: diamond,
         Pearl: pearl,
         Ruby: ruby,
@@ -107,7 +105,7 @@ const Games = () => {
                             <img
                             src={keywordImages[keyword]}
                             alt=""
-                            className="badgesize"
+                            className="zoom-game"
                             />
                         )}
                         </div>
@@ -147,10 +145,10 @@ const Games = () => {
                  
             </Slider>
             <MDBBtn color="transparent" className="shadow-0 arrowleft" onClick={gotoPrev}>
-            <img src={leftarrow} alt="..." className="arrowleft" />
+            <img src={leftarrow} alt="..." className="zoom-game arrowleft" />
             </MDBBtn>    
             <MDBBtn color="transparent" className="shadow-0 arrowright" onClick={gotoNext}>
-            <img src={rightarrow} alt="..." className="arrowright" />
+            <img src={rightarrow} alt="..." className="zoom-game arrowright" />
             </MDBBtn>
             
 

@@ -90,7 +90,7 @@ const News = () => {
           {news.map(balita =>(
           <div>
           <MDBCard className="cards" key={balita._id} alignment="center">
-                <MDBCardImage src={balita.image} alt='...' position='top' id="images" />
+                <MDBCardImage src={balita.image} alt='...' position='top' id="banner" />
                 <MDBCardBody>
                     <MDBCardText className="fw-bold text-center">
                     {balita.title.length > 70 ? `${balita.title.substring(0,70)}...`: balita.title}
@@ -123,7 +123,7 @@ const News = () => {
                 <MDBModalBody>
                 <MDBCard  className="d-flex justify-content-center seamless" >
                     <MDBCardBody>
-                    <img alt="" src={imahe}/>
+                    <img alt="" src={imahe} id="bannermodal"/>
                     </MDBCardBody>                    
                 </MDBCard>
                 <MDBCardText className="text-dark mt-3 mb-0 fw-bold">Description</MDBCardText>

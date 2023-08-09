@@ -86,11 +86,14 @@
 .subs {
     margin: 15% 12% 0% 13%;    
 }
-/* 
-.hw90 {
- height: 50%;
- width: 50%;
-} */
+
+.zoom-game {
+    transition: transform 0.3s ease-in-out;
+}
+
+.zoom-game:hover {
+    transform: scale(1.1);
+}
 
 @media only screen and (min-width: 1440px) {
     .gamesdesktopview {

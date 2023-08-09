@@ -78,7 +78,7 @@ const Roadmap = () => {
 
         <MDBTypography className="fw-bold text-wrap text-white m-0" >{roadmaps.description.length > 50 ? `${roadmaps.description.substring(0,50)}...`: roadmaps.description}</MDBTypography>
         
-        <img src={seemore} alt="" className="seemorebtn" 
+        <img src={seemore} alt="" className="zoom-roadmap seemorebtn" 
         onClick={() => {
             setTitle(roadmaps.title)
             setRoadmapDescription(roadmaps.description)

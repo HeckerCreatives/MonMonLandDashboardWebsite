@@ -1,7 +1,7 @@
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardText, MDBCol, MDBIcon, MDBRow, MDBCollapse, MDBInput,MDBTable, MDBTableHead, MDBTableBody,} from "mdb-react-ui-kit";
 import React, { useEffect, useState } from "react";
-import ruby from "../../../../../assets/subscription/ruby badge png.png"
-import emerald from "../../../../../assets/subscription/emerald png.png"
+import ruby from "../../../../../assets/subscription/ruby badge.png"
+import emerald from "../../../../../assets/subscription/emerald.png"
 import diamond from "../../../../../assets/subscription/diamond.png"
 import ChatPage from "../../../../../component/minichatapp/ChatPage";
 import Swal from "sweetalert2"

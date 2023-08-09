@@ -3,6 +3,13 @@
     height: 100vh;
 }
 
+.zoom-roadmap {
+    transition: transform 0.3s ease-in-out;
+}
+
+.zoom-roadmap:hover {
+    transform: scale(1.1);
+}
 
 
 .titlefontsize {

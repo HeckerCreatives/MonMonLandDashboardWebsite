@@ -20,8 +20,8 @@ import {
   MDBTextArea,
 } from "mdb-react-ui-kit";
 import pearl from "../../../../assets/subscription/pearl badge.png"
-import ruby from "../../../../assets/subscription/ruby badge png.png"
-import emerald from "../../../../assets/subscription/emerald png.png"
+import ruby from "../../../../assets/subscription/ruby badge.png"
+import emerald from "../../../../assets/subscription/emerald.png"
 import diamond from "../../../../assets/subscription/diamond.png"
 // import free from "../../../../assets/subscription/Free icon.png"
 import Swal from "sweetalert2";

@@ -19,11 +19,6 @@ import {
   MDBRow,
   MDBTextArea,
 } from "mdb-react-ui-kit";
-import pearl from "../../../../assets/subscription/pearl badge.png"
-import ruby from "../../../../assets/subscription/ruby badge png.png"
-import emerald from "../../../../assets/subscription/emerald png.png"
-import diamond from "../../../../assets/subscription/diamond.png"
-import free from "../../../../assets/subscription/Free icon.png"
 import Swal from "sweetalert2";
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet"
 // import "./create.css"

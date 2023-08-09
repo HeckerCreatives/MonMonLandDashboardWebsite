@@ -10,8 +10,8 @@ import {
     MDBTableBody, 
     MDBTypography, 
     MDBCard, MDBCardBody, MDBCardText, MDBIcon, MDBCollapse, MDBInput,} from "mdb-react-ui-kit";
-import ruby from "../../../../assets/subscription/ruby badge png.png"
-import emerald from "../../../../assets/subscription/emerald png.png"
+import ruby from "../../../../assets/subscription/ruby badge.png"
+import emerald from "../../../../assets/subscription/emerald.png"
 import diamond from "../../../../assets/subscription/diamond.png"
 import Swal from "sweetalert2"
 import Breadcrumb from "../../../../component/breadcrumb";

@@ -6,10 +6,9 @@ import Breadcrumb from "../../../component/breadcrumb";
 import PaginationPager from "../../../component/pagination/index"
 import CreateGames from "./modal/create";
 import pearl from "../../../assets/subscription/pearl badge.png"
-import ruby from "../../../assets/subscription/ruby badge png.png"
-import emerald from "../../../assets/subscription/emerald png.png"
+import ruby from "../../../assets/subscription/ruby badge.png"
+import emerald from "../../../assets/subscription/emerald.png"
 import diamond from "../../../assets/subscription/diamond.png"
-import free from "../../../assets/subscription/Free icon.png"
 import ViewGames from "./modal/view";
 import UpdateGames from "./modal/edit";
 const Games = () => {
@@ -33,7 +32,6 @@ const Games = () => {
     },[])
 
     const keywordImages = {
-        Free: free,
         Diamond: diamond,
         Pearl: pearl,
         Ruby: ruby,

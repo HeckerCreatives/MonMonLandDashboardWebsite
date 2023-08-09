@@ -3,11 +3,19 @@
     height: 75vh;
 }
 
-#images {
-    height: 200px;
-    width: 200px;
-    margin: 2rem;
+#banner {
+    height: 100%;
+    width: 90%;
     align-self: center;
+    border-radius: 0;
+    margin-top: 5%;
+}
+
+#bannermodal {
+    height: 100%;
+    width: 100%;
+    align-self: center;
+    border-radius: 0;
 }
 
 /* .cards {

@@ -7,6 +7,7 @@ import fb from "../../../assets/footer/fb.png"
 import instagram from "../../../assets/footer/instagram.png"
 import telegram from "../../../assets/footer/telegram.png"
 import twitter from "../../../assets/footer/twitter.png"
+import tiktok from "../../../assets/footer/tiktok.png"
 
 const Footer = ({links}) => {
     const [active, setActive] = useState("");
@@ -56,8 +57,11 @@ const Footer = ({links}) => {
             <a href="https://twitter.com/monmonland_" target="_blank" rel="noreferrer">
             <img src={twitter} className="socials zoom-socials" alt=""/>
             </a>
-            <a href="https://www.tiktok.com/@officialmonmonland" target="_blank" rel="noreferrer">
+            <a href="" target="_blank" rel="noreferrer">
             <img src={telegram} className="socials zoom-socials" alt=""/>
+            </a>
+            <a href="https://www.tiktok.com/@officialmonmonland" target="_blank" rel="noreferrer">
+            <img src={tiktok} className="socials zoom-socials" alt=""/>
             </a>
             
             </MDBCol>

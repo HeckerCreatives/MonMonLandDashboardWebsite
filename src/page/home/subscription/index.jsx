@@ -17,10 +17,6 @@ import { MDBContainer,
  MDBModalBody,
  MDBModalFooter,
  MDBSpinner, } from "mdb-react-ui-kit";
-import ruby from "../../../assets/subscription/ruby badge png.png"
-import emerald from "../../../assets/subscription/emerald png.png"
-import diamond from "../../../assets/subscription/diamond.png"
-import pearl from "../../../assets/subscription/pearl badge.png"
 // import caro from "../../../assets/caro.png"
 import Slider from "react-slick";
 import "./index.css"
