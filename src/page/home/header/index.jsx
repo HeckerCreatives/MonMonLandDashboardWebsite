@@ -52,10 +52,10 @@ const Header = () => {
                 
         <MDBContainer fluid className="d-flex text-center justify-content-center align-items-center mb-5" id="home">
         <div className="dahonleft">
-        <img src={dahonleft} alt=""/>
+        <img src={dahonleft} alt="" className="d-none d-lg-block"/>
         </div>
         <div className="dahonright">
-        <img src={dahonright} alt=""/>
+        <img src={dahonright} alt="" className="d-none d-lg-block"/>
         </div>
         <MDBContainer fluid className="">
         <img src={cloudA} alt="" className="cloudA x1"/>

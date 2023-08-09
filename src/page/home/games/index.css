@@ -47,19 +47,19 @@
 }
 
 .charholdersize {
-    width: 60%; 
-    height: 60%; 
+    width: 70%; 
+    height: 70%; 
 }
 
 .chardiv {
     position:absolute;
-    top: -0.8%; /* You can adjust this value to position the slider vertically */
-    left: 27.3%; /* You can adjust this value to position the slider horizontally */
+    top: -1.2%; /* You can adjust this value to position the slider vertically */
+    left: 23.6%; /* You can adjust this value to position the slider horizontally */
     /* right: 10px;
     bottom: 10px;
     margin-left: 10%;
     margin-right: 10%; */
-    width: 45%;
+    width: 52.5%;
     height: 100%;
     z-index: 2;  
 }

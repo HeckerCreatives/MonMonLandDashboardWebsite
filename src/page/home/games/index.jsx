@@ -60,7 +60,7 @@ const Games = () => {
 
     return(
         <div className="gamesbgcolor">
-        <MDBContainer fluid  id="games" className="pt-5">
+        <MDBContainer fluid  id="games" className="min-vh-100 pt-5">
         
             <MDBTypography className="p-4 titlefontsize text-center text-warning fw-bold">
                 Games
@@ -105,7 +105,7 @@ const Games = () => {
                             <img
                             src={keywordImages[keyword]}
                             alt=""
-                            className="zoom-game"
+                            className="zoom-game badgesize"
                             />
                         )}
                         </div>

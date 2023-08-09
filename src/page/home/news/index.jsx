@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBTypography,MDBCard,MDBCardBody,MDBCardImage,MDBCardText,
+import { MDBContainer, MDBAccordion, MDBAccordionItem, MDBTypography,MDBCard,MDBCardBody,MDBCardImage,MDBCardText,
   MDBBtn,
   MDBModal,
   MDBModalDialog,
@@ -14,10 +14,11 @@ import Slider from "react-slick";
 const News = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [news, setNews] = useState([]);
-  const [activeModal, setActiveModal] = useState(null);
+  const [activeModal, setActiveModal] = useState(false);
   const [newsdescription, setnewsDescription] = useState('');
   const [newstitle, setNewsTitle] = useState('');
   const [imahe, setImahe] = useState('');
+  const toggleShow = () => setActiveModal(!activeModal)
   // const [currentPage, setCurrentPage] = useState(0);
   // const maxCharsPerPage = 669;
 
@@ -76,8 +77,8 @@ const News = () => {
 
     return (
         <MDBContainer fluid className="pt-5 newsbgcolor" id="news">
-        <div>
-        <MDBTypography className="p-5 titlefontsize text-warning text-center fw-bold">NEWS AND INFORMATION</MDBTypography>
+        <div className="w-100 titlefontsize text-warning text-center fw-bold text-wrap">
+        <MDBTypography className="">NEWS AND INFORMATION</MDBTypography>
         </div>
             
         {isLoading ? <MDBSpinner color="warning"></MDBSpinner>
@@ -89,17 +90,19 @@ const News = () => {
         
           {news.map(balita =>(
           <div>
-          <MDBCard className="cards" key={balita._id} alignment="center">
+          <MDBCard className="m-2" key={balita._id} alignment="center">
                 <MDBCardImage src={balita.image} alt='...' position='top' id="banner" />
                 <MDBCardBody>
-                    <MDBCardText className="fw-bold text-center">
+                    <MDBCardText className="fw-bold text-center newstxtsize">
                     {balita.title.length > 70 ? `${balita.title.substring(0,70)}...`: balita.title}
                     </MDBCardText>
-                    <MDBCardText className="text-center">
-                    {balita.description.length > 70 ? `${balita.description.substring(0,70)}...`: balita.description}
+                    <MDBCardText className="text-center newstxtsize">
+                    {balita.subtitle.length > 60 ? `${balita.subtitle.substring(0,60)}...`: balita.subtitle}
                     </MDBCardText>
-                  <MDBBtn onClick={() => {
-                  setActiveModal(true)
+                  <MDBBtn 
+                  className="btn-warning zoom-news"
+                  onClick={() => {
+                  toggleShow()
                   setnewsDescription(balita.description)
                   setNewsTitle(balita.title)
                   setImahe(balita.image)
@@ -113,21 +116,19 @@ const News = () => {
         </Slider>
         </div>
         } 
-        <MDBModal  show={activeModal} onClick={()=> setActiveModal(null)} tabIndex='-1'>
+        <MDBModal staticBackdrop  show={activeModal} setShow={setActiveModal} tabIndex='-1' >
             <MDBModalDialog centered scrollable>
             <MDBModalContent>
-                <MDBModalHeader style={{background:"#A57552"}}>
-                <MDBModalTitle className="text-light">{newstitle}</MDBModalTitle>
-                {/* <MDBBtn className='btn-close' color='none' onClick={()=> setActiveModal(null)}></MDBBtn> */}
+                <MDBModalHeader className="seamless">
+                <MDBModalTitle className="text-white" >{newstitle}</MDBModalTitle>
                 </MDBModalHeader>
                 <MDBModalBody>
-                <MDBCard  className="d-flex justify-content-center seamless" >
-                    <MDBCardBody>
+                <MDBCard  className="d-flex justify-content-center bg-transparent">
                     <img alt="" src={imahe} id="bannermodal"/>
-                    </MDBCardBody>                    
                 </MDBCard>
                 <MDBCardText className="text-dark mt-3 mb-0 fw-bold">Description</MDBCardText>
                 <MDBCard  style={{background: "#EDCAB4",}}>
+                
                     <MDBCardBody >
                     {newsdescription.split('\n').map((paragraph, index) => (
                       <p className="justify" key={index}>{paragraph}</p>
@@ -137,8 +138,8 @@ const News = () => {
                 </MDBCard>
                 
                 </MDBModalBody>
-                <MDBModalFooter>
-                <MDBBtn color='secondary' type="button" onClick={()=> setActiveModal(null)}>
+                <MDBModalFooter className="seamless">
+                <MDBBtn className="btn-warning" type="button" onClick={toggleShow}>
                     Close
                 </MDBBtn>                
                 </MDBModalFooter>

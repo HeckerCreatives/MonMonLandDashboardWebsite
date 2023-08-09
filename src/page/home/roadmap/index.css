@@ -11,6 +11,12 @@
     transform: scale(1.1);
 }
 
+.seamlessrd {
+    background-image: url("../../../assets/BG/BG\ seemless.png");
+    /* background-repeat: no-repeat; */
+    /* background-position: center; */
+    background-size: cover;
+}
 
 .titlefontsize {
     font-size: 50px;

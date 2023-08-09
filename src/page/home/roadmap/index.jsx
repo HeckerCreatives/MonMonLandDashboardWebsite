@@ -76,7 +76,7 @@ const Roadmap = () => {
         <img src={roadmaps.image} alt="" id="woodchar" />
         </MDBCol>            
 
-        <MDBTypography className="fw-bold text-wrap text-white m-0" >{roadmaps.description.length > 50 ? `${roadmaps.description.substring(0,50)}...`: roadmaps.description}</MDBTypography>
+        <MDBTypography className="fw-bold text-wrap text-white m-2" >{roadmaps.subtitle.length > 50 ? `${roadmaps.subtitle.substring(0,50)}...`: roadmaps.subtitle}</MDBTypography>
         
         <img src={seemore} alt="" className="zoom-roadmap seemorebtn" 
         onClick={() => {
@@ -102,7 +102,7 @@ const Roadmap = () => {
         <MDBModal  show={activeModal} onClick={()=> setActiveModal(null)} tabIndex='-1'>
             <MDBModalDialog centered>
             <MDBModalContent>
-                <MDBModalHeader style={{background:"#A57552"}}>
+                <MDBModalHeader className="seamlessrd">
                 <MDBModalTitle className="text-light">{roadmaptitle}</MDBModalTitle>
                 {/* <MDBBtn className='btn-close' color='none' onClick={()=> setActiveModal(null)}></MDBBtn> */}
                 </MDBModalHeader>
@@ -124,8 +124,8 @@ const Roadmap = () => {
                 </MDBCard>
                 
                 </MDBModalBody>
-                <MDBModalFooter>
-                <MDBBtn color='secondary' onClick={()=> setActiveModal(null)}>
+                <MDBModalFooter className="seamlessrd">
+                <MDBBtn className="text-dark btn-transparent" style={{background: "#FCF4A0"}} onClick={()=> setActiveModal(null)}>
                     Close
                 </MDBBtn>                
                 </MDBModalFooter>
