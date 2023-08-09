@@ -97,7 +97,7 @@
 @media only screen and (max-width: 425px) {
     .roadmapbgcolor {
         background: #D2EEFF;
-        height: 125vh !important;
+        height: 175vh !important;
     }
 
     .line {
@@ -323,7 +323,7 @@
 @media (min-width: 320px) and (max-width: 375px) {
     .roadmapbgcolor {
         background: #D2EEFF;
-        height: 125vh !important;
+        height: 175vh !important;
     }
     .itemcolumn {
         /* height: 100%;
