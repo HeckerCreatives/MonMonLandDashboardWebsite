@@ -85,30 +85,26 @@ ul .list::before {
     align-items: stretch;
 }
   
-/* .slick-slide {
-    height: inherit !important;
-} */
-
-/* .h100 {
-    height: 650px !important;   
-} */
 
 .slick-slide {
     /* display: block !important; */
     /* float: none !important; */
     height: auto !important;
     margin-top: 1%;
+    
 }
 
 .slick-list {
     /* overflow-y: visible !important;     */
     height: 100% !important;
     /* padding: 10%; */
+    
 }
 
 .slick-slide > div {
     height: 100% !important;
-    font-size: smaller; 
+    font-size: smaller;
+     
 }
 
 /* .slick-slide > div > div {

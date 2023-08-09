@@ -31,7 +31,7 @@ const Games = () => {
     }
 
     const settings = {
-        // className: "hw90",
+        className: "align-items-start",
         arrows: false,
         dots: false,
         fade: true,
@@ -60,7 +60,7 @@ const Games = () => {
 
     return(
         <div className="gamesbgcolor">
-        <MDBContainer fluid  id="games" className="min-vh-100 pt-5">
+        <MDBContainer fluid  id="games" className="h-75 pt-5">
         
             <MDBTypography className="p-4 titlefontsize text-center text-warning fw-bold">
                 Games
@@ -85,16 +85,13 @@ const Games = () => {
                 </div>
                 
                 <div className="mx-3">
-                <MDBTypography className="p p-3 px-xl-5 custom-text-size">
+                <MDBTypography className="p m-0 px-3 px-xl-5 custom-text-size">
                 {content.description.split('\n').map((paragraph, index) => (
-                    <p key={index}>{paragraph}</p>
+                    <p className="pmargin" key={index}>{paragraph}</p>
                     ))}
                 </MDBTypography>
-                </div>    
-                
 
-                <div className="">
-                <MDBCol className="mx-3 p-3">
+                <div className="subsdiv">
                 <MDBTypography className="h4 px-4 text-wrap">
                 Subscription:
                 </MDBTypography>
@@ -111,8 +108,15 @@ const Games = () => {
                         </div>
                     ))}
                 </div>
-                </MDBCol>                    
+                {/* <MDBCol className="mx-3 p-3">                
+                </MDBCol> */}
+
                 </div>
+                
+                </div>    
+                
+
+                
 
                 </div>
                 

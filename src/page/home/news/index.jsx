@@ -43,9 +43,9 @@ const News = () => {
         arrows: false,
         centerMode: true,
         infinite: true,
-        centerPadding: "60px",
-        slidesToShow: news.length >= 3 ? 3 : news.length,
-        speed: 500,
+        // centerPadding: "60px",
+        slidesToShow: news.length >= 3 ? 3 : news.length,        
+        adaptiveHeight: false,
         focusOnSelect: true,
         responsive: [
             {
@@ -90,8 +90,11 @@ const News = () => {
         
           {news.map(balita =>(
           <div>
-          <MDBCard className="m-2" key={balita._id} alignment="center">
-                <MDBCardImage src={balita.image} alt='...' position='top' id="banner" />
+          <MDBCard className="mx-2" key={balita._id} alignment="center">
+          <div className="d-flex justify-content-center">
+          <MDBCardImage src={balita.image} alt='...' position='top' id="banner" />
+          </div>
+                
                 <MDBCardBody>
                     <MDBCardText className="fw-bold text-center newstxtsize">
                     {balita.title.length > 70 ? `${balita.title.substring(0,70)}...`: balita.title}

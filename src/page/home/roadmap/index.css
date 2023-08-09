@@ -144,7 +144,7 @@
     }
 
     #woodchar {
-        height: 100px;
+        height: 70px;
         transform: translateX(0%);
     }
     
@@ -164,7 +164,7 @@
         width: 82%;
         /* padding: 5%; */
         padding-top: 8%;
-        margin-top: 5%;
+        margin-top: 10%;
         font-size: small;
         /* display: flex;
         justify-content: center;
