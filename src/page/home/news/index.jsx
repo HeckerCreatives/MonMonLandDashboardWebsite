@@ -75,8 +75,11 @@ const News = () => {
   
 
     return (
-        <MDBContainer fluid className="pt-5 newsbgcolor text-center" id="news">
-            <MDBTypography className="p-5 titlefontsize text-warning text-center fw-bold">NEWS AND INFORMATION</MDBTypography>
+        <MDBContainer fluid className="pt-5 newsbgcolor" id="news">
+        <div>
+        <MDBTypography className="p-5 titlefontsize text-warning text-center fw-bold">NEWS AND INFORMATION</MDBTypography>
+        </div>
+            
         {isLoading ? <MDBSpinner color="warning"></MDBSpinner>
         :
         <div className="center">
@@ -124,10 +127,10 @@ const News = () => {
                     </MDBCardBody>                    
                 </MDBCard>
                 <MDBCardText className="text-dark mt-3 mb-0 fw-bold">Description</MDBCardText>
-                <MDBCard style={{background: "#EDCAB4",}}>
+                <MDBCard  style={{background: "#EDCAB4",}}>
                     <MDBCardBody >
                     {newsdescription.split('\n').map((paragraph, index) => (
-                      <p key={index}>{paragraph}</p>
+                      <p className="justify" key={index}>{paragraph}</p>
                     ))}
 
                     </MDBCardBody>                    

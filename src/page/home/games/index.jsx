@@ -83,7 +83,7 @@ const Games = () => {
                 {games.map((content)=> (
                 <div key={content._id} className="" >
                 <div className="mx-4">
-                <MDBTypography className="h2 text-center mt-3" >{content.gametitle}</MDBTypography>
+                <MDBTypography className="h2 text-center" >{content.gametitle}</MDBTypography>
                 </div>
                 
                 <div className="mx-3">

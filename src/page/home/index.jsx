@@ -30,7 +30,7 @@ const Initial = () => {
         },
     ];
     return (
-        <div>
+        <MDBContainer fluid className="px-0">
         <div className="bg-image">
         <MDBContainer fluid className="px-0" >
         <Navbar links={Links}/> 
@@ -45,7 +45,7 @@ const Initial = () => {
             <Roadmap/>
             <Footer links={Links}/>
         </div>
-        </div>        
+        </MDBContainer>        
         
     )
 }
