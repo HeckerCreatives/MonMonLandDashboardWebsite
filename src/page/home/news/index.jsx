@@ -18,6 +18,14 @@ const News = () => {
   const [newsdescription, setnewsDescription] = useState('');
   const [newstitle, setNewsTitle] = useState('');
   const [imahe, setImahe] = useState('');
+  // const [currentPage, setCurrentPage] = useState(0);
+  // const maxCharsPerPage = 669;
+
+  // const handleNextPage = () => {
+  //   setCurrentPage(currentPage + 1);
+  // };
+
+  // const displaycontent = newsdescription.substring(0,(currentPage + 1) * maxCharsPerPage);
 
   useEffect(()=>{
     setIsLoading(true)
@@ -103,7 +111,7 @@ const News = () => {
         </div>
         } 
         <MDBModal  show={activeModal} onClick={()=> setActiveModal(null)} tabIndex='-1'>
-            <MDBModalDialog centered>
+            <MDBModalDialog centered scrollable>
             <MDBModalContent>
                 <MDBModalHeader style={{background:"#A57552"}}>
                 <MDBModalTitle className="text-light">{newstitle}</MDBModalTitle>
@@ -119,8 +127,9 @@ const News = () => {
                 <MDBCard style={{background: "#EDCAB4",}}>
                     <MDBCardBody >
                     {newsdescription.split('\n').map((paragraph, index) => (
-                    <p key={index}>{paragraph}</p>
+                      <p key={index}>{paragraph}</p>
                     ))}
+
                     </MDBCardBody>                    
                 </MDBCard>
                 

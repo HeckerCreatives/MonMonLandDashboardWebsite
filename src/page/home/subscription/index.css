@@ -14,7 +14,9 @@ ul .list::before {
 
 .bgbadge {
     background-image: url('../../../assets/BG/BG\ seemless.png');
-    background-size: 100% 100%;
+    background-size: 100% 100%;    
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 /*  */
@@ -40,8 +42,6 @@ ul .list::before {
 #badge {
     height: 100%;
     width: 100%;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
 }
 
 .bgcolor {
@@ -144,3 +144,11 @@ ul .list::before {
 }
 
 /* ------------------------------------------------------ */
+
+.zoom-badge {
+    transition: transform 0.3s ease-in-out;
+}
+
+.zoom-badge:hover {
+    transform: scale(1.2);
+}

@@ -114,8 +114,12 @@ const Roadmap = () => {
                 </MDBCard>
                 <MDBCardText className="text-dark mt-3 mb-0 fw-bold">Description</MDBCardText>
                 <MDBCard style={{background: "#EDCAB4",}}>
-                    <MDBCardBody>                    
-                    {roadmapdescription}
+                    <MDBCardBody>
+                    <ul>
+                        {roadmapdescription.split('\n').map((item, index) => (
+                        <li key={index}>{item}</li>
+                        ))}
+                    </ul>
                     </MDBCardBody>
                 </MDBCard>
                 

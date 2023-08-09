@@ -84,8 +84,8 @@ const Subscription = () => {
         {sortedList.map(sub => (
         <MDBCol className="">
             <MDBCard key={sub._id} className="col-12 align-items-center linya" style={{height:"100%", width: "100%"}}>
-                <div>
-                <MDBCardImage src={sub.image} alt=""  id="badge" className="bgbadge text-center"/>
+                <div className="bgbadge">
+                <MDBCardImage src={sub.image} alt=""  id="badge" className="zoom-badge text-center"/>
                 </div>
                 
             
@@ -109,7 +109,7 @@ const Subscription = () => {
                                       
                 </MDBCardBody>
                 <MDBContainer className="text-center">
-                    <MDBBtn type="button" className="subsbutton btn btn-warning fw-bold" size="lg"  >SUBSCRIBE NOW</MDBBtn>
+                    <MDBBtn type="button" className=" zoom-badge subsbutton btn btn-warning fw-bold" size="lg"  >SUBSCRIBE NOW</MDBBtn>
                 </MDBContainer>
             </MDBCard>
         </MDBCol>
