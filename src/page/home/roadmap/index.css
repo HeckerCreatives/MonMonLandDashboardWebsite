@@ -95,6 +95,10 @@
 }
 
 @media only screen and (max-width: 425px) {
+    .roadmapbgcolor {
+        background: #D2EEFF;
+        height: 125vh !important;
+    }
 
     .line {
         background-image: url("../../../assets/roadmap/line.png");
@@ -317,6 +321,10 @@
 }
 
 @media (min-width: 320px) and (max-width: 375px) {
+    .roadmapbgcolor {
+        background: #D2EEFF;
+        height: 125vh !important;
+    }
     .itemcolumn {
         /* height: 100%;
         width: 40%;
