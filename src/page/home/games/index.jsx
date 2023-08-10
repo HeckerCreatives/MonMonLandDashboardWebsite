@@ -11,12 +11,15 @@ import pearl from "../../../assets/subscription/pearl badge.png"
 import ruby from "../../../assets/subscription/ruby badge.png"
 import emerald from "../../../assets/subscription/emerald.png"
 import diamond from "../../../assets/subscription/diamond.png"
+import pageon from "../../../assets/games/A.png"
+import pageoff from "../../../assets/games/B.png"
 import Slider from "react-slick";
 
 
 const Games = () => {
     const [games, setGames] = useState([]);
     const [id, setId] = useState([]);
+    const [currentSlide, setCurrentSlide] = useState(0);
     const sliderRef1 = useRef();
     const sliderRef2 = useRef();
 
@@ -35,20 +38,27 @@ const Games = () => {
         arrows: false,
         dots: window.innerWidth <= 1024 ? true: false,
         fade: true,
-        // infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
+        afterChange: window.innerWidth <= 1024 ? (current) => {
+            setCurrentSlide(current);
+        } : false,
         swipe:window.innerWidth <= 1024 ? true: false,
-        // responsive: [
-        //     {
-        //       breakpoint: 1439,
-        //       settings: {
-        //         swipe:true,
-        //         dots: true,
-                
-        //       }
-        //     },
-        //   ]
+        appendDots: window.innerWidth <= 1024 ? dots => (
+            <div        
+            >
+              <ul style={{ margin: "0px", padding: "0px", listStyle: "none" }}> {dots} </ul>
+            </div>
+          ) : false,
+          customPaging: window.innerWidth <= 1024 ? function(i) {
+          const isActive = i === currentSlide;
+          const imageSource = isActive ? pageon : pageoff;
+            return (
+              <a>
+                <img src={imageSource} alt="" style={{height: "6px", width: "25px"}} className="rounded"/>
+              </a>
+            );
+          } : false,
       };
 
       

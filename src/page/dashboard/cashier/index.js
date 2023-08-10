@@ -227,7 +227,7 @@ const AvailableCashiers = () => {
                 </div>
                 </td>
                 <td>{game.paymentcollected ? game.paymentcollected  : 0}/{game.paymentlimit}</td>
-                <td>
+                {/* <td>
                 <MDBBtn 
                 className="mx-2 fw-bold" 
                 outline color="dark" 
@@ -235,7 +235,7 @@ const AvailableCashiers = () => {
                 >
                 Buy
                 </MDBBtn>
-                </td>
+                </td> */}
                 </tr>
                 ))}
                 </>

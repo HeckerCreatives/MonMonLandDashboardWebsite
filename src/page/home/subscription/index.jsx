@@ -20,14 +20,15 @@ import { MDBContainer,
 // import caro from "../../../assets/caro.png"
 import Slider from "react-slick";
 import "./index.css"
-
+import pageon from "../../../assets/games/A.png"
+import pageoff from "../../../assets/games/B.png"
 const Subscription = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [subs, setSubs] = useState([]);
     const [activeModal, setActiveModal] = useState(null);
     const [subsdescription, setSubsDescription] = useState([]);
     const [substitle, setSubsTitle] = useState('');
-    
+    const [currentSlide, setCurrentSlide] = useState(0);
     useEffect(()=>{
         setIsLoading(true)
         fetch(`${process.env.REACT_APP_API_URL}subscription/find`)
@@ -48,14 +49,34 @@ const Subscription = () => {
 
     const settings = {
         className: "h100",
-        dots: true,
+        dots:window.innerWidth <= 1024 ? true: false,
         infinite: true,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
         adaptiveHeight: false,
         variableWidth: false,
-        arrows:false
+        arrows:false,
+        afterChange: window.innerWidth <= 1024 ? (current) => {
+            setCurrentSlide(current);
+        } : false,
+        swipe:window.innerWidth <= 1024 ? true: false,
+        appendDots: window.innerWidth <= 1024 ? dots => (
+            <div        
+            >
+              <ul style={{ margin: "0px", padding: "0px", listStyle: "none" }}> {dots} </ul>
+            </div>
+          ) : false,
+          customPaging: window.innerWidth <= 1024 ? function(i) {
+          const isActive = i === currentSlide;
+          const imageSource = isActive ? pageon : pageoff;
+            return (
+              <a>
+                <img src={imageSource} alt="" style={{height: "6px", width: "25px"}} className="rounded"/>
+              </a>
+            );
+          } : false,
+      
       };
     
 

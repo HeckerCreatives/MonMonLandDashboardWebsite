@@ -16,7 +16,6 @@ import { MDBContainer,
         MDBCardBody,
         MDBCardText,} from "mdb-react-ui-kit";
 import "./index.css"
-import woodcutting from "../../../assets/character/Wood Cutting.png"
 import seemore from "../../../assets/roadmap/see more btn.png"
 
 const Roadmap = () => {
@@ -70,13 +69,13 @@ const Roadmap = () => {
         index === 1 || index === roadmap.length - 1 ? 'itempositionright' : index % 2 === 0 ? 'itemposition' : 'itempositionright'
         }`} >
         
-        <MDBTypography className="fw-bold text-white" >{roadmaps.title.length > 50 ? `${roadmaps.title.substring(0,50)}...`: roadmaps.title}</MDBTypography>
+        <MDBTypography className="mb-1 fw-bold text-white" >{roadmaps.title.length > 50 ? `${roadmaps.title.substring(0,50)}...`: roadmaps.title}</MDBTypography>
 
         <MDBCol  className="woodcharbg">
         <img src={roadmaps.image} alt="" id="woodchar" />
         </MDBCol>            
 
-        <MDBTypography className="fw-bold text-wrap text-white m-lg-2" >{roadmaps.subtitle.length > 50 ? `${roadmaps.subtitle.substring(0,50)}...`: roadmaps.subtitle}</MDBTypography>
+        <MDBTypography className="mb-1 fw-bold text-wrap text-white m-lg-2" >{roadmaps.subtitle.length > 50 ? `${roadmaps.subtitle.substring(0,50)}...`: roadmaps.subtitle}</MDBTypography>
         
         <img src={seemore} alt="" className="zoom-roadmap seemorebtn" 
         onClick={() => {
