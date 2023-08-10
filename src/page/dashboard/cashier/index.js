@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBTypography, } from "mdb-react-ui-kit";
+import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBTypography, MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem,MDBIcon} from "mdb-react-ui-kit";
 import Swal from "sweetalert2"
 import Breadcrumb from "../../../component/breadcrumb";
 import PaginationPager from "../../../component/pagination/index"
@@ -15,7 +15,7 @@ const AvailableCashiers = () => {
     const [games, setGames] = useState([]),
             [recipientId, setRecipientId] = useState(""),
             [page, setPage] = useState(1),
-            [status, setStatus] = useState(""),
+            [paymethod, setPayMethod] = useState(""),
             [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
     const [toggle, settoggle] = useState(false)        
@@ -53,7 +53,8 @@ const AvailableCashiers = () => {
         .then(result => {
             setGames(result)
         })
-    },[])
+        console.log(paymethod)
+    },[paymethod])
     
     useEffect(()=>{
         socket.on('room_full', (data) => {
@@ -111,6 +112,31 @@ const AvailableCashiers = () => {
         <MDBContainer fluid className="">
         {/* <Breadcrumb title="Cashiers" paths={[]}/> */}
         <MDBTypography className="fw-bold">Cashier List</MDBTypography>
+
+        <MDBRow className="">
+
+        <MDBCol md={2} className="d-flex align-items-center justify-content-center">
+        <MDBDropdown >
+        <MDBDropdownToggle style={{background: '#EDCAB4'}}>
+        Payment Method &nbsp;<MDBIcon fas icon="filter" />&nbsp;
+        </MDBDropdownToggle>
+        <MDBDropdownMenu>
+            <MDBDropdownItem link onClick={() => setPayMethod("Bank")}>Bank</MDBDropdownItem>
+            <MDBDropdownItem  link onClick={() => setPayMethod("Gcash")}>Gcash</MDBDropdownItem>
+            <MDBDropdownItem link onClick={() => setPayMethod("Binance")}>Binance</MDBDropdownItem>
+        </MDBDropdownMenu>
+        </MDBDropdown>
+        </MDBCol>
+
+        <MDBCol md={2} className="">
+        <MDBTypography className="fw-bold">Search Admin Username</MDBTypography>
+        <MDBInput type="search"/>
+        </MDBCol>
+
+        </MDBRow>
+        
+
+
         <MDBRow>
         <MDBCol>
         { step2toggle ? 
