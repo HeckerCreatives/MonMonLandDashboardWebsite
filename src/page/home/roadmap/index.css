@@ -23,7 +23,10 @@
 }
 
 @media (min-width: 426px) and (max-width: 768px) {
-
+    .roadmapbgcolor {
+        background: #D2EEFF;
+        height: 150vh !important;
+    }
     .line {
         background-image: url("../../../assets/roadmap/line.png");
         background-position:3%;
@@ -178,6 +181,10 @@
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
+    .roadmapbgcolor {
+        background: #D2EEFF;
+        height: 150vh !important;
+    }
 
     .line {
         background-image: url("../../../assets/roadmap/line.png");

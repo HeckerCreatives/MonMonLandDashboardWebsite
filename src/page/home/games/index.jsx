@@ -33,13 +33,25 @@ const Games = () => {
     const settings = {
         className: "align-items-start",
         arrows: false,
-        dots: false,
+        dots: window.innerWidth <= 1024 ? true: false,
         fade: true,
-        infinite: true,
+        // infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
-        // adaptiveHeight: true
+        swipe:window.innerWidth <= 1024 ? true: false,
+        // responsive: [
+        //     {
+        //       breakpoint: 1439,
+        //       settings: {
+        //         swipe:true,
+        //         dots: true,
+                
+        //       }
+        //     },
+        //   ]
       };
+
+      
 
       useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}games/find`)
@@ -72,11 +84,11 @@ const Games = () => {
            {/* Description holder */}
             <MDBCol className="col-12 col-xl-5 offset-xl-1"> 
                 <div className="descriptionholder">
-                <div className="d-none d-lg-block text-center">
+                <div className="d-none d-xl-block text-center">
                 <img src={desc} alt="" className="holdersize"/>                       
                 </div>
                 <div className="descdiv">
-                <div className="d-lg-none d-block text-center">
+                <div className="d-xl-none d-block text-center">
                 <img src={desc} alt="" className="descriptionholdermobile"/>                       
                 </div>
                 <Slider {...settings} className=' fw-bold' ref={sliderRef1}>
