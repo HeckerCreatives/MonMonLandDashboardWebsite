@@ -282,13 +282,19 @@
     }
 
     .itemposition {
-        transform: translateX(60%);
+        transform: translateX(39%);
     }
     
     .itempositionright {
-        transform: translateX(60%) scaleX(-1);
+        transform: translateX(39%) scaleX(-1);
         /* transform: ; */
         
+    }
+
+    .itemcolumn {
+        height: 90%;
+        width: 32%;
+        margin-top: 2%;
     }
 
     .roadmapholder {
@@ -309,7 +315,8 @@
     }
 
     #woodchar {
-        height: 100px;
+        height: 100%;
+        width: 100%;
         transform: translateX(0%);
     }
     
@@ -320,14 +327,10 @@
     
     .seemorebtn {
         /* height: 50%; */
-        width: 50%;
+        width: 40%;
     }
 
-    .itemcolumn {
-        height: 90%;
-        width: 25%;
-        margin-top: 2%;
-    }
+    
     
       
 }
