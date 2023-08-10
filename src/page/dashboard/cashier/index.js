@@ -11,9 +11,9 @@ const AvailableCashiers = () => {
     const [username, setUsername] = useState(''); // Add this
     const [room, setRoom] = useState(''); // Add this
     const [cashier, setCashier] = useState(''); // Add this
-    // const {buyer, setBuyer } = useContext(DataContext);
     const [games, setGames] = useState([]),
-            [recipientId, setRecipientId] = useState(""),
+            [backup, setBackup] = useState([]),
+            [searchadmin, setSearchAdmin] = useState(""),
             [page, setPage] = useState(1),
             [paymethod, setPayMethod] = useState(""),
             [total, setTotal] = useState(0);
@@ -43,18 +43,55 @@ const AvailableCashiers = () => {
         }, [games]);
 
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`, {
-            method: "GET",
+        if(!paymethod){
+            fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                setGames(result)
+                setBackup(result)
+            })
+        }
+        
+
+        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/filterpayment`, {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json"
-            }
+            },
+            body: JSON.stringify({method:paymethod})
         })
         .then(response => response.json())
-        .then(result => {
-            setGames(result)
+        .then(data => {
+            setGames(data.data)
+            setBackup(data.data)
         })
-        console.log(paymethod)
-    },[paymethod])
+        
+        // fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/searchcashier`, {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify({cashier:searchadmin})
+        // })
+        // .then(response => response.json())
+        // .then(data => {
+        //     if(data.message === "failed"){
+        //         Swal.fire({
+        //             icon: "info",
+        //             title: "No user Found",
+        //             text: data.data,
+        //             confirmButtonText: "Confirm"
+        //         })
+        //     } else {
+        //     setGames(data.data)
+        //     }
+        // })
+    },[paymethod, searchadmin])
     
     useEffect(()=>{
         socket.on('room_full', (data) => {
@@ -106,7 +143,24 @@ const AvailableCashiers = () => {
         }
         
     }
-      
+
+    const handleFilterChange = (event) => {
+        setPayMethod(event.target.value);
+    };
+
+    const handleSearch = e => {
+        const str = e.target.value;
+        if (str) {
+          const regex = new RegExp(str, "i"); 
+          setGames(
+            backup.filter(e =>
+              regex.test(e.userId.userName)
+            )
+          );
+        } else {
+          setGames(backup);
+        }
+    };
 
     return (
         <MDBContainer fluid className="">
@@ -115,28 +169,28 @@ const AvailableCashiers = () => {
 
         <MDBRow className="">
 
-        <MDBCol md={2} className="d-flex align-items-center justify-content-center">
-        <MDBDropdown >
-        <MDBDropdownToggle style={{background: '#EDCAB4'}}>
-        Payment Method &nbsp;<MDBIcon fas icon="filter" />&nbsp;
-        </MDBDropdownToggle>
-        <MDBDropdownMenu>
-            <MDBDropdownItem link onClick={() => setPayMethod("Bank")}>Bank</MDBDropdownItem>
-            <MDBDropdownItem  link onClick={() => setPayMethod("Gcash")}>Gcash</MDBDropdownItem>
-            <MDBDropdownItem link onClick={() => setPayMethod("Binance")}>Binance</MDBDropdownItem>
-        </MDBDropdownMenu>
-        </MDBDropdown>
+        <MDBCol md={2} className="">
+        <MDBTypography className="fw-bold">Filter Payment Method</MDBTypography>
+        <div className="">
+            <select
+                className="form-select"
+                value={paymethod}
+                onChange={handleFilterChange}
+            >
+                <option value="All">All</option>
+                <option value="Bank">Bank</option>
+                <option value="Gcash">Gcash</option>
+                <option value="Binance">Binance</option>
+            </select>
+        </div>
         </MDBCol>
 
-        <MDBCol md={2} className="">
+        <MDBCol md={3} className="">
         <MDBTypography className="fw-bold">Search Admin Username</MDBTypography>
-        <MDBInput type="search"/>
+        <MDBInput type="search" onChange={handleSearch}/>
         </MDBCol>
 
         </MDBRow>
-        
-
-
         <MDBRow>
         <MDBCol>
         { step2toggle ? 
@@ -144,7 +198,6 @@ const AvailableCashiers = () => {
         user={cashier} 
         step2toggle={step2toggle} 
         setstep2toggle={toggleShow2} 
-        recipientId={recipientId}
         // data={buyer}
         room={room}
         buyer={username} 
@@ -155,12 +208,9 @@ const AvailableCashiers = () => {
             <MDBTable align='middle' className="border mt-4" responsive>
                 <MDBTableHead className="head text-center">
                     <tr >
-                    <th className="fw-bold" scope='col'>Username</th>
+                    <th className="fw-bold" scope='col'>Admin</th>
                     <th className="fw-bold" scope='col'>Payment Method</th>
-                    <th className="fw-bold" scope='col'>Number of Transaction</th>
                     <th className="fw-bold" scope='col'>Payment Limit</th>
-                    <th className="fw-bold" scope='col'>Status</th>
-                    <th className="fw-bold" scope='col'>Action</th>
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody className="text-center">                
@@ -176,12 +226,7 @@ const AvailableCashiers = () => {
                 <span>{game.paymentdetail}</span>
                 </div>
                 </td>
-                <td>{game.numberoftransaction}</td>
-                <td>{game.paymentlimit}</td>
-                <td style={{ color: game.status === 'Close' ? 'red' : game.status === 'Open' ? 'green' : 'blue' }}>
-                {game.status}
-                </td>
-
+                <td>{game.paymentcollected ? game.paymentcollected  : 0}/{game.paymentlimit}</td>
                 <td>
                 <MDBBtn 
                 className="mx-2 fw-bold" 
