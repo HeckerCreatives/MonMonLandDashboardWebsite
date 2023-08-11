@@ -43,6 +43,10 @@ const AvailableCashiers = () => {
         }, [games]);
 
     useEffect(()=>{
+        // socket.on('allroom', (data)=>{
+        //     console.log(data)
+        // })
+
         if(!paymethod){
             fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`, {
                 method: "GET",
@@ -52,11 +56,11 @@ const AvailableCashiers = () => {
             })
             .then(response => response.json())
             .then(result => {
+                // const online = result.filter(e => e.userId.userName === roomOwner.username)
                 setGames(result)
                 setBackup(result)
             })
         }
-        
 
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/filterpayment`, {
             method: "POST",
@@ -67,65 +71,60 @@ const AvailableCashiers = () => {
         })
         .then(response => response.json())
         .then(data => {
+            // const item = data.data;
+            // const online = item.filter(e => e.userId.userName === roomOwner.username)
             setGames(data.data)
             setBackup(data.data)
         })
-        
-        // fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/searchcashier`, {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify({cashier:searchadmin})
-        // })
-        // .then(response => response.json())
-        // .then(data => {
-        //     if(data.message === "failed"){
-        //         Swal.fire({
-        //             icon: "info",
-        //             title: "No user Found",
-        //             text: data.data,
-        //             confirmButtonText: "Confirm"
-        //         })
-        //     } else {
-        //     setGames(data.data)
-        //     }
-        // })
     },[paymethod, searchadmin])
     
     useEffect(()=>{
-        socket.on('room_full', (data) => {
-            // Handle the room_full event here
-            if(data){
-            // You can display an error message to the user or perform any other action
-            Swal.fire({
-                icon: "info",
-                title: "Queing",
-                text: data.message,
-                confirmButtonText: "Ok",
-            }).then(result => {
-                if(result.isConfirmed){
-                    window.location.href = "/"
-                }
-            })
-            }
+        // socket.on('room_full', (data) => {
+        //     // Handle the room_full event here
+        //     if(data){
+        //     // You can display an error message to the user or perform any other action
+        //     Swal.fire({
+        //         icon: "info",
+        //         title: "Queing",
+        //         text: data.message,
+        //         confirmButtonText: "Ok",
+        //     }).then(result => {
+        //         if(result.isConfirmed){
+        //             window.location.href = "/"
+        //         }
+        //     })
+        //     }
             
-        })
+        // })
 
-        socket.on('room_not_allowed', (data)=> {
-            if(data){
+        
+
+        socket.on('queue_message', (data) => {
+            // Display the queue message to the user
+            if(data.message === "Now its your turn.") {
                 Swal.fire({
                     icon: "info",
-                    title: "Admin is Out",
+                    title: "It's Your Turn now",
                     text: data.message,
                     confirmButtonText: "Ok",
-                }).then(result => {
-                    if(result.isConfirmed){
-                        window.location.href = "/"
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,                    
+                })
+            } else {
+                Swal.fire({
+                    icon: "info",
+                    title: "Queing",
+                    text: data.message,
+                    confirmButtonText: "Ok",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: function (){
+                        Swal.disableButtons();
                     }
                 })
             }
-        })
+            
+          });
     },[])
 
     const buybtn = (user) => {
@@ -215,8 +214,10 @@ const AvailableCashiers = () => {
                 </MDBTableHead>
                 <MDBTableBody className="text-center">                
                 <>
+                {games ?
+                <>
                 {games.map((game,i) =>(
-                <tr key={`game-${i}`}>               
+                <tr key={`game-${i}`} onClick={() =>buybtn(game)}>               
                 <td>
                     {game.userId.userName}
                 </td>
@@ -226,18 +227,14 @@ const AvailableCashiers = () => {
                 <span>{game.paymentdetail}</span>
                 </div>
                 </td>
-                <td>{game.paymentcollected ? game.paymentcollected  : 0}/{game.paymentlimit}</td>
-                {/* <td>
-                <MDBBtn 
-                className="mx-2 fw-bold" 
-                outline color="dark" 
-                onClick={() =>buybtn(game)}
-                >
-                Buy
-                </MDBBtn>
-                </td> */}
+                <td>{game.paymentcollected ? game.paymentcollected  : 0}/{game.paymentlimit}</td>                
                 </tr>
                 ))}
+                </>
+                :                
+                <span>No Data</span>
+                }
+                
                 </>
                 </MDBTableBody>
             </MDBTable>

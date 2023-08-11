@@ -153,6 +153,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
           
       }
       const goonline = () => {
+        // socket.emit('create-room', auth.userName);
         socket.emit('join_room', { username: auth.userName, room: auth.userName});
       }
       const handleCheckboxChange = (checkboxName) => {
