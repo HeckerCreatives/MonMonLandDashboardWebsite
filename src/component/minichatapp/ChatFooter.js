@@ -5,13 +5,12 @@ const ChatFooter = ({socket, buyer, room}) => {
     const [message, setMessage] = useState("")
     const [image, setImage] = useState(null);
     // const handleTyping = () => socket.emit("typing",`${ } is typing`)
-    const handleImageUpload = (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        setImage(file);
-      }
-    };
-
+    // const handleImageUpload = (e) => {
+    //   const file = e.target.files[0];
+    //   if (file) {
+    //     setImage(file);
+    //   }
+    // };
     const handleImgUrl = (url) => {
       // Use the uploaded image URL in the parent component or pass it to another component
       setImage(url);
@@ -21,22 +20,22 @@ const ChatFooter = ({socket, buyer, room}) => {
     
     const sendMessage = (e) => {
       e.preventDefault();
-      if (message.trim()) {        
+      if (message !== "") {        
         // Send message to server. We can't specify who we send the message to from the frontend. We can only send to server. Server can then send message to rest of users in room
         socket.emit('send_message', { username: buyer, room: room, message: message, __createdtime__, image: image ? image : null});
         setMessage('');
         setImage(null);
       } 
       // else if (image) {
-      //       const reader = new FileReader();
-      //       reader.onload = function (e) {
-      //         const dataURL = e.target.result;
-      //         socket.emit('send_message', { username: buyer, room: room, message: message, __createdtime__, image: dataURL});
-      //         console.log(dataURL)
+      //       // const reader = new FileReader();
+      //       // reader.onload = function (e) {
+      //       //   const dataURL = e.target.result;
+      //         socket.emit('send_message', { username: buyer, room: room, message: message, __createdtime__, image: image});
+      //         // console.log(dataURL)
       //         setMessage('');
       //         setImage(null);
-      //       };
-      //       reader.readAsDataURL(image);
+      //     //   };
+      //     //   reader.readAsDataURL(image);
       //     }
     };
     

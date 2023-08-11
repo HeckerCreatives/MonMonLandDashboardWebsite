@@ -37,7 +37,6 @@ const SubAdminUpgradeSubscriptionManual = () => {
               const data = result.filter(e => e.cashier === auth.userName)
               setHistory(data)
           })
-          
       },[])
   
       function generateRandomString() {
@@ -48,7 +47,6 @@ const SubAdminUpgradeSubscriptionManual = () => {
           const randomIndex = Math.floor(Math.random() * characters.length);
           randomString += characters[randomIndex];
         }
-      
         return randomString;
       }
 
@@ -64,7 +62,6 @@ const SubAdminUpgradeSubscriptionManual = () => {
             const filter = result.filter(e => e.userId._id === auth._id)            
             setUser(filter[0])            
         })
-        
         },[])
   
       const cancelorder = (id) => {
@@ -152,10 +149,12 @@ const SubAdminUpgradeSubscriptionManual = () => {
           })
           
       }
+
       const goonline = () => {
-        // socket.emit('create-room', auth.userName);
-        socket.emit('join_room', { username: auth.userName, room: auth.userName});
+        socket.emit('create-room', auth.userName, auth._id);
+        socket.emit('join_room', { username: auth.userName, room: auth._id});
       }
+
       const handleCheckboxChange = (checkboxName) => {
         if (checkboxName === 'ruby') {
         setSubscriptionId(process.env.REACT_APP_RUBY)
@@ -197,7 +196,8 @@ const SubAdminUpgradeSubscriptionManual = () => {
             })
             
         
-    }
+      }
+
       return(
           <>
           <MDBRow>
@@ -386,7 +386,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
               <MDBCardBody>
                   <MDBRow>
                       <MDBCol>
-                          <ChatPage socket={socket} buyer={auth.userName} room={auth.userName}/>
+                          <ChatPage socket={socket} buyer={auth.userName} room={auth._id}/>
                       </MDBCol>
                   </MDBRow>
               </MDBCardBody>

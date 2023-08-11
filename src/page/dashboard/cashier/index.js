@@ -43,11 +43,9 @@ const AvailableCashiers = () => {
         }, [games]);
 
     useEffect(()=>{
-        // socket.on('allroom', (data)=>{
-        //     console.log(data)
-        // })
-
-        if(!paymethod){
+        socket.on('room_created', ({room})=>{
+            console.log(room)
+            if(!paymethod){
             fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`, {
                 method: "GET",
                 headers: {
@@ -56,27 +54,29 @@ const AvailableCashiers = () => {
             })
             .then(response => response.json())
             .then(result => {
-                // const online = result.filter(e => e.userId.userName === roomOwner.username)
-                setGames(result)
-                setBackup(result)
+                const online = result.filter(e => e.userId._id === room)
+                setGames(online)
+                setBackup(online)
             })
-        }
+            }
 
-        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/filterpayment`, {
+            fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/filterpayment`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({method:paymethod})
+            })
+            .then(response => response.json())
+            .then(data => {
+                const item = data.data;
+                const online = item.filter(e => e.userId._id === room)
+                setGames(online)
+                setBackup(online)
+            })
+
         })
-        .then(response => response.json())
-        .then(data => {
-            // const item = data.data;
-            // const online = item.filter(e => e.userId.userName === roomOwner.username)
-            setGames(data.data)
-            setBackup(data.data)
-        })
-    },[paymethod, searchadmin])
+    },[paymethod])
     
     useEffect(()=>{
         // socket.on('room_full', (data) => {
@@ -131,14 +131,14 @@ const AvailableCashiers = () => {
         setCashier(user)
         if(auth){        
         setUsername(auth.userName)
-        setRoom(user.userId.userName)
+        setRoom(user.userId._id)
         toggleShow2()
-        socket.emit('join_room', { username: auth.userName, room: user.userId.userName });
+        socket.emit('join_room', { username: auth.userName, room: user.userId._id});
         } else {
         setUsername("Guest")
-        setRoom(user.userId.userName)
+        setRoom(user.userId._id)
         toggleShow2()
-        socket.emit('join_room', { username: "Guest", room: user.userId.userName });
+        socket.emit('join_room', { username: "Guest", room: user.userId._id});
         }
         
     }
