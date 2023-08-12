@@ -130,10 +130,10 @@ const SubAdminUpgradeSubscriptionManual = () => {
                       Swal.fire({
                           title: "User Upgraded Successfully",
                           icon: "success",
-                          text: "You Successfully Upgraded a User"
+                          text: "You Successfully Upgraded a User, Ready for the next user?"
                       }).then(ok => {
                       if(ok.isConfirmed){
-                          window.location.reload()
+                        //   window.location.reload()
                       }
                       })
                           

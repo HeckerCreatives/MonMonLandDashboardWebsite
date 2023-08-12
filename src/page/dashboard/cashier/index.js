@@ -43,37 +43,39 @@ const AvailableCashiers = () => {
         }, [games]);
 
     useEffect(()=>{
+       
         socket.on('room_created', ({room})=>{
-            console.log(room)
-            if(!paymethod){
-            fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-            .then(response => response.json())
-            .then(result => {
-                const online = result.filter(e => e.userId._id === room)
-                setGames(online)
-                setBackup(online)
-            })
-            }
+            const admins = room.flatMap((item => item.item))
+            console.log(admins)
+            // if(!paymethod){
+            // fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`, {
+            //     method: "GET",
+            //     headers: {
+            //         "Content-Type": "application/json"
+            //     }
+            // })
+            // .then(response => response.json())
+            // .then(result => {
+            //     const online = result.filter(e => e.userId._id === room)
+                setGames(admins)
+                // setBackup(room)
+            // })
+            // }
 
-            fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/filterpayment`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({method:paymethod})
-            })
-            .then(response => response.json())
-            .then(data => {
-                const item = data.data;
-                const online = item.filter(e => e.userId._id === room)
-                setGames(online)
-                setBackup(online)
-            })
+            // fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/filterpayment`, {
+            // method: "POST",
+            // headers: {
+            //     "Content-Type": "application/json"
+            // },
+            // body: JSON.stringify({method:paymethod})
+            // })
+            // .then(response => response.json())
+            // .then(data => {
+            //     const item = data.data;
+            //     const online = item.filter(e => e.userId._id === room)
+            //     setGames(online)
+            //     setBackup(online)
+            // })
 
         })
     },[paymethod])
