@@ -1,6 +1,7 @@
 import React, {useEffect, useState,useContext} from "react";
 import { MDBContainer, MDBBtn, MDBBadge, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBInput,  MDBCard, MDBCardBody, MDBCardText, MDBIcon} from "mdb-react-ui-kit";
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
+import { Toast } from "../../../../component/utils";
 import Breadcrumb from "../../../../component/breadcrumb";
 import PaginationPager from "../../../../component/pagination/index"
 import ruby from "../../../../assets/subscription/ruby badge.png"
@@ -9,6 +10,7 @@ import diamond from "../../../../assets/subscription/diamond.png"
 import ChatPage from "../../../../component/minichatapp/ChatPage";
 import { handlePagination } from "../../../../component/utils"
 import io from "socket.io-client"
+import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
 const socket = io(process.env.REACT_APP_API_URL)
 
 const SubAdminUpgradeSubscriptionManual = () => {
@@ -21,6 +23,9 @@ const SubAdminUpgradeSubscriptionManual = () => {
     const [user, setUser] = useState([]);
     const [history, setHistory] = useState("");
     const [page, setPage] = useState(1),
+          [color, setColor] = useState(false),
+          [image, setImage] = useState(""),
+          [filename, setFilename] = useState(""),
           [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
   
@@ -119,11 +124,13 @@ const SubAdminUpgradeSubscriptionManual = () => {
                           subscription: subscriptionId,
                           cashierId: user._id,
                           amount: price,
+                          stats: stats,
+                        // below is for payment history
                           cashier: user.userId.userName,
                           subscriptionlevel: subscriptionId,
                           price: price,
                           clientusername: username.value,
-                          stats: stats,
+                          image: image,
                       })
                   }).then(data =>{
                       if (data) {
@@ -153,18 +160,19 @@ const SubAdminUpgradeSubscriptionManual = () => {
       const goonline = () => {
         socket.emit('create-room', auth.userName, auth._id);
         socket.emit('join_room', { username: auth.userName, room: auth._id});
+        setColor(true)
       }
 
       const handleCheckboxChange = (checkboxName) => {
         if (checkboxName === 'ruby') {
         setSubscriptionId(process.env.REACT_APP_RUBY)
-        setPrice("20")
+        setPrice("25")
         setRubyChecked(true);
         setEmeraldChecked(false);
         setDiamondChecked(false);
         } else if (checkboxName === 'emerald') {
         setSubscriptionId(process.env.REACT_APP_EMERALD)
-        setPrice("45")
+        setPrice("50")
         setRubyChecked(false);
         setEmeraldChecked(true);
         setDiamondChecked(false);
@@ -198,6 +206,24 @@ const SubAdminUpgradeSubscriptionManual = () => {
         
       }
 
+      const kapy = (text) => {
+        navigator.clipboard.writeText(text)
+        Toast.fire({
+            icon: 'success',
+            title: 'Copy successfully'
+        })
+      }
+
+      const handleImgUrl = (url) => {
+        // Use the uploaded image URL in the parent component or pass it to another component
+        setImage(url);
+      };
+
+      const handleFilename = (url) => {
+        // Use the uploaded image URL in the parent component or pass it to another component
+        setFilename(url);
+      };
+
       return(
           <>
           <MDBRow>
@@ -207,7 +233,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                           <MDBRow>
                               <MDBCol className="">
                               <MDBCardText className="fw-bold mt-2">Cashier Username: {auth.userName}</MDBCardText>
-                              <MDBCardText className="text-mute">Created Time: {new Date(Buyer.createdAt).toLocaleString()}</MDBCardText>
+                              <MDBCardText className="text-mute">Created Time: {Buyer.createdAt ? new Date(Buyer.createdAt).toLocaleString(): ""}</MDBCardText>
                               </MDBCol>
                               <MDBCol className="">
                               <MDBCardText className="d-flex fw-bold mt-2 align-items-center" >
@@ -223,17 +249,17 @@ const SubAdminUpgradeSubscriptionManual = () => {
                               </MDBBtn>                                
                               </div> 
                               <div>
-                              <MDBBtn
+                                <MDBBtn
                                   type="button"
-                                  className="mx-2" 
+                                  className={color ? `mx-2 bg-success`:`mx-2 bg-danger`} 
                                   outline color="dark" size="sm" 
                                   onClick={goonline}>
-                                  Go Online
-                                  </MDBBtn>                               
+                                  {color ? "Online": "Offline"}
+                                </MDBBtn>                               
                               </div> 
                               </MDBCardText>
                               <MDBCardText className="text-mute">Transaction Number: &nbsp;{Buyer.transactionnumber}
-                              &nbsp; <MDBIcon far icon="copy" />
+                              &nbsp; <MDBIcon far icon="copy" onClick={() =>kapy(Buyer.transactionnumber)}/>
                               </MDBCardText>                             
                               </MDBCol>
                           </MDBRow>
@@ -315,12 +341,21 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                   <div className="offset-lg-2 col-lg-10 mt-3">
                                   <MDBCardText className="text-mute">Subscription Price : {price ? "$"+price: ""}</MDBCardText>
                                   </div>
+                                  <div className="offset-lg-2 col-lg-10 mt-3">
+                                  <MDBCardText className="text-mute">Image Filename : {filename ? filename: ""}</MDBCardText>
+                                  </div>
                                   <div className="d-flex justify-content-end mt-2">
                                   <div className="">
-                                  <MDBBtn className="mx-2 mt-2" type="submit">Upgrade Subscription</MDBBtn>
+                                  <UploadWidget
+                                  fileName={handleFilename} 
+                                  setImgUrl={handleImgUrl} 
+                                  disabled={Buyer.transactionnumber ? false : true}/>
                                   </div>
                                   <div className="">
-                                  <MDBBtn className="mx-2 mt-2" color="danger" type="button" onClick={() => cancelorder(Buyer._id)}>Cancel Order</MDBBtn>
+                                  <MDBBtn className="mx-2 mt-2" type="submit" disabled={Buyer.transactionnumber ? false : true}>Upgrade Subscription</MDBBtn>
+                                  </div>
+                                  <div className="">
+                                  <MDBBtn className="mx-2 mt-2" disabled={Buyer.transactionnumber ? false : true} color="danger" type="button" onClick={() => cancelorder(Buyer._id)}>Cancel Order</MDBBtn>
                                   </div>
                                   </div>
                                   
@@ -343,6 +378,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                       <th className="fw-bold" scope='col'>Subscription Level</th>
                       <th className="fw-bold" scope='col'>Price</th>
                       <th className="fw-bold" scope='col'>Client Username</th>
+                      <th className="fw-bold" scope='col'>Receipt</th>
                       </tr>
                   </MDBTableHead>
                   <MDBTableBody className="text-center">                
@@ -365,6 +401,10 @@ const SubAdminUpgradeSubscriptionManual = () => {
                   </td>
                   <td>
                       {data.clientusername}
+                  </td>
+                  <td>
+                  {data.image ? <img src={data.image} alt="resibo" className="img-fluid"/>  : 
+                   "nag antay ka ? wala na"}
                   </td>                
                   </tr>
                   ))}

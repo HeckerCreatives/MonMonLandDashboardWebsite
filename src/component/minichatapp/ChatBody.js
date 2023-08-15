@@ -1,7 +1,7 @@
 import React from 'react'
 import {useNavigate} from "react-router-dom"
 
-const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room}) => { 
+const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket}) => { 
   const navigate = useNavigate()
   const buy = localStorage.getItem("buy")
 
@@ -11,6 +11,9 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room}) => {
     return date.toLocaleString();
   }
 
+  const kick = () => {
+    socket.emit('kick', ({userid: socket.id, room: room}))
+  }
   
   return (
     <>
@@ -19,7 +22,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room}) => {
       <p>Please make a payment within 60:00 mins. otherwise, the order will be cancelled</p>
       </div>
       <div className='mx-2'>
-      <button className='btn-primary mb-1 rounded'>Done Transaction</button>
+      <button className='btn-primary mb-1 rounded' onClick={kick}>Done Transaction</button>
       <button className='btn-danger rounded'>Cancel Order</button>
       </div>
       </header>

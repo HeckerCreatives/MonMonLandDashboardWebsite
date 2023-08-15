@@ -26,17 +26,17 @@ const ChatFooter = ({socket, buyer, room}) => {
         setMessage('');
         setImage(null);
       } 
-      // else if (image) {
-      //       // const reader = new FileReader();
-      //       // reader.onload = function (e) {
-      //       //   const dataURL = e.target.result;
-      //         socket.emit('send_message', { username: buyer, room: room, message: message, __createdtime__, image: image});
-      //         // console.log(dataURL)
-      //         setMessage('');
-      //         setImage(null);
-      //     //   };
-      //     //   reader.readAsDataURL(image);
-      //     }
+      else if (image) {
+            // const reader = new FileReader();
+            // reader.onload = function (e) {
+            //   const dataURL = e.target.result;
+              socket.emit('send_message', { username: buyer, room: room, message: message, __createdtime__, image: image});
+              // console.log(dataURL)
+              setMessage('');
+              setImage(null);
+          //   };
+          //   reader.readAsDataURL(image);
+          }
     };
     
     
