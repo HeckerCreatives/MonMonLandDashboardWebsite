@@ -6,6 +6,7 @@ import PaginationPager from "../../../component/pagination/index"
 import CashierStep1 from "./steps/step1";
 import CashierStep2 from "./steps/step2";
 import io from "socket.io-client"
+import "./index.css"
 const socket = io(process.env.REACT_APP_API_URL)
 const AvailableCashiers = () => {
     const [username, setUsername] = useState(''); // Add this
@@ -13,7 +14,6 @@ const AvailableCashiers = () => {
     const [cashier, setCashier] = useState(''); // Add this
     const [games, setGames] = useState([]),
             [backup, setBackup] = useState([]),
-            [searchadmin, setSearchAdmin] = useState(""),
             [page, setPage] = useState(1),
             [paymethod, setPayMethod] = useState(""),
             [total, setTotal] = useState(0);
@@ -37,68 +37,23 @@ const AvailableCashiers = () => {
       }
 
     useEffect(() => {
-        let totalPages = Math.floor(games.length / 5);
-        if (games.length % 5 > 0) totalPages += 1;
-        setTotal(totalPages);
-        }, [games]);
+    let totalPages = Math.floor(games.length / 5);
+    if (games.length % 5 > 0) totalPages += 1;
+    setTotal(totalPages);
+    }, [games]);
 
     useEffect(()=>{
-       
-        socket.on('room_created', ({room})=>{
-            const admins = room.flatMap((item => item.item))
-            console.log(admins)
-            // if(!paymethod){
-            // fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`, {
-            //     method: "GET",
-            //     headers: {
-            //         "Content-Type": "application/json"
-            //     }
-            // })
-            // .then(response => response.json())
-            // .then(result => {
-            //     const online = result.filter(e => e.userId._id === room)
-                setGames(admins)
-                // setBackup(room)
-            // })
-            // }
+    
+    socket.on('room_created', ({room})=>{
+        const admins = room.flatMap((item => item.item))
+        setGames(admins)
+        setBackup(admins)
+        
+    })
 
-            // fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/filterpayment`, {
-            // method: "POST",
-            // headers: {
-            //     "Content-Type": "application/json"
-            // },
-            // body: JSON.stringify({method:paymethod})
-            // })
-            // .then(response => response.json())
-            // .then(data => {
-            //     const item = data.data;
-            //     const online = item.filter(e => e.userId._id === room)
-            //     setGames(online)
-            //     setBackup(online)
-            // })
-
-        })
-    },[paymethod])
+    },[])
     
     useEffect(()=>{
-        // socket.on('room_full', (data) => {
-        //     // Handle the room_full event here
-        //     if(data){
-        //     // You can display an error message to the user or perform any other action
-        //     Swal.fire({
-        //         icon: "info",
-        //         title: "Queing",
-        //         text: data.message,
-        //         confirmButtonText: "Ok",
-        //     }).then(result => {
-        //         if(result.isConfirmed){
-        //             window.location.href = "/"
-        //         }
-        //     })
-        //     }
-            
-        // })
-
         
 
         socket.on('queue_message', (data) => {
@@ -146,7 +101,18 @@ const AvailableCashiers = () => {
     }
 
     const handleFilterChange = (event) => {
-        setPayMethod(event.target.value);
+        const method = event.target.value
+        if(method){
+            setGames(
+                backup.filter(e =>
+                e.paymentmethod === method
+                )
+            )
+        } else if (method === "All"){
+            setGames(backup);
+        } else {
+            setGames(backup);
+        }
     };
 
     const handleSearch = e => {
@@ -166,6 +132,21 @@ const AvailableCashiers = () => {
     return (
         <MDBContainer fluid className="">
         {/* <Breadcrumb title="Cashiers" paths={[]}/> */}
+        
+        <MDBRow>
+        <MDBCol>
+        { step2toggle ? 
+        <CashierStep2         
+        user={cashier} 
+        step2toggle={step2toggle} 
+        setstep2toggle={toggleShow2} 
+        // data={buyer}
+        room={room}
+        buyer={username} 
+        socket={socket}   
+        />
+        :
+        <>
         <MDBTypography className="fw-bold">Cashier List</MDBTypography>
 
         <MDBRow className="">
@@ -192,20 +173,6 @@ const AvailableCashiers = () => {
         </MDBCol>
 
         </MDBRow>
-        <MDBRow>
-        <MDBCol>
-        { step2toggle ? 
-        <CashierStep2         
-        user={cashier} 
-        step2toggle={step2toggle} 
-        setstep2toggle={toggleShow2} 
-        // data={buyer}
-        room={room}
-        buyer={username} 
-        socket={socket}   
-        />
-        :
-        <>
             <MDBTable align='middle' className="border mt-4" responsive>
                 <MDBTableHead className="head text-center">
                     <tr >
