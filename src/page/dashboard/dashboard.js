@@ -300,6 +300,14 @@ const Dashboard = () => {
           // },
         ],
       },
+      {
+        name: "Payment History",
+        path: "/dashboard/SubAdministrator/paymenthistory",
+        icon: "book",
+        children: [
+          
+        ],
+      },
       
     ];
     break;
@@ -382,6 +390,14 @@ const Dashboard = () => {
         //   path: "/dashboard/Agent/settings/updatesubs/free",
         // }
       ]
+    },
+    {
+      name: "Payment History",
+      path: "/dashboard/Agent/paymenthistory",
+      icon: "book",
+      children: [
+        
+      ],
     },
      ];
      break;

@@ -259,7 +259,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                               </div> 
                               </MDBCardText>
                               <MDBCardText className="text-mute">Transaction Number: &nbsp;{Buyer.transactionnumber}
-                              &nbsp; <MDBIcon far icon="copy" onClick={() =>kapy(Buyer.transactionnumber)}/>
+                              &nbsp; <MDBIcon far icon="copy" className="icon-zoom" onClick={() =>kapy(Buyer.transactionnumber)}/>
                               </MDBCardText>                             
                               </MDBCol>
                           </MDBRow>

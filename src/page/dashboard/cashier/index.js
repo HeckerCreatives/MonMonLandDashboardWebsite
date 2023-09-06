@@ -186,7 +186,7 @@ const AvailableCashiers = () => {
                 {games ?
                 <>
                 {games.map((game,i) =>(
-                <tr key={`game-${i}`} onClick={() =>buybtn(game)}>               
+                <tr key={`game-${i}`} className="table-zoom" onClick={() =>buybtn(game)}>               
                 <td>
                     {game.userId.userName}
                 </td>

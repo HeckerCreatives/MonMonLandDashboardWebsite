@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {useNavigate} from "react-router-dom"
-
+import Swal from 'sweetalert2'
 const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket}) => { 
   const navigate = useNavigate()
   const buy = localStorage.getItem("buy")
@@ -11,9 +11,38 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket})
     return date.toLocaleString();
   }
 
-  const kick = () => {
-    socket.emit('kick', ({userid: socket.id, room: room}))
-  }
+  // const kick = () => {
+  //   socket.emit('kick', ({userid: socket.id}))
+    
+  // }
+
+  const doneTransaction = (room, normalUserId) => {
+    // Emit 'doneTransaction' event to server
+    socket.emit('doneTransaction', room, normalUserId);
+  };
+
+  useEffect(()=>{
+    // Listen for 'kicked' event
+  socket.on('kicked', () => {
+    // Refresh page
+    Swal.fire({
+      title: "Transaction Done",
+      icon: "success",
+      text: `Redirecting to cashier list`
+    }).then(result => {
+      if(result.isConfirmed){
+        window.location.reload();
+      }
+    })
+    
+  });
+
+  // Cleanup on unmount
+  return () => {
+    socket.off('kicked');
+  };
+    
+  },[socket])
   
   return (
     <>
@@ -22,8 +51,8 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket})
       <p>Please make a payment within 60:00 mins. otherwise, the order will be cancelled</p>
       </div>
       <div className='mx-2'>
-      <button className='btn-primary mb-1 rounded' onClick={kick}>Done Transaction</button>
-      <button className='btn-danger rounded'>Cancel Order</button>
+      <button className='btn-primary mb-1 rounded' onClick={() => doneTransaction(room,socket.id)}>Done Transaction</button>
+      {/* <button className='btn-danger rounded'>Cancel Order</button> */}
       </div>
       </header>
 

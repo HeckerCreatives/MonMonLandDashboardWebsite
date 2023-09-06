@@ -39,13 +39,14 @@ import ChatPage from "./component/minichatapp/ChatPage";
 import AvailableCashiers from "./page/dashboard/cashier";
 import CsrDashboard from "./page/dashboard/csr/dashboard";
 import CsrUpgradeSubscriptionManual from "./page/dashboard/csr/upgradesubs";
-
+import SubAdminPaymentHistory from "./page/dashboard/subadmin/paymenthistory";
+import CsrPaymentHistory from "./page/dashboard/csr/paymenthistory";
 const Routers = () => {
   return (
     <Routes>
       <Route path="*" element={<Error/>}/>
       {/* Initial */}
-      <Route path="/home" element={<Initial />} />
+      <Route path="/" element={<Initial />} />
 
       <Route path="/dashboard" element={<Dashboard />}>
        
@@ -103,7 +104,7 @@ const Routers = () => {
         </Route>
         
         <Route path="upgradesubscription" element={<SubAdminUpgradeSubscriptionManual/>}/>
-        
+        <Route path="paymenthistory" element={<SubAdminPaymentHistory/>}/>
         <Route path="settings">
           <Route path="updateprogressbar" element={<UpdateProgressBar/>}/>
           <Route path="updatesubs">
@@ -136,6 +137,7 @@ const Routers = () => {
           <Route path="updategames" element={<Games/>}/>
         </Route>
         <Route path="upgradesubscription" element={<CsrUpgradeSubscriptionManual/>}/>
+        <Route path="paymenthistory" element={<CsrPaymentHistory/>}/>
         </Route>
 
         <Route path="Player" element={""}>
@@ -151,7 +153,7 @@ const Routers = () => {
       <Route path="/login" element={<Login />}/>
       <Route path="/verification/:userId" element={<StepVerification />}/>
       
-      <Route path="/" element={<AvailableCashiers/>}/>
+      <Route path="/cashier" element={<AvailableCashiers/>}/>
     </Routes>
   );
 };

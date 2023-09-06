@@ -191,3 +191,11 @@ font-size: 15px;
   font-size: 13px;
   font-style: italic;
 }
+
+.icon-zoom {
+  transition: transform 0.2s;
+}
+
+.icon-zoom:hover {
+  transform: scale(1.2);
+}

@@ -2,8 +2,16 @@ import { MDBBtn, MDBCard, MDBCardBody, MDBCardText, MDBCol, MDBInput, MDBRow, MD
 import React, { useEffect , useState} from "react";
 // import Home from "../../../../../component/minichatapp/Home";
 import ChatPage from "../../../../component/minichatapp/ChatPage";
+import { Toast } from "../../../../component/utils";
+
 const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buyer, socket}) => {
-    
+    const kapy = (text) => {
+        navigator.clipboard.writeText(text)
+        Toast.fire({
+            icon: 'success',
+            title: 'Copy successfully'
+        })
+      }
     
     return(
         <>
@@ -52,7 +60,7 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
                                 </div>                            
                                 <div className="offset-2 col-lg-10">
                                 <MDBCardText className="text-mute">Account Number : {user.paymentdetail}
-                                &nbsp;<MDBIcon far icon="copy" />
+                                &nbsp;<MDBIcon far icon="copy" className="icon-zoom"  onClick={() =>kapy(user.paymentdetail)}/>
                                 </MDBCardText>
                                 </div>                 
                             </MDBCol>
