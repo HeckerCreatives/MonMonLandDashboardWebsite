@@ -85,17 +85,32 @@ const AvailableCashiers = () => {
     },[])
 
     const buybtn = (user) => {
+        const url = new URL(window.location.href);
+        const params = new URLSearchParams(url.search);
+
+        const username = params.get('username');
+        const id = params.get('id');
+        
         setCashier(user)
-        if(auth){        
-        setUsername(auth.userName)
+        if(username && id){        
+        setUsername(username)
         setRoom(user.userId._id)
         toggleShow2()
-        socket.emit('join_room', { username: auth.userName, room: user.userId._id});
+        socket.emit('join_room', { username: username, room: user.userId._id, playfabid: id});
+        socket.emit('userdetails', {id: socket.id})
         } else {
-        setUsername("Guest")
-        setRoom(user.userId._id)
-        toggleShow2()
-        socket.emit('join_room', { username: "Guest", room: user.userId._id});
+            Swal.fire({
+                icon: "info",
+                title: "Username and Id Not Found",
+                text: "Please Open the Cashier Link inside the Game",
+                confirmButtonText: "Ok",
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+            }).then(result => {
+                if(result.isConfirmed){
+                    window.location.replace('https://monmonland.games')
+                }
+            })
         }
         
     }
