@@ -18,6 +18,8 @@ const CsrUpgradeSubscriptionManual = () => {
     const [emeraldChecked, setEmeraldChecked] = useState(false);
     const [diamondChecked, setDiamondChecked] = useState(false);
     const [subscriptionId, setSubscriptionId] = useState("");
+    const [bibiliuser, setBibiliUser] = useState("");
+    const [bibiliuserplayfabid, setBibiliUserPlayfabid] = useState("");
     const [Buyer, setBuyer] = useState([]);
     const [price, setPrice] = useState("");
     const [user, setUser] = useState([]);
@@ -56,6 +58,13 @@ const CsrUpgradeSubscriptionManual = () => {
       }
 
       useEffect(()=>{
+        socket.on('details', (userdetails) => {
+            setBibiliUser(userdetails[1].userDetails.username)
+            setBibiliUserPlayfabid(userdetails[1].userDetails.playfabid)
+        })
+      },[])
+
+      useEffect(()=>{
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`, {
           method: "GET",
           headers: {
@@ -68,7 +77,7 @@ const CsrUpgradeSubscriptionManual = () => {
             setUser(filter[0])            
         })
         },[])
-  
+        
       const cancelorder = (id) => {
           const stats = "Open"
       Swal.fire({
@@ -302,11 +311,17 @@ const CsrUpgradeSubscriptionManual = () => {
                                   <MDBCardText className="fw-bold">Subscription Details</MDBCardText>
                                   </div>
                                   <div className="offset-lg-2 col-lg-10">
-                                  <MDBCardText className="text-mute d-flex mt-2">Enter Subscriber Username :
-                                  &nbsp; <MDBInput size="sm" name="username"/>
+                                  <MDBCardText className="text-mute d-flex mt-2"> Subscriber Username :
+                                  &nbsp; {bibiliuser}
                                   </MDBCardText>                                
                                   </div>
-  
+
+                                  <div className="offset-lg-2 col-lg-10">
+                                  <MDBCardText className="text-mute d-flex mt-2">Subscriber PlayfabId :
+                                  &nbsp; {bibiliuserplayfabid}
+                                  </MDBCardText>                                
+                                  </div>
+                                  
                                   <div className="offset-lg-2 col-lg-10 mt-2">
                                   <MDBCardText className="text-mute">Select Subscription Level :                                
                                   </MDBCardText>

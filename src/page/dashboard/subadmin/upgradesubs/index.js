@@ -9,6 +9,7 @@ import emerald from "../../../../assets/subscription/emerald.png"
 import diamond from "../../../../assets/subscription/diamond.png"
 import ChatPage from "../../../../component/minichatapp/ChatPage";
 import { handlePagination } from "../../../../component/utils"
+import  { UpgradeSubscriptionApi }  from "../../../../component/playfab/playfabupgrade";
 import io from "socket.io-client"
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
 const socket = io(process.env.REACT_APP_API_URL)
@@ -20,6 +21,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
     const [subscriptionId, setSubscriptionId] = useState("");
     const [bibiliuser, setBibiliUser] = useState("");
     const [bibiliuserplayfabid, setBibiliUserPlayfabid] = useState("");
+    const [substype, setSubsType] = useState("")
     const [Buyer, setBuyer] = useState([]);
     const [price, setPrice] = useState("");
     const [user, setUser] = useState([]);
@@ -72,8 +74,9 @@ const SubAdminUpgradeSubscriptionManual = () => {
         },[])
 
         useEffect(()=>{
-            socket.on('admin_room_users', (adminRoomUsers) => {
-                console.log(adminRoomUsers)
+            socket.on('details', (userdetails) => {
+                setBibiliUser(userdetails[1]?.userDetails.username)
+                setBibiliUserPlayfabid(userdetails[1]?.userDetails.playfabid)
             })
         },[])
 
@@ -120,46 +123,49 @@ const SubAdminUpgradeSubscriptionManual = () => {
               showDenyButton: true,
               confirmButtonText: "Confirm",
               denyButtonText: "Cancel",
-          }).then(result =>{
+          }).then(async result =>{
               if(result.isConfirmed){
-                  fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/updatebuyer/${Buyer._id}`,{
-                      method: "PUT",
-                      headers: {
-                          'Content-Type': 'application/json'
-                      },
-                      body: JSON.stringify({
-                          username: username.value,
-                          subscription: subscriptionId,
-                          cashierId: user._id,
-                          amount: price,
-                          stats: stats,
-                        // below is for payment history
-                          cashier: user.userId.userName,
-                          subscriptionlevel: subscriptionId,
-                          price: price,
-                          clientusername: username.value,
-                          image: image,
-                      })
-                  }).then(data =>{
-                      if (data) {
-                      Swal.fire({
-                          title: "User Upgraded Successfully",
-                          icon: "success",
-                          text: "You Successfully Upgraded a User, Ready for the next user?"
-                      }).then(ok => {
-                      if(ok.isConfirmed){
-                        //   window.location.reload()
-                      }
-                      })
-                          
-                      } else {
-                          Swal.fire({
-                              title: "User Upgraded Unsuccessfully",
-                              icon: "error",
-                              text: "There is an error Upgrading the Account"
-                          })
-                      }
-                  })
+                await UpgradeSubscriptionApi( bibiliuserplayfabid, bibiliuser, substype, price,)
+                .then(() => {
+                    fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/updatebuyer/${Buyer._id}`,{
+                        method: "PUT",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            username: bibiliuser,
+                            subscription: subscriptionId,
+                            cashierId: user._id,
+                            amount: price,
+                            stats: stats,
+                          // below is for payment history
+                            cashier: user.userId.userName,
+                            subscriptionlevel: subscriptionId,
+                            price: price,
+                            clientusername: username.value,
+                            image: image,
+                        })
+                    }).then(data =>{
+                        if (data) {
+                        Swal.fire({
+                            title: "User Upgraded Successfully",
+                            icon: "success",
+                            text: "You Successfully Upgraded a User, Ready for the next user?"
+                        }).then(ok => {
+                        if(ok.isConfirmed){
+                          //   window.location.reload()
+                        }
+                        })
+                            
+                        } else {
+                            Swal.fire({
+                                title: "User Upgraded Unsuccessfully",
+                                icon: "error",
+                                text: "There is an error Upgrading the Account"
+                            })
+                        }
+                    })
+                })
               }
           })
           
@@ -175,18 +181,21 @@ const SubAdminUpgradeSubscriptionManual = () => {
         if (checkboxName === 'ruby') {
         setSubscriptionId(process.env.REACT_APP_RUBY)
         setPrice("25")
+        setSubsType("1")
         setRubyChecked(true);
         setEmeraldChecked(false);
         setDiamondChecked(false);
         } else if (checkboxName === 'emerald') {
         setSubscriptionId(process.env.REACT_APP_EMERALD)
         setPrice("50")
+        setSubsType("2")
         setRubyChecked(false);
         setEmeraldChecked(true);
         setDiamondChecked(false);
         } else if (checkboxName === 'diamond') {
         setSubscriptionId(process.env.REACT_APP_DIAMOND)
-        setPrice("100")  
+        setPrice("100") 
+        setSubsType("3") 
         setRubyChecked(false);
         setEmeraldChecked(false);
         setDiamondChecked(true);
@@ -311,13 +320,13 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                   </div>
                                   <div className="offset-lg-2 col-lg-10">
                                   <MDBCardText className="text-mute d-flex mt-2">Subscriber Username :
-                                  &nbsp; <MDBInput disabled size="sm" name="username" value={bibiliuser}/>
+                                  &nbsp; {bibiliuser}
                                   </MDBCardText>                                
                                   </div>
 
                                   <div className="offset-lg-2 col-lg-10">
                                   <MDBCardText className="text-mute d-flex mt-2">Subscriber PlayfabId :
-                                  &nbsp; <MDBInput disabled size="sm" name="username" value={bibiliuserplayfabid}/>
+                                  &nbsp; {bibiliuserplayfabid}
                                   </MDBCardText>                                
                                   </div>
 

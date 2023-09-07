@@ -48,9 +48,9 @@ const AvailableCashiers = () => {
         const admins = room.flatMap((item => item.item))
         setGames(admins)
         setBackup(admins)
-        
+        console.log(admins)
     })
-
+    
     },[])
     
     useEffect(()=>{
