@@ -1,3 +1,4 @@
+import { MDBBtn } from 'mdb-react-ui-kit'
 import React, { useEffect } from 'react'
 import {useNavigate} from "react-router-dom"
 import Swal from 'sweetalert2'
@@ -51,7 +52,8 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket})
       <p>Please make a payment within 60:00 mins. otherwise, the order will be cancelled</p>
       </div>
       <div className='mx-2'>
-      <button className='btn-primary mb-1 rounded' onClick={() => doneTransaction(room,socket.id)}>Done Transaction</button>
+      <MDBBtn className='mb-1 rounded' onClick={() => doneTransaction(room,socket.id)}>Done Transaction</MDBBtn>
+      {/* <button className='btn-primary mb-1 rounded' ></button> */}
       {/* <button className='btn-danger rounded'>Cancel Order</button> */}
       </div>
       </header>

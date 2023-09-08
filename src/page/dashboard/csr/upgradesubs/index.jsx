@@ -8,6 +8,7 @@ import ruby from "../../../../assets/subscription/ruby badge.png"
 import emerald from "../../../../assets/subscription/emerald.png"
 import diamond from "../../../../assets/subscription/diamond.png"
 import ChatPage from "../../../../component/minichatapp/ChatPage";
+import { UpgradeSubscriptionApi } from "../../../../component/playfab/playfabupgrade";
 import { handlePagination } from "../../../../component/utils"
 import io from "socket.io-client"
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
@@ -20,6 +21,7 @@ const CsrUpgradeSubscriptionManual = () => {
     const [subscriptionId, setSubscriptionId] = useState("");
     const [bibiliuser, setBibiliUser] = useState("");
     const [bibiliuserplayfabid, setBibiliUserPlayfabid] = useState("");
+    const [substype, setSubsType] = useState("")
     const [Buyer, setBuyer] = useState([]);
     const [price, setPrice] = useState("");
     const [user, setUser] = useState([]);
@@ -45,7 +47,16 @@ const CsrUpgradeSubscriptionManual = () => {
               setHistory(data)
           })
       },[])
-  
+
+      const refreshtable = () => {
+        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
+          .then(response => response.json())
+          .then(result => {
+              const data = result.filter(e => e.cashier === auth.userName)
+              setHistory(data)
+          })
+      }
+
       function generateRandomString() {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         let randomString = '';
@@ -59,8 +70,8 @@ const CsrUpgradeSubscriptionManual = () => {
 
       useEffect(()=>{
         socket.on('details', (userdetails) => {
-            setBibiliUser(userdetails[1].userDetails.username)
-            setBibiliUserPlayfabid(userdetails[1].userDetails.playfabid)
+            setBibiliUser(userdetails[1]?.userDetails.username)
+            setBibiliUserPlayfabid(userdetails[1]?.userDetails.playfabid)
         })
       },[])
 
@@ -112,7 +123,6 @@ const CsrUpgradeSubscriptionManual = () => {
   
       const upgradebuyer = (e) => {
           e.preventDefault();
-          const {username} = e.target
           const stats = "Open"
           Swal.fire({
               icon: "warning",
@@ -121,46 +131,65 @@ const CsrUpgradeSubscriptionManual = () => {
               showDenyButton: true,
               confirmButtonText: "Confirm",
               denyButtonText: "Cancel",
-          }).then(result =>{
+          }).then(async result =>{
               if(result.isConfirmed){
-                  fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/updatebuyer/${Buyer._id}`,{
-                      method: "PUT",
-                      headers: {
-                          'Content-Type': 'application/json'
-                      },
-                      body: JSON.stringify({
-                          username: username.value,
-                          subscription: subscriptionId,
-                          cashierId: user._id,
-                          amount: price,
-                          stats: stats,
-                        // below is for payment history
-                          cashier: user.userId.userName,
-                          subscriptionlevel: subscriptionId,
-                          price: price,
-                          clientusername: username.value,
-                          image: image,
-                      })
-                  }).then(data =>{
-                      if (data) {
-                      Swal.fire({
-                          title: "User Upgraded Successfully",
-                          icon: "success",
-                          text: "You Successfully Upgraded a User, Ready for the next user?"
-                      }).then(ok => {
-                      if(ok.isConfirmed){
-                        //   window.location.reload()
-                      }
-                      })
-                          
-                      } else {
-                          Swal.fire({
-                              title: "User Upgraded Unsuccessfully",
-                              icon: "error",
-                              text: "There is an error Upgrading the Account"
-                          })
-                      }
-                  })
+                await UpgradeSubscriptionApi(bibiliuserplayfabid, bibiliuser, substype, price,)
+                .then(item => {
+                    if(item === "success"){
+                        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/updatebuyer/${Buyer._id}`,{
+                            method: "PUT",
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                cashierId: user._id,
+                                amount: price,
+                                stats: stats,
+                              // below is for payment history
+                                cashier: user.userId.userName,
+                                subscriptionlevel: subscriptionId,
+                                price: price,
+                                clientusername: bibiliuser,
+                                image: image,
+                            })
+                        }).then(data =>{
+                            if (data) {
+                            Swal.fire({
+                                title: "User Upgraded Successfully",
+                                icon: "success",
+                                text: "You Successfully Upgraded a User, Ready for the next user?"
+                            }).then(ok => {
+                            if(ok.isConfirmed){
+                                setPrice("")
+                                setSubsType("")
+                                setRubyChecked(false);
+                                setEmeraldChecked(false);
+                                setDiamondChecked(false);
+                                setBuyer([]);
+                                setFilename("")
+                                refreshtable();
+                            }
+                            })
+                                
+                            } else {
+                                Swal.fire({
+                                    title: "User Upgrade Unsuccessfull",
+                                    icon: "error",
+                                    text: "There is an error Upgrading the Account"
+                                })
+                            }
+                        })
+                    } else if (item.data.FunctionResult.message === "failed"){
+                        Swal.fire({
+                            title: "User Upgrade Unsuccessfull",
+                            icon: "error",
+                            text: item.data.FunctionResult.data
+                        })
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
               }
           })
           
@@ -176,18 +205,21 @@ const CsrUpgradeSubscriptionManual = () => {
         if (checkboxName === 'ruby') {
         setSubscriptionId(process.env.REACT_APP_RUBY)
         setPrice("25")
+        setSubsType("1")
         setRubyChecked(true);
         setEmeraldChecked(false);
         setDiamondChecked(false);
         } else if (checkboxName === 'emerald') {
         setSubscriptionId(process.env.REACT_APP_EMERALD)
         setPrice("50")
+        setSubsType("2")
         setRubyChecked(false);
         setEmeraldChecked(true);
         setDiamondChecked(false);
         } else if (checkboxName === 'diamond') {
         setSubscriptionId(process.env.REACT_APP_DIAMOND)
         setPrice("100")  
+        setSubsType("3")
         setRubyChecked(false);
         setEmeraldChecked(false);
         setDiamondChecked(true);
@@ -246,8 +278,8 @@ const CsrUpgradeSubscriptionManual = () => {
                               </MDBCol>
                               <MDBCol className="">
                               <MDBCardText className="d-flex fw-bold mt-2 align-items-center" >
-                              <span>Cashier Status:</span>
-                              &nbsp;<span style={{ color: user.status === 'Close' ? 'red' : user.status === 'Open' ? 'green' : 'blue' }}>{user.status}</span>
+                              {/* <span>Cashier Status:</span>
+                              &nbsp;<span style={{ color: user.status === 'Close' ? 'red' : user.status === 'Open' ? 'green' : 'blue' }}>{user.status}</span> */}
                               <div>
                               <MDBBtn 
                               className="mx-2" 

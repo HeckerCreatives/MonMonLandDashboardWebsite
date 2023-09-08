@@ -7,11 +7,12 @@ export const UpgradeSubscriptionApi = async (playerPlayfabId, playerUsername, su
         Username: "monmonland",            
         Password: "monmonlandgames",           
     };
-    return(
-        PlayFabClient.LoginWithPlayFab( playFabUserData, (error, result) => {
-            
-            if(result){
-               
+
+    return new Promise((resolve, reject) => {
+        PlayFabClient.LoginWithPlayFab(playFabUserData, (error, result) => {
+            if (error) {
+                reject(error);
+            } else {
                 PlayFabClient.ExecuteCloudScript({
                     FunctionName: "Subscription",
                     FunctionParameter: {
@@ -23,30 +24,16 @@ export const UpgradeSubscriptionApi = async (playerPlayfabId, playerUsername, su
                     ExecuteCloudScript: true,
                     GeneratePlayStreamEvent: true,
                 }, (error1, result1) => {
-                    if(result1.message === "success"){
-                        Swal.fire({
-                            title: "Upgrade Success",
-                            icon: "success",
-                            text: "Account Subscription Upgraded Successfully"
-                        })
+                    if (error1) {
+                        reject(error1);
+                    } else if (result1.data.FunctionResult.message === "success") {
+                        resolve("success");
                     } else {
-                        Swal.fire({
-                            title: "Upgrade Unsuccessfull",
-                            icon: "error",
-                            text: error1.data
-                        })
+                        resolve(result1);
                     }
-                })
-            } else {
-                Swal.fire({
-                    title: "Upgrade Unsuccessfull",
-                    icon: "error",
-                    text: error.data
-                })
+                });
             }
-            
-            
-        })
-        
-    )
-}
+        });
+    });
+};
+

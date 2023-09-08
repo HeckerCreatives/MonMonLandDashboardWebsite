@@ -47,7 +47,16 @@ const SubAdminUpgradeSubscriptionManual = () => {
               setHistory(data)
           })
       },[])
-  
+      
+      const refreshtable = () => {
+        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
+          .then(response => response.json())
+          .then(result => {
+              const data = result.filter(e => e.cashier === auth.userName)
+              setHistory(data)
+          })
+      }
+
       function generateRandomString() {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         let randomString = '';
@@ -114,7 +123,6 @@ const SubAdminUpgradeSubscriptionManual = () => {
   
       const upgradebuyer = (e) => {
           e.preventDefault();
-          const {username} = e.target
           const stats = "Open"
           Swal.fire({
               icon: "warning",
@@ -126,46 +134,63 @@ const SubAdminUpgradeSubscriptionManual = () => {
           }).then(async result =>{
               if(result.isConfirmed){
                 await UpgradeSubscriptionApi( bibiliuserplayfabid, bibiliuser, substype, price,)
-                .then(() => {
-                    fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/updatebuyer/${Buyer._id}`,{
-                        method: "PUT",
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            username: bibiliuser,
-                            subscription: subscriptionId,
-                            cashierId: user._id,
-                            amount: price,
-                            stats: stats,
-                          // below is for payment history
-                            cashier: user.userId.userName,
-                            subscriptionlevel: subscriptionId,
-                            price: price,
-                            clientusername: username.value,
-                            image: image,
-                        })
-                    }).then(data =>{
-                        if (data) {
-                        Swal.fire({
-                            title: "User Upgraded Successfully",
-                            icon: "success",
-                            text: "You Successfully Upgraded a User, Ready for the next user?"
-                        }).then(ok => {
-                        if(ok.isConfirmed){
-                          //   window.location.reload()
-                        }
-                        })
-                            
-                        } else {
-                            Swal.fire({
-                                title: "User Upgraded Unsuccessfully",
-                                icon: "error",
-                                text: "There is an error Upgrading the Account"
+                .then((item) => {
+                    if(item === "success"){
+                        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/updatebuyer/${Buyer._id}`,{
+                            method: "PUT",
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                cashierId: user._id,
+                                amount: price,
+                                stats: stats,
+                              // below is for payment history
+                                cashier: user.userId.userName,
+                                subscriptionlevel: subscriptionId,
+                                price: price,
+                                clientusername: bibiliuser,
+                                image: image,
                             })
-                        }
-                    })
+                        }).then(data =>{
+                            if (data) {
+                            Swal.fire({
+                                title: "User Upgraded Successfully",
+                                icon: "success",
+                                text: "You Successfully Upgraded a User, Ready for the next user?"
+                            }).then(ok => {
+                            if(ok.isConfirmed){
+                                setPrice("")
+                                setSubsType("")
+                                setRubyChecked(false);
+                                setEmeraldChecked(false);
+                                setDiamondChecked(false);
+                                setBuyer([]);
+                                setFilename("")
+                                refreshtable();
+                            }
+                            })
+                                
+                            } else {
+                                Swal.fire({
+                                    title: "User Upgrade Unsuccessfull",
+                                    icon: "error",
+                                    text: "There is an error Upgrading the Account"
+                                })
+                            }
+                        })
+                    } else if (item.data.FunctionResult.message === "failed"){
+                        Swal.fire({
+                            title: "User Upgrade Unsuccessfull",
+                            icon: "error",
+                            text: item.data.FunctionResult.data
+                        })
+                    }
+                    
                 })
+                .catch((error) => {
+                    console.error(error);
+                });
                 
               }
           })
