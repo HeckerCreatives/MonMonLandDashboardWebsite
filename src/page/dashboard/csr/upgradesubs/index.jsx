@@ -195,6 +195,14 @@ const CsrUpgradeSubscriptionManual = () => {
           
       }
 
+      useEffect(()=> {
+        fetch(`${process.env.REACT_APP_API_URL}subscription/${subscriptionId}/find`)
+        .then(result => result.json())
+        .then(data => {
+        setPrice(data.amount)
+        })
+      },[subscriptionId])
+
       const goonline = () => {
         socket.emit('create-room', auth.userName, auth._id);
         socket.emit('join_room', { username: auth.userName, room: auth._id});
@@ -204,21 +212,21 @@ const CsrUpgradeSubscriptionManual = () => {
       const handleCheckboxChange = (checkboxName) => {
         if (checkboxName === 'ruby') {
         setSubscriptionId(process.env.REACT_APP_RUBY)
-        setPrice("25")
+        // setPrice("25")
         setSubsType("1")
         setRubyChecked(true);
         setEmeraldChecked(false);
         setDiamondChecked(false);
         } else if (checkboxName === 'emerald') {
         setSubscriptionId(process.env.REACT_APP_EMERALD)
-        setPrice("50")
+        // setPrice("50")
         setSubsType("2")
         setRubyChecked(false);
         setEmeraldChecked(true);
         setDiamondChecked(false);
         } else if (checkboxName === 'diamond') {
         setSubscriptionId(process.env.REACT_APP_DIAMOND)
-        setPrice("100")  
+        // setPrice("100")  
         setSubsType("3")
         setRubyChecked(false);
         setEmeraldChecked(false);

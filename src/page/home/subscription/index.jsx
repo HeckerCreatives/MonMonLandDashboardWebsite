@@ -109,7 +109,7 @@ const Subscription = () => {
                 <MDBCardBody className="subsparent">            
                     <MDBCardTitle className=" text-center fw-bold h2 mt-5">{sub.subscriptionName}</MDBCardTitle>
                     
-                        <MDBCardSubTitle className="text-center fw-bold h3 price mb-5">{sub.amount}</MDBCardSubTitle>
+                        <MDBCardSubTitle className="text-center fw-bold h3 price mb-5">{sub.amount === "Free" ? sub.amount : "$"+sub.amount}</MDBCardSubTitle>
                            
                         <ul className="mx-4">
                         {subsdescription.map(desc => {

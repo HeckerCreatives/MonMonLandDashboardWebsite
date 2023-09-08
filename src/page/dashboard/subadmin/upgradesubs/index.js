@@ -57,6 +57,15 @@ const SubAdminUpgradeSubscriptionManual = () => {
           })
       }
 
+      useEffect(()=> {
+        fetch(`${process.env.REACT_APP_API_URL}subscription/${subscriptionId}/find`)
+        .then(result => result.json())
+        .then(data => {
+        console.log(data)
+        setPrice(data.amount)
+        })
+      },[subscriptionId])
+
       function generateRandomString() {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         let randomString = '';
@@ -206,21 +215,21 @@ const SubAdminUpgradeSubscriptionManual = () => {
       const handleCheckboxChange = (checkboxName) => {
         if (checkboxName === 'ruby') {
         setSubscriptionId(process.env.REACT_APP_RUBY)
-        setPrice("25")
+        // setPrice("25")
         setSubsType("1")
         setRubyChecked(true);
         setEmeraldChecked(false);
         setDiamondChecked(false);
         } else if (checkboxName === 'emerald') {
         setSubscriptionId(process.env.REACT_APP_EMERALD)
-        setPrice("50")
+        // setPrice("50")
         setSubsType("2")
         setRubyChecked(false);
         setEmeraldChecked(true);
         setDiamondChecked(false);
         } else if (checkboxName === 'diamond') {
         setSubscriptionId(process.env.REACT_APP_DIAMOND)
-        setPrice("100") 
+        // setPrice("100") 
         setSubsType("3") 
         setRubyChecked(false);
         setEmeraldChecked(false);
@@ -280,8 +289,8 @@ const SubAdminUpgradeSubscriptionManual = () => {
                               </MDBCol>
                               <MDBCol className="">
                               <MDBCardText className="d-flex fw-bold mt-2 align-items-center" >
-                              <span>Cashier Status:</span>
-                              &nbsp;<span style={{ color: user.status === 'Close' ? 'red' : user.status === 'Open' ? 'green' : 'blue' }}>{user.status}</span>
+                              {/* <span>Cashier Status:</span>
+                              &nbsp;<span style={{ color: user.status === 'Close' ? 'red' : user.status === 'Open' ? 'green' : 'blue' }}>{user.status}</span> */}
                               <div>
                               <MDBBtn 
                               className="mx-2" 

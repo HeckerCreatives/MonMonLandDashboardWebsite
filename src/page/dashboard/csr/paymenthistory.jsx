@@ -66,7 +66,7 @@ const CsrPaymentHistory = () => {
             {data.clientusername}
             </td>
             <td>
-            {data.image ? <img src={data.image} alt="resibo" className="img-fluid"/>  : 
+            {data.image ? <img src={data.image} alt="resibo" style={{width: "100px", height: "100px"}}/>  : 
             "nag antay ka ? wala na"}
             </td>                
             </tr>
