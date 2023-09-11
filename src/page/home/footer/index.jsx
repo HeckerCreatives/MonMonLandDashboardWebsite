@@ -45,22 +45,22 @@ const Footer = ({links}) => {
         
         <MDBRow>
             <MDBCol className="mt-4 mb-5 text-center">
-            <a href="https://www.facebook.com/MonMonlandOfficial" target="_blank" rel="noreferrer">
+            <a href="https://www.facebook.com/monmonlandgames" target="_blank" rel="noreferrer">
             <img src={fb} className="socials zoom-socials" alt=""/>
             </a>
-            <a href="https://discord.gg/uwazHyU5" target="_blank" rel="noreferrer">
+            <a href="https://discord.gg/f3AayGjvzU" target="_blank" rel="noreferrer">
             <img src={discord} className="socials zoom-socials" alt=""/>
             </a>
-            <a href="https://www.instagram.com/realmonmonland_/" target="_blank" rel="noreferrer">
+            <a href="https://www.instagram.com/monmonland.games/" target="_blank" rel="noreferrer">
             <img src={instagram} className="socials zoom-socials" alt=""/>
             </a>
-            <a href="https://twitter.com/monmonland_" target="_blank" rel="noreferrer">
+            <a href="https://twitter.com/Monmonlandgames" target="_blank" rel="noreferrer">
             <img src={twitter} className="socials zoom-socials" alt=""/>
             </a>
             <a href="" target="_blank" rel="noreferrer">
             <img src={telegram} className="socials zoom-socials" alt=""/>
             </a>
-            <a href="https://www.tiktok.com/@officialmonmonland" target="_blank" rel="noreferrer">
+            <a href="https://www.tiktok.com/@monmonlandgames" target="_blank" rel="noreferrer">
             <img src={tiktok} className="socials zoom-socials" alt=""/>
             </a>
             
