@@ -25,7 +25,6 @@ import { handlePagination } from "../../../component/utils"
 
 const SubAdminPaymentHistory = () => {
     const [basicModal, setBasicModal] = useState(false);
-
     const toggleShow = () => setBasicModal(!basicModal);
     const auth = JSON.parse(localStorage.getItem("auth"))
     const [history, setHistory] = useState("");
