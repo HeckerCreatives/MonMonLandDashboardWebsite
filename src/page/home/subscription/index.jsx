@@ -16,19 +16,59 @@ import { MDBContainer,
  MDBModalTitle,
  MDBModalBody,
  MDBModalFooter,
- MDBSpinner, } from "mdb-react-ui-kit";
+ MDBSpinner,
+ MDBCardText,
+ MDBInput, } from "mdb-react-ui-kit";
 // import caro from "../../../assets/caro.png"
+import { PlayFabClient } from "playfab-sdk";
+import { Link } from "react-router-dom"
 import Slider from "react-slick";
 import "./index.css"
 import pageon from "../../../assets/games/A.png"
 import pageoff from "../../../assets/games/B.png"
+import axios from "axios";
 const Subscription = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [subs, setSubs] = useState([]);
     const [activeModal, setActiveModal] = useState(null);
     const [subsdescription, setSubsDescription] = useState([]);
-    const [substitle, setSubsTitle] = useState('');
+    const [subsname, setSubsName] = useState('');
     const [currentSlide, setCurrentSlide] = useState(0);
+
+    const login = (e) => {
+        e.preventDefault();
+
+        const {user, pass} = e.target
+
+        const playFabUserData = {
+            Username: user.value,            
+            Password: pass.value,           
+        };
+
+        PlayFabClient.LoginWithPlayFab(playFabUserData, (error, result) => {
+            const id = result.data.PlayFabId;
+
+            if(result){
+                fetch(`${process.env.REACT_APP_API_URL}coin/${subsname}`, {
+                    method:"POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({name: user.value})
+                })
+                .then(result => result.json())
+                .then(data => {
+                    const url = data.hosted_url
+                    window.open(url, '_blank')
+                })
+
+            }
+            console.log(subsname)
+            console.log(result)
+            console.log(id)
+        })
+    }
+
     useEffect(()=>{
         setIsLoading(true)
         fetch(`${process.env.REACT_APP_API_URL}subscription/find`)
@@ -44,6 +84,10 @@ const Subscription = () => {
             setIsLoading(false)
         })
     },[])
+
+    const r = "https://commerce.coinbase.com/checkout/f4a6bc8b-06e7-4c69-b54d-b77b55d75711"
+    const e = "https://commerce.coinbase.com/checkout/aeda98cc-d26a-4976-a6dd-4dd6a61ccb44"
+    const d = "https://commerce.coinbase.com/checkout/430de90e-23cb-4a48-aad8-03db474a0e99"
 
     const sortedList = subs.sort((a, b) => a._id.localeCompare(b._id));
 
@@ -126,7 +170,20 @@ const Subscription = () => {
                                       
                 </MDBCardBody>
                 <MDBContainer className="text-center">
-                    <MDBBtn type="button" className=" zoom-badge subsbutton btn btn-warning fw-bold" size="lg"  >SUBSCRIBE NOW</MDBBtn>
+                
+                    {/* <Link to={sub.subscriptionName === "Ruby" ? r : sub.subscriptionName === "Emerald" ? e : sub.subscriptionName === "Diamond" ? d : ""} target="_blank">
+                    
+                    </Link> */}
+                    <MDBBtn 
+                    type="button" 
+                    className="zoom-badge subsbutton btn btn-warning fw-bold" 
+                    size="lg" 
+                    onClick={() => {
+                    setActiveModal(true)
+                    setSubsName(sub.subscriptionName.toLowerCase())
+                    }} 
+                    >SUBSCRIBE NOW</MDBBtn>
+                    
                 </MDBContainer>
             </MDBCard>
         </MDBCol>
@@ -186,22 +243,36 @@ const Subscription = () => {
         </MDBCol>        
         </div>
 
-        {/* <MDBModal  show={activeModal} onClick={()=> setActiveModal(null)} tabIndex='-1'>
+        <MDBModal  show={activeModal} staticBackdrop tabIndex='-1'>
             <MDBModalDialog centered>
             <MDBModalContent>
+            <form autoComplete="off" onSubmit={login}>
                 <MDBModalHeader>
-                <MDBModalTitle>{substitle}</MDBModalTitle>
-                <MDBBtn className='btn-close' color='none' onClick={()=> setActiveModal(null)}></MDBBtn>
+                <MDBModalTitle>Please Login Your Ingame Account</MDBModalTitle>
+                {/* <MDBBtn className='btn-close' color='none' onClick={()=> setActiveModal(null)}></MDBBtn> */}
                 </MDBModalHeader>
-                <MDBModalBody>{subsdescription}</MDBModalBody>
+                <MDBModalBody>
+                <MDBCardText>
+                    Username
+                    <MDBInput name="user"/>
+                </MDBCardText>
+                <MDBCardText>
+                    Password
+                    <MDBInput name="pass" type="password"/>
+                </MDBCardText>
+                </MDBModalBody>
                 <MDBModalFooter>
                 <MDBBtn color='secondary' onClick={()=> setActiveModal(null)}>
                     Close
-                </MDBBtn>                
+                </MDBBtn>  
+                <MDBBtn color='secondary' type="submit">
+                    Login
+                </MDBBtn>               
                 </MDBModalFooter>
+            </form>
             </MDBModalContent>
             </MDBModalDialog>
-        </MDBModal>  */}
+        </MDBModal> 
 
         </MDBContainer>
 

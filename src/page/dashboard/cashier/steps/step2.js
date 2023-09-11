@@ -77,7 +77,7 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
                                 <MDBBtn 
                                 className="mx-3" 
                                 color="danger"
-                                onClick={() => window.location.href = "/"}
+                                onClick={() => window.location.reload()}
                                 >Cancel Order</MDBBtn>
                                 </div>
                                 </MDBCardText>
