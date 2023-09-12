@@ -41,6 +41,8 @@ import CsrDashboard from "./page/dashboard/csr/dashboard";
 import CsrUpgradeSubscriptionManual from "./page/dashboard/csr/upgradesubs";
 import SubAdminPaymentHistory from "./page/dashboard/subadmin/paymenthistory";
 import CsrPaymentHistory from "./page/dashboard/csr/paymenthistory";
+import SuccessPage from "./page/coinbase/success";
+import CancelPage from "./page/coinbase/cancel";
 const Routers = () => {
   return (
     <Routes>
@@ -152,8 +154,10 @@ const Routers = () => {
       {/* <Route path="/signup" element={<SignUp />}/> */}
       <Route path="/login" element={<Login />}/>
       <Route path="/verification/:userId" element={<StepVerification />}/>
-      
       <Route path="/cashier" element={<AvailableCashiers/>}/>
+
+      <Route path="/payment/success" element={<SuccessPage/>} />
+      <Route path="/payment/cancel" element={<CancelPage/>} />
     </Routes>
   );
 };

@@ -23,6 +23,7 @@ import { MDBContainer,
 import { PlayFabClient } from "playfab-sdk";
 import { Link } from "react-router-dom"
 import Slider from "react-slick";
+import { Toast } from "../../../component/utils";
 import "./index.css"
 import pageon from "../../../assets/games/A.png"
 import pageoff from "../../../assets/games/B.png"
@@ -34,11 +35,25 @@ const Subscription = () => {
     const [subsdescription, setSubsDescription] = useState([]);
     const [subsname, setSubsName] = useState('');
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [quantity, setQuantity] = useState('1');
+
+    const handleQuantityChange = (event) => {
+        if (event.target.value <= 99) {
+          setQuantity(event.target.value);
+        } 
+      };
 
     const login = (e) => {
         e.preventDefault();
 
-        const {user, pass} = e.target
+        const {user, pass, quantity} = e.target
+
+        if (quantity.value < 1){
+            Toast.fire({
+                icon: 'error',
+                title: 'Please input a valid number'
+            })
+        }
 
         const playFabUserData = {
             Username: user.value,            
@@ -46,7 +61,7 @@ const Subscription = () => {
         };
 
         PlayFabClient.LoginWithPlayFab(playFabUserData, (error, result) => {
-            const id = result.data.PlayFabId;
+            // const id = result.data.PlayFabId;
 
             if(result){
                 fetch(`${process.env.REACT_APP_API_URL}coin/${subsname}`, {
@@ -54,7 +69,11 @@ const Subscription = () => {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({name: user.value})
+                    body: JSON.stringify({
+                        name: user.value,
+                        playfabId: result.data.PlayFabId,
+                        quantity: quantity.value
+                    })
                 })
                 .then(result => result.json())
                 .then(data => {
@@ -65,7 +84,7 @@ const Subscription = () => {
             }
             console.log(subsname)
             console.log(result)
-            console.log(id)
+            // console.log(id)
         })
     }
 
@@ -85,9 +104,6 @@ const Subscription = () => {
         })
     },[])
 
-    const r = "https://commerce.coinbase.com/checkout/f4a6bc8b-06e7-4c69-b54d-b77b55d75711"
-    const e = "https://commerce.coinbase.com/checkout/aeda98cc-d26a-4976-a6dd-4dd6a61ccb44"
-    const d = "https://commerce.coinbase.com/checkout/430de90e-23cb-4a48-aad8-03db474a0e99"
 
     const sortedList = subs.sort((a, b) => a._id.localeCompare(b._id));
 
@@ -171,9 +187,6 @@ const Subscription = () => {
                 </MDBCardBody>
                 <MDBContainer className="text-center">
                 
-                    {/* <Link to={sub.subscriptionName === "Ruby" ? r : sub.subscriptionName === "Emerald" ? e : sub.subscriptionName === "Diamond" ? d : ""} target="_blank">
-                    
-                    </Link> */}
                     <MDBBtn 
                     type="button" 
                     className="zoom-badge subsbutton btn btn-warning fw-bold" 
@@ -254,11 +267,15 @@ const Subscription = () => {
                 <MDBModalBody>
                 <MDBCardText>
                     Username
-                    <MDBInput name="user"/>
+                    <MDBInput name="user" required/>
                 </MDBCardText>
                 <MDBCardText>
                     Password
-                    <MDBInput name="pass" type="password"/>
+                    <MDBInput name="pass" type="password" required/>
+                </MDBCardText>
+                <MDBCardText>
+                    Quantity
+                    <MDBInput name="quantity" type="number" value={quantity} onChange={handleQuantityChange}/>
                 </MDBCardText>
                 </MDBModalBody>
                 <MDBModalFooter>
