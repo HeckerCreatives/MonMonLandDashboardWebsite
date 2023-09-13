@@ -123,7 +123,7 @@ const TopNavbar = ({auth, didToggle, setDidToggle}) => {
           </ThemeContext.Consumer>      
       <div className="dropdown">
       
-        <MDBCol className="dropdown text d-lg-flex justify-content-end align-items-center" onClick={() => setVisibility(!visibility)}>
+        <MDBCol className="dropdown text d-lg-flex justify-content-end align-items-center panel-zoom" onClick={() => setVisibility(!visibility)}>
           <MDBIcon fas icon="user-circle" size="lg" />
           <div className="d-lg-block d-none">
           &nbsp;{auth.userName}

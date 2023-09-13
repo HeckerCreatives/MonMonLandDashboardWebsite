@@ -48,29 +48,16 @@ const Login = () =>{
           text: "Please Check your username and password"
         })
 			} else {
-        if(!data.isVerified) {
-          localStorage.setItem('auth', JSON.stringify(data))
-          Swal.fire({
-            title: "Login Successfully",
-            icon: "success",
-            text: `Welcome ${data.firstName}`
-          }).then(result => {
-            if(result.isConfirmed)
-            navigate(`/verification/${data._id}`)
-          })
-        } else {			
-          localStorage.setItem('auth', JSON.stringify(data))	
-          Swal.fire({
-            title: "Login Successfully",
-            icon: "success",
-            text: `Welcome ${data.firstName}`
-          })
-          .then(result => {
-            if(result.isConfirmed)
-            window.location.reload()
-          })
-                  
-        }
+        localStorage.setItem('auth', JSON.stringify(data))	
+        Swal.fire({
+          title: "Login Successfully",
+          icon: "success",
+          text: `Welcome ${data.firstName}`
+        })
+        .then(result => {
+          if(result.isConfirmed)
+          window.location.reload()
+        })
       }  
       
     })

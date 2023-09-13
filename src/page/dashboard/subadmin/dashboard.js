@@ -92,6 +92,7 @@ const SubAdminDashboard = () => {
       setTotalEmerald(emeraldPrice)
       setTotalDiamond(diamondPrice)
       setTotalPaidUsers(totalPrice)
+      
   },[diamond,ruby,emerald,paidusers])
 
     return (

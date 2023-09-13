@@ -244,7 +244,12 @@ const Subscription = () => {
             <MDBBtn 
             type="button" 
             className="subsbuttonmobile btn btn-warning fw-bold " 
-            size="lg">
+            size="lg"
+            onClick={() => {
+                setActiveModal(true)
+                setSubsName(sub.subscriptionName.toLowerCase())
+                }} 
+            >
             SUBSCRIBE NOW
             </MDBBtn> 
                         

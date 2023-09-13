@@ -153,7 +153,7 @@ const Routers = () => {
       </Route>
       {/* <Route path="/signup" element={<SignUp />}/> */}
       <Route path="/login" element={<Login />}/>
-      <Route path="/verification/:userId" element={<StepVerification />}/>
+      {/* <Route path="/verification/:userId" element={<StepVerification />}/> */}
       <Route path="/cashier" element={<AvailableCashiers/>}/>
 
       <Route path="/payment/success" element={<SuccessPage/>} />
