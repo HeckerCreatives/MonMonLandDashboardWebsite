@@ -73,7 +73,43 @@ const CsrUpgradeSubscriptionManual = () => {
             setBibiliUser(userdetails[1]?.userDetails.username)
             setBibiliUserPlayfabid(userdetails[1]?.userDetails.playfabid)
         })
+        socket.on("ey", () => {
+            Swal.fire({
+                title: "Transaction Done",
+                icon: "success",
+            })
+            setPrice("")
+            setSubsType("")
+            setRubyChecked(false);
+            setEmeraldChecked(false);
+            setDiamondChecked(false);
+            setBuyer([]);
+            setFilename("")
+            refreshtable();
+        })
+        socket.on('alis', () => {
+            Swal.fire({
+                title:"Are you sure you want to go offline?",
+                icon: "info"
+            }).then(e => {
+                if(e.isConfirmed){
+                    window.location.reload()
+                }
+            })
+        })
       },[])
+      
+      useEffect(()=> {
+        socket.emit('isonline', socket.id)
+
+        socket.on('onlinenga', () => {
+            setColor(true)
+        })
+        return () => {
+            // Clean up your socket event listener when the component unmounts
+            socket.off('onlinenga');
+        }
+        },[])
 
       useEffect(()=>{
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`, {
@@ -112,7 +148,14 @@ const CsrUpgradeSubscriptionManual = () => {
                   }).then(result => result.json())
                   .then(data => {
                       if(data){
-                      window.location.reload()
+                        setPrice("")
+                        setSubsType("")
+                        setRubyChecked(false);
+                        setEmeraldChecked(false);
+                        setDiamondChecked(false);
+                        setBuyer([]);
+                        setFilename("")
+                        refreshtable();
                       }
                   })
               }
@@ -204,9 +247,14 @@ const CsrUpgradeSubscriptionManual = () => {
       },[subscriptionId])
 
       const goonline = () => {
-        socket.emit('create-room', auth.userName, auth._id);
-        socket.emit('join_room', { username: auth.userName, room: auth._id});
-        setColor(true)
+        if(!color){
+            socket.emit('create-room', auth.userName, auth._id);
+            socket.emit('join_room', { username: auth.userName, room: auth._id});
+            setColor(true)
+        } else {
+            socket.emit('leave', (auth.userName))
+            setColor(false)
+        }
       }
 
       const handleCheckboxChange = (checkboxName) => {
@@ -256,11 +304,18 @@ const CsrUpgradeSubscriptionManual = () => {
       }
 
       const kapy = (text) => {
-        navigator.clipboard.writeText(text)
-        Toast.fire({
-            icon: 'success',
-            title: 'Copy successfully'
-        })
+        if(text){
+            navigator.clipboard.writeText(text)
+            Toast.fire({
+                icon: 'success',
+                title: 'Copy successfully'
+            })
+        } else {
+            Toast.fire({
+                icon: 'error',
+                title: 'No text to copy'
+            }) 
+        }
       }
 
       const handleImgUrl = (url) => {
@@ -459,7 +514,7 @@ const CsrUpgradeSubscriptionManual = () => {
                   </td>
                   <td>
                   {data.image ? <img src={data.image} alt="resibo" className="img-fluid"/>  : 
-                   "nag antay ka ? wala na"}
+                   "no receipt attached"}
                   </td>                
                   </tr>
                   ))}

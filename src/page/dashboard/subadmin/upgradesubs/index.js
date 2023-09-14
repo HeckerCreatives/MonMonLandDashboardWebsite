@@ -132,8 +132,6 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 // Clean up your socket event listener when the component unmounts
                 socket.off('onlinenga');
             }
-
-            
         },[])
 
       const cancelorder = (id) => {
@@ -526,7 +524,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                   </td>
                   <td>
                   {data.image ? <img src={data.image} alt="resibo" className="img-fluid"/>  : 
-                   "nag antay ka ? wala na"}
+                   "no receipt attached"}
                   </td>                
                   </tr>
                   ))}

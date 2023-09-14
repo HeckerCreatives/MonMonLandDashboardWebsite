@@ -57,7 +57,7 @@ const Footer = ({links}) => {
             <a href="https://twitter.com/Monmonlandgames" target="_blank" rel="noreferrer">
             <img src={twitter} className="socials zoom-socials" alt=""/>
             </a>
-            <a href="" target="_blank" rel="noreferrer">
+            <a href="https://t.me/+GgUTboYg7MI3OGI1" target="_blank" rel="noreferrer">
             <img src={telegram} className="socials zoom-socials" alt=""/>
             </a>
             <a href="https://www.tiktok.com/@monmonlandgames" target="_blank" rel="noreferrer">
