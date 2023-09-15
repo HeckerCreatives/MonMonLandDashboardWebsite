@@ -15,7 +15,9 @@ const AvailableCashiers = () => {
     const [games, setGames] = useState([]),
             [backup, setBackup] = useState([]),
             [page, setPage] = useState(1),
+            [transacno, setTransacNo] = useState(""),
             [paymethod, setPayMethod] = useState(""),
+            [q, setQ] = useState(""),
             [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
     const [toggle, settoggle] = useState(false)        
@@ -54,8 +56,11 @@ const AvailableCashiers = () => {
     },[])
     
     useEffect(()=>{
-        
-
+        socket.on('ifqueue', ({no}) => {
+            setQ(no)
+            // console.log(typeof no)
+        })
+        console.log(q)
         socket.on('queue_message', (data) => {
             // Display the queue message to the user
             if(data.message === "Now its your turn.") {
@@ -66,6 +71,24 @@ const AvailableCashiers = () => {
                     confirmButtonText: "Ok",
                     allowOutsideClick: false,
                     allowEscapeKey: false,                    
+                }).then(ok => {
+                    if(ok.isConfirmed){
+                        toggleShow2()
+                        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
+                            method:'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                transactionnumber: generateRandomString(),
+                                cashierId: cashier._id, 
+                            })
+                            }).then(result => result.json())
+                            .then(data => {
+                            setTransacNo(data.transactionnumber)
+                            socket.emit('buyer', data)
+                        })
+                    }
                 })
             } else if(data.message === "Admin has disconnected."){
                 Swal.fire({
@@ -99,6 +122,8 @@ const AvailableCashiers = () => {
           });
     },[])
 
+    
+
     const buybtn = (user) => {
         const url = new URL(window.location.href);
         const params = new URLSearchParams(url.search);
@@ -110,7 +135,24 @@ const AvailableCashiers = () => {
         if(username && id){        
         setUsername(username)
         setRoom(user.userId._id)
+
+        if(q !== 1){
         toggleShow2()
+        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                transactionnumber: generateRandomString(),
+                cashierId: cashier._id, 
+            })
+            }).then(result => result.json())
+            .then(data => {
+            setTransacNo(data.transactionnumber)
+            socket.emit('buyer', data)
+        })
+        }
         socket.emit('join_room', { username: username, room: user.userId._id, playfabid: id});
         socket.emit('userdetails', {id: socket.id})
         } else {
@@ -170,7 +212,7 @@ const AvailableCashiers = () => {
         user={cashier} 
         step2toggle={step2toggle} 
         setstep2toggle={toggleShow2} 
-        // data={buyer}
+        transactionno={transacno}
         room={room}
         buyer={username} 
         socket={socket}   

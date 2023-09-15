@@ -96,6 +96,10 @@ const CsrUpgradeSubscriptionManual = () => {
       },[])
      
       useEffect(()=> {
+        socket.on('buyerdata', ({item}) => {
+            setBuyer(item)
+        })
+
         socket.emit('isonline', socket.id)
 
         socket.on('onlinenga', () => {
@@ -273,6 +277,7 @@ const CsrUpgradeSubscriptionManual = () => {
 
       const handleCheckboxChange = (checkboxName) => {
         if (checkboxName === 'ruby') {
+        socket.emit('selectsubs', {data: 'ruby'})
         setSubscriptionId(process.env.REACT_APP_RUBY)
         // setPrice("25")
         setSubsType("1")
@@ -280,6 +285,7 @@ const CsrUpgradeSubscriptionManual = () => {
         setEmeraldChecked(false);
         setDiamondChecked(false);
         } else if (checkboxName === 'emerald') {
+        socket.emit('selectsubs', {data: 'emerald'})
         setSubscriptionId(process.env.REACT_APP_EMERALD)
         // setPrice("50")
         setSubsType("2")
@@ -287,6 +293,7 @@ const CsrUpgradeSubscriptionManual = () => {
         setEmeraldChecked(true);
         setDiamondChecked(false);
         } else if (checkboxName === 'diamond') {
+         socket.emit('selectsubs', {data: 'diamond'})
         setSubscriptionId(process.env.REACT_APP_DIAMOND)
         // setPrice("100")  
         setSubsType("3")
@@ -296,26 +303,26 @@ const CsrUpgradeSubscriptionManual = () => {
         }
       }
 
-      const buy = (id) => {
-        const stats = "Processing"
-        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
-                method:'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    transactionnumber: generateRandomString(),
-                    cashierId: id, 
-                    stats: stats,
-                })
-                }).then(result => result.json())
-                .then(data => {
-                setBuyer(data)
+    //   const buy = (id) => {
+    //     const stats = "Processing"
+    //     fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
+    //             method:'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify({
+    //                 transactionnumber: generateRandomString(),
+    //                 cashierId: id, 
+    //                 stats: stats,
+    //             })
+    //             }).then(result => result.json())
+    //             .then(data => {
+    //             setBuyer(data)
                 
-            })
+    //         })
             
         
-      }
+    //   }
 
       const kapy = (text) => {
         if(text){
@@ -357,7 +364,7 @@ const CsrUpgradeSubscriptionManual = () => {
                               <MDBCardText className="d-flex fw-bold mt-2 align-items-center" >
                               {/* <span>Cashier Status:</span>
                               &nbsp;<span style={{ color: user.status === 'Close' ? 'red' : user.status === 'Open' ? 'green' : 'blue' }}>{user.status}</span> */}
-                              <div>
+                              {/* <div>
                               <MDBBtn 
                               className="mx-2" 
                               outline color="dark" 
@@ -365,7 +372,7 @@ const CsrUpgradeSubscriptionManual = () => {
                               onClick={() => buy(auth._id)}  
                               >Create
                               </MDBBtn>                                
-                              </div> 
+                              </div>  */}
                               <div>
                                 <MDBBtn
                                   type="button"

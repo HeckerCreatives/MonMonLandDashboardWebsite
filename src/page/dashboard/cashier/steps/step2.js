@@ -4,7 +4,13 @@ import React, { useEffect , useState} from "react";
 import ChatPage from "../../../../component/minichatapp/ChatPage";
 import { Toast } from "../../../../component/utils";
 import Swal from "sweetalert2";
-const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buyer, socket}) => {
+import ruby from "../../../../assets/subscription/ruby badge.png"
+import emerald from "../../../../assets/subscription/emerald.png"
+import diamond from "../../../../assets/subscription/diamond.png"
+const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buyer, socket, transactionno}) => {
+    const [image, setImage] = useState("");
+    const [bibiliuser, setBibiliUser] = useState("");
+    const [bibiliuserplayfabid, setBibiliUserPlayfabid] = useState("");
     const kapy = (text) => {
         navigator.clipboard.writeText(text)
         Toast.fire({
@@ -12,7 +18,27 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
             title: 'Copy successfully'
         })
       }
-    
+    useEffect(()=> {
+        const url = new URL(window.location.href);
+        const params = new URLSearchParams(url.search);
+
+        const username = params.get('username');
+        const id = params.get('id');
+        setBibiliUser(username)
+        setBibiliUserPlayfabid(id)
+        socket.on('badge', ({item}) => {
+            console.log(item.data)
+            if(item.data === 'ruby'){
+                setImage(ruby)
+            } else if (item.data === 'emerald'){
+                setImage(emerald)
+            } else if (item.data === 'diamond') {
+                setImage(diamond)
+            } else {
+                setImage(null)
+            }
+        })
+    },[socket])
     return(
         <>
         <MDBCollapse show={step2toggle}>       
@@ -63,6 +89,31 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
                                 &nbsp;<MDBIcon far icon="copy" className="icon-zoom"  onClick={() =>kapy(user.paymentdetail)}/>
                                 </MDBCardText>
                                 </div>                 
+                            </MDBCol>
+                        </MDBRow>
+                        <hr/>
+                        <MDBRow>
+                            <MDBCol className="mt-2">
+                                <div>
+                                <MDBCardText className="fw-bold">Subscription Details</MDBCardText>
+                                </div>
+                                <div className="offset-2 col-lg-10">
+                                <MDBCardText className="text-mute">Transaction Number: {transactionno}</MDBCardText>
+                                </div>
+                                <div className="offset-2 col-lg-10">
+                                <MDBCardText className="text-mute">Username: {bibiliuser}</MDBCardText>
+                                </div>                            
+                                <div className="offset-2 col-lg-10">
+                                <MDBCardText className="text-mute">Id: {bibiliuserplayfabid}
+                                </MDBCardText>
+                                </div>
+                                <div className="offset-2 col-lg-10">
+                                <MDBCardText className="text-mute">Subscription Level:
+                                {image ? 
+                                <img src={image} alt="" style={{height: "60px", width: "60px"}}/>
+                                : ""} 
+                                </MDBCardText>
+                                </div>                  
                             </MDBCol>
                         </MDBRow>
                         <hr/>
