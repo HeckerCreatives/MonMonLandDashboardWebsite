@@ -107,16 +107,11 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 setBuyer([]);
                 setFilename("")
                 refreshtable();
+                setBibiliUser("")
+                setBibiliUserPlayfabid("")
             })
             socket.on('alis', () => {
-                Swal.fire({
-                    title:"Are you sure you want to go offline?",
-                    icon: "info"
-                }).then(e => {
-                    if(e.isConfirmed){
-                        window.location.reload()
-                    }
-                })
+                window.location.reload()
             })
 
             
@@ -165,6 +160,8 @@ const SubAdminUpgradeSubscriptionManual = () => {
                         setBuyer([]);
                         setFilename("")
                         refreshtable();
+                        setBibiliUser("")
+                        setBibiliUserPlayfabid("")
                       }
                   })
               }
@@ -220,6 +217,8 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                 setBuyer([]);
                                 setFilename("")
                                 refreshtable();
+                                setBibiliUser("")
+                                setBibiliUserPlayfabid("")
                             }
                             })
                                 
@@ -255,8 +254,20 @@ const SubAdminUpgradeSubscriptionManual = () => {
             socket.emit('join_room', { username: auth.userName, room: auth._id});
             setColor(true)
         } else {
-            socket.emit('leave', (auth.userName))
-            setColor(false)
+            Swal.fire({
+                icon: "warning",
+                title: "Are you sure ?",
+                text: "You will go Offline",
+                showDenyButton: true,
+                confirmButtonText: "Confirm",
+                denyButtonText: "Cancel",
+            }).then(e => {
+                if(e.isConfirmed){
+                socket.emit('leave', (auth.userName))
+                setColor(false)
+                }
+            })
+            
         }
         
       }

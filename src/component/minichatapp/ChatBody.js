@@ -2,7 +2,7 @@ import { MDBBtn } from 'mdb-react-ui-kit'
 import React, { useEffect } from 'react'
 import {useNavigate} from "react-router-dom"
 import Swal from 'sweetalert2'
-const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket}) => { 
+const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, adminsocket}) => { 
   const navigate = useNavigate()
   const buy = localStorage.getItem("buy")
 
@@ -44,7 +44,24 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket})
   };
     
   },[socket])
-  
+
+  useEffect(()=>{
+    socket.on('walasiadmin', (data) => {
+        Swal.fire({
+            icon: "info",
+            title: data.message,
+            // title: "Admin is Offline, Sorry for inconvenience",
+            confirmButtonText: "Ok",
+            allowOutsideClick: false,
+            allowEscapeKey: false,                    
+        }).then(ok => {
+            if(ok.isConfirmed){
+                window.location.reload()
+            }
+        })
+    })
+},[socket])
+
   return (
     <>
       <header className='chat__mainHeader'>

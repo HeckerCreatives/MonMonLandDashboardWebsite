@@ -86,19 +86,15 @@ const CsrUpgradeSubscriptionManual = () => {
             setBuyer([]);
             setFilename("")
             refreshtable();
+            setBibiliUser("")
+            setBibiliUserPlayfabid("")
         })
         socket.on('alis', () => {
-            Swal.fire({
-                title:"Are you sure you want to go offline?",
-                icon: "info"
-            }).then(e => {
-                if(e.isConfirmed){
-                    window.location.reload()
-                }
-            })
+            window.location.reload()
         })
+        
       },[])
-      
+     
       useEffect(()=> {
         socket.emit('isonline', socket.id)
 
@@ -112,6 +108,7 @@ const CsrUpgradeSubscriptionManual = () => {
         },[])
 
       useEffect(()=>{
+        
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`, {
           method: "GET",
           headers: {
@@ -156,6 +153,8 @@ const CsrUpgradeSubscriptionManual = () => {
                         setBuyer([]);
                         setFilename("")
                         refreshtable();
+                        setBibiliUser("")
+                        setBibiliUserPlayfabid("")
                       }
                   })
               }
@@ -211,6 +210,8 @@ const CsrUpgradeSubscriptionManual = () => {
                                 setBuyer([]);
                                 setFilename("")
                                 refreshtable();
+                                setBibiliUser("")
+                                setBibiliUserPlayfabid("")
                             }
                             })
                                 
@@ -248,12 +249,25 @@ const CsrUpgradeSubscriptionManual = () => {
 
       const goonline = () => {
         if(!color){
+            // socket.emit('admincheck', socket.id)
             socket.emit('create-room', auth.userName, auth._id);
             socket.emit('join_room', { username: auth.userName, room: auth._id});
             setColor(true)
         } else {
-            socket.emit('leave', (auth.userName))
-            setColor(false)
+            Swal.fire({
+                icon: "warning",
+                title: "Are you sure ?",
+                text: "You will go Offline",
+                showDenyButton: true,
+                confirmButtonText: "Confirm",
+                denyButtonText: "Cancel",
+            }).then(e => {
+                if(e.isConfirmed){
+                socket.emit('leave', (auth.userName))
+                setColor(false)
+                }
+            })
+            
         }
       }
 
@@ -536,7 +550,7 @@ const CsrUpgradeSubscriptionManual = () => {
               <MDBCardBody>
                   <MDBRow>
                       <MDBCol>
-                          <ChatPage socket={socket} buyer={auth.userName} room={auth._id}/>
+                          <ChatPage adminsocket ={auth.userName} socket={socket} buyer={auth.userName} room={auth._id}/>
                       </MDBCol>
                   </MDBRow>
               </MDBCardBody>

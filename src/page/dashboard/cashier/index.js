@@ -42,6 +42,7 @@ const AvailableCashiers = () => {
     setTotal(totalPages);
     }, [games]);
 
+
     useEffect(()=>{
     
     socket.on('room_created', ({room})=>{
@@ -66,6 +67,19 @@ const AvailableCashiers = () => {
                     allowOutsideClick: false,
                     allowEscapeKey: false,                    
                 })
+            } else if(data.message === "Admin has disconnected."){
+                Swal.fire({
+                    icon: "info",
+                    title: "Admin has disconnected.",
+                    text: data.message,
+                    confirmButtonText: "Ok",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,                    
+                }).then(ok => {
+                    if(ok.isConfirmed){
+                        window.location.reload()
+                    }
+                })
             } else {
                 Swal.fire({
                     icon: "info",
@@ -79,6 +93,8 @@ const AvailableCashiers = () => {
                     }
                 })
             }
+
+            
             
           });
     },[])

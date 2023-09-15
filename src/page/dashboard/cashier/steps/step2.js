@@ -3,7 +3,7 @@ import React, { useEffect , useState} from "react";
 // import Home from "../../../../../component/minichatapp/Home";
 import ChatPage from "../../../../component/minichatapp/ChatPage";
 import { Toast } from "../../../../component/utils";
-
+import Swal from "sweetalert2";
 const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buyer, socket}) => {
     const kapy = (text) => {
         navigator.clipboard.writeText(text)
