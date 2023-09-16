@@ -52,15 +52,20 @@ const AvailableCashiers = () => {
         setGames(admins)
         setBackup(admins)
     })
-    
-    },[])
+    return () => {
+        // Clean up your socket event listener when the component unmounts
+        socket.off('room_created');
+        
+    }
+    },[socket])
     
     useEffect(()=>{
-        socket.on('ifqueue', ({no}) => {
-            setQ(no)
-            // console.log(typeof no)
-        })
-        console.log(q)
+        // socket.on('room_full', (data) => {
+        //     const { message } = data
+        //     setQ(message)
+        // })
+
+        // console.log(q)
         socket.on('queue_message', (data) => {
             // Display the queue message to the user
             if(data.message === "Now its your turn.") {
@@ -71,25 +76,25 @@ const AvailableCashiers = () => {
                     confirmButtonText: "Ok",
                     allowOutsideClick: false,
                     allowEscapeKey: false,                    
-                }).then(ok => {
-                    if(ok.isConfirmed){
-                        toggleShow2()
-                        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
-                            method:'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                transactionnumber: generateRandomString(),
-                                cashierId: cashier._id, 
-                            })
-                            }).then(result => result.json())
-                            .then(data => {
-                            setTransacNo(data.transactionnumber)
-                            socket.emit('buyer', data)
-                        })
-                    }
                 })
+                // .then(ok => {
+                //     if(ok.isConfirmed){
+                //         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
+                //             method:'POST',
+                //             headers: {
+                //                 'Content-Type': 'application/json'
+                //             },
+                //             body: JSON.stringify({
+                //                 transactionnumber: generateRandomString(),
+                //                 cashierId: cashier._id, 
+                //             })
+                //             }).then(result => result.json())
+                //             .then(data => {
+                //             setTransacNo(data.transactionnumber)
+                //             socket.emit('buyer', data)
+                //         })
+                //     }
+                // })
             } else if(data.message === "Admin has disconnected."){
                 Swal.fire({
                     icon: "info",
@@ -116,27 +121,32 @@ const AvailableCashiers = () => {
                     }
                 })
             }
-
+            return () => {
+                // Clean up your socket event listener when the component unmounts
+                socket.off('queue_message');
+                
+            }
             
             
           });
-    },[])
+    },[socket])
 
     
 
     const buybtn = (user) => {
+        
         const url = new URL(window.location.href);
         const params = new URLSearchParams(url.search);
 
         const username = params.get('username');
         const id = params.get('id');
+
+        if(username && id){ 
+            
         
-        setCashier(user)
-        if(username && id){        
+        setCashier(user)       
         setUsername(username)
         setRoom(user.userId._id)
-
-        if(q !== 1){
         toggleShow2()
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
             method:'POST',
@@ -149,13 +159,14 @@ const AvailableCashiers = () => {
             })
             }).then(result => result.json())
             .then(data => {
-            setTransacNo(data.transactionnumber)
-            socket.emit('buyer', data)
+            setTransacNo(data)
+            socket.emit('join_room', { username: username, room: user.userId._id, playfabid: id, transaction: data});
         })
+        
+        // socket.emit('userdetails', {id: socket.id})
         }
-        socket.emit('join_room', { username: username, room: user.userId._id, playfabid: id});
-        socket.emit('userdetails', {id: socket.id})
-        } else {
+        
+         else {
             Swal.fire({
                 icon: "info",
                 title: "Username and Id Not Found",
@@ -212,7 +223,7 @@ const AvailableCashiers = () => {
         user={cashier} 
         step2toggle={step2toggle} 
         setstep2toggle={toggleShow2} 
-        transactionno={transacno}
+        transactionno={transacno.transactionnumber}
         room={room}
         buyer={username} 
         socket={socket}   

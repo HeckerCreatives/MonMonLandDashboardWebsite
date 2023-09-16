@@ -70,8 +70,10 @@ const CsrUpgradeSubscriptionManual = () => {
 
       useEffect(()=>{
         socket.on('details', (userdetails) => {
+            
             setBibiliUser(userdetails[1]?.userDetails.username)
             setBibiliUserPlayfabid(userdetails[1]?.userDetails.playfabid)
+            setBuyer(userdetails[1]?.userDetails.transaction)
         })
         socket.on("ey", () => {
             Swal.fire({
@@ -92,13 +94,18 @@ const CsrUpgradeSubscriptionManual = () => {
         socket.on('alis', () => {
             window.location.reload()
         })
-        
-      },[])
+        return () => {
+            // Clean up your socket event listener when the component unmounts
+            socket.off('alis');
+            socket.off('ey');
+            socket.off('details');
+        }
+      },[socket])
      
       useEffect(()=> {
-        socket.on('buyerdata', ({item}) => {
-            setBuyer(item)
-        })
+        // socket.on('buyerdata', ({item}) => {
+        //     setBuyer(item)
+        // })
 
         socket.emit('isonline', socket.id)
 
@@ -108,8 +115,9 @@ const CsrUpgradeSubscriptionManual = () => {
         return () => {
             // Clean up your socket event listener when the component unmounts
             socket.off('onlinenga');
+            socket.off('buyerdata');
         }
-        },[])
+        },[socket])
 
       useEffect(()=>{
         
@@ -357,54 +365,38 @@ const CsrUpgradeSubscriptionManual = () => {
                       <MDBCardBody>
                           <MDBRow>
                               <MDBCol className="">
-                              <MDBCardText className="fw-bold mt-2">Cashier Username: {auth.userName}</MDBCardText>
-                              <MDBCardText className="text-mute">Created Time: {Buyer.createdAt ? new Date(Buyer.createdAt).toLocaleString(): ""}</MDBCardText>
-                              </MDBCol>
-                              <MDBCol className="">
-                              <MDBCardText className="d-flex fw-bold mt-2 align-items-center" >
-                              {/* <span>Cashier Status:</span>
-                              &nbsp;<span style={{ color: user.status === 'Close' ? 'red' : user.status === 'Open' ? 'green' : 'blue' }}>{user.status}</span> */}
-                              {/* <div>
-                              <MDBBtn 
-                              className="mx-2" 
-                              outline color="dark" 
-                              size="sm"
-                              onClick={() => buy(auth._id)}  
-                              >Create
-                              </MDBBtn>                                
-                              </div>  */}
-                              <div>
-                                <MDBBtn
+                              <MDBCardText className="d-flex justify-content-between fw-bold mt-2">Cashier Username: {auth.userName}
+                              <MDBBtn
                                   type="button"
                                   className={color ? `mx-2 bg-success`:`mx-2 bg-danger`} 
                                   outline color="dark" size="sm" 
                                   onClick={goonline}>
                                   {color ? "Online": "Offline"}
-                                </MDBBtn>                               
-                              </div> 
+                                </MDBBtn> 
                               </MDBCardText>
-                              <MDBCardText className="text-mute">Transaction Number: &nbsp;{Buyer.transactionnumber}
+                              
+                              <div className="offset-2 col-lg-10">
+                              <MDBCardText className="text-mute">Created Time: {Buyer?.createdAt ? new Date(Buyer.createdAt).toLocaleString(): ""}</MDBCardText>
+                              </div>
+                              <div className="offset-2 col-lg-10">
+                              <MDBCardText className="text-mute">Transaction Number: &nbsp;{Buyer?.transactionnumber}
                               &nbsp; <MDBIcon far icon="copy" className="icon-zoom" onClick={() =>kapy(Buyer.transactionnumber)}/>
-                              </MDBCardText>                             
+                              </MDBCardText>
+                              </div>
+                              
+                              <div className="offset-2 col-lg-10">
+                              <MDBCardText className="text-mute">No. of Transaction: &nbsp; {user.numberoftransaction}</MDBCardText>
+                              </div>                            
+                              <div className="offset-2 col-lg-10">
+                              <MDBCardText className="text-mute">Payment Limit: &nbsp; {user.paymentlimit} USDT</MDBCardText>
+                              </div>                            
+                              <div className="offset-2 col-lg-10">
+                              <MDBCardText className="text-mute">Quantity: {user.paymentcollected} USDT</MDBCardText>
+                              </div>
                               </MDBCol>
+                             
                           </MDBRow>
   
-                          <MDBRow>
-                              <MDBCol className="d-flex justify-content-between text-center mt-2">
-                              <div>
-                              <MDBCardText className="text-mute">No. of Transaction</MDBCardText>
-                              <MDBCardText className="fw-bold">{user.numberoftransaction}</MDBCardText>
-                              </div>                            
-                              <div>
-                              <MDBCardText className="text-mute">Payment Limit</MDBCardText>
-                              <MDBCardText className="fw-bold">{user.paymentlimit} USDT</MDBCardText>
-                              </div>                            
-                              <div>
-                              <MDBCardText className="text-mute">Quantity</MDBCardText>
-                              <MDBCardText className="fw-bold">{user.paymentcollected} USDT</MDBCardText>
-                              </div>                            
-                              </MDBCol>
-                          </MDBRow>
                           <hr/>
                           <MDBRow>
                               <MDBCol className="mt-2">
@@ -480,13 +472,13 @@ const CsrUpgradeSubscriptionManual = () => {
                                   <UploadWidget
                                   fileName={handleFilename} 
                                   setImgUrl={handleImgUrl} 
-                                  disabled={Buyer.transactionnumber ? false : true}/>
+                                  disabled={Buyer?.transactionnumber ? false : true}/>
                                   </div>
                                   <div className="">
-                                  <MDBBtn className="mx-2 mt-2" type="submit" disabled={Buyer.transactionnumber ? false : true}>Upgrade Subscription</MDBBtn>
+                                  <MDBBtn className="mx-2 mt-2" type="submit" disabled={Buyer?.transactionnumber ? false : true}>Upgrade Subscription</MDBBtn>
                                   </div>
                                   <div className="">
-                                  <MDBBtn className="mx-2 mt-2" disabled={Buyer.transactionnumber ? false : true} color="danger" type="button" onClick={() => cancelorder(Buyer._id)}>Cancel Order</MDBBtn>
+                                  <MDBBtn className="mx-2 mt-2" disabled={Buyer?.transactionnumber ? false : true} color="danger" type="button" onClick={() => cancelorder(Buyer._id)}>Cancel Order</MDBBtn>
                                   </div>
                                   </div>
                                   

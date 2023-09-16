@@ -38,6 +38,11 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
                 setImage(null)
             }
         })
+        return () => {
+            // Clean up your socket event listener when the component unmounts
+            socket.off('badge');
+            
+        }
     },[socket])
     return(
         <>
