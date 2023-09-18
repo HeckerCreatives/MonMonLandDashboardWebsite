@@ -90,11 +90,11 @@ const SubAdminUpgradeSubscriptionManual = () => {
         },[])
 
         useEffect(()=>{
-            socket.on('details', (userdetails) => {
-                console.log(userdetails)
-                setBibiliUser(userdetails[1]?.userDetails.username)
-                setBibiliUserPlayfabid(userdetails[1]?.userDetails.playfabid)
-                setBuyer(userdetails[1]?.userDetails.transaction)
+            socket.on('details', (data) => {
+                console.log(data)
+                setBibiliUser(data[1]?.userDetails.username)
+                setBibiliUserPlayfabid(data[1]?.userDetails.playfabid)
+                setBuyer(data[1]?.userDetails.transaction)
             })
             socket.on("ey", () => {
                 Swal.fire({
