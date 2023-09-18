@@ -185,14 +185,12 @@ const AvailableCashiers = () => {
 
     const handleFilterChange = (event) => {
         const method = event.target.value
-        if(method){
+        if(method && method !== "All"){
             setGames(
                 backup.filter(e =>
                 e.paymentmethod === method
                 )
             )
-        } else if (method === "All"){
-            setGames(backup);
         } else {
             setGames(backup);
         }
@@ -238,8 +236,9 @@ const AvailableCashiers = () => {
         <MDBTypography className="fw-bold">Filter Payment Method</MDBTypography>
         <div className="">
             <select
+                name="method"
                 className="form-select"
-                value={paymethod}
+                // value={paymethod}
                 onChange={handleFilterChange}
             >
                 <option value="All">All</option>

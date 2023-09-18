@@ -134,7 +134,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
             }
         },[])
 
-      const cancelorder = (id) => {
+      const cancelorder = (id, room, normalUserId) => {
           const stats = "Open"
       Swal.fire({
           icon: "warning",
@@ -167,6 +167,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                         refreshtable();
                         setBibiliUser("")
                         setBibiliUserPlayfabid("")
+                        socket.emit('doneTransaction', room, normalUserId);
                       }
                   })
               }
@@ -455,7 +456,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                   <MDBBtn className="mx-2 mt-2" type="submit" disabled={Buyer?.transactionnumber ? false : true}>Upgrade Subscription</MDBBtn>
                                   </div>
                                   <div className="">
-                                  <MDBBtn className="mx-2 mt-2" disabled={Buyer?.transactionnumber ? false : true} color="danger" type="button" onClick={() => cancelorder(Buyer._id)}>Cancel Order</MDBBtn>
+                                  <MDBBtn className="mx-2 mt-2" disabled={Buyer?.transactionnumber ? false : true} color="danger" type="button" onClick={() => cancelorder(Buyer._id,auth._id,socket.id)}>Cancel Order</MDBBtn>
                                   </div>
                                   </div>
                                   
