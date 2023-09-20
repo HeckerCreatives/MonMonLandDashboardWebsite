@@ -10,13 +10,13 @@ import "./index.css"
 const socket = io(process.env.REACT_APP_API_URL)
 const AvailableCashiers = () => {
     const [username, setUsername] = useState(''); // Add this
-    const [room, setRoom] = useState(''); // Add this
+    let room = "";
     const [cashier, setCashier] = useState(''); // Add this
     const [games, setGames] = useState([]),
             [backup, setBackup] = useState([]),
             [page, setPage] = useState(1),
             [transacno, setTransacNo] = useState(""),
-            [paymethod, setPayMethod] = useState(""),
+            // [paymethod, setPayMethod] = useState(""),
             [q, setQ] = useState(""),
             [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
@@ -47,59 +47,46 @@ const AvailableCashiers = () => {
 
     useEffect(()=>{
     
-    socket.on('room_created', ({room})=>{
-        const admins = room.flatMap((item => item.item))
-        setGames(admins)
-        setBackup(admins)
+    socket.emit("joinlobby")
+    socket.on('sendroomlist', (room)=>{
+        const dataArray = Object.values(room);
+        const processedData = dataArray.map(item => item)
+        console.log(processedData)
+        setGames(processedData)
+        // setBackup(processedData)
     })
+    socket.emit("receiveroomlist")
+    
     return () => {
         // Clean up your socket event listener when the component unmounts
-        socket.off('room_created');
-        
+        socket.off('sendroomlist');
+        socket.off('receiveroomlist');
     }
     },[socket])
     
     useEffect(()=>{
-        // socket.on('room_full', (data) => {
-        //     const { message } = data
-        //     setQ(message)
-        // })
-
-        // console.log(q)
+       
         socket.on('queue_message', (data) => {
+            setQ(data.message)
+            
             // Display the queue message to the user
-            if(data.message === "Now its your turn.") {
+            if(data.message === "full") {
                 Swal.fire({
                     icon: "info",
-                    title: "It's Your Turn now",
-                    text: data.message,
+                    title: "Queing",
+                    text: data.data,
                     confirmButtonText: "Ok",
                     allowOutsideClick: false,
-                    allowEscapeKey: false,                    
+                    allowEscapeKey: false,
+                    didOpen: function (){
+                        Swal.disableButtons();
+                    }
                 })
-                // .then(ok => {
-                //     if(ok.isConfirmed){
-                //         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
-                //             method:'POST',
-                //             headers: {
-                //                 'Content-Type': 'application/json'
-                //             },
-                //             body: JSON.stringify({
-                //                 transactionnumber: generateRandomString(),
-                //                 cashierId: cashier._id, 
-                //             })
-                //             }).then(result => result.json())
-                //             .then(data => {
-                //             setTransacNo(data.transactionnumber)
-                //             socket.emit('buyer', data)
-                //         })
-                //     }
-                // })
-            } else if(data.message === "Admin has disconnected."){
+            } else if(data.message === "admindisconnect"){
                 Swal.fire({
                     icon: "info",
                     title: "Admin has disconnected.",
-                    text: data.message,
+                    text: data.data,
                     confirmButtonText: "Ok",
                     allowOutsideClick: false,
                     allowEscapeKey: false,                    
@@ -108,16 +95,24 @@ const AvailableCashiers = () => {
                         window.location.reload()
                     }
                 })
-            } else {
+            } else if (data.message === "refresh queue.") {
+                socket.emit('refreshque')
+            } else if (data.message === "turn") {
                 Swal.fire({
                     icon: "info",
-                    title: "Queing",
-                    text: data.message,
+                    title: "It's Your Turn now",
+                    text: data.data,
                     confirmButtonText: "Ok",
                     allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    didOpen: function (){
-                        Swal.disableButtons();
+                    allowEscapeKey: false,                    
+                }).then(ok => {
+                    if(ok.isConfirmed){
+                        const url = new URL(window.location.href);
+                        const params = new URLSearchParams(url.search);
+
+                        const username = params.get('username');
+                        
+                        socket.emit('playerready', {room: cashier.item[0].userId._id, username: username})
                     }
                 })
             }
@@ -129,7 +124,7 @@ const AvailableCashiers = () => {
             
             
           });
-    },[socket])
+    },[socket, room, cashier])
 
     
 
@@ -141,13 +136,6 @@ const AvailableCashiers = () => {
         const username = params.get('username');
         const id = params.get('id');
 
-        if(username && id){ 
-            
-        
-        setCashier(user)       
-        setUsername(username)
-        setRoom(user.userId._id)
-        toggleShow2()
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
             method:'POST',
             headers: {
@@ -160,26 +148,31 @@ const AvailableCashiers = () => {
             }).then(result => result.json())
             .then(data => {
             setTransacNo(data)
-            socket.emit('join_room', { username: username, room: user.userId._id, playfabid: id, transaction: data});
+            if(username && id){ 
+            
+        
+                setCashier(user)       
+                setUsername(username)
+                room = user.item[0].userId._id
+                toggleShow2()
+                socket.emit('joinroom', { username: username, roomid: user.item[0].userId._id, playfabid: id, transaction: data});
+                } else if (!username || !id){
+                    Swal.fire({
+                        icon: "info",
+                        title: "Username and Id Not Found",
+                        text: "Please Open the Cashier Link inside the Game",
+                        confirmButtonText: "Ok",
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                    }).then(result => {
+                        if(result.isConfirmed){
+                            window.location.replace('https://monmonland.games')
+                        }
+                    })
+                } 
         })
+
         
-        // socket.emit('userdetails', {id: socket.id})
-        }
-        
-         else {
-            Swal.fire({
-                icon: "info",
-                title: "Username and Id Not Found",
-                text: "Please Open the Cashier Link inside the Game",
-                confirmButtonText: "Ok",
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-            }).then(result => {
-                if(result.isConfirmed){
-                    window.location.replace('https://monmonland.games')
-                }
-            })
-        }
         
     }
 
@@ -222,7 +215,7 @@ const AvailableCashiers = () => {
         step2toggle={step2toggle} 
         setstep2toggle={toggleShow2} 
         transactionno={transacno.transactionnumber}
-        room={room}
+        room={cashier.item[0].userId._id}
         buyer={username} 
         socket={socket}   
         />
@@ -270,15 +263,15 @@ const AvailableCashiers = () => {
                 {games.map((game,i) =>(
                 <tr key={`game-${i}`} className="table-zoom" onClick={() =>buybtn(game)}>               
                 <td>
-                    {game.userId.userName}
+                    {game.user}
                 </td>
                 <td> 
                 <div className="d-flex flex-column align-items-center justify-content-center">
-                <span>{game.paymentmethod}</span>
-                <span>{game.paymentdetail}</span>
+                <span>{game.item[0].paymentmethod}</span>
+                <span>{game.item[0].paymentdetail}</span>
                 </div>
                 </td>
-                <td>{game.paymentcollected ? game.paymentcollected  : 0}/{game.paymentlimit}</td>                
+                <td>{game.item[0].paymentcollected ? game.item[0].paymentcollected  : 0}/{game.item[0].paymentlimit}</td>                
                 </tr>
                 ))}
                 </>

@@ -24,6 +24,7 @@ export const UpgradeSubscriptionApi = async (playerPlayfabId, playerUsername, su
                     ExecuteCloudScript: true,
                     GeneratePlayStreamEvent: true,
                 }, (error1, result1) => {
+                    console.log(result1)
                     if (error1) {
                         reject(error1);
                     } else if (result1.data.FunctionResult.message === "success") {

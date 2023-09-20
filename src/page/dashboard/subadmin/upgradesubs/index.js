@@ -18,6 +18,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
     const [emeraldChecked, setEmeraldChecked] = useState(false);
     const [diamondChecked, setDiamondChecked] = useState(false);
     const [subscriptionId, setSubscriptionId] = useState("");
+    const [bibiliuserid, setBibiliUserId] = useState("");
     const [bibiliuser, setBibiliUser] = useState("");
     const [bibiliuserplayfabid, setBibiliUserPlayfabid] = useState("");
     const [substype, setSubsType] = useState("")
@@ -90,12 +91,13 @@ const SubAdminUpgradeSubscriptionManual = () => {
         },[])
 
         useEffect(()=>{
-            socket.on('details', (data) => {
-                console.log(data)
-                setBibiliUser(data[1]?.userDetails.username)
-                setBibiliUserPlayfabid(data[1]?.userDetails.playfabid)
-                setBuyer(data[1]?.userDetails.transaction)
+            socket.on('playerdetails', (data) => {
+                setBibiliUserId(data?.id)
+                setBibiliUser(data?.username)
+                setBibiliUserPlayfabid(data?.playfabid)
+                setBuyer(data?.transaction)
             })
+
             socket.on("ey", () => {
                 Swal.fire({
                     title: "Transaction Done",
@@ -120,9 +122,38 @@ const SubAdminUpgradeSubscriptionManual = () => {
         },[])
         
         useEffect(()=> {
-            // socket.on('buyerdata', ({item}) => {
-            //     setBuyer(item)
-            // })
+            socket.on("canceleduser", (data) => {
+                Swal.fire({
+                    icon: "warning",
+                    title: `User ${data.username} canceled the transaction`,
+                })
+                setPrice("")
+                setSubsType("")
+                setRubyChecked(false);
+                setEmeraldChecked(false);
+                setDiamondChecked(false);
+                setBuyer([]);
+                setFilename("")
+                refreshtable();
+                setBibiliUser("")
+                setBibiliUserPlayfabid("")
+            })
+            socket.on("adminrefreshlist", (data) => {
+                Swal.fire({
+                    icon: "success",
+                    title: `User ${data.username} is done on this transaction`,
+                })
+                setPrice("")
+                setSubsType("")
+                setRubyChecked(false);
+                setEmeraldChecked(false);
+                setDiamondChecked(false);
+                setBuyer([]);
+                setFilename("")
+                refreshtable();
+                setBibiliUser("")
+                setBibiliUserPlayfabid("")
+            })
             socket.emit('isonline', socket.id)
 
             socket.on('onlinenga', () => {
@@ -167,7 +198,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                         refreshtable();
                         setBibiliUser("")
                         setBibiliUserPlayfabid("")
-                        socket.emit('doneTransaction', room, normalUserId);
+                        socket.emit('cancelTransactionAdmin', {room: room, buyer: bibiliuserid});
                       }
                   })
               }
@@ -256,8 +287,8 @@ const SubAdminUpgradeSubscriptionManual = () => {
 
       const goonline = () => {
         if(!color){
-            socket.emit('create-room', auth.userName, auth._id);
-            socket.emit('join_room', { username: auth.userName, room: auth._id});
+            socket.emit('joinroom', { username: auth.userName, roomid: auth._id});
+            
             setColor(true)
         } else {
             Swal.fire({
@@ -269,8 +300,9 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 denyButtonText: "Cancel",
             }).then(e => {
                 if(e.isConfirmed){
-                socket.emit('leave', (auth.userName))
-                setColor(false)
+                socket.emit('leave')
+                window.location.reload()
+                // setColor(false)
                 }
             })
             
@@ -280,7 +312,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
 
       const handleCheckboxChange = (checkboxName) => {
         if (checkboxName === 'ruby') {
-        socket.emit('selectsubs', {data: 'ruby'})
+        socket.emit('selectsubs', {id: bibiliuserid, subs: 'ruby'})
         setSubscriptionId(process.env.REACT_APP_RUBY)
         // setPrice("25")
         setSubsType("1")
@@ -288,7 +320,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
         setEmeraldChecked(false);
         setDiamondChecked(false);
         } else if (checkboxName === 'emerald') {
-        socket.emit('selectsubs', {data: 'emerald'})
+        socket.emit('selectsubs', {id: bibiliuserid, subs: 'emerald'})
         setSubscriptionId(process.env.REACT_APP_EMERALD)
         // setPrice("50")
         setSubsType("2")
@@ -296,7 +328,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
         setEmeraldChecked(true);
         setDiamondChecked(false);
         } else if (checkboxName === 'diamond') {
-        socket.emit('selectsubs', {data: 'diamond'})
+        socket.emit('selectsubs', {id: bibiliuserid, subs: 'diamond'})
         setSubscriptionId(process.env.REACT_APP_DIAMOND)
         // setPrice("100") 
         setSubsType("3") 
@@ -527,7 +559,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
               <MDBCardBody>
                   <MDBRow>
                       <MDBCol>
-                          <ChatPage socket={socket} buyer={auth.userName} room={auth._id}/>
+                          <ChatPage socket={socket} buyerid={bibiliuserid} buyer={bibiliuser} room={auth._id} isadmin={true}/>
                       </MDBCol>
                   </MDBRow>
               </MDBCardBody>

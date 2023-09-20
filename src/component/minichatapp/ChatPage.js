@@ -4,12 +4,11 @@ import ChatBody from './ChatBody'
 import ChatFooter from './ChatFooter'
 
 
-const ChatPage = ({socket, room, buyer, adminsocket}) => { 
+const ChatPage = ({socket, room, buyer, adminsocket, isadmin, buyerid}) => { 
   const [messagesRecieved, setMessagesReceived] = useState([]);
   const lastMessageRef = useRef(null);
 
 
-  // console.log(setNotif)
   // Runs whenever a socket event is recieved from the server
   useEffect(() => {
     socket.on('receive_message', (data) => {
@@ -22,10 +21,6 @@ const ChatPage = ({socket, room, buyer, adminsocket}) => {
           __createdtime__: data.__createdtime__,
         },
       ]);
-    });
-    
-    window.addEventListener('load', function() {
-      socket.emit('leave_room', {username: buyer, room: room})
     });
     
 	// Remove event listener on component unmount
@@ -43,7 +38,7 @@ const ChatPage = ({socket, room, buyer, adminsocket}) => {
     <div className="chat">
       {/* <ChatBar socket={socket}/> */}
       <div className='chat__main'>
-        <ChatBody adminsocket={adminsocket} room={room} buyer={buyer} messages={messagesRecieved} lastMessageRef={lastMessageRef} socket={socket}/>
+        <ChatBody adminsocket={adminsocket} room={room} buyer={buyer} messages={messagesRecieved} lastMessageRef={lastMessageRef} socket={socket} isadmin={isadmin} buyerid={buyerid}/>
         <ChatFooter socket={socket} buyer={buyer} room={room}/>
       </div>
     </div>

@@ -2,7 +2,7 @@ import { MDBBtn } from 'mdb-react-ui-kit'
 import React, { useEffect } from 'react'
 import {useNavigate} from "react-router-dom"
 import Swal from 'sweetalert2'
-const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, adminsocket}) => { 
+const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, isadmin, buyerid}) => { 
   const navigate = useNavigate()
   const buy = localStorage.getItem("buy")
 
@@ -12,17 +12,52 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
     return date.toLocaleString();
   }
 
-  // const kick = () => {
-  //   socket.emit('kick', ({userid: socket.id}))
-    
-  // }
 
-  const doneTransaction = (room, normalUserId) => {
+  const doneTransaction = (room, buyerid) => {
     // Emit 'doneTransaction' event to server
-    socket.emit('doneTransaction', room, normalUserId);
+    if(isadmin){
+      Swal.fire({
+        icon: "warning",
+        title: "Are you sure ?",
+        text: "You will go Offline",
+        showDenyButton: true,
+        confirmButtonText: "Confirm",
+        denyButtonText: "Cancel",
+      }).then(e => {
+          if(e.isConfirmed){
+          socket.emit('doneTransactionAdmin', {room: room, buyer: buyerid});
+          }
+      })
+      
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "Are you sure ?",
+        text: "You will go Offline",
+        showDenyButton: true,
+        confirmButtonText: "Confirm",
+        denyButtonText: "Cancel",
+      }).then(e => {
+          if(e.isConfirmed){
+          socket.emit('doneTransactionUser', {roomId: room});
+          }
+      })
+    }
   };
 
   useEffect(()=>{
+    socket.on("canceled", () => {
+      Swal.fire({
+        title: "Canceled Transaction",
+        icon: "success",
+        text: `Redirecting to cashier list`
+      }).then(result => {
+        if(result.isConfirmed){
+          // socket.leave(room)
+          window.location.reload();
+        }
+      })
+    })
     // Listen for 'kicked' event
   socket.on('kicked', () => {
     // Refresh page
@@ -32,6 +67,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
       text: `Redirecting to cashier list`
     }).then(result => {
       if(result.isConfirmed){
+        // socket.leave(room)
         window.location.reload();
       }
     })
@@ -69,7 +105,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
       <p>Please make a payment within 60:00 mins. otherwise, the order will be cancelled</p>
       </div>
       <div className='mx-2'>
-      <MDBBtn className='mb-1 rounded' onClick={() => doneTransaction(room,socket.id)}>Done Transaction</MDBBtn>
+      <MDBBtn className='mb-1 rounded' onClick={() => doneTransaction(room,buyerid)}>Done Transaction</MDBBtn>
       {/* <button className='btn-primary mb-1 rounded' ></button> */}
       {/* <button className='btn-danger rounded'>Cancel Order</button> */}
       </div>

@@ -276,7 +276,7 @@ const CsrUpgradeSubscriptionManual = () => {
                 denyButtonText: "Cancel",
             }).then(e => {
                 if(e.isConfirmed){
-                socket.emit('leave', (auth.userName))
+                socket.emit('leave')
                 setColor(false)
                 }
             })

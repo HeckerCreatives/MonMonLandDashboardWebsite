@@ -9,8 +9,10 @@ import emerald from "../../../../assets/subscription/emerald.png"
 import diamond from "../../../../assets/subscription/diamond.png"
 const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buyer, socket, transactionno}) => {
     const [image, setImage] = useState("");
+    const [cashier, setcashier] = useState([]);
     const [bibiliuser, setBibiliUser] = useState("");
     const [bibiliuserplayfabid, setBibiliUserPlayfabid] = useState("");
+
     const kapy = (text) => {
         navigator.clipboard.writeText(text)
         Toast.fire({
@@ -18,7 +20,26 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
             title: 'Copy successfully'
         })
       }
+    
+    const cancel = () => {
+        Swal.fire({
+            icon: "warning",
+            title: "Are you sure ?",
+            text: "You will cancel the transaction",
+            showDenyButton: true,
+            confirmButtonText: "Confirm",
+            denyButtonText: "Cancel",
+        }).then(e => {
+            if(e.isConfirmed){
+            socket.emit('cancelTransactionUser')
+            window.location.reload()
+            }
+        })
+
+        
+    }
     useEffect(()=> {
+        
         const url = new URL(window.location.href);
         const params = new URLSearchParams(url.search);
 
@@ -27,16 +48,22 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
         setBibiliUser(username)
         setBibiliUserPlayfabid(id)
         socket.on('badge', ({item}) => {
-            console.log(item.data)
-            if(item.data === 'ruby'){
+            if(item === 'ruby'){
                 setImage(ruby)
-            } else if (item.data === 'emerald'){
+            } else if (item === 'emerald'){
                 setImage(emerald)
-            } else if (item.data === 'diamond') {
+            } else if (item === 'diamond') {
                 setImage(diamond)
             } else {
                 setImage(null)
             }
+        })
+        socket.on("admindetails", (data) => {
+            setcashier(data)
+        })
+        socket.on("donegetlist", () => {
+            console.log(room)
+            socket.emit("refreshque", {room: room})
         })
         return () => {
             // Clean up your socket event listener when the component unmounts
@@ -53,7 +80,7 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
                     <MDBCardBody>
                         <MDBRow >
                             <MDBCol className="text-center">
-                            <MDBCardText className="fw-bold">Cashier: {user.userId.userName}</MDBCardText>                            
+                            <MDBCardText className="fw-bold">Cashier: {cashier?.user}</MDBCardText>                            
                             </MDBCol>
                             
                             <MDBCol className="text-center">
@@ -68,15 +95,16 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
                             <MDBCol className="d-flex justify-content-between align-items-center mt-2">
                             <div>
                             <MDBCardText className="text-mute">Number of Transaction</MDBCardText>
-                            <MDBCardText className="fw-bold">{user.numberoftransaction}</MDBCardText>
+                            
+                            <MDBCardText className="fw-bold"> {cashier.length !== 0 ? cashier?.item[0]?.numberoftransaction : ""}</MDBCardText>
                             </div>                            
                             <div>
                             <MDBCardText className="text-mute">Payment Limit</MDBCardText>
-                            <MDBCardText className="fw-bold">{user.paymentlimit} USDT</MDBCardText>
+                            <MDBCardText className="fw-bold">{cashier.length !== 0 ? cashier?.item[0]?.paymentlimit : ""} USDT</MDBCardText>
                             </div>                            
                             <div>
                             <MDBCardText className="text-mute">Quantity</MDBCardText>
-                            <MDBCardText className="fw-bold">{user.paymentcollected} USDT</MDBCardText>
+                            <MDBCardText className="fw-bold">{cashier.length !== 0 ? cashier?.item[0]?.paymentcollected: ""} USDT</MDBCardText>
                             </div>                            
                             </MDBCol>
                         </MDBRow>
@@ -87,11 +115,11 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
                                 <MDBCardText className="fw-bold">Payment Details</MDBCardText>
                                 </div>
                                 <div className="offset-2 col-lg-10">
-                                <MDBCardText className="text-mute">Payment Gateway : {user.paymentmethod}</MDBCardText>
+                                <MDBCardText className="text-mute">Payment Gateway : {cashier.length !== 0 ? cashier?.item[0]?.paymentmethod: ""}</MDBCardText>
                                 </div>                            
                                 <div className="offset-2 col-lg-10">
-                                <MDBCardText className="text-mute">Account Number : {user.paymentdetail}
-                                &nbsp;<MDBIcon far icon="copy" className="icon-zoom"  onClick={() =>kapy(user.paymentdetail)}/>
+                                <MDBCardText className="text-mute">Account Number : {cashier.length !== 0 ? cashier?.item[0]?.paymentdetail: ""}
+                                &nbsp;<MDBIcon far icon="copy" className="icon-zoom"  onClick={() =>kapy(cashier.length !== 0 ? cashier?.item[0]?.paymentdetail: "")}/>
                                 </MDBCardText>
                                 </div>                 
                             </MDBCol>
@@ -133,7 +161,7 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
                                 <MDBBtn 
                                 className="mx-3" 
                                 color="danger"
-                                onClick={() => window.location.reload()}
+                                onClick={cancel}
                                 >Cancel Order</MDBBtn>
                                 </div>
                                 </MDBCardText>
