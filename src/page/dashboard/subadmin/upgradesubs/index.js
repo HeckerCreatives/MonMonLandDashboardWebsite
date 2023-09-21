@@ -174,6 +174,8 @@ const SubAdminUpgradeSubscriptionManual = () => {
             })
             return () => {
                 // Clean up your socket event listener when the component unmounts
+                
+                socket.emit('leave')
                 socket.off('onlinenga');
             }
         },[currenturn])
