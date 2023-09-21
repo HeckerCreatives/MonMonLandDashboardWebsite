@@ -1,9 +1,10 @@
 import { MDBIcon } from 'mdb-react-ui-kit';
 import React, {useState, useEffect} from 'react'
 import UploadWidget from "../uploadwidget/uploadwidet"
-const ChatFooter = ({socket, buyer, room}) => {
+const ChatFooter = ({socket, buyer, room, msguser, rcvrid}) => {
     const [message, setMessage] = useState("")
     const [image, setImage] = useState(null);
+    const [filename, setFilename] = useState("");
     // const handleTyping = () => socket.emit("typing",`${ } is typing`)
     // const handleImageUpload = (e) => {
     //   const file = e.target.files[0];
@@ -15,14 +16,18 @@ const ChatFooter = ({socket, buyer, room}) => {
       // Use the uploaded image URL in the parent component or pass it to another component
       setImage(url);
     };
-
+    const handleFilename = (url) => {
+      // Use the uploaded image URL in the parent component or pass it to another component
+      setFilename(url);
+    };
     const __createdtime__ = Date.now();
     
     const sendMessage = (e) => {
+      console.log(socket.id)
       e.preventDefault();
       if (message !== "") {        
         // Send message to server. We can't specify who we send the message to from the frontend. We can only send to server. Server can then send message to rest of users in room
-        socket.emit('send_message', { username: buyer, room: room, message: message, __createdtime__, image: image ? image : null});
+        socket.emit('send_message', { username: msguser, room: room, message: message, __createdtime__, image: image ? image : null, usersocket: rcvrid});
         setMessage('');
         setImage(null);
       } 
@@ -30,7 +35,7 @@ const ChatFooter = ({socket, buyer, room}) => {
             // const reader = new FileReader();
             // reader.onload = function (e) {
             //   const dataURL = e.target.result;
-              socket.emit('send_message', { username: buyer, room: room, message: message, __createdtime__, image: image});
+              socket.emit('send_message', { username: msguser, room: room, message: message, __createdtime__, image: image, usersocket: rcvrid});
               // console.log(dataURL)
               setMessage('');
               setImage(null);
@@ -116,7 +121,7 @@ const ChatFooter = ({socket, buyer, room}) => {
               style={{ display: "none" }}
               onChange={handleImageUpload}
             /> */}
-            <UploadWidget setImgUrl={handleImgUrl}/>
+            <UploadWidget setfileName={handleFilename} setImgUrl={handleImgUrl}/>
             <button type='submit' className="sendBtn mx-2 rounded">
             <MDBIcon fas icon="paper-plane" size='xl'/>
             </button>

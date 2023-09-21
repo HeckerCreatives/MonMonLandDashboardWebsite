@@ -175,7 +175,7 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
             <MDBCol>
             <MDBCard>
             <MDBCardBody>
-            <ChatPage socket={socket} recipientId={recipientId} room={room} buyer={buyer}/>
+            <ChatPage socket={socket} recipientId={recipientId} room={room} buyer={buyer} msguser={bibiliuser} rcvrid={cashier.length !== 0 ? cashier.id : ""}/>
                 {/* <MDBRow>
                     <MDBCol>
                         

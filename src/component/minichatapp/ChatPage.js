@@ -4,7 +4,7 @@ import ChatBody from './ChatBody'
 import ChatFooter from './ChatFooter'
 
 
-const ChatPage = ({socket, room, buyer, adminsocket, isadmin, buyerid}) => { 
+const ChatPage = ({socket, room, buyer, adminsocket, isadmin, buyerid, msguser, rcvrid, isloading}) => { 
   const [messagesRecieved, setMessagesReceived] = useState([]);
   const lastMessageRef = useRef(null);
 
@@ -38,8 +38,8 @@ const ChatPage = ({socket, room, buyer, adminsocket, isadmin, buyerid}) => {
     <div className="chat">
       {/* <ChatBar socket={socket}/> */}
       <div className='chat__main'>
-        <ChatBody adminsocket={adminsocket} room={room} buyer={buyer} messages={messagesRecieved} lastMessageRef={lastMessageRef} socket={socket} isadmin={isadmin} buyerid={buyerid}/>
-        <ChatFooter socket={socket} buyer={buyer} room={room}/>
+        <ChatBody adminsocket={adminsocket} room={room} buyer={buyer} messages={messagesRecieved} lastMessageRef={lastMessageRef} socket={socket} isadmin={isadmin} buyerid={buyerid} msguser={msguser} isloading={isloading}/>
+        <ChatFooter socket={socket} buyer={buyer} room={room} msguser={msguser} rcvrid={rcvrid}/>
       </div>
     </div>
   )

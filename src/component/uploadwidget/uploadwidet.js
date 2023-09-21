@@ -2,7 +2,7 @@ import { MDBBtn } from "mdb-react-ui-kit";
 import { useEffect, useRef } from "react";
 
 
-const UploadWidget = ({setImgUrl, disabled, fileName}) => {
+const UploadWidget = ({setImgUrl, disabled, setfileName}) => {
     const cloudinaryRef = useRef();
     const widgetRef = useRef();
 
@@ -14,10 +14,10 @@ const UploadWidget = ({setImgUrl, disabled, fileName}) => {
         }, function(error, result){
             if(result.event === 'success'){
                 setImgUrl(result.info.url)
-                fileName(result.info.original_filename)
+                setfileName(result.info.original_filename)
             }
         })
-    },[setImgUrl, fileName])
+    },[setImgUrl])
 
     return (
         <MDBBtn className="mt-2" onClick={() => widgetRef.current.open()} style={{background: "#80C548"}} type="button" disabled={disabled}>

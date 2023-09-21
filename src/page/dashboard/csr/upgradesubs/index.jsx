@@ -1,5 +1,5 @@
-import React, {useEffect, useState,useContext} from "react";
-import { MDBContainer, MDBBtn, MDBBadge, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBInput,  MDBCard, MDBCardBody, MDBCardText, MDBIcon} from "mdb-react-ui-kit";
+import React, {useEffect, useState } from "react";
+import { MDBContainer, MDBBtn, MDBBadge, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBInput,  MDBCard, MDBCardBody, MDBCardText, MDBIcon,MDBSpinner} from "mdb-react-ui-kit";
 import Swal from "sweetalert2";
 import { Toast } from "../../../../component/utils";
 import Breadcrumb from "../../../../component/breadcrumb";
@@ -8,17 +8,17 @@ import ruby from "../../../../assets/subscription/ruby badge.png"
 import emerald from "../../../../assets/subscription/emerald.png"
 import diamond from "../../../../assets/subscription/diamond.png"
 import ChatPage from "../../../../component/minichatapp/ChatPage";
-import { UpgradeSubscriptionApi } from "../../../../component/playfab/playfabupgrade";
 import { handlePagination } from "../../../../component/utils"
-import io from "socket.io-client"
+import  { UpgradeSubscriptionApi }  from "../../../../component/playfab/playfabupgrade";
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
+import io from "socket.io-client"
 const socket = io(process.env.REACT_APP_API_URL)
-
 const CsrUpgradeSubscriptionManual = () => {
     const [rubyChecked, setRubyChecked] = useState(false);
     const [emeraldChecked, setEmeraldChecked] = useState(false);
     const [diamondChecked, setDiamondChecked] = useState(false);
     const [subscriptionId, setSubscriptionId] = useState("");
+    const [bibiliuserid, setBibiliUserId] = useState("");
     const [bibiliuser, setBibiliUser] = useState("");
     const [bibiliuserplayfabid, setBibiliUserPlayfabid] = useState("");
     const [substype, setSubsType] = useState("")
@@ -30,6 +30,7 @@ const CsrUpgradeSubscriptionManual = () => {
           [color, setColor] = useState(false),
           [image, setImage] = useState(""),
           [filename, setFilename] = useState(""),
+          [isloading, setIsLoading] = useState(false),
           [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
   
@@ -47,7 +48,7 @@ const CsrUpgradeSubscriptionManual = () => {
               setHistory(data)
           })
       },[])
-
+      
       const refreshtable = () => {
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
           .then(response => response.json())
@@ -56,6 +57,14 @@ const CsrUpgradeSubscriptionManual = () => {
               setHistory(data)
           })
       }
+
+      useEffect(()=> {
+        fetch(`${process.env.REACT_APP_API_URL}subscription/${subscriptionId}/find`)
+        .then(result => result.json())
+        .then(data => {
+        setPrice(data.amount)
+        })
+      },[subscriptionId])
 
       function generateRandomString() {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -69,58 +78,6 @@ const CsrUpgradeSubscriptionManual = () => {
       }
 
       useEffect(()=>{
-        socket.on('details', (userdetails) => {
-            
-            setBibiliUser(userdetails[1]?.userDetails.username)
-            setBibiliUserPlayfabid(userdetails[1]?.userDetails.playfabid)
-            setBuyer(userdetails[1]?.userDetails.transaction)
-        })
-        socket.on("ey", () => {
-            Swal.fire({
-                title: "Transaction Done",
-                icon: "success",
-            })
-            setPrice("")
-            setSubsType("")
-            setRubyChecked(false);
-            setEmeraldChecked(false);
-            setDiamondChecked(false);
-            setBuyer([]);
-            setFilename("")
-            refreshtable();
-            setBibiliUser("")
-            setBibiliUserPlayfabid("")
-        })
-        socket.on('alis', () => {
-            window.location.reload()
-        })
-        return () => {
-            // Clean up your socket event listener when the component unmounts
-            socket.off('alis');
-            socket.off('ey');
-            socket.off('details');
-        }
-      },[socket])
-     
-      useEffect(()=> {
-        // socket.on('buyerdata', ({item}) => {
-        //     setBuyer(item)
-        // })
-
-        socket.emit('isonline', socket.id)
-
-        socket.on('onlinenga', () => {
-            setColor(true)
-        })
-        return () => {
-            // Clean up your socket event listener when the component unmounts
-            socket.off('onlinenga');
-            socket.off('buyerdata');
-        }
-        },[socket])
-
-      useEffect(()=>{
-        
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`, {
           method: "GET",
           headers: {
@@ -133,8 +90,87 @@ const CsrUpgradeSubscriptionManual = () => {
             setUser(filter[0])            
         })
         },[])
+
+        useEffect(()=>{
+            socket.on('playerdetails', (data) => {
+                setBibiliUserId(data?.id)
+                setBibiliUser(data?.username)
+                setBibiliUserPlayfabid(data?.playfabid)
+                setBuyer(data?.transaction)
+            })
+
+            socket.on("ey", () => {
+                Swal.fire({
+                    title: "Transaction Done",
+                    icon: "success",
+                })
+                setPrice("")
+                setSubsType("")
+                setRubyChecked(false);
+                setEmeraldChecked(false);
+                setDiamondChecked(false);
+                setBuyer([]);
+                setFilename("")
+                refreshtable();
+                setBibiliUser("")
+                setBibiliUserPlayfabid("")
+            })
+            socket.on('alis', () => {
+                window.location.reload()
+            })
+
+            
+        },[])
         
-      const cancelorder = (id,room, normalUserId) => {
+        useEffect(()=> {
+            socket.on("canceleduser", (data) => {
+                Swal.fire({
+                    icon: "warning",
+                    title: `User ${data.username} canceled the transaction`,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                })
+                setPrice("")
+                setSubsType("")
+                setRubyChecked(false);
+                setEmeraldChecked(false);
+                setDiamondChecked(false);
+                setBuyer([]);
+                setFilename("")
+                refreshtable();
+                setBibiliUser("")
+                setBibiliUserPlayfabid("")
+            })
+            socket.on("adminrefreshlist", (data) => {
+                Swal.fire({
+                    icon: "success",
+                    title: `User ${data.username} is done on this transaction`,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                })
+                setPrice("")
+                setSubsType("")
+                setRubyChecked(false);
+                setEmeraldChecked(false);
+                setDiamondChecked(false);
+                setBuyer([]);
+                setFilename("")
+                refreshtable();
+                setBibiliUser("")
+                setBibiliUserPlayfabid("")
+            })
+            socket.emit('isonline', socket.id)
+
+            socket.on('onlinenga', () => {
+                setColor(true)
+            })
+            return () => {
+                // Clean up your socket event listener when the component unmounts
+                socket.off('onlinenga');
+            }
+        },[])
+
+      const cancelorder = (id, room, normalUserId) => {
           const stats = "Open"
       Swal.fire({
           icon: "warning",
@@ -167,7 +203,7 @@ const CsrUpgradeSubscriptionManual = () => {
                         refreshtable();
                         setBibiliUser("")
                         setBibiliUserPlayfabid("")
-                        socket.emit('doneTransaction', room, normalUserId);
+                        socket.emit('cancelTransactionAdmin', {room: room, buyer: bibiliuserid});
                       }
                   })
               }
@@ -187,9 +223,10 @@ const CsrUpgradeSubscriptionManual = () => {
               confirmButtonText: "Confirm",
               denyButtonText: "Cancel",
           }).then(async result =>{
+            setIsLoading(true)
               if(result.isConfirmed){
-                await UpgradeSubscriptionApi(bibiliuserplayfabid, bibiliuser, substype, price,)
-                .then(item => {
+                await UpgradeSubscriptionApi( bibiliuserplayfabid, bibiliuser, substype, price,)
+                .then((item) => {
                     if(item === "success"){
                         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/updatebuyer/${Buyer._id}`,{
                             method: "PUT",
@@ -212,9 +249,13 @@ const CsrUpgradeSubscriptionManual = () => {
                             Swal.fire({
                                 title: "User Upgraded Successfully",
                                 icon: "success",
-                                text: "You Successfully Upgraded a User, Ready for the next user?"
+                                text: "You Successfully Upgraded a User, Ready for the next user?",
+                                allowOutsideClick: false,
+                                allowEscapeKey: false
                             }).then(ok => {
+                                
                             if(ok.isConfirmed){
+                                setIsLoading(false)
                                 setPrice("")
                                 setSubsType("")
                                 setRubyChecked(false);
@@ -225,6 +266,7 @@ const CsrUpgradeSubscriptionManual = () => {
                                 refreshtable();
                                 setBibiliUser("")
                                 setBibiliUserPlayfabid("")
+
                             }
                             })
                                 
@@ -243,28 +285,21 @@ const CsrUpgradeSubscriptionManual = () => {
                             text: item.data.FunctionResult.data
                         })
                     }
+                    
                 })
                 .catch((error) => {
                     console.error(error);
                 });
+                
               }
           })
           
       }
 
-      useEffect(()=> {
-        fetch(`${process.env.REACT_APP_API_URL}subscription/${subscriptionId}/find`)
-        .then(result => result.json())
-        .then(data => {
-        setPrice(data.amount)
-        })
-      },[subscriptionId])
-
       const goonline = () => {
         if(!color){
-            // socket.emit('admincheck', socket.id)
-            socket.emit('create-room', auth.userName, auth._id);
-            socket.emit('join_room', { username: auth.userName, room: auth._id});
+            socket.emit('joinroom', { username: auth.userName, roomid: auth._id});
+            
             setColor(true)
         } else {
             Swal.fire({
@@ -277,16 +312,18 @@ const CsrUpgradeSubscriptionManual = () => {
             }).then(e => {
                 if(e.isConfirmed){
                 socket.emit('leave')
-                setColor(false)
+                window.location.reload()
+                // setColor(false)
                 }
             })
             
         }
+        
       }
 
       const handleCheckboxChange = (checkboxName) => {
         if (checkboxName === 'ruby') {
-        socket.emit('selectsubs', {data: 'ruby'})
+        socket.emit('selectsubs', {id: bibiliuserid, subs: 'ruby'})
         setSubscriptionId(process.env.REACT_APP_RUBY)
         // setPrice("25")
         setSubsType("1")
@@ -294,7 +331,7 @@ const CsrUpgradeSubscriptionManual = () => {
         setEmeraldChecked(false);
         setDiamondChecked(false);
         } else if (checkboxName === 'emerald') {
-        socket.emit('selectsubs', {data: 'emerald'})
+        socket.emit('selectsubs', {id: bibiliuserid, subs: 'emerald'})
         setSubscriptionId(process.env.REACT_APP_EMERALD)
         // setPrice("50")
         setSubsType("2")
@@ -302,38 +339,18 @@ const CsrUpgradeSubscriptionManual = () => {
         setEmeraldChecked(true);
         setDiamondChecked(false);
         } else if (checkboxName === 'diamond') {
-         socket.emit('selectsubs', {data: 'diamond'})
+        socket.emit('selectsubs', {id: bibiliuserid, subs: 'diamond'})
         setSubscriptionId(process.env.REACT_APP_DIAMOND)
-        // setPrice("100")  
-        setSubsType("3")
+        // setPrice("100") 
+        setSubsType("3") 
         setRubyChecked(false);
         setEmeraldChecked(false);
         setDiamondChecked(true);
         }
       }
 
-    //   const buy = (id) => {
-    //     const stats = "Processing"
-    //     fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
-    //             method:'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body: JSON.stringify({
-    //                 transactionnumber: generateRandomString(),
-    //                 cashierId: id, 
-    //                 stats: stats,
-    //             })
-    //             }).then(result => result.json())
-    //             .then(data => {
-    //             setBuyer(data)
-                
-    //         })
-            
-        
-    //   }
-
       const kapy = (text) => {
+        
         if(text){
             navigator.clipboard.writeText(text)
             Toast.fire({
@@ -346,6 +363,7 @@ const CsrUpgradeSubscriptionManual = () => {
                 title: 'No text to copy'
             }) 
         }
+        
       }
 
       const handleImgUrl = (url) => {
@@ -395,9 +413,11 @@ const CsrUpgradeSubscriptionManual = () => {
                               <MDBCardText className="text-mute">Quantity: {user.paymentcollected} USDT</MDBCardText>
                               </div>
                               </MDBCol>
-                             
+
+                              
                           </MDBRow>
   
+                          
                           <hr/>
                           <MDBRow>
                               <MDBCol className="mt-2">
@@ -420,7 +440,7 @@ const CsrUpgradeSubscriptionManual = () => {
                                   <MDBCardText className="fw-bold">Subscription Details</MDBCardText>
                                   </div>
                                   <div className="offset-lg-2 col-lg-10">
-                                  <MDBCardText className="text-mute d-flex mt-2"> Subscriber Username :
+                                  <MDBCardText className="text-mute d-flex mt-2">Subscriber Username :
                                   &nbsp; {bibiliuser}
                                   </MDBCardText>                                
                                   </div>
@@ -430,7 +450,7 @@ const CsrUpgradeSubscriptionManual = () => {
                                   &nbsp; {bibiliuserplayfabid}
                                   </MDBCardText>                                
                                   </div>
-                                  
+
                                   <div className="offset-lg-2 col-lg-10 mt-2">
                                   <MDBCardText className="text-mute">Select Subscription Level :                                
                                   </MDBCardText>
@@ -470,16 +490,49 @@ const CsrUpgradeSubscriptionManual = () => {
                                   </div>
                                   <div className="d-flex justify-content-end mt-2">
                                   <div className="">
+                                  { isloading ?
+                                    <MDBBtn className="mx-2 mt-2" disabled={isloading} style={{background: "#80C548"}}>
+                                    <MDBSpinner role='status'>
+                                    </MDBSpinner>
+                                    </MDBBtn>
+                                  :
                                   <UploadWidget
-                                  fileName={handleFilename} 
+                                  setfileName={handleFilename} 
                                   setImgUrl={handleImgUrl} 
                                   disabled={Buyer?.transactionnumber ? false : true}/>
+                                  }
+                                  
                                   </div>
                                   <div className="">
-                                  <MDBBtn className="mx-2 mt-2" type="submit" disabled={Buyer?.transactionnumber ? false : true}>Upgrade Subscription</MDBBtn>
+                                  { isloading ?
+                                    <MDBBtn className="mx-2 mt-2" type="submit" disabled={isloading}>
+                                    <MDBSpinner role='status'>
+                                    </MDBSpinner>
+                                    </MDBBtn>
+                                    :
+                                    <MDBBtn className="mx-2 mt-2" type="submit" disabled={Buyer?.transactionnumber ? false : true}>Upgrade Subscription</MDBBtn>
+                                  }
                                   </div>
                                   <div className="">
-                                  <MDBBtn className="mx-2 mt-2" disabled={Buyer?.transactionnumber ? false : true} color="danger" type="button" onClick={() => cancelorder(Buyer._id,auth._id, socket.id)}>Cancel Order</MDBBtn>
+                                  { isloading ?
+                                  <MDBBtn 
+                                  className="mx-2 mt-2" 
+                                  disabled={isloading} 
+                                  color="danger" type="button" 
+                                  onClick={() => cancelorder(Buyer._id,auth._id,socket.id)}>
+                                  <MDBSpinner role='status'>
+                                  </MDBSpinner>
+                                  </MDBBtn>
+                                    :
+                                  <MDBBtn 
+                                  className="mx-2 mt-2" 
+                                  disabled={Buyer?.transactionnumber ? false : true} 
+                                  color="danger" type="button" 
+                                  onClick={() => cancelorder(Buyer._id,auth._id,socket.id)}>
+                                  Cancel Order
+                                  </MDBBtn>
+                                  }
+                                  
                                   </div>
                                   </div>
                                   
@@ -550,7 +603,7 @@ const CsrUpgradeSubscriptionManual = () => {
               <MDBCardBody>
                   <MDBRow>
                       <MDBCol>
-                          <ChatPage adminsocket ={auth.userName} socket={socket} buyer={auth.userName} room={auth._id}/>
+                          <ChatPage socket={socket} buyerid={bibiliuserid} buyer={bibiliuser} room={auth._id} isadmin={true} msguser={auth.userName} rcvrid={bibiliuserid} isloading={isloading}/>
                       </MDBCol>
                   </MDBRow>
               </MDBCardBody>

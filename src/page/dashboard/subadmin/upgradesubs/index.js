@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from "react";
-import { MDBContainer, MDBBtn, MDBBadge, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBInput,  MDBCard, MDBCardBody, MDBCardText, MDBIcon} from "mdb-react-ui-kit";
+import { MDBContainer, MDBBtn, MDBBadge, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBInput,  MDBCard, MDBCardBody, MDBCardText, MDBIcon,MDBSpinner} from "mdb-react-ui-kit";
 import Swal from "sweetalert2";
 import { Toast } from "../../../../component/utils";
 import Breadcrumb from "../../../../component/breadcrumb";
@@ -30,6 +30,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
           [color, setColor] = useState(false),
           [image, setImage] = useState(""),
           [filename, setFilename] = useState(""),
+          [isloading, setIsLoading] = useState(false),
           [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
   
@@ -126,6 +127,8 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 Swal.fire({
                     icon: "warning",
                     title: `User ${data.username} canceled the transaction`,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
                 })
                 setPrice("")
                 setSubsType("")
@@ -142,6 +145,8 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 Swal.fire({
                     icon: "success",
                     title: `User ${data.username} is done on this transaction`,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
                 })
                 setPrice("")
                 setSubsType("")
@@ -218,6 +223,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
               confirmButtonText: "Confirm",
               denyButtonText: "Cancel",
           }).then(async result =>{
+            setIsLoading(true)
               if(result.isConfirmed){
                 await UpgradeSubscriptionApi( bibiliuserplayfabid, bibiliuser, substype, price,)
                 .then((item) => {
@@ -243,9 +249,13 @@ const SubAdminUpgradeSubscriptionManual = () => {
                             Swal.fire({
                                 title: "User Upgraded Successfully",
                                 icon: "success",
-                                text: "You Successfully Upgraded a User, Ready for the next user?"
+                                text: "You Successfully Upgraded a User, Ready for the next user?",
+                                allowOutsideClick: false,
+                                allowEscapeKey: false
                             }).then(ok => {
+                                
                             if(ok.isConfirmed){
+                                setIsLoading(false)
                                 setPrice("")
                                 setSubsType("")
                                 setRubyChecked(false);
@@ -256,6 +266,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                 refreshtable();
                                 setBibiliUser("")
                                 setBibiliUserPlayfabid("")
+
                             }
                             })
                                 
@@ -479,16 +490,49 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                   </div>
                                   <div className="d-flex justify-content-end mt-2">
                                   <div className="">
+                                  { isloading ?
+                                    <MDBBtn className="mx-2 mt-2" disabled={isloading} style={{background: "#80C548"}}>
+                                    <MDBSpinner role='status'>
+                                    </MDBSpinner>
+                                    </MDBBtn>
+                                  :
                                   <UploadWidget
-                                  fileName={handleFilename} 
+                                  setfileName={handleFilename} 
                                   setImgUrl={handleImgUrl} 
                                   disabled={Buyer?.transactionnumber ? false : true}/>
+                                  }
+                                  
                                   </div>
                                   <div className="">
-                                  <MDBBtn className="mx-2 mt-2" type="submit" disabled={Buyer?.transactionnumber ? false : true}>Upgrade Subscription</MDBBtn>
+                                  { isloading ?
+                                    <MDBBtn className="mx-2 mt-2" type="submit" disabled={isloading}>
+                                    <MDBSpinner role='status'>
+                                    </MDBSpinner>
+                                    </MDBBtn>
+                                    :
+                                    <MDBBtn className="mx-2 mt-2" type="submit" disabled={Buyer?.transactionnumber ? false : true}>Upgrade Subscription</MDBBtn>
+                                  }
                                   </div>
                                   <div className="">
-                                  <MDBBtn className="mx-2 mt-2" disabled={Buyer?.transactionnumber ? false : true} color="danger" type="button" onClick={() => cancelorder(Buyer._id,auth._id,socket.id)}>Cancel Order</MDBBtn>
+                                  { isloading ?
+                                  <MDBBtn 
+                                  className="mx-2 mt-2" 
+                                  disabled={isloading} 
+                                  color="danger" type="button" 
+                                  onClick={() => cancelorder(Buyer._id,auth._id,socket.id)}>
+                                  <MDBSpinner role='status'>
+                                  </MDBSpinner>
+                                  </MDBBtn>
+                                    :
+                                  <MDBBtn 
+                                  className="mx-2 mt-2" 
+                                  disabled={Buyer?.transactionnumber ? false : true} 
+                                  color="danger" type="button" 
+                                  onClick={() => cancelorder(Buyer._id,auth._id,socket.id)}>
+                                  Cancel Order
+                                  </MDBBtn>
+                                  }
+                                  
                                   </div>
                                   </div>
                                   
@@ -559,7 +603,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
               <MDBCardBody>
                   <MDBRow>
                       <MDBCol>
-                          <ChatPage socket={socket} buyerid={bibiliuserid} buyer={bibiliuser} room={auth._id} isadmin={true}/>
+                          <ChatPage socket={socket} buyerid={bibiliuserid} buyer={bibiliuser} room={auth._id} isadmin={true} msguser={auth.userName} rcvrid={bibiliuserid} isloading={isloading}/>
                       </MDBCol>
                   </MDBRow>
               </MDBCardBody>
