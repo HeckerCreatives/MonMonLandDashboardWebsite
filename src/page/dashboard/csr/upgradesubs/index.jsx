@@ -244,8 +244,10 @@ const CsrUpgradeSubscriptionManual = () => {
                                 clientusername: bibiliuser,
                                 image: image,
                             })
-                        }).then(data =>{
+                        }).then(result => result.json())
+                        .then(data =>{
                             if (data) {
+                                socket.emit("refreshcashierdata", data)
                             Swal.fire({
                                 title: "User Upgraded Successfully",
                                 icon: "success",

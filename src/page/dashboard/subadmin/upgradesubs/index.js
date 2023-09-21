@@ -244,8 +244,11 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                 clientusername: bibiliuser,
                                 image: image,
                             })
-                        }).then(data =>{
+                        }).then(result => result.json())
+                        .then(data =>{
                             if (data) {
+                                socket.emit("refreshcashierdata", data.roomdetails)
+                                
                             Swal.fire({
                                 title: "User Upgraded Successfully",
                                 icon: "success",
@@ -255,6 +258,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                             }).then(ok => {
                                 
                             if(ok.isConfirmed){
+                                setUser(data.roomdetails)
                                 setIsLoading(false)
                                 setPrice("")
                                 setSubsType("")

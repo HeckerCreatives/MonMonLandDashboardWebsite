@@ -58,11 +58,11 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
                 setImage(null)
             }
         })
+
         socket.on("admindetails", (data) => {
             setcashier(data)
         })
         socket.on("donegetlist", () => {
-            console.log(room)
             socket.emit("refreshque", {room: room})
         })
         return () => {
