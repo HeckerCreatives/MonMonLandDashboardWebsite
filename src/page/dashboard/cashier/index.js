@@ -16,13 +16,13 @@ const AvailableCashiers = () => {
             [backup, setBackup] = useState([]),
             [page, setPage] = useState(1),
             [transacno, setTransacNo] = useState(""),
-            // [paymethod, setPayMethod] = useState(""),
+            // [currenturn, setCurrentTurn] = useState(""),
             [q, setQ] = useState(""),
             [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
     const [toggle, settoggle] = useState(false)        
     const toggleShow = () => settoggle(!toggle);
-
+    let currenturn = ""
     const [step2toggle, setstep2toggle] = useState(false)        
     const toggleShow2= () => setstep2toggle(!step2toggle);
 
@@ -98,23 +98,28 @@ const AvailableCashiers = () => {
             } else if (data.message === "refresh queue.") {
                 socket.emit('refreshque')
             } else if (data.message === "turn") {
-                Swal.fire({
-                    icon: "info",
-                    title: "It's Your Turn now",
-                    text: data.data,
-                    confirmButtonText: "Ok",
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,                    
-                }).then(ok => {
-                    if(ok.isConfirmed){
-                        const url = new URL(window.location.href);
-                        const params = new URLSearchParams(url.search);
+                if(currenturn === ""){
+                    currenturn = "turn";
+                    
+                    Swal.fire({
+                        icon: "info",
+                        title: "It's Your Turn now",
+                        text: data.data,
+                        confirmButtonText: "Ok",
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,                    
+                    }).then(ok => {
+                        if(ok.isConfirmed){
+                            const url = new URL(window.location.href);
+                    const params = new URLSearchParams(url.search);
 
-                        const username = params.get('username');
-                        
-                        socket.emit('playerready', {room: cashier.item[0].userId._id, username: username})
-                    }
-                })
+                    const username = params.get('username');
+                    
+                    socket.emit('playerready', {room: cashier.item[0].userId._id, username: username})
+                        }
+                    })
+                }
+                
             }
             return () => {
                 // Clean up your socket event listener when the component unmounts
@@ -124,7 +129,7 @@ const AvailableCashiers = () => {
             
             
           });
-    },[socket, room, cashier])
+    },[ room, cashier, currenturn])
 
     
 

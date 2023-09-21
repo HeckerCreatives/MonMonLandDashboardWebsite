@@ -33,7 +33,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
           [isloading, setIsLoading] = useState(false),
           [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
-  
+    let currenturn = "";
       useEffect(() => {
           let totalPages = Math.floor(history.length / 2);
           if (history.length % 2 > 0) totalPages += 1;
@@ -93,6 +93,9 @@ const SubAdminUpgradeSubscriptionManual = () => {
 
         useEffect(()=>{
             socket.on('playerdetails', (data) => {
+                currenturn = data.username;
+                console.log(currenturn)
+                console.log(data.username)
                 setBibiliUserId(data?.id)
                 setBibiliUser(data?.username)
                 setBibiliUserPlayfabid(data?.playfabid)
@@ -142,22 +145,27 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 setBibiliUserPlayfabid("")
             })
             socket.on("adminrefreshlist", (data) => {
-                Swal.fire({
-                    icon: "success",
-                    title: `User ${data.username} is done on this transaction`,
-                    allowOutsideClick: false,
-                    allowEscapeKey: false
-                })
-                setPrice("")
-                setSubsType("")
-                setRubyChecked(false);
-                setEmeraldChecked(false);
-                setDiamondChecked(false);
-                setBuyer([]);
-                setFilename("")
-                refreshtable();
-                setBibiliUser("")
-                setBibiliUserPlayfabid("")
+                if(currenturn === data.username){
+                    currenturn = "";
+                    Swal.fire({
+                        icon: "success",
+                        title: `User ${data.username} is done on this transaction`,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    })
+                    setPrice("")
+                    setSubsType("")
+                    setRubyChecked(false);
+                    setEmeraldChecked(false);
+                    setDiamondChecked(false);
+                    setBuyer([]);
+                    setFilename("")
+                    refreshtable();
+                    setBibiliUser("")
+                    setBibiliUserPlayfabid("")
+                }
+                
+                
             })
             socket.emit('isonline', socket.id)
 
@@ -168,7 +176,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 // Clean up your socket event listener when the component unmounts
                 socket.off('onlinenga');
             }
-        },[])
+        },[currenturn])
 
       const cancelorder = (id, room, normalUserId) => {
           const stats = "Open"
