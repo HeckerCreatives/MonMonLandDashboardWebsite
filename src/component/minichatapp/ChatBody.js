@@ -93,6 +93,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
   // Cleanup on unmount
   return () => {
     socket.off('kicked');
+    socket.off('canceled');
   };
     
   },[socket])
@@ -112,6 +113,10 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
             }
         })
     })
+     // Cleanup on unmount
+  return () => {
+    socket.off('walasiadmin');
+  };
 },[socket])
 
   return (

@@ -61,6 +61,7 @@ const AvailableCashiers = () => {
         // Clean up your socket event listener when the component unmounts
         socket.off('sendroomlist');
         socket.off('receiveroomlist');
+        socket.off('joinlobby');
     }
     },[socket])
     
@@ -124,6 +125,8 @@ const AvailableCashiers = () => {
             return () => {
                 // Clean up your socket event listener when the component unmounts
                 socket.off('queue_message');
+                socket.off('playerready');
+                socket.off('refreshque');
                 
             }
             

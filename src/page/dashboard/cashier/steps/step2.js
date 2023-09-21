@@ -68,6 +68,8 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
         return () => {
             // Clean up your socket event listener when the component unmounts
             socket.off('badge');
+            socket.off('refreshque');
+            socket.off('admindetails');
             
         }
     },[socket])

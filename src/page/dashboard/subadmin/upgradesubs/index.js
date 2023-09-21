@@ -102,26 +102,10 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 setBuyer(data?.transaction)
             })
 
-            socket.on("ey", () => {
-                Swal.fire({
-                    title: "Transaction Done",
-                    icon: "success",
-                })
-                setPrice("")
-                setSubsType("")
-                setRubyChecked(false);
-                setEmeraldChecked(false);
-                setDiamondChecked(false);
-                setBuyer([]);
-                setFilename("")
-                refreshtable();
-                setBibiliUser("")
-                setBibiliUserPlayfabid("")
-            })
-            socket.on('alis', () => {
-                window.location.reload()
-            })
-
+            return () => {
+                // Clean up your socket event listener when the component unmounts
+                socket.off('playerdetails');
+            }
             
         },[])
         
@@ -174,9 +158,10 @@ const SubAdminUpgradeSubscriptionManual = () => {
             })
             return () => {
                 // Clean up your socket event listener when the component unmounts
-                
+                socket.off('adminrefreshlist');
                 socket.emit('leave')
                 socket.off('onlinenga');
+                socket.off('canceleduse');
             }
         },[currenturn])
 
