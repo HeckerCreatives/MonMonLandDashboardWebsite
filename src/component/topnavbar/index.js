@@ -19,6 +19,7 @@ import ReferralButton from "../../component/dashboard/referral/referral";
 const TopNavbar = ({auth, didToggle, setDidToggle}) => {
     const [visibility, setVisibility] = useState(false),
     [word, setword] = useState(""),
+    [word2, setword2] = useState(""),
     navigate = useNavigate();
     const location = useLocation();
     const [darkMode, setDarkMode] = React.useState(true);
@@ -29,11 +30,13 @@ const TopNavbar = ({auth, didToggle, setDidToggle}) => {
   useEffect(() => {
     const pathParts = location.pathname.split('/');
     const Word = pathParts[3];
+    const Word2 = pathParts[4];
     const splitWords = Word
     .replace(/([a-z])([A-Z])/g, '$1 $2')
     .replace(/\b\w/g, (match) => match.toUpperCase());
     
     setword(splitWords);
+    setword2(Word2);
   }, [location.pathname]);
 
     const handleLogout = () => {
@@ -99,7 +102,11 @@ const TopNavbar = ({auth, didToggle, setDidToggle}) => {
       
       { window.innerWidth > 375 ? 
       <div>
-        {word}
+      
+      {/* <MDBTypography className="m-0">
+       
+      </MDBTypography> */}
+      {word} {word2 ? `> ${word2.charAt(0).toUpperCase() + word2.slice(1)}`: "" }
       </div>
       :
       null  

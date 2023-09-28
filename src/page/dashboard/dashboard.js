@@ -100,7 +100,20 @@ const Dashboard = () => {
           name: "Payout",
           path: "",
           icon: "money-bill-alt",
-          children: [],
+          children: [
+            {
+              name: "Request",
+              path: "/dashboard/Administrator/payout/request",
+            },                
+            {
+              name: "Process",
+              path: "/dashboard/Administrator/payout/process",
+            },
+            {
+              name: "Done",
+              path: "/dashboard/Administrator/payout/done",
+            },
+          ],
         },
         {
           name: "Tools",
@@ -233,7 +246,20 @@ const Dashboard = () => {
           name: "Payout",
           path: "",
           icon: "money-bill-alt",
-          children: [],
+          children: [
+            {
+              name: "Request",
+              path: "/dashboard/SubAdministrator/payout/request",
+            },                
+            {
+              name: "Process",
+              path: "/dashboard/SubAdministrator/payout/process",
+            },
+            {
+              name: "Done",
+              path: "/dashboard/SubAdministrator/payout/done",
+            },
+          ],
         },
         {
           name: "Tools",
@@ -339,7 +365,20 @@ const Dashboard = () => {
         name: "Payout",
         path: "",
         icon: "money-bill-alt",
-        children: [],
+        children: [
+          {
+            name: "Request",
+            path: "/dashboard/Agent/payout/request",
+          },                
+          {
+            name: "Process",
+            path: "/dashboard/Agent/payout/process",
+          },
+          {
+            name: "Done",
+            path: "/dashboard/Agent/payout/done",
+          },
+        ],
       },
       {
         name: "Tools",
@@ -410,7 +449,7 @@ const Dashboard = () => {
     return(
       <>
         {auth ? 
-          <MDBContainer fluid className="p-0">
+        <MDBContainer fluid className="p-0">
         
         <Sidebarnav
           links={link}

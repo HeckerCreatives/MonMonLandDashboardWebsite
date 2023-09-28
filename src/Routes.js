@@ -43,6 +43,15 @@ import SubAdminPaymentHistory from "./page/dashboard/subadmin/paymenthistory";
 import CsrPaymentHistory from "./page/dashboard/csr/paymenthistory";
 import SuccessPage from "./page/coinbase/success";
 import CancelPage from "./page/coinbase/cancel";
+import AdminPayoutProcess from "./page/dashboard/payout/process";
+import AdminPayoutDone from "./page/dashboard/payout/done";
+import AdminPayoutRequest from "./page/dashboard/payout/request"
+import SubAdminPayoutRequest from "./page/dashboard/subadmin/payout/request";
+import SubAdminPayoutProcess from "./page/dashboard/subadmin/payout/process";
+import SubAdminPayoutDone from "./page/dashboard/subadmin/payout/done";
+import CsrPayoutRequest from "./page/dashboard/csr/payout/request";
+import CsrPayoutProcess from "./page/dashboard/csr/payout/process";
+import CsrPayoutDone from "./page/dashboard/csr/payout/done";
 const Routers = () => {
   return (
     <Routes>
@@ -71,6 +80,12 @@ const Routers = () => {
         
         <Route path="upgradesubscription">
         <Route path="manual" element={<UpgradeSubscriptionManual/>}/>
+        </Route>
+
+        <Route path="payout">
+        <Route path="request" element={<AdminPayoutRequest/>}/>
+        <Route path="process" element={<AdminPayoutProcess/>}/>
+        <Route path="done" element={<AdminPayoutDone/>}/>
         </Route>
 
         <Route path="settings">
@@ -106,6 +121,11 @@ const Routers = () => {
         </Route>
         
         <Route path="upgradesubscription" element={<SubAdminUpgradeSubscriptionManual/>}/>
+        <Route path="payout">
+        <Route path="request" element={<SubAdminPayoutRequest/>}/>
+        <Route path="process" element={<SubAdminPayoutProcess/>}/>
+        <Route path="done" element={<SubAdminPayoutDone/>}/>
+        </Route>
         <Route path="paymenthistory" element={<SubAdminPaymentHistory/>}/>
         <Route path="settings">
           <Route path="updateprogressbar" element={<UpdateProgressBar/>}/>
@@ -139,6 +159,11 @@ const Routers = () => {
           <Route path="updategames" element={<Games/>}/>
         </Route>
         <Route path="upgradesubscription" element={<CsrUpgradeSubscriptionManual/>}/>
+        <Route path="payout">
+        <Route path="request" element={<CsrPayoutRequest/>}/>
+        <Route path="process" element={<CsrPayoutProcess/>}/>
+        <Route path="done" element={<CsrPayoutDone/>}/>
+        </Route>
         <Route path="paymenthistory" element={<CsrPaymentHistory/>}/>
         </Route>
 
