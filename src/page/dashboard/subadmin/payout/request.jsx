@@ -7,12 +7,18 @@ const SubAdminPayoutRequest = () => {
     const [page, setPage] = useState(1),
     [total, setTotal] = useState(0),
     [request, setRequest] = useState([]);
+    const [selectedColor, setSelectedColor] = useState('all'); // Initialize with an empty string
+
+    const filteredRequest = request.filter((data) => {
+        const rowColorClass = getRowColorClass(data.createdAt);
+        return selectedColor === 'all' || rowColorClass === selectedColor;
+    });
 
     useEffect(() => {
-        let totalPages = Math.floor(request.length / 5);
-        if (request.length % 5 > 0) totalPages += 1;
+        let totalPages = Math.floor(filteredRequest.length / 5);
+        if (filteredRequest.length % 5 > 0) totalPages += 1;
         setTotal(totalPages);
-    }, [request]);
+    }, [filteredRequest]);
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}payout/adminfind`, {
@@ -75,6 +81,27 @@ const SubAdminPayoutRequest = () => {
         })
     }
 
+    // Define a function to calculate the time difference in hours
+    function calculateTimeDifference(createdAt) {
+        const createdAtDate = new Date(createdAt);
+        const currentDate = new Date();
+        const timeDifferenceInMilliseconds = currentDate - createdAtDate;
+        const timeDifferenceInHours = timeDifferenceInMilliseconds / (1000 * 60 * 60); // Convert milliseconds to hours
+        return timeDifferenceInHours;
+    }
+
+    // Define a function to determine the CSS class based on the time difference
+    function getRowColorClass(createdAt) {
+        const timeDifference = calculateTimeDifference(createdAt);
+        if (timeDifference <= 24) {
+        return 'success';
+        } else if (timeDifference <= 32) {
+        return 'warning';
+        } else {
+        return 'danger';
+        }
+    }
+
     return (
         <MDBContainer fluid>
         <MDBRow className="mt-5">
@@ -84,10 +111,15 @@ const SubAdminPayoutRequest = () => {
                 <MDBTypography className="fw-bold m-0">Filter:</MDBTypography>
             </div>
             <div>
-            <select name="example">
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
+            <select
+                name="colorFilter"
+                value={selectedColor}
+                onChange={(e) => setSelectedColor(e.target.value)}
+            >
+                <option value="all">All</option>
+                <option value="success">Green</option>
+                <option value="warning">Orange</option>
+                <option value="danger">Red</option>
             </select>
             </div> 
             </MDBCol>
@@ -106,9 +138,9 @@ const SubAdminPayoutRequest = () => {
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody>
-                { request.length !== 0 ?
-                    request.map((data,i) => (
-                    <tr key={`request-${i}`}>
+                { filteredRequest.length !== 0 ?
+                    filteredRequest.map((data,i) => (
+                    <tr key={`request-${i}`} className={`bg-${getRowColorClass(data.createdAt)}`}>
                         <td>{data.id}</td>
                         <td>{data.username}</td>
                         <td>{data.amount}</td>

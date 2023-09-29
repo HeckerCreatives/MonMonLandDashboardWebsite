@@ -76,6 +76,27 @@ const CsrPayoutProcess = () => {
         })
     }
 
+    // Define a function to calculate the time difference in hours
+    function calculateTimeDifference(createdAt) {
+        const createdAtDate = new Date(createdAt);
+        const currentDate = new Date();
+        const timeDifferenceInMilliseconds = currentDate - createdAtDate;
+        const timeDifferenceInHours = timeDifferenceInMilliseconds / (1000 * 60 * 60); // Convert milliseconds to hours
+        return timeDifferenceInHours;
+    }
+
+    // Define a function to determine the CSS class based on the time difference
+    function getRowColorClass(createdAt) {
+        const timeDifference = calculateTimeDifference(createdAt);
+        if (timeDifference <= 24) {
+        return 'success';
+        } else if (timeDifference <= 32) {
+        return 'warning';
+        } else {
+        return 'danger';
+        }
+    }
+
     return (
         <MDBContainer fluid>
         <MDBRow className="mt-5">
@@ -109,7 +130,7 @@ const CsrPayoutProcess = () => {
                 <MDBTableBody>
                 { processed.length !== 0 ?
                     processed.map((data,i) => (
-                    <tr key={`processed-${i}`}>
+                    <tr key={`processed-${i}`} className={`bg-${getRowColorClass(data.createdAt)}`}>
                         <td>{data.id}</td>
                         <td>{data.username}</td>
                         <td>{data.amount}</td>
