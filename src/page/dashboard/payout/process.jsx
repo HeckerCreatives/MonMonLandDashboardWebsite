@@ -2,17 +2,25 @@ import { MDBContainer, MDBTable, MDBTableHead, MDBTableBody, MDBBtn,MDBRow, MDBC
 import React, {useState, useEffect} from "react";
 import PaginationPager from "../../../component/pagination";
 import Swal from "sweetalert2";
+import { Toast } from "../../../component/utils"
 const AdminPayoutProcess = () => {
     const auth = JSON.parse(localStorage.getItem("auth"));
     const [page, setPage] = useState(1),
     [total, setTotal] = useState(0),
     [processed, setProcessed] = useState([]);
+    const [selectedColor, setSelectedColor] = useState('all'); // Initialize with an empty string
+
+    const filteredRequest = processed.filter((data) => {
+        const rowColorClass = getRowColorClass(data.createdAt);
+        return selectedColor === 'all' || rowColorClass === selectedColor;
+    });
+      
 
     useEffect(() => {
-        let totalPages = Math.floor(processed.length / 5);
-        if (processed.length % 5 > 0) totalPages += 1;
+        let totalPages = Math.floor(filteredRequest.length / 5);
+        if (filteredRequest.length % 5 > 0) totalPages += 1;
         setTotal(totalPages);
-    }, [processed]);
+    }, [filteredRequest]);
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}payout/adminfind`, {
@@ -74,6 +82,7 @@ const AdminPayoutProcess = () => {
             }
         })
     }
+
     // Define a function to calculate the time difference in hours
     function calculateTimeDifference(createdAt) {
         const createdAtDate = new Date(createdAt);
@@ -94,6 +103,18 @@ const AdminPayoutProcess = () => {
         return 'danger';
         }
     }
+
+    const copywallet = (text) => {
+        navigator.clipboard
+        .writeText(text)
+        .then(
+            Toast.fire({
+                icon: "success",
+                text: "Copied Successfully"
+            })
+        )
+    }
+
     return (
         <MDBContainer fluid>
         <MDBRow className="mt-5">
@@ -102,15 +123,20 @@ const AdminPayoutProcess = () => {
                 <MDBTypography className="fw-bold m-0">Filter:</MDBTypography>
             </div>
             <div>
-            <select name="example">
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
+            <select
+                name="colorFilter"
+                value={selectedColor}
+                onChange={(e) => setSelectedColor(e.target.value)}
+            >
+                <option value="all">All</option>
+                <option value="success">Green</option>
+                <option value="warning">Orange</option>
+                <option value="danger">Red</option>
             </select>
             </div>
             </MDBCol>
         </MDBRow>
-            <MDBTable responsive className="mt-3">
+            <MDBTable responsive className="mt-3 text-center">
                 <MDBTableHead style={{background: "#EDCAB4"}}>
                     <tr>
                     <th scope='col'>ID</th>
@@ -124,9 +150,9 @@ const AdminPayoutProcess = () => {
                     <th scope='col'>Action</th>
                     </tr>
                 </MDBTableHead>
-                <MDBTableBody className="text-center">
-                { processed.length !== 0 ?
-                    processed.map((data,i) => (
+                <MDBTableBody className="text-white">
+                { filteredRequest.length !== 0 ?
+                    filteredRequest.map((data,i) => (
                     <tr key={`processed-${i}`} className={`bg-${getRowColorClass(data.createdAt)}`}>
                         <td>{data.id}</td>
                         <td>{data.username}</td>
@@ -137,7 +163,8 @@ const AdminPayoutProcess = () => {
                         <td>{data.paymentmethod}</td>
                         <td>{data.admin}</td>
                         <td>
-                            <MDBBtn onClick={() => handleDone(data._id)}>Done</MDBBtn>
+                            <MDBBtn className="mx-1" onClick={() => handleDone(data._id)}>Done</MDBBtn>
+                            <MDBBtn className="mx-1" onClick={() => copywallet(data.walletaddress)}>Copy Wallet</MDBBtn>
                         </td>
                     </tr>
                     ))

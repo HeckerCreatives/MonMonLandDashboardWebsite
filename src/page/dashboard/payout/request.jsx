@@ -159,7 +159,7 @@ const AdminPayoutRequest = () => {
             </div>
             </MDBCol>
         </MDBRow>
-            <MDBTable responsive className="mt-3">
+            <MDBTable responsive className="mt-3 text-center">
                 <MDBTableHead style={{background: "#EDCAB4"}}>
                     <tr>
                     <th scope='col'>ID</th>
@@ -172,7 +172,7 @@ const AdminPayoutRequest = () => {
                     <th scope='col'>Action</th>
                     </tr>
                 </MDBTableHead>
-                <MDBTableBody className="text-center">
+                <MDBTableBody className="text-white">
                 { filteredRequest.length !== 0 ?
                     filteredRequest.map((data,i) => (
                     <tr key={`request-${i}`} className={`bg-${getRowColorClass(data.createdAt)}`}>

@@ -137,7 +137,7 @@ const SubAdminPayoutRequest = () => {
                     <th scope='col'>Action</th>
                     </tr>
                 </MDBTableHead>
-                <MDBTableBody>
+                <MDBTableBody className="text-white">
                 { filteredRequest.length !== 0 ?
                     filteredRequest.map((data,i) => (
                     <tr key={`request-${i}`} className={`bg-${getRowColorClass(data.createdAt)}`}>

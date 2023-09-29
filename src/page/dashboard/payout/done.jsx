@@ -1,11 +1,12 @@
-import { MDBContainer, MDBTable, MDBTableHead, MDBTableBody, MDBBtn,MDBRow, MDBCol, MDBTypography } from "mdb-react-ui-kit";
+import { MDBContainer, MDBTable, MDBTableHead, MDBTableBody, MDBBtn,MDBRow, MDBCol, MDBTypography, MDBInput } from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
 import PaginationPager from "../../../component/pagination";
 import Swal from "sweetalert2";
 const AdminPayoutDone = () => {
     const [page, setPage] = useState(1),
     [total, setTotal] = useState(0),
-    [done, setDone] = useState([]);
+    [done, setDone] = useState([]),
+    [backup, setBackup] = useState([]);
 
     useEffect(() => {
         let totalPages = Math.floor(done.length / 5);
@@ -26,9 +27,10 @@ const AdminPayoutDone = () => {
         .then(data => {
             if(data.message === "success"){
                 setDone(data.data)
+                setBackup(data.data)
             }
         })
-    })
+    },[])
 
     const handleReprocessed = (id) => {
         Swal.fire({
@@ -71,19 +73,27 @@ const AdminPayoutDone = () => {
         })
     }
 
+    const handleSearch = e => {
+        const str = e.target.value;
+        if (str) {
+          const regex = new RegExp(str, "i"); 
+          setDone(
+            backup.filter(e =>
+              regex.test(e.username)
+            )
+          );
+        } else {
+          setDone(backup);
+        }
+    };
+      
     return (
         <MDBContainer fluid>
         <MDBRow className="mt-5">
             <MDBCol md={6}>
             <div>
-                <MDBTypography className="fw-bold m-0">Filter:</MDBTypography>
-            </div>
-            <div>
-            <select name="example">
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
-            </select>
+                <MDBTypography className="fw-bold m-0">Search Username:</MDBTypography>
+                <MDBInput type="search" size="sm" onChange={handleSearch}/>
             </div>
             </MDBCol>
         </MDBRow>

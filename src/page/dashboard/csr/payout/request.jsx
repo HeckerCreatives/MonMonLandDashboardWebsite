@@ -138,9 +138,9 @@ const CsrPayoutRequest = () => {
                         <th scope='col'>Action</th>
                     </tr>
                 </MDBTableHead>
-                <MDBTableBody>
-                { request.length !== 0 ?
-                    request.map((data,i) => (
+                <MDBTableBody className="text-white">
+                { filteredRequest.length > 0 ?
+                    filteredRequest.map((data,i) => (
                     <tr key={`request-${i}`} className={`bg-${getRowColorClass(data.createdAt)}`}>
                         <td>{data.id}</td>
                         <td>{data.username}</td>
