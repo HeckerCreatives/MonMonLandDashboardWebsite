@@ -141,7 +141,7 @@ const SubAdminPaymentHistory = () => {
                 Clients Username: &nbsp;{view.clientusername}
                 </MDBCardText>
                 <div>
-                Receipt: &nbsp; {view.image ? <img src={view.image} alt="resibo" style={{width: "100px", height: "100px"}}/>  : 
+                Receipt: &nbsp; {view.image ? <a href={view.image} target="_blank" rel="noreferrer"><img src={view.image} alt="resibo" style={{width: "100px", height: "100px"}}/>  </a> : 
                 "no reciept attached"}
                 </div>
             </MDBCardBody>

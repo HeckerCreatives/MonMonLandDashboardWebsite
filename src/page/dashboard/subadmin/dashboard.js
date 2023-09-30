@@ -22,7 +22,11 @@ const SubAdminDashboard = () => {
     const [totaldiamond, setTotalDiamond] = useState([]);
     const [totalpaidusers, setTotalPaidUsers] = useState([]);
     const navigate = useNavigate()
-    
+
+    const [done, setDone] = useState([])
+    const [processed, setProcessed] = useState([]);
+    const [pendings, setPendings] = useState("");
+    const [approved, setApproved] = useState("");
   useEffect(() => {
       if (auth) {
         if (auth.roleId.display_name !== "SubAdministrator") {
@@ -32,6 +36,55 @@ const SubAdminDashboard = () => {
       }
     }, [auth, navigate]);
 
+    useEffect(() => {
+      fetch(`${process.env.REACT_APP_API_URL}payout/agentfind`, {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+              status: "done",
+              admin: auth.userName
+          })
+      }).then(result => result.json())
+      .then(data => {
+          if(data.message === "success"){
+              setDone(data.data)
+          }
+      })
+
+      fetch(`${process.env.REACT_APP_API_URL}payout/agentfind`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            status: "process",
+            admin: auth.userName
+        })
+    }).then(result => result.json())
+    .then(data => {
+        if(data.message === "success"){
+          setProcessed(data.data)
+        }
+    })
+    },[])
+
+    useEffect(()=>{
+      let pending = 0;
+      let approve = 0;
+  
+      for (let i = 0; i < processed.length; i++) {
+        pending += processed[i].amount;
+      }
+  
+      for (let i = 0; i < done.length; i++) {
+        approve += done[i].amount;
+      }
+  
+      setPendings(pending)
+      setApproved(approve)
+    },[processed, done])
 
   useEffect(()=> {
     fetch(`${process.env.REACT_APP_API_URL}user/find`)
@@ -42,7 +95,8 @@ const SubAdminDashboard = () => {
       setUsers(data)
       setActiveUsers(active)
       setInActiveUsers(inactive)        
-    })    
+    })
+        
   },[]) 
 
   useEffect(()=>{
@@ -105,16 +159,16 @@ const SubAdminDashboard = () => {
               colSpan="4"
               icon={`dollar-sign`}
               thtitle={`Total Pay-in`}
-              cardtoptext={totalpaidusers}
+              cardtoptext={totalpaidusers.toLocaleString()}
               txtsup={`USDT`} 
               td1={true}
-              td1txttop={totalruby}
+              td1txttop={totalruby.toLocaleString()}
               td1txtbot={`Ruby`} 
               td2={true}
-              td2txttop={totalemerald}
+              td2txttop={totalemerald.toLocaleString()}
               td2txtbot={`Emerald`} 
               td3={true}
-              td3txttop={totaldiamond}
+              td3txttop={totaldiamond.toLocaleString()}
               td3txtbot={`Diamond`}
               />
           </MDBCol>
@@ -123,17 +177,14 @@ const SubAdminDashboard = () => {
               colSpan="4"
               icon={`dollar-sign`}
               thtitle={`Total Pay-out`}
-              cardtoptext={`1050`}
+              cardtoptext={approved.toLocaleString()}
               txtsup={`USDT`}  
               td1={true}
-              td1txttop={`300`}
+              td1txttop={pendings.toLocaleString()}
               td1txtbot={`Pending`} 
               td2={true}
-              td2txttop={`350`}
-              td2txtbot={`Approved`} 
-              td3={true}
-              td3txttop={`400`}
-              td3txtbot={`Reject`}
+              td2txttop={approved.toLocaleString()}
+              td2txtbot={`Approved`}
               />
           </MDBCol>
           
@@ -143,34 +194,34 @@ const SubAdminDashboard = () => {
             <DashCard 
               colSpan="4"
               icon={`user`} 
-              thtitle={`Total User`} 
-              cardtoptext={paidusers ? paidusers.length : 0}
-              td1={true}
-              td1txttop={`0`}
-              td1txtbot={`Pearl`} 
-              td2={true}
-              td2txttop={ruby ? ruby.length : 0}
-              td2txtbot={`Ruby`} 
-              td3={true}
-              td3txttop={emerald ? emerald.length : 0}
-              td3txtbot={`Emerald`}
-              td4={true}
-              td4txttop={diamond ? diamond.length : 0}
-              td4txtbot={`Diamond`}
+              // thtitle={`Total User`} 
+              cardtoptext={"Coming Soon"}
+              // td1={true}
+              // td1txttop={`0`}
+              // td1txtbot={`Pearl`} 
+              // td2={true}
+              // td2txttop={ruby ? ruby.length : 0}
+              // td2txtbot={`Ruby`} 
+              // td3={true}
+              // td3txttop={emerald ? emerald.length : 0}
+              // td3txtbot={`Emerald`}
+              // td4={true}
+              // td4txttop={diamond ? diamond.length : 0}
+              // td4txtbot={`Diamond`}
               />
           </MDBCol>
           <MDBCol className="my-2">
           <DashCard 
               colSpan="4"
-              icon={`user`}
-              thtitle={`Total Member`}
-              cardtoptext={users ? users.length : 0}
-              td1={true}
-              td1txttop={activeusers ? activeusers.length : 0}
-              td1txtbot={`Active`} 
-              td2={true}
-              td2txttop={inactiveusers ? inactiveusers.length : 0}
-              td2txtbot={`Inactive`}
+              icon={`shopping-bag`}
+              // thtitle={`Total Member`}
+              cardtoptext={"Merchandise Soon"}
+              // td1={true}
+              // td1txttop={activeusers ? activeusers.length : 0}
+              // td1txtbot={`Active`} 
+              // td2={true}
+              // td2txttop={inactiveusers ? inactiveusers.length : 0}
+              // td2txtbot={`Inactive`}
               />
           </MDBCol>
         </MDBRow>

@@ -1,5 +1,11 @@
 import React, {useEffect, useState } from "react";
-import { MDBContainer, MDBBtn, MDBBadge, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBInput,  MDBCard, MDBCardBody, MDBCardText, MDBIcon,MDBSpinner} from "mdb-react-ui-kit";
+import { MDBContainer, MDBBtn, MDBBadge, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBInput,  MDBCard, MDBCardBody, MDBCardText, MDBIcon,MDBSpinner,MDBModal,
+    MDBModalDialog,
+    MDBModalContent,
+    MDBModalHeader,
+    MDBModalTitle,
+    MDBModalBody,
+    MDBModalFooter,} from "mdb-react-ui-kit";
 import Swal from "sweetalert2";
 import { Toast } from "../../../../component/utils";
 import Breadcrumb from "../../../../component/breadcrumb";
@@ -29,10 +35,14 @@ const SubAdminUpgradeSubscriptionManual = () => {
     const [page, setPage] = useState(1),
           [color, setColor] = useState(false),
           [image, setImage] = useState(""),
+          [receipt, setReceipt] = useState(""),
           [filename, setFilename] = useState(""),
           [isloading, setIsLoading] = useState(false),
           [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
+    const [basicModal, setBasicModal] = useState(false);
+
+    const toggleShow = () => setBasicModal(!basicModal);
     let currenturn = "";
       useEffect(() => {
           let totalPages = Math.floor(history.length / 2);
@@ -579,8 +589,13 @@ const SubAdminUpgradeSubscriptionManual = () => {
                       {data.clientusername}
                   </td>
                   <td>
-                  {data.image ? <img src={data.image} alt="resibo" className="img-fluid"/>  : 
-                   "no receipt attached"}
+                  <MDBBtn 
+                  onClick={() => {
+                    setReceipt(data.image)
+                    toggleShow()
+                  }}>
+                    View Receipt
+                  </MDBBtn>
                   </td>                
                   </tr>
                   ))}
@@ -609,6 +624,27 @@ const SubAdminUpgradeSubscriptionManual = () => {
           </MDBCard>
               </MDBCol>
           </MDBRow> 
+
+          <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1' staticBackdrop closeOnEsc="false">
+        <MDBModalDialog>
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>Receipt Image</MDBModalTitle>
+              {/* <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn> */}
+            </MDBModalHeader>
+            <MDBModalBody>
+            {receipt ? <img src={receipt} alt="" className="img-fluid"/>  : 
+            "no receipt attached"}
+            </MDBModalBody>
+
+            <MDBModalFooter>
+              <MDBBtn color='secondary' onClick={toggleShow}>
+                Close
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
           </>
       )
 }
