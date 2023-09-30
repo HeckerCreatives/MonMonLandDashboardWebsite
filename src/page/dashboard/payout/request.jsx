@@ -159,7 +159,7 @@ const AdminPayoutRequest = () => {
             </div>
             </MDBCol>
         </MDBRow>
-            <MDBTable responsive className="mt-3 text-center">
+            <MDBTable align="middle" responsive className="mt-3 text-center">
                 <MDBTableHead style={{background: "#EDCAB4"}}>
                     <tr>
                     <th scope='col'>ID</th>

@@ -3,10 +3,13 @@ import React, {useState, useEffect} from "react";
 import PaginationPager from "../../../component/pagination";
 import Swal from "sweetalert2";
 import { Toast } from "../../../component/utils"
+import UploadWidget from "../../../component/uploadwidget/uploadwidet";
 const AdminPayoutProcess = () => {
     const auth = JSON.parse(localStorage.getItem("auth"));
     const [page, setPage] = useState(1),
     [total, setTotal] = useState(0),
+    [image, setImage] = useState(""),
+    [filename, setFilename] = useState(""),
     [processed, setProcessed] = useState([]);
     const [selectedColor, setSelectedColor] = useState('all'); // Initialize with an empty string
 
@@ -14,7 +17,7 @@ const AdminPayoutProcess = () => {
         const rowColorClass = getRowColorClass(data.createdAt);
         return selectedColor === 'all' || rowColorClass === selectedColor;
     });
-      
+    const [imageStatus, setImageStatus] = useState(false)
 
     useEffect(() => {
         let totalPages = Math.floor(filteredRequest.length / 5);
@@ -55,7 +58,8 @@ const AdminPayoutProcess = () => {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        admin: auth.userName
+                        admin: auth.userName,
+                        receipt: image,
                     })
                 }).then(result => result.json())
                 .then(data => {
@@ -115,6 +119,21 @@ const AdminPayoutProcess = () => {
         )
     }
 
+    const handleImgUrl = (url,rowIndex) => {
+    // Use the uploaded image URL in the parent component or pass it to another component
+    // When an image is uploaded for a specific row, update the imageStatus state
+    setImageStatus(prevStatus => ({
+        ...prevStatus,
+        [rowIndex]: true, // Set the upload status for the specific row to true
+      }));
+    setImage(url);
+    };
+
+    const handleFilename = (url) => {
+    // Use the uploaded image URL in the parent component or pass it to another component
+    setFilename(url);
+    };
+
     return (
         <MDBContainer fluid>
         <MDBRow className="mt-5">
@@ -136,7 +155,7 @@ const AdminPayoutProcess = () => {
             </div>
             </MDBCol>
         </MDBRow>
-            <MDBTable responsive className="mt-3 text-center">
+            <MDBTable align="middle" responsive className="mt-3 text-center">
                 <MDBTableHead style={{background: "#EDCAB4"}}>
                     <tr>
                     <th scope='col'>ID</th>
@@ -163,8 +182,12 @@ const AdminPayoutProcess = () => {
                         <td>{data.paymentmethod}</td>
                         <td>{data.admin}</td>
                         <td>
-                            <MDBBtn className="mx-1" onClick={() => handleDone(data._id)}>Done</MDBBtn>
+                            <MDBBtn disabled={!imageStatus[i]} className="mx-1" onClick={() => handleDone(data._id)}>Done</MDBBtn>
                             <MDBBtn className="mx-1" onClick={() => copywallet(data.walletaddress)}>Copy Wallet</MDBBtn>
+                            <UploadWidget
+                            setfileName={handleFilename} 
+                            setImgUrl={(url) => handleImgUrl(url, i)}
+                            />
                         </td>
                     </tr>
                     ))

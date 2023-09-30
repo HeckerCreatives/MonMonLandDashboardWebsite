@@ -1,4 +1,10 @@
-import { MDBContainer, MDBTable, MDBTableHead, MDBTableBody, MDBBtn,MDBRow, MDBCol, MDBTypography, MDBInput } from "mdb-react-ui-kit";
+import { MDBContainer, MDBTable, MDBTableHead, MDBTableBody, MDBBtn,MDBRow, MDBCol, MDBTypography, MDBInput,MDBModal,
+    MDBModalDialog,
+    MDBModalContent,
+    MDBModalHeader,
+    MDBModalTitle,
+    MDBModalBody,
+    MDBModalFooter, } from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
 import PaginationPager from "../../../../component/pagination";
 import Swal from "sweetalert2";
@@ -7,8 +13,11 @@ const SubAdminPayoutDone = () => {
     const [page, setPage] = useState(1),
     [total, setTotal] = useState(0),
     [done, setDone] = useState([]),
+    [receipt, setReceipt] = useState(""),
     [backup, setBackup] = useState([]);
+    const [basicModal, setBasicModal] = useState(false);
 
+    const toggleShow = () => setBasicModal(!basicModal);
     useEffect(() => {
         let totalPages = Math.floor(done.length / 5);
         if (done.length % 5 > 0) totalPages += 1;
@@ -90,6 +99,7 @@ const SubAdminPayoutDone = () => {
     };
 
     return (
+        <>
         <MDBContainer fluid>
         <MDBRow className="mt-5">
             <MDBCol md={6}>
@@ -99,7 +109,7 @@ const SubAdminPayoutDone = () => {
             </div>
             </MDBCol>
         </MDBRow>
-            <MDBTable responsive className="mt-3 text-center">
+            <MDBTable align="middle" responsive className="mt-3 text-center">
                 <MDBTableHead style={{background: "#EDCAB4"}}>
                     <tr>
                         <th scope='col'>ID</th>
@@ -110,6 +120,7 @@ const SubAdminPayoutDone = () => {
                         <th scope='col'>Network</th>
                         <th scope='col'>Payment Method</th>
                         <th scope='col'>Admin</th>
+                        <th scope='col'>Receipt</th>
                         <th scope='col'>Action</th>
                     </tr>
                 </MDBTableHead>
@@ -126,13 +137,21 @@ const SubAdminPayoutDone = () => {
                         <td>{data.paymentmethod}</td>
                         <td>{data.admin}</td>
                         <td>
+                        <MDBBtn 
+                        onClick={() => {
+                        toggleShow()
+                        setReceipt(data.receipt)
+                        }}
+                        >View Receipt</MDBBtn>
+                        </td>
+                        <td>
                             <MDBBtn onClick={() => handleReprocessed(data._id)}>Re-Processed</MDBBtn>
                         </td>
                     </tr>
                     ))
                 :
                     <tr>
-                        <td colSpan={9}>
+                        <td colSpan={10}>
                             No Data
                         </td>
                     </tr>
@@ -143,6 +162,27 @@ const SubAdminPayoutDone = () => {
                 total={total} page={page} setPage={setPage}
             />
         </MDBContainer>
+
+        <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1' staticBackdrop closeOnEsc="false">
+        <MDBModalDialog>
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>Receipt Image</MDBModalTitle>
+              {/* <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn> */}
+            </MDBModalHeader>
+            <MDBModalBody>
+            <img src={receipt} alt="" className="img-fluid"/>
+            </MDBModalBody>
+
+            <MDBModalFooter>
+              <MDBBtn color='secondary' onClick={toggleShow}>
+                Close
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+      </>
     )
 }
 
