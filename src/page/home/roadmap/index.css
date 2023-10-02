@@ -250,7 +250,7 @@
     
     .seemorebtn {
         /* height: 100px; */
-        width: 150px;
+        width: 140px;
     }
 
     .itemcolumn {
@@ -282,11 +282,11 @@
     }
 
     .itemposition {
-        transform: translateX(39%);
+        transform: translateX(37%);
     }
     
     .itempositionright {
-        transform: translateX(39%) scaleX(-1);
+        transform: translateX(37%) scaleX(-1);
         /* transform: ; */
         
     }

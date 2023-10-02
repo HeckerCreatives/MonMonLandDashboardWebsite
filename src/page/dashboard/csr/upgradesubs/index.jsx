@@ -418,7 +418,7 @@ const CsrUpgradeSubscriptionManual = () => {
                                   <MDBCardText className="text-mute">Payment Gateway : {user.paymentmethod}</MDBCardText>
                                   </div>                            
                                   <div className="offset-2 col-lg-10">
-                                  <MDBCardText className="text-mute">Account Number : {user.paymentdetail}</MDBCardText>
+                                  <MDBCardText className="text-mute">Wallet Adress : {user.paymentdetail}</MDBCardText>
                                   </div>                 
                               </MDBCol>
                           </MDBRow>

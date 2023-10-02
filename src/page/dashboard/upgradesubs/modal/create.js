@@ -56,7 +56,7 @@ const CreateCashier = () => {
           userId: userId.value,
           paymentmethod: paymentmethod.value,
           paymentdetail: paymentdetail.value,
-          paymentlimit: paymentlimit.value,
+          // paymentlimit: paymentlimit.value,
       })
     }).then(result => result.json())
     .then(data => {
@@ -124,13 +124,13 @@ return (
                     ))}
                     </select> 
                     <MDBCardText className="text-color mt-3 mb-0 fw-bold">
-                    Enter Payment Detail:
+                    Enter Wallet Address:
                     </MDBCardText>
                     <input className="square bordercolor rounded mb-2 p-1" name="paymentdetail" style={{width:'100%'}} required></input> 
-                    <MDBCardText className="text-color mt-3 mb-0 fw-bold">
+                    {/* <MDBCardText className="text-color mt-3 mb-0 fw-bold">
                     Payment Limit :
                     </MDBCardText>
-                    <input className="square bordercolor rounded mb-2 p-1" name="paymentlimit" style={{width:'100%'}} required></input>  
+                    <input className="square bordercolor rounded mb-2 p-1" name="paymentlimit" style={{width:'100%'}} required></input>   */}
                 </MDBCol>
                 </MDBRow>
                 </MDBCardBody>                

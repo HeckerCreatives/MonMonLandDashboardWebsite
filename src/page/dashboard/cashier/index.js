@@ -261,7 +261,7 @@ const AvailableCashiers = () => {
                     <tr >
                     <th className="fw-bold" scope='col'>Admin</th>
                     <th className="fw-bold" scope='col'>Payment Method</th>
-                    <th className="fw-bold" scope='col'>Payment Limit</th>
+                    {/* <th className="fw-bold" scope='col'>Payment Limit</th> */}
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody className="text-center">                
@@ -279,7 +279,7 @@ const AvailableCashiers = () => {
                 <span>{game.item[0].paymentdetail}</span>
                 </div>
                 </td>
-                <td>{game.item[0].paymentcollected ? game.item[0].paymentcollected  : 0}/{game.item[0].paymentlimit}</td>                
+                {/* <td>{game.item[0].paymentcollected ? game.item[0].paymentcollected  : 0}/{game.item[0].paymentlimit}</td>                 */}
                 </tr>
                 ))}
                 </>

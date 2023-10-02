@@ -120,7 +120,7 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
                                 <MDBCardText className="text-mute">Payment Gateway : {cashier.length !== 0 ? cashier?.item[0]?.paymentmethod: ""}</MDBCardText>
                                 </div>                            
                                 <div className="offset-2 col-lg-10">
-                                <MDBCardText className="text-mute">Account Number : {cashier.length !== 0 ? cashier?.item[0]?.paymentdetail: ""}
+                                <MDBCardText className="text-mute">Wallet Address : {cashier.length !== 0 ? cashier?.item[0]?.paymentdetail: ""}
                                 &nbsp;<MDBIcon far icon="copy" className="icon-zoom"  onClick={() =>kapy(cashier.length !== 0 ? cashier?.item[0]?.paymentdetail: "")}/>
                                 </MDBCardText>
                                 </div>                 
