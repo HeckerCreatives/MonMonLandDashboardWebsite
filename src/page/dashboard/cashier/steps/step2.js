@@ -48,15 +48,9 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
         setBibiliUser(username)
         setBibiliUserPlayfabid(id)
         socket.on('badge', ({item}) => {
-            if(item === 'ruby'){
-                setImage(ruby)
-            } else if (item === 'emerald'){
-                setImage(emerald)
-            } else if (item === 'diamond') {
-                setImage(diamond)
-            } else {
-                setImage(null)
-            }
+            
+            const coma = item.toLocaleString()
+            setImage(coma)
         })
 
         socket.on("admindetails", (data) => {
@@ -130,7 +124,7 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
                         <MDBRow>
                             <MDBCol className="mt-2">
                                 <div>
-                                <MDBCardText className="fw-bold">Subscription Details</MDBCardText>
+                                <MDBCardText className="fw-bold">Top Up Amount Details</MDBCardText>
                                 </div>
                                 <div className="offset-2 col-lg-10">
                                 <MDBCardText className="text-mute">Transaction Number: {transactionno}</MDBCardText>
@@ -143,10 +137,8 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
                                 </MDBCardText>
                                 </div>
                                 <div className="offset-2 col-lg-10">
-                                <MDBCardText className="text-mute">Subscription Level:
-                                {image ? 
-                                <img src={image} alt="" style={{height: "60px", width: "60px"}}/>
-                                : ""} 
+                                <MDBCardText className="text-mute">Top Up Amount:
+                                &nbsp; {image}
                                 </MDBCardText>
                                 </div>                  
                             </MDBCol>

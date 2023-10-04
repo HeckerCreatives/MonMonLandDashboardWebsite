@@ -86,7 +86,7 @@ const Dashboard = () => {
           ],
         },
         {
-          name: "Upgrade Subscription",
+          name: "Manage Upgrade Subscription",
           path: "",
           icon: "arrow-alt-circle-up",
           children: [
@@ -237,7 +237,7 @@ const Dashboard = () => {
           ],
         },
         {
-          name: "Upgrade Subscription",
+          name: "Top Up",
           path: "/dashboard/SubAdministrator/upgradesubscription",
           icon: "arrow-alt-circle-up",
           children: [],
@@ -356,7 +356,7 @@ const Dashboard = () => {
         children: [],
       },
       {
-        name: "Upgrade Subscription",
+        name: "Top Up",
         path: "/dashboard/Agent/upgradesubscription",
         icon: "arrow-alt-circle-up",
         children: [],

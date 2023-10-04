@@ -64,14 +64,13 @@ const SubAdminPaymentHistory = () => {
                 <th className="fw-bold" scope='col'>Date Created</th>
                 <th className="fw-bold" scope='col'>Cashier Username</th>
                 <th className="fw-bold" scope='col'>Transaction Number</th>
-                <th className="fw-bold" scope='col'>Subscription Level</th>
                 <th className="fw-bold" scope='col'>Price</th>
                 <th className="fw-bold" scope='col'>Client Username</th>
                 <th className="fw-bold" scope='col'>Receipt</th>
                 </tr>
                 </MDBTableHead>
                 <MDBTableBody className="text-center">                
-                {history ? 
+                {history.length !== 0 ? 
                 <>
                 {handlePagination(history, page, 10)?.map((data,i) =>(
                 <tr 
@@ -87,9 +86,6 @@ const SubAdminPaymentHistory = () => {
                 {data.transactionnumber}
                 </td>
                 <td>
-                {data.subscriptionlevel?.subscriptionName}
-                </td>
-                <td>
                 {`$${data.price}`}
                 </td>
                 <td>
@@ -102,7 +98,9 @@ const SubAdminPaymentHistory = () => {
                 </tr>
                 ))}
                 </>
-                : null}
+                : <tr>
+                    <td colSpan={6}>No Data</td>
+                  </tr>}
 
                 </MDBTableBody>
                 </MDBTable>

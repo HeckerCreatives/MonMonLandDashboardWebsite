@@ -20,10 +20,6 @@ import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
 import io from "socket.io-client"
 const socket = io(process.env.REACT_APP_API_URL)
 const SubAdminUpgradeSubscriptionManual = () => {
-    const [rubyChecked, setRubyChecked] = useState(false);
-    const [emeraldChecked, setEmeraldChecked] = useState(false);
-    const [diamondChecked, setDiamondChecked] = useState(false);
-    const [subscriptionId, setSubscriptionId] = useState("");
     const [bibiliuserid, setBibiliUserId] = useState("");
     const [bibiliuser, setBibiliUser] = useState("");
     const [bibiliuserplayfabid, setBibiliUserPlayfabid] = useState("");
@@ -40,8 +36,8 @@ const SubAdminUpgradeSubscriptionManual = () => {
           [isloading, setIsLoading] = useState(false),
           [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
+    const [topup, setTopUp] = useState("");
     const [basicModal, setBasicModal] = useState(false);
-
     const toggleShow = () => setBasicModal(!basicModal);
     let currenturn = "";
       useEffect(() => {
@@ -54,8 +50,12 @@ const SubAdminUpgradeSubscriptionManual = () => {
           fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
           .then(response => response.json())
           .then(result => {
-              const data = result.filter(e => e.cashier === auth.userName)
-              setHistory(data)
+            // console.log(result)
+            if(result.length !== 0){
+                const data = result?.filter(e => e.cashier === auth.userName)
+                setHistory(data)
+            }
+              
           })
       },[])
       
@@ -63,28 +63,9 @@ const SubAdminUpgradeSubscriptionManual = () => {
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
           .then(response => response.json())
           .then(result => {
-              const data = result.filter(e => e.cashier === auth.userName)
+              const data = result?.filter(e => e.cashier === auth.userName)
               setHistory(data)
           })
-      }
-
-      useEffect(()=> {
-        fetch(`${process.env.REACT_APP_API_URL}subscription/${subscriptionId}/find`)
-        .then(result => result.json())
-        .then(data => {
-        setPrice(data.amount)
-        })
-      },[subscriptionId])
-
-      function generateRandomString() {
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        let randomString = '';
-      
-        for (let i = 0; i < 12; i++) {
-          const randomIndex = Math.floor(Math.random() * characters.length);
-          randomString += characters[randomIndex];
-        }
-        return randomString;
       }
 
       useEffect(()=>{
@@ -128,15 +109,12 @@ const SubAdminUpgradeSubscriptionManual = () => {
                     allowEscapeKey: false
                 })
                 setPrice("")
-                setSubsType("")
-                setRubyChecked(false);
-                setEmeraldChecked(false);
-                setDiamondChecked(false);
                 setBuyer([]);
                 setFilename("")
                 refreshtable();
                 setBibiliUser("")
                 setBibiliUserPlayfabid("")
+                setTopUp("")
             })
             socket.on("adminrefreshlist", (data) => {
                 if(currenturn === data.username){
@@ -148,32 +126,33 @@ const SubAdminUpgradeSubscriptionManual = () => {
                         allowEscapeKey: false
                     })
                     setPrice("")
-                    setSubsType("")
-                    setRubyChecked(false);
-                    setEmeraldChecked(false);
-                    setDiamondChecked(false);
                     setBuyer([]);
                     setFilename("")
                     refreshtable();
                     setBibiliUser("")
                     setBibiliUserPlayfabid("")
+                    setTopUp("")
                 }
                 
                 
             })
+            
             socket.emit('isonline', socket.id)
 
             socket.on('onlinenga', () => {
                 setColor(true)
             })
+            
+
             return () => {
                 // Clean up your socket event listener when the component unmounts
                 socket.off('adminrefreshlist');
                 socket.emit('leave')
                 socket.off('onlinenga');
                 socket.off('canceleduse');
+                socket.off('selectsubs');
             }
-        },[currenturn])
+        },[currenturn, topup])
 
       const cancelorder = (id, room, normalUserId) => {
           const stats = "Open"
@@ -199,15 +178,12 @@ const SubAdminUpgradeSubscriptionManual = () => {
                   .then(data => {
                       if(data){
                         setPrice("")
-                        setSubsType("")
-                        setRubyChecked(false);
-                        setEmeraldChecked(false);
-                        setDiamondChecked(false);
                         setBuyer([]);
                         setFilename("")
                         refreshtable();
                         setBibiliUser("")
                         setBibiliUserPlayfabid("")
+                        setTopUp("")
                         socket.emit('cancelTransactionAdmin', {room: room, buyer: bibiliuserid});
                       }
                   })
@@ -230,7 +206,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
           }).then(async result =>{
             setIsLoading(true)
               if(result.isConfirmed){
-                await UpgradeSubscriptionApi( bibiliuserplayfabid, bibiliuser, substype, price,)
+                await UpgradeSubscriptionApi( bibiliuserplayfabid, price,)
                 .then((item) => {
                     if(item === "success"){
                         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/updatebuyer/${Buyer._id}`,{
@@ -244,7 +220,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                 stats: stats,
                               // below is for payment history
                                 cashier: user.userId.userName,
-                                subscriptionlevel: subscriptionId,
+                                // subscriptionlevel: subscriptionId,
                                 price: price,
                                 clientusername: bibiliuser,
                                 image: image,
@@ -266,16 +242,12 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                 setUser(data.roomdetails)
                                 setIsLoading(false)
                                 setPrice("")
-                                setSubsType("")
-                                setRubyChecked(false);
-                                setEmeraldChecked(false);
-                                setDiamondChecked(false);
                                 setBuyer([]);
                                 setFilename("")
                                 refreshtable();
                                 setBibiliUser("")
                                 setBibiliUserPlayfabid("")
-
+                                setTopUp("")
                             }
                             })
                                 
@@ -330,32 +302,9 @@ const SubAdminUpgradeSubscriptionManual = () => {
         
       }
 
-      const handleCheckboxChange = (checkboxName) => {
-        if (checkboxName === 'ruby') {
-        socket.emit('selectsubs', {id: bibiliuserid, subs: 'ruby'})
-        setSubscriptionId(process.env.REACT_APP_RUBY)
-        // setPrice("25")
-        setSubsType("1")
-        setRubyChecked(true);
-        setEmeraldChecked(false);
-        setDiamondChecked(false);
-        } else if (checkboxName === 'emerald') {
-        socket.emit('selectsubs', {id: bibiliuserid, subs: 'emerald'})
-        setSubscriptionId(process.env.REACT_APP_EMERALD)
-        // setPrice("50")
-        setSubsType("2")
-        setRubyChecked(false);
-        setEmeraldChecked(true);
-        setDiamondChecked(false);
-        } else if (checkboxName === 'diamond') {
-        socket.emit('selectsubs', {id: bibiliuserid, subs: 'diamond'})
-        setSubscriptionId(process.env.REACT_APP_DIAMOND)
-        // setPrice("100") 
-        setSubsType("3") 
-        setRubyChecked(false);
-        setEmeraldChecked(false);
-        setDiamondChecked(true);
-        }
+      const handleTopupChange = (topup) => {
+        socket.emit('selectsubs', {id: bibiliuserid, subs: topup})
+        setPrice(topup)
       }
 
       const kapy = (text) => {
@@ -446,7 +395,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                               <form autoComplete="off" onSubmit={upgradebuyer}>
                               <MDBCol className="mt-2">
                                   <div>
-                                  <MDBCardText className="fw-bold">Subscription Details</MDBCardText>
+                                  <MDBCardText className="fw-bold">Top Up  Details</MDBCardText>
                                   </div>
                                   <div className="offset-lg-2 col-lg-10">
                                   <MDBCardText className="text-mute d-flex mt-2">Subscriber Username :
@@ -460,40 +409,16 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                   </MDBCardText>                                
                                   </div>
 
-                                  <div className="offset-lg-2 col-lg-10 mt-2">
-                                  <MDBCardText className="text-mute">Select Subscription Level :                                
+                                  <div className="d-flex offset-lg-2 col-lg-10 mt-2">
+                                  <MDBCardText className="d-flex text-mute">Top Up Amount:  
                                   </MDBCardText>
-                                  <MDBCol className="d-flex offset-3">
-                                  <div className="mx-2 d-flex justify-content-center align-items-center flex-column">
-                                  <img src={ruby} alt="" style={{height: "60px", width: "60px"}}/>
-                                  <label className="d-flex justify-content-center align-items-center flex-column">
-                                  <span className="pb-2">Ruby</span>
-                                  <input type="checkbox" checked={rubyChecked} onChange={() => handleCheckboxChange('ruby')} className="mx-2"/>                        
-                                  </label>
+                                  &nbsp;
+                                  <div>
+                                  <MDBInput value={price} size="sm" type="number" onChange={(e) => handleTopupChange(e.target.value)}/>
                                   </div>
-  
-                                  <div className="mx-2 d-flex justify-content-center align-items-center flex-column">
-                                  <img src={emerald} alt="" style={{height: "60px", width: "60px"}}/>
-                                  <label className="d-flex justify-content-center align-items-center flex-column">
-                                  <span className="pb-2">Emerald</span>
-                                  <input type="checkbox" checked={emeraldChecked} onChange={() => handleCheckboxChange('emerald')} className="mx-2"/>                        
-                                  </label>
-                                  </div>
-  
-                                  <div className="mx-2 d-flex justify-content-center align-items-center flex-column">
-                                  <img src={diamond} alt="" style={{height: "60px", width: "60px"}}/>
-                                  <label className="d-flex justify-content-center align-items-center flex-column">
-                                  <span className="pb-2">Diamond</span>
-                                  <input type="checkbox" checked={diamondChecked} onChange={() => handleCheckboxChange('diamond')} className="mx-2"/>                        
-                                  </label>
-                                  </div>
-                                  </MDBCol>
                                   
                                   </div>
   
-                                  <div className="offset-lg-2 col-lg-10 mt-3">
-                                  <MDBCardText className="text-mute">Subscription Price : {price ? "$"+price: ""}</MDBCardText>
-                                  </div>
                                   <div className="offset-lg-2 col-lg-10 mt-3">
                                   <MDBCardText className="text-mute">Image Filename : {filename ? filename: ""}</MDBCardText>
                                   </div>
@@ -519,7 +444,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                     </MDBSpinner>
                                     </MDBBtn>
                                     :
-                                    <MDBBtn className="mx-2 mt-2" type="submit" disabled={Buyer?.transactionnumber ? false : true}>Upgrade Subscription</MDBBtn>
+                                    <MDBBtn className="mx-2 mt-2" type="submit" disabled={Buyer?.transactionnumber ? false : true}>Finish Top Up</MDBBtn>
                                   }
                                   </div>
                                   <div className="">
@@ -561,14 +486,13 @@ const SubAdminUpgradeSubscriptionManual = () => {
                       <th className="fw-bold" scope='col'>Date Created</th>
                       <th className="fw-bold" scope='col'>Cashier Username</th>
                       <th className="fw-bold" scope='col'>Transaction Number</th>
-                      <th className="fw-bold" scope='col'>Subscription Level</th>
                       <th className="fw-bold" scope='col'>Price</th>
                       <th className="fw-bold" scope='col'>Client Username</th>
                       <th className="fw-bold" scope='col'>Receipt</th>
                       </tr>
                   </MDBTableHead>
                   <MDBTableBody className="text-center">                
-                  {history ? 
+                  {history.length !== 0 ? 
                       <>
                   {handlePagination(history, page, 2)?.map((data,i) =>(
                   <tr key={`game-${i}`}>
@@ -578,9 +502,6 @@ const SubAdminUpgradeSubscriptionManual = () => {
                   </td>
                   <td>
                       {data.transactionnumber}
-                  </td>
-                  <td>
-                      {data.subscriptionlevel?.subscriptionName}
                   </td>
                   <td>
                       {`$${data.price}`}
@@ -600,7 +521,10 @@ const SubAdminUpgradeSubscriptionManual = () => {
                   </tr>
                   ))}
                   </>
-                  : null}
+                  :
+                  <tr>
+                    <td colSpan={6}>No Data</td>
+                  </tr>}
                       
                   </MDBTableBody>
                               </MDBTable>

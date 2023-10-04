@@ -1,7 +1,7 @@
 import { PlayFabClient } from "playfab-sdk";
 import Swal from "sweetalert2";
 
-export const UpgradeSubscriptionApi = async (playerPlayfabId, playerUsername, subscriptionType, subscriptionAmount) => {
+export const UpgradeSubscriptionApi = async (playerPlayfabId, subscriptionAmount) => {
     const playFabUserData = {
         Username: "monmonland",            
         Password: "monmonlandgames",           
@@ -13,17 +13,14 @@ export const UpgradeSubscriptionApi = async (playerPlayfabId, playerUsername, su
                 reject(error);
             } else {
                 PlayFabClient.ExecuteCloudScript({
-                    FunctionName: "Subscription",
+                    FunctionName: "Topup",
                     FunctionParameter: {
-                        playerPlayfabId: playerPlayfabId,
-                        playerUsername: playerUsername,
-                        subscriptionType: subscriptionType,
-                        subscriptionAmount: subscriptionAmount,
+                        playerId: playerPlayfabId,
+                        topupAmount: subscriptionAmount,
                     },
                     ExecuteCloudScript: true,
                     GeneratePlayStreamEvent: true,
                 }, (error1, result1) => {
-                    console.log(result1)
                     if (error1) {
                         reject(error1);
                     } else if (result1.data.FunctionResult.message === "success") {
