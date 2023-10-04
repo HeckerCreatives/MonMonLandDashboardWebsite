@@ -56,7 +56,6 @@ const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
     const url = new URL(window.location.href);
-    console.log(url.href === `${window.location.origin}/register`)
 
     if(url.href === `${window.location.origin}/register`){
       navigate("/register?sponsor=monmonland&id=ECBFE0CB217B1E12")
