@@ -3,7 +3,6 @@ import Swal from "sweetalert2";
 
 export const UpgradeSubscriptionApi = async (playerPlayfabId, playerUsername, subscriptionType, subscriptionAmount) => {
     const playFabUserData = {
-        // TitleId: "261D1",
         Username: "monmonland",            
         Password: "monmonlandgames",           
     };

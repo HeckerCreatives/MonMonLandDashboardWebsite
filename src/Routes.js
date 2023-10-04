@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Route, Routes } from "react-router-dom";
 import Error from "./page/404";
 //Home
@@ -53,6 +53,7 @@ import CsrPayoutRequest from "./page/dashboard/csr/payout/request";
 import CsrPayoutProcess from "./page/dashboard/csr/payout/process";
 import CsrPayoutDone from "./page/dashboard/csr/payout/done";
 const Routers = () => {
+  
   return (
     <Routes>
       <Route path="*" element={<Error/>}/>
@@ -171,9 +172,9 @@ const Routers = () => {
             <Route path="home" element={<UserDashboard/>}/>
         </Route>
       </Route>
-
+      <Route path={`/register`} element={<SignUp />}/>
       <Route path="referral">
-        <Route path="agent/:userId/register" element={<SignUp />}/>
+        
         <Route path="player/:userId/register" element={<SignUpPlayer />}/>
       </Route>
       {/* <Route path="/signup" element={<SignUp />}/> */}

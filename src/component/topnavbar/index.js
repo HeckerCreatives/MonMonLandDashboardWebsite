@@ -112,7 +112,7 @@ const TopNavbar = ({auth, didToggle, setDidToggle}) => {
       null  
       }
       <div className="d-flex">
-      <ReferralButton auth={auth} />
+      {/* <ReferralButton auth={auth} /> */}
           <ThemeContext.Consumer>
             {({ changeTheme }) => (
               <MDBBtn

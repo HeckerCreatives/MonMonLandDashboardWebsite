@@ -1,46 +1,46 @@
-import { MDBContainer, MDBInput, MDBRow, MDBCol,MDBIcon,MDBTypography,MDBBtn, MDBCard, MDBCardTitle, MDBCardBody, MDBCheckbox } from "mdb-react-ui-kit";
+import { MDBContainer, MDBInput, MDBRow, MDBCol,MDBIcon,MDBTypography,MDBBtn, MDBCard, MDBCardTitle, MDBCardBody, MDBCheckbox,MDBSpinner } from "mdb-react-ui-kit";
 import React, { useEffect, useState } from "react";
 import logo from "../../assets/header/small logo for navi.png"
 import './signup.css'
 import Swal from "sweetalert2";
-import { useNavigate, useParams } from "react-router-dom";
 
 const SignUp = () => {
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
+  const [phone, setPhone] = useState('')
   const [userName, setUserName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')  
   const [confirmpassword, setconfirmPassword] = useState('')
-  const [user, setUser] = useState("")
   const [referrer, setReferrer] = useState('');
-  const navigate = useNavigate()
-  const { userId } = useParams();
-  const roleId = process.env.REACT_APP_AGENTROLE
-  const auth = JSON.parse(localStorage.getItem("auth"))
+  const [referrerid, setReferrerId] = useState('');
+  const [isloading, setIsLoading] = useState(false);
   useEffect(()=> {
-    if (userId) {
-      const validateReferrer = async () =>{
-       await fetch(`${process.env.REACT_APP_API_URL}user/findone/${userId}`)
-       .then(result => result.json())
-       .then(data => {
-        setUser(data)
-        setReferrer(data.userName)
-       })
-        
-      }
-      validateReferrer()
-    }
-  },[userId])
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search);
 
-  useEffect(()=>{
-    if(auth){
-      
-      window.location.href = `/dashboard/${auth.roleId?.display_name}/home`
+    const sponsor = params.get('sponsor');
+    const id = params.get('id');
+
+    if(sponsor && id){
+      setReferrerId(id)
+      setReferrer(sponsor)
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title:"Please do not alter the registration link",
+        text: "Please Use Ingame Registration Link Thank You",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+      })
+      .then(ok => {
+        if(ok.isConfirmed){
+          window.location.href="https://monmonland.games/"
+        }
+      })
     }
-  },[auth])
+    
+    
+  },[])
   
-  // console.log(referrer)
   const register = (e) => {
     e.preventDefault();
     
@@ -52,36 +52,39 @@ const SignUp = () => {
       })
       return 
     }
-    
-    fetch(`${process.env.REACT_APP_API_URL}user/register`, {
+    setIsLoading(true)
+    fetch(`${process.env.REACT_APP_API_URL}monmon/register`, {
       method:'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        roleId: roleId,
-        referrerId: user._id,
-        firstName: firstName,
-        lastName: lastName,
-        userName: userName,
+        sponsor: referrerid,
+        username: userName,
+        phone: phone,
         email: email,
         password: password
       })
     }).then(result => result.json())
     .then(data =>{
-      if (data) {        
+      if (data.message === "success") {
+        setIsLoading(false)        
 				Swal.fire({
 					title: "Registered Successfully",
 					icon: "success",
 					text: "You Successfully Registered"
-				})
-				navigate('/login')
+				}).then(ok => {
+          if(ok.isConfirmed){
+            window.location.href="https://monmonland.games/"
+          }
+        })
 			} else {
 				Swal.fire({
-          title: "Password Not Match",
+          title: data.message,
           icon: "error",
-          text: "There is an error typing your password"
+          text: `${data.data} display name is your username.`
         })
+        setIsLoading(false)
 			}
     })
   }
@@ -128,100 +131,39 @@ const SignUp = () => {
             Username        
           </MDBTypography>
           <input className="square border border-dark rounded mb-2 p-1" onChange={e => setUserName(e.target.value)} style={{width:'100%'}} placeholder="Enter Username here" required></input>
-          {/* <MDBInput
-            type="text"
-            label={<span className="">Enter Username here</span>}
-            name="username"
-            className="my-3 border border-dark"
-          //   defaultValue={user.username}
-            minLength={5}
-            required
-          /> */}
+          
           </MDBCol>
           <MDBCol lg={6}>
           <MDBTypography className="mb-0">Email</MDBTypography>
           <input className="square border border-dark rounded mb-2 p-1" onChange={e => setEmail(e.target.value)} style={{width:'100%'}} placeholder="Enter E-mail Address here" type="email" required></input>
-          {/* <MDBInput
-            type="email"
-            label={<span className="">Enter E-mail Address here</span>}
-            name="email"
-            className="my-3 "
-            minLength={5}
-          //   defaultValue={user.email}
-            required
-          /> */}
+          
           </MDBCol>
-          <MDBCol md={6}>
-          <MDBTypography className="mb-0">First Name</MDBTypography>
-          <input className="square border border-dark rounded mb-2 p-1" onChange={e => setFirstName(e.target.value)} style={{width:'100%'}} placeholder="Enter First Name here" required></input>
-          {/* <MDBInput
-            type="text"
-            label={<span className="">Enter First Name here</span>}
-            name="firstName"
-            className="my-3 "
-          //   defaultValue={user.username}
-            // minLength={5}
-            required
-          /> */}
-          </MDBCol>
-          <MDBCol md={6}>
-          <MDBTypography className="mb-0">Last Name</MDBTypography>
-          <input className="square border border-dark rounded mb-2 p-1" onChange={e => setLastName(e.target.value)} style={{width:'100%'}} placeholder="Enter Last Name here" required></input>
-          {/* <MDBInput
-            type="text"
-            label={<span className="">Enter Last Name here</span>}
-            name="lastName"
-            className="my-3 "
-            //   defaultValue={user.username}
-            // minLength={5}
-            required
-          /> */}
-          </MDBCol>
+          
           <MDBCol md={6}>
           <MDBTypography className="mb-0">Password</MDBTypography>
           <input className="square border border-dark rounded mb-2 p-1" onChange={e => setPassword(e.target.value)} style={{width:'100%'}} placeholder="Enter Password here" type='password' required></input>
-          {/* <MDBInput
-          //   type={!show.password ? "password" : "text"}
-            label={<span className="">Enter Password here</span>}
-            name="password"
-            className=""
-            minLength={6}
-          //   defaultValue={user.password}
-            required
-          /> */}
+          
           </MDBCol>
           <MDBCol md={6}>
           <MDBTypography className="mb-0">Confirm Password</MDBTypography>
           <input className="square border border-dark rounded mb-2 p-1" onChange={e => setconfirmPassword(e.target.value)} style={{width:'100%'}} placeholder="Confirm Password here" type="password"></input>
-          {/* <MDBInput
-          //   type={!show.confirm_password ? "password" : "text"}
-            label={<span className="">Confirm Password here</span>}
-            name="confirm_password"
-            className="my-3"
-          //   defaultValue={user.confirm_password}
-            minLength={6}
-            required
-          /> */}
           </MDBCol>
+          <MDBCol md={6}>
+
+          <MDBTypography className="mb-0">Phone</MDBTypography>
+          <input className="square border border-dark rounded mb-2 p-1" onChange={e => setPhone(e.target.value)} style={{width:'100%'}} placeholder="Enter Phone Number here" type="tel" required></input>
+          </MDBCol>
+
           <MDBCol lg={6}>   
           <MDBTypography className="mb-0">
           Referral
-          {/* <MDBInput
-            //   type={!show.confirm_password ? "password" : "text"}
-              label={<span className="">Enter Referral here</span>}
-              name="referral"
-              className="my-3"
-            //   defaultValue={user.confirm_password}
-              // minLength={6}
-              required
-            /> */}
           </MDBTypography>
           <input className="square border border-dark rounded mb-2 p-1" style={{width:'100%'}} defaultValue={referrer} readOnly></input>
           </MDBCol>         
 
           </MDBRow>
           <MDBCol>
-          <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Accept our Terms and Condition'/>
+          <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Accept our Terms and Condition' required/>
           </MDBCol>     
 
           
@@ -229,15 +171,9 @@ const SignUp = () => {
 
           </MDBCard>
           <MDBRow>
-          <MDBCol md={6}>
-          <MDBTypography className="mt-3 fw-bold">
-            Already have an account? <a href="/login" className="text-primary">Login</a>          
-          </MDBTypography>
-
-          </MDBCol>
-          <MDBCol md={6}>
-          <MDBBtn type="submit" color="primary" className="mt-3 ms-md-auto d-flex">
-              Create Account
+          <MDBCol>
+          <MDBBtn type="submit" color="primary" className="mt-3 ms-md-auto d-flex" disabled={isloading}>
+            {isloading ? <MDBSpinner grow size="sm" /> : "Create Account"}  
           </MDBBtn>
           </MDBCol>
           
