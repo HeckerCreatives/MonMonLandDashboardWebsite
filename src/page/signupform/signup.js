@@ -84,7 +84,7 @@ const SignUp = () => {
 				Swal.fire({
           title: data.message,
           icon: "error",
-          text: `${data.data} display name is your username.`
+          text: data.data
         })
         setIsLoading(false)
 			}
