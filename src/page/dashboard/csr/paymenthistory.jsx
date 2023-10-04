@@ -64,7 +64,6 @@ const CsrPaymentHistory = () => {
                 <th className="fw-bold" scope='col'>Date Created</th>
                 <th className="fw-bold" scope='col'>Cashier Username</th>
                 <th className="fw-bold" scope='col'>Transaction Number</th>
-                <th className="fw-bold" scope='col'>Subscription Level</th>
                 <th className="fw-bold" scope='col'>Price</th>
                 <th className="fw-bold" scope='col'>Client Username</th>
                 <th className="fw-bold" scope='col'>Receipt</th>
@@ -85,9 +84,6 @@ const CsrPaymentHistory = () => {
                 </td>
                 <td>
                 {data.transactionnumber}
-                </td>
-                <td>
-                {data.subscriptionlevel?.subscriptionName}
                 </td>
                 <td>
                 {`$${data.price}`}
@@ -130,9 +126,6 @@ const CsrPaymentHistory = () => {
                 </MDBCardText>
                 <MDBCardText>
                 Transaction Number: &nbsp;{view.transactionnumber}
-                </MDBCardText>
-                <MDBCardText>
-                Subscription Level: &nbsp;{view.subscriptionlevel?.subscriptionName}
                 </MDBCardText>
                 <MDBCardText>
                 Price: &nbsp;{view.price}

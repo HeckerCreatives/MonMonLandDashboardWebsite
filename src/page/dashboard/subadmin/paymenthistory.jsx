@@ -130,9 +130,6 @@ const SubAdminPaymentHistory = () => {
                 Transaction Number: &nbsp;{view.transactionnumber}
                 </MDBCardText>
                 <MDBCardText>
-                Subscription Level: &nbsp;{view.subscriptionlevel?.subscriptionName}
-                </MDBCardText>
-                <MDBCardText>
                 Price: &nbsp;{view.price}
                 </MDBCardText>
                 <MDBCardText>
