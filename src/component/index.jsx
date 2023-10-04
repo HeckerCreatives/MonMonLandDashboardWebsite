@@ -92,7 +92,7 @@ const Navbar = ({ links }) => {
             ))}
             <MDBNavbarItem className="ms-lg-auto text-center px-4">
                   <MDBNavbarLink>
-                  <img src={playnow} id="joinnow" alt="" className="zoom-playnow mb-2"></img>
+                  <a href={`${window.location.origin}/register?sponsor=monmonland&id=ECBFE0CB217B1E12`} ><img src={playnow} id="joinnow" alt="" className="zoom-playnow mb-2"></img></a>
                   </MDBNavbarLink>
             </MDBNavbarItem>
             

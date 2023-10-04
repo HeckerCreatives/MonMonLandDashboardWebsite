@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Error from "./page/404";
 //Home
 import Initial from "./page/home";
@@ -53,7 +53,17 @@ import CsrPayoutRequest from "./page/dashboard/csr/payout/request";
 import CsrPayoutProcess from "./page/dashboard/csr/payout/process";
 import CsrPayoutDone from "./page/dashboard/csr/payout/done";
 const Routers = () => {
-  
+  const navigate = useNavigate();
+  useEffect(()=> {
+    const url = new URL(window.location.href);
+    console.log(url.href === `${window.location.origin}/register`)
+
+    if(url.href === `${window.location.origin}/register`){
+      navigate("/register?sponsor=monmonland&id=ECBFE0CB217B1E12")
+    } 
+    
+  },[])
+
   return (
     <Routes>
       <Route path="*" element={<Error/>}/>
@@ -172,7 +182,13 @@ const Routers = () => {
             <Route path="home" element={<UserDashboard/>}/>
         </Route>
       </Route>
-      <Route path={`/register`} element={<SignUp />}/>
+      {/* <Route
+          path="/register"
+          element={<Navigate to="/register?sponsor=monmonland&id=ECBFE0CB217B1E12" replace />}
+      /> */}
+      <Route path="/register" element={<SignUp />}/>
+      
+      
       <Route path="referral">
         
         <Route path="player/:userId/register" element={<SignUpPlayer />}/>

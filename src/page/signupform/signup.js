@@ -13,30 +13,32 @@ const SignUp = () => {
   const [referrer, setReferrer] = useState('');
   const [referrerid, setReferrerId] = useState('');
   const [isloading, setIsLoading] = useState(false);
+
   useEffect(()=> {
     const url = new URL(window.location.href);
     const params = new URLSearchParams(url.search);
 
     const sponsor = params.get('sponsor');
     const id = params.get('id');
+    setReferrerId(id)
+    setReferrer(sponsor)
 
-    if(sponsor && id){
-      setReferrerId(id)
-      setReferrer(sponsor)
-    } else {
-      Swal.fire({
-        icon: "warning",
-        title:"Please do not alter the registration link",
-        text: "Please Use Ingame Registration Link Thank You",
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-      })
-      .then(ok => {
-        if(ok.isConfirmed){
-          window.location.href="https://monmonland.games/"
-        }
-      })
-    }
+    // if(sponsor && id){
+      
+    // } else {
+    //   Swal.fire({
+    //     icon: "warning",
+    //     title:"Please do not alter the registration link",
+    //     text: "Please Use Ingame Registration Link Thank You",
+    //     allowOutsideClick: false,
+    //     allowEscapeKey: false,
+    //   })
+    //   .then(ok => {
+    //     if(ok.isConfirmed){
+    //       window.location.href="https://monmonland.games/"
+    //     }
+    //   })
+    // }
     
     
   },[])
