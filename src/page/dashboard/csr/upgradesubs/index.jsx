@@ -257,6 +257,7 @@ const CsrAdminUpgradeSubscriptionManual = () => {
                                     icon: "error",
                                     text: "There is an error Upgrading the Account"
                                 })
+                                setIsLoading(false)
                             }
                         })
                     } else if (item.data.FunctionResult.message === "failed"){
@@ -265,6 +266,7 @@ const CsrAdminUpgradeSubscriptionManual = () => {
                             icon: "error",
                             text: item.data.FunctionResult.data
                         })
+                        setIsLoading(false)
                     }
                     
                 })
@@ -272,6 +274,8 @@ const CsrAdminUpgradeSubscriptionManual = () => {
                     console.error(error);
                 });
                 
+              } else {
+                setIsLoading(false)
               }
           })
           

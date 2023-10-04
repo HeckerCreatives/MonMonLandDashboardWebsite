@@ -187,6 +187,8 @@ const SubAdminUpgradeSubscriptionManual = () => {
                         socket.emit('cancelTransactionAdmin', {room: room, buyer: bibiliuserid});
                       }
                   })
+              } else {
+                setIsLoading(false)
               }
           })     
       
