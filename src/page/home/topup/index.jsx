@@ -41,7 +41,7 @@ const TopUp = () =>{
                 {/* <MDBCardText>
                 Some quick example text to build on the card title and make up the bulk of the card's content.
                 </MDBCardText> */}
-                <MDBBtn onClick={()=>handleFunds(20)}>Add Funds</MDBBtn>
+                <MDBBtn onClick={()=>handleFunds(1)}>Add Funds</MDBBtn>
             </MDBCardBody>
             </MDBCard>
             </MDBCol>
@@ -52,7 +52,7 @@ const TopUp = () =>{
                 {/* <MDBCardText>
                 Some quick example text to build on the card title and make up the bulk of the card's content.
                 </MDBCardText> */}
-                <MDBBtn onClick={()=>handleFunds(50)}>Add Funds</MDBBtn>
+                <MDBBtn onClick={()=>handleFunds(1)}>Add Funds</MDBBtn>
             </MDBCardBody>
             </MDBCard>
             </MDBCol>
@@ -63,7 +63,7 @@ const TopUp = () =>{
                 {/* <MDBCardText>
                 Some quick example text to build on the card title and make up the bulk of the card's content.
                 </MDBCardText> */}
-                <MDBBtn onClick={()=>handleFunds(100)}>Add Funds</MDBBtn>
+                <MDBBtn onClick={()=>handleFunds(1)}>Add Funds</MDBBtn>
             </MDBCardBody>
             </MDBCard>
             </MDBCol>
@@ -74,7 +74,7 @@ const TopUp = () =>{
                 {/* <MDBCardText>
                 Some quick example text to build on the card title and make up the bulk of the card's content.
                 </MDBCardText> */}
-                <MDBBtn onClick={()=>handleFunds(200)}>Add Funds</MDBBtn>
+                <MDBBtn onClick={()=>handleFunds(1)}>Add Funds</MDBBtn>
             </MDBCardBody>
             </MDBCard>
             </MDBCol>
@@ -92,7 +92,7 @@ const TopUp = () =>{
                 <MDBCardText>
                 $ 30
                 </MDBCardText>
-                <MDBBtn onClick={() =>handleBundles(30,"Iron Pack","Ruby Subscription + Iron Tool","ruby")}>Add Funds</MDBBtn>
+                <MDBBtn onClick={() =>handleBundles(1,"Iron Pack","Ruby Subscription + Iron Tool","ruby")}>Add Funds</MDBBtn>
             </MDBCardBody>
             </MDBCard>
             </MDBCol>
@@ -106,7 +106,7 @@ const TopUp = () =>{
                 <MDBCardText>
                 $ 65
                 </MDBCardText>
-                <MDBBtn onClick={() =>handleBundles(65,"Steel Pack","Emerald Subscription + Steel Tool","emerald")}>Add Funds</MDBBtn>
+                <MDBBtn onClick={() =>handleBundles(1,"Steel Pack","Emerald Subscription + Steel Tool","emerald")}>Add Funds</MDBBtn>
             </MDBCardBody>
             </MDBCard>
             </MDBCol>
@@ -120,7 +120,7 @@ const TopUp = () =>{
                 <MDBCardText>
                 $ 120
                 </MDBCardText>
-                <MDBBtn onClick={() =>handleBundles(120,"Mithril Pack","Diamond Subscription + Mithril Tool","diamond")}>Add Funds</MDBBtn>
+                <MDBBtn onClick={() =>handleBundles(1,"Mithril Pack","Diamond Subscription + Mithril Tool","diamond")}>Add Funds</MDBBtn>
             </MDBCardBody>
             </MDBCard>
             </MDBCol>
@@ -134,7 +134,7 @@ const TopUp = () =>{
                 <MDBCardText>
                 $ 180
                 </MDBCardText>
-                <MDBBtn onClick={() =>handleBundles(180,"Adamant Pack","Diamond Subscription + Adamant Tool + 5 hours clock", "diamond")}>Add Funds</MDBBtn>
+                <MDBBtn onClick={() =>handleBundles(1,"Adamant Pack","Diamond Subscription + Adamant Tool + 5 hours clock", "diamond")}>Add Funds</MDBBtn>
             </MDBCardBody>
             </MDBCard>
             </MDBCol>
