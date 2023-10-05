@@ -5,16 +5,28 @@ import { MDBContainer, MDBTypography,MDBCard,
     MDBBtn, 
     MDBRow,
     MDBCol} from "mdb-react-ui-kit";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import TopUpLogin from "./topuplogin";
 const TopUp = () =>{
     const [basicModal, setBasicModal] = useState(false);
+    const [username, setUsername] = useState("")
     const [amount, setAmount] = useState(0);
     const [selectedtopup, setSelectedTopUp] = useState("");
     const [bundle, setBundle] = useState("");
     const [bundledes, setBundleDes] = useState("");
     const [bundlesubs, setBundleSubs] = useState("");
     const toggleShow = () => setBasicModal(!basicModal);
+    
+    useEffect(() => {
+        const queryParams = new URL(window.location.href);
+        const value = new URLSearchParams(queryParams.search);
+        const decrypt = value.get('value');
+
+        const final = atob(decrypt)
+        const decrypted = new URLSearchParams(final);
+        const username = decrypted.get('username');
+        setUsername(username)
+    },[])
 
     const handleFunds = (e) => {
         setAmount(e)
@@ -32,6 +44,7 @@ const TopUp = () =>{
     }
     return(
         <MDBContainer fluid>
+        <MDBTypography tag="h1" className="text-end fw-bold">Login as: {username}</MDBTypography>
         <MDBRow>
         <MDBTypography tag="h1" className="text-center fw-bold">SELECT FUNDS</MDBTypography>
             <MDBCol>

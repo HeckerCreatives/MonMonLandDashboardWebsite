@@ -23,27 +23,35 @@ import {
   import { useNavigate } from "react-router-dom";
   import logo from '../../../assets/header/big logo.png'
 const TopUpLogin = ({basicModal, setBasicModal, amount, selectedtopup, bundle , bundledes,bundlesubs}) =>{
-    const [toggleTwoModal, setToggleTwoModal] = useState(false);
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+    const [isloading, setIsLoading] = useState(false)
     const handleClose = (e) =>{
         setBasicModal(e)
     }
 
-    // useEffect(() => {
-    //     console.log(amount)
-    //     console.log(selectedtopup)
-    //     console.log(bundle)
-    //     console.log(bundledes)
-    //     console.log(bundlesubs)
-    // },[amount,selectedtopup,bundle,bundledes,bundlesubs])
+    useEffect(() => {
+    
+
+    const queryParams = new URL(window.location.href);
+    const value = new URLSearchParams(queryParams.search);
+    const decrypt = value.get('value');
+
+    const final = atob(decrypt)
+    const decrypted = new URLSearchParams(final);
+    const username = decrypted.get('username');
+    const password = decrypted.get('password');
+    setUsername(username)
+    setPassword(password)
+    },[])
 
     const login = (e) => {
         e.preventDefault();
-        const {username, password} = e.target;
         const playFabUserData = {
-            Username: username.value,            
-            Password: password.value,           
+            Username: username,            
+            Password: password,           
         };
-        setToggleTwoModal(!toggleTwoModal)
+        setIsLoading(true)
         if(selectedtopup === "funds"){
             PlayFabClient.LoginWithPlayFab(playFabUserData, (error, result) => {
 
@@ -54,32 +62,35 @@ const TopUpLogin = ({basicModal, setBasicModal, amount, selectedtopup, bundle , 
                             "Content-Type": "application/json",
                         },
                         body: JSON.stringify({
-                            name: username.value,
+                            name: username,
                             playfabId: result.data.PlayFabId,
                             amount: amount,
                         })
                     })
                     .then(result => result.json())
                     .then(data => {
+                        setIsLoading(false)
                         const url = data.hosted_url
                         window.location.href = url
                     })
                     .catch(error =>{
                         Swal.fire({
                             icon: "warning",
-                            title: error,
+                            title: "Please Do Not Tamper The URL",
                             allowOutsideClick: false,
                             allowEscapeKey: false
                         })
+                        setIsLoading(false)
                     })
     
                 } else if (error) {
                     Swal.fire({
                         icon: "warning",
-                        title: error.errorMessage,
+                        title: "Please Do Not Tamper The URL",
                         allowOutsideClick: false,
                         allowEscapeKey: false
                     })
+                    setIsLoading(false)
                 }
             })
         } else if (selectedtopup === "bundles"){
@@ -92,7 +103,7 @@ const TopUpLogin = ({basicModal, setBasicModal, amount, selectedtopup, bundle , 
                             "Content-Type": "application/json",
                         },
                         body: JSON.stringify({
-                            name: username.value,
+                            name: username,
                             playfabId: result.data.PlayFabId,
                             amount: amount,
                             bundle: bundle,
@@ -102,25 +113,29 @@ const TopUpLogin = ({basicModal, setBasicModal, amount, selectedtopup, bundle , 
                     })
                     .then(result => result.json())
                     .then(data => {
+                        setIsLoading(false)
                         const url = data.hosted_url
                         window.location.href = url
+                        
                     })
                     .catch(error =>{
                         Swal.fire({
                             icon: "warning",
-                            title: error,
+                            title: "Please Do Not Tamper The URL",
                             allowOutsideClick: false,
                             allowEscapeKey: false
                         })
+                        setIsLoading(false)
                     })
     
                 } else if (error) {
                     Swal.fire({
                         icon: "warning",
-                        title: error.errorMessage,
+                        title: "Please Do Not Tamper The URL",
                         allowOutsideClick: false,
                         allowEscapeKey: false
                     })
+                    setIsLoading(false)
                 }
             })
         }
@@ -132,27 +147,33 @@ const TopUpLogin = ({basicModal, setBasicModal, amount, selectedtopup, bundle , 
         <MDBModal show={basicModal} tabIndex='-1' staticBackdrop closeOnEsc="false">
         <MDBModalDialog centered>
           <MDBModalContent>
-          <form autoComplete="off" onSubmit={login}>
+            <form autoComplete="off" onSubmit={login}>
             <MDBModalHeader>
-              <MDBModalTitle>Login</MDBModalTitle>
               <MDBBtn type="button" className='btn-close' color='none' onClick={() => handleClose(false)}></MDBBtn>
             </MDBModalHeader>
             <MDBModalBody>
-                <MDBTypography>Username</MDBTypography>
-                <MDBInput name="username" required/>
-                <MDBTypography >Password</MDBTypography>
-                <MDBInput name="password" type="password" required/>
+            <MDBCard alignment="center">
+            <MDBCardBody>
+            <MDBCardImage src={logo} style={{width: "50%"}}/>
+                <MDBCardText tag="h1">
+                    PRESS OK TO
+                </MDBCardText>
+                <MDBCardText tag="h1">
+                    REDIRECT TO COINBASE
+                </MDBCardText>
+                <MDBBtn disabled={isloading}>
+                   {isloading ? <MDBSpinner grow/> : "OK"}
+                </MDBBtn>
+            </MDBCardBody>
+            </MDBCard>
             </MDBModalBody>
 
-            <MDBModalFooter>
-              <MDBBtn type="submit">Login</MDBBtn>
-            </MDBModalFooter>
-        </form>
+            </form>
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>
 
-      <MDBModal show={toggleTwoModal} setShow={setToggleTwoModal} tabIndex='-1' staticBackdrop closeOnEsc="false">
+      {/* <MDBModal show={toggleTwoModal} setShow={setToggleTwoModal} tabIndex='-1' staticBackdrop closeOnEsc="false">
         <MDBModalDialog centered>
           <MDBModalContent>
             <MDBModalHeader>
@@ -162,18 +183,20 @@ const TopUpLogin = ({basicModal, setBasicModal, amount, selectedtopup, bundle , 
             <MDBCardBody>
             <MDBCardImage src={logo} style={{width: "50%"}}/>
                 <MDBCardText tag="h1">
-                    YOU ARE NOW 
+                    PRESS OK TO
                 </MDBCardText>
                 <MDBCardText tag="h1">
-                    REDIRECTING TO COINBASE
+                    REDIRECT TO COINBASE
                 </MDBCardText>
-                <MDBSpinner/>
+                <MDBBtn>
+                    OK
+                </MDBBtn>
             </MDBCardBody>
             </MDBCard>
             </MDBModalBody>
           </MDBModalContent>
         </MDBModalDialog>
-      </MDBModal>
+      </MDBModal> */}
     </>
     )
 }
