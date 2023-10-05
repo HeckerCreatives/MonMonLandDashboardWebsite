@@ -82,9 +82,6 @@ const Subscription = () => {
                 })
 
             }
-            console.log(subsname)
-            console.log(result)
-            // console.log(id)
         })
     }
 

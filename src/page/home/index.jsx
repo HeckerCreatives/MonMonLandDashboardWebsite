@@ -28,6 +28,10 @@ const Initial = () => {
             name: "ROADMAP",
             path: "#roadmap",
         },
+        {
+            name: "TOP UP",
+            path: "/topup",
+        },
     ];
     return (
         <MDBContainer fluid className="px-0">

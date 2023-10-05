@@ -107,23 +107,23 @@ const CsrDashboard = () => {
     })    
   },[]) 
 
-  useEffect(()=>{
-    fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
-    .then(result => result.json())
-    .then(data => {
-      const cashier = data.filter(e => e.cashier === auth.userName)
-      const ruby = cashier.filter(e => e.subscriptionlevel.subscriptionName
-      === "Ruby")
-      const emerald = cashier.filter(e => e.subscriptionlevel.subscriptionName
-      === "Emerald")
-      const diamond = cashier.filter(e => e.subscriptionlevel.subscriptionName
-      === "Diamond")  
-      setPaidUsers(cashier)
-      setRuby(ruby)
-      setEmerald(emerald)
-      setDiamond(diamond)
-    })
-  },[])
+  // useEffect(()=>{
+  //   fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
+  //   .then(result => result.json())
+  //   .then(data => {
+  //     const cashier = data.filter(e => e.cashier === auth.userName)
+  //     const ruby = cashier.filter(e => e.subscriptionlevel.subscriptionName
+  //     === "Ruby")
+  //     const emerald = cashier.filter(e => e.subscriptionlevel.subscriptionName
+  //     === "Emerald")
+  //     const diamond = cashier.filter(e => e.subscriptionlevel.subscriptionName
+  //     === "Diamond")  
+  //     setPaidUsers(cashier)
+  //     setRuby(ruby)
+  //     setEmerald(emerald)
+  //     setDiamond(diamond)
+  //   })
+  // },[])
 
   useEffect(()=>{
       let totalPrice = 0;

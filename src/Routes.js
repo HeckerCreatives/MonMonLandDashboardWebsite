@@ -52,6 +52,8 @@ import SubAdminPayoutDone from "./page/dashboard/subadmin/payout/done";
 import CsrPayoutRequest from "./page/dashboard/csr/payout/request";
 import CsrPayoutProcess from "./page/dashboard/csr/payout/process";
 import CsrPayoutDone from "./page/dashboard/csr/payout/done";
+import TopUp from "./page/home/topup";
+import TopUpRedirect from "./page/home/topup/redirect";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -196,9 +198,10 @@ const Routers = () => {
       <Route path="/login" element={<Login />}/>
       {/* <Route path="/verification/:userId" element={<StepVerification />}/> */}
       <Route path="/cashier" element={<AvailableCashiers/>}/>
-
+      <Route path="/topup" element={<TopUp />}/>
       <Route path="/payment/success" element={<SuccessPage/>} />
       <Route path="/payment/cancel" element={<CancelPage/>} />
+      <Route path="/redirect" element={<TopUpRedirect/>} />
     </Routes>
   );
 };
