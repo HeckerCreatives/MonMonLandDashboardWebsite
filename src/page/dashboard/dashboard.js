@@ -86,7 +86,7 @@ const Dashboard = () => {
           ],
         },
         {
-          name: "Manage Upgrade Subscription",
+          name: "Manage Top Up",
           path: "",
           icon: "arrow-alt-circle-up",
           children: [

@@ -23,7 +23,7 @@ const CsrAdminUpgradeSubscriptionManual = () => {
     const [bibiliuserid, setBibiliUserId] = useState("");
     const [bibiliuser, setBibiliUser] = useState("");
     const [bibiliuserplayfabid, setBibiliUserPlayfabid] = useState("");
-    const [substype, setSubsType] = useState("")
+    const [iscashier, setIsCashier] = useState(false)
     const [Buyer, setBuyer] = useState([]);
     const [price, setPrice] = useState("");
     const [user, setUser] = useState([]);
@@ -196,6 +196,7 @@ const CsrAdminUpgradeSubscriptionManual = () => {
       const upgradebuyer = (e) => {
           e.preventDefault();
           const stats = "Open"
+          const totalprice = Math.floor(price) + 1;
           Swal.fire({
               icon: "warning",
               title: "Are you sure this is the right user?",
@@ -216,12 +217,12 @@ const CsrAdminUpgradeSubscriptionManual = () => {
                             },
                             body: JSON.stringify({
                                 cashierId: user._id,
-                                amount: price,
+                                amount: totalprice,
                                 stats: stats,
                               // below is for payment history
                                 cashier: user.userId.userName,
                                 // subscriptionlevel: subscriptionId,
-                                price: price,
+                                price: totalprice,
                                 clientusername: bibiliuser,
                                 image: image,
                             })
@@ -281,11 +282,36 @@ const CsrAdminUpgradeSubscriptionManual = () => {
           
       }
 
+      useEffect(() => {
+        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/iscashier`,{
+            method:"POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({adminId: auth._id})
+        })
+        .then(result => result.json())
+        .then(data => {
+            setIsCashier(data)
+        })
+      },[])
+
       const goonline = () => {
         if(!color){
             socket.emit('joinroom', { username: auth.userName, roomid: auth._id});
             
             setColor(true)
+        } else if (!iscashier){
+            Swal.fire({
+                icon: "warning",
+                title: "You are not a cashier yet",
+                text: "contact admin to be a cashier",
+            }).then(e => {
+                if(e.isConfirmed){
+                window.location.reload()
+                setColor(false)
+                }
+            })
         } else {
             Swal.fire({
                 icon: "warning",
@@ -422,7 +448,11 @@ const CsrAdminUpgradeSubscriptionManual = () => {
                                   </div>
                                   
                                   </div>
-  
+                                  <div className="offset-lg-2 col-lg-10">
+                                  <MDBCardText className="text-mute d-flex mt-2">Admin Fee:
+                                  &nbsp; $ 1
+                                  </MDBCardText>                                
+                                  </div>
                                   <div className="offset-lg-2 col-lg-10 mt-3">
                                   <MDBCardText className="text-mute">Image Filename : {filename ? filename: ""}</MDBCardText>
                                   </div>

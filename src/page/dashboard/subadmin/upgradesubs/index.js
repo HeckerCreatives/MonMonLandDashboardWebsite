@@ -23,7 +23,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
     const [bibiliuserid, setBibiliUserId] = useState("");
     const [bibiliuser, setBibiliUser] = useState("");
     const [bibiliuserplayfabid, setBibiliUserPlayfabid] = useState("");
-    const [substype, setSubsType] = useState("")
+    const [iscashier, setIsCashier] = useState(false)
     const [Buyer, setBuyer] = useState([]);
     const [price, setPrice] = useState("");
     const [user, setUser] = useState([]);
@@ -198,6 +198,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
       const upgradebuyer = (e) => {
           e.preventDefault();
           const stats = "Open"
+          const totalprice = Math.floor(price) + 1;
           Swal.fire({
               icon: "warning",
               title: "Are you sure this is the right user?",
@@ -218,12 +219,13 @@ const SubAdminUpgradeSubscriptionManual = () => {
                             },
                             body: JSON.stringify({
                                 cashierId: user._id,
-                                amount: price,
+                                amount: totalprice,
                                 stats: stats,
                               // below is for payment history
                                 cashier: user.userId.userName,
-                                // subscriptionlevel: subscriptionId,
-                                price: price,
+                                adminId:auth._id,
+                                idnitopup: process.env.REACT_APP_MANUALID,
+                                price: totalprice,
                                 clientusername: bibiliuser,
                                 image: image,
                             })
@@ -279,11 +281,36 @@ const SubAdminUpgradeSubscriptionManual = () => {
           
       }
 
+      useEffect(() => {
+        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/iscashier`,{
+            method:"POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({adminId: auth._id})
+        })
+        .then(result => result.json())
+        .then(data => {
+            setIsCashier(data)
+        })
+      },[])
+
       const goonline = () => {
-        if(!color){
+        if(!color && iscashier){
             socket.emit('joinroom', { username: auth.userName, roomid: auth._id});
             
             setColor(true)
+        } else if (!iscashier){
+            Swal.fire({
+                icon: "warning",
+                title: "You are not a cashier yet",
+                text: "contact admin to be a cashier",
+            }).then(e => {
+                if(e.isConfirmed){
+                window.location.reload()
+                setColor(false)
+                }
+            })
         } else {
             Swal.fire({
                 icon: "warning",
@@ -364,13 +391,13 @@ const SubAdminUpgradeSubscriptionManual = () => {
                               </div>
                               
                               <div className="offset-2 col-lg-10">
-                              <MDBCardText className="text-mute">No. of Transaction: &nbsp; {user.numberoftransaction}</MDBCardText>
+                              <MDBCardText className="text-mute">No. of Transaction: &nbsp; {user?.numberoftransaction}</MDBCardText>
                               </div>                            
                               <div className="offset-2 col-lg-10">
-                              <MDBCardText className="text-mute">Payment Limit: &nbsp; {user.paymentlimit} USDT</MDBCardText>
+                              <MDBCardText className="text-mute">Payment Limit: &nbsp; {user?.paymentlimit} USDT</MDBCardText>
                               </div>                            
                               <div className="offset-2 col-lg-10">
-                              <MDBCardText className="text-mute">Quantity: {user.paymentcollected} USDT</MDBCardText>
+                              <MDBCardText className="text-mute">Quantity: {user?.paymentcollected} USDT</MDBCardText>
                               </div>
                               </MDBCol>
 
@@ -385,10 +412,10 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                   <MDBCardText className="fw-bold">Payment Details</MDBCardText>
                                   </div>
                                   <div className="offset-2 col-lg-10">
-                                  <MDBCardText className="text-mute">Payment Gateway : {user.paymentmethod}</MDBCardText>
+                                  <MDBCardText className="text-mute">Payment Gateway : {user?.paymentmethod}</MDBCardText>
                                   </div>                            
                                   <div className="offset-2 col-lg-10">
-                                  <MDBCardText className="text-mute">Wallet Address: {user.paymentdetail}</MDBCardText>
+                                  <MDBCardText className="text-mute">Wallet Address: {user?.paymentdetail}</MDBCardText>
                                   </div>                 
                               </MDBCol>
                           </MDBRow>
@@ -420,7 +447,11 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                   </div>
                                   
                                   </div>
-  
+                                  <div className="offset-lg-2 col-lg-10">
+                                  <MDBCardText className="text-mute d-flex mt-2">Admin Fee:
+                                  &nbsp; $ 1
+                                  </MDBCardText>                                
+                                  </div>
                                   <div className="offset-lg-2 col-lg-10 mt-3">
                                   <MDBCardText className="text-mute">Image Filename : {filename ? filename: ""}</MDBCardText>
                                   </div>

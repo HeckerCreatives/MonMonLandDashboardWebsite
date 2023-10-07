@@ -34,6 +34,7 @@ const CreateGames = () => {
   const [show, setShow] = useState(false);
   const toggleShow = () => setShow(!show);
   const [image, setImage] = useState("");
+  const [filename, setFilename] = useState("");
   // const [isChecked, setIsChecked] = useState(false);
   const defaultimg = process.env.REACT_APP_GAMEDEFAULTIMG;
   
@@ -91,6 +92,11 @@ const CreateGames = () => {
     // Use the uploaded image URL in the parent component or pass it to another component
     setImage(url);
   };
+
+  const handleFileUrl = (url) => {
+    // Use the uploaded image URL in the parent component or pass it to another component
+    setFilename(url);
+  };
 return (
     <>
       <MDBBtn
@@ -135,7 +141,7 @@ return (
                   </div>
                   </label>
                 </form> }                  
-                    <UploadWidget setImgUrl={handleImgUrl}/>
+                    <UploadWidget setImgUrl={handleImgUrl} setfileName={handleFileUrl}/>
                     </MDBCol>
                     <MDBCol lg={8}>
                     <MDBCardText className="text-color mt-3 mb-0 fw-bold">

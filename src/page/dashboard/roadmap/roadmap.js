@@ -97,11 +97,16 @@ const UpdateRoadmap = () => {
                         {data.title.length > 25 ? `${data.title.substring(0,25)}...`: data.title}
                     </td>
                     <td>
+                    {data.image !== "Empty" ? 
                     <img
                         src={data.image}
                         alt=""
                         style={{ height: "50px", width: "50px"}}
                     />
+                    :
+                    "No Data Yet"
+                    }
+                    
                     </td>
                     <td>
                         {data.description.length > 25 ? `${data.description.substring(0,25)}...`: data.description}

@@ -23,7 +23,7 @@ return(
           </div>
           <MDBCardText style={{fontSize: "50px"}} className="mb-0">
             {cardtoptext}
-            &nbsp;{txtsup && <span>USDT</span>}
+            &nbsp;{txtsup}
          </MDBCardText>
           <MDBTable responsive borderless className="text-light mb-0">
                 <MDBTableHead >
@@ -36,7 +36,6 @@ return(
                     {td1 && 
                     <td style={{borderTop:"1px solid", borderRight: "1px solid"}}>                    
                     <div>{td1txttop}
-                    &nbsp;{txtsup && <span>USDT</span>}
                     </div>
                     <div>{td1txtbot}</div>
                     </td>
@@ -44,7 +43,6 @@ return(
                     {td2 && 
                     <td style={{borderTop: "1px solid",}}>
                     <div>{td2txttop}
-                    &nbsp;{txtsup && <span>USDT</span>}
                     </div>
                     <div>{td2txtbot}</div>
                     </td>
@@ -52,7 +50,6 @@ return(
                     {td3 && 
                     <td style={{borderTop: "1px solid", borderLeft: "1px solid"}}>
                     <div>{td3txttop}
-                    &nbsp;{txtsup && <span>USDT</span>}
                     </div>
                     <div>{td3txtbot}</div>
                     </td>
@@ -60,7 +57,6 @@ return(
                     {td4 && 
                     <td style={{borderTop: "1px solid", borderLeft: "1px solid"}}>
                     <div>{td4txttop}
-                    &nbsp;{txtsup && <span>USDT</span>}
                     </div>
                     <div>{td4txtbot}</div>
                     </td>

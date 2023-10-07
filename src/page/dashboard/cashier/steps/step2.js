@@ -8,7 +8,8 @@ import ruby from "../../../../assets/subscription/ruby badge.png"
 import emerald from "../../../../assets/subscription/emerald.png"
 import diamond from "../../../../assets/subscription/diamond.png"
 const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buyer, socket, transactionno}) => {
-    const [image, setImage] = useState("");
+    const [image, setImage] = useState(0);
+    const [topay, setTopay] = useState(0);
     const [cashier, setcashier] = useState([]);
     const [bibiliuser, setBibiliUser] = useState("");
     const [bibiliuserplayfabid, setBibiliUserPlayfabid] = useState("");
@@ -49,7 +50,7 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
         setBibiliUserPlayfabid(id)
         socket.on('badge', ({item}) => {
             
-            const coma = item.toLocaleString()
+            const coma = Math.floor(item)
             setImage(coma)
         })
 
@@ -59,6 +60,10 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
         socket.on("donegetlist", () => {
             socket.emit("refreshque", {room: room})
         })
+
+        const total = image + 1
+        setTopay(total.toLocaleString())
+
         return () => {
             // Clean up your socket event listener when the component unmounts
             socket.off('badge');
@@ -66,7 +71,8 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
             socket.off('admindetails');
             
         }
-    },[socket])
+        
+    },[socket,image])
     return(
         <>
         <MDBCollapse show={step2toggle}>       
@@ -138,9 +144,19 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
                                 </div>
                                 <div className="offset-2 col-lg-10">
                                 <MDBCardText className="text-mute">Top Up Amount:
-                                &nbsp; {image}
+                                &nbsp; {image.toLocaleString()}
                                 </MDBCardText>
-                                </div>                  
+                                </div>  
+                                <div className="offset-lg-2 col-lg-10">
+                                <MDBCardText className="text-mute d-flex mt-2">Admin Fee:
+                                &nbsp; $ 1
+                                </MDBCardText>                                
+                                </div>  
+                                <div className="offset-lg-2 col-lg-10">
+                                <MDBCardText className="text-mute d-flex mt-2">Total Amount to Pay:
+                                &nbsp; {topay}
+                                </MDBCardText>                                
+                                </div>               
                             </MDBCol>
                         </MDBRow>
                         <hr/>

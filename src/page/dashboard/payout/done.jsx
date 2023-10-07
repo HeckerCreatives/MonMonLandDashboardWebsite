@@ -41,7 +41,7 @@ const AdminPayoutDone = () => {
         })
     },[])
 
-    const handleReprocessed = (id) => {
+    const handleReprocessed = (id,admin) => {
         Swal.fire({
             icon: "warning",
             title: "Are you sure you want to mark as done this payout?",
@@ -55,7 +55,8 @@ const AdminPayoutDone = () => {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
-                    }
+                    },
+                    body: JSON.stringify({admin: admin})
                 }).then(result => result.json())
                 .then(data => {
                     if(data.message === "success"){
@@ -143,7 +144,7 @@ const AdminPayoutDone = () => {
                         >View Receipt</MDBBtn>
                         </td>
                         <td>
-                            <MDBBtn onClick={() => handleReprocessed(data._id)}>Re-Processed</MDBBtn>
+                            <MDBBtn onClick={() => handleReprocessed(data._id,data.admin)}>Re-Processed</MDBBtn>
                         </td>
                     </tr>
                     ))

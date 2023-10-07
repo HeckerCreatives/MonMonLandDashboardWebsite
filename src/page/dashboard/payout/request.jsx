@@ -14,7 +14,7 @@ const AdminPayoutRequest = () => {
     const [page, setPage] = useState(1),
     [total, setTotal] = useState(0),
     [payoutid, setPayoutId] = useState(""),
-    [selectedcashier, setSelectedCashier] = useState(""),
+    [selectedcashier, setSelectedCashier] = useState([]),
     [cashier, setCashier] = useState([]),
     [request, setRequest] = useState([]);
     const [basicModal, setBasicModal] = useState(false);
@@ -87,7 +87,8 @@ const AdminPayoutRequest = () => {
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                            admin: selectedcashier
+                            admin: selectedcashier.userId.userName,
+                            adminId: selectedcashier._id
                         })
                     }).then(result => result.json())
                     .then(data => {
@@ -214,7 +215,7 @@ const AdminPayoutRequest = () => {
                 <select  onChange={(e) => setSelectedCashier(e.target.value)} style={{width: "100%"}}>
                 <option selected disabled>Select</option>
                 {cashier.map((data, i) =>(
-                    <option key={`cashier-${i}`} value={data.userId.userName}>{data.userId.userName}</option>
+                    <option key={`cashier-${i}`} value={data}>{data.userId.userName}</option>
                 ))}
                 </select>
             </div>

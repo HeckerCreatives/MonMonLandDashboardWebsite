@@ -30,6 +30,7 @@ const CreateNews = () => {
   const [image, setImage] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
   const [file, setFile] = useState();
+  const [filename, setFilename] = useState("");
   // const handlePreview = e => {
   //   if (e.target.files[0].size / 1024 <= 25000) {
   //     setFile(e.target.files[0]);
@@ -93,6 +94,10 @@ const CreateNews = () => {
     setImage(url);
     setPreviewUrl(url)
   };
+  const handleFileUrl = (url) => {
+    // Use the uploaded image URL in the parent component or pass it to another component
+    setFilename(url);
+  };
 return (
     <>
       <MDBBtn
@@ -136,7 +141,7 @@ return (
                   </div>
                   </label>
                 </form> }                  
-                    <UploadWidget setImgUrl={handleImgUrl}/>
+                    <UploadWidget setImgUrl={handleImgUrl} setfileName={handleFileUrl}/>
                     </MDBCol>
                   <MDBCol>
                   <MDBCardText className="text-color mb-0 fw-bold">

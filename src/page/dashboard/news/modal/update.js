@@ -28,7 +28,7 @@ const UpdateNewsModal = ({ theme, news }) => {
   const [file, setFile] = useState("");
   const [titles, setTitles] = useState('');
   const [descriptions, setDescriptions] = useState('');
-
+  const [filename, setFilename] = useState("");
   const handlePreview = e => {
     setFile(e.target.files[0]);
     setImage(URL.createObjectURL(e.target.files[0]));
@@ -104,6 +104,10 @@ const handleImgUrl = (url) => {
   // Use the uploaded image URL in the parent component or pass it to another component
   setImage(url);
 };
+const handleFileUrl = (url) => {
+  // Use the uploaded image URL in the parent component or pass it to another component
+  setFilename(url);
+};
   return (
     <>
       <MDBBtn
@@ -144,7 +148,7 @@ const handleImgUrl = (url) => {
                   alt="preview"
                   className="img-fluid"
                 />                  
-                    <UploadWidget setImgUrl={handleImgUrl}/>
+                    <UploadWidget setImgUrl={handleImgUrl} setfileName={handleFileUrl}/>
                     </MDBCol>
                   <MDBCol>
                   <MDBCardText className="text-color mb-0 fw-bold">

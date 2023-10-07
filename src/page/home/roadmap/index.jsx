@@ -62,20 +62,20 @@ const Roadmap = () => {
         <MDBRow className="circle">
         
         <MDBCol className={`roadmapholder text-center ${
-        index === 1 || index === roadmap.length - 1 ? 'roadmapholderright' : index % 2 === 0 ? 'roadmapholder' : 'roadmapholderright'
+        index === 1 || index === roadmap?.length - 1 ? 'roadmapholderright' : index % 2 === 0 ? 'roadmapholder' : 'roadmapholderright'
         }`} key={roadmaps._id}>
 
         <MDBCol className={`itemposition itemcolumn ${
-        index === 1 || index === roadmap.length - 1 ? 'itempositionright' : index % 2 === 0 ? 'itemposition' : 'itempositionright'
+        index === 1 || index === roadmap?.length - 1 ? 'itempositionright' : index % 2 === 0 ? 'itemposition' : 'itempositionright'
         }`} >
         
-        <MDBTypography className="mb-1 fw-bold text-white" >{roadmaps.title.length > 50 ? `${roadmaps.title.substring(0,50)}...`: roadmaps.title}</MDBTypography>
+        <MDBTypography className="mb-1 fw-bold text-white" >{roadmaps?.title?.length > 50 ? `${roadmaps?.title.substring(0,50)}...`: roadmaps?.title}</MDBTypography>
 
         <MDBCol  className="woodcharbg">
-        <img src={roadmaps.image} alt="" id="woodchar" />
+        <img src={roadmaps?.image} alt="" id="woodchar" />
         </MDBCol>            
 
-        <MDBTypography className="mb-1 fw-bold text-wrap text-white m-lg-2" >{roadmaps.subtitle.length > 50 ? `${roadmaps.subtitle.substring(0,50)}...`: roadmaps.subtitle}</MDBTypography>
+        <MDBTypography className="mb-1 fw-bold text-wrap text-white m-lg-2" >{roadmaps?.subtitle?.length > 50 ? `${roadmaps.subtitle.substring(0,50)}...`: roadmaps?.subtitle}</MDBTypography>
         
         <img src={seemore} alt="" className="zoom-roadmap seemorebtn" 
         onClick={() => {

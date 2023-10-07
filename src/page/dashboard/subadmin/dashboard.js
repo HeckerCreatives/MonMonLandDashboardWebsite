@@ -8,21 +8,16 @@ import { useNavigate } from "react-router-dom";
 
 const SubAdminDashboard = () => {
     const auth = JSON.parse(localStorage.getItem("auth"))
-    const [viewdetails, setviewdetails] = useState(true)
     const [users, setUsers] = useState([]);
-    const [activeusers, setActiveUsers] = useState([]);
-    const [inactiveusers, setInActiveUsers] = useState([]);
-    const [ruby, setRuby] = useState([]);
-    const [emerald, setEmerald] = useState([]);
-    const [diamond, setDiamond] = useState([]);
     const [paidusers, setPaidUsers] = useState([]);
 
-    const [totalruby, setTotalRuby] = useState([]);
-    const [totalemerald, setTotalEmerald] = useState([]);
-    const [totaldiamond, setTotalDiamond] = useState([]);
+    const [totalautopayment, setTotalAutoPayment] = useState([]);
+    const [AutoAndManual, setAutoAndManual] = useState([]);
+    const [autopayment, setAutoPayment] = useState([]);
     const [totalpaidusers, setTotalPaidUsers] = useState([]);
     const navigate = useNavigate()
 
+    const [request, setRequest] = useState([])
     const [done, setDone] = useState([])
     const [processed, setProcessed] = useState([]);
     const [pendings, setPendings] = useState("");
@@ -37,6 +32,21 @@ const SubAdminDashboard = () => {
     }, [auth, navigate]);
 
     useEffect(() => {
+      fetch(`${process.env.REACT_APP_API_URL}payout/adminfind`,{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          status: "pending"
+        })
+      }).then(result => result.json())
+      .then(data => {
+          if(data.message === "success"){
+              setRequest(data.data)
+          }
+      })
+
       fetch(`${process.env.REACT_APP_API_URL}payout/agentfind`, {
           method: "POST",
           headers: {
@@ -93,8 +103,8 @@ const SubAdminDashboard = () => {
       const active = data.filter(e => e.isVerified === true)
       const inactive = data.filter(e => e.isVerified === false)
       setUsers(data)
-      setActiveUsers(active)
-      setInActiveUsers(inactive)        
+      // setActiveUsers(active)
+      // setInActiveUsers(inactive)        
     })
         
   },[]) 
@@ -103,51 +113,51 @@ const SubAdminDashboard = () => {
     fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
     .then(result => result.json())
     .then(data => {
-      const cashier = data.filter(e => e.cashier === auth.userName)
-      const ruby = cashier.filter(e => e.subscriptionlevel.subscriptionName
-      === "Ruby")
-      const emerald = cashier.filter(e => e.subscriptionlevel.subscriptionName
-      === "Emerald")
-      const diamond = cashier.filter(e => e.subscriptionlevel.subscriptionName
-      === "Diamond")  
+      const cashier = data.filter(e => e.cashier === auth.userName) 
       setPaidUsers(cashier)
-      setRuby(ruby)
-      setEmerald(emerald)
-      setDiamond(diamond)
     })
   },[])
 
   useEffect(()=>{
-      let totalPrice = 0;
-      let rubyPrice = 0;
-      let emeraldPrice = 0;
-      let diamondPrice = 0;
+    fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
+    .then(result => result.json())
+    .then(data => {
+      const cashier = data.filter(e => e.cashier === auth.userName)
+      setPaidUsers(cashier)
+    })
 
-      for (let i = 0; i < paidusers.length; i++) {
-        totalPrice += paidusers[i].price;
-      }
-      
+    fetch(`${process.env.REACT_APP_API_URL}coin/find`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({status: "success"})
+    })
+    .then(result => result.json())
+    .then(data => {
+      setAutoPayment(data.data)
+    })
 
-      for (let i = 0; i < ruby.length; i++) {
-        rubyPrice += ruby[i].price;
-      }
-      
 
-      for (let i = 0; i < emerald.length; i++) {
-        emeraldPrice += emerald[i].price;
-      }
-      
+  },[])
 
-      for (let i = 0; i < diamond.length; i++) {
-        diamondPrice += diamond[i].price;
-      }
-      
-      setTotalRuby(rubyPrice)
-      setTotalEmerald(emeraldPrice)
-      setTotalDiamond(diamondPrice)
-      setTotalPaidUsers(totalPrice)
-      
-  },[diamond,ruby,emerald,paidusers])
+  useEffect(()=>{
+    let totalPrice = 0;
+    let autoPrice = 0;
+
+    for (let i = 0; i < paidusers.length; i++) {
+      totalPrice += paidusers[i].price;
+    }
+    
+
+    for (let i = 0; i < autopayment.length; i++) {
+      autoPrice += autopayment[i].amount;
+    }
+    
+    setTotalAutoPayment(autoPrice)
+    setTotalPaidUsers(totalPrice)
+    setAutoAndManual(totalPrice + autoPrice)
+},[autopayment,paidusers])
 
     return (
         <MDBContainer fluid>
@@ -158,18 +168,15 @@ const SubAdminDashboard = () => {
             <DashCard 
               colSpan="4"
               icon={`dollar-sign`}
-              thtitle={`Total Pay-in`}
+              thtitle={`Total Top-Up`}
               cardtoptext={totalpaidusers.toLocaleString()}
               txtsup={`USDT`} 
               td1={true}
-              td1txttop={totalruby.toLocaleString()}
-              td1txtbot={`Ruby`} 
+              td1txttop={`${totalpaidusers.toLocaleString()} USDT`}
+              td1txtbot={`Manual`} 
               td2={true}
-              td2txttop={totalemerald.toLocaleString()}
-              td2txtbot={`Emerald`} 
-              td3={true}
-              td3txttop={totaldiamond.toLocaleString()}
-              td3txtbot={`Diamond`}
+              td2txttop={"0"}
+              td2txtbot={`Automated`} 
               />
           </MDBCol>
           <MDBCol className="my-2">
@@ -180,11 +187,14 @@ const SubAdminDashboard = () => {
               cardtoptext={approved.toLocaleString()}
               txtsup={`USDT`}  
               td1={true}
-              td1txttop={pendings.toLocaleString()}
+              td1txttop={request.length}
               td1txtbot={`Pending`} 
               td2={true}
-              td2txttop={approved.toLocaleString()}
-              td2txtbot={`Approved`}
+              td2txttop={processed.length}
+              td2txtbot={`Process`}
+              td3={true}
+              td3txttop={done.length}
+              td3txtbot={`Done`}
               />
           </MDBCol>
           
