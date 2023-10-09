@@ -295,10 +295,10 @@ const CsrAdminUpgradeSubscriptionManual = () => {
         .then(data => {
             setIsCashier(data)
         })
-      },[])
+      },[auth])
 
       const goonline = () => {
-        if(!color){
+        if(!color && iscashier){
             socket.emit('joinroom', { username: auth.userName, roomid: auth._id});
             
             setColor(true)
@@ -384,22 +384,22 @@ const CsrAdminUpgradeSubscriptionManual = () => {
                               </MDBCardText>
                               
                               <div className="offset-2 col-lg-10">
-                              <MDBCardText className="text-mute">Created Time: {Buyer?.createdAt ? new Date(Buyer.createdAt).toLocaleString(): ""}</MDBCardText>
+                              <MDBCardText className="text-mute">Created Time: {Buyer?.createdAt ? new Date(Buyer?.createdAt).toLocaleString(): ""}</MDBCardText>
                               </div>
                               <div className="offset-2 col-lg-10">
                               <MDBCardText className="text-mute">Transaction Number: &nbsp;{Buyer?.transactionnumber}
-                              &nbsp; <MDBIcon far icon="copy" className="icon-zoom" onClick={() =>kapy(Buyer.transactionnumber)}/>
+                              &nbsp; <MDBIcon far icon="copy" className="icon-zoom" onClick={() =>kapy(Buyer?.transactionnumber)}/>
                               </MDBCardText>
                               </div>
                               
                               <div className="offset-2 col-lg-10">
-                              <MDBCardText className="text-mute">No. of Transaction: &nbsp; {user.numberoftransaction}</MDBCardText>
+                              <MDBCardText className="text-mute">No. of Transaction: &nbsp; {user?.numberoftransaction}</MDBCardText>
                               </div>                            
                               <div className="offset-2 col-lg-10">
-                              <MDBCardText className="text-mute">Payment Limit: &nbsp; {user.paymentlimit} USDT</MDBCardText>
+                              <MDBCardText className="text-mute">Payment Limit: &nbsp; {user?.paymentlimit} USDT</MDBCardText>
                               </div>                            
                               <div className="offset-2 col-lg-10">
-                              <MDBCardText className="text-mute">Quantity: {user.paymentcollected} USDT</MDBCardText>
+                              <MDBCardText className="text-mute">Quantity: {user?.paymentcollected} USDT</MDBCardText>
                               </div>
                               </MDBCol>
 
@@ -414,10 +414,10 @@ const CsrAdminUpgradeSubscriptionManual = () => {
                                   <MDBCardText className="fw-bold">Payment Details</MDBCardText>
                                   </div>
                                   <div className="offset-2 col-lg-10">
-                                  <MDBCardText className="text-mute">Payment Gateway : {user.paymentmethod}</MDBCardText>
+                                  <MDBCardText className="text-mute">Payment Gateway : {user?.paymentmethod}</MDBCardText>
                                   </div>                            
                                   <div className="offset-2 col-lg-10">
-                                  <MDBCardText className="text-mute">Wallet Address: {user.paymentdetail}</MDBCardText>
+                                  <MDBCardText className="text-mute">Wallet Address: {user?.paymentdetail}</MDBCardText>
                                   </div>                 
                               </MDBCol>
                           </MDBRow>

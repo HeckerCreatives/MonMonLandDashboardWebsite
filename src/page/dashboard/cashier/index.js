@@ -116,7 +116,7 @@ const AvailableCashiers = () => {
 
                     const username = params.get('username');
                     
-                    socket.emit('playerready', {room: cashier.item[0].userId._id, username: username})
+                    socket.emit('playerready', {room: cashier?.item[0]?.userId._id, username: username})
                         }
                     })
                 }
