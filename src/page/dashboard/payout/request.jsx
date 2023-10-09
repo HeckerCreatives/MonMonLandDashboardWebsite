@@ -87,7 +87,7 @@ const AdminPayoutRequest = () => {
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                            admin: selectedcashier.userId.userName,
+                            admin: selectedcashier?.userId?.userName,
                             adminId: selectedcashier._id
                         })
                     }).then(result => result.json())

@@ -57,7 +57,8 @@ const SubAdminPayoutDone = () => {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
-                    }
+                    },
+                    body: JSON.stringify({admin: auth.userName})
                 }).then(result => result.json())
                 .then(data => {
                     if(data.message === "success"){
