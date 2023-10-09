@@ -177,12 +177,12 @@ const CreateCSRAccount = () => {
         
         <Breadcrumb title="CSR List"/>
         </MDBCol>        
-        <MDBCol md={3} className="">
+        {/* <MDBCol md={3} className="">
             <MDBInput type="search"                
             label="Search">
             </MDBInput>        
-        {/* <MDBIcon fas icon="search" /> */}        
-        </MDBCol>
+        <MDBIcon fas icon="search" />        
+        </MDBCol> */}
         </MDBRow>
         <MDBRow>
         <MDBCol md={6}>

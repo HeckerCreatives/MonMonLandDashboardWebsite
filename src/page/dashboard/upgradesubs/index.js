@@ -137,7 +137,7 @@ const UpgradeSubscriptionManual = () => {
 
     return (
         <MDBContainer fluid className="">
-        <Breadcrumb title="Upgrade Subscription" paths={[]}/>
+        <Breadcrumb title="Manage Top-Up" paths={[]}/>
         <MDBTypography className="fw-bold">Manual</MDBTypography>
         <MDBRow>
             <MDBCol>
@@ -170,7 +170,6 @@ const UpgradeSubscriptionManual = () => {
                     <th className="fw-bold" scope='col'>Username</th>
                     <th className="fw-bold" scope='col'>Payment Method</th>
                     <th className="fw-bold" scope='col'>Number of Transaction</th>
-                    <th className="fw-bold" scope='col'>Payment Limit</th>
                     <th className="fw-bold" scope='col'>Status</th>
                     <th className="fw-bold" scope='col'>Action</th>
                     </tr>
@@ -195,7 +194,6 @@ const UpgradeSubscriptionManual = () => {
                 </div>
                 </td>
                 <td>{game.numberoftransaction}</td>
-                <td>{game.paymentlimit}</td>
                 <td style={{ color: game.status === 'Close' ? 'red' : game.status === 'Open' ? 'green' : 'blue' }}>
                 {game.status}
                 </td>

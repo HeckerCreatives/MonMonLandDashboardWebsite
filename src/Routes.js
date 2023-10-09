@@ -54,13 +54,16 @@ import CsrPayoutProcess from "./page/dashboard/csr/payout/process";
 import CsrPayoutDone from "./page/dashboard/csr/payout/done";
 import TopUp from "./page/home/topup";
 import TopUpRedirect from "./page/home/topup/redirect";
+import AdminLoginLogs from "./page/dashboard/userloginlogs/adminlogs";
+import CsrLoginLogs from "./page/dashboard/userloginlogs/csrlogs";
+import SubadminCsrLoginLogs from "./page/dashboard/subadmin/csrloginlogs/csrlogs";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
     const url = new URL(window.location.href);
 
     if(url.href === `${window.location.origin}/register`){
-      navigate("/register?sponsor=monmonland&id=ECBFE0CB217B1E12")
+      navigate("/register?sponsor=monmonland&id=C2E59CE1938419B1")
     } 
     
   },[])
@@ -91,7 +94,7 @@ const Routers = () => {
         </Route>
         
         <Route path="upgradesubscription">
-        <Route path="manual" element={<UpgradeSubscriptionManual/>}/>
+        <Route path="managetopup" element={<UpgradeSubscriptionManual/>}/>
         </Route>
 
         <Route path="payout">
@@ -112,6 +115,11 @@ const Routers = () => {
           <Route path="updatenews" element={<UpdateNews/>}/>
           <Route path="updateroadmap" element={<UpdateRoadmap/>}/>
           <Route path="updategames" element={<Games/>}/>
+        </Route>
+
+        <Route path="userlogs">
+          <Route path="adminloginlogs" element={<AdminLoginLogs/>}/>
+          <Route path="csrloginlogs" element={<CsrLoginLogs/>}/>
         </Route>
 
         </Route>  
@@ -151,7 +159,11 @@ const Routers = () => {
           <Route path="updatenews" element={<UpdateNews/>}/>
           <Route path="updateroadmap" element={<UpdateRoadmap/>}/>
           <Route path="updategames" element={<Games/>}/>
-        </Route>        
+        </Route>  
+
+        <Route path="userlogs">
+        <Route path="csrloginlogs" element={<SubadminCsrLoginLogs/>}/>
+        </Route>      
         </Route>
 
         <Route path="Agent" element={""}>

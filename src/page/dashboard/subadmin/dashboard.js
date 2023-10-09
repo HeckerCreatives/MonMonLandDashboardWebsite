@@ -199,50 +199,6 @@ const SubAdminDashboard = () => {
           </MDBCol>
           
         </MDBRow>
-        <MDBRow>
-        <MDBCol className="my-2">
-            <DashCard 
-              colSpan="4"
-              icon={`user`} 
-              // thtitle={`Total User`} 
-              cardtoptext={"Coming Soon"}
-              // td1={true}
-              // td1txttop={`0`}
-              // td1txtbot={`Pearl`} 
-              // td2={true}
-              // td2txttop={ruby ? ruby.length : 0}
-              // td2txtbot={`Ruby`} 
-              // td3={true}
-              // td3txttop={emerald ? emerald.length : 0}
-              // td3txtbot={`Emerald`}
-              // td4={true}
-              // td4txttop={diamond ? diamond.length : 0}
-              // td4txtbot={`Diamond`}
-              />
-          </MDBCol>
-          <MDBCol className="my-2">
-          <DashCard 
-              colSpan="4"
-              icon={`shopping-bag`}
-              // thtitle={`Total Member`}
-              cardtoptext={"Merchandise Soon"}
-              // td1={true}
-              // td1txttop={activeusers ? activeusers.length : 0}
-              // td1txtbot={`Active`} 
-              // td2={true}
-              // td2txttop={inactiveusers ? inactiveusers.length : 0}
-              // td2txtbot={`Inactive`}
-              />
-          </MDBCol>
-        </MDBRow>
-        <MDBRow>
-          <MDBCol>
-            <Graph
-              users={users}
-              payin={paidusers}
-            />
-          </MDBCol>          
-        </MDBRow>
         
         
 

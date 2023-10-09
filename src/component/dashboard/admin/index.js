@@ -18,9 +18,9 @@ const AdminDashboard = () => {
     const [request, setRequest] = useState([]);
     const [processed, setProcessed] = useState([]);
     const [done, setDone] = useState([]);
-    const [autopayment, setAutoPayment] = useState([]);
-    const [AutoAndManual, setAutoAndManual] = useState([]);
-    const [ManualPayment, setManualPayment] = useState([]);
+    const [autopayment, setAutoPayment] = useState(0);
+    const [AutoAndManual, setAutoAndManual] = useState(0);
+    const [ManualPayment, setManualPayment] = useState(0);
 
     const [pearl, setPearl] = useState(0);
     const [ruby, setRuby] = useState(0);
@@ -104,7 +104,10 @@ const AdminDashboard = () => {
       })
     }).then(result => result.json())
     .then(data => {
-      setAutoPayment(data?.data?.amount)
+      if(data?.data !== null){
+        setAutoPayment(data?.data?.amount)
+      }
+      
     })
 
     fetch(`${process.env.REACT_APP_API_URL}coin/topupwallet`,{
@@ -119,9 +122,9 @@ const AdminDashboard = () => {
     .then(data => {
       setManualPayment(data?.data?.amount)
     })
-
-    setAutoAndManual(autopayment + ManualPayment)
-  },[])
+    const total = autopayment ? autopayment : 0 + ManualPayment
+    setAutoAndManual(total)
+  },[autopayment,ManualPayment])
 
 
   useEffect(()=> {

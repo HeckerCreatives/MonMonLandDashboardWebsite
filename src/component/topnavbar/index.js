@@ -113,7 +113,7 @@ const TopNavbar = ({auth, didToggle, setDidToggle}) => {
       }
       <div className="d-flex">
       {/* <ReferralButton auth={auth} /> */}
-          <ThemeContext.Consumer>
+          {/* <ThemeContext.Consumer>
             {({ changeTheme }) => (
               <MDBBtn
                 color="link"
@@ -127,7 +127,7 @@ const TopNavbar = ({auth, didToggle, setDidToggle}) => {
                 <i className={darkMode ? 'fas fa-sun' : 'fas fa-moon'}></i>
               </MDBBtn>
             )}
-          </ThemeContext.Consumer>      
+          </ThemeContext.Consumer>       */}
       <div className="dropdown">
       
         <MDBCol className="dropdown text d-lg-flex justify-content-end align-items-center panel-zoom" onClick={() => setVisibility(!visibility)}>

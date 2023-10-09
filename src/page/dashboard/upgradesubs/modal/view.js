@@ -42,7 +42,7 @@ const ViewCashier = ({ theme, id, checkedItems}) => {
       await  fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
           .then(response => response.json())
           .then(result => {
-                const data = result.filter(e => e.cashier ===  user.userId.userName)
+                const data = result.filter(e => e.cashier ===  user?.userId?.userName)
                 setHistory(data)          
           })}
     }
@@ -98,7 +98,7 @@ const ViewCashier = ({ theme, id, checkedItems}) => {
                    <MDBCardText className="text-color mt-3 mb-0 fw-bold">
                     Cashier :
                     </MDBCardText>
-                    <input className="square bordercolor rounded mb-2 p-1" style={{width:'100%'}} defaultValue={user ? user.userId.userName : null} disabled></input>
+                    <input className="square bordercolor rounded mb-2 p-1" style={{width:'100%'}} defaultValue={user ? user?.userId?.userName : null} disabled></input>
                     <MDBCardText className="text-color mt-3 mb-0 fw-bold">
                     Payment Method :
                     </MDBCardText>
@@ -115,12 +115,12 @@ const ViewCashier = ({ theme, id, checkedItems}) => {
                     </MDBCardText>
                     <input className="square bordercolor rounded mb-2 p-1" defaultValue={user.paymentdetail} style={{width:'100%'}} disabled></input> 
                    </MDBCol>
-                    <MDBCol lg={6}>
+                    {/* <MDBCol lg={6}>
                     <MDBCardText className="text-color mt-3 mb-0 fw-bold">
                     Payment Limit :
                     </MDBCardText>
                     <input className="square bordercolor rounded mb-2 p-1" defaultValue={user.paymentlimit} style={{width:'100%'}} disabled></input>
-                    </MDBCol>
+                    </MDBCol> */}
                     <MDBCol lg={6}>
                     <MDBCardText className="text-color mt-3 mb-0 fw-bold">
                     Status :
@@ -139,7 +139,6 @@ const ViewCashier = ({ theme, id, checkedItems}) => {
                     <th className="fw-bold" scope='col'>Date Created</th>
                     <th className="fw-bold" scope='col'>Cashier Username</th>
                     <th className="fw-bold" scope='col'>Transaction Number</th>
-                    <th className="fw-bold" scope='col'>Subscription Level</th>
                     <th className="fw-bold" scope='col'>Price</th>
                     <th className="fw-bold" scope='col'>Client Username</th>
                     </tr>
@@ -155,9 +154,6 @@ const ViewCashier = ({ theme, id, checkedItems}) => {
                 </td>
                 <td>
                     {data.transactionnumber}
-                </td>
-                <td>
-                    {data.subscriptionlevel?.subscriptionName}
                 </td>
                 <td>
                     {`$${data.price}`}

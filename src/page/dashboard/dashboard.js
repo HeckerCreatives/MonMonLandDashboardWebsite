@@ -92,7 +92,7 @@ const Dashboard = () => {
           children: [
             {
               name: "Manual",
-              path: "/dashboard/Administrator/upgradesubscription/manual"
+              path: "/dashboard/Administrator/upgradesubscription/managetopup"
             }
           ],
         },
@@ -171,12 +171,12 @@ const Dashboard = () => {
         icon: "user",
         children: [
           {
-            name: "Admin",
-            path: "/dashboard/Administrator/manageaccount/createadminacc",
+            name: "Admin Login Logs",
+            path: "/dashboard/Administrator/userlogs/adminloginlogs",
           },
           {
-            name: "CSR",
-            path: "/dashboard/Administrator/manageaccount/createcsracc",
+            name: "Csr Login Logs",
+            path: "/dashboard/Administrator/userlogs/csrloginlogs",
           },
         ],
       },
@@ -313,7 +313,7 @@ const Dashboard = () => {
       },
       {
         name: "CSR Logs",
-        path: "/dashboard/SubAdministrator/manageaccount/createcsracc",
+        path: "/dashboard/SubAdministrator/userlogs/csrloginlogs",
         icon: "user",
         children: [
           // {

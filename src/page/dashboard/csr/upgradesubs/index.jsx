@@ -219,9 +219,10 @@ const CsrAdminUpgradeSubscriptionManual = () => {
                                 cashierId: user._id,
                                 amount: totalprice,
                                 stats: stats,
-                              // below is for payment history
+                              // below is for payment history 
                                 cashier: user.userId.userName,
-                                // subscriptionlevel: subscriptionId,
+                                adminId:auth._id,
+                                idnitopup: process.env.REACT_APP_MANUALID,
                                 price: totalprice,
                                 clientusername: bibiliuser,
                                 image: image,
