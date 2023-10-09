@@ -270,7 +270,7 @@ const CreateCSRAccount = () => {
           <MDBModalContent>
             <form autoComplete="off" onSubmit={e => createcsr(e)}>
             <MDBModalHeader style={{background:"#A57552"}}>
-              <MDBModalTitle className="text-light">Create an Admin Account</MDBModalTitle>
+              <MDBModalTitle className="text-light">Create an Csr Account</MDBModalTitle>
               {/* <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn> */}
             </MDBModalHeader>
             <MDBModalBody>
