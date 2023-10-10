@@ -449,7 +449,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                   </div>
                                   <div className="offset-lg-2 col-lg-10">
                                   <MDBCardText className="text-mute d-flex mt-2">Admin Fee:
-                                  &nbsp; $ 1
+                                  &nbsp; $ 1.00
                                   </MDBCardText>                                
                                   </div>
                                   <div className="offset-lg-2 col-lg-10 mt-3">

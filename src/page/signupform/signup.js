@@ -132,7 +132,7 @@ const SignUp = () => {
           <MDBTypography className="mb-0">
             Username        
           </MDBTypography>
-          <input className="square border border-dark rounded mb-2 p-1" onChange={e => setUserName(e.target.value)} style={{width:'100%'}} placeholder="Enter Username here" required></input>
+          <input className="square border border-dark rounded mb-2 p-1" onChange={e => setUserName(e.target.value)} style={{width:'100%'}} placeholder="Enter Username here" maxLength={15} required></input>
           
           </MDBCol>
           <MDBCol lg={6}>
@@ -143,12 +143,12 @@ const SignUp = () => {
           
           <MDBCol md={6}>
           <MDBTypography className="mb-0">Password</MDBTypography>
-          <input className="square border border-dark rounded mb-2 p-1" onChange={e => setPassword(e.target.value)} style={{width:'100%'}} placeholder="Enter Password here" type='password' required></input>
+          <input className="square border border-dark rounded mb-2 p-1" onChange={e => setPassword(e.target.value)} style={{width:'100%'}} placeholder="Enter Password here" type='password' maxLength={15} required></input>
           
           </MDBCol>
           <MDBCol md={6}>
           <MDBTypography className="mb-0">Confirm Password</MDBTypography>
-          <input className="square border border-dark rounded mb-2 p-1" onChange={e => setconfirmPassword(e.target.value)} style={{width:'100%'}} placeholder="Confirm Password here" type="password"></input>
+          <input className="square border border-dark rounded mb-2 p-1" onChange={e => setconfirmPassword(e.target.value)} style={{width:'100%'}} placeholder="Confirm Password here" type="password" maxLength={15}></input>
           </MDBCol>
           <MDBCol md={6}>
 
