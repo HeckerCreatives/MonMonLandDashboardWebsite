@@ -17,6 +17,7 @@ import {
   MDBCardBody,
   MDBRow,
   MDBCol,
+  MDBSpinner
 } from "mdb-react-ui-kit";
 import Swal from "sweetalert2";
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
@@ -29,6 +30,7 @@ const UpdateNewsModal = ({ theme, news }) => {
   const [titles, setTitles] = useState('');
   const [descriptions, setDescriptions] = useState('');
   const [filename, setFilename] = useState("");
+  const [isloading, setIsLoading] = useState(false);
   const handlePreview = e => {
     setFile(e.target.files[0]);
     setImage(URL.createObjectURL(e.target.files[0]));
@@ -36,6 +38,7 @@ const UpdateNewsModal = ({ theme, news }) => {
 
   function updatenews (e) {
     e.preventDefault();
+    setIsLoading(true)
     fetch(`${process.env.REACT_APP_API_URL}news/${news._id}/update`, {
         method:'PUT',
         headers: {
@@ -50,6 +53,7 @@ const UpdateNewsModal = ({ theme, news }) => {
     .then(data => {
 
         if (data) {
+          setIsLoading(false)
           Swal.fire({
             title: "Updated Successfully",
             icon: "success",
@@ -60,6 +64,7 @@ const UpdateNewsModal = ({ theme, news }) => {
             }
           })
         } else {
+          setIsLoading(false)
           Swal.fire({
             title: "Update Unsuccessfully",
             icon: "error",
@@ -170,7 +175,7 @@ const handleFileUrl = (url) => {
                   Close
                 </MDBBtn>
                 <MDBBtn type="submit" className={`fw-bold`}>
-                  Save changes
+                {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Save changes"}
                 </MDBBtn>
               </MDBModalFooter>
             </form>

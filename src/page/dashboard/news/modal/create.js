@@ -18,6 +18,7 @@ import {
   MDBCardBody,
   MDBRow,
   MDBCol,
+  MDBSpinner,
 } from "mdb-react-ui-kit";
 import logo from "../../../../assets/header/big logo.png"
 import Swal from "sweetalert2";
@@ -31,6 +32,8 @@ const CreateNews = () => {
   const [previewUrl, setPreviewUrl] = useState("");
   const [file, setFile] = useState();
   const [filename, setFilename] = useState("");
+  const [isloading, setIsLoading] = useState(false);
+
   // const handlePreview = e => {
   //   if (e.target.files[0].size / 1024 <= 25000) {
   //     setFile(e.target.files[0]);
@@ -56,6 +59,7 @@ const CreateNews = () => {
 
   function addnews (e) {
     e.preventDefault()
+    setIsLoading(true)
     // const {title, description} = e.target
     fetch(`${process.env.REACT_APP_API_URL}news/addnews`, {
       method:'POST',
@@ -70,6 +74,7 @@ const CreateNews = () => {
     }).then(result => result.json())
     .then(data => {
       if (data) {
+        setIsLoading(false)
 				Swal.fire({
 					title: "Updated Successfully",
 					icon: "success",
@@ -81,6 +86,7 @@ const CreateNews = () => {
         })
 				
 			} else {
+        setIsLoading(false)
 				Swal.fire({
 					title: "Update Unsuccessfully",
 					icon: "error",
@@ -163,7 +169,8 @@ return (
                   Cancel
                 </MDBBtn>
                 <MDBBtn type="submit" className={``}>
-                  Add News
+                {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Add News"}
+                  
                 </MDBBtn>
               </MDBModalFooter>
             </form>

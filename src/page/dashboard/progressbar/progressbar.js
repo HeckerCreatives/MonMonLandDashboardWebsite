@@ -17,10 +17,10 @@ const UpdateProgressBar = () => {
             [total, setTotal] = useState(0);
 
     useEffect(() => {
-        let totalPages = Math.floor(list.length / 5);
-        if (list.length % 5 > 0) totalPages += 1;
+        let totalPages = Math.floor(history.length / 5);
+        if (history.length % 5 > 0) totalPages += 1;
         setTotal(totalPages);
-        }, [list]);
+        }, [history]);
     const seperator = (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
@@ -136,7 +136,7 @@ const UpdateProgressBar = () => {
         <MDBContainer fluid className="">
         <Breadcrumb title="Landing Page Header" paths={[]}/>
         
-        <MDBRow>
+        {/* <MDBRow>
         <MDBCol className="mt-3 text-center align-items-center d-flex flex-column">
         <MDBTypography tag={'h3'} className=" fw-bold">
             Progress Bar
@@ -148,12 +148,12 @@ const UpdateProgressBar = () => {
             <MDBProgressBar className="progressbar" width={progress} valuemin={initialbar} valuemax={totalbar}/>
         </MDBProgress> 
         </MDBCol>
-        </MDBRow>
+        </MDBRow> */}
 
 
         <MDBRow className="my-4 align-items-center justify-content-center">
         
-        <MDBCol md={6}  className="mt-3">
+        {/* <MDBCol md={6}  className="mt-3">
         <form onSubmit={updateinitial}>
         <MDBCard className="" alignment="end">
             <MDBCardBody>
@@ -174,7 +174,7 @@ const UpdateProgressBar = () => {
         </MDBCard>
         </form>
         
-        </MDBCol>      
+        </MDBCol> */}
         <MDBCol md={6}  className="mt-3">
         <form onSubmit={e => updatetargetvalue(e)}>
         <MDBCard className="" alignment="end">
@@ -216,7 +216,7 @@ const UpdateProgressBar = () => {
                 {history.map((lists)=>(
                     <tr key={lists._id}>
                     <td>
-                    {(initialbar)} / {(totalbar)}
+                    {/* {(initialbar)} / {(totalbar)} */}{(totalbar)}
                     </td>
                     <td>
                     {new Date(lists.createdAt).toLocaleString()}

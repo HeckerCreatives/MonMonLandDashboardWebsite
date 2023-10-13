@@ -18,6 +18,7 @@ import {
   MDBModalTitle,
   MDBRow,
   MDBTextArea,
+  MDBSpinner
 } from "mdb-react-ui-kit";
 import Swal from "sweetalert2";
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet"
@@ -29,11 +30,13 @@ const UpdateRoadmapSlot = ({roadmap}) => {
   const toggleShow = () => setShow(!show);
   const [image, setImage] = useState("");
   const [filename, setFilename] = useState("");
+  const [isloading, setIsLoading] = useState(false);
   // const [isChecked, setIsChecked] = useState(false);
   // const defaultimg = process.env.REACT_APP_GAMEDEFAULTIMG;
   
   function updategame (e) {
     e.preventDefault()
+    setIsLoading(true)
     fetch(`${process.env.REACT_APP_API_URL}roadmap/${roadmap._id}/update`, {
       method:'PUT',
       headers: {
@@ -47,6 +50,7 @@ const UpdateRoadmapSlot = ({roadmap}) => {
     }).then(result => result.json())
     .then(data => {
       if (data) {
+        setIsLoading(false)
 				Swal.fire({
 					title: "Updated Successfully",
 					icon: "success",
@@ -58,6 +62,7 @@ const UpdateRoadmapSlot = ({roadmap}) => {
         })
 				
 			} else {
+        setIsLoading(false)
 				Swal.fire({
 					title: "Update Unsuccessfully",
 					icon: "error",
@@ -142,7 +147,8 @@ return (
                 Cancel
                 </MDBBtn>
                 <MDBBtn type="submit" className={``}>
-                 Update 
+                 
+                 {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Update"}
                 </MDBBtn>
               </MDBModalFooter>
             </form>

@@ -18,8 +18,10 @@ import {
 } from "mdb-react-ui-kit";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
-
+import AddFundsModal from "../page/home/addfunds";
 const Navbar = ({ links }) => {
+  const [basicModal, setBasicModal] = useState(false);
+  const toggleShow = () => setBasicModal(!basicModal);
   const [showNav, setShowNav] = useState(false);
   const [active, setActive] = useState("");
   const navigate = useNavigate();
@@ -37,6 +39,7 @@ const Navbar = ({ links }) => {
 
 
   return (
+    <>
     <MDBNavbar
       expand="lg"
       className="custom-landing-navbar py-0 m-5 fixed-top"      
@@ -92,7 +95,7 @@ const Navbar = ({ links }) => {
             ))}
             <MDBNavbarItem className="ms-lg-auto text-center px-4">
                   <MDBNavbarLink>
-                  <a href={`${window.location.origin}/register?sponsor=monmonland&id=ECBFE0CB217B1E12`} ><img src={playnow} id="joinnow" alt="" className="zoom-playnow mb-2"></img></a>
+                  <img src={playnow} id="joinnow" alt="" className="zoom-playnow mb-2" onClick={toggleShow}></img>
                   </MDBNavbarLink>
             </MDBNavbarItem>
             
@@ -101,7 +104,8 @@ const Navbar = ({ links }) => {
               
       </MDBContainer>      
     </MDBNavbar>
-    
+    <AddFundsModal basicModal={basicModal} setBasicModal={setBasicModal}/>
+    </>
   );
 };
 

@@ -6,7 +6,7 @@ import PaginationPager from "../../../component/pagination/index"
 import CreateCashier from "./modal/create";
 import ViewCashier from "./modal/view";
 import UpdateCashier from "./modal/edit";
-
+import { handlePagination } from "../../../component/utils";
 const UpgradeSubscriptionManual = () => {
 
     const [games, setGames] = useState([]),
@@ -175,7 +175,7 @@ const UpgradeSubscriptionManual = () => {
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody className="text-center">
-                {games.map((game,i) =>(
+                {handlePagination(games, page, 5)?.map((game,i) =>(
                 <tr key={`game-${i}`}>
                 <td>
                   <input type="checkbox"

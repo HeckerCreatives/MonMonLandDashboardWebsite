@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBTypography,MDBProgress, MDBProgressBar, MDBBtn, MDBSpinner } from "mdb-react-ui-kit";
+import { MDBContainer, MDBRow, MDBCol, MDBIcon,MDBTypography,MDBProgress, MDBProgressBar, MDBBtn, MDBSpinner } from "mdb-react-ui-kit";
 import "./index.css";
 import biglogo from "../../../assets/header/big logo2.gif"
 import dahonleft from "../../../assets/BG/leaves Left.png"
@@ -7,7 +7,7 @@ import dahonright from "../../../assets/BG/leaves Right.png"
 import cloudA from "../../../assets/BG/cloud A.png"
 import cloudB from "../../../assets/BG/cloud B.png"
 import cloudC from "../../../assets/BG/cloud C.png"
-
+import usdt from "../../../assets/usdt.png"
 
 const Header = () => {
     const [isLoading, setIsLoading] = useState(false)
@@ -72,33 +72,40 @@ const Header = () => {
                 </div>
             </MDBRow>
             
-            <MDBRow>
-                <MDBCol className=" mt-5 mb-5">
-                <MDBTypography className="position-relative h1 fw-bold text-center text-white">
-                    <p className="stroke ">Game Activity</p>
-                </MDBTypography>
-                
-                <MDBCol className="d-flex justify-content-center align-items-center text-center">
-                {isLoading  ? 
-                <MDBSpinner color="warning"></MDBSpinner>
-                :
-                <>
-                <MDBProgress height='50' className="innerbar">
-                    <MDBProgressBar className="progressbar" width={progress} valuemin={initialbar} valuemax={totalbar}/>                                     
-                </MDBProgress> 
-                <MDBTypography className="text mt-3 fw-bold">{(initialbar)}/{(totalbar)}</MDBTypography>
-                </>
-                }
-                                      
+            <MDBRow className="align-items-center justify-content-center">
+                <MDBCol lg={2} className="mb-5">
+                <div className="card">
+                <MDBIcon fas icon="users" size="4x"/>
+                <strong style={{fontSize: "2rem"}}>999,999,999</strong>
+                </div>        
                 </MDBCol>
-                                
-                </MDBCol>
+            </MDBRow>
+                <MDBRow className="align-items-center justify-content-center"> 
+                    <MDBCol lg={1} className="bg-white text-center mx-2">
+                    <div>
+                    <strong style={{fontSize: "2rem"}}>MC</strong>
+                    </div>
+                    <div className="d-flex">
+                    <img src={usdt} alt="" style={{width: "40px"}}/>
+                    <strong className="mx-2" style={{fontSize: "2rem"}}>0.001</strong> 
+                    </div> 
+                    <p>999,999,999</p>         
+                    </MDBCol>
+                    <MDBCol lg={1} className="bg-white text-center mx-2">
+                    <div>
+                    <strong style={{fontSize: "2rem"}}>MG</strong> 
+                    </div>
+                    <div className="d-flex">
+                    <img src={usdt} alt="" style={{width: "40px"}}/>
+                    <strong className="mx-2" style={{fontSize: "2rem"}}>1.00</strong> 
+                    </div> 
+                    <p>999,999,999</p>         
+                    </MDBCol>
                 </MDBRow>
-
                 <MDBRow> 
-                    <MDBCol className="text-center">
-                    <MDBBtn color="transparent" className="shadow-0">
-                    {/* <img src={playnow} id="playnow" alt="" className="img-fluid"></img>                     */}
+                    <MDBCol className="my-3 text-center">
+                    <MDBBtn color="" className=" bg-primary shadow-0">
+                    DOWNLOAD NOW
                     </MDBBtn>                       
                     </MDBCol>
                 </MDBRow>

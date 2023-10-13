@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
-import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol, MDBIcon, MDBTable, MDBTableHead, MDBTableBody, MDBTypography, MDBCardText} from "mdb-react-ui-kit";
+import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol, MDBIcon, MDBTable, MDBTableHead, MDBTableBody, MDBTypography, MDBCardText,MDBSpinner,} from "mdb-react-ui-kit";
 import Swal from "sweetalert2"
 import Breadcrumb from "../../../../component/breadcrumb";
 import UpdateDescriptionModal from "../modal/editmodal";
@@ -17,12 +17,13 @@ const UpdateEmerald = () => {
     const badge = process.env.REACT_APP_EMERALD,
     [page, setPage] = useState(1),
     [total, setTotal] = useState(0);
-    
+    const [isloading, setIsLoading] = useState(false);
+
     useEffect(() => {
         let totalPages = Math.floor(descriptionlist.length / 5);
         if (descriptionlist.length % 5 > 0) totalPages += 1;
         setTotal(totalPages);
-        }, [descriptionlist]);    
+    }, [descriptionlist]);    
 
     useEffect(()=>{
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/find`)
@@ -42,6 +43,7 @@ const UpdateEmerald = () => {
 
     function updatesubsname (e) {
         e.preventDefault();
+        setIsLoading(true)
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/update`, {
             method:'PUT',
             headers: {
@@ -54,6 +56,7 @@ const UpdateEmerald = () => {
         .then(data => {
 
             if (data) {
+                setIsLoading(false)
 				Swal.fire({
 					title: "Updated Successfully",
 					icon: "success",
@@ -64,6 +67,7 @@ const UpdateEmerald = () => {
                     }
                   })				
 			} else {
+                setIsLoading(false)
 				Swal.fire({
 					title: "Update Unsuccessfully",
 					icon: "error",
@@ -75,6 +79,7 @@ const UpdateEmerald = () => {
 
     function updatesubsamount (e) {
         e.preventDefault();
+        setIsLoading(true)
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/update`, {
             method:'PUT',
             headers: {
@@ -86,6 +91,7 @@ const UpdateEmerald = () => {
         }).then(result => result.json())
         .then(data => {
             if (data) {
+                setIsLoading(false)
 				Swal.fire({
 					title: "Updated Successfully",
 					icon: "success",
@@ -96,6 +102,7 @@ const UpdateEmerald = () => {
                     }
                   })				
 			} else {
+                setIsLoading(false)
 				Swal.fire({
 					title: "Update Unsuccessfully",
 					icon: "error",
@@ -107,6 +114,7 @@ const UpdateEmerald = () => {
 
     function updatesubsimage (e) {
         e.preventDefault();
+        setIsLoading(true)
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/update`, {
             method:'PUT',
             headers: {
@@ -119,6 +127,7 @@ const UpdateEmerald = () => {
         .then(data => {
 
             if (data) {
+                setIsLoading(false)
 				Swal.fire({
 					title: "Updated Successfully",
 					icon: "success",
@@ -129,6 +138,7 @@ const UpdateEmerald = () => {
                     }
                   })				
 			} else {
+                setIsLoading(false)
 				Swal.fire({
 					title: "Update Unsuccessfully",
 					icon: "error",
@@ -139,6 +149,7 @@ const UpdateEmerald = () => {
     }
     function adddescription (e) {
         e.preventDefault();
+        setIsLoading(true)
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/addnewdesc`,{
             method:'POST',
             headers: {
@@ -150,6 +161,7 @@ const UpdateEmerald = () => {
         }).then(result => result.json())
         .then(data => {
             if (data) {
+                setIsLoading(false)
 				Swal.fire({
 					title: "Add Successfully",
 					icon: "success",
@@ -161,6 +173,7 @@ const UpdateEmerald = () => {
                   })
 				
 			} else {
+                setIsLoading(false)
 				Swal.fire({
 					title: "Update Unsuccessfully",
 					icon: "error",
@@ -218,7 +231,7 @@ const UpdateEmerald = () => {
                     outline color="dark" 
                     type="submit" 
                     className="mx-1">
-                    Save
+                    {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Save"}
                     </MDBBtn>
                     </div>
             </form>
@@ -238,7 +251,9 @@ const UpdateEmerald = () => {
                     <MDBInput type="text" label={pearldata.subscriptionName} onChange={e => setTitles(e.target.value)}/>
                     </div>
                     <div className="mx-1">
-                    <MDBBtn outline color="dark" type="submit">update</MDBBtn>
+                    <MDBBtn outline color="dark" type="submit">
+                    {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Update"}
+                    </MDBBtn>
                     </div>                              
                     </MDBCol>                            
                 
@@ -256,7 +271,9 @@ const UpdateEmerald = () => {
                     <MDBInput type="text" label={pearldata.amount} onChange={e => setAmounts(e.target.value)}/>
                     </div>                        
                     <div className="mx-1">
-                    <MDBBtn outline color="dark" type="submit">update</MDBBtn> 
+                    <MDBBtn outline color="dark" type="submit">
+                    {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Update"}
+                    </MDBBtn> 
                     </div>    
                     </MDBCol>                 
                 
@@ -277,7 +294,7 @@ const UpdateEmerald = () => {
 
             <MDBBtn className="mx-1" outline color="dark" type="submit">
             <MDBIcon fas icon="plus"/>
-            &nbsp;Add Perks
+            &nbsp; {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Add Perks"}
             </MDBBtn>
             </MDBCol>
             </form>

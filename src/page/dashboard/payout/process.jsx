@@ -1,9 +1,10 @@
-import { MDBContainer, MDBTable, MDBTableHead, MDBTableBody, MDBBtn,MDBRow, MDBCol, MDBTypography } from "mdb-react-ui-kit";
+import { MDBContainer, MDBTable, MDBTableHead, MDBTableBody, MDBBtn,MDBRow, MDBCol, MDBTypography,MDBSpinner  } from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
 import PaginationPager from "../../../component/pagination";
 import Swal from "sweetalert2";
 import { Toast } from "../../../component/utils"
 import UploadWidget from "../../../component/uploadwidget/uploadwidet";
+import { handlePagination } from "../../../component/utils";
 const AdminPayoutProcess = () => {
     const auth = JSON.parse(localStorage.getItem("auth"));
     const [page, setPage] = useState(1),
@@ -12,6 +13,7 @@ const AdminPayoutProcess = () => {
     [filename, setFilename] = useState(""),
     [processed, setProcessed] = useState([]);
     const [selectedColor, setSelectedColor] = useState('all'); // Initialize with an empty string
+    const [isloading, setIsLoading] = useState(false);
 
     const filteredRequest = processed.filter((data) => {
         const rowColorClass = getRowColorClass(data.createdAt);
@@ -43,6 +45,7 @@ const AdminPayoutProcess = () => {
     },[])
 
     const handleDone = (id) => {
+        setIsLoading(true)
         Swal.fire({
             icon: "warning",
             title: "Are you sure you want to mark as done this payout?",
@@ -64,6 +67,7 @@ const AdminPayoutProcess = () => {
                 }).then(result => result.json())
                 .then(data => {
                     if(data.message === "success"){
+                        setIsLoading(false)
                         Swal.fire({
                             icon: "success",
                             title: "Payout is now mark as done",
@@ -73,6 +77,7 @@ const AdminPayoutProcess = () => {
                             }
                         })
                     } else {
+                        setIsLoading(false)
                         Swal.fire({
                             icon: "error",
                             title: data.data,
@@ -83,6 +88,8 @@ const AdminPayoutProcess = () => {
                         })
                     }
                 })
+            } else {
+                setIsLoading(false)
             }
         })
     }
@@ -171,7 +178,7 @@ const AdminPayoutProcess = () => {
                 </MDBTableHead>
                 <MDBTableBody className="text-white">
                 { filteredRequest.length !== 0 ?
-                    filteredRequest.map((data,i) => (
+                    handlePagination(filteredRequest, page,5)?.map((data,i) => (
                     <tr key={`processed-${i}`} className={`bg-${getRowColorClass(data.createdAt)}`}>
                         <td>{data.id}</td>
                         <td>{data.username}</td>
@@ -182,7 +189,9 @@ const AdminPayoutProcess = () => {
                         <td>{data.paymentmethod}</td>
                         <td>{data.admin}</td>
                         <td>
-                            <MDBBtn disabled={!imageStatus[i]} className="mx-1" onClick={() => handleDone(data._id)}>Done</MDBBtn>
+                            <MDBBtn disabled={!imageStatus[i]} className="mx-1" onClick={() => handleDone(data._id)}>
+                            {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Done"}
+                            </MDBBtn>
                             <MDBBtn className="mx-1" onClick={() => copywallet(data.walletaddress)}>Copy Wallet</MDBBtn>
                             <UploadWidget
                             setfileName={handleFilename} 

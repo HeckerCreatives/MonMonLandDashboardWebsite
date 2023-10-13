@@ -7,16 +7,21 @@ import { MDBContainer, MDBTypography,MDBCard,
     MDBCol} from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
 import TopUpLogin from "./topuplogin";
+import Swal from "sweetalert2";
 const TopUp = () =>{
     const [basicModal, setBasicModal] = useState(false);
+    // const [toggleTwoModal, setToggleTwoModal] = useState(false);
+    // const [hasquery, setHasQuery] = useState(false)
     const [username, setUsername] = useState("")
     const [amount, setAmount] = useState(0);
     const [selectedtopup, setSelectedTopUp] = useState("");
     const [bundle, setBundle] = useState("");
     const [bundledes, setBundleDes] = useState("");
     const [bundlesubs, setBundleSubs] = useState("");
+    const auth = JSON.parse(localStorage.getItem("auth"))
     const toggleShow = () => setBasicModal(!basicModal);
-    
+    // const toggleShow1 = () => setToggleTwoModal(!toggleTwoModal);
+
     useEffect(() => {
         const queryParams = new URL(window.location.href);
         const value = new URLSearchParams(queryParams.search);
@@ -26,12 +31,30 @@ const TopUp = () =>{
         const decrypted = new URLSearchParams(final);
         const username = decrypted.get('username');
         setUsername(username)
-    },[])
+        
+        // if(decrypt !== null){
+        //     setHasQuery(true)
+        // }
+
+       if(!decrypt && !auth){
+        Swal.fire({
+            icon: "warning",
+            title: "Do not Tamper Url",
+            allowOutsideClick: false,
+            allowEscapeKey: false
+        }).then(() => {
+            window.location.href = "/"
+        })
+       } else {
+
+       }
+    },[auth])
 
     const handleFunds = (e) => {
         setAmount(e)
         setSelectedTopUp("funds")
         toggleShow()
+        
     }
 
     const handleBundles = (e,bundle,des,subs) => {
@@ -44,7 +67,7 @@ const TopUp = () =>{
     }
     return(
         <MDBContainer fluid>
-        <MDBTypography tag="h1" className="text-end fw-bold">Login as: {username}</MDBTypography>
+        <MDBTypography tag="h1" className="text-end fw-bold">Login as: {auth ? auth.Username : username}</MDBTypography>
         <MDBRow>
         <MDBTypography tag="h1" className="text-center fw-bold">SELECT FUNDS</MDBTypography>
             <MDBCol>
@@ -159,7 +182,11 @@ const TopUp = () =>{
         selectedtopup={selectedtopup} 
         amount={amount} 
         basicModal={basicModal} 
-        setBasicModal={setBasicModal}/>
+        setBasicModal={setBasicModal}
+        // toggleTwoModal={toggleTwoModal}
+        // setToggleTwoModal={setToggleTwoModal}
+        />
+        
         </MDBContainer>
     )
 }

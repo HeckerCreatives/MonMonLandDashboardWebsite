@@ -57,6 +57,8 @@ import TopUpRedirect from "./page/home/topup/redirect";
 import AdminLoginLogs from "./page/dashboard/userloginlogs/adminlogs";
 import CsrLoginLogs from "./page/dashboard/userloginlogs/csrlogs";
 import SubadminCsrLoginLogs from "./page/dashboard/subadmin/csrloginlogs/csrlogs";
+import FAQ from "./page/home/faq";
+import Media from "./page/home/media";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -206,9 +208,9 @@ const Routers = () => {
         
         <Route path="player/:userId/register" element={<SignUpPlayer />}/>
       </Route>
-      {/* <Route path="/signup" element={<SignUp />}/> */}
+      <Route path="/faq" element={<FAQ />}/>
       <Route path="/login" element={<Login />}/>
-      {/* <Route path="/verification/:userId" element={<StepVerification />}/> */}
+      <Route path="/media" element={<Media />}/>
       <Route path="/cashier" element={<AvailableCashiers/>}/>
       <Route path="/topup" element={<TopUp />}/>
       <Route path="/payment/success" element={<SuccessPage/>} />

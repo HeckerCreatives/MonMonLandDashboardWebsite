@@ -22,27 +22,32 @@ import {
   import Swal from "sweetalert2";
   import { useNavigate } from "react-router-dom";
   import logo from '../../../assets/header/big logo.png'
-const TopUpLogin = ({basicModal, setBasicModal, amount, selectedtopup, bundle , bundledes,bundlesubs}) =>{
+const TopUpLogin = ({toggleTwoModal, setToggleTwoModal,basicModal, setBasicModal, amount, selectedtopup, bundle , bundledes,bundlesubs}) =>{
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [isloading, setIsLoading] = useState(false)
+    const auth = JSON.parse(localStorage.getItem("auth"))
+    // const [toggleTwoModal, setToggleTwoModal] = useState(false);
     const handleClose = (e) =>{
         setBasicModal(e)
     }
 
     useEffect(() => {
-    
-
     const queryParams = new URL(window.location.href);
     const value = new URLSearchParams(queryParams.search);
     const decrypt = value.get('value');
-
-    const final = atob(decrypt)
-    const decrypted = new URLSearchParams(final);
-    const username = decrypted.get('username');
-    const password = decrypted.get('password');
-    setUsername(username)
-    setPassword(password)
+    if(decrypt){
+        const final = atob(decrypt)
+        const decrypted = new URLSearchParams(final);
+        const username = decrypted.get('username');
+        const password = decrypted.get('password');
+        setUsername(username)
+        setPassword(password)
+    } else if (auth){
+        const pazz = atob(auth.Password)
+        setUsername(auth.Username)
+        setPassword(pazz)
+    }
     },[])
 
     const login = (e) => {
@@ -108,7 +113,7 @@ const TopUpLogin = ({basicModal, setBasicModal, amount, selectedtopup, bundle , 
                             amount: amount,
                             bundle: bundle,
                             bundledescription: bundledes,
-                            subs:bundlesubs
+                            subs: bundlesubs
                         })
                     })
                     .then(result => result.json())
@@ -173,27 +178,27 @@ const TopUpLogin = ({basicModal, setBasicModal, amount, selectedtopup, bundle , 
         </MDBModalDialog>
       </MDBModal>
 
-      {/* <MDBModal show={toggleTwoModal} setShow={setToggleTwoModal} tabIndex='-1' staticBackdrop closeOnEsc="false">
+      {/* <MDBModal show={toggleTwoModal} tabIndex='-1' staticBackdrop>
         <MDBModalDialog centered>
           <MDBModalContent>
+          <form autoComplete="off" onSubmit={login}>
             <MDBModalHeader>
             </MDBModalHeader>
             <MDBModalBody>
             <MDBCard alignment="center">
             <MDBCardBody>
             <MDBCardImage src={logo} style={{width: "50%"}}/>
-                <MDBCardText tag="h1">
-                    PRESS OK TO
-                </MDBCardText>
-                <MDBCardText tag="h1">
-                    REDIRECT TO COINBASE
-                </MDBCardText>
-                <MDBBtn>
-                    OK
+                <MDBTypography>Username</MDBTypography>
+                <MDBInput name="username" required onChange={(e) => setUsername(e.target.value)}/>
+                <MDBTypography >Password</MDBTypography>
+                <MDBInput name="password" type="password" required onChange={(e) => setPassword(e.target.value)}/>
+                <MDBBtn disabled={isloading} type="submit" className="my-2">
+                   {isloading ? <MDBSpinner grow/> : "Login"}
                 </MDBBtn>
             </MDBCardBody>
             </MDBCard>
             </MDBModalBody>
+            </form>
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal> */}

@@ -18,6 +18,7 @@ import {
   MDBModalTitle,
   MDBRow,
   MDBTextArea,
+  MDBSpinner
 } from "mdb-react-ui-kit";
 import Swal from "sweetalert2";
 const CreateCashier = () => {
@@ -25,6 +26,7 @@ const CreateCashier = () => {
   const [csraccounts, setCsrAcc] = useState([]);
   const [show, setShow] = useState(false);
   const toggleShow = () => setShow(!show);
+  const [isloading, setIsLoading] = useState(false);
 
   useEffect(()=>{
     fetch(`${process.env.REACT_APP_API_URL}user/find`)
@@ -46,6 +48,7 @@ const CreateCashier = () => {
 
   function addcashier (e) {
     e.preventDefault()
+    setIsLoading(true)
     const {userId, paymentmethod, paymentdetail, paymentlimit} = e.target
     fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/add`, {
       method:'POST',
@@ -61,6 +64,7 @@ const CreateCashier = () => {
     }).then(result => result.json())
     .then(data => {
       if (data) {
+        setIsLoading(false)
 				Swal.fire({
 					title: "Cashier Created Successfully",
 					icon: "success",
@@ -72,6 +76,7 @@ const CreateCashier = () => {
         })
 				
 			} else {
+        setIsLoading(false)
 				Swal.fire({
 					title: "Cashier Creation Unsuccessfully",
 					icon: "error",
@@ -143,7 +148,7 @@ return (
                 Cancel
                 </MDBBtn>
                 <MDBBtn type="submit" className={``}>
-                 Create Cashier
+                {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Create Cashier"}
                 </MDBBtn>
               </MDBModalFooter>
             </form>

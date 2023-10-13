@@ -479,7 +479,7 @@ const CsrAdminUpgradeSubscriptionManual = () => {
                                     </MDBSpinner>
                                     </MDBBtn>
                                     :
-                                    <MDBBtn className="mx-2 mt-2" type="submit" disabled={Buyer?.transactionnumber ? false : true}>Finish Top Up</MDBBtn>
+                                    <MDBBtn className="mx-2 mt-2" type="submit" disabled={Buyer?.transactionnumber && image ? false : true}>Finish Top Up</MDBBtn>
                                   }
                                   </div>
                                   <div className="">

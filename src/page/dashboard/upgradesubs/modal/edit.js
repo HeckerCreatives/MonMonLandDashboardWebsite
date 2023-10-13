@@ -18,13 +18,14 @@ import {
   MDBModalTitle,
   MDBRow,
   MDBTextArea,
+  MDBSpinner
 } from "mdb-react-ui-kit";
 import Swal from "sweetalert2";
 const UpdateCashier = ({checkedItems, id}) => {
   const [user, setuser] = useState('');
   const [show, setShow] = useState(false);
   const toggleShow = () => setShow(!show);
-
+  const [isloading, setIsLoading] = useState(false);
   useEffect(()=>{
     if(!checkedItems){
     fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findone/${id}`)
@@ -44,7 +45,8 @@ const UpdateCashier = ({checkedItems, id}) => {
   }
 
   function updatecashier (e) {
-    e.preventDefault()
+    e.preventDefault();
+    setIsLoading(true)
     const {paymentmethod, paymentdetail, paymentlimit} = e.target
     fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/update/${user._id}`, {
       method:'PUT',
@@ -59,6 +61,7 @@ const UpdateCashier = ({checkedItems, id}) => {
     }).then(result => result.json())
     .then(data => {
       if (data) {
+        setIsLoading(false)
 				Swal.fire({
 					title: "Cashier Updated Successfully",
 					icon: "success",
@@ -70,6 +73,7 @@ const UpdateCashier = ({checkedItems, id}) => {
         })
 				
 			} else {
+        setIsLoading(false)
 				Swal.fire({
 					title: "Cashier Update Unsuccessfully",
 					icon: "error",
@@ -138,7 +142,7 @@ return (
                 Cancel
                 </MDBBtn>
                 <MDBBtn type="submit" className={``}>
-                Save Changes
+                {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Save Changes"}
                 </MDBBtn>
               </MDBModalFooter>
             </form>

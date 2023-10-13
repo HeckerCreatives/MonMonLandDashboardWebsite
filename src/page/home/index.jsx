@@ -21,7 +21,7 @@ const Initial = () => {
             path: "#games",
         },
         {
-            name: "NEWS",
+            name: "NEWS & UPDATES",
             path: "#news",
         },
         {
@@ -29,9 +29,17 @@ const Initial = () => {
             path: "#roadmap",
         },
         {
-            name: "TOP UP",
-            path: "/topup",
+            name: "FAQ",
+            path: "/faq",
         },
+        {
+            name: "MEDIA",
+            path: "/media",
+        },
+        // {
+        //     name: "TOP UP",
+        //     path: "/topup",
+        // },
     ];
     return (
         <MDBContainer fluid className="px-0">

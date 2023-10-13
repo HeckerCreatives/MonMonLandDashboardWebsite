@@ -12,12 +12,14 @@ import { MDBBtn, MDBCol, MDBContainer, MDBIcon, MDBInput, MDBRow,
   MDBTable,
   MDBTableHead,
   MDBTableBody,
-  MDBCardText, } from "mdb-react-ui-kit";
+  MDBCardText,
+  MDBSpinner } from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
 import Breadcrumb from "../../../../component/breadcrumb";
 import FullTable from "../../../../component/fulltablelist";
 import Cards from "../../../../component/cards";
 import { Link } from "react-router-dom";
+import { handlePagination } from "../../../../component/utils"
 // import ManageDashboard from "../../../component/dashboard/admin/manageplayer/managedashboard"
 import "./index.css"
 import PaginationPager from "../../../../component/pagination";
@@ -33,6 +35,7 @@ const CreateAdminAccount = () => {
   const auth = JSON.parse(localStorage.getItem("auth"))
   const toggleShow = () => setCentredModal(!centredModal),
   [page, setPage] = useState(1),
+  [isloading, setIsLoading] = useState(false),
   [total, setTotal] = useState(0);
     
     useEffect(() => {
@@ -67,7 +70,8 @@ const CreateAdminAccount = () => {
     };
     
     const createadmin = (e) => {
-      e.preventDefault()
+      e.preventDefault();
+      setIsLoading(true)
       const {firstName,lastName,userName, email, password, phone} = e.target
       if(password.value === confirmpass){
         fetch(`${process.env.REACT_APP_API_URL}user/register`,{
@@ -88,6 +92,7 @@ const CreateAdminAccount = () => {
         }).then(result => result.json())
         .then(data => {
           if (data) {
+            setIsLoading(false)
             Swal.fire({
               title: "Admin Account Created Successfully",
               icon: "success",
@@ -99,6 +104,7 @@ const CreateAdminAccount = () => {
             })
             
           } else {
+            setIsLoading(false)
             Swal.fire({
               title: "Unsuccessfull",
               icon: "error",
@@ -107,6 +113,7 @@ const CreateAdminAccount = () => {
           }
         })
       } else {
+        setIsLoading(false)
         Swal.fire({
           title: "Password not Match",
           icon: "error",
@@ -227,7 +234,6 @@ const CreateAdminAccount = () => {
                     <th className="fw-bold" scope='col'>Select</th>
                     <th className="fw-bold" scope='col'>Date Created</th>
                     <th className="fw-bold" scope='col'>Username</th>
-                    <th className="fw-bold" scope='col'>Password</th>
                     <th className="fw-bold" scope='col'>Email</th>
                     <th className="fw-bold" scope='col'>Phone</th>
                     <th className="fw-bold" scope='col'>Action</th>
@@ -236,7 +242,7 @@ const CreateAdminAccount = () => {
                 <MDBTableBody className="text-center">
                 {adminaccounts ?
                   <>
-                {adminaccounts.map((acc, i) =>(
+                {handlePagination(adminaccounts, page, 5)?.map((acc, i) =>(
                 <tr key={`acc-${i}`}>
                 <td>
                   <input type="checkbox"
@@ -247,8 +253,7 @@ const CreateAdminAccount = () => {
                 <td>{new Date(acc.createdAt).toLocaleString()}</td>
                 <td>
                 {acc.userName}
-                </td>                
-                <td>{acc.password}</td>
+                </td>              
                 <td>{acc.email}</td>
                 <td>{acc.phone}</td>                
                 <td>
@@ -323,7 +328,11 @@ const CreateAdminAccount = () => {
               <MDBBtn type="button" color='secondary' onClick={toggleShow}>
                 Cancel
               </MDBBtn>
-              <MDBBtn type="submit">Create Account</MDBBtn>
+              <MDBBtn type="submit">
+              
+              {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Create Account"}
+              
+              </MDBBtn>
             </MDBModalFooter>
             </form>
           </MDBModalContent>

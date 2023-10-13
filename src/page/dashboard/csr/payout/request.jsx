@@ -1,13 +1,15 @@
-import { MDBContainer, MDBTable, MDBTableHead, MDBTableBody, MDBBtn, MDBRow, MDBCol, MDBTypography } from "mdb-react-ui-kit";
+import { MDBContainer, MDBTable, MDBTableHead, MDBTableBody, MDBBtn, MDBRow, MDBCol, MDBTypography, MDBSpinner } from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
 import PaginationPager from "../../../../component/pagination";
 import Swal from "sweetalert2";
+import { handlePagination } from "../../../../component/utils";
 const CsrPayoutRequest = () => {
     const auth = JSON.parse(localStorage.getItem("auth"));
     const [page, setPage] = useState(1),
     [total, setTotal] = useState(0),
     [request, setRequest] = useState([]);
     const [selectedColor, setSelectedColor] = useState('all'); // Initialize with an empty string
+    const [isloading, setIsLoading] = useState(false);
 
     const filteredRequest = request.filter((data) => {
         const rowColorClass = getRowColorClass(data.createdAt);
@@ -39,6 +41,7 @@ const CsrPayoutRequest = () => {
     },[])
 
     const handleRequest = (id) => {
+        setIsLoading(true)
         Swal.fire({
             icon: "warning",
             title: "Are you sure you want to mark as done this payout?",
@@ -48,6 +51,7 @@ const CsrPayoutRequest = () => {
             denyButtonText: "Cancel",
         }).then(ok => {
             if(ok.isConfirmed){
+                
                 fetch(`${process.env.REACT_APP_API_URL}payout/process/${id}`, {
                     method: "POST",
                     headers: {
@@ -59,6 +63,7 @@ const CsrPayoutRequest = () => {
                 }).then(result => result.json())
                 .then(data => {
                     if(data.message === "success"){
+                        setIsLoading(false)
                         Swal.fire({
                             icon: "success",
                             title: "Payout is now on process",
@@ -68,6 +73,7 @@ const CsrPayoutRequest = () => {
                             }
                         })
                     } else {
+                        setIsLoading(false)
                         Swal.fire({
                             icon: "error",
                             title: data.data,
@@ -78,6 +84,8 @@ const CsrPayoutRequest = () => {
                         })
                     }
                 })
+            } else {
+                setIsLoading(false)
             }
         })
     }
@@ -140,7 +148,7 @@ const CsrPayoutRequest = () => {
                 </MDBTableHead>
                 <MDBTableBody className="text-white">
                 { filteredRequest.length > 0 ?
-                    filteredRequest.map((data,i) => (
+                    handlePagination(filteredRequest, page, 5)?.map((data,i) => (
                     <tr key={`request-${i}`} className={`bg-${getRowColorClass(data.createdAt)}`}>
                         <td>{data.id}</td>
                         <td>{data.username}</td>
@@ -150,7 +158,9 @@ const CsrPayoutRequest = () => {
                         <td>{data.network}</td>
                         <td>{data.paymentmethod}</td>
                         <td>
-                            <MDBBtn onClick={() => handleRequest(data._id)}>Process</MDBBtn>
+                            <MDBBtn onClick={() => handleRequest(data._id)}>
+                            {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Process"}
+                            </MDBBtn>
                         </td>
                     </tr>
                     ))

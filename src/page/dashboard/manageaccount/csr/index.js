@@ -12,7 +12,8 @@ import { MDBBtn, MDBCol, MDBContainer, MDBIcon, MDBInput, MDBRow,
   MDBTable,
   MDBTableHead,
   MDBTableBody,
-  MDBCardText, } from "mdb-react-ui-kit";
+  MDBCardText,
+  MDBSpinner } from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
 import Breadcrumb from "../../../../component/breadcrumb";
 import FullTable from "../../../../component/fulltablelist";
@@ -21,6 +22,7 @@ import "./index.css"
 import PaginationPager from "../../../../component/pagination";
 import Swal from "sweetalert2";
 import UpdateCSRAccount from "./modal/edit";
+import { handlePagination } from "../../../../component/utils"
 const CreateCSRAccount = () => {
   const [confirmpass, setConfirmPass] = useState(""),
         [csraccounts, setCsrAcc] = useState([]),
@@ -31,6 +33,7 @@ const CreateCSRAccount = () => {
   const auth = JSON.parse(localStorage.getItem("auth"))
   const toggleShow = () => setCentredModal(!centredModal),
   [page, setPage] = useState(1),
+  [isloading, setIsLoading] = useState(false),
   [total, setTotal] = useState(0);
     
     useEffect(() => {
@@ -65,7 +68,8 @@ const CreateCSRAccount = () => {
     };
     
     const createcsr = (e) => {
-      e.preventDefault()
+      e.preventDefault();
+      setIsLoading(true)
       const {firstName,lastName,userName, email, password, phone} = e.target
       if(password.value === confirmpass){
         fetch(`${process.env.REACT_APP_API_URL}user/register`,{
@@ -86,6 +90,7 @@ const CreateCSRAccount = () => {
         }).then(result => result.json())
         .then(data => {
           if (data) {
+            setIsLoading(false)
             Swal.fire({
               title: "Admin Account Created Successfully",
               icon: "success",
@@ -97,6 +102,7 @@ const CreateCSRAccount = () => {
             })
             
           } else {
+            setIsLoading(false)
             Swal.fire({
               title: "Unsuccessfull",
               icon: "error",
@@ -105,6 +111,7 @@ const CreateCSRAccount = () => {
           }
         })
       } else {
+        setIsLoading(false)
         Swal.fire({
           title: "Password not Match",
           icon: "error",
@@ -225,7 +232,6 @@ const CreateCSRAccount = () => {
                     <th className="fw-bold" scope='col'>Select</th>
                     <th className="fw-bold" scope='col'>Date Created</th>
                     <th className="fw-bold" scope='col'>Username</th>
-                    <th className="fw-bold" scope='col'>Password</th>
                     <th className="fw-bold" scope='col'>Email</th>
                     <th className="fw-bold" scope='col'>Phone</th>
                     <th className="fw-bold" scope='col'>Action</th>
@@ -234,7 +240,7 @@ const CreateCSRAccount = () => {
                 <MDBTableBody className="text-center">
                 {csraccounts ?
                   <>
-                {csraccounts.map((acc, i) =>(
+                {handlePagination(csraccounts, page, 5)?.map((acc, i) =>(
                 <tr key={`acc-${i}`}>
                 <td>
                   <input type="checkbox"
@@ -246,7 +252,6 @@ const CreateCSRAccount = () => {
                 <td>
                 {acc.userName}
                 </td>                
-                <td>{acc.password}</td>
                 <td>{acc.email}</td>
                 <td>{acc.phone}</td>                
                 <td>
@@ -321,7 +326,9 @@ const CreateCSRAccount = () => {
               <MDBBtn type="button" color='secondary' onClick={toggleShow}>
                 Cancel
               </MDBBtn>
-              <MDBBtn type="submit">Create Account</MDBBtn>
+              <MDBBtn type="submit">
+              {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Create Account"}
+              </MDBBtn>
             </MDBModalFooter>
             </form>
           </MDBModalContent>

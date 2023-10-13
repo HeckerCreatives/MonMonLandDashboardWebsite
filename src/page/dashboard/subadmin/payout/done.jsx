@@ -4,10 +4,13 @@ import { MDBContainer, MDBTable, MDBTableHead, MDBTableBody, MDBBtn,MDBRow, MDBC
     MDBModalHeader,
     MDBModalTitle,
     MDBModalBody,
-    MDBModalFooter, } from "mdb-react-ui-kit";
+    MDBModalFooter, 
+    MDBSpinner} from "mdb-react-ui-kit";
+    
 import React, {useState, useEffect} from "react";
 import PaginationPager from "../../../../component/pagination";
 import Swal from "sweetalert2";
+import { handlePagination } from "../../../../component/utils";
 const SubAdminPayoutDone = () => {
     const auth = JSON.parse(localStorage.getItem("auth"));
     const [page, setPage] = useState(1),
@@ -16,6 +19,7 @@ const SubAdminPayoutDone = () => {
     [receipt, setReceipt] = useState(""),
     [backup, setBackup] = useState([]);
     const [basicModal, setBasicModal] = useState(false);
+    const [isloading, setIsLoading] = useState(false);
 
     const toggleShow = () => setBasicModal(!basicModal);
     useEffect(() => {
@@ -53,6 +57,7 @@ const SubAdminPayoutDone = () => {
             denyButtonText: "Cancel",
         }).then(ok => {
             if(ok.isConfirmed){
+                setIsLoading(false)
                 fetch(`${process.env.REACT_APP_API_URL}payout/reprocess/${id}`, {
                     method: "POST",
                     headers: {
@@ -62,6 +67,7 @@ const SubAdminPayoutDone = () => {
                 }).then(result => result.json())
                 .then(data => {
                     if(data.message === "success"){
+                        setIsLoading(false)
                         Swal.fire({
                             icon: "success",
                             title: "Payout is now in reprocess",
@@ -71,6 +77,7 @@ const SubAdminPayoutDone = () => {
                             }
                         })
                     } else {
+                        setIsLoading(false)
                         Swal.fire({
                             icon: "error",
                             title: data.data,
@@ -81,6 +88,8 @@ const SubAdminPayoutDone = () => {
                         })
                     }
                 })
+            } else {
+                setIsLoading(false)
             }
         })
     }
@@ -127,7 +136,7 @@ const SubAdminPayoutDone = () => {
                 </MDBTableHead>
                 <MDBTableBody>
                 { done.length !== 0 ?
-                    done.map((data,i) => (
+                    handlePagination(done,page, 5)?.map((data,i) => (
                     <tr key={`done-${i}`}>
                         <td>{data.id}</td>
                         <td>{data.username}</td>
@@ -146,7 +155,9 @@ const SubAdminPayoutDone = () => {
                         >View Receipt</MDBBtn>
                         </td>
                         <td>
-                            <MDBBtn onClick={() => handleReprocessed(data._id)}>Re-Processed</MDBBtn>
+                            <MDBBtn onClick={() => handleReprocessed(data._id)}>
+                            {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Re-Processed"}
+                            </MDBBtn>
                         </td>
                     </tr>
                     ))

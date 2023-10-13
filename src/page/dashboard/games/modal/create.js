@@ -18,6 +18,7 @@ import {
   MDBModalTitle,
   MDBRow,
   MDBTextArea,
+  MDBSpinner,
 } from "mdb-react-ui-kit";
 import pearl from "../../../../assets/subscription/pearl badge.png"
 import ruby from "../../../../assets/subscription/ruby badge.png"
@@ -36,10 +37,12 @@ const CreateGames = () => {
   const [image, setImage] = useState("");
   const [filename, setFilename] = useState("");
   // const [isChecked, setIsChecked] = useState(false);
+  const [isloading, setIsLoading] = useState(false);
   const defaultimg = process.env.REACT_APP_GAMEDEFAULTIMG;
   
 
   function addgame () {
+    setIsLoading(true)
     fetch(`${process.env.REACT_APP_API_URL}games/addgame`, {
       method:'POST',
       headers: {
@@ -54,6 +57,7 @@ const CreateGames = () => {
     }).then(result => result.json())
     .then(data => {
       if (data) {
+        setIsLoading(false)
 				Swal.fire({
 					title: "Updated Successfully",
 					icon: "success",
@@ -65,6 +69,7 @@ const CreateGames = () => {
         })
 				
 			} else {
+        setIsLoading(false)
 				Swal.fire({
 					title: "Update Unsuccessfully",
 					icon: "error",
@@ -203,7 +208,8 @@ return (
                 Cancel
                 </MDBBtn>
                 <MDBBtn type="submit" className={``}>
-                 Add Game
+                 
+                 {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Add Game"}
                 </MDBBtn>
               </MDBModalFooter>
             </form>

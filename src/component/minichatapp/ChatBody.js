@@ -6,10 +6,12 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
   const navigate = useNavigate()
   const buy = localStorage.getItem("buy")
   const [bibiliuser, setBibiliUser] = useState("")
+  const [message, setMessages] = useState([]);
 
   useEffect(() => {
     setBibiliUser(buyerid)
-  },[buyerid])
+    setMessages(messages)
+  },[buyerid, messages])
 
   // dd/mm/yyyy, hh:mm:ss
   function formatDateFromTimestamp(timestamp) {
@@ -34,6 +36,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
           if(e.isConfirmed){
           socket.emit('doneTransactionAdmin', {room: room, buyer: buyerid});
           setBibiliUser("")
+          setMessages([])
           }
       })
       
@@ -51,6 +54,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
           if(e.isConfirmed){
           socket.emit('doneTransactionUser', {roomId: room});
           setBibiliUser("")
+          setMessages([])
           }
       })
     }
@@ -146,7 +150,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
 
     
         <div className='message__container'>
-          {messages.map((message,i) => (
+          {message.map((message,i) => (
             message.username === msguser ? (
               <div className="message__chats" key={i}>
             <p className='sender__name'>You</p>
