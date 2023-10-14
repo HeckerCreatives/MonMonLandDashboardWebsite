@@ -1,14 +1,26 @@
 import { PlayFabClient } from "playfab-sdk";
 import Swal from "sweetalert2";
 
+function generateRandomString() {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let randomString = '';
+  
+    for (let i = 0; i < 12; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      randomString += characters[randomIndex];
+    }
+  
+    return randomString;
+}
+
 export const UpgradeSubscriptionApi = async (playerPlayfabId, subscriptionAmount) => {
     const playFabUserData = {
-        Username: "monmonland",            
-        Password: "monmonlandgames",           
+        CreateAccount: true,            
+        CustomId: generateRandomString(10),           
     };
 
     return new Promise((resolve, reject) => {
-        PlayFabClient.LoginWithPlayFab(playFabUserData, (error, result) => {
+        PlayFabClient.LoginWithCustomID(playFabUserData, (error, result) => {
             if (error) {
                 reject(error);
             } else {

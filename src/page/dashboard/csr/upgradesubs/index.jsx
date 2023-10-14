@@ -85,8 +85,6 @@ const CsrAdminUpgradeSubscriptionManual = () => {
         useEffect(()=>{
             socket.on('playerdetails', (data) => {
                 currenturn = data.username;
-                console.log(currenturn)
-                console.log(data.username)
                 setBibiliUserId(data?.id)
                 setBibiliUser(data?.username)
                 setBibiliUserPlayfabid(data?.playfabid)
@@ -142,8 +140,17 @@ const CsrAdminUpgradeSubscriptionManual = () => {
             socket.on('onlinenga', () => {
                 setColor(true)
             })
-            
 
+            socket.on("deletemsg", () => {
+                setPrice("")
+                setBuyer([]);
+                setFilename("")
+                refreshtable();
+                setBibiliUser("")
+                setBibiliUserPlayfabid("")
+                setTopUp("")
+            })
+            
             return () => {
                 // Clean up your socket event listener when the component unmounts
                 socket.off('adminrefreshlist');
@@ -151,8 +158,9 @@ const CsrAdminUpgradeSubscriptionManual = () => {
                 socket.off('onlinenga');
                 socket.off('canceleduse');
                 socket.off('selectsubs');
+                socket.off('deletemsg');
             }
-        },[currenturn, topup])
+        },[currenturn, topup,])
 
       const cancelorder = (id, room, normalUserId) => {
           const stats = "Open"
@@ -479,7 +487,7 @@ const CsrAdminUpgradeSubscriptionManual = () => {
                                     </MDBSpinner>
                                     </MDBBtn>
                                     :
-                                    <MDBBtn className="mx-2 mt-2" type="submit" disabled={Buyer?.transactionnumber && image ? false : true}>Finish Top Up</MDBBtn>
+                                    <MDBBtn className="mx-2 mt-2" type="submit" disabled={Buyer?.transactionnumber && filename !== "" && bibiliuser !== "" ? false : true}>Finish Top Up</MDBBtn>
                                   }
                                   </div>
                                   <div className="">

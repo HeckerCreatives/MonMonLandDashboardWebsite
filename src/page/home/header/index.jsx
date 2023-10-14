@@ -14,12 +14,15 @@ const Header = () => {
     const [initialbar, setInitialBar] = useState();
     const [totalbar, setTotalBar] = useState();
     const [progress, setProgress] = useState();
+    const [mc, setMc] = useState([])
+    const [mg, setMg] = useState([])
+    const [totaluser, setTotaluser] = useState([])
 
     const seperator = (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-     useEffect(()=> {
+    useEffect(()=> {
         setIsLoading(true)
         fetch(`${process.env.REACT_APP_API_URL}gameactivity/${process.env.REACT_APP_PROGRESSID}/find`)
         .then(result => result.json())
@@ -28,7 +31,6 @@ const Header = () => {
             setTotalBar(data.total)
             setIsLoading(false)
             })
-
     },[])
 
     useEffect(()=>{

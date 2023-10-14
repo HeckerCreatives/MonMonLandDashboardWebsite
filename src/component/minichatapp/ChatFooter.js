@@ -23,7 +23,6 @@ const ChatFooter = ({socket, buyer, room, msguser, rcvrid}) => {
     const __createdtime__ = Date.now();
     
     const sendMessage = (e) => {
-      console.log(socket.id)
       e.preventDefault();
       if (message !== "") {        
         // Send message to server. We can't specify who we send the message to from the frontend. We can only send to server. Server can then send message to rest of users in room

@@ -85,8 +85,6 @@ const SubAdminUpgradeSubscriptionManual = () => {
         useEffect(()=>{
             socket.on('playerdetails', (data) => {
                 currenturn = data.username;
-                console.log(currenturn)
-                console.log(data.username)
                 setBibiliUserId(data?.id)
                 setBibiliUser(data?.username)
                 setBibiliUserPlayfabid(data?.playfabid)
@@ -143,6 +141,15 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 setColor(true)
             })
             
+            socket.on("deletemsg", () => {
+                setPrice("")
+                setBuyer([]);
+                setFilename("")
+                refreshtable();
+                setBibiliUser("")
+                setBibiliUserPlayfabid("")
+                setTopUp("")
+            })
 
             return () => {
                 // Clean up your socket event listener when the component unmounts
@@ -477,7 +484,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                     </MDBSpinner>
                                     </MDBBtn>
                                     :
-                                    <MDBBtn className="mx-2 mt-2" type="submit" disabled={Buyer?.transactionnumber && image? false : true}>Finish Top Up</MDBBtn>
+                                    <MDBBtn className="mx-2 mt-2" type="submit" disabled={Buyer?.transactionnumber && filename !== "" && bibiliuser !== "" ? false : true}>Finish Top Up</MDBBtn>
                                   }
                                   </div>
                                   <div className="">

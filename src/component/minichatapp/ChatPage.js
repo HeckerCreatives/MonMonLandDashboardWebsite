@@ -22,7 +22,9 @@ const ChatPage = ({socket, room, buyer, adminsocket, isadmin, buyerid, msguser, 
         },
       ]);
     });
-    
+    socket.on("deletemsg", () => {
+      setMessagesReceived([])
+    })
 	// Remove event listener on component unmount
     return () => socket.off('receive_message');
 
