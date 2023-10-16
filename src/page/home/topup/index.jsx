@@ -18,6 +18,9 @@ import line from "../../../assets/topup/username TAB.png"
 import fundstab from "../../../assets/topup/select TAB small.png"
 import addfundsbtn from "../../../assets/topup/add funds BUTTON.png"
 import ironpak from "../../../assets/topup/ruby + iron icon.png"
+import steelpak from "../../../assets/topup/emerald + steel icon.png"
+import mithrilpak from "../../../assets/topup/diamond + mithril icon.png"
+import adamantpak from "../../../assets/topup/siamon + adamant + 5hrs icon.png"
 import "./index.css"
 const TopUp = () =>{
     const [basicModal, setBasicModal] = useState(false);
@@ -107,7 +110,7 @@ const TopUp = () =>{
         
             <MDBCol className="p-5">
             <MDBCard alignment="center" className="fundbdy">
-            <MDBCardBody className="d-flex align-items-center justify-content-between">
+            <MDBCardBody className="fundbdy d-flex align-items-center justify-content-between">
                 <MDBTypography tag="h1">$ 20</MDBTypography>
                 <MDBBtn className="p-0" onClick={()=>handleFunds(1)}>
                 <img src={addfundsbtn} alt=""/>
@@ -118,7 +121,7 @@ const TopUp = () =>{
             
             <MDBCol className="p-5">
             <MDBCard alignment="center" className="fundbdy">
-            <MDBCardBody className="d-flex align-items-center justify-content-between">
+            <MDBCardBody className="fundbdy d-flex align-items-center justify-content-between">
                 <MDBTypography tag="h1">$ 50</MDBTypography>
                 <MDBBtn className="p-0" onClick={()=>handleFunds(1)}>
                 <img src={addfundsbtn} alt=""/>
@@ -129,7 +132,7 @@ const TopUp = () =>{
 
             <MDBCol className="p-5">
             <MDBCard alignment="center" className="fundbdy">
-            <MDBCardBody className="d-flex align-items-center justify-content-between">
+            <MDBCardBody className="fundbdy d-flex align-items-center justify-content-between">
                 <MDBTypography tag="h1">$ 100</MDBTypography>
                 <MDBBtn className="p-0" onClick={()=>handleFunds(1)}>
                 <img src={addfundsbtn} alt=""/>
@@ -140,7 +143,7 @@ const TopUp = () =>{
 
             <MDBCol className="p-5">
             <MDBCard alignment="center" className="fundbdy">
-            <MDBCardBody className="d-flex align-items-center justify-content-between">
+            <MDBCardBody className="fundbdy d-flex align-items-center justify-content-between">
                 <MDBTypography tag="h1">$ 200</MDBTypography>
                 <MDBBtn className="p-0" onClick={()=>handleFunds(1)}>
                 <img src={addfundsbtn} alt=""/>
@@ -158,63 +161,99 @@ const TopUp = () =>{
             <MDBCardBody>
             <MDBRow>
                 <MDBCol>
-                <MDBCard alignment="center" className="bundlesbdy">
+                <MDBCard alignment="center" >
                 <MDBCardHeader className="fw-bold" style={{background: "#FADDBF"}}>IRON PACK</MDBCardHeader>
-                <MDBCardBody>
+                <MDBCardBody className="bundlesbdy">
                     <MDBCardImage src={ironpak} />
-                    <MDBCardText>
+
+                    <div className="mt-3" style={{background: "#838383"}}>
+                    <MDBCardText className="text-white">
                     Ruby Subscription + Iron Tool
                     </MDBCardText>
-                    <MDBCardText>
-                    $ 30
-                    </MDBCardText>
+                    </div>
                     
                 </MDBCardBody>
-                <MDBCardFooter style={{background: "#FADDBF"}}>
-                <MDBBtn onClick={() =>handleBundles(1,"Iron Pack","Ruby Subscription + Iron Tool","ruby")}>Add Funds</MDBBtn>
+                <MDBCardFooter className="d-flex justify-content-end align-items-center" style={{background: "#FADDBF"}}>
+                <span className="fw-bold" style={{fontSize: "1.5rem"}}>
+                $ 30
+                </span>
+                <MDBBtn className="p-0 mx-2" onClick={() =>handleBundles(1,"Iron Pack","Ruby Subscription + Iron Tool","ruby")}>
+                <img src={addfundsbtn} alt=""/>
+                </MDBBtn>
                 </MDBCardFooter>
                 </MDBCard>
                 </MDBCol>
+
                 <MDBCol>
-                <MDBCard alignment="center">
-                <MDBCardBody>
-                    <MDBCardTitle>IRON PACK</MDBCardTitle>
-                    <MDBCardText>
-                    Ruby Subscription + Iron Tool
+                <MDBCard alignment="center" >
+                <MDBCardHeader className="fw-bold" style={{background: "#FADDBF"}}>STEEL PACK</MDBCardHeader>
+                <MDBCardBody className="bundlesbdy">
+                    <MDBCardImage src={steelpak} />
+
+                    <div className="mt-3" style={{background: "#838383"}}>
+                    <MDBCardText className="text-white">
+                    Emerald Subscription + Steel Tool
                     </MDBCardText>
-                    <MDBCardText>
-                    $ 30
-                    </MDBCardText>
-                    <MDBBtn onClick={() =>handleBundles(1,"Iron Pack","Ruby Subscription + Iron Tool","ruby")}>Add Funds</MDBBtn>
+                    </div>
+                    
                 </MDBCardBody>
+                <MDBCardFooter className="d-flex justify-content-end align-items-center" style={{background: "#FADDBF"}}>
+                <span className="fw-bold" style={{fontSize: "1.5rem"}}>
+                $ 65
+                </span>
+                <MDBBtn className="p-0 mx-2" onClick={() =>handleBundles(1,"Steel Pack","Emerald Subscription + Steel Tool","emerald")}>
+                <img src={addfundsbtn} alt=""/>
+                </MDBBtn>
+                </MDBCardFooter>
                 </MDBCard>
                 </MDBCol>
+
                 <MDBCol>
-                <MDBCard alignment="center">
-                <MDBCardBody>
-                    <MDBCardTitle>IRON PACK</MDBCardTitle>
-                    <MDBCardText>
-                    Ruby Subscription + Iron Tool
+                <MDBCard alignment="center" >
+                <MDBCardHeader className="fw-bold" style={{background: "#FADDBF"}}>MITHRIL PACK</MDBCardHeader>
+                <MDBCardBody className="bundlesbdy">
+                    <MDBCardImage src={mithrilpak} />
+
+                    <div className="mt-3" style={{background: "#838383"}}>
+                    <MDBCardText className="text-white">
+                    Diamond Subscription + Mithril Tool
                     </MDBCardText>
-                    <MDBCardText>
-                    $ 30
-                    </MDBCardText>
-                    <MDBBtn onClick={() =>handleBundles(1,"Iron Pack","Ruby Subscription + Iron Tool","ruby")}>Add Funds</MDBBtn>
+                    </div>
+                    
                 </MDBCardBody>
+                <MDBCardFooter className="d-flex justify-content-end align-items-center" style={{background: "#FADDBF"}}>
+                <span className="fw-bold" style={{fontSize: "1.5rem"}}>
+                $ 120
+                </span>
+                <MDBBtn className="p-0 mx-2" onClick={() =>handleBundles(1,"Mithril Pack","Diamond Subscription + Mithril Tool","diamond")}>
+                <img src={addfundsbtn} alt=""/>
+                </MDBBtn>
+                </MDBCardFooter>
                 </MDBCard>
                 </MDBCol>
+
+
                 <MDBCol>
-                <MDBCard alignment="center">
-                <MDBCardBody>
-                    <MDBCardTitle>IRON PACK</MDBCardTitle>
-                    <MDBCardText>
-                    Ruby Subscription + Iron Tool
+                <MDBCard alignment="center" >
+                <MDBCardHeader className="fw-bold" style={{background: "#FADDBF"}}>DIAMOND PACK</MDBCardHeader>
+                <MDBCardBody className="bundlesbdy">
+                    <MDBCardImage src={adamantpak} />
+
+                    <div className="mt-3" style={{background: "#838383"}}>
+                    <MDBCardText className="text-white">
+                    Diamond Subscription + Adamant Tool + 5 hours clock
                     </MDBCardText>
-                    <MDBCardText>
-                    $ 30
-                    </MDBCardText>
-                    <MDBBtn onClick={() =>handleBundles(1,"Iron Pack","Ruby Subscription + Iron Tool","ruby")}>Add Funds</MDBBtn>
+                    </div>
+                    
                 </MDBCardBody>
+                <MDBCardFooter className="d-flex justify-content-end align-items-center" style={{background: "#FADDBF"}}>
+                <span className="fw-bold" style={{fontSize: "1.5rem"}}>
+                $ 180
+                </span>
+                <MDBBtn className="p-0 mx-2" onClick={() =>handleBundles(1,"Adamant Pack","Diamond Subscription + Adamant Tool + 5 hours clock", "diamond")}>
+                <img src={addfundsbtn} alt=""/>
+                </MDBBtn>
+                </MDBCardFooter>
                 </MDBCard>
                 </MDBCol>
             </MDBRow>
@@ -224,68 +263,6 @@ const TopUp = () =>{
 
         </MDBRow>
 
-        <MDBRow>
-        <div>
-        <MDBTypography tag="h1" className="text-center fw-bold">BUNDLES</MDBTypography>
-        </div>
-        
-            <MDBCol>
-            <MDBCard alignment="center">
-            <MDBCardBody>
-                <MDBCardTitle>IRON PACK</MDBCardTitle>
-                <MDBCardText>
-                Ruby Subscription + Iron Tool
-                </MDBCardText>
-                <MDBCardText>
-                $ 30
-                </MDBCardText>
-                <MDBBtn onClick={() =>handleBundles(1,"Iron Pack","Ruby Subscription + Iron Tool","ruby")}>Add Funds</MDBBtn>
-            </MDBCardBody>
-            </MDBCard>
-            </MDBCol>
-            <MDBCol>
-            <MDBCard alignment="center">
-            <MDBCardBody>
-                <MDBCardTitle>STEEL PACK</MDBCardTitle>
-                <MDBCardText>
-                Emerald Subscription + Steel Tool
-                </MDBCardText>
-                <MDBCardText>
-                $ 65
-                </MDBCardText>
-                <MDBBtn onClick={() =>handleBundles(1,"Steel Pack","Emerald Subscription + Steel Tool","emerald")}>Add Funds</MDBBtn>
-            </MDBCardBody>
-            </MDBCard>
-            </MDBCol>
-            <MDBCol>
-            <MDBCard alignment="center">
-            <MDBCardBody>
-                <MDBCardTitle>MITHRIL PACK</MDBCardTitle>
-                <MDBCardText>
-                Diamond Subscription + Mithril Tool
-                </MDBCardText>
-                <MDBCardText>
-                $ 120
-                </MDBCardText>
-                <MDBBtn onClick={() =>handleBundles(1,"Mithril Pack","Diamond Subscription + Mithril Tool","diamond")}>Add Funds</MDBBtn>
-            </MDBCardBody>
-            </MDBCard>
-            </MDBCol>
-            <MDBCol>
-            <MDBCard alignment="center">
-            <MDBCardBody>
-                <MDBCardTitle>ADAMANT PACK</MDBCardTitle>
-                <MDBCardText>
-                Diamond Subscription + Adamant Tool + 5 hours clock
-                </MDBCardText>
-                <MDBCardText>
-                $ 180
-                </MDBCardText>
-                <MDBBtn onClick={() =>handleBundles(1,"Adamant Pack","Diamond Subscription + Adamant Tool + 5 hours clock", "diamond")}>Add Funds</MDBBtn>
-            </MDBCardBody>
-            </MDBCard>
-            </MDBCol>
-        </MDBRow>
         </MDBContainer>
         
        
