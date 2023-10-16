@@ -21,6 +21,11 @@ import {
   } from 'mdb-react-ui-kit';
   import { PlayFabClient } from "playfab-sdk";
   import Swal from "sweetalert2";
+  import loginbtn from "../../../assets/header/login BUTTON.png"
+  import logoutbtn from "../../../assets/header/logout BUTTON.png"
+  import topupbtn from "../../../assets/header/TOP UP BUTTON.png"
+  import signupbtn from "../../../assets/header/sign up BUTTON.png"
+  import clsbtn from "../../../assets/header/X BUTTON.png"
 const AddFundsModal = ({basicModal, setBasicModal}) => {
     const auth = JSON.parse(localStorage.getItem("auth"))
     const [toggleTwoModal, setToggleTwoModal] = useState(false);
@@ -75,8 +80,10 @@ const AddFundsModal = ({basicModal, setBasicModal}) => {
         <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
         <MDBModalDialog centered>
           <MDBModalContent>
-            <MDBModalHeader>
-              <MDBBtn className='btn-close' color='none' onClick={() =>handleClose(false)}></MDBBtn>
+            <MDBModalHeader className='d-flex justify-content-end'>
+              <MDBBtn  className="border-0 bg-transparent" color='none' onClick={() =>handleClose(false)}>
+              <img src={clsbtn} alt="" className="img-fluid"/>
+              </MDBBtn>
             </MDBModalHeader>
             <MDBModalBody>
             <MDBModalTitle className="text-center">
@@ -87,24 +94,35 @@ const AddFundsModal = ({basicModal, setBasicModal}) => {
             <MDBRow className="my-2">
                 <MDBCol className="d-flex justify-content-between align-items-center">
                     {auth ? 
-                    <MDBBtn block onClick={lagawts}>Logout</MDBBtn>
+                    <MDBBtn className="bg-transparent p-0" block onClick={lagawts}>
+                    <img src={logoutbtn} alt="" className="img-fluid"/>
+                    </MDBBtn>
                     :
-                    <MDBBtn block onClick={toggleShow1}>Login</MDBBtn>
+                    <MDBBtn className="bg-transparent p-0" block onClick={toggleShow1}>
+                    <img src={loginbtn} alt="" className="img-fluid"/>
+                    </MDBBtn>
                     }
                     
                 </MDBCol>
                 <MDBCol className="d-flex justify-content-between align-items-center">
-                    <MDBBtn href={`${window.location.origin}/register?sponsor=monmonland&id=ECBFE0CB217B1E12`} block>Sign Up</MDBBtn>
+                    <MDBBtn className="bg-transparent p-0" href={`${window.location.origin}/register?sponsor=monmonland&id=ECBFE0CB217B1E12`} block>
+                    <img src={signupbtn} alt="" className="img-fluid"/>
+                    </MDBBtn>
                 </MDBCol>
             </MDBRow>
             <MDBRow className="my-2">
                 <MDBCol>
-                    <MDBBtn block disabled={auth ? false: true} href={`/topup`}>Top Up</MDBBtn>
+                    <MDBBtn className="bg-transparent p-0" block disabled={auth ? false: true} href={`/topup`}>
+                    <img src={topupbtn} alt="" className="img-fluid"/>
+                    </MDBBtn>
                 </MDBCol>
             </MDBRow>
             </MDBModalBody>
             <MDBModalBody className="text-center">
-            WELCOME POGI
+            <div className="text-white p-1" style={{backgroundColor: "#40290A", textAlign: "justify"}}>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            </div>
+            
             </MDBModalBody>
 
           </MDBModalContent>
@@ -117,13 +135,15 @@ const AddFundsModal = ({basicModal, setBasicModal}) => {
         <MDBModalDialog centered>
           <MDBModalContent>
           <form autoComplete="off" onSubmit={login}>
-            <MDBModalHeader>
-            <MDBBtn className='btn-close' color='none' 
+            <MDBModalHeader className='d-flex justify-content-end'>
+            <MDBBtn className="border-0 bg-transparent" color='none' 
             onClick={() => {
             toggleShow1()
             handleClose(false)
             }}
-            ></MDBBtn>
+            >
+             <img src={clsbtn} alt="" className="img-fluid"/>   
+            </MDBBtn>
             </MDBModalHeader>
             <MDBModalBody>
             <MDBCard alignment="center">
@@ -133,9 +153,20 @@ const AddFundsModal = ({basicModal, setBasicModal}) => {
                 <MDBInput name="username" required onChange={(e) => setUsername(e.target.value)}/>
                 <MDBTypography >Password</MDBTypography>
                 <MDBInput name="password" type="password" required onChange={(e) => setPassword(e.target.value)}/>
-                <MDBBtn disabled={isloading} type="submit" className="my-2">
-                   {isloading ? <MDBSpinner grow/> : "Login"}
+                <MDBRow className="mt-3">
+                <MDBCol>
+                <MDBBtn  disabled={isloading} type="submit" className="bg-transparent p-0 my-2">
+                   {isloading ? <MDBSpinner grow color='dark'/> : <img src={loginbtn} alt="" className="img-fluid"/>}
                 </MDBBtn>
+                </MDBCol>
+                
+                <MDBCol className="d-flex justify-content-between align-items-center">
+                    <MDBBtn className="bg-transparent p-0" href={`${window.location.origin}/register?sponsor=monmonland&id=ECBFE0CB217B1E12`} block>
+                    <img src={signupbtn} alt="" className="img-fluid"/>
+                    </MDBBtn>
+                </MDBCol>
+                </MDBRow>
+                
             </MDBCardBody>
             </MDBCard>
             </MDBModalBody>

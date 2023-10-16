@@ -14,9 +14,9 @@ PlayFab.settings.titleId = "E6B3E";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ThemeContextWrapper>
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+   <App />
+  {/* <React.StrictMode>
+  </React.StrictMode> */}
   </ThemeContextWrapper>
 );
 

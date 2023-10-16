@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import smalllogo from "../assets/header/small logo for navi.png"
-import playnow from "../assets/header/play now btn.png"
+import playnow from "../assets/header/add funds BUTTON.png"
 import navholder from "../assets/header/navigation holder.png"
 import { useActiveLinkObserver } from "./utils";
 import {

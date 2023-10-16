@@ -99,6 +99,42 @@
     z-index: 2;
 }
 
+.moncoin {
+    /* background-image: url("../../../assets/header/TAB.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover; */
+    position: absolute;
+    z-index: 2;
+}
+
+.container { 
+    position: relative;
+    z-index: 2;
+} 
+  
+.input { 
+    width: 40px; 
+    background-color: #40290A;
+    /* border: 3px solid rgba(0, 0, 0, 0.5);  */
+    margin: 0 1px; 
+    border-radius: 6px;
+    text-align: center; 
+    font-size: 36px; 
+    cursor: not-allowed; 
+    pointer-events: none; 
+} 
+  
+.input:focus { 
+    border-bottom: 3px solid orange; 
+    outline: none; 
+} 
+  
+.input:nth-child(1) { 
+    cursor: pointer; 
+    pointer-events: all; 
+}
+
 @media only screen and (min-width: 1440px) {
     .progressbar {
         background: #FFBF0F;

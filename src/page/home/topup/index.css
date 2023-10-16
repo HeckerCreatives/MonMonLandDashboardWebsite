@@ -1,0 +1,40 @@
+.bak {
+    position: absolute;
+    z-index: 2;
+}
+
+.baner {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+}
+
+.kontainer {
+    position: relative;
+    background-image: url("../../../assets/topup/banner.png");
+    background-size: 100% 100%;
+    height: 100px;
+}
+
+.userholder {
+    position: absolute;
+    z-index: 3;
+}
+
+.addfnds {
+    position: absolute;
+    z-index: 1;
+}
+
+.fundbdy {
+    border: 15px solid #FADDBF;
+    background-color: #FFF2E4;
+}
+
+.bundlesbdy {
+    /* border-width: 0px 10px 0px 10px; */
+    /* border-style: solid;
+    border-color: #FADDBF; */
+    /* border: 15px 5px 15px 5px solid ; */
+    background-color: #FFF2E4;
+}

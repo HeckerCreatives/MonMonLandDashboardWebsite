@@ -8,7 +8,8 @@ import cloudA from "../../../assets/BG/cloud A.png"
 import cloudB from "../../../assets/BG/cloud B.png"
 import cloudC from "../../../assets/BG/cloud C.png"
 import usdt from "../../../assets/usdt.png"
-
+import Tab from "../../../assets/header/TAB.png"
+import donwloadnow from "../../../assets/header/download now BUTTON.png"
 const Header = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [initialbar, setInitialBar] = useState();
@@ -30,8 +31,82 @@ const Header = () => {
             setInitialBar(data.initial)
             setTotalBar(data.total)
             setIsLoading(false)
+        })
+
+        fetch(`${process.env.REACT_APP_API_URL}monmoncoin/find`,{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                coin: "Monster Coin"
             })
+        })
+        .then(result =>result.json())
+        .then(data => {
+                setMc(data.data)
+                setIsLoading(false)
+        }) 
+
+        fetch(`${process.env.REACT_APP_API_URL}monmoncoin/find`,{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                coin: "Monster Gem"
+            })
+        }) 
+        .then(result =>result.json())
+        .then(data => {
+            setMg(data.data)
+            setIsLoading(false)
+        })
+
+        fetch(`${process.env.REACT_APP_API_URL}totalusers/find`)
+        .then(result => result.json())
+        .then(data => {
+        const totalUsers = data.data.count;
+        setIsLoading(false);
+
+        // Get the container element for the inputs
+        const inputsContainer = document.getElementById('inputs');
+
+        
+        // Initialize variables
+        let currentValue = "";
+        
+
+        // Loop through the totalUsers and populate the inputs
+        for (let i = 9; i >= 0; i--) {
+            if(i < totalUsers.toString().length){
+                for (let b = 0; b < totalUsers.toString().length; b++){
+                    currentValue += totalUsers.toString()[b]
+                }
+                break;
+            } else {
+                currentValue += "0"
+            }
+            
+        }
+
+        for(let a = 0; a < currentValue.length; a++){
+            console.log(a <= 0)
+                const inputElement = document.createElement('input');
+                inputElement.className = 'input text-white';
+                inputElement.type = 'text';
+                inputElement.disabled = true;
+                inputElement.inputmode = 'numeric';
+                inputElement.maxLength = 1;
+                inputElement.value = currentValue[a];
+                // Append the input element to the container
+                inputsContainer.appendChild(inputElement);
+        }
+
+        })
+
     },[])
+
 
     useEffect(()=>{
         const percentage = (initialbar/totalbar) * 100     
@@ -75,39 +150,62 @@ const Header = () => {
             </MDBRow>
             
             <MDBRow className="align-items-center justify-content-center">
-                <MDBCol lg={2} className="mb-5">
-                <div className="card">
-                <MDBIcon fas icon="users" size="4x"/>
-                <strong style={{fontSize: "2rem"}}>999,999,999</strong>
+                <MDBCol lg={3} className="mb-5">
+                <div class="container"  style={{backgroundColor: "#FADDBF", borderRadius: "6px"}}>
+                <div className="card bg-transparent shadow-0" >
+                <MDBIcon fas icon="users" style={{color: "#238731"}} className="my-2" size="2x"/>
+                <div id="inputs" className="inputs pb-3"> 
+
+                    </div>
+                </div> 
+                     
                 </div>        
                 </MDBCol>
             </MDBRow>
                 <MDBRow className="align-items-center justify-content-center"> 
-                    <MDBCol lg={1} className="bg-white text-center mx-2">
-                    <div>
-                    <strong style={{fontSize: "2rem"}}>MC</strong>
-                    </div>
-                    <div className="d-flex">
+                    <MDBCol lg={2} className=" text-center ">
+                    <div className="card bg-transparent container p-0">
+                    <img src={Tab} alt="" />
+                    <div className="moncoin">
                     <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem"}}>0.001</strong> 
+                    <strong className="mx-2" style={{fontSize: "2rem"}}>Monster Coin</strong>
+
+                    <div className="mt-2">
+                    <img src={usdt} alt="" style={{width: "40px"}}/>
+                    <strong className="mx-2" style={{fontSize: "3rem", color: "white"}}>0.00001</strong> 
                     </div> 
-                    <p>999,999,999</p>         
+                    <div className="mt-4">
+                    <strong >Total Coins: {mc?.amount?.toLocaleString()}</strong> 
+                    </div>
+                    
+                    </div>
+                    
+                    </div>        
                     </MDBCol>
-                    <MDBCol lg={1} className="bg-white text-center mx-2">
-                    <div>
-                    <strong style={{fontSize: "2rem"}}>MG</strong> 
-                    </div>
-                    <div className="d-flex">
+                    <MDBCol lg={2} className=" text-center ">
+                    <div className="card bg-transparent container p-0">
+                    <img src={Tab} alt="" />
+                    <div className="moncoin">
                     <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem"}}>1.00</strong> 
+                    <strong className="mx-2" style={{fontSize: "2rem"}}>Monster Gem</strong>
+
+                    <div className="mt-2">
+                    <img src={usdt} alt="" style={{width: "40px"}}/>
+                    <strong className="mx-2" style={{fontSize: "3rem", color: "white"}}>1</strong> 
                     </div> 
-                    <p>999,999,999</p>         
+                    <div className="mt-4">
+                    <strong >Total Gems: {mg?.amount?.toLocaleString()}</strong> 
+                    </div>
+                    
+                    </div>
+                    
+                    </div>        
                     </MDBCol>
                 </MDBRow>
                 <MDBRow> 
                     <MDBCol className="my-3 text-center">
-                    <MDBBtn color="" className=" bg-primary shadow-0">
-                    DOWNLOAD NOW
+                    <MDBBtn color="" className="bg-transparent shadow-0">
+                    <img src={donwloadnow} className="zoom-playnow" alt="" />
                     </MDBBtn>                       
                     </MDBCol>
                 </MDBRow>
