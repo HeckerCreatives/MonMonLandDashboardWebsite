@@ -68,7 +68,7 @@ const Navbar = ({ links }) => {
           <MDBNavbarNav 
           
             className={`${
-              window.innerWidth > 768
+              window.innerWidth > 1070
                 ? "d-flex align-items-center justify-content-start"
                 : "text-center"
             }`}

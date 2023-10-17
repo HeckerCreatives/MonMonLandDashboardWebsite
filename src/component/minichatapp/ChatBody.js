@@ -62,7 +62,13 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
 
   useEffect(()=>{
 
+    socket.on("forcekick", () => {
+      localStorage.clear("userbuyer")
+      window.location.reload()
+    })
+
     socket.on("canceled", () => {
+      localStorage.clear("userbuyer")
       Swal.fire({
         title: "Canceled Transaction",
         icon: "success",
@@ -78,6 +84,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
     })
     // Listen for 'kicked' event
   socket.on('kicked', () => {
+    localStorage.clear("userbuyer")
     // Refresh page
     Swal.fire({
       title: "Transaction Done",
@@ -89,6 +96,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
       if(result.isConfirmed){
         // socket.leave(room)
         window.location.reload();
+
       }
     })
     
@@ -131,20 +139,21 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
       </div>
       <div className='mx-2'>
       {
-        isloading ? 
-        <MDBBtn className='mb-1 rounded'
-        disabled={isloading} 
-        onClick={() => doneTransaction(room,buyerid)}
-        >
-          <MDBSpinner role='status'>
-          </MDBSpinner>
-        </MDBBtn>
-        :
-        <MDBBtn className='mb-1 rounded' onClick={() => doneTransaction(room,buyerid)} disabled={bibiliuser === ""}>Done Transaction</MDBBtn>
+        isadmin ? (
+          isloading ? (
+            <MDBBtn className='mb-1 rounded' disabled={isloading} onClick={() => doneTransaction(room, buyerid)}>
+              <MDBSpinner role='status'>
+              </MDBSpinner>
+            </MDBBtn>
+          ) : (
+            <MDBBtn className='mb-1 rounded' onClick={() => doneTransaction(room, buyerid)} disabled={bibiliuser === ""}>
+              Done Transaction
+            </MDBBtn>
+          )
+        ) : null
       }
+
       
-      {/* <button className='btn-primary mb-1 rounded' ></button> */}
-      {/* <button className='btn-danger rounded'>Cancel Order</button> */}
       </div>
       </header>
 

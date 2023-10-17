@@ -7,6 +7,7 @@ import { MDBContainer, MDBTypography,MDBCard,
     MDBCol,
     MDBCardHeader,
     MDBCardFooter,
+    MDBIcon,
     MDBCardImage} from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
 import TopUpLogin from "./topuplogin";
@@ -32,7 +33,7 @@ const TopUp = () =>{
     const [bundle, setBundle] = useState("");
     const [bundledes, setBundleDes] = useState("");
     const [bundlesubs, setBundleSubs] = useState("");
-    const auth = JSON.parse(localStorage.getItem("auth"))
+    const auth = JSON.parse(localStorage.getItem("user"))
     const toggleShow = () => setBasicModal(!basicModal);
     // const toggleShow1 = () => setToggleTwoModal(!toggleTwoModal);
 
@@ -80,25 +81,23 @@ const TopUp = () =>{
         toggleShow()
     }
     return(
-        <MDBContainer fluid className=""> 
-        <MDBRow >
-            <MDBCol className="p-0">
+        <>
             <div className="kontainer">
-                <div className="d-flex align-items-start">
-                <img className="" src={backbtn} alt=""/>
-            </div>
+
+            <MDBBtn className="bg-transparent p-0 mt-2" onClick={() => window.location.href="/"}>
+                <img className="" src={backbtn} alt="" />
+            </MDBBtn>
             
             </div>
-            <div className="d-flex align-items-center justify-content-end">
-                <img className="w-100" src={line} alt="" />
-            <div className="d-flex align-items-center justify-content-end">
-                <img className="userholder" src={userholder} alt=""/>
-                <span className="userholder text-white me-5">Login as: {auth ? auth.Username : username}</span> 
-            </div>   
+            <div className="" style={{backgroundColor: "#432808"}}>
+                <div className="d-flex justify-content-end align-items-center">
+                <MDBIcon fas icon="user-circle" color="primary"/>
+                    <span className=" text-white mx-3">Login as: {auth ? auth.Username : username}</span> 
+                </div>   
             </div>
+        
+        <MDBContainer fluid className="">            
             
-            </MDBCol>
-        </MDBRow>
 
         <MDBContainer fluid>
         <MDBRow className="position-relative">
@@ -159,18 +158,16 @@ const TopUp = () =>{
         <MDBCard className="mt-5 px-0">
             <MDBCardHeader style={{background: "#8D5513", color: "white"}}>Select Bundles</MDBCardHeader>
             <MDBCardBody>
-            <MDBRow>
-                <MDBCol>
+            <MDBRow >
+                <MDBCol className="my-2">
                 <MDBCard alignment="center" >
                 <MDBCardHeader className="fw-bold" style={{background: "#FADDBF"}}>IRON PACK</MDBCardHeader>
-                <MDBCardBody className="bundlesbdy">
-                    <MDBCardImage src={ironpak} />
+                <MDBCardBody className="bundlesbdy p-0">
+                    <MDBCardImage src={ironpak} className="pt-4"/>
 
-                    <div className="mt-3" style={{background: "#838383"}}>
-                    <MDBCardText className="text-white">
+                    <MDBCardText className="p-4 text-white" style={{background: "#838383", width: "100%", height: "92px"}}>
                     Ruby Subscription + Iron Tool
                     </MDBCardText>
-                    </div>
                     
                 </MDBCardBody>
                 <MDBCardFooter className="d-flex justify-content-end align-items-center" style={{background: "#FADDBF"}}>
@@ -184,17 +181,15 @@ const TopUp = () =>{
                 </MDBCard>
                 </MDBCol>
 
-                <MDBCol>
+                <MDBCol className="my-2">
                 <MDBCard alignment="center" >
                 <MDBCardHeader className="fw-bold" style={{background: "#FADDBF"}}>STEEL PACK</MDBCardHeader>
-                <MDBCardBody className="bundlesbdy">
-                    <MDBCardImage src={steelpak} />
+                <MDBCardBody className="bundlesbdy p-0">
+                    <MDBCardImage src={steelpak} className="pt-4"/>
 
-                    <div className="mt-3" style={{background: "#838383"}}>
-                    <MDBCardText className="text-white">
+                    <MDBCardText className="p-4 text-white" style={{background: "#838383", width: "100%", height: "92px"}}>
                     Emerald Subscription + Steel Tool
                     </MDBCardText>
-                    </div>
                     
                 </MDBCardBody>
                 <MDBCardFooter className="d-flex justify-content-end align-items-center" style={{background: "#FADDBF"}}>
@@ -208,18 +203,16 @@ const TopUp = () =>{
                 </MDBCard>
                 </MDBCol>
 
-                <MDBCol>
+                <MDBCol className="my-2">
                 <MDBCard alignment="center" >
                 <MDBCardHeader className="fw-bold" style={{background: "#FADDBF"}}>MITHRIL PACK</MDBCardHeader>
-                <MDBCardBody className="bundlesbdy">
-                    <MDBCardImage src={mithrilpak} />
+                <MDBCardBody className="bundlesbdy p-0">
+                    <MDBCardImage src={mithrilpak} className="pt-4"/>
 
-                    <div className="mt-3" style={{background: "#838383"}}>
-                    <MDBCardText className="text-white">
+                    <MDBCardText className="p-4 text-white" style={{background: "#838383", width: "100%", height: "92px"}}>
                     Diamond Subscription + Mithril Tool
                     </MDBCardText>
-                    </div>
-                    
+
                 </MDBCardBody>
                 <MDBCardFooter className="d-flex justify-content-end align-items-center" style={{background: "#FADDBF"}}>
                 <span className="fw-bold" style={{fontSize: "1.5rem"}}>
@@ -233,17 +226,17 @@ const TopUp = () =>{
                 </MDBCol>
 
 
-                <MDBCol>
+                <MDBCol className="my-2">
                 <MDBCard alignment="center" >
                 <MDBCardHeader className="fw-bold" style={{background: "#FADDBF"}}>DIAMOND PACK</MDBCardHeader>
-                <MDBCardBody className="bundlesbdy">
-                    <MDBCardImage src={adamantpak} />
+                <MDBCardBody className="bundlesbdy p-0">
+                    <MDBCardImage src={adamantpak} className="pt-4"/>
 
-                    <div className="mt-3" style={{background: "#838383"}}>
-                    <MDBCardText className="text-white">
+                    
+
+                    <MDBCardText className="p-4 text-white" style={{background: "#838383", width: "100%", height: "92px"}}>
                     Diamond Subscription + Adamant Tool + 5 hours clock
                     </MDBCardText>
-                    </div>
                     
                 </MDBCardBody>
                 <MDBCardFooter className="d-flex justify-content-end align-items-center" style={{background: "#FADDBF"}}>
@@ -279,6 +272,7 @@ const TopUp = () =>{
         />
         
         </MDBContainer>
+        </>
     )
 }
 

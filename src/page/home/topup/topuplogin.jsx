@@ -26,7 +26,7 @@ const TopUpLogin = ({toggleTwoModal, setToggleTwoModal,basicModal, setBasicModal
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [isloading, setIsLoading] = useState(false)
-    const auth = JSON.parse(localStorage.getItem("auth"))
+    const auth = JSON.parse(localStorage.getItem("user"))
     // const [toggleTwoModal, setToggleTwoModal] = useState(false);
     const handleClose = (e) =>{
         setBasicModal(e)

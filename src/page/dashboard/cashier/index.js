@@ -17,7 +17,7 @@ const AvailableCashiers = () => {
             [page, setPage] = useState(1),
             [transacno, setTransacNo] = useState(""),
             // [currenturn, setCurrentTurn] = useState(""),
-            [q, setQ] = useState(""),
+            [q, setQ] = useState(false),
             [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
     const [toggle, settoggle] = useState(false)        
@@ -51,24 +51,31 @@ const AvailableCashiers = () => {
     socket.on('sendroomlist', (room)=>{
         const dataArray = Object.values(room);
         const processedData = dataArray.map(item => item)
-        console.log(processedData)
         setGames(processedData)
         // setBackup(processedData)
     })
     socket.emit("receiveroomlist")
+
     
     return () => {
         // Clean up your socket event listener when the component unmounts
         socket.off('sendroomlist');
         socket.off('receiveroomlist');
         socket.off('joinlobby');
+        setQ(false)
     }
     },[socket])
+
+    window.addEventListener("beforeunload", () => {
+        // Set a flag in localStorage to indicate the code should be executed on refresh
+        setQ(true)
+    });
+
     
     useEffect(()=>{
        
         socket.on('queue_message', (data) => {
-            setQ(data.message)
+            
             
             // Display the queue message to the user
             if(data.message === "full") {
@@ -84,6 +91,7 @@ const AvailableCashiers = () => {
                     }
                 })
             } else if(data.message === "admindisconnect"){
+                localStorage.clear("userbuyer")
                 Swal.fire({
                     icon: "info",
                     title: "Admin has disconnected.",
@@ -94,6 +102,7 @@ const AvailableCashiers = () => {
                 }).then(ok => {
                     if(ok.isConfirmed){
                         window.location.reload()
+
                     }
                 })
             } else if (data.message === "refresh queue.") {
@@ -122,6 +131,7 @@ const AvailableCashiers = () => {
                 }
                 
             }
+
             return () => {
                 // Clean up your socket event listener when the component unmounts
                 socket.off('queue_message');
@@ -133,8 +143,32 @@ const AvailableCashiers = () => {
             
           });
     },[ room, cashier, currenturn])
+    const buyer = JSON.parse(localStorage.getItem("userbuyer"))
+    useEffect(() => {
+        
+        if(localStorage.getItem("userbuyer") !== null) {
+            
+            setQ(false)
+            const byr = {
+                username: buyer.username,
+                roomid: buyer.roomid,
+                playfabid: buyer.playfabid,
+                transaction: buyer.transaction,
+                cashieruser: buyer.cashieruser,
+                usersocket: socket.id,
 
-    
+            }
+            console.log(buyer.usersocket)
+            console.log(socket.id)
+            localStorage.setItem("userbuyer", JSON.stringify(byr))
+            setCashier(buyer.cashieruser)       
+            setUsername(buyer.username)
+            setTransacNo(buyer.transaction)
+            room = buyer.roomid;
+            socket.emit('joinroom', { username: buyer.username, roomid: buyer.roomid, playfabid: buyer.playfabid, transaction: buyer.transaction, reconnect : true, oldsocket: buyer.usersocket,});
+            toggleShow2()
+        } 
+    },[q])
 
     const buybtn = (user) => {
         
@@ -157,13 +191,29 @@ const AvailableCashiers = () => {
             .then(data => {
             setTransacNo(data)
             if(username && id){ 
-            
+
+                
         
                 setCashier(user)       
                 setUsername(username)
                 room = user.item[0].userId._id
                 toggleShow2()
-                socket.emit('joinroom', { username: username, roomid: user.item[0].userId._id, playfabid: id, transaction: data});
+
+                    const byr = {
+                        username: username,
+                        roomid: user.item[0].userId._id,
+                        playfabid: id,
+                        transaction: data,
+                        cashieruser: user,
+                        usersocket: socket.id,
+
+                    }
+
+                    localStorage.setItem("userbuyer", JSON.stringify(byr))
+                    socket.emit('joinroom', { username: username, roomid: user.item[0].userId._id, playfabid: id, transaction: data, reconnect: false});
+                
+                
+                
                 } else if (!username || !id){
                     Swal.fire({
                         icon: "info",

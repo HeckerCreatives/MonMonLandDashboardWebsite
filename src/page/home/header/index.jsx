@@ -1,5 +1,10 @@
 import React, {useState, useEffect} from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBIcon,MDBTypography,MDBProgress, MDBProgressBar, MDBBtn, MDBSpinner } from "mdb-react-ui-kit";
+import { MDBContainer, MDBRow, MDBCol, MDBIcon,MDBTypography,MDBProgress, MDBProgressBar, MDBBtn, MDBSpinner,MDBCard,
+    MDBCardBody,
+    MDBCardTitle,
+    MDBCardText,
+    MDBCardHeader,
+    MDBCardFooter, } from "mdb-react-ui-kit";
 import "./index.css";
 import biglogo from "../../../assets/header/big logo2.gif"
 import dahonleft from "../../../assets/BG/leaves Left.png"
@@ -129,10 +134,10 @@ const Header = () => {
                 
         <MDBContainer fluid className="d-flex text-center justify-content-center align-items-center mb-5" id="home">
         <div className="dahonleft">
-        <img src={dahonleft} alt="" className="d-none d-lg-block"/>
+            <img src={dahonleft} alt="" className="d-none d-lg-block"/>
         </div>
         <div className="dahonright">
-        <img src={dahonright} alt="" className="d-none d-lg-block"/>
+            <img src={dahonright} alt="" className="d-none d-lg-block"/>
         </div>
         <MDBContainer fluid className="">
         <img src={cloudA} alt="" className="cloudA x1"/>
@@ -153,9 +158,8 @@ const Header = () => {
                 <MDBCol lg={3} className="mb-5">
                 <div class="container"  style={{backgroundColor: "#FADDBF", borderRadius: "6px"}}>
                 <div className="card bg-transparent shadow-0" >
-                <MDBIcon fas icon="users" style={{color: "#238731"}} className="my-2" size="2x"/>
+                    <MDBIcon fas icon="users" style={{color: "#238731"}} className="my-2" size="2x"/>
                 <div id="inputs" className="inputs pb-3"> 
-
                     </div>
                 </div> 
                      
@@ -163,50 +167,47 @@ const Header = () => {
                 </MDBCol>
             </MDBRow>
                 <MDBRow className="align-items-center justify-content-center"> 
-                    <MDBCol lg={2} className=" text-center ">
-                    <div className="card bg-transparent container p-0">
-                    <img src={Tab} alt="" />
-                    <div className="moncoin">
+                    <MDBCol className="col-lg-2 text-center my-2">
+                    <MDBCard alignment='center' className="moncoin">
+                    
+                    <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
                     <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem"}}>Monster Coin</strong>
+                    
+                    <span className="ms-2">Monster Coin</span> 
+                    </MDBCardHeader>
 
-                    <div className="mt-2">
+                    <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
                     <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "3rem", color: "white"}}>0.00001</strong> 
-                    </div> 
-                    <div className="mt-4">
-                    <strong >Total Coins: {mc?.amount?.toLocaleString()}</strong> 
-                    </div>
-                    
-                    </div>
-                    
-                    </div>        
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>0.00001</strong> 
+                    </MDBCardBody>
+                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Coins: {mc?.amount?.toLocaleString()}</MDBCardFooter>
+                    </MDBCard> 
+
                     </MDBCol>
-                    <MDBCol lg={2} className=" text-center ">
-                    <div className="card bg-transparent container p-0">
-                    <img src={Tab} alt="" />
-                    <div className="moncoin">
-                    <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem"}}>Monster Gem</strong>
 
-                    <div className="mt-2">
+                    <MDBCol  className="col-lg-2 text-center  my-2">
+                    <MDBCard alignment='center' className="moncoin">
+                    
+                    <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
                     <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "3rem", color: "white"}}>1</strong> 
-                    </div> 
-                    <div className="mt-4">
-                    <strong >Total Gems: {mg?.amount?.toLocaleString()}</strong> 
-                    </div>
                     
-                    </div>
-                    
-                    </div>        
+                    <span className="ms-2">Monster Gem</span> 
+                    </MDBCardHeader>
+
+                    <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
+                    <img src={usdt} alt="" style={{width: "40px"}}/>
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>1.00</strong> 
+                    </MDBCardBody>
+                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Gems: {mg?.amount?.toLocaleString()}</MDBCardFooter>
+                    </MDBCard> 
+
                     </MDBCol>
                 </MDBRow>
                 <MDBRow> 
                     <MDBCol className="my-3 text-center">
-                    <MDBBtn color="" className="bg-transparent shadow-0">
-                    <img src={donwloadnow} className="zoom-playnow" alt="" />
-                    </MDBBtn>                       
+                        <MDBBtn color="" className="bg-transparent shadow-0 p-0">
+                        <img src={donwloadnow} className="w-100" alt="" />
+                        </MDBBtn>                       
                     </MDBCol>
                 </MDBRow>
         </MDBContainer>

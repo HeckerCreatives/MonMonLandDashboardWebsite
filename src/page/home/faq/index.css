@@ -1,0 +1,23 @@
+.selection {
+    border-right:1px solid;
+    height: 100vh;
+    text-align: end;
+    /* color: gray; */
+}
+
+a {
+    text-decoration: none;
+    color: #969696;
+}
+
+ul {
+    list-style: none;
+}
+
+li:hover {
+    text-decoration: underline black;
+}
+
+.botnav {
+    border-bottom: 1px solid;
+}
