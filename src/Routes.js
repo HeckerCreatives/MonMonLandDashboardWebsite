@@ -65,7 +65,7 @@ const Routers = () => {
     const url = new URL(window.location.href);
 
     if(url.href === `${window.location.origin}/register`){
-      navigate("/register?sponsor=monmonland&id=C2E59CE1938419B1")
+      navigate("/register?sponsor=monmonland&id=27557BB301ABB773")
     } 
     
   },[])
@@ -106,7 +106,7 @@ const Routers = () => {
         </Route>
 
         <Route path="settings">
-          <Route path="updateprogressbar" element={<UpdateProgressBar/>}/>
+          <Route path="updatetotalincome" element={<UpdateProgressBar/>}/>
           <Route path="updatesubs">
             <Route path="pearl"element={<UpdatePearl/>}/>
             <Route path="ruby"element={<UpdateRuby/>}/>
@@ -150,7 +150,7 @@ const Routers = () => {
         </Route>
         <Route path="paymenthistory" element={<SubAdminPaymentHistory/>}/>
         <Route path="settings">
-          <Route path="updateprogressbar" element={<UpdateProgressBar/>}/>
+          <Route path="updatetotalincome" element={<UpdateProgressBar/>}/>
           <Route path="updatesubs">
             <Route path="pearl"element={<UpdatePearl/>}/>
             <Route path="ruby"element={<UpdateRuby/>}/>
@@ -171,7 +171,7 @@ const Routers = () => {
         <Route path="Agent" element={""}>
             <Route path="home" element={<CsrDashboard/>}/>
             <Route path="settings">
-          <Route path="updateprogressbar" element={<UpdateProgressBar/>}/>
+          <Route path="updatetotalincome" element={<UpdateProgressBar/>}/>
           <Route path="updatesubs">
             <Route path="pearl"element={<UpdatePearl/>}/>
             <Route path="ruby"element={<UpdateRuby/>}/>

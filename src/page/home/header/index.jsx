@@ -15,15 +15,17 @@ import cloudC from "../../../assets/BG/cloud C.png"
 import usdt from "../../../assets/usdt.png"
 import Tab from "../../../assets/header/TAB.png"
 import donwloadnow from "../../../assets/header/download now BUTTON.png"
+import monstercoin from "../../../assets/header/MC coin.png"
+import monstergem from "../../../assets/header/Monster GEM.png"
 const Header = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [initialbar, setInitialBar] = useState();
-    const [totalbar, setTotalBar] = useState();
-    const [progress, setProgress] = useState();
-    const [mc, setMc] = useState([])
-    const [mg, setMg] = useState([])
+    const [totalbar, setTotalBar] = useState(0);
+    const [progress, setProgress] = useState(0);
+    const [mc, setMc] = useState(0)
+    const [mg, setMg] = useState(0)
     const [totaluser, setTotaluser] = useState([])
-
+    const [Mcprice, setMcPrice] = useState(0)
     const seperator = (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
@@ -49,7 +51,7 @@ const Header = () => {
         })
         .then(result =>result.json())
         .then(data => {
-                setMc(data.data)
+                setMc(data.data.amount)
                 setIsLoading(false)
         }) 
 
@@ -64,7 +66,7 @@ const Header = () => {
         }) 
         .then(result =>result.json())
         .then(data => {
-            setMg(data.data)
+            setMg(data.data.amount)
             setIsLoading(false)
         })
 
@@ -96,7 +98,6 @@ const Header = () => {
         }
 
         for(let a = 0; a < currentValue.length; a++){
-            console.log(a <= 0)
                 const inputElement = document.createElement('input');
                 inputElement.className = 'input text-white';
                 inputElement.type = 'text';
@@ -116,7 +117,13 @@ const Header = () => {
     useEffect(()=>{
         const percentage = (initialbar/totalbar) * 100     
         setProgress(percentage)
+        
     },[initialbar, totalbar])
+
+    useEffect(() => {
+        const price = parseFloat(totalbar) / parseFloat(mc)
+        setMcPrice(price)
+    },[mc, totalbar])
 
     useEffect(()=>{
         if(initialbar){
@@ -171,16 +178,16 @@ const Header = () => {
                     <MDBCard alignment='center' className="moncoin">
                     
                     <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
-                    <img src={usdt} alt="" style={{width: "40px"}}/>
+                    <img src={monstercoin} alt="" style={{width: "40px"}}/>
                     
                     <span className="ms-2">Monster Coin</span> 
                     </MDBCardHeader>
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
                     <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>0.00001</strong> 
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{isNaN(Mcprice) ? Mcprice : 0}</strong> 
                     </MDBCardBody>
-                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Coins: {mc?.amount?.toLocaleString()}</MDBCardFooter>
+                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Coins: {mc.toLocaleString()}</MDBCardFooter>
                     </MDBCard> 
 
                     </MDBCol>
@@ -189,7 +196,7 @@ const Header = () => {
                     <MDBCard alignment='center' className="moncoin">
                     
                     <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
-                    <img src={usdt} alt="" style={{width: "40px"}}/>
+                    <img src={monstergem} alt="" style={{width: "40px"}}/>
                     
                     <span className="ms-2">Monster Gem</span> 
                     </MDBCardHeader>
@@ -198,7 +205,7 @@ const Header = () => {
                     <img src={usdt} alt="" style={{width: "40px"}}/>
                     <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>1.00</strong> 
                     </MDBCardBody>
-                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Gems: {mg?.amount?.toLocaleString()}</MDBCardFooter>
+                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Gems: {mg.toLocaleString()}</MDBCardFooter>
                     </MDBCard> 
 
                     </MDBCol>

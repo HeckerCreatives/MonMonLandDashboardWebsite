@@ -122,7 +122,7 @@ const Dashboard = () => {
           children: [
             {
               name: "Header",
-              path: "/dashboard/Administrator/settings/updateprogressbar",
+              path: "/dashboard/Administrator/settings/updatetotalincome",
             },                
             {
               name: "Games",
@@ -268,7 +268,7 @@ const Dashboard = () => {
           children: [
             {
               name: "Header",
-              path: "/dashboard/SubAdministrator/settings/updateprogressbar",
+              path: "/dashboard/SubAdministrator/settings/updatetotalincome",
             },                
             {
               name: "Games",

@@ -185,7 +185,7 @@ const UpdateProgressBar = () => {
                 <MDBIcon size="2x" icon='coins' color="white"/>
                 </div>
                 <MDBCol>
-                <MDBInput label='Target Value' id='form2' type='number'  onChange={e => setTotalNum(e.target.value)} className="mb-3"/>
+                <MDBInput label='Total Income' id='form2' type='number'  onChange={e => setTotalNum(e.target.value)} className="mb-3"/>
                 </MDBCol>
             </MDBRow>
 
@@ -201,11 +201,11 @@ const UpdateProgressBar = () => {
         
         <MDBRow>
         <MDBCol>
-            <MDBTypography tag='h3' className="mt-4">Progress Bar History</MDBTypography>
+            <MDBTypography tag='h3' className="mt-4">Total Income History</MDBTypography>
             <MDBTable align='middle' className="border mt-4" responsive>
                 <MDBTableHead className="head">
                     <tr >
-                    <th className="fw-bold" scope='col'>Progress Bar Value</th>
+                    <th className="fw-bold" scope='col'>Total Income Value</th>
                     <th className="fw-bold" scope='col'>Date Created</th>
                     <th className="fw-bold" scope='col'>Value</th>
                     <th className="fw-bold" scope='col'>Entered Amount</th>

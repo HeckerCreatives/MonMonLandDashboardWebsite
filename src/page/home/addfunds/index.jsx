@@ -105,7 +105,7 @@ const AddFundsModal = ({basicModal, setBasicModal}) => {
                     
                 </MDBCol>
                 <MDBCol className="d-flex justify-content-between align-items-center">
-                    <MDBBtn className="bg-transparent p-0" href={`${window.location.origin}/register?sponsor=monmonland&id=C2E59CE1938419B1`} block>
+                    <MDBBtn className="bg-transparent p-0" href={`${window.location.origin}/register?sponsor=monmonland&id=27557BB301ABB773`} block>
                     <img src={signupbtn} alt="" className="img-fluid"/>
                     </MDBBtn>
                 </MDBCol>
@@ -161,7 +161,7 @@ const AddFundsModal = ({basicModal, setBasicModal}) => {
                 </MDBCol>
                 
                 <MDBCol className="d-flex justify-content-between align-items-center">
-                    <MDBBtn className="bg-transparent p-0" href={`${window.location.origin}/register?sponsor=monmonland&id=ECBFE0CB217B1E12`} block>
+                    <MDBBtn className="bg-transparent p-0" href={`${window.location.origin}/register?sponsor=monmonland&id=27557BB301ABB773`} block>
                     <img src={signupbtn} alt="" className="img-fluid"/>
                     </MDBBtn>
                 </MDBCol>
