@@ -215,7 +215,7 @@ const CsrAdminUpgradeSubscriptionManual = () => {
           }).then(async result =>{
             setIsLoading(true)
               if(result.isConfirmed){
-                await UpgradeSubscriptionApi( bibiliuserplayfabid, price,)
+                await UpgradeSubscriptionApi( bibiliuserplayfabid, price, auth.playfabid)
                 .then((item) => {
                     if(item === "success"){
                         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/updatebuyer/${Buyer._id}`,{

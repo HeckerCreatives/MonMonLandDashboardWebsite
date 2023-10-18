@@ -13,10 +13,10 @@ function generateRandomString() {
     return randomString;
 }
 
-export const UpgradeSubscriptionApi = async (playerPlayfabId, subscriptionAmount) => {
+export const UpgradeSubscriptionApi = async (playerPlayfabId, subscriptionAmount, playfabid) => {
     const playFabUserData = {
-        CreateAccount: true,            
-        CustomId: generateRandomString(10),           
+        CreateAccount: false,            
+        CustomId: playfabid,           
     };
 
     return new Promise((resolve, reject) => {

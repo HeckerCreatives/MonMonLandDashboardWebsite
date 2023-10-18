@@ -14,6 +14,7 @@ const UpdateRuby = () => {
     const [descriptionlist, setDescriptionList] = useState([]);
     const [adddescriptions, setAddDescriptions] = useState('');
     const [image, setImage] = useState("");
+    const [filename, setFilename] = useState("")
     const badge = process.env.REACT_APP_RUBY,
     [page, setPage] = useState(1),
     [total, setTotal] = useState(0);
@@ -188,6 +189,11 @@ const UpdateRuby = () => {
         setImage(url);
     };
 
+    const handleFilename = (url) => {
+        // Use the uploaded image URL in the parent component or pass it to another component
+        setFilename(url);
+    };
+
     const deleteitem = (id) => {
         Swal.fire({
             icon: "warning",
@@ -226,7 +232,7 @@ const UpdateRuby = () => {
                         </div>                                        
                     </MDBCol>
                     <div className="text-center">
-                    <UploadWidget setImgUrl={handleImgUrl}/>
+                    <UploadWidget setImgUrl={handleImgUrl} setfileName={handleFilename}/>
                     <MDBBtn 
                     outline color="dark" 
                     type="submit" 

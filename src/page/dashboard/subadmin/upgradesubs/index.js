@@ -216,7 +216,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
           }).then(async result =>{
             setIsLoading(true)
               if(result.isConfirmed){
-                await UpgradeSubscriptionApi( bibiliuserplayfabid, price,)
+                await UpgradeSubscriptionApi( bibiliuserplayfabid, price, auth.playfabid)
                 .then((item) => {
                     if(item === "success"){
                         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/updatebuyer/${Buyer._id}`,{
@@ -263,6 +263,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                             })
                                 
                             } else {
+                                setIsLoading(false)
                                 Swal.fire({
                                     title: "User Upgrade Unsuccessfull",
                                     icon: "error",
@@ -271,6 +272,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                             }
                         })
                     } else if (item.data.FunctionResult.message === "failed"){
+                        setIsLoading(false)
                         Swal.fire({
                             title: "User Upgrade Unsuccessfull",
                             icon: "error",
@@ -280,6 +282,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                     
                 })
                 .catch((error) => {
+                    setIsLoading(false)
                     console.error(error);
                 });
                 

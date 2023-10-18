@@ -97,10 +97,10 @@ const News = () => {
                 
                 <MDBCardBody>
                     <MDBCardText className="fw-bold text-center newstxtsize">
-                    {balita.title.length > 70 ? `${balita.title.substring(0,70)}...`: balita.title}
+                    {balita?.title?.length > 70 ? `${balita?.title?.substring(0,70)}...`: balita?.title}
                     </MDBCardText>
                     <MDBCardText className="text-center newstxtsize">
-                    {balita.subtitle.length > 60 ? `${balita.subtitle.substring(0,60)}...`: balita.subtitle}
+                    {balita?.subtitle?.length > 60 ? `${balita?.subtitle?.substring(0,60)}...`: balita?.subtitle}
                     </MDBCardText>
                   <MDBBtn 
                   className="btn-warning zoom-news"

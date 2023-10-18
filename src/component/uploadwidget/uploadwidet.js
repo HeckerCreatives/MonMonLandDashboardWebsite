@@ -17,7 +17,7 @@ const UploadWidget = ({setImgUrl, disabled, setfileName}) => {
                 setfileName(result.info.original_filename)
             }
         })
-    },[setImgUrl])
+    },[setImgUrl, setfileName])
 
     return (
         <MDBBtn className="mt-2" onClick={() => widgetRef.current.open()} style={{background: "#80C548"}} type="button" disabled={disabled}>

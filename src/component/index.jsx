@@ -41,7 +41,7 @@ const Navbar = ({ links }) => {
   return (
     <>
     <MDBNavbar
-      expand="lg"
+      expand="xl"
       className="custom-landing-navbar py-0 m-5 fixed-top"      
     > 
     <MDBContainer fluid className="d-sm-flex justify-sm-content-around px-0 px-md-0">
