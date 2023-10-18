@@ -66,6 +66,7 @@ const AvailableCashiers = () => {
         const dataArray = Object.values(room);
         const processedData = dataArray.map(item => item)
         setGames(processedData)
+        console.log(processedData)
         // setBackup(processedData)
     })
     socket.emit("receiveroomlist")

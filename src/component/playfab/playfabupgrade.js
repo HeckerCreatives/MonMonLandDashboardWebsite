@@ -1,4 +1,4 @@
-import { PlayFabClient } from "playfab-sdk";
+import { PlayFabClient, PlayFab } from "playfab-sdk";
 import Swal from "sweetalert2";
 
 function generateRandomString() {
@@ -13,34 +13,27 @@ function generateRandomString() {
     return randomString;
 }
 
-export const UpgradeSubscriptionApi = async (playerPlayfabId, subscriptionAmount, playfabid) => {
-    const playFabUserData = {
-        CreateAccount: false,            
-        CustomId: playfabid,           
-    };
-
+export const UpgradeSubscriptionApi = async (playerPlayfabId, subscriptionAmount, playfabToken) => {
+    console.log("hello")
     return new Promise((resolve, reject) => {
-        PlayFabClient.LoginWithCustomID(playFabUserData, (error, result) => {
-            if (error) {
-                reject(error);
+        console.log("hello3")
+        PlayFab._inter = playfabToken
+        console.log("hello1")
+        PlayFabClient.ExecuteCloudScript({
+            FunctionName: "Topup",
+            FunctionParameter: {
+                playerId: playerPlayfabId,
+                topupAmount: subscriptionAmount,
+            },
+            ExecuteCloudScript: true,
+            GeneratePlayStreamEvent: true,
+        }, (error1, result1) => {
+            if (error1) {
+                reject(error1);
+            } else if (result1.data.FunctionResult.message === "success") {
+                resolve("success");
             } else {
-                PlayFabClient.ExecuteCloudScript({
-                    FunctionName: "Topup",
-                    FunctionParameter: {
-                        playerId: playerPlayfabId,
-                        topupAmount: subscriptionAmount,
-                    },
-                    ExecuteCloudScript: true,
-                    GeneratePlayStreamEvent: true,
-                }, (error1, result1) => {
-                    if (error1) {
-                        reject(error1);
-                    } else if (result1.data.FunctionResult.message === "success") {
-                        resolve("success");
-                    } else {
-                        resolve(result1);
-                    }
-                });
+                resolve(result1);
             }
         });
     });

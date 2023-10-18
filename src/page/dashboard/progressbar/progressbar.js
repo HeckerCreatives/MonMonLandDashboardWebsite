@@ -10,6 +10,7 @@ const UpdateProgressBar = () => {
     const [totalnum, setTotalNum] = useState("");
     const [initialbar, setInitialBar] = useState("");
     const auth = JSON.parse(localStorage.getItem("auth"))
+    const playfabToken = localStorage.getItem("playfabAdminAuthToken")
     const [totalbar, setTotalBar] = useState("");
     const [progress, setProgress] = useState("");
     const [history, setHistory] = useState([]),
@@ -68,7 +69,8 @@ const UpdateProgressBar = () => {
                 barId: process.env.REACT_APP_PROGRESSID,
                 value: value,
                 enteredamount: initial.value,
-                createdby: auth.userName
+                createdby: auth.userName,
+                playfabToken: playfabToken
             })
         }).then(result => result.json())
         .then(data => {

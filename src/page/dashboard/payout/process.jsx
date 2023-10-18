@@ -12,6 +12,7 @@ const AdminPayoutProcess = () => {
     [image, setImage] = useState(""),
     [filename, setFilename] = useState(""),
     [processed, setProcessed] = useState([]);
+    const playfabToken = localStorage.getItem("playfabAdminAuthToken")
     const [selectedColor, setSelectedColor] = useState('all'); // Initialize with an empty string
     const [isloading, setIsLoading] = useState(false);
 
@@ -63,6 +64,7 @@ const AdminPayoutProcess = () => {
                     body: JSON.stringify({
                         admin: auth.userName,
                         receipt: image,
+                        playfabToken: playfabToken
                     })
                 }).then(result => result.json())
                 .then(data => {

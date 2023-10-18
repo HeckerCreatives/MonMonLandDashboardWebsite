@@ -18,6 +18,7 @@ const AdminPayoutDone = () => {
     [backup, setBackup] = useState([]);
     const [basicModal, setBasicModal] = useState(false);
     const [isloading, setIsLoading] = useState(false);
+    const playfabToken = localStorage.getItem("playfabAdminAuthToken")
 
     const toggleShow = () => setBasicModal(!basicModal);
     useEffect(() => {
@@ -60,7 +61,7 @@ const AdminPayoutDone = () => {
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({admin: admin})
+                    body: JSON.stringify({admin: admin, playfabToken: playfabToken})
                 }).then(result => result.json())
                 .then(data => {
                    

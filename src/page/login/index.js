@@ -15,6 +15,7 @@ import {
 import logo from "../../assets/header/small logo for navi.png"
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
+import { PlayFabClient } from "playfab-sdk";
 const Login = () =>{
   const [email, setEmail]= useState('');
   const [password, setPassword] = useState("");
@@ -48,15 +49,33 @@ const Login = () =>{
           text: "Please Check your username and password"
         })
 			} else {
-        localStorage.setItem('auth', JSON.stringify(data))	
-        Swal.fire({
-          title: "Login Successfully",
-          icon: "success",
-          text: `Welcome ${data.firstName}`
-        })
-        .then(result => {
-          if(result.isConfirmed)
-          window.location.reload()
+        const playFabUserData = {
+          CreateAccount: false,            
+          CustomId: data.playfabid,           
+        };
+        PlayFabClient.LoginWithCustomID(playFabUserData, (error, result) => {
+          if (result){
+            localStorage.setItem("playfabAdminAuthToken", result.data.SessionTicket)
+            console.log(result)
+            localStorage.setItem('auth', JSON.stringify(data))
+            Swal.fire({
+              title: "Login Successfully",
+              icon: "success",
+              text: `Welcome ${data.firstName}`
+            })
+            .then(result1 => {
+              if(result1.isConfirmed)
+              window.location.reload()
+            })
+          } else if (error) {
+            Swal.fire({
+                icon: "warning",
+                title: error.error,
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            })
+            // setIsLoading(false)
+          }
         })
       }  
       

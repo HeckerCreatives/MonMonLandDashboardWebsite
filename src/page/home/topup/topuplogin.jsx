@@ -24,9 +24,10 @@ import {
   import logo from '../../../assets/header/big logo.png'
 const TopUpLogin = ({toggleTwoModal, setToggleTwoModal,basicModal, setBasicModal, amount, selectedtopup, bundle , bundledes,bundlesubs}) =>{
     const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
+    const [playfabId, setPlayfabID] = useState("")
     const [isloading, setIsLoading] = useState(false)
     const auth = JSON.parse(localStorage.getItem("user"))
+    const playfabToken = localStorage.getItem("playfabAuthToken")
     // const [toggleTwoModal, setToggleTwoModal] = useState(false);
     const handleClose = (e) =>{
         setBasicModal(e)
@@ -40,108 +41,77 @@ const TopUpLogin = ({toggleTwoModal, setToggleTwoModal,basicModal, setBasicModal
         const final = atob(decrypt)
         const decrypted = new URLSearchParams(final);
         const username = decrypted.get('username');
-        const password = decrypted.get('password');
+        const playfabId = decrypted.get('playfabId');
         setUsername(username)
-        setPassword(password)
+        setPlayfabID(playfabId)
     } else if (auth){
-        const pazz = atob(auth.Password)
         setUsername(auth.Username)
-        setPassword(pazz)
+        setPlayfabID(auth.PlayfabId)
     }
     },[])
 
     const login = (e) => {
         e.preventDefault();
-        const playFabUserData = {
-            Username: username,            
-            Password: password,           
-        };
         setIsLoading(true)
         if(selectedtopup === "funds"){
-            PlayFabClient.LoginWithPlayFab(playFabUserData, (error, result) => {
-
-                if(result){
-                    fetch(`${process.env.REACT_APP_API_URL}coin/funds`, {
-                        method:"POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            name: username,
-                            playfabId: result.data.PlayFabId,
-                            amount: amount,
-                        })
-                    })
-                    .then(result => result.json())
-                    .then(data => {
-                        setIsLoading(false)
-                        const url = data.hosted_url
-                        window.location.href = url
-                    })
-                    .catch(error =>{
-                        Swal.fire({
-                            icon: "warning",
-                            title: "Please Do Not Tamper The URL",
-                            allowOutsideClick: false,
-                            allowEscapeKey: false
-                        })
-                        setIsLoading(false)
-                    })
-    
-                } else if (error) {
-                    Swal.fire({
-                        icon: "warning",
-                        title: "Please Do Not Tamper The URL",
-                        allowOutsideClick: false,
-                        allowEscapeKey: false
-                    })
-                    setIsLoading(false)
-                }
+            fetch(`${process.env.REACT_APP_API_URL}coin/funds`, {
+                method:"POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: username,
+                    playfabId: playfabId,
+                    amount: amount,
+                    playfabToken: playfabToken
+                })
+            })
+            .then(result => result.json())
+            .then(data => {
+                setIsLoading(false)
+                const url = data.hosted_url
+                window.location.href = url
+            })
+            .catch(error =>{
+                Swal.fire({
+                    icon: "warning",
+                    title: "Please Do Not Tamper The URL",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                })
+                setIsLoading(false)
             })
         } else if (selectedtopup === "bundles"){
-            PlayFabClient.LoginWithPlayFab(playFabUserData, (error, result) => {
-
-                if(result){
-                    fetch(`${process.env.REACT_APP_API_URL}coin/bundles`, {
-                        method:"POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            name: username,
-                            playfabId: result.data.PlayFabId,
-                            amount: amount,
-                            bundle: bundle,
-                            bundledescription: bundledes,
-                            subs: bundlesubs
-                        })
-                    })
-                    .then(result => result.json())
-                    .then(data => {
-                        setIsLoading(false)
-                        const url = data.hosted_url
-                        window.location.href = url
-                        
-                    })
-                    .catch(error =>{
-                        Swal.fire({
-                            icon: "warning",
-                            title: "Please Do Not Tamper The URL",
-                            allowOutsideClick: false,
-                            allowEscapeKey: false
-                        })
-                        setIsLoading(false)
-                    })
-    
-                } else if (error) {
-                    Swal.fire({
-                        icon: "warning",
-                        title: "Please Do Not Tamper The URL",
-                        allowOutsideClick: false,
-                        allowEscapeKey: false
-                    })
-                    setIsLoading(false)
-                }
+            fetch(`${process.env.REACT_APP_API_URL}coin/bundles`, {
+                method:"POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: username,
+                    playfabId: playfabId,
+                    amount: amount,
+                    bundle: bundle,
+                    bundledescription: bundledes,
+                    subs: bundlesubs,
+                    playfabToken: playfabToken
+                })
+            })
+            .then(result => result.json())
+            .then(data => {
+                setIsLoading(false)
+                const url = data.hosted_url
+                window.location.href = url
+                
+            })
+            .catch(error =>{
+                Swal.fire({
+                    icon: "warning",
+                    title: "Please Do Not Tamper The URL",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                })
+                setIsLoading(false)
             })
         }
         

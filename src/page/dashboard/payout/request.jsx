@@ -23,6 +23,8 @@ const AdminPayoutRequest = () => {
     const toggleShow = () => setBasicModal(!basicModal);
     const [selectedColor, setSelectedColor] = useState('all'); // Initialize with an empty string
     const [isloading, setIsLoading] = useState(false);
+    
+    const playfabToken = localStorage.getItem("playfabAdminAuthToken")
     const filteredRequest = request.filter((data) => {
         const rowColorClass = getRowColorClass(data.createdAt);
         return selectedColor === 'all' || rowColorClass === selectedColor;
@@ -91,7 +93,8 @@ const AdminPayoutRequest = () => {
                         },
                         body: JSON.stringify({
                             admin: selectedcashier?.userId?.userName,
-                            adminId: selectedcashier._id
+                            adminId: selectedcashier._id,
+                            playfabToken: playfabToken
                         })
                     }).then(result => result.json())
                     .then(data => {

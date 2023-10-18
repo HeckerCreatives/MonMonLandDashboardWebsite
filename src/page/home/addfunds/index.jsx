@@ -53,10 +53,11 @@ const AddFundsModal = ({basicModal, setBasicModal}) => {
             if(result){
                 const user = {
                     Username: username,
-                    Password: btoa(password)
+                    PlayfabId: result.data.PlayFabId
                 }
                 setIsLoading(false)
                 localStorage.setItem("user", JSON.stringify(user))
+                localStorage.setItem("playfabAuthToken", result.data.SessionTicket)
                 window.location.href = "/topup"
             } else if (error) {
                 Swal.fire({

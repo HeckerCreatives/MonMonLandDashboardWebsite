@@ -36,6 +36,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
           [isloading, setIsLoading] = useState(false),
           [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
+    const playfabToken = localStorage.getItem("playfabAdminAuthToken")
     const [topup, setTopUp] = useState("");
     const [basicModal, setBasicModal] = useState(false);
     const toggleShow = () => setBasicModal(!basicModal);
@@ -216,75 +217,61 @@ const SubAdminUpgradeSubscriptionManual = () => {
           }).then(async result =>{
             setIsLoading(true)
               if(result.isConfirmed){
-                await UpgradeSubscriptionApi( bibiliuserplayfabid, price, auth.playfabid)
-                .then((item) => {
-                    if(item === "success"){
-                        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/updatebuyer/${Buyer._id}`,{
-                            method: "PUT",
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                cashierId: user._id,
-                                amount: totalprice,
-                                stats: stats,
-                              // below is for payment history
-                                cashier: user.userId.userName,
-                                adminId:auth._id,
-                                idnitopup: process.env.REACT_APP_MANUALID,
-                                price: totalprice,
-                                clientusername: bibiliuser,
-                                image: image,
-                            })
-                        }).then(result => result.json())
-                        .then(data =>{
-                            if (data) {
-                                socket.emit("refreshcashierdata", data.roomdetails)
-                                
-                            Swal.fire({
-                                title: "User Upgraded Successfully",
-                                icon: "success",
-                                text: "You Successfully Upgraded a User, Ready for the next user?",
-                                allowOutsideClick: false,
-                                allowEscapeKey: false
-                            }).then(ok => {
-                                
-                            if(ok.isConfirmed){
-                                setUser(data.roomdetails)
-                                setIsLoading(false)
-                                setPrice("")
-                                setBuyer([]);
-                                setFilename("")
-                                refreshtable();
-                                setBibiliUser("")
-                                setBibiliUserPlayfabid("")
-                                setTopUp("")
-                            }
-                            })
-                                
-                            } else {
-                                setIsLoading(false)
-                                Swal.fire({
-                                    title: "User Upgrade Unsuccessfull",
-                                    icon: "error",
-                                    text: "There is an error Upgrading the Account"
-                                })
-                            }
-                        })
-                    } else if (item.data.FunctionResult.message === "failed"){
+                fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/updatebuyer/${Buyer._id}`,{
+                    method: "PUT",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        cashierId: user._id,
+                        amount: totalprice,
+                        stats: stats,
+                      // below is for payment history
+                        cashier: user.userId.userName,
+                        adminId:auth._id,
+                        idnitopup: process.env.REACT_APP_MANUALID,
+                        price: totalprice,
+                        clientusername: bibiliuser,
+                        image: image,
+                        playfabId: bibiliuserplayfabid,
+                        playfabPrice: price,
+                        playfabToken: playfabToken
+                    })
+                }).then(result => result.json())
+                .then(data =>{
+                    if (data) {
+                        socket.emit("refreshcashierdata", data.roomdetails)
+                        
+                    Swal.fire({
+                        title: "User Upgraded Successfully",
+                        icon: "success",
+                        text: "You Successfully Upgraded a User, Ready for the next user?",
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    }).then(ok => {
+                        
+                    if(ok.isConfirmed){
+                        setUser(data.roomdetails)
+                        setIsLoading(false)
+                        setPrice("")
+                        setBuyer([]);
+                        setFilename("")
+                        refreshtable();
+                        setBibiliUser("")
+                        setBibiliUserPlayfabid("")
+                        setTopUp("")
+                    }
+                    })
+                        
+                    } else {
                         setIsLoading(false)
                         Swal.fire({
                             title: "User Upgrade Unsuccessfull",
                             icon: "error",
-                            text: item.data.FunctionResult.data
+                            text: "There is an error Upgrading the Account"
                         })
                     }
-                    
                 })
-                .catch((error) => {
-                    setIsLoading(false)
-                    console.error(error);
-                });
                 
               }
           })
