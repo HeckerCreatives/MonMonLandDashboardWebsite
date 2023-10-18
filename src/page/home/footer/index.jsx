@@ -48,19 +48,19 @@ const Footer = ({links}) => {
             <a href="https://www.facebook.com/monmonlandgames" target="_blank" rel="noreferrer">
             <img src={fb} className="socials zoom-socials" alt=""/>
             </a>
-            <a href="https://discord.gg/f3AayGjvzU" target="_blank" rel="noreferrer">
+            <a href="https://discord.gg/Rku52unvuH" target="_blank" rel="noreferrer">
             <img src={discord} className="socials zoom-socials" alt=""/>
             </a>
-            <a href="https://www.instagram.com/monmonland.games/" target="_blank" rel="noreferrer">
+            <a href="https://www.instagram.com/monmonlandgames_/" target="_blank" rel="noreferrer">
             <img src={instagram} className="socials zoom-socials" alt=""/>
             </a>
             <a href="https://twitter.com/Monmonlandgames" target="_blank" rel="noreferrer">
             <img src={twitter} className="socials zoom-socials" alt=""/>
             </a>
-            <a href="https://t.me/+GgUTboYg7MI3OGI1" target="_blank" rel="noreferrer">
+            <a href="https://t.me/monmonlandgameschannel" target="_blank" rel="noreferrer">
             <img src={telegram} className="socials zoom-socials" alt=""/>
             </a>
-            <a href="https://www.tiktok.com/@monmonlandgames" target="_blank" rel="noreferrer">
+            <a href="https://www.tiktok.com/@monmonlandgames_" target="_blank" rel="noreferrer">
             <img src={tiktok} className="socials zoom-socials" alt=""/>
             </a>
             

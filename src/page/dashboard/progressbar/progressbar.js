@@ -107,7 +107,8 @@ const UpdateProgressBar = () => {
                 barId: process.env.REACT_APP_PROGRESSID,
                 value: value,
                 enteredamount: totalnum,
-                createdby: auth.userName
+                createdby: auth.userName,
+                playfabid: auth.playfabid
             })
         }).then(result => result.json())
         .then(data => {

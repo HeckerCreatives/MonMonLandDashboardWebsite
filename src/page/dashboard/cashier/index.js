@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState, Component} from "react";
 import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBTypography, MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem,MDBIcon} from "mdb-react-ui-kit";
 import Swal from "sweetalert2"
 import Breadcrumb from "../../../component/breadcrumb";
@@ -8,6 +8,7 @@ import CashierStep2 from "./steps/step2";
 import io from "socket.io-client"
 import "./index.css"
 const socket = io(process.env.REACT_APP_API_URL)
+
 const AvailableCashiers = () => {
     const [username, setUsername] = useState(''); // Add this
     let room = "";
@@ -37,13 +38,26 @@ const AvailableCashiers = () => {
       
         return randomString;
       }
+    
+    window.addEventListener("beforeload", () => {
+        // Set a flag in localStorage to indicate the code should be executed on refresh
+        console.log("hello")
+        setQ(true)
+    });
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setQ(true)
+        }, 1000)
+
+        return () => clearTimeout(timer)
+    }, [])
 
     useEffect(() => {
     let totalPages = Math.floor(games.length / 5);
     if (games.length % 5 > 0) totalPages += 1;
     setTotal(totalPages);
     }, [games]);
-
 
     useEffect(()=>{
     
@@ -66,12 +80,6 @@ const AvailableCashiers = () => {
     }
     },[socket])
 
-    window.addEventListener("beforeunload", () => {
-        // Set a flag in localStorage to indicate the code should be executed on refresh
-        setQ(true)
-    });
-
-    
     useEffect(()=>{
        
         socket.on('queue_message', (data) => {
@@ -143,32 +151,37 @@ const AvailableCashiers = () => {
             
           });
     },[ room, cashier, currenturn])
+
+   
+
     const buyer = JSON.parse(localStorage.getItem("userbuyer"))
     useEffect(() => {
         
-        if(localStorage.getItem("userbuyer") !== null) {
+        if (socket.connected){
+            if(localStorage.getItem("userbuyer") !== null) {
             
-            setQ(false)
-            const byr = {
-                username: buyer.username,
-                roomid: buyer.roomid,
-                playfabid: buyer.playfabid,
-                transaction: buyer.transaction,
-                cashieruser: buyer.cashieruser,
-                usersocket: socket.id,
-
-            }
-            console.log(buyer.usersocket)
-            console.log(socket.id)
-            localStorage.setItem("userbuyer", JSON.stringify(byr))
-            setCashier(buyer.cashieruser)       
-            setUsername(buyer.username)
-            setTransacNo(buyer.transaction)
-            room = buyer.roomid;
-            socket.emit('joinroom', { username: buyer.username, roomid: buyer.roomid, playfabid: buyer.playfabid, transaction: buyer.transaction, reconnect : true, oldsocket: buyer.usersocket,});
-            toggleShow2()
-        } 
-    },[q])
+                setQ(false)
+                const byr = {
+                    username: buyer.username,
+                    roomid: buyer.roomid,
+                    playfabid: buyer.playfabid,
+                    transaction: buyer.transaction,
+                    cashieruser: buyer.cashieruser,
+                    usersocket: socket.id,
+    
+                }
+                console.log(buyer.usersocket)
+                console.log(socket.id)
+                localStorage.setItem("userbuyer", JSON.stringify(byr))
+                setCashier(buyer.cashieruser)       
+                setUsername(buyer.username)
+                setTransacNo(buyer.transaction)
+                room = buyer.roomid;
+                socket.emit('joinroom', { username: buyer.username, roomid: buyer.roomid, playfabid: buyer.playfabid, transaction: buyer.transaction, reconnect : true, oldsocket: buyer.usersocket,});
+                toggleShow2()
+            } 
+        }
+    },[socket.connected])
 
     const buybtn = (user) => {
         

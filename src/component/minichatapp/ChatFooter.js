@@ -1,7 +1,7 @@
 import { MDBIcon } from 'mdb-react-ui-kit';
 import React, {useState, useEffect} from 'react'
 import UploadWidget from "../uploadwidget/uploadwidet"
-const ChatFooter = ({socket, buyer, room, msguser, rcvrid}) => {
+const ChatFooter = ({socket, buyer, room, msguser, rcvrid, isadmin}) => {
     const [message, setMessage] = useState("")
     const [image, setImage] = useState(null);
     const [filename, setFilename] = useState("");
@@ -24,13 +24,13 @@ const ChatFooter = ({socket, buyer, room, msguser, rcvrid}) => {
     
     const sendMessage = (e) => {
       e.preventDefault();
-      if (message !== "") {        
+      if (!isadmin &&message !== "") {        
         // Send message to server. We can't specify who we send the message to from the frontend. We can only send to server. Server can then send message to rest of users in room
         socket.emit('send_message', { username: msguser, room: room, message: message, __createdtime__, image: image ? image : null, usersocket: rcvrid});
         setMessage('');
         setImage(null);
       } 
-      else if (image) {
+      else if (!isadmin && image) {
             // const reader = new FileReader();
             // reader.onload = function (e) {
             //   const dataURL = e.target.result;
@@ -40,7 +40,17 @@ const ChatFooter = ({socket, buyer, room, msguser, rcvrid}) => {
               setImage(null);
           //   };
           //   reader.readAsDataURL(image);
-          }
+      } else if (isadmin && message !== ""){
+        console.log("wewewe")
+        socket.emit('admin_send_message', { username: msguser, room: room, message: message, __createdtime__, image: image, usersocket: rcvrid});
+        setMessage('');
+        setImage(null);
+      } else if (isadmin && image){
+        socket.emit('admin_send_message', { username: msguser, room: room, message: message, __createdtime__, image: image, usersocket: rcvrid});
+        setMessage('');
+        setImage(null);
+      }
+
     };
     
     
