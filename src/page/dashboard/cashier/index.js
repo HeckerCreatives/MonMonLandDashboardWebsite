@@ -178,7 +178,7 @@ const AvailableCashiers = () => {
                 setUsername(buyer.username)
                 setTransacNo(buyer.transaction)
                 room = buyer.roomid;
-                socket.emit('joinroom', { username: buyer.username, roomid: buyer.roomid, playfabid: buyer.playfabid, transaction: buyer.transaction, reconnect : true, oldsocket: buyer.usersocket,});
+                socket.emit('joinroom', { username: buyer.username, roomid: buyer.roomid, playfabid: buyer.playfabid, transaction: buyer.transaction, reconnect : true, oldsocket: buyer.usersocket, isplayer: true});
                 toggleShow2()
             } 
         }
@@ -224,7 +224,7 @@ const AvailableCashiers = () => {
                     }
 
                     localStorage.setItem("userbuyer", JSON.stringify(byr))
-                    socket.emit('joinroom', { username: username, roomid: user.item[0].userId._id, playfabid: id, transaction: data, reconnect: false});
+                    socket.emit('joinroom', { username: username, roomid: user.item[0].userId._id, playfabid: id, transaction: data, reconnect: false, isplayer: true});
                 
                 
                 

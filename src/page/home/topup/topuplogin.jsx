@@ -131,11 +131,11 @@ const TopUpLogin = ({toggleTwoModal, setToggleTwoModal,basicModal, setBasicModal
             <MDBCardBody>
             <MDBCardImage src={logo} style={{width: "50%"}}/>
                 <MDBCardText tag="h1">
-                    PRESS OK TO
+                    Press ok to Redirect to payment gateway
                 </MDBCardText>
-                <MDBCardText tag="h1">
-                    REDIRECT TO COINBASE
-                </MDBCardText>
+                {/* <MDBCardText tag="h1">
+                    
+                </MDBCardText> */}
                 <MDBBtn disabled={isloading}>
                    {isloading ? <MDBSpinner grow/> : "OK"}
                 </MDBBtn>

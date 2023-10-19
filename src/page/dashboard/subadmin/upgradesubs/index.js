@@ -294,7 +294,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
 
       const goonline = () => {
         if(!color && iscashier){
-            socket.emit('joinroom', { username: auth.userName, roomid: auth._id});
+            socket.emit('joinroom', { username: auth.userName, roomid: auth._id, isplayer: false});
             
             setColor(true)
         } else if (!iscashier){

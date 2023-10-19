@@ -28,6 +28,7 @@ import {
   import clsbtn from "../../../assets/header/X BUTTON.png"
 const AddFundsModal = ({basicModal, setBasicModal}) => {
     const auth = JSON.parse(localStorage.getItem("auth"))
+    const user = JSON.parse(localStorage.getItem("user"))
     const [toggleTwoModal, setToggleTwoModal] = useState(false);
     const toggleShow1 = () => setToggleTwoModal(!toggleTwoModal);
     const [username, setUsername] = useState("")
@@ -88,13 +89,13 @@ const AddFundsModal = ({basicModal, setBasicModal}) => {
             </MDBModalHeader>
             <MDBModalBody>
             <MDBModalTitle className="text-center">
-            { auth && 
-                `Login As: ${auth.Username}`
+            { user && 
+                `Login As: ${user.Username}`
             }
             </MDBModalTitle>
             <MDBRow className="my-2">
                 <MDBCol className="d-flex justify-content-between align-items-center">
-                    {auth ? 
+                    {user ? 
                     <MDBBtn className="bg-transparent p-0" block onClick={lagawts}>
                     <img src={logoutbtn} alt="" className="img-fluid"/>
                     </MDBBtn>
@@ -113,7 +114,7 @@ const AddFundsModal = ({basicModal, setBasicModal}) => {
             </MDBRow>
             <MDBRow className="my-2">
                 <MDBCol>
-                    <MDBBtn className="bg-transparent p-0" block disabled={auth ? false: true} href={`/topup`}>
+                    <MDBBtn className="bg-transparent p-0" block disabled={user ? false: true} href={`/topup`}>
                     <img src={topupbtn} alt="" className="img-fluid"/>
                     </MDBBtn>
                 </MDBCol>
