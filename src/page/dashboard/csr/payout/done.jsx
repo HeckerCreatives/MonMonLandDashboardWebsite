@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import { handlePagination } from "../../../../component/utils";
 const CsrPayoutDone = () => {
     const auth = JSON.parse(localStorage.getItem("auth"));
+    const playfabToken = localStorage.getItem("playfabAdminAuthToken")
     const [page, setPage] = useState(1),
     [total, setTotal] = useState(0),
     [done, setDone] = useState([]),
@@ -61,7 +62,11 @@ const CsrPayoutDone = () => {
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({admin: auth.userName})
+                    body: JSON.stringify({
+                        admin: auth.userName,
+                        playfabid: auth.playfabid,
+                        playfabToken: playfabToken,
+                    })
                 }).then(result => result.json())
                 .then(data => {
                     if(data.message === "success"){

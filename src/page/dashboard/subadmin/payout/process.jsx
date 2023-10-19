@@ -7,6 +7,7 @@ import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
 import { handlePagination } from "../../../../component/utils";
 const SubAdminPayoutProcess = () => {
     const auth = JSON.parse(localStorage.getItem("auth"));
+    const playfabToken = localStorage.getItem("playfabAdminAuthToken")
     const [page, setPage] = useState(1),
     [total, setTotal] = useState(0),
     [image, setImage] = useState(""),
@@ -64,6 +65,9 @@ const SubAdminPayoutProcess = () => {
                     body: JSON.stringify({
                         admin: auth.userName,
                         receipt: image,
+                        adminId: auth._id,
+                        playfabid: auth.playfabid,
+                        playfabToken: playfabToken,
                     })
                 }).then(result => result.json())
                 .then(data => {

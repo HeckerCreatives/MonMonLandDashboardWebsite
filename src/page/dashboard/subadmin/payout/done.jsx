@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import { handlePagination } from "../../../../component/utils";
 const SubAdminPayoutDone = () => {
     const auth = JSON.parse(localStorage.getItem("auth"));
+    const playfabToken = localStorage.getItem("playfabAdminAuthToken")
     const [page, setPage] = useState(1),
     [total, setTotal] = useState(0),
     [done, setDone] = useState([]),
@@ -36,7 +37,7 @@ const SubAdminPayoutDone = () => {
             },
             body: JSON.stringify({
                 status: "done",
-                admin: auth.userName
+                admin: auth.userName,
             })
         }).then(result => result.json())
         .then(data => {
@@ -63,7 +64,11 @@ const SubAdminPayoutDone = () => {
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({admin: auth.userName})
+                    body: JSON.stringify({
+                        admin: auth.userName,
+                        playfabid: auth.playfabid,
+                        playfabToken: playfabToken,
+                    })
                 }).then(result => result.json())
                 .then(data => {
                     if(data.message === "success"){
