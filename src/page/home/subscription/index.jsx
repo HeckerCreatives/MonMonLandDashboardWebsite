@@ -21,64 +21,89 @@ import { MDBContainer,
  MDBInput, } from "mdb-react-ui-kit";
 // import caro from "../../../assets/caro.png"
 import { PlayFabClient } from "playfab-sdk";
-import { Link } from "react-router-dom"
+import { Link , useNavigate} from "react-router-dom"
 import Slider from "react-slick";
 import { Toast } from "../../../component/utils";
 import "./index.css"
 import pageon from "../../../assets/games/A.png"
 import pageoff from "../../../assets/games/B.png"
+import lagin from "../../../assets/header/login BUTTON.png"
 import axios from "axios";
+import logoutbtn from "../../../assets/header/logout BUTTON.png"
+import topupbtn from "../../../assets/header/TOP UP BUTTON.png"
+import signupbtn from "../../../assets/header/sign up BUTTON.png"
+import clsbtn from "../../../assets/header/X BUTTON.png"
 const Subscription = () => {
     const [isLoading, setIsLoading] = useState(false);
+    const user = JSON.parse(localStorage.getItem("user"))
+    const playfabToken = localStorage.getItem("playfabAuthToken")
+    const [playfabId, setPlayfabID] = useState("")
+    const [playfabtoken, setPlayfabToken] = useState("")
     const [subs, setSubs] = useState([]);
-    const [activeModal, setActiveModal] = useState(null);
     const [subsdescription, setSubsDescription] = useState([]);
     const [subsname, setSubsName] = useState('');
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [quantity, setQuantity] = useState('1');
+    
+    const [toggleTwoModal, setToggleTwoModal] = useState(false);
+    const toggleShow1 = () => setToggleTwoModal(!toggleTwoModal);
 
-    const handleQuantityChange = (event) => {
-        if (event.target.value <= 99) {
-          setQuantity(event.target.value);
-        } 
-      };
+    const [basicModal, setBasicModal] = useState(false);
+    const toggleShow = () => setBasicModal(!basicModal);
+
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+
+    const lagawts = () => {
+        localStorage.clear()
+        window.location.reload()
+    }
+
+    useEffect(() => {
+        if(user){
+        setUsername(user.Username)
+        setPlayfabID(user.PlayfabId)
+        setPlayfabToken(playfabToken)
+        setPassword(atob(user.code))
+        }
+    },[])
 
     const login = (e) => {
         e.preventDefault();
 
-        const {user, pass, quantity} = e.target
 
-        if (quantity.value < 1){
-            Toast.fire({
-                icon: 'error',
-                title: 'Please input a valid number'
-            })
-        }
 
         const playFabUserData = {
-            Username: user.value,            
-            Password: pass.value,           
+            Username: username,            
+            Password: password,           
         };
-
+        setIsLoading(true)
         PlayFabClient.LoginWithPlayFab(playFabUserData, (error, result) => {
-            // const id = result.data.PlayFabId;
-
             if(result){
+                const users = {
+                    Username: username,
+                    PlayfabId: result.data.PlayFabId,
+                    code: btoa(password)
+                }
+
                 fetch(`${process.env.REACT_APP_API_URL}coin/${subsname}`, {
                     method:"POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        name: user.value,
+                        name: username,
                         playfabId: result.data.PlayFabId,
-                        quantity: quantity.value
+                        playfabToken: result.data.SessionTicket,
                     })
                 })
                 .then(result => result.json())
                 .then(data => {
+                    setIsLoading(false)
+                    localStorage.setItem("user", JSON.stringify(users))
+                    localStorage.setItem("playfabAuthToken", result.data.SessionTicket)
                     const url = data.hosted_url
                     window.open(url, '_blank')
+                    window.location.reload()
                 })
 
             }
@@ -184,15 +209,24 @@ const Subscription = () => {
                 </MDBCardBody>
                 <MDBContainer className="text-center">
                 
-                    <MDBBtn 
-                    type="button" 
-                    className="zoom-badge subsbutton btn btn-warning fw-bold" 
-                    size="lg" 
+                <MDBBtn
+                    type="button"
+                    className="zoom-badge subsbutton btn btn-warning fw-bold"
+                    size="lg"
                     onClick={() => {
-                    setActiveModal(true)
-                    setSubsName(sub.subscriptionName.toLowerCase())
-                    }} 
-                    >SUBSCRIBE NOW</MDBBtn>
+                        
+                        if (sub.subscriptionName.toLowerCase() === "pearl") {
+                        window.location.href = `${window.location.origin}/register?sponsor=monmonland&id=27557BB301ABB773`;
+                        
+                        } else {
+                        toggleShow()
+                        setSubsName(sub.subscriptionName.toLowerCase());
+                        }
+                    }}
+                    >
+                    SUBSCRIBE NOW
+                </MDBBtn>
+
                     
                 </MDBContainer>
             </MDBCard>
@@ -238,17 +272,22 @@ const Subscription = () => {
                 </ul>
             </MDBCardBody>
             <br/>
-            <MDBBtn 
-            type="button" 
-            className="subsbuttonmobile btn btn-warning fw-bold " 
-            size="lg"
-            onClick={() => {
-                setActiveModal(true)
-                setSubsName(sub.subscriptionName.toLowerCase())
-                }} 
-            >
-            SUBSCRIBE NOW
-            </MDBBtn> 
+            <MDBBtn
+                type="button"
+                className="zoom-badge subsbutton btn btn-warning fw-bold"
+                size="lg"
+                onClick={() => {
+                    if (sub.subscriptionName.toLowerCase() === "pearl") {
+                        window.location.href = `${window.location.origin}/register?sponsor=monmonland&id=27557BB301ABB773`;
+                        
+                    } else {
+                    toggleShow()
+                    setSubsName(sub.subscriptionName.toLowerCase());
+                    }
+                }}
+                >
+                SUBSCRIBE NOW
+            </MDBBtn>
                         
             </MDBCard> 
                                            
@@ -258,40 +297,113 @@ const Subscription = () => {
         </MDBCol>        
         </div>
 
-        <MDBModal  show={activeModal} staticBackdrop tabIndex='-1'>
-            <MDBModalDialog centered>
-            <MDBModalContent>
-            <form autoComplete="off" onSubmit={login}>
-                <MDBModalHeader>
-                <MDBModalTitle>Please Login Your Ingame Account</MDBModalTitle>
-                {/* <MDBBtn className='btn-close' color='none' onClick={()=> setActiveModal(null)}></MDBBtn> */}
-                </MDBModalHeader>
-                <MDBModalBody>
-                <MDBCardText>
-                    Username
-                    <MDBInput name="user" required/>
-                </MDBCardText>
-                <MDBCardText>
-                    Password
-                    <MDBInput name="pass" type="password" required/>
-                </MDBCardText>
-                <MDBCardText>
-                    Quantity
-                    <MDBInput name="quantity" type="number" value={quantity} onChange={handleQuantityChange}/>
-                </MDBCardText>
-                </MDBModalBody>
-                <MDBModalFooter>
-                <MDBBtn color='secondary' onClick={()=> setActiveModal(null)}>
-                    Close
-                </MDBBtn>  
-                <MDBBtn color='secondary' type="submit">
-                    Login
-                </MDBBtn>               
-                </MDBModalFooter>
+
+        <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
+        <MDBModalDialog centered>
+          <MDBModalContent>
+            <MDBModalHeader className='d-flex justify-content-end'>
+              <MDBBtn  className="border-0 bg-transparent" color='none' onClick={() =>setBasicModal(false)}>
+              <img src={clsbtn} alt="" className="img-fluid"/>
+              </MDBBtn>
+            </MDBModalHeader>
+            <MDBModalBody>
+            <MDBModalTitle className="text-center">
+            { user && 
+                `Login As: ${user.Username}`
+            }
+            </MDBModalTitle>
+            <MDBRow className="my-2">
+                <MDBCol className="d-flex justify-content-between align-items-center">
+                    {user ? 
+                    <img src={logoutbtn} alt="" className="zoom-playnow img-fluid" onClick={lagawts}/>
+                    :
+                    <img src={lagin} alt="" className="zoom-playnow img-fluid" onClick={toggleShow1}/>
+                    
+                    }
+                    
+                </MDBCol>
+                <MDBCol className="d-flex justify-content-between align-items-center">
+                <img src={signupbtn} alt="" className="zoom-playnow img-fluid"
+                 
+                onClick={() => {
+                    window.location.href = `${window.location.origin}/register?sponsor=monmonland&id=27557BB301ABB773`;
+                }}/>
+                </MDBCol>
+            </MDBRow>
+            <MDBRow className="my-2">
+                {/* <MDBCol className="d-flex justify-content-between align-items-center ">
+                    <MDBBtn className="bg-transparent p-1" block disabled={user ? false: true} href={`/topup`}>
+                    <img src={topupbtn} alt="" className="img-fluid"/>
+                    </MDBBtn>
+                </MDBCol> */}
+                <MDBCol className="d-flex justify-content-between align-items-center">
+                    <MDBBtn 
+                    className="zoom-playnow" block
+                    disabled={user ? false: true}
+                    onClick={(e) => login(e)}
+                    >
+                    Subscribe
+                    {/* <img src={topupbtn} alt="" className="img-fluid"/> */}
+                    </MDBBtn>
+                </MDBCol>
+            </MDBRow>
+            </MDBModalBody>
+            <MDBModalBody className="text-center">
+            <div className="text-white p-1" style={{backgroundColor: "#40290A", textAlign: "justify"}}>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            </div>
+            
+            </MDBModalBody>
+
+          </MDBModalContent>
+        </MDBModalDialog>
+        </MDBModal>
+
+        <MDBModal 
+        show={toggleTwoModal} 
+        tabIndex='-1' staticBackdrop>
+        <MDBModalDialog centered>
+          <MDBModalContent>
+          <form autoComplete="off" onSubmit={login}>
+            <MDBModalHeader className='d-flex justify-content-end'>
+            <MDBBtn className="border-0 bg-transparent" color='none' 
+            onClick={() => {
+            toggleShow1()
+            setBasicModal(false)
+            }}
+            >
+             <img src={clsbtn} alt="" className="img-fluid"/>   
+            </MDBBtn>
+            </MDBModalHeader>
+            <MDBModalBody>
+            <MDBCard alignment="center">
+            <MDBCardBody>
+            {/* <MDBCardImage src={logo} style={{width: "50%"}}/> */}
+                <MDBTypography>Username</MDBTypography>
+                <MDBInput name="username" required onChange={(e) => setUsername(e.target.value)}/>
+                <MDBTypography >Password</MDBTypography>
+                <MDBInput name="password" type="password" required onChange={(e) => setPassword(e.target.value)}/>
+                <MDBRow className="mt-3">
+                <MDBCol>
+                <MDBBtn  disabled={isLoading} type="submit" className="bg-transparent p-0 my-2">
+                   {isLoading ? <MDBSpinner grow color='dark'/> : <img src={lagin} alt="" className="img-fluid"/>}
+                </MDBBtn>
+                </MDBCol>
+                
+                <MDBCol className="d-flex justify-content-between align-items-center">
+                    <MDBBtn className="bg-transparent p-0" href={`${window.location.origin}/register?sponsor=monmonland&id=27557BB301ABB773`} block>
+                    <img src={signupbtn} alt="" className="img-fluid"/>
+                    </MDBBtn>
+                </MDBCol>
+                </MDBRow>
+                
+            </MDBCardBody>
+            </MDBCard>
+            </MDBModalBody>
             </form>
-            </MDBModalContent>
-            </MDBModalDialog>
-        </MDBModal> 
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
 
         </MDBContainer>
 

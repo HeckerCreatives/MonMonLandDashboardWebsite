@@ -25,6 +25,7 @@ import {
 const TopUpLogin = ({toggleTwoModal, setToggleTwoModal,basicModal, setBasicModal, amount, selectedtopup, bundle , bundledes,bundlesubs}) =>{
     const [username, setUsername] = useState("")
     const [playfabId, setPlayfabID] = useState("")
+    const [playfabtoken, setPlayfabToken] = useState("")
     const [isloading, setIsLoading] = useState(false)
     const auth = JSON.parse(localStorage.getItem("user"))
     const playfabToken = localStorage.getItem("playfabAuthToken")
@@ -42,11 +43,14 @@ const TopUpLogin = ({toggleTwoModal, setToggleTwoModal,basicModal, setBasicModal
         const decrypted = new URLSearchParams(final);
         const username = decrypted.get('username');
         const playfabId = decrypted.get('playfabId');
+        const playfabtoken = decrypted.get('sessionTicket')
+        setPlayfabToken(playfabtoken)
         setUsername(username)
         setPlayfabID(playfabId)
     } else if (auth){
         setUsername(auth.Username)
         setPlayfabID(auth.PlayfabId)
+        setPlayfabToken(playfabToken)
     }
     },[])
 
@@ -63,7 +67,7 @@ const TopUpLogin = ({toggleTwoModal, setToggleTwoModal,basicModal, setBasicModal
                     name: username,
                     playfabId: playfabId,
                     amount: amount,
-                    playfabToken: playfabToken
+                    playfabToken: playfabtoken
                 })
             })
             .then(result => result.json())

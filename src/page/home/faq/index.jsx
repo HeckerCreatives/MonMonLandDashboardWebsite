@@ -2,6 +2,7 @@ import { MDBCol, MDBContainer, MDBRow, MDBTypography } from "mdb-react-ui-kit";
 import React, {useState} from "react";
 import "./index.css"
 import Sidenav from "./sidenav/sidenav";
+import { Outlet } from "react-router-dom";
 const FAQ = () => {
     const [didToggle, setDidToggle] = useState(
         window.innerWidth > 768 ? false : true
@@ -15,75 +16,83 @@ const FAQ = () => {
             children: [
               {
                 name: "What is MML",
-                path: "/faq",
+                path: "/faq/generalquestion/whatismml",
               },
               {
                 name: "What is Monster Coin and Monster Gem?",
-                path: "/faq",
+                path: "/faq/generalquestion/whatismcmg",
               },
               {
                 name: "How do I find information and support for Monmonland games?",
-                path: "/faq",
+                path: "/faq/generalquestion/infoandsupport",
               },
               {
                 name: "In what platforms is Monmonland available?",
-                path: "/faq",
+                path: "/faq/generalquestion/mmlplatforms",
               },
             ],
         },
         {
             name: "Mode Of Payment",
             path: "",
-            icon: "book",
+            icon: "cash-register",
             children: [
               {
                 name: "How to use an automated payment method?",
-                path: "/faq",
+                path: "/faq/mop/autopayment",
               },
               {
                 name: "How to use a manual payment method",
-                path: "/faq",
+                path: "/faq/mop/manualpayment",
               },
             ],
         },
         {
             name: "Games",
             path: "",
-            icon: "book",
+            icon: "gamepad",
             children: [
               {
                 name: "How to earn in Monmonland?",
-                path: "/faq",
+                path: "/faq/game/howtoearn",
               },
               {
                 name: "How to create an account?",
-                path: "/faq",
+                path: "/faq/game/howtocreateacc",
               },
               {
                 name: "How to Subscribe?",
-                path: "/faq",
+                path: "/faq/game/howtosubscribe",
               },
               {
                 name: "How to cash out? ",
-                path: "/faq",
+                path: "/faq/game/howtocashout",
               },
               {
                 name: "Is it okay if I have no Binance but have other wallets?",
-                path: "/faq",
+                path: "/faq/game/binancewallet",
               },
             ],
         },
         {
             name: "Unilevel",
             path: "",
-            icon: "book",
+            icon: "users",
             children: [
               {
                 name: "What is Unilevel?",
-                path: "/faq",
+                path: "/faq/unilevel/whatisunilevel",
               },
             ],
         },
+        {
+          name: "Back to Home",
+          path: "/",
+          icon: "chevron-circle-left",
+          children: [
+            
+          ],
+      },
     ]
 
 return(
@@ -100,12 +109,16 @@ return(
             window.innerWidth > 768
               ? didToggle 
                 ? window.innerWidth <= 768
-                  ? "0rem"
+                  ? "4.5rem"
                   : "4.5rem"
-                : "17.5rem"
+                : "18rem"
               : "0rem",
         }}
         >
+
+        <MDBContainer fluid className="px-0">
+        <Outlet />        
+        </MDBContainer>
 
         </main> 
     </MDBContainer>

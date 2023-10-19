@@ -78,7 +78,7 @@ const News = () => {
     return (
         <MDBContainer fluid className="pt-5 newsbgcolor" id="news">
         <div className=" titlefontsize text-warning text-center fw-bold text-wrap">
-        <MDBTypography className="w-100">NEWS AND INFORMATION</MDBTypography>
+        <MDBTypography className="w-100">NEWS AND UPDATE</MDBTypography>
         </div>
             
         {isLoading ? <MDBSpinner color="warning"></MDBSpinner>

@@ -42,26 +42,26 @@ const Login = () =>{
       })
     }).then(result => result.json())
     .then(data =>{
-      if (data === false) {        
+      if (data.message !== "success") {        
 				Swal.fire({
-          title: "Authentication Failed",
+          title: data.message,
           icon: "info",
-          text: "Please Check your username and password"
+          text: data.data
         })
 			} else {
         const playFabUserData = {
           CreateAccount: false,            
-          CustomId: data.playfabid,           
+          CustomId: data.data.playfabid,           
         };
         PlayFabClient.LoginWithCustomID(playFabUserData, (error, result) => {
           if (result){
             localStorage.setItem("playfabAdminAuthToken", result.data.SessionTicket)
             console.log(result)
-            localStorage.setItem('auth', JSON.stringify(data))
+            localStorage.setItem('auth', JSON.stringify(data.data))
             Swal.fire({
               title: "Login Successfully",
               icon: "success",
-              text: `Welcome ${data.firstName}`
+              text: `Welcome ${data.data.firstName}`
             })
             .then(result1 => {
               if(result1.isConfirmed)
@@ -81,6 +81,7 @@ const Login = () =>{
       
     })
   }
+
   return(
     <MDBContainer
     fluid

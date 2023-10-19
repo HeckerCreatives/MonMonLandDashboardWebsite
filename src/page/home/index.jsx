@@ -30,7 +30,7 @@ const Initial = () => {
         },
         {
             name: "FAQ",
-            path: "/faq",
+            path: "/faq/generalquestion/whatismml",
         },
         {
             name: "MEDIA",

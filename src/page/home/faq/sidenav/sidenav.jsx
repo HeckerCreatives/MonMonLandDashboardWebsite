@@ -9,7 +9,6 @@ const Sidenav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1, di
   const [toggled, setToggled] = useState("");
   const [toggled1, setToggled1] = useState("");
   const [toggled2, setToggled2] = useState("");
-  const [toggled3, setToggled3] = useState("");
   const navigate = useNavigate();
   const activePath = window.location.pathname;
 
@@ -52,33 +51,34 @@ const Sidenav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1, di
       <>
       <div
       className={`sidebar-wrapper d-flex flex-column ${
-        window.innerWidth <= 768 && didToggle && didToggle1 && "overflow-auto"
+        window.innerWidth <= 768 && didToggle && "overflow-auto"
       }`}
       style={{
-        width: didToggle && didToggle1
+        width: didToggle 
           ? window.innerWidth <= 768
-            ? "0rem"
+            ? "4.5rem"
             : "4.5rem"
-          : "17.8rem",
+          : "18rem",
       }}
     >
-      {/* {window.innerWidth > 768 && (
+      {window.innerWidth > 768 && (
         <div
           onClick={() => {
             setDidToggle(!didToggle);
             setToggled("");
           }}
           className={`sidebar-toggle d-flex align-items-center justify-content-center ${
-            didToggle && didToggle1 && didToggle2 && didToggle3 &&"sidebar-toggle-rotate"
+            didToggle && "sidebar-toggle-rotate"
           }`}
         >
           <MDBIcon fas icon="angle-left" size="lg" />
         </div>
-      )} */}
+      )}
 
       <div className="sidebar-header pt-4 mb-2">
         <div className="text-center sidebar-logo-container d-flex align-items-center justify-content-center">
-          <img src={smalllogo} alt="logo" className="img-fluid w-50" />
+          {/* <img src={smalllogo} alt="logo" className="img-fluid w-50" /> */}
+          <h1 className="text-wrap">F.A.Q</h1>
         </div>
         <div className="text-center pt-3">
           
@@ -158,7 +158,7 @@ const Sidenav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1, di
                     <div className="mx-3">
                       <MDBIcon fas icon={"angle-right"} size="sm" />
                     </div>
-                    <div className="flex-grow-1 sidebar-sublink-header-title">
+                    <div className="txtwrap flex-grow-1 sidebar-sublink-header-title">
                       {sub.name}
                       {/* subchild */}
             {/* {link.children.map((sub)=>( */}

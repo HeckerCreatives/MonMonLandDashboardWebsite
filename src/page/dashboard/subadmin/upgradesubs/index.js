@@ -239,6 +239,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                     })
                 }).then(result => result.json())
                 .then(data =>{
+                    console.log(data)
                     if (data) {
                         socket.emit("refreshcashierdata", data.roomdetails)
                         
@@ -329,7 +330,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
       }
 
       const handleTopupChange = (topup) => {
-        socket.emit('selectsubs', {id: bibiliuserid, subs: topup})
+        socket.emit('selectsubs', {room: auth._id, subs: topup})
         setPrice(topup)
       }
 
@@ -440,7 +441,9 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                   </MDBCardText>
                                   &nbsp;
                                   <div>
-                                  <MDBInput value={price} size="sm" type="number" onChange={(e) => handleTopupChange(e.target.value)}/>
+                                  <MDBInput value={price} size="sm" type="number" 
+                                  disabled={Buyer?.transactionnumber ? false : true}
+                                  onChange={(e) => handleTopupChange(e.target.value)}/>
                                   </div>
                                   
                                   </div>

@@ -54,7 +54,8 @@ const AddFundsModal = ({basicModal, setBasicModal}) => {
             if(result){
                 const user = {
                     Username: username,
-                    PlayfabId: result.data.PlayFabId
+                    PlayfabId: result.data.PlayFabId,
+                    code: btoa(password)
                 }
                 setIsLoading(false)
                 localStorage.setItem("user", JSON.stringify(user))
@@ -96,26 +97,25 @@ const AddFundsModal = ({basicModal, setBasicModal}) => {
             <MDBRow className="my-2">
                 <MDBCol className="d-flex justify-content-between align-items-center">
                     {user ? 
-                    <MDBBtn className="bg-transparent p-0" block onClick={lagawts}>
-                    <img src={logoutbtn} alt="" className="img-fluid"/>
-                    </MDBBtn>
+                    <img src={logoutbtn} alt="" className="zoom-playnow img-fluid" onClick={lagawts}/>
                     :
-                    <MDBBtn className="bg-transparent p-0" block onClick={toggleShow1}>
-                    <img src={loginbtn} alt="" className="img-fluid"/>
-                    </MDBBtn>
+                    <img src={loginbtn} alt="" className="zoom-playnow img-fluid" onClick={toggleShow1}/>
+                    
                     }
                     
                 </MDBCol>
                 <MDBCol className="d-flex justify-content-between align-items-center">
-                    <MDBBtn className="bg-transparent p-0" href={`${window.location.origin}/register?sponsor=monmonland&id=27557BB301ABB773`} block>
-                    <img src={signupbtn} alt="" className="img-fluid"/>
-                    </MDBBtn>
+                <img src={signupbtn} alt="" className="zoom-playnow img-fluid"
+                 
+                 onClick={() => {
+                     window.location.href = `${window.location.origin}/register?sponsor=monmonland&id=27557BB301ABB773`;
+                 }}/>
                 </MDBCol>
             </MDBRow>
             <MDBRow className="my-2">
                 <MDBCol>
-                    <MDBBtn className="bg-transparent p-0" block disabled={user ? false: true} href={`/topup`}>
-                    <img src={topupbtn} alt="" className="img-fluid"/>
+                    <MDBBtn className="bg-transparent p-0 " block disabled={user ? false: true} href={`/topup`}>
+                    <img src={topupbtn} alt="" className="zoom-playnow img-fluid"/>
                     </MDBBtn>
                 </MDBCol>
             </MDBRow>

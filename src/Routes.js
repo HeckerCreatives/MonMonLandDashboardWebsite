@@ -59,6 +59,18 @@ import CsrLoginLogs from "./page/dashboard/userloginlogs/csrlogs";
 import SubadminCsrLoginLogs from "./page/dashboard/subadmin/csrloginlogs/csrlogs";
 import FAQ from "./page/home/faq";
 import Media from "./page/home/media";
+import General1 from "./page/home/faq/contents/generalquestion/whatismml";
+import General2 from "./page/home/faq/contents/generalquestion/whatismc";
+import General3 from "./page/home/faq/contents/generalquestion/infoandsupport";
+import General4 from "./page/home/faq/contents/generalquestion/mmlplatform";
+import Mop1 from "./page/home/faq/contents/modeofpayment/autopayment";
+import Mop2 from "./page/home/faq/contents/modeofpayment/manualpayment";
+import Game1 from "./page/home/faq/contents/games/howtoearn";
+import Game2 from "./page/home/faq/contents/games/createaccount";
+import Game3 from "./page/home/faq/contents/games/howtosubs";
+import Game4 from "./page/home/faq/contents/games/howtocashout";
+import Game5 from "./page/home/faq/contents/games/binancewallet";
+import Unilevel1 from "./page/home/faq/contents/unilevel/unilevel";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -208,7 +220,28 @@ const Routers = () => {
         
         <Route path="player/:userId/register" element={<SignUpPlayer />}/>
       </Route>
-      <Route path="/faq" element={<FAQ />}/>
+      <Route path="/faq" element={<FAQ />}>
+        <Route path="generalquestion">
+          <Route path="whatismml" element={<General1 />}/>
+          <Route path="whatismcmg" element={<General2 />}/>
+          <Route path="infoandsupport" element={<General3 />}/>
+          <Route path="mmlplatforms" element={<General4 />}/>
+        </Route>
+        <Route path="mop">
+          <Route path="autopayment" element={<Mop1 />}/>
+          <Route path="manualpayment" element={<Mop2 />}/>
+        </Route>
+        <Route path="game">
+          <Route path="howtoearn" element={<Game1 />}/>
+          <Route path="howtocreateacc" element={<Game2 />}/>
+          <Route path="howtosubscribe" element={<Game3 />}/>
+          <Route path="howtocashout" element={<Game4 />}/>
+          <Route path="binancewallet" element={<Game5 />}/>
+        </Route>
+        <Route path="unilevel">
+          <Route path="whatisunilevel" element={<Unilevel1/>}/>
+        </Route>
+      </Route>
       <Route path="/login" element={<Login />}/>
       <Route path="/media" element={<Media />}/>
       <Route path="/cashier" element={<AvailableCashiers/>}/>

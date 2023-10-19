@@ -212,9 +212,7 @@ const Header = () => {
                 </MDBRow>
                 <MDBRow> 
                     <MDBCol className="my-3 text-center">
-                        <MDBBtn color="" className="bg-transparent shadow-0 p-0">
-                        <img src={donwloadnow} className="w-100" alt="" />
-                        </MDBBtn>                       
+                    <img src={donwloadnow} className="img-fluid zoom-playnow" alt="" />                       
                     </MDBCol>
                 </MDBRow>
         </MDBContainer>

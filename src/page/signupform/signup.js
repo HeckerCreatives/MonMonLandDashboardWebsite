@@ -1,4 +1,10 @@
-import { MDBContainer, MDBInput, MDBRow, MDBCol,MDBIcon,MDBTypography,MDBBtn, MDBCard, MDBCardTitle, MDBCardBody, MDBCheckbox,MDBSpinner } from "mdb-react-ui-kit";
+import { MDBContainer, MDBInput, MDBRow, MDBCol,MDBIcon,MDBTypography,MDBBtn, MDBCard, MDBCardTitle, MDBCardBody, MDBCheckbox,MDBSpinner,MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter, } from "mdb-react-ui-kit";
 import React, { useEffect, useState } from "react";
 import logo from "../../assets/header/small logo for navi.png"
 import './signup.css'
@@ -13,7 +19,9 @@ const SignUp = () => {
   const [referrer, setReferrer] = useState('');
   const [referrerid, setReferrerId] = useState('');
   const [isloading, setIsLoading] = useState(false);
+  const [basicModal, setBasicModal] = useState(false);
 
+  const toggleShow = () => setBasicModal(!basicModal);
   useEffect(()=> {
     const url = new URL(window.location.href);
     const params = new URLSearchParams(url.search);
@@ -92,6 +100,7 @@ const SignUp = () => {
   }
 
     return(
+      <>
         <MDBContainer 
         fluid 
         className="min-vh-100 text-black align-items-stretch d-flex" 
@@ -101,8 +110,8 @@ const SignUp = () => {
         <MDBCol lg={4} className="sidebg d-flex align-items-center text-dark text-center">
         <MDBContainer fluid >
         <MDBCol className="text fs-6">
-        <h1 >Lorem Ipsum</h1>
-          <p >Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        <h1 >Register Now!</h1>
+          <p >Join us on this extraordinary adventure, and together, let's travel on an epic journey that will lead us through the lands of Monmonland.  Become a Monmon master, honing our skills and forging unbreakable bonds with our Money Monsters. Create your account by filling up the requirements. So, what are you waiting for? Let's band together and make our mark on the ever-expanding tapestry of Monmonland, creating unforgettable memories and stories that will be told for generations to come!</p>
         </MDBCol>          
           </MDBContainer>
         </MDBCol>          
@@ -164,8 +173,9 @@ const SignUp = () => {
           </MDBCol>         
 
           </MDBRow>
-          <MDBCol>
-          <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Accept our Terms and Condition' required/>
+          <MDBCol className="d-flex">
+          <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' required/>
+          <span>Accept our</span>&nbsp;<span style={{color: "blue", cursor: "pointer"}} onClick={toggleShow}>Terms and Condition</span>
           </MDBCol>     
 
           
@@ -188,9 +198,26 @@ const SignUp = () => {
 
         </MDBRow>
         
-        
-        
         </MDBContainer>
+
+        <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
+        <MDBModalDialog>
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>Terms and Condition</MDBModalTitle>
+              <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn>
+            </MDBModalHeader>
+            <MDBModalBody>Bleh Bleh Bleh</MDBModalBody>
+
+            <MDBModalFooter>
+              <MDBBtn color='secondary' onClick={toggleShow}>
+                Close
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+      </>
     )
 }
 

@@ -30,7 +30,7 @@ const Footer = ({links}) => {
                 active
                 aria-current="page"
                 href={link.path}
-                className={`text-white fw-bold`}
+                className={`text-white fw-bold mx-2`}
                 onClick={() => {
                 handleActive(link.path);
                 }}

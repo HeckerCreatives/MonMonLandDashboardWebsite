@@ -440,7 +440,9 @@ const CsrAdminUpgradeSubscriptionManual = () => {
                                   </MDBCardText>
                                   &nbsp;
                                   <div>
-                                  <MDBInput value={price} size="sm" type="number" onChange={(e) => handleTopupChange(e.target.value)}/>
+                                  <MDBInput value={price} size="sm" type="number" 
+                                  disabled={Buyer?.transactionnumber ? false : true}
+                                  onChange={(e) => handleTopupChange(e.target.value)}/>
                                   </div>
                                   
                                   </div>
