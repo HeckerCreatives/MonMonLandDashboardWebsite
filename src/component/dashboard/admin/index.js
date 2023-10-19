@@ -15,9 +15,9 @@ const AdminDashboard = () => {
     const [paidusers, setPaidUsers] = useState([]);
     const navigate = useNavigate()
     
-    const [request, setRequest] = useState([]);
-    const [processed, setProcessed] = useState([]);
-    const [done, setDone] = useState([]);
+    const [request, setRequest] = useState(0);
+    const [processed, setProcessed] = useState(0);
+    const [done, setDone] = useState(0);
     const [autopayment, setAutoPayment] = useState(0);
     const [AutoAndManual, setAutoAndManual] = useState(0);
     const [ManualPayment, setManualPayment] = useState(0);
