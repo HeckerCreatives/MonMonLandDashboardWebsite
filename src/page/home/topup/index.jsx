@@ -181,7 +181,7 @@ const TopUp = () =>{
                 {/* <MDBBtn className="p-0 mx-2" onClick={() =>handleBundles(30,"Iron Pack","Ruby Subscription + Iron Tool","ruby")}>
                 <img src={addfundsbtn} alt=""/>
                 </MDBBtn> */}
-                <img className="zoom-playnow mx-2" src={addfundsbtn} alt="" onClick={() =>handleBundles(30,"Iron Pack","Ruby Subscription + Iron Tool","ruby")}/>
+                <img className="zoom-playnow mx-2" src={addfundsbtn} alt="" onClick={() =>handleBundles(30,"Iron Pack","Ruby Subscription + Iron Tool","ironpack")}/>
                 </MDBCardFooter>
                 </MDBCard>
                 </MDBCol>
@@ -204,7 +204,7 @@ const TopUp = () =>{
                 {/* <MDBBtn className="p-0 mx-2" onClick={() =>handleBundles(65,"Steel Pack","Emerald Subscription + Steel Tool","emerald")}>
                 <img src={addfundsbtn} alt=""/>
                 </MDBBtn> */}
-                <img className="zoom-playnow mx-2" src={addfundsbtn} alt="" onClick={() =>handleBundles(65,"Steel Pack","Emerald Subscription + Steel Tool","emerald")}/>
+                <img className="zoom-playnow mx-2" src={addfundsbtn} alt="" onClick={() =>handleBundles(65,"Steel Pack","Emerald Subscription + Steel Tool","steelpack")}/>
                 </MDBCardFooter>
                 </MDBCard>
                 </MDBCol>
@@ -227,7 +227,7 @@ const TopUp = () =>{
                 {/* <MDBBtn className="p-0 mx-2" onClick={() =>handleBundles(120,"Mithril Pack","Diamond Subscription + Mithril Tool","diamond")}>
                 <img src={addfundsbtn} alt=""/>
                 </MDBBtn> */}
-                <img className="zoom-playnow mx-2" src={addfundsbtn} alt="" onClick={() =>handleBundles(120,"Mithril Pack","Diamond Subscription + Mithril Tool","diamond")}/>
+                <img className="zoom-playnow mx-2" src={addfundsbtn} alt="" onClick={() =>handleBundles(120,"Mithril Pack","Diamond Subscription + Mithril Tool","mithrilpack")}/>
                 </MDBCardFooter>
                 </MDBCard>
                 </MDBCol>
@@ -253,7 +253,7 @@ const TopUp = () =>{
                 {/* <MDBBtn className="p-0 mx-2" onClick={() =>handleBundles(180,"Adamant Pack","Diamond Subscription + Adamant Tool + 5 hours clock", "diamond")}>
                 <img src={addfundsbtn} alt=""/>
                 </MDBBtn> */}
-                <img className="zoom-playnow mx-2" src={addfundsbtn} alt="" onClick={() =>handleBundles(180,"Adamant Pack","Diamond Subscription + Adamant Tool + 5 hours clock", "diamond")}/>
+                <img className="zoom-playnow mx-2" src={addfundsbtn} alt="" onClick={() =>handleBundles(180,"Adamant Pack","Diamond Subscription + Adamant Tool + 5 hours clock", "adamantpack")}/>
                 </MDBCardFooter>
                 </MDBCard>
                 </MDBCol>

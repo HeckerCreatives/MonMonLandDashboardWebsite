@@ -306,16 +306,16 @@ const AdminDashboard = () => {
               colSpan="4"
               icon={`dollar-sign`}
               thtitle={`Total Pay-out`}
-              cardtoptext={done.toLocaleString()}
+              cardtoptext={done ? done?.toLocaleString() : 0}
               txtsup={`USDT`}  
               td1={true}
-              td1txttop={`${request?.toLocaleString()} USDT`}
+              td1txttop={ request ? `${request?.toLocaleString()} USDT`: `0 USDT`}
               td1txtbot={`Request`} 
               td2={true}
-              td2txttop={`${processed?.toLocaleString()} USDT`}
+              td2txttop={ processed? `${processed?.toLocaleString()} USDT`: `0 USDT`}
               td2txtbot={`Process`}
               td3={true}
-              td3txttop={`${done?.toLocaleString()} USDT`}
+              td3txttop={done ? `${done?.toLocaleString()} USDT`: `0 USDT` }
               td3txtbot={`Done`}
               />
           </MDBCol>
@@ -367,7 +367,7 @@ const AdminDashboard = () => {
               colSpan="4"
               icon={`shopping-bag`}
               thtitle={`Merchandise`}
-              cardtoptext={`${totalmerchandise}`}
+              cardtoptext={totalmerchandise ? `${totalmerchandise}`: 0}
               td1={true}
               td1txttop={tools}
               td1txtbot={`Tools`} 

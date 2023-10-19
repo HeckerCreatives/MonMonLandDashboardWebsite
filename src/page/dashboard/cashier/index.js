@@ -297,28 +297,6 @@ const AvailableCashiers = () => {
 
         <MDBRow className="">
 
-        <MDBCol md={2} className="">
-        <MDBTypography className="fw-bold">Filter Payment Method</MDBTypography>
-        <div className="">
-            <select
-                name="method"
-                className="form-select"
-                // value={paymethod}
-                onChange={handleFilterChange}
-            >
-                <option value="All">All</option>
-                <option value="Bank">Bank</option>
-                <option value="Gcash">Gcash</option>
-                <option value="Binance">Binance</option>
-            </select>
-        </div>
-        </MDBCol>
-
-        <MDBCol md={3} className="">
-        <MDBTypography className="fw-bold">Search Admin Username</MDBTypography>
-        <MDBInput type="search" onChange={handleSearch}/>
-        </MDBCol>
-
         </MDBRow>
             <MDBTable align='middle' className="border mt-4" responsive>
                 <MDBTableHead className="head text-center">
