@@ -1,6 +1,6 @@
 import { MDBContainer, MDBRow, MDBCol } from "mdb-react-ui-kit";
 import React from "react";
-import img1 from "../../../../../assets/faq/faq.png"
+import img1 from "../../../../../assets/faq/monmoncoin.png"
 // import img2 from "../../../../../assets/faq/01.png"
 
 const General2 = () => {
