@@ -110,7 +110,8 @@ const UpdateProgressBar = () => {
                 value: value,
                 enteredamount: totalnum,
                 createdby: auth.userName,
-                playfabid: auth.playfabid
+                playfabid: auth.playfabid,
+                playfabToken: playfabToken
             })
         }).then(result => result.json())
         .then(data => {
