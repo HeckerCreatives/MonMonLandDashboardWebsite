@@ -1,6 +1,6 @@
 import { MDBContainer, MDBRow, MDBCol } from "mdb-react-ui-kit";
 import React from "react";
-import img1 from "../../../../../assets/faq/faq.png"
+import img1 from "../../../../../assets/faq/howtoearn.png"
 
 const Game1 = () => {
     return (
