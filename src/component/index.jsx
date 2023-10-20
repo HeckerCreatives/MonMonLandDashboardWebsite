@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import smalllogo from "../assets/header/small logo for navi.png"
 import playnow from "../assets/header/add funds BUTTON.png"
 import navholder from "../assets/header/navigation holder.png"
@@ -31,22 +31,29 @@ const Navbar = ({ links }) => {
   const gameLink = useActiveLinkObserver("games");
   const subscriptionlink = useActiveLinkObserver("subscription");
   const roadmaplink = useActiveLinkObserver("roadmap");
+  // const [tapaps, setTapap] = useState("")
+  const toggleShowCalled = useRef(false);
 
   const handleActive = str => {
     setActive(str);
     setCurrentLink(str);
   };
 
-  useEffect(() => {
-    const url = new URL(window.location.href);
-    const value = new URLSearchParams(url.search);
-    const tapap = value.get('topup');
-    
-    if(tapap === "1"){
-      toggleShow()
-    }
+  
 
-  },[])
+  // useEffect(() => {
+  //   const url = new URL(window.location.href);
+  //   const value = new URLSearchParams(url.search);
+  //   const tapap = value.get('topup');
+
+  //   if (tapap && !toggleShowCalled.current) {
+  //     setBasicModal(true);
+  //     toggleShowCalled.current = true;
+  //   }
+  //   return () => {
+  //     setBasicModal(false)
+  //   }
+  // }, []);
 
   return (
     <>
