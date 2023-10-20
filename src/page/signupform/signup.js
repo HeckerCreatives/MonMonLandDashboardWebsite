@@ -53,50 +53,60 @@ const SignUp = () => {
   
   const register = (e) => {
     e.preventDefault();
-    
-    if(password !== confirmpassword){
+    const specialchar = /^[a-zA-Z0-9]+$/;
+    if(!specialchar.test(userName) || !specialchar.test(password)){
       Swal.fire({
-        title: "Password Not Match",
+        title: "Failed",
         icon: "error",
-        text: "There is an error typing your password"
+        text: "Special Characters is not allowed"
       })
-      return 
-    }
-    setIsLoading(true)
-    fetch(`${process.env.REACT_APP_API_URL}monmon/register`, {
-      method:'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        sponsor: referrerid,
-        username: userName,
-        phone: phone,
-        email: email,
-        password: password
-      })
-    }).then(result => result.json())
-    .then(data =>{
-      if (data.message === "success") {
-        setIsLoading(false)        
-				Swal.fire({
-					title: "Registered Successfully",
-					icon: "success",
-					text: "You Successfully Registered"
-				}).then(ok => {
-          if(ok.isConfirmed){
-            window.location.href="https://monmonland.games/"
-          }
-        })
-			} else {
-				Swal.fire({
-          title: data.message,
+      return
+    } else {
+      if(password !== confirmpassword){
+        Swal.fire({
+          title: "Password Not Match",
           icon: "error",
-          text: data.data
+          text: "There is an error typing your password"
         })
-        setIsLoading(false)
-			}
-    })
+        return 
+      }
+      setIsLoading(true)
+      fetch(`${process.env.REACT_APP_API_URL}monmon/register`, {
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          sponsor: referrerid,
+          username: userName,
+          phone: phone,
+          email: email,
+          password: password
+        })
+      }).then(result => result.json())
+      .then(data =>{
+        if (data.message === "success") {
+          setIsLoading(false)        
+          Swal.fire({
+            title: "Registered Successfully",
+            icon: "success",
+            text: "You Successfully Registered"
+          }).then(ok => {
+            if(ok.isConfirmed){
+              window.location.href="https://monmonland.games/"
+            }
+          })
+        } else {
+          Swal.fire({
+            title: data.message,
+            icon: "error",
+            text: data.data
+          })
+          setIsLoading(false)
+        }
+      })
+    }
+    
   }
 
     return(
