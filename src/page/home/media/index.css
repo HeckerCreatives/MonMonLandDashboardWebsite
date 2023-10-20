@@ -1,0 +1,55 @@
+.headerbg {
+    background-image: url("../../../assets/BG/HEADER.png");
+    background-position: right 0, right 80%;
+    background-repeat: no-repeat;
+    /* background-size: contain, cover; */
+    clip-path: polygon(0 0,100% 0,100% 15%,100% 70.8%,75% 97%,0 63%,0 57.5%,0 15%);
+    transition: all 1s ease-in-out;
+}
+
+/* .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: .75rem;
+    padding-left: var(--mdb-gutter-x,.75rem);
+    padding-right: .75rem;
+    padding-right: var(--mdb-gutter-x,.75rem);
+    width: 100%;
+} */
+
+.custom-media-btns {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    justify-content: center;
+}
+
+.custom-media-cards {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.custom-media-image-card {
+    border: 1px solid #d3d3d3;
+    border-radius: 1rem;
+    cursor: pointer;
+    height: 22.5rem;
+    overflow: hidden;
+    position: relative;
+    transition: transform .1s ease-out, -webkit-transform .1s ease-out;
+    width: 22.5rem;
+}
+
+.custom-media-image-card:hover {
+    transform: scale(1.1);
+}
+
+.custom-media-image-card img {
+    height: 22.5rem;
+    object-fit: cover;
+    width: 22.5rem;
+}

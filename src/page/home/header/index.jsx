@@ -185,7 +185,7 @@ const Header = () => {
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
                     <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{isNaN(Mcprice) ? Mcprice : 0}</strong> 
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{isNaN(Mcprice) ? 0 : Mcprice.toFixed(2)}</strong> 
                     </MDBCardBody>
                     <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Coins: {mc.toLocaleString()}</MDBCardFooter>
                     </MDBCard> 

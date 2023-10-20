@@ -122,7 +122,8 @@ const AddFundsModal = ({basicModal, setBasicModal}) => {
             </MDBModalBody>
             <MDBModalBody className="text-center">
             <div className="text-white p-1" style={{backgroundColor: "#40290A", textAlign: "justify"}}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            <h2 className="text-center">Welcome to MonMonland</h2>
+            come and join us as we reach the world filled with adorable MonMons. Just click Login/Sign-up your account and start earning.
             </div>
             
             </MDBModalBody>

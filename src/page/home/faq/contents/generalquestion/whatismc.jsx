@@ -1,10 +1,12 @@
 import { MDBContainer, MDBRow, MDBCol } from "mdb-react-ui-kit";
 import React from "react";
-
+import img1 from "../../../../../assets/faq/faq.png"
+// import img2 from "../../../../../assets/faq/01.png"
 
 const General2 = () => {
     return (
-        <MDBContainer className="min-vh-100 d-flex align-items-center justify-content-center">
+        <>
+        <MDBContainer className="">
         <MDBRow className="">
             <MDBCol>
             <h2>
@@ -19,6 +21,14 @@ const General2 = () => {
             </MDBCol>
         </MDBRow>
         </MDBContainer>
+        <MDBContainer>
+                <MDBRow>
+                    <MDBCol className="d-flex align-items-center justify-content-center">
+                        <img src={img1} alt="" className="img-fluid" style={{width: "100%", height: "90%"}}/>
+                    </MDBCol>
+                </MDBRow>
+        </MDBContainer>
+        </>
     )
 }
 

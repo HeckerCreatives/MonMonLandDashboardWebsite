@@ -1,11 +1,13 @@
 import { MDBContainer, MDBRow, MDBCol } from "mdb-react-ui-kit";
 import React from "react";
-
+import img1 from "../../../../../assets/faq/faq.png"
 
 const General4 = () => {
     return (
-        <MDBContainer className="min-vh-100 d-flex align-items-center justify-content-center">
-        <MDBRow className="">
+        <>
+        
+        <MDBContainer className="">
+        <MDBRow className="mt-5">
             <MDBCol>
             <h2>
             In what platforms is Monmonland available?
@@ -20,6 +22,14 @@ const General4 = () => {
             </MDBCol>
         </MDBRow>
         </MDBContainer>
+        <MDBContainer>
+                <MDBRow>
+                    <MDBCol className="d-flex align-items-center justify-content-center">
+                        <img src={img1} alt="" className="img-fluid" style={{width: "100%", height: "90%"}}/>
+                    </MDBCol>
+                </MDBRow>
+        </MDBContainer>
+        </>
     )
 }
 

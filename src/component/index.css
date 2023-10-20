@@ -76,6 +76,7 @@
 
 .zoom-playnow {
   transition: transform 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .zoom-playnow:hover {

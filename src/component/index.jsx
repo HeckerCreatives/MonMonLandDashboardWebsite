@@ -83,13 +83,14 @@ const Navbar = ({ links }) => {
                   
                   aria-current="page"
                   href={link.path}
-                  className={`${currentLink === link.path && "activenavlink" && newsLink.isIntersecting ? 'activenavlink' : ''}`}                  
+                  className={`${currentLink === link.path && "activenavlink" && newsLink.isIntersecting ? 'activenavlink' : ''}`}
+                  disabled={link.name === "MEDIA" ? true : false}                  
                   onClick={() => {
                     handleActive(link.path);
                     window.innerWidth <= 900 && setShowNav(!showNav);                    
                   }}
                 >
-                  <span className={`fw-bold p-4 mb-2 navbar-link ${currentLink === link.path && "activenavlink"}`}>{link.name}</span>
+                  <span className={`fw-bold p-4 mb-2 navbar-link ${currentLink === link.path && "activenavlink"}`} style={link.name === "MEDIA" ? { color: "gray"} : { color: "white"}}>{link.name}</span>
                 </MDBNavbarLink>
               </MDBNavbarItem>
             ))}

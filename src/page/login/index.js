@@ -91,8 +91,8 @@ const Login = () =>{
       <MDBCol lg={4} className="sidebg d-flex align-items-center text-dark text-center">
         <MDBContainer fluid >
         <MDBCol className="text fs-6">
-        <h1 >Lorem Ipsum</h1>
-          <p >Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        <h1 >Welcome Admin</h1>
+          <p >Join us on this extraordinary adventure, and together, let's travel on an epic journey that will lead us through the lands of Monmonland.  Become a Monmon master, honing our skills and forging unbreakable bonds with our Money Monsters. Create your account by filling up the requirements. So, what are you waiting for? Let's band together and make our mark on the ever-expanding tapestry of Monmonland, creating unforgettable memories and stories that will be told for generations to come!</p>
         </MDBCol>          
           </MDBContainer>
       </MDBCol>
