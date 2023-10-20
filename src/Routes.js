@@ -75,7 +75,8 @@ const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
     const url = new URL(window.location.href);
-
+    const value = new URLSearchParams(url.search);
+    const tapap = value.get('topup');
     if(url.href === `${window.location.origin}/register`){
       navigate("/register?sponsor=monmonland&id=27557BB301ABB773")
     } 
