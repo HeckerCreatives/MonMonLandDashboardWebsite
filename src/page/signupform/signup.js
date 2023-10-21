@@ -51,7 +51,7 @@ const SignUp = () => {
     
   },[])
   
-  const register = (e) => {
+  const register = async (e) => {
     e.preventDefault();
     const specialchar = /^[a-zA-Z0-9]+$/;
     if(!specialchar.test(userName) || !specialchar.test(password)){
@@ -62,7 +62,7 @@ const SignUp = () => {
       })
       return
     } else {
-      if(password !== confirmpassword){
+      if (password !== confirmpassword){
         Swal.fire({
           title: "Password Not Match",
           icon: "error",
@@ -71,30 +71,17 @@ const SignUp = () => {
         return 
       }
       setIsLoading(true)
-      
-      fetch(`${process.env.REACT_APP_API_URL}monmon/register`, {
-        method:'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          sponsor: referrerid,
-          username: userName,
-          phone: phone,
-          email: email,
-          password: password
-        })
-      }).then(result => result.json())
-      .then(data =>{
-        if (data.message === "success") {
-          setIsLoading(false)        
+      await Monmonregister(userName, password, phone, email, referrerid)
+      .then((data) => {
+        if(data.message === "success"){
+          setIsLoading(false) 
           Swal.fire({
             title: "Registered Successfully",
             icon: "success",
             text: "You Successfully Registered"
           }).then(ok => {
             if(ok.isConfirmed){
-              window.location.href="https://monmonland.games/"
+              window.location.href="/"
             }
           })
         } else {
@@ -106,6 +93,51 @@ const SignUp = () => {
           setIsLoading(false)
         }
       })
+      .catch((error) => {
+        Swal.fire({
+          title: "Failed",
+          icon: "error",
+          text: error
+        })
+        setIsLoading(false)
+      });
+      
+      
+
+      // fetch(`${process.env.REACT_APP_API_URL}monmon/register`, {
+      //   method:'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify({
+      //     sponsor: referrerid,
+      //     username: userName,
+      //     phone: phone,
+      //     email: email,
+      //     password: password
+      //   })
+      // }).then(result => result.json())
+      // .then(data =>{
+      //   if (data.message === "success") {
+      //     setIsLoading(false)        
+      //     Swal.fire({
+      //       title: "Registered Successfully",
+      //       icon: "success",
+      //       text: "You Successfully Registered"
+      //     }).then(ok => {
+      //       if(ok.isConfirmed){
+      //         window.location.href="https://monmonland.games/"
+      //       }
+      //     })
+      //   } else {
+      //     Swal.fire({
+      //       title: data.message,
+      //       icon: "error",
+      //       text: data.data
+      //     })
+      //     setIsLoading(false)
+      //   }
+      // })
     }
     
   }

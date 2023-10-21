@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { MDBContainer, MDBBtn, MDBRow, MDBCol,MDBIcon, MDBCard, MDBCardBody, MDBTypography } from "mdb-react-ui-kit";
+import { MDBContainer, MDBBtn, MDBRow, MDBCol,MDBIcon, } from "mdb-react-ui-kit";
 import DashCard from "../../cards/dashcard";
 import Graph from "../../graph";
 import MiniTableList from "../../minitablelist";
@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
     const auth = JSON.parse(localStorage.getItem("auth"))
+    const [basicModal, setBasicModal] = useState(false);
+    const toggleShow = () => setBasicModal(!basicModal);
     const [users, setUsers] = useState([]);
     const [paidusers, setPaidUsers] = useState([]);
     const navigate = useNavigate()
@@ -104,12 +106,13 @@ const AdminDashboard = () => {
       })
     }).then(result => result.json())
     .then(data => {
+      
       if(data?.data !== null){
         setAutoPayment(data?.data?.amount)
       }
       
     })
-
+    console.log(autopayment)
     fetch(`${process.env.REACT_APP_API_URL}coin/topupwallet`,{
       method: "POST",
       headers: {
@@ -122,7 +125,7 @@ const AdminDashboard = () => {
     .then(data => {
       setManualPayment(data?.data?.amount)
     })
-    const total = autopayment ? autopayment : 0 + ManualPayment
+    const total = autopayment ? autopayment + ManualPayment : 0 + ManualPayment
     setAutoAndManual(total)
   },[autopayment,ManualPayment])
 
@@ -273,6 +276,7 @@ const AdminDashboard = () => {
     })
   })
     return (
+      <>
         <MDBContainer fluid>
         <Breadcrumb title='Dashboard' paths={[]}/>
         {/* Cards */}
@@ -343,7 +347,11 @@ const AdminDashboard = () => {
               />
           </MDBCol>
           <MDBCol className="my-2">
-            <DashCard 
+            <DashCard
+              flipbtn={true}
+              basicModal={basicModal}
+              setBasicModal={setBasicModal}
+              distri={totalaccumulated}
               colSpan="4"
               icon={`dollar-sign`} 
               thtitle={`Subscription Accumulated`} 
@@ -389,7 +397,9 @@ const AdminDashboard = () => {
         
 
         </MDBContainer>
+
         
+    </>  
     )
 }
 

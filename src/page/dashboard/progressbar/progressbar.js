@@ -4,7 +4,7 @@ import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol, MDBCard, MDBCardBody, M
 import Swal from "sweetalert2"
 import Breadcrumb from "../../../component/breadcrumb";
 import PaginationPager from "../../../component/pagination/index"
-
+import {handlePagination} from "../../../component/utils"
 const UpdateProgressBar = () => {
     const [list, setlist] = useState("");
     const [totalnum, setTotalNum] = useState("");
@@ -217,7 +217,7 @@ const UpdateProgressBar = () => {
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody>
-                {history.map((lists)=>(
+                {handlePagination(history, page, 5)?.map((lists)=>(
                     <tr key={lists._id}>
                     <td>
                     {/* {(initialbar)} / {(totalbar)} */}{(totalbar)}
