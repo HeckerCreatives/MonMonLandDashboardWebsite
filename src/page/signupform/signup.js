@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import logo from "../../assets/header/small logo for navi.png"
 import './signup.css'
 import Swal from "sweetalert2";
-
+import { Monmonregister } from "../../component/playfab/playfabregistration";
 const SignUp = () => {
   const [phone, setPhone] = useState('')
   const [userName, setUserName] = useState('')
@@ -71,6 +71,7 @@ const SignUp = () => {
         return 
       }
       setIsLoading(true)
+      
       fetch(`${process.env.REACT_APP_API_URL}monmon/register`, {
         method:'POST',
         headers: {

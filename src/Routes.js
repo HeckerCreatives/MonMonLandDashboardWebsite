@@ -76,7 +76,7 @@ const Routers = () => {
   useEffect(()=> {
     const url = new URL(window.location.href);
     if(url.href === `${window.location.origin}/register`){
-      navigate("/register?sponsor=monmonland&id=27557BB301ABB773")
+      navigate(`/register?sponsor=monmonland&id=${process.env.REACT_APP_MONMONID}`)
     } 
     
   },[])

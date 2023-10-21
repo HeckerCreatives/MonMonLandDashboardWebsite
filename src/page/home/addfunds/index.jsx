@@ -108,7 +108,7 @@ const AddFundsModal = ({basicModal, setBasicModal}) => {
                 <img src={signupbtn} alt="" className="zoom-playnow img-fluid"
                  
                  onClick={() => {
-                     window.location.href = `${window.location.origin}/register?sponsor=monmonland&id=27557BB301ABB773`;
+                     window.location.href = `${window.location.origin}/register?sponsor=monmonland&id=${process.env.REACT_APP_MONMONID}`;
                  }}/>
                 </MDBCol>
             </MDBRow>
@@ -164,7 +164,7 @@ const AddFundsModal = ({basicModal, setBasicModal}) => {
                 </MDBCol>
                 
                 <MDBCol className="d-flex justify-content-between align-items-center">
-                    <MDBBtn className="bg-transparent p-0" href={`${window.location.origin}/register?sponsor=monmonland&id=27557BB301ABB773`} block>
+                    <MDBBtn className="bg-transparent p-0" href={`${window.location.origin}/register?sponsor=monmonland&id=${process.env.REACT_APP_MONMONID}`} block>
                     <img src={signupbtn} alt="" className="img-fluid"/>
                     </MDBBtn>
                 </MDBCol>

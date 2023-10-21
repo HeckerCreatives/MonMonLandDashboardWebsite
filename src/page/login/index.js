@@ -113,7 +113,7 @@ const Login = () =>{
       <img src={logo} alt=""/>
       <MDBTypography className="mb-0 mt-4">Welcome back,</MDBTypography>
       <MDBTypography className="mb-0">Please sign in to your account</MDBTypography>
-      <MDBTypography >No account yet? <a href={`/register?sponsor=monmonland&id=27557BB301ABB773`}>Register now</a></MDBTypography>
+      <MDBTypography >No account yet? <a href={`/register?sponsor=monmonland&id=${process.env.REACT_APP_MONMONID}`}>Register now</a></MDBTypography>
       </MDBCol>
       
         <form onSubmit={login}>
