@@ -21,6 +21,7 @@ const AvailableCashiers = () => {
             [q, setQ] = useState(false),
             [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
+    const buyer = JSON.parse(localStorage.getItem("userbuyer"))
     const [toggle, settoggle] = useState(false)        
     const toggleShow = () => settoggle(!toggle);
     let currenturn = ""
@@ -82,7 +83,7 @@ const AvailableCashiers = () => {
     },[socket])
 
     useEffect(()=>{
-       
+        
         socket.on('queue_message', (data) => {
             
             
@@ -92,11 +93,17 @@ const AvailableCashiers = () => {
                     icon: "info",
                     title: "Queing",
                     text: data.data,
-                    confirmButtonText: "Ok",
+                    showConfirmButton: false,
+                    showDenyButton: true,
                     allowOutsideClick: false,
                     allowEscapeKey: false,
-                    didOpen: function (){
-                        Swal.disableButtons();
+                    denyButtonText: "Cancel"
+                    // didOpen: function (){
+                    //     Swal.disableButtons(Swal.confirmButton);
+                    // }
+                }).then(cancel => {
+                    if(cancel.isDenied){
+                        socket.emit("leaveroom",{currentsocket :buyer.usersocket, room: cashier?.item[0]?.userId._id})
                     }
                 })
             } else if(data.message === "admindisconnect"){
@@ -105,6 +112,7 @@ const AvailableCashiers = () => {
                     icon: "info",
                     title: "Admin has disconnected.",
                     text: data.data,
+                    showConfirmButton: true,
                     confirmButtonText: "Ok",
                     allowOutsideClick: false,
                     allowEscapeKey: false,                    
@@ -124,6 +132,7 @@ const AvailableCashiers = () => {
                         icon: "info",
                         title: "It's Your Turn now",
                         text: data.data,
+                        showConfirmButton: true,
                         confirmButtonText: "Ok",
                         allowOutsideClick: false,
                         allowEscapeKey: false,                    
@@ -155,7 +164,7 @@ const AvailableCashiers = () => {
 
    
 
-    const buyer = JSON.parse(localStorage.getItem("userbuyer"))
+    
     useEffect(() => {
         
         if (socket.connected){

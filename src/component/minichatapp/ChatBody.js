@@ -61,6 +61,10 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
   };
 
   useEffect(()=>{
+    socket.on("cancelque", () => {
+      localStorage.clear("userbuyer")
+      window.location.reload()
+    })
 
     socket.on("forcekick", () => {
       localStorage.clear("userbuyer")
