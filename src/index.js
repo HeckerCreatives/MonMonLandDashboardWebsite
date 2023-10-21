@@ -10,7 +10,7 @@ import "slick-carousel/slick/slick-theme.css";
 import ThemeContextWrapper from './component/theme/themewrapper';
 import { PlayFab } from "playfab-sdk";
 // import 'bootstrap-css-only/css/bootstrap.min.css';
-PlayFab.settings.titleId = "92446";
+PlayFab.settings.titleId = process.env.REACT_APP_PLAYFABTITLEID;
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ThemeContextWrapper>
