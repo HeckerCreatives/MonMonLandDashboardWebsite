@@ -14,7 +14,7 @@ const AdminDashboard = () => {
     const [basicModal, setBasicModal] = useState(false);
     const toggleShow = () => setBasicModal(!basicModal);
     const [users, setUsers] = useState([]);
-    const [paidusers, setPaidUsers] = useState([]);
+    // const [unilevel, setUnilevel] = useState(0);
     const navigate = useNavigate()
     
     const [request, setRequest] = useState(0);
@@ -274,6 +274,19 @@ const AdminDashboard = () => {
     .then(data => {
       setAdminFee(data.data)
     })
+
+    // fetch(`${process.env.REACT_APP_API_URL}wallet/find`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify({id: auth._id})
+    // })
+    // .then(result => result.json())
+    // .then(data => {
+    //     setUnilevel(data.data.commission)
+    // })
+
   })
     return (
       <>
@@ -384,21 +397,19 @@ const AdminDashboard = () => {
               td2txtbot={`Clock`}
               />
           </MDBCol>
+          
         </MDBRow>
         {/* <MDBRow>
-          <MDBCol>
-            <Graph
-              users={users}
-              payin={paidusers}
-            />
-          </MDBCol>          
+         <MDBCol className="col-lg-4 my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`coins`}
+              thtitle={`Unilevel Bonus`}
+              cardtoptext={unilevel ? `${unilevel}`: 0}
+              />
+          </MDBCol>         
         </MDBRow> */}
-        
-        
-
         </MDBContainer>
-
-        
     </>  
     )
 }

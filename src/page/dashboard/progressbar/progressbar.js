@@ -209,10 +209,9 @@ const UpdateProgressBar = () => {
             <MDBTable align='middle' className="border mt-4" responsive>
                 <MDBTableHead className="head">
                     <tr >
-                    <th className="fw-bold" scope='col'>Total Income Value</th>
+                    <th className="fw-bold" scope='col'>Entered Amount</th>
                     <th className="fw-bold" scope='col'>Date Created</th>
                     <th className="fw-bold" scope='col'>Value</th>
-                    <th className="fw-bold" scope='col'>Entered Amount</th>
                     <th className="fw-bold" scope='col'>Created By</th>
                     </tr>
                 </MDBTableHead>
@@ -220,16 +219,13 @@ const UpdateProgressBar = () => {
                 {handlePagination(history, page, 5)?.map((lists)=>(
                     <tr key={lists._id}>
                     <td>
-                    {/* {(initialbar)} / {(totalbar)} */}{(totalbar)}
+                    {seperator(lists.enteredamount)}
                     </td>
                     <td>
                     {new Date(lists.createdAt).toLocaleString()}
                     </td>
                     <td>
                     {lists.value}
-                    </td>
-                    <td>
-                    {seperator(lists.enteredamount)}
                     </td>
                     <td>
                     {lists.createdby}

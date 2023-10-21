@@ -21,7 +21,7 @@ import
     MDBModalFooter, } 
 from "mdb-react-ui-kit";
 
-const DashCard = ({txtsup, icon, cardtoptext, colSpan, thtitle, td1, td1txttop, td1txtbot, td2, td2txttop, td2txtbot,td3, td3txttop, td3txtbot, td4, td4txttop, td4txtbot, flipbtn, basicModal, setBasicModal,}) => {
+const DashCard = ({txtsup, icon, cardtoptext, colSpan, thtitle, td1, td1txttop, td1txtbot, td2, td2txttop, td2txtbot,td3, td3txttop, td3txtbot, td4, td4txttop, td4txtbot, flipbtn, basicModal, setBasicModal,distri}) => {
     const [payin1, setpayin1] = useState(0)
     const [payin2, setpayin2] = useState(0)
     const [payin3, setpayin3] = useState(0)
@@ -32,7 +32,7 @@ const DashCard = ({txtsup, icon, cardtoptext, colSpan, thtitle, td1, td1txttop, 
     const [payin8, setpayin8] = useState(0)
     const [payin9, setpayin9] = useState(0)
     // const [payin10, setpayin10] = useState(0)
-    const distri = 20
+    // const distri = 20
     useEffect(()=>{
         setpayin1(distri * .25)
         setpayin2(distri * .05)
@@ -50,9 +50,9 @@ return(
     <MDBCard className="text-center text-light fw-bold" style={{background: "linear-gradient(to right, #fd9566 , #feb697)"}}>          
           <MDBCardBody>
           { flipbtn &&
-            <div>
+            <div className="d-flex justify-content-end">
                 <MDBBtn onClick={() => setBasicModal(true)}>
-                    Distribution
+                <MDBIcon fas icon="book-open" size="2x"/>
                 </MDBBtn>
             </div>
           }
@@ -113,7 +113,7 @@ return(
               {/* <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn> */}
             </MDBModalHeader>
             <MDBModalBody>
-            <MDBTable small responsive className=" mb-0">
+            <MDBTable hover bordered small responsive className=" mb-0">
                 <MDBTableHead >
                     <tr>
                     <th className="fw-bold" scope='col'>Particular</th>
