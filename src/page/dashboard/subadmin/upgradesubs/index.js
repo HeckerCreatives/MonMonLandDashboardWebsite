@@ -410,10 +410,10 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                   <MDBCardText className="fw-bold">Payment Details</MDBCardText>
                                   </div>
                                   <div className="offset-2 col-lg-10">
-                                  <MDBCardText className="text-mute">Payment Gateway : {user?.paymentmethod}</MDBCardText>
+                                  <MDBCardText className="text-mute">Payment Gateway : {user?.paymentmethod} Pay</MDBCardText>
                                   </div>                            
                                   <div className="offset-2 col-lg-10">
-                                  <MDBCardText className="text-mute">Wallet Address: {user?.paymentdetail}</MDBCardText>
+                                  <MDBCardText className="text-mute">Binance Id: {user?.paymentdetail}</MDBCardText>
                                   </div>                 
                               </MDBCol>
                           </MDBRow>
@@ -431,7 +431,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                   </div>
 
                                   <div className="offset-lg-2 col-lg-10">
-                                  <MDBCardText className="text-mute d-flex mt-2">Subscriber PlayfabId :
+                                  <MDBCardText className="text-mute d-flex mt-2">Subscriber Id :
                                   &nbsp; {bibiliuserplayfabid}
                                   </MDBCardText>                                
                                   </div>
