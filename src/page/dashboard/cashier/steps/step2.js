@@ -81,20 +81,20 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
                 <MDBCard className="h-100 mb-lg-0 mb-sm-5">
                     <MDBCardBody>
                         <MDBRow >
-                            <MDBCol className="text-center">
+                            <MDBCol className="">
                             <MDBCardText className="fw-bold">Cashier: {cashier?.user}</MDBCardText>                            
                             </MDBCol>
                             
-                            <MDBCol className="text-center">
+                            {/* <MDBCol className="text-center">
                             <MDBCardText className="fw-bold" >
                             Status: 
                             &nbsp;<span style={{ color: user ? user.status : null === 'Close' ? 'red' : user ? user.status : null === 'Open' ? 'green' : 'blue' }}> {user ? user.status : null}</span>
                             </MDBCardText>                           
-                            </MDBCol>
+                            </MDBCol> */}
                         </MDBRow>
                         <br/>
                         <MDBRow>
-                            <MDBCol className="d-flex justify-content-between align-items-center mt-2">
+                            {/* <MDBCol className="d-flex justify-content-between align-items-center mt-2">
                             <div>
                             <MDBCardText className="text-mute">Number of Transaction</MDBCardText>
                             
@@ -108,7 +108,7 @@ const CashierStep2 = ({user, step2toggle, setstep2toggle, recipientId, room, buy
                             <MDBCardText className="text-mute">Quantity</MDBCardText>
                             <MDBCardText className="fw-bold">{cashier.length !== 0 ? cashier?.item[0]?.paymentcollected: ""} USDT</MDBCardText>
                             </div>                            
-                            </MDBCol>
+                            </MDBCol> */}
                         </MDBRow>
                         <hr/>
                         <MDBRow>

@@ -239,7 +239,7 @@ const CsrAdminUpgradeSubscriptionManual = () => {
                 }).then(result => result.json())
                 .then(data =>{
                     if (data) {
-                        socket.emit("refreshcashierdata", data.roomdetails)
+                        socket.emit("refreshcashierdata")
                         
                     Swal.fire({
                         title: "User Upgraded Successfully",

@@ -165,53 +165,53 @@ const SubAdminUpgradeSubscriptionManual = () => {
             }
         },[currenturn, topup])
 
-      const cancelorder = (id, room, normalUserId) => {
-      const stats = "Open"
-      Swal.fire({
-          icon: "warning",
-          title: "Are you sure to delete these items?",
-          text: "You won't be able to revert this",
-          showDenyButton: true,
-          confirmButtonText: "Delete",
-          denyButtonText: "Cancel",
-          }).then(result => {
-              if(result.isConfirmed){
-                  fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/${id}/destroybuyer`,{
-                      method: "DELETE",
-                      headers: {
-                          'Content-Type': 'application/json'
-                      },
-                      body: JSON.stringify({
-                      cashierId: user._id,
-                      stats: stats,
-                      })
-                  }).then(result => result.json())
-                  .then(data => {
-                      if(data){
-                        fetch(`${process.env.REACT_APP_API_URL}upload/deleteemp`, {
-                            method: "POST",
-                            headers: {
-                              "Accept": "application/json"
-                            },
-                            body: JSON.stringify({ownerId: room})
-                        })
-                        setPrice("")
-                        setBuyer([]);
-                        setFilename("")
-                        refreshtable();
-                        setBibiliUser("")
-                        setBibiliUserPlayfabid("")
-                        setTopUp("")
-                        socket.emit('cancelTransactionAdmin', {room: room, buyer: bibiliuserid});
-                      }
-                  })
-              } else {
-                setIsLoading(false)
-              }
-          })     
+    //   const cancelorder = (id, room, normalUserId) => {
+    //   const stats = "Open"
+    //   Swal.fire({
+    //       icon: "warning",
+    //       title: "Are you sure to delete these items?",
+    //       text: "You won't be able to revert this",
+    //       showDenyButton: true,
+    //       confirmButtonText: "Delete",
+    //       denyButtonText: "Cancel",
+    //       }).then(result => {
+    //           if(result.isConfirmed){
+    //               fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/${id}/destroybuyer`,{
+    //                   method: "DELETE",
+    //                   headers: {
+    //                       'Content-Type': 'application/json'
+    //                   },
+    //                   body: JSON.stringify({
+    //                   cashierId: user._id,
+    //                   stats: stats,
+    //                   })
+    //               }).then(result => result.json())
+    //               .then(data => {
+    //                   if(data){
+    //                     fetch(`${process.env.REACT_APP_API_URL}upload/deleteemp`, {
+    //                         method: "POST",
+    //                         headers: {
+    //                           "Accept": "application/json"
+    //                         },
+    //                         body: JSON.stringify({ownerId: room})
+    //                     })
+    //                     setPrice("")
+    //                     setBuyer([]);
+    //                     setFilename("")
+    //                     refreshtable();
+    //                     setBibiliUser("")
+    //                     setBibiliUserPlayfabid("")
+    //                     setTopUp("")
+    //                     socket.emit('cancelTransactionAdmin', {room: room, buyer: bibiliuserid});
+    //                   }
+    //               })
+    //           } else {
+    //             setIsLoading(false)
+    //           }
+    //       })     
       
-      //        
-      }
+    //   //        
+    //   }
   
       const upgradebuyer = (e) => {
           e.preventDefault();
@@ -252,7 +252,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 .then(data =>{
                     
                     if (data) {
-                        socket.emit("refreshcashierdata", data.roomdetails)
+                        socket.emit("refreshcashierdata")
                         
                     Swal.fire({
                         title: "User Upgraded Successfully",
@@ -306,6 +306,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
       },[])
 
       const goonline = () => {
+        setIsLoading(true)
         if(!color && iscashier){
             fetch(`${process.env.REACT_APP_API_URL}upload/deletetemp`, {
                 method: "POST",
@@ -317,6 +318,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
             .then(() => {
             socket.emit('joinroom', { username: auth.userName, roomid: auth._id, isplayer: false});
             setColor(true)
+            setIsLoading(false)
             })
             
         } else if (!iscashier){
@@ -326,8 +328,11 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 text: "contact admin to be a cashier",
             }).then(e => {
                 if(e.isConfirmed){
+                setIsLoading(false)
                 window.location.reload()
                 setColor(false)
+                } else {
+                    setIsLoading(false)
                 }
             })
         } else {
@@ -340,9 +345,12 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 denyButtonText: "Cancel",
             }).then(e => {
                 if(e.isConfirmed){
+                setIsLoading(false)
                 socket.emit('leave')
                 window.location.reload()
                 // setColor(false)
+                } else {
+                    setIsLoading(false)
                 }
             })
             
@@ -394,25 +402,31 @@ const SubAdminUpgradeSubscriptionManual = () => {
                           <MDBRow>
                               <MDBCol className="">
                               <MDBCardText className="d-flex justify-content-between fw-bold mt-2">Cashier Username: {auth.userName}
-                              <MDBBtn
+                              {isloading ? 
+                                <MDBSpinner grow size="sm"/>
+                              :
+                                <MDBBtn
                                   type="button"
                                   className={color ? `mx-2 bg-success`:`mx-2 bg-danger`} 
                                   outline color="dark" size="sm" 
                                   onClick={goonline}>
-                                  {color ? "Online": "Offline"}
+                                  { color ? "Online": "Offline"}
                                 </MDBBtn> 
+                              }
+                                
+                                
                               </MDBCardText>
                               
-                              <div className="offset-2 col-lg-10">
+                              {/* <div className="offset-2 col-lg-10">
                               <MDBCardText className="text-mute">Created Time: {Buyer?.createdAt ? new Date(Buyer.createdAt).toLocaleString(): ""}</MDBCardText>
-                              </div>
+                              </div> */}
                               <div className="offset-2 col-lg-10">
                               <MDBCardText className="text-mute">Transaction Number: &nbsp;{Buyer?.transactionnumber}
                               &nbsp; <MDBIcon far icon="copy" className="icon-zoom" onClick={() =>kapy(Buyer.transactionnumber)}/>
                               </MDBCardText>
                               </div>
                               
-                              <div className="offset-2 col-lg-10">
+                              {/* <div className="offset-2 col-lg-10">
                               <MDBCardText className="text-mute">No. of Transaction: &nbsp; {user?.numberoftransaction}</MDBCardText>
                               </div>                            
                               <div className="offset-2 col-lg-10">
@@ -420,7 +434,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                               </div>                            
                               <div className="offset-2 col-lg-10">
                               <MDBCardText className="text-mute">Quantity: {user?.paymentcollected} USDT</MDBCardText>
-                              </div>
+                              </div> */}
                               </MDBCol>
 
                               

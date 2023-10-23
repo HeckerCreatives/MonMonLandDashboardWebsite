@@ -1,5 +1,12 @@
 import React, {useContext, useEffect, useState, Component} from "react";
-import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBTypography, MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem,MDBIcon} from "mdb-react-ui-kit";
+import { MDBContainer, MDBBtn, MDBInput, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBTypography, MDBModal,
+    MDBModalDialog,
+    MDBModalContent,
+    MDBModalHeader,
+    MDBModalTitle,
+    MDBModalBody,
+    MDBModalFooter,
+    MDBSpinner} from "mdb-react-ui-kit";
 import Swal from "sweetalert2"
 import Breadcrumb from "../../../component/breadcrumb";
 import PaginationPager from "../../../component/pagination/index"
@@ -28,6 +35,10 @@ const AvailableCashiers = () => {
     const [step2toggle, setstep2toggle] = useState(false)        
     const toggleShow2= () => setstep2toggle(!step2toggle);
 
+    const [basicModal, setBasicModal] = useState(false);
+    const toggleShow1 = () => setBasicModal(!basicModal);
+    const [ isLoading, setIsLoading ] = useState(false)
+    const [kasyer, setkasyer] = useState([])
     function generateRandomString() {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         let randomString = '';
@@ -89,6 +100,7 @@ const AvailableCashiers = () => {
             
             // Display the queue message to the user
             if(data.message === "full") {
+                toggleShow1()
                 Swal.fire({
                     icon: "info",
                     title: "Queing",
@@ -127,7 +139,7 @@ const AvailableCashiers = () => {
             } else if (data.message === "turn") {
                 if(currenturn === ""){
                     currenturn = "turn";
-                    
+                    toggleShow1()
                     Swal.fire({
                         icon: "info",
                         title: "It's Your Turn now",
@@ -189,102 +201,80 @@ const AvailableCashiers = () => {
                 room = buyer.roomid;
                 socket.emit('joinroom', { username: buyer.username, roomid: buyer.roomid, playfabid: buyer.playfabid, transaction: buyer.transaction, reconnect : true, oldsocket: buyer.usersocket, isplayer: true});
                 toggleShow2()
+                toggleShow1()
             } 
         }
     },[socket.connected])
 
+
     const buybtn = (user) => {
-        
-        const url = new URL(window.location.href);
-        const params = new URLSearchParams(url.search);
-
-        const username = params.get('username');
-        const id = params.get('id');
-
-        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
-            method:'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                transactionnumber: generateRandomString(),
-                cashierId: cashier._id, 
-            })
-            }).then(result => result.json())
-            .then(data => {
-            setTransacNo(data)
-            if(username && id){ 
-
-                
-        
-                setCashier(user)       
-                setUsername(username)
-                room = user.item[0].userId._id
-                toggleShow2()
-
-                    const byr = {
-                        username: username,
-                        roomid: user.item[0].userId._id,
-                        playfabid: id,
-                        transaction: data,
-                        cashieruser: user,
-                        usersocket: socket.id,
-
-                    }
-
-                    localStorage.setItem("userbuyer", JSON.stringify(byr))
-                    socket.emit('joinroom', { username: username, roomid: user.item[0].userId._id, playfabid: id, transaction: data, reconnect: false, isplayer: true});
-                
-                
-                
-                } else if (!username || !id){
-                    Swal.fire({
-                        icon: "info",
-                        title: "Username and Id Not Found",
-                        text: "Please Open the Cashier Link inside the Game",
-                        confirmButtonText: "Ok",
-                        allowOutsideClick: false,
-                        allowEscapeKey: false,
-                    }).then(result => {
-                        if(result.isConfirmed){
-                            window.location.replace('https://monmonland.games')
+            toggleShow1()
+            const url = new URL(window.location.href);
+            const params = new URLSearchParams(url.search);
+    
+            const username = params.get('username');
+            const id = params.get('id');
+            setIsLoading(true)
+            fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
+                method:'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    transactionnumber: generateRandomString(),
+                    cashierId: cashier._id, 
+                })
+                }).then(result => result.json())
+                .then(data => {
+                setTransacNo(data)
+                if(username && id){ 
+    
+                    
+            
+                    setCashier(user)       
+                    setUsername(username)
+                    room = user.item[0].userId._id
+                    toggleShow2()
+    
+                        const byr = {
+                            username: username,
+                            roomid: user.item[0].userId._id,
+                            playfabid: id,
+                            transaction: data,
+                            cashieruser: user,
+                            usersocket: socket.id,
+    
                         }
-                    })
-                } 
-        })
-
+    
+                        localStorage.setItem("userbuyer", JSON.stringify(byr))
+                        socket.emit('joinroom', { username: username, roomid: user.item[0].userId._id, playfabid: id, transaction: data, reconnect: false, isplayer: true});
+                        setIsLoading(false)
+                    
+                } else if (!username || !id){
+                        Swal.fire({
+                            icon: "info",
+                            title: "Username and Id Not Found",
+                            text: "Please Open the Cashier Link inside the Game",
+                            confirmButtonText: "Ok",
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                        }).then(result => {
+                            if(result.isConfirmed){
+                                setIsLoading(false)
+                                window.location.replace('https://monmonland.games')
+                            }
+                        })
+                } else {
+                    setIsLoading(false)
+                }
+            })
         
         
     }
 
-    const handleFilterChange = (event) => {
-        const method = event.target.value
-        if(method && method !== "All"){
-            setGames(
-                backup.filter(e =>
-                e.paymentmethod === method
-                )
-            )
-        } else {
-            setGames(backup);
-        }
-    };
-
-    const handleSearch = e => {
-        const str = e.target.value;
-        if (str) {
-          const regex = new RegExp(str, "i"); 
-          setGames(
-            backup.filter(e =>
-              regex.test(e.userId.userName)
-            )
-          );
-        } else {
-          setGames(backup);
-        }
-    };
 
     return (
+        <>
         <MDBContainer fluid className="">
         {/* <Breadcrumb title="Cashiers" paths={[]}/> */}
         
@@ -320,7 +310,9 @@ const AvailableCashiers = () => {
                 {games ?
                 <>
                 {games.map((game,i) =>(
-                <tr key={`game-${i}`} className="table-zoom" onClick={() =>buybtn(game)}>               
+                <tr key={`game-${i}`} className="table-zoom" onClick={() => {
+                    buybtn(game)
+                }}>               
                 <td>
                     {game.user}
                 </td>
@@ -352,6 +344,19 @@ const AvailableCashiers = () => {
         </MDBRow>
             
         </MDBContainer>
+
+        <MDBModal show={basicModal} tabIndex='-1' staticBackdrop closeOnEsc="false">
+        <MDBModalDialog centered>
+          <MDBModalContent>
+            <MDBModalBody className="text-center">
+            Joining Room Please Wait
+            <br/>
+            {isLoading ? <MDBSpinner grow size="sm"/> : "Ok"}
+            </MDBModalBody>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+        </>
     )
 }
 
