@@ -5,11 +5,11 @@ import { MDBContainer, MDBInput, MDBRow, MDBCol,MDBIcon,MDBTypography,MDBBtn, MD
   MDBModalTitle,
   MDBModalBody,
   MDBModalFooter, } from "mdb-react-ui-kit";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef,useCallback } from "react";
 import logo from "../../assets/header/small logo for navi.png"
 import './signup.css'
 import Swal from "sweetalert2";
-import { GoogleReCaptchaProvider, GoogleReCaptcha } from 'react-google-recaptcha-v3';
+import { GoogleReCaptchaProvider, GoogleReCaptcha, useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { Monmonregister } from "../../component/playfab/playfabregistration";
 
 const SignUp = () => {
@@ -22,9 +22,9 @@ const SignUp = () => {
   const [referrerid, setReferrerId] = useState('');
   const [isloading, setIsLoading] = useState(false);
   const [basicModal, setBasicModal] = useState(false);
-  const [token, setToken] = useState();
+  const [tokenC, setToken] = useState("");
   const captchaRef = useRef(null)
-  // const [refreshReCaptcha, setRefreshReCaptcha] = useState(false);
+  const [refreshReCaptcha, setRefreshReCaptcha] = useState(false);
   
 
   const toggleShow = () => setBasicModal(!basicModal);
@@ -56,6 +56,7 @@ const SignUp = () => {
     
     
   },[])
+
   
   const register = async (e) => {
     e.preventDefault();
@@ -88,7 +89,7 @@ const SignUp = () => {
           phone: phone,
           email: email,
           password: password,
-          token: token
+          // token: tokenC
         })
       }).then(result => result.json())
       .then((data) => {
@@ -125,6 +126,10 @@ const SignUp = () => {
     }
     
   }
+  const onVerify = useCallback((token) => {
+    setToken(token);
+  },[]);
+
 
     return(
       <>
@@ -158,6 +163,13 @@ const SignUp = () => {
           <MDBTypography className="fw-bold">Create your account in <span className="text-warning">few seconds</span></MDBTypography>
           </MDBCol>
           
+          <GoogleReCaptchaProvider
+          reCaptchaKey={process.env.REACT_APP_SITE_KEY}
+          >
+          <GoogleReCaptcha 
+            onVerify={onVerify}
+            refreshReCaptcha={refreshReCaptcha}
+            />
           <form  autoComplete="off" onSubmit={register}>
           <MDBCard className="shadow-3 ">
           <MDBCardBody>
@@ -203,20 +215,7 @@ const SignUp = () => {
           <MDBCol className="d-flex">
           <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' required/>
           <span>Accept our</span>&nbsp;<span style={{color: "blue", cursor: "pointer"}} onClick={toggleShow}>Terms and Condition</span>
-          </MDBCol>     
-        <MDBCol>
-        <GoogleReCaptchaProvider
-            reCaptchaKey={process.env.REACT_APP_SITE_KEY}
-            // sitekey={process.env.REACT_APP_SITE_KEY}
-          >
-          <GoogleReCaptcha 
-          onVerify={token => {
-          setToken(token);
-          }}
-          // refreshReCaptcha={refreshReCaptcha}
-          />
-        </GoogleReCaptchaProvider>
-        </MDBCol>
+          </MDBCol>  
           
           </MDBCardBody>
 
@@ -231,6 +230,8 @@ const SignUp = () => {
           
           </MDBRow>
           </form>
+          </GoogleReCaptchaProvider>
+
                   
           
           </MDBContainer>
@@ -462,7 +463,6 @@ const SignUp = () => {
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>
-      
       </>
     )
 }

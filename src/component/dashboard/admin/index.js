@@ -286,7 +286,7 @@ const AdminDashboard = () => {
     })
     .then(result => result.json())
     .then(data => {
-        setUnilevel(data.data.commission)
+        setUnilevel(data.data[0].commission)
     })
 
   })
