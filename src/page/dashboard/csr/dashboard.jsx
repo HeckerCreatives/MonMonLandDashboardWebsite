@@ -7,21 +7,19 @@ import { useNavigate } from "react-router-dom";
 
 
 const CsrDashboard = () => {
-    const auth = JSON.parse(localStorage.getItem("auth"))
-    const [users, setUsers] = useState([]);
-    const [autopayment, setAutoPayment] = useState([]);
-    const [paidusers, setPaidUsers] = useState([]);
+  const auth = JSON.parse(localStorage.getItem("auth"))
+  const [users, setUsers] = useState([]);
+  const [paidusers, setPaidUsers] = useState(0);
 
-    const [totalautopayment, setTotalAutoPayment] = useState([]);
-    const [AutoAndManual, setAutoAndManual] = useState([]);
-    const [totalpaidusers, setTotalPaidUsers] = useState([]);
-    const navigate = useNavigate()
+  // const [totalautopayment, setTotalAutoPayment] = useState([]);
+  // const [AutoAndManual, setAutoAndManual] = useState([]);
+  // const [autopayment, setAutoPayment] = useState([]);
+  // const [totalpaidusers, setTotalPaidUsers] = useState([]);
+  const navigate = useNavigate()
 
-    const [request, setRequest] = useState([])
-    const [done, setDone] = useState([])
-    const [processed, setProcessed] = useState([]);
-    const [pendings, setPendings] = useState("");
-    const [approved, setApproved] = useState("");
+  const [request, setRequest] = useState(0)
+  const [done, setDone] = useState(0)
+  const [processed, setProcessed] = useState(0);
 
   useEffect(() => {
       if (auth) {
@@ -34,7 +32,7 @@ const CsrDashboard = () => {
 
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}payout/adminfind`,{
+    fetch(`${process.env.REACT_APP_API_URL}payout/payoutwallet`,{
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -44,160 +42,207 @@ const CsrDashboard = () => {
       })
     }).then(result => result.json())
     .then(data => {
-        if(data.message === "success"){
-            setRequest(data.data)
+        if(data.message === "success" && data.data.length !== 0){
+            setRequest(data?.data[0]?.amount)
         }
     })
 
-    fetch(`${process.env.REACT_APP_API_URL}payout/agentfind`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            status: "done",
-            admin: auth.userName
-        })
-    }).then(result => result.json())
-    .then(data => {
-        if(data.message === "success"){
-            setDone(data.data)
-        }
-    })
-
-    fetch(`${process.env.REACT_APP_API_URL}payout/agentfind`, {
-      method: "POST",
-      headers: {
-          "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-          status: "process",
-          admin: auth.userName
-      })
-  }).then(result => result.json())
-  .then(data => {
-      if(data.message === "success"){
-        setProcessed(data.data)
-      }
-  })
-  },[])
-
-  useEffect(()=>{
-    let pending = 0;
-    let approve = 0;
-
-    for (let i = 0; i < processed.length; i++) {
-      pending += processed[i].amount;
-    }
-
-    for (let i = 0; i < done.length; i++) {
-      approve += done[i].amount;
-    }
-
-    setPendings(pending)
-    setApproved(approve)
-  },[processed, done])
-
-
-
-
-  // useEffect(()=> {
-  //   fetch(`${process.env.REACT_APP_API_URL}user/find`)
-  //   .then(result => result.json())
-  //   .then(data => {
-  //     const active = data.filter(e => e.isVerified === true)
-  //     const inactive = data.filter(e => e.isVerified === false)
-  //     setUsers(data)
-  //     // setActiveUsers(active)
-  //     // setInActiveUsers(inactive)        
-  //   })    
-  // },[]) 
-
-  useEffect(()=>{
-    fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
-    .then(result => result.json())
-    .then(data => {
-      const cashier = data.filter(e => e.cashier === auth.userName)
-      setPaidUsers(cashier)
-    })
-
-    fetch(`${process.env.REACT_APP_API_URL}coin/find`, {
+    fetch(`${process.env.REACT_APP_API_URL}payout/agentpayoutwallet`,{
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({status: "success"})
+      body: JSON.stringify({
+        adminId: auth._id,
+        item: "process"
+      })
     })
     .then(result => result.json())
     .then(data => {
-      setAutoPayment(data.data)
+      if(data.message === "success" && data.data.length !== 0){
+        setProcessed(data?.data[0]?.amount)
+      }
     })
 
+    fetch(`${process.env.REACT_APP_API_URL}payout/agentpayoutwallet`,{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        adminId: auth._id,
+        item: "done"
+      })
+    })
+    .then(result => result.json())
+    .then(data => {
+      if(data.message === "success" && data.data.length !== 0){
+        setDone(data?.data[0]?.amount)
+      }
+    })
 
+  //   fetch(`${process.env.REACT_APP_API_URL}payout/agentfind`, {
+  //       method: "POST",
+  //       headers: {
+  //           "Content-Type": "application/json"
+  //       },
+  //       body: JSON.stringify({
+  //           status: "done",
+  //           admin: auth.userName
+  //       })
+  //   }).then(result => result.json())
+  //   .then(data => {
+  //       if(data.message === "success"){
+  //           setDone(data.data)
+  //       }
+  //   })
+
+  //   fetch(`${process.env.REACT_APP_API_URL}payout/agentfind`, {
+  //     method: "POST",
+  //     headers: {
+  //         "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //         status: "process",
+  //         admin: auth.userName
+  //     })
+  // }).then(result => result.json())
+  // .then(data => {
+  //     if(data.message === "success"){
+  //       setProcessed(data.data)
+  //     }
+  // })
   },[])
 
-  useEffect(()=>{
-      let totalPrice = 0;
-      let autoPrice = 0;
+  // useEffect(()=>{
+  //   let pending = 0;
+  //   let approve = 0;
 
-      for (let i = 0; i < paidusers.length; i++) {
-        totalPrice += paidusers[i].price;
-      }
-      
+  //   for (let i = 0; i < processed.length; i++) {
+  //     pending += processed[i].amount;
+  //   }
 
-      for (let i = 0; i < autopayment.length; i++) {
-        autoPrice += autopayment[i].amount;
-      }
+  //   for (let i = 0; i < done.length; i++) {
+  //     approve += done[i].amount;
+  //   }
+
+  //   setPendings(pending)
+  //   setApproved(approve)
+  // },[processed, done])
+
+useEffect(()=> {
+  fetch(`${process.env.REACT_APP_API_URL}user/find`)
+  .then(result => result.json())
+  .then(data => {
+    const active = data.filter(e => e.isVerified === true)
+    const inactive = data.filter(e => e.isVerified === false)
+    setUsers(data)
+    // setActiveUsers(active)
+    // setInActiveUsers(inactive)        
+  })
       
-      setTotalAutoPayment(autoPrice)
-      setTotalPaidUsers(totalPrice)
-      setAutoAndManual(totalPrice + autoPrice)
-  },[autopayment,paidusers])
+},[]) 
+
+// useEffect(()=>{
+//   fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
+//   .then(result => result.json())
+//   .then(data => {
+//     const cashier = data.filter(e => e.cashier === auth.userName) 
+//     setPaidUsers(cashier)
+//   })
+// },[])
+
+useEffect(()=>{
+
+  fetch(`${process.env.REACT_APP_API_URL}coin/agentmanualwallet`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      adminId: auth._id,
+      name: "manual"
+    })
+  })
+  .then(result => result.json())
+  .then(data => {
+    if(data.message === "success" && data.data.length !== 0){
+      setPaidUsers(data?.data[0]?.amount)
+  }
+    
+  })
+
+  // fetch(`${process.env.REACT_APP_API_URL}coin/find`, {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json"
+  //   },
+  //   body: JSON.stringify({status: "success"})
+  // })
+  // .then(result => result.json())
+  // .then(data => {
+  //   setAutoPayment(data.data)
+  // })
+
+
+},[])
+
+//   useEffect(()=>{
+//     let totalPrice = 0;
+//     let autoPrice = 0;
+
+//     for (let i = 0; i < paidusers.length; i++) {
+//       totalPrice += paidusers[i].price;
+//     }
+  
+
+//     for (let i = 0; i < autopayment.length; i++) {
+//       autoPrice += autopayment[i].amount;
+//     }
+  
+//     setTotalAutoPayment(autoPrice)
+//     setTotalPaidUsers(totalPrice)
+//     setAutoAndManual(totalPrice + autoPrice)
+// },[autopayment,paidusers])
 
     return (
-        <MDBContainer fluid>
-        <Breadcrumb title='Dashboard' paths={[]}/>
-        {/* Cards */}
-        <MDBRow className="my-2">
-          <MDBCol className="my-2">
-            <DashCard 
-              colSpan="4"
-              icon={`dollar-sign`}
-              thtitle={`Total Top-Up`}
-              cardtoptext={totalpaidusers.toLocaleString()}
-              txtsup={`USDT`} 
-              td1={true}
-              td1txttop={totalpaidusers.toLocaleString()}
-              td1txtbot={`Manual`} 
-              td2={true}
-              td2txttop={"0"}
-              td2txtbot={`Automated`} 
-              />
-          </MDBCol>
-          <MDBCol className="my-2">
+      <MDBContainer fluid>
+      <Breadcrumb title='Dashboard' paths={[]}/>
+      {/* Cards */}
+      <MDBRow className="my-2">
+        <MDBCol className="my-2">
           <DashCard 
-              colSpan="4"
-              icon={`dollar-sign`}
-              thtitle={`Total Pay-out`}
-              cardtoptext={approved.toLocaleString()}
-              txtsup={`USDT`}  
-              td1={true}
-              td1txttop={request.length}
-              td1txtbot={`Request`} 
-              td2={true}
-              td2txttop={processed.length}
-              td2txtbot={`Process`}
-              td3={true}
-              td3txttop={done.length}
-              td3txtbot={`Done`}
-              />
-          </MDBCol>
-          
-        </MDBRow>
+            colSpan="4"
+            icon={`dollar-sign`}
+            thtitle={`Total Manual Top-Up`}
+            cardtoptext={paidusers  ? paidusers?.toLocaleString(): 0}
+            txtsup={`USDT`}
+            />
+        </MDBCol>
+        <MDBCol className="my-2">
+        <DashCard 
+            colSpan="4"
+            icon={`dollar-sign`}
+            thtitle={`Total Pay-out`}
+            cardtoptext={done  ? done?.toLocaleString(): 0}
+            txtsup={`USDT`}  
+            td1={true}
+            td1txttop={request  ? request?.toLocaleString(): 0}
+            td1txtbot={`Pending`} 
+            td2={true}
+            td2txttop={processed  ? processed?.toLocaleString(): 0}
+            td2txtbot={`Process`}
+            td3={true}
+            td3txttop={done  ? done?.toLocaleString(): 0}
+            td3txtbot={`Done`}
+            />
+        </MDBCol>
         
-        
+      </MDBRow>
+      
+      
 
-        </MDBContainer>
+      </MDBContainer>
         
     )
 }

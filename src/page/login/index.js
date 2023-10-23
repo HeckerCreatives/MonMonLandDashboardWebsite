@@ -52,8 +52,9 @@ const Login = () =>{
         const playFabUserData = {
           CreateAccount: false,            
           CustomId: data.data.playfabid,           
-        };
+        }
         PlayFabClient.LoginWithCustomID(playFabUserData, (error, result) => {
+          console.log(result)
           if (result){
             localStorage.setItem("playfabAdminAuthToken", result.data.SessionTicket)
             console.log(result)

@@ -108,6 +108,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                     allowEscapeKey: false
                 })
                 setPrice("")
+                setImage("")
                 setBuyer([]);
                 setFilename("")
                 refreshtable();
@@ -125,6 +126,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                         allowEscapeKey: false
                     })
                     setPrice("")
+                    setImage("")
                     setBuyer([]);
                     setFilename("")
                     refreshtable();
@@ -144,6 +146,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
             
             socket.on("deletemsg", () => {
                 setPrice("")
+                setImage("")
                 setBuyer([]);
                 setFilename("")
                 refreshtable();
@@ -163,7 +166,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
         },[currenturn, topup])
 
       const cancelorder = (id, room, normalUserId) => {
-          const stats = "Open"
+      const stats = "Open"
       Swal.fire({
           icon: "warning",
           title: "Are you sure to delete these items?",
@@ -185,6 +188,13 @@ const SubAdminUpgradeSubscriptionManual = () => {
                   }).then(result => result.json())
                   .then(data => {
                       if(data){
+                        fetch(`${process.env.REACT_APP_API_URL}upload/deleteemp`, {
+                            method: "POST",
+                            headers: {
+                              "Accept": "application/json"
+                            },
+                            body: JSON.stringify({ownerId: room})
+                        })
                         setPrice("")
                         setBuyer([]);
                         setFilename("")
@@ -217,29 +227,30 @@ const SubAdminUpgradeSubscriptionManual = () => {
           }).then(async result =>{
             setIsLoading(true)
               if(result.isConfirmed){
+                console.log(user.userId.userName)
+                const data = new FormData()
+                data.append("cashierId", user._id)
+                data.append("amount", totalprice)
+                data.append("stats", stats)
+                data.append("cashier", auth.userName)
+                data.append("price", totalprice)
+                data.append("clientusername", bibiliuser)
+                data.append("file", image)
+                data.append("adminId", auth._id)
+                data.append("idnitopup", process.env.REACT_APP_MANUALID)
+                data.append("playfabId", bibiliuserplayfabid)
+                data.append("playfabPrice", price)
+                data.append("playfabToken", playfabToken)
+
                 fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/updatebuyer/${Buyer._id}`,{
                     method: "PUT",
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Accept': 'application/json'
                     },
-                    body: JSON.stringify({
-                        cashierId: user._id,
-                        amount: totalprice,
-                        stats: stats,
-                      // below is for payment history
-                        cashier: user.userId.userName,
-                        adminId:auth._id,
-                        idnitopup: process.env.REACT_APP_MANUALID,
-                        price: totalprice,
-                        clientusername: bibiliuser,
-                        image: image,
-                        playfabId: bibiliuserplayfabid,
-                        playfabPrice: price,
-                        playfabToken: playfabToken
-                    })
+                    body: data,
                 }).then(result => result.json())
                 .then(data =>{
-                    console.log(data)
+                    
                     if (data) {
                         socket.emit("refreshcashierdata", data.roomdetails)
                         
@@ -255,6 +266,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                         setUser(data.roomdetails)
                         setIsLoading(false)
                         setPrice("")
+                        setImage("")
                         setBuyer([]);
                         setFilename("")
                         refreshtable();
@@ -295,9 +307,18 @@ const SubAdminUpgradeSubscriptionManual = () => {
 
       const goonline = () => {
         if(!color && iscashier){
+            fetch(`${process.env.REACT_APP_API_URL}upload/deletetemp`, {
+                method: "POST",
+                headers: {
+                  "Accept": "application/json"
+                },
+                body: JSON.stringify({ownerId: auth._id})
+            }).then(result => result.json())
+            .then(() => {
             socket.emit('joinroom', { username: auth.userName, roomid: auth._id, isplayer: false});
-            
             setColor(true)
+            })
+            
         } else if (!iscashier){
             Swal.fire({
                 icon: "warning",
@@ -351,9 +372,12 @@ const SubAdminUpgradeSubscriptionManual = () => {
         
       }
 
-      const handleImgUrl = (url) => {
-        // Use the uploaded image URL in the parent component or pass it to another component
-        setImage(url);
+      const handleImgUrl = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+        // You can do further processing here, such as displaying a preview or uploading the image.
+        setImage(file);
+        }
       };
 
       const handleFilename = (url) => {
@@ -452,9 +476,9 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                   &nbsp; $ 1.00
                                   </MDBCardText>                                
                                   </div>
-                                  <div className="offset-lg-2 col-lg-10 mt-3">
+                                  {/* <div className="offset-lg-2 col-lg-10 mt-3">
                                   <MDBCardText className="text-mute">Image Filename : {filename ? filename: ""}</MDBCardText>
-                                  </div>
+                                  </div> */}
                                   <div className="d-flex justify-content-end mt-2">
                                   <div className="">
                                   { isloading ?
@@ -463,10 +487,13 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                     </MDBSpinner>
                                     </MDBBtn>
                                   :
-                                  <UploadWidget
-                                  setfileName={handleFilename} 
-                                  setImgUrl={handleImgUrl} 
-                                  disabled={Buyer?.transactionnumber ? false : true}/>
+                                  <input
+                                        type="file"
+                                        accept="image/*" // Limit to image files only
+                                        onChange={(e) => handleImgUrl(e)}
+                                        disabled={Buyer?.transactionnumber ? false : true}
+                                    />
+                                  
                                   }
                                   
                                   </div>
@@ -477,10 +504,10 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                     </MDBSpinner>
                                     </MDBBtn>
                                     :
-                                    <MDBBtn className="mx-2 mt-2" type="submit" disabled={Buyer?.transactionnumber && filename !== "" && bibiliuser !== "" ? false : true}>Finish Top Up</MDBBtn>
+                                    <MDBBtn className="mx-2 mt-2" type="submit" disabled={Buyer?.transactionnumber && image !== "" && bibiliuser !== "" ? false : true}>Finish Top Up</MDBBtn>
                                   }
                                   </div>
-                                  <div className="">
+                                  {/* <div className="">
                                   { isloading ?
                                   <MDBBtn 
                                   className="mx-2 mt-2" 
@@ -500,7 +527,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                                   </MDBBtn>
                                   }
                                   
-                                  </div>
+                                  </div> */}
                                   </div>
                                   
                                                     
@@ -590,7 +617,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
               {/* <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn> */}
             </MDBModalHeader>
             <MDBModalBody>
-            {receipt ? <img src={receipt} alt="" className="img-fluid"/>  : 
+            {receipt ? <img src={(`${process.env.REACT_APP_API_URL}${receipt}`)} alt="" className="img-fluid"/>  : 
             "no receipt attached"}
             </MDBModalBody>
 

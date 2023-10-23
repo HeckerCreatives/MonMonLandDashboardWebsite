@@ -5,11 +5,13 @@ import { MDBContainer, MDBInput, MDBRow, MDBCol,MDBIcon,MDBTypography,MDBBtn, MD
   MDBModalTitle,
   MDBModalBody,
   MDBModalFooter, } from "mdb-react-ui-kit";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import logo from "../../assets/header/small logo for navi.png"
 import './signup.css'
 import Swal from "sweetalert2";
+import { GoogleReCaptchaProvider, GoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { Monmonregister } from "../../component/playfab/playfabregistration";
+
 const SignUp = () => {
   const [phone, setPhone] = useState('')
   const [userName, setUserName] = useState('')
@@ -20,12 +22,16 @@ const SignUp = () => {
   const [referrerid, setReferrerId] = useState('');
   const [isloading, setIsLoading] = useState(false);
   const [basicModal, setBasicModal] = useState(false);
+  const [token, setToken] = useState();
+  const captchaRef = useRef(null)
+  const [refreshReCaptcha, setRefreshReCaptcha] = useState(false);
+  
 
   const toggleShow = () => setBasicModal(!basicModal);
   useEffect(()=> {
     const url = new URL(window.location.href);
     const params = new URLSearchParams(url.search);
-
+    
     const sponsor = params.get('sponsor');
     const id = params.get('id');
     setReferrerId(id)
@@ -71,7 +77,20 @@ const SignUp = () => {
         return 
       }
       setIsLoading(true)
-      await Monmonregister(userName, password, phone, email, referrerid)
+      fetch(`${process.env.REACT_APP_API_URL}monmon/register`, {
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          sponsor: referrerid,
+          username: userName,
+          phone: phone,
+          email: email,
+          password: password,
+          token: token
+        })
+      }).then(result => result.json())
       .then((data) => {
         if(data.message === "success"){
           setIsLoading(false) 
@@ -81,6 +100,8 @@ const SignUp = () => {
             text: "You Successfully Registered"
           }).then(ok => {
             if(ok.isConfirmed){
+              
+              setRefreshReCaptcha(r => !r);
               window.location.href="/"
             }
           })
@@ -102,42 +123,6 @@ const SignUp = () => {
         setIsLoading(false)
       });
       
-      
-
-      // fetch(`${process.env.REACT_APP_API_URL}monmon/register`, {
-      //   method:'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify({
-      //     sponsor: referrerid,
-      //     username: userName,
-      //     phone: phone,
-      //     email: email,
-      //     password: password
-      //   })
-      // }).then(result => result.json())
-      // .then(data =>{
-      //   if (data.message === "success") {
-      //     setIsLoading(false)        
-      //     Swal.fire({
-      //       title: "Registered Successfully",
-      //       icon: "success",
-      //       text: "You Successfully Registered"
-      //     }).then(ok => {
-      //       if(ok.isConfirmed){
-      //         window.location.href="https://monmonland.games/"
-      //       }
-      //     })
-      //   } else {
-      //     Swal.fire({
-      //       title: data.message,
-      //       icon: "error",
-      //       text: data.data
-      //     })
-      //     setIsLoading(false)
-      //   }
-      // })
     }
     
   }
@@ -220,13 +205,26 @@ const SignUp = () => {
           <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' required/>
           <span>Accept our</span>&nbsp;<span style={{color: "blue", cursor: "pointer"}} onClick={toggleShow}>Terms and Condition</span>
           </MDBCol>     
-
+        <MDBCol>
+        <GoogleReCaptchaProvider
+            reCaptchaKey={process.env.REACT_APP_SITE_KEY}
+            // sitekey={process.env.REACT_APP_SITE_KEY}
+          >
+          <GoogleReCaptcha 
+          onVerify={token => {
+          setToken(token);
+          }}
+          refreshReCaptcha={refreshReCaptcha}
+          />
+        </GoogleReCaptchaProvider>
+        </MDBCol>
           
           </MDBCardBody>
 
           </MDBCard>
           <MDBRow>
           <MDBCol>
+          
           <MDBBtn type="submit" color="primary" className="mt-3 ms-md-auto d-flex" disabled={isloading}>
             {isloading ? <MDBSpinner grow size="sm" /> : "Create Account"}  
           </MDBBtn>
@@ -465,6 +463,7 @@ const SignUp = () => {
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>
+      
       </>
     )
 }

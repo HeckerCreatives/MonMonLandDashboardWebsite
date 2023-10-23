@@ -34,9 +34,18 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
         allowEscapeKey: false
       }).then(e => {
           if(e.isConfirmed){
-          socket.emit('doneTransactionAdmin', {room: room, buyer: buyerid});
-          setBibiliUser("")
-          setMessages([])
+          fetch(`${process.env.REACT_APP_API_URL}upload/deletetemp`, {
+              method: "POST",
+              headers: {
+                "Accept": "application/json"
+              },
+              body: JSON.stringify({ownerId: room})
+            }).then(result => result.json())
+            .then(()=> {
+              socket.emit('doneTransactionAdmin', {room: room, buyer: buyerid});
+              setBibiliUser("")
+              setMessages([])
+            })
           }
       })
       
@@ -52,9 +61,19 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
         allowEscapeKey: false
       }).then(e => {
           if(e.isConfirmed){
-          socket.emit('doneTransactionUser', {roomId: room});
-          setBibiliUser("")
-          setMessages([])
+          fetch(`${process.env.REACT_APP_API_URL}upload/deletetemp`, {
+            method: "POST",
+            headers: {
+              "Accept": "application/json"
+            },
+            body: JSON.stringify({ownerId: room})
+          }).then(result => result.json())
+          .then(() => {
+            socket.emit('doneTransactionUser', {roomId: room});
+            setBibiliUser("")
+            setMessages([])
+          })
+          
           }
       })
     }
@@ -170,7 +189,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
             <div className='message__sender'>
                 <p>{formatDateFromTimestamp(message.__createdtime__)}</p>
                 <p>{message.message}</p>
-                <img src={message.image} alt='' className='img-fluid'/>
+                <img src={`${process.env.REACT_APP_API_URL}${message.image}`} alt='' className='img-fluid'/>
             </div>
           </div>
             ) : (
@@ -179,7 +198,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
             <div className='message__recipient'>
                 <p>{formatDateFromTimestamp(message.__createdtime__)}</p>
                 <p>{message.message}</p>
-                <img src={message.image} alt='' className='img-fluid'/>
+                <img src={`${process.env.REACT_APP_API_URL}${message.image}`} alt='' className='img-fluid'/>
             </div>
           </div>
             )

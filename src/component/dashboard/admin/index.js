@@ -57,6 +57,7 @@ const AdminDashboard = () => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
+        adminId: auth._id,
         name: "request"
       })
     }).then(result => result.json())
@@ -72,6 +73,7 @@ const AdminDashboard = () => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
+        adminId: auth._id,
         name: "process"
       })
     }).then(result => result.json())
@@ -87,6 +89,7 @@ const AdminDashboard = () => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
+        adminId: auth._id,
         name: "done"
       })
     }).then(result => result.json())
@@ -108,11 +111,10 @@ const AdminDashboard = () => {
     .then(data => {
       
       if(data?.data !== null){
-        setAutoPayment(data?.data?.amount)
+        setAutoPayment(data?.data[0]?.amount)
       }
       
     })
-    console.log(autopayment)
     fetch(`${process.env.REACT_APP_API_URL}coin/topupwallet`,{
       method: "POST",
       headers: {
@@ -123,11 +125,11 @@ const AdminDashboard = () => {
       })
     }).then(result => result.json())
     .then(data => {
-      setManualPayment(data?.data?.amount)
+      setManualPayment(data?.data[0]?.amount)
     })
     const total = autopayment ? autopayment + ManualPayment : 0 + ManualPayment
     setAutoAndManual(total)
-  },[autopayment,ManualPayment])
+  },[autopayment, ManualPayment])
 
 
   useEffect(()=> {

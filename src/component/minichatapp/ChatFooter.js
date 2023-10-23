@@ -12,9 +12,25 @@ const ChatFooter = ({socket, buyer, room, msguser, rcvrid, isadmin}) => {
     //     setImage(file);
     //   }
     // };
-    const handleImgUrl = (url) => {
-      // Use the uploaded image URL in the parent component or pass it to another component
-      setImage(url);
+    const handleImgUrl = (e) => {
+      const file = e.target.files[0];
+      
+      if (file) {
+      const data = new FormData();
+      data.append("file", file)
+      fetch(`${process.env.REACT_APP_API_URL}upload/uploadimg`, {
+        method: "POST",
+        headers: {
+          "Accept": "application/json"
+        },
+        body: data
+      })
+      .then(result => result.json()) 
+      .then(data => {
+        setImage(data.data);
+      })   
+      
+      }
     };
     const handleFilename = (url) => {
       // Use the uploaded image URL in the parent component or pass it to another component
@@ -24,7 +40,8 @@ const ChatFooter = ({socket, buyer, room, msguser, rcvrid, isadmin}) => {
     
     const sendMessage = (e) => {
       e.preventDefault();
-      if (!isadmin &&message !== "") {        
+      if (!isadmin && message !== "") {   
+         
         // Send message to server. We can't specify who we send the message to from the frontend. We can only send to server. Server can then send message to rest of users in room
         socket.emit('send_message', { username: msguser, room: room, message: message, __createdtime__, image: image ? image : null, usersocket: rcvrid});
         setMessage('');
@@ -50,7 +67,7 @@ const ChatFooter = ({socket, buyer, room, msguser, rcvrid, isadmin}) => {
         setMessage('');
         setImage(null);
       }
-
+      console.log(image)
     };
     
     
@@ -98,7 +115,7 @@ const ChatFooter = ({socket, buyer, room, msguser, rcvrid, isadmin}) => {
         {image && (
           <>
             <div className='mx-3 imagee'>
-              <img src={image} alt="selected" className="img-fluid imagee"/>              
+              <img src={`${process.env.REACT_APP_API_URL}${image}`} alt="selected" className="img-fluid imagee"/>              
             </div>
             <div className=''>
             <button className="cancelBtn" onClick={() => setImage(null)}>
@@ -130,12 +147,19 @@ const ChatFooter = ({socket, buyer, room, msguser, rcvrid, isadmin}) => {
               style={{ display: "none" }}
               onChange={handleImageUpload}
             /> */}
-            <UploadWidget setfileName={handleFilename} setImgUrl={handleImgUrl}/>
+            {/* <UploadWidget setfileName={handleFilename} setImgUrl={handleImgUrl}/> */}
+            
             <button type='submit' className="sendBtn mx-2 rounded">
             <MDBIcon fas icon="paper-plane" size='xl'/>
             </button>
         </div>  
-            
+        <input
+              id="fileInput"
+              type="file"
+              accept="image/*"
+              // style={{ display: "none" }}
+              onChange={(e) => handleImgUrl(e)}
+            />
 
             
         </form>

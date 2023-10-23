@@ -93,6 +93,59 @@ const SubAdminPayoutRequest = () => {
         })
     }
 
+    const handleReject = (id) => {
+        setIsLoading(true)
+        Swal.fire({
+            icon: "warning",
+            title: "Are you sure you want to reject this payout?",
+            text: "You won't be able to revert this",
+            showDenyButton: true,
+            confirmButtonText: "Confirm",
+            denyButtonText: "Cancel",
+        }).then(ok => {
+            if(ok.isConfirmed){
+                setIsLoading(false)
+                fetch(`${process.env.REACT_APP_API_URL}payout/reject/${id}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        admin: auth.userName,
+                        adminId: auth._id,
+                        playfabid: auth.playfabid,
+                        playfabToken: playfabToken,
+                    })
+                }).then(result => result.json())
+                .then(data => {
+                    if(data.message === "success"){
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: "success",
+                            title: "Payout Rejected",
+                        }).then(ok=> {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    } else {
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: "error",
+                            title: data.data,
+                        }).then(ok=> {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    }
+                })
+            } else {
+                setIsLoading(false)
+            }
+        })
+    }
+
     // Define a function to calculate the time difference in hours
     function calculateTimeDifference(createdAt) {
         const createdAtDate = new Date(createdAt);
@@ -163,6 +216,9 @@ const SubAdminPayoutRequest = () => {
                         <td>
                             <MDBBtn onClick={() => handleRequest(data._id)}>
                             {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Process"}
+                            </MDBBtn>
+                            <MDBBtn onClick={() => handleRequest(data._id)}>
+                            {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Reject"}
                             </MDBBtn>
                         </td>
                     </tr>
