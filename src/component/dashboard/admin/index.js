@@ -14,7 +14,7 @@ const AdminDashboard = () => {
     const [basicModal, setBasicModal] = useState(false);
     const toggleShow = () => setBasicModal(!basicModal);
     const [users, setUsers] = useState([]);
-    // const [unilevel, setUnilevel] = useState(0);
+    const [unilevel, setUnilevel] = useState(0);
     const navigate = useNavigate()
     
     const [request, setRequest] = useState(0);
@@ -277,17 +277,17 @@ const AdminDashboard = () => {
       setAdminFee(data.data)
     })
 
-    // fetch(`${process.env.REACT_APP_API_URL}wallet/find`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify({id: auth._id})
-    // })
-    // .then(result => result.json())
-    // .then(data => {
-    //     setUnilevel(data.data.commission)
-    // })
+    fetch(`${process.env.REACT_APP_API_URL}wallet/find`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({id: auth._id})
+    })
+    .then(result => result.json())
+    .then(data => {
+        setUnilevel(data.data.commission)
+    })
 
   })
     return (
@@ -401,7 +401,7 @@ const AdminDashboard = () => {
           </MDBCol>
           
         </MDBRow>
-        {/* <MDBRow>
+        <MDBRow>
          <MDBCol className="col-lg-4 my-2">
           <DashCard 
               colSpan="4"
@@ -410,7 +410,7 @@ const AdminDashboard = () => {
               cardtoptext={unilevel ? `${unilevel}`: 0}
               />
           </MDBCol>         
-        </MDBRow> */}
+        </MDBRow>
         </MDBContainer>
     </>  
     )

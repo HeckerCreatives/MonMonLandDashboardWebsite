@@ -24,7 +24,7 @@ const SignUp = () => {
   const [basicModal, setBasicModal] = useState(false);
   const [token, setToken] = useState();
   const captchaRef = useRef(null)
-  const [refreshReCaptcha, setRefreshReCaptcha] = useState(false);
+  // const [refreshReCaptcha, setRefreshReCaptcha] = useState(false);
   
 
   const toggleShow = () => setBasicModal(!basicModal);
@@ -100,8 +100,7 @@ const SignUp = () => {
             text: "You Successfully Registered"
           }).then(ok => {
             if(ok.isConfirmed){
-              
-              setRefreshReCaptcha(r => !r);
+              // setRefreshReCaptcha(r => !r);
               window.location.href="/"
             }
           })
@@ -214,7 +213,7 @@ const SignUp = () => {
           onVerify={token => {
           setToken(token);
           }}
-          refreshReCaptcha={refreshReCaptcha}
+          // refreshReCaptcha={refreshReCaptcha}
           />
         </GoogleReCaptchaProvider>
         </MDBCol>
