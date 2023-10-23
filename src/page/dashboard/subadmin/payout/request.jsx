@@ -217,7 +217,7 @@ const SubAdminPayoutRequest = () => {
                             <MDBBtn onClick={() => handleRequest(data._id)}>
                             {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Process"}
                             </MDBBtn>
-                            <MDBBtn onClick={() => handleRequest(data._id)}>
+                            <MDBBtn onClick={() => handleReject(data._id)}>
                             {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Reject"}
                             </MDBBtn>
                         </td>
