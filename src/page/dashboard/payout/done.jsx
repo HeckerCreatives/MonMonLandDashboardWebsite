@@ -11,6 +11,7 @@ import PaginationPager from "../../../component/pagination";
 import Swal from "sweetalert2";
 import { handlePagination } from "../../../component/utils";
 const AdminPayoutDone = () => {
+    const auth = JSON.parse(localStorage.getItem("auth"));
     const [page, setPage] = useState(1),
     [total, setTotal] = useState(0),
     [done, setDone] = useState([]),
@@ -31,14 +32,31 @@ const AdminPayoutDone = () => {
         fetch(`${process.env.REACT_APP_API_URL}payout/adminfind`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 status: "done"
             })
         }).then(result => result.json())
         .then(data => {
-            if(data.message === "success"){
+            if(data.expired){
+                Swal.fire({
+                  icon: "error",
+                  title: data.expired,
+                  text: "You Will Redirect to Login",
+                  allowOutsideClick: false,
+                  allowEscapeKey: false
+                }).then(ok => {
+                  if(ok.isConfirmed){
+                    localStorage.removeItem("auth");
+                    localStorage.removeItem("playfabAdminAuthToken")
+                    window.location.replace("/login");
+                  }
+                })
+            }
+
+            if(data.message === "success" && !data.expired){
                 setDone(data.data)
                 setBackup(data.data)
             }
@@ -59,13 +77,30 @@ const AdminPayoutDone = () => {
                 fetch(`${process.env.REACT_APP_API_URL}payout/reprocess/${id}`, {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${auth?.token}`,
                     },
                     body: JSON.stringify({admin: admin, playfabToken: playfabToken})
                 }).then(result => result.json())
                 .then(data => {
-                   
-                    if(data.message === "success"){
+
+                    if(data.expired){
+                        Swal.fire({
+                          icon: "error",
+                          title: data.expired,
+                          text: "You Will Redirect to Login",
+                          allowOutsideClick: false,
+                          allowEscapeKey: false
+                        }).then(ok => {
+                          if(ok.isConfirmed){
+                            localStorage.removeItem("auth");
+                            localStorage.removeItem("playfabAdminAuthToken")
+                            window.location.replace("/login");
+                          }
+                        })
+                    }
+
+                    if(data.message === "success" && !data.expired){
                         setIsLoading(false)
                         Swal.fire({
                             icon: "success",

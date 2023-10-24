@@ -89,26 +89,43 @@ const CreateCSRAccount = () => {
           })
         }).then(result => result.json())
         .then(data => {
-          if (data) {
-            setIsLoading(false)
+          if(data.expired){
             Swal.fire({
-              title: "Admin Account Created Successfully",
-              icon: "success",
-              text: "You Successfully Created An Admin Account"
-            }).then(result1 => {
-              if(result1.isConfirmed){
-                window.location.reload()
+              icon: "error",
+              title: data.expired,
+              text: "You Will Redirect to Login",
+              allowOutsideClick: false,
+              allowEscapeKey: false
+            }).then(ok => {
+              if(ok.isConfirmed){
+                localStorage.removeItem("auth");
+                localStorage.removeItem("playfabAdminAuthToken")
+                window.location.replace("/login");
               }
             })
-            
           } else {
-            setIsLoading(false)
-            Swal.fire({
-              title: "Unsuccessfull",
-              icon: "error",
-              text: "There is an error Creating Account"
-            })
+            if (!data.expired) {
+              setIsLoading(false)
+              Swal.fire({
+                title: "Admin Account Created Successfully",
+                icon: "success",
+                text: "You Successfully Created An Admin Account"
+              }).then(result1 => {
+                if(result1.isConfirmed){
+                  window.location.reload()
+                }
+              })
+              
+            } else {
+              setIsLoading(false)
+              Swal.fire({
+                title: "Unsuccessfull",
+                icon: "error",
+                text: "There is an error Creating Account"
+              })
+            }
           }
+         
         })
       } else {
         setIsLoading(false)
@@ -134,13 +151,28 @@ const CreateCSRAccount = () => {
               fetch(`${process.env.REACT_APP_API_URL}user/${id}/destroy`,{
                   method: "DELETE",
                   headers: {
-                      'Content-Type': 'application/json'
+                      'Content-Type': 'application/json',
+                      Authorization: `Bearer ${auth?.token}`,
                   }
               }).then(result => result.json())
               .then(data => {
-                  if(data){
-                  window.location.reload()
-                  }
+                if(data.expired){
+                  Swal.fire({
+                    icon: "error",
+                    title: data.expired,
+                    text: "You Will Redirect to Login",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                  }).then(ok => {
+                    if(ok.isConfirmed){
+                      localStorage.removeItem("auth");
+                      localStorage.removeItem("playfabAdminAuthToken")
+                      window.location.replace("/login");
+                    }
+                  })
+                } else {
+                  window.location.reload();
+                }
               })
               
           }
@@ -162,12 +194,27 @@ const CreateCSRAccount = () => {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${auth?.token}`,
           },
           body: JSON.stringify({ ids: checkedItems }),
         })
           .then((result) => result.json())
           .then((data) => {
-            if (data) {
+            if(data.expired){
+              Swal.fire({
+                icon: "error",
+                title: data.expired,
+                text: "You Will Redirect to Login",
+                allowOutsideClick: false,
+                allowEscapeKey: false
+              }).then(ok => {
+                if(ok.isConfirmed){
+                  localStorage.removeItem("auth");
+                  localStorage.removeItem("playfabAdminAuthToken")
+                  window.location.replace("/login");
+                }
+              })
+            } else {
               window.location.reload();
             }
           });

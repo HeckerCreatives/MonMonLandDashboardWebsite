@@ -33,7 +33,8 @@ const CsrPayoutProcess = () => {
         fetch(`${process.env.REACT_APP_API_URL}payout/agentfind`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 status: "process",
@@ -41,7 +42,22 @@ const CsrPayoutProcess = () => {
             })
         }).then(result => result.json())
         .then(data => {
-            if(data.message === "success"){
+            if(data.expired){
+                Swal.fire({
+                  icon: "error",
+                  title: data.expired,
+                  text: "You Will Redirect to Login",
+                  allowOutsideClick: false,
+                  allowEscapeKey: false
+                }).then(ok => {
+                  if(ok.isConfirmed){
+                    localStorage.removeItem("auth");
+                    localStorage.removeItem("playfabAdminAuthToken")
+                    window.location.replace("/login");
+                  }
+                })
+            }
+            if(data.message === "success" && !data.expired){
                 setProcessed(data.data)
             }
         })

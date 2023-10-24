@@ -7,6 +7,7 @@ import UpdateDescriptionModal from "./modal/editmodal";
 import PaginationPager from '../../../component/pagination/index'
 
 const UpdateSubs = () => {
+    const auth = JSON.parse(localStorage.getItem("auth"));
     const [titles, setTitles] = useState('');
     const [gettitles, setGetTitles] = useState('');
     const [amounts, setAmounts] = useState('');
@@ -62,7 +63,8 @@ const UpdateSubs = () => {
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/update`, {
             method:'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 subscriptionName: titles,
@@ -70,21 +72,38 @@ const UpdateSubs = () => {
             })            
         }).then(result => result.json())
         .then(data => {
+            if(data.expired){
+                Swal.fire({
+                  icon: "error",
+                  title: data.expired,
+                  text: "You Will Redirect to Login",
+                  allowOutsideClick: false,
+                  allowEscapeKey: false
+                }).then(ok => {
+                  if(ok.isConfirmed){
+                    localStorage.removeItem("auth");
+                    localStorage.removeItem("playfabAdminAuthToken")
+                    window.location.replace("/login");
+                  }
+                })
+            } else {
+                if (!data.expired) {
+                    Swal.fire({
+                        title: "Updated Successfully",
+                        icon: "success",
+                        text: "You Successfully Updated This"
+                    })
+                    
+                } else {
+                    Swal.fire({
+                        title: "Update Unsuccessfully",
+                        icon: "error",
+                        text: "There is an error Updating This"
+                    })
+                }
+            }
 
-            if (data) {
-				Swal.fire({
-					title: "Updated Successfully",
-					icon: "success",
-					text: "You Successfully Updated This"
-				})
-				
-			} else {
-				Swal.fire({
-					title: "Update Unsuccessfully",
-					icon: "error",
-					text: "There is an error Updating This"
-				})
-			}
+            
         }) 
     }
 
@@ -93,28 +112,45 @@ const UpdateSubs = () => {
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/addnewdesc`,{
             method:'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 description: adddescriptions
             }) 
         }).then(result => result.json())
         .then(data => {
-            // console.log(data)
-            if (data) {
-				Swal.fire({
-					title: "Add Successfully",
-					icon: "success",
-					text: "Successfully Added"
-				})
-				
-			} else {
-				Swal.fire({
-					title: "Update Unsuccessfully",
-					icon: "error",
-					text: "There is an error Updating This"
-				})
-			}
+            if(data.expired){
+                Swal.fire({
+                  icon: "error",
+                  title: data.expired,
+                  text: "You Will Redirect to Login",
+                  allowOutsideClick: false,
+                  allowEscapeKey: false
+                }).then(ok => {
+                  if(ok.isConfirmed){
+                    localStorage.removeItem("auth");
+                    localStorage.removeItem("playfabAdminAuthToken")
+                    window.location.replace("/login");
+                  }
+                })
+            } else {
+                if (!data.expired) {
+                    Swal.fire({
+                        title: "Add Successfully",
+                        icon: "success",
+                        text: "Successfully Added"
+                    })
+                    
+                } else {
+                    Swal.fire({
+                        title: "Update Unsuccessfully",
+                        icon: "error",
+                        text: "There is an error Updating This"
+                    })
+                }
+            }
+           
         })
     }
 

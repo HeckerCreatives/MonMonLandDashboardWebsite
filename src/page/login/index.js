@@ -24,7 +24,6 @@ const Login = () =>{
   // const {userId} = useParams();
   useEffect(()=>{
     if(auth){
-      
       window.location.href = `/dashboard/${auth.roleId?.display_name}/home`
     } 
   },[auth])
@@ -54,7 +53,6 @@ const Login = () =>{
           CustomId: data.data.playfabid,           
         }
         PlayFabClient.LoginWithCustomID(playFabUserData, (error, result) => {
-          console.log(result)
           if (result){
             localStorage.setItem("playfabAdminAuthToken", result.data.SessionTicket)
             console.log(result)

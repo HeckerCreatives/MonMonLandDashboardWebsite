@@ -62,7 +62,8 @@ const UpdateProgressBar = () => {
        await fetch(`${process.env.REACT_APP_API_URL}gameactivity/${process.env.REACT_APP_PROGRESSID}/update`, {
             method:'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${auth?.token}`,
               },
             body: JSON.stringify({
                 initial: initial.value,
@@ -102,7 +103,8 @@ const UpdateProgressBar = () => {
         fetch(`${process.env.REACT_APP_API_URL}gameactivity/${process.env.REACT_APP_PROGRESSID}/update`, {
             method:'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${auth?.token}`,
               },
             body: JSON.stringify({
                 total: totalnum,
@@ -115,7 +117,23 @@ const UpdateProgressBar = () => {
             })
         }).then(result => result.json())
         .then(data => {
-            if (data) {
+            if(data.expired){
+                Swal.fire({
+                  icon: "error",
+                  title: data.expired,
+                  text: "You Will Redirect to Login",
+                  allowOutsideClick: false,
+                  allowEscapeKey: false
+                }).then(ok => {
+                  if(ok.isConfirmed){
+                    localStorage.removeItem("auth");
+                    localStorage.removeItem("playfabAdminAuthToken")
+                    window.location.replace("/login");
+                  }
+                })
+            }
+
+            if (!data.expired) {
 				Swal.fire({
 					title: "Updated Successfully",
 					icon: "success",

@@ -7,8 +7,8 @@ import CreateCashier from "./modal/create";
 import ViewCashier from "./modal/view";
 import UpdateCashier from "./modal/edit";
 import { handlePagination } from "../../../component/utils";
-const UpgradeSubscriptionManual = () => {
-
+  const UpgradeSubscriptionManual = () => {
+    const auth = JSON.parse(localStorage.getItem("auth"))
     const [games, setGames] = useState([]),
             [checkedItems, setCheckedItems] = useState([]),
             [page, setPage] = useState(1),
@@ -54,14 +54,30 @@ const UpgradeSubscriptionManual = () => {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${auth?.token}`,
               },
               body: JSON.stringify({ ids: checkedItems }),
             })
               .then((result) => result.json())
               .then((data) => {
-                if (data) {
+                if(data.expired){
+                  Swal.fire({
+                    icon: "error",
+                    title: data.expired,
+                    text: "You Will Redirect to Login",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                  }).then(ok => {
+                    if(ok.isConfirmed){
+                      localStorage.removeItem("auth");
+                      localStorage.removeItem("playfabAdminAuthToken")
+                      window.location.replace("/login");
+                    }
+                  })
+                } else {
                   window.location.reload();
                 }
+
               });
           }
         });
@@ -73,31 +89,50 @@ const UpgradeSubscriptionManual = () => {
     fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/update/${ID}`, {
       method:'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({
           status: stats
       })
     }).then(result => result.json())
     .then(data => {
-      if (data) {
-				Swal.fire({
-					title: "Cashier Updated Successfully",
-					icon: "success",
-					text: "You Successfully Updated a Cashier"
-				}).then(ok => {
+      if(data.expired){
+        Swal.fire({
+          icon: "error",
+          title: data.expired,
+          text: "You Will Redirect to Login",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        }).then(ok => {
           if(ok.isConfirmed){
-            window.location.reload()
+            localStorage.removeItem("auth");
+            localStorage.removeItem("playfabAdminAuthToken")
+            window.location.replace("/login");
           }
         })
-				
-			} else {
-				Swal.fire({
-					title: "Cashier Update Unsuccessfully",
-					icon: "error",
-					text: "There is an error Updating the Account"
-				})
-			}
+      } else {
+        if (!data.expired) {
+          Swal.fire({
+            title: "Cashier Updated Successfully",
+            icon: "success",
+            text: "You Successfully Updated a Cashier"
+          }).then(ok => {
+            if(ok.isConfirmed){
+              window.location.reload()
+            }
+          })
+          
+        } else {
+          Swal.fire({
+            title: "Cashier Update Unsuccessfully",
+            icon: "error",
+            text: "There is an error Updating the Account"
+          })
+        }
+      }
+
+      
     })
     }
 
@@ -107,31 +142,49 @@ const UpgradeSubscriptionManual = () => {
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/update/${ID}`, {
           method:'PUT',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${auth?.token}`,
           },
           body: JSON.stringify({
               status: stats
           })
         }).then(result => result.json())
         .then(data => {
-          if (data) {
-                    Swal.fire({
-                        title: "Cashier Updated Successfully",
-                        icon: "success",
-                        text: "You Successfully Updated a Cashier"
-                    }).then(ok => {
+          if(data.expired){
+            Swal.fire({
+              icon: "error",
+              title: data.expired,
+              text: "You Will Redirect to Login",
+              allowOutsideClick: false,
+              allowEscapeKey: false
+            }).then(ok => {
               if(ok.isConfirmed){
-                window.location.reload()
+                localStorage.removeItem("auth");
+                localStorage.removeItem("playfabAdminAuthToken")
+                window.location.replace("/login");
               }
             })
-                    
-                } else {
-                    Swal.fire({
-                        title: "Cashier Update Unsuccessfully",
-                        icon: "error",
-                        text: "There is an error Updating the Account"
-                    })
+          } else {
+            if (!data.expired) {
+              Swal.fire({
+                  title: "Cashier Updated Successfully",
+                  icon: "success",
+                  text: "You Successfully Updated a Cashier"
+              }).then(ok => {
+                if(ok.isConfirmed){
+                  window.location.reload()
                 }
+              })   
+            } else {
+              Swal.fire({
+                  title: "Cashier Update Unsuccessfully",
+                  icon: "error",
+                  text: "There is an error Updating the Account"
+              })
+            }
+          }
+
+          
         })
         }
 

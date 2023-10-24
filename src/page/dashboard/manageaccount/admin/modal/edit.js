@@ -39,29 +39,47 @@ import {
           fetch(`${process.env.REACT_APP_API_URL}user/update/${account._id}`,{
             method: "PUT",
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify(requestBody)
           }).then(result => result.json())
           .then(data => {
-            if (data) {
+            if(data.expired){
               Swal.fire({
-                title: "Updated Successfully",
-                icon: "success",
-                text: "You Successfully Updated This Admin Account"
-              }).then(result1 => {
-                if(result1.isConfirmed){
-                  window.location.reload()
+                icon: "error",
+                title: data.expired,
+                text: "You Will Redirect to Login",
+                allowOutsideClick: false,
+                allowEscapeKey: false
+              }).then(ok => {
+                if(ok.isConfirmed){
+                  localStorage.removeItem("auth");
+                  localStorage.removeItem("playfabAdminAuthToken")
+                  window.location.replace("/login");
                 }
               })
-              
             } else {
-              Swal.fire({
-                title: "Unsuccessfull",
-                icon: "error",
-                text: "There is an error Creating Account"
-              })
+              if (!data.expired) {
+                Swal.fire({
+                  title: "Updated Successfully",
+                  icon: "success",
+                  text: "You Successfully Updated This Admin Account"
+                }).then(result1 => {
+                  if(result1.isConfirmed){
+                    window.location.reload()
+                  }
+                })
+                
+              } else {
+                Swal.fire({
+                  title: "Unsuccessfull",
+                  icon: "error",
+                  text: "There is an error Creating Account"
+                })
+              }
             }
+            
           })
         
         

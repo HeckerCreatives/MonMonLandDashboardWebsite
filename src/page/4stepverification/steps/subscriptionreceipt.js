@@ -31,7 +31,8 @@ const SubscriptionReceipt = ({values}) => {
         fetch(`${process.env.REACT_APP_API_URL}user/update/${userId}`,{
             method:"PUT",
             headers: {
-                "Content-type": "application/json"
+                "Content-type": "application/json",
+                Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 isVerified: verify,

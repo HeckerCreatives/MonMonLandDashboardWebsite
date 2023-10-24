@@ -24,6 +24,7 @@ import logo from "../../../../assets/header/big logo.png"
 import Swal from "sweetalert2";
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
 const CreateNews = () => {
+  const auth = JSON.parse(localStorage.getItem("auth"))
   const [titles, setTitles] = useState('');
   const [descriptions, setDescriptions] = useState('');
   const [show, setShow] = useState(false);
@@ -64,7 +65,8 @@ const CreateNews = () => {
     fetch(`${process.env.REACT_APP_API_URL}news/addnews`, {
       method:'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({
           title: titles,
@@ -73,7 +75,22 @@ const CreateNews = () => {
       })
     }).then(result => result.json())
     .then(data => {
-      if (data) {
+      if(data.expired){
+        Swal.fire({
+          icon: "error",
+          title: data.expired,
+          text: "You Will Redirect to Login",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        }).then(ok => {
+          if(ok.isConfirmed){
+            localStorage.removeItem("auth");
+            localStorage.removeItem("playfabAdminAuthToken")
+            window.location.replace("/login");
+          }
+        })
+    } else {
+      if (!data.expired) {
         setIsLoading(false)
 				Swal.fire({
 					title: "Updated Successfully",
@@ -93,6 +110,9 @@ const CreateNews = () => {
 					text: "There is an error Updating This"
 				})
 			}
+    }
+
+     
     })
   }
   const handleImgUrl = (url) => {

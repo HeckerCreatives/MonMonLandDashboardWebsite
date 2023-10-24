@@ -17,6 +17,7 @@ import {
 import Swal from "sweetalert2";
 
 const UpdateDescriptionModal = ({descriptionlist}) => {
+    const auth = JSON.parse(localStorage.getItem("auth"));
     const [show, setShow] = useState(false);
     const toggleShow = () => setShow(!show);
     // const [image, setImage] = useState("");
@@ -34,15 +35,30 @@ const UpdateDescriptionModal = ({descriptionlist}) => {
       fetch(`${process.env.REACT_APP_API_URL}subscription/${descriptionlist._id}/updatedesc`, {
           method:'PUT',
           headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${auth?.token}`,
           },
           body: JSON.stringify({              
               description: descriptions,              
           })            
       }).then(result => result.json())
       .then(data => {
-  
-          if (data) {
+        if(data.expired){
+          Swal.fire({
+            icon: "error",
+            title: data.expired,
+            text: "You Will Redirect to Login",
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          }).then(ok => {
+            if(ok.isConfirmed){
+              localStorage.removeItem("auth");
+              localStorage.removeItem("playfabAdminAuthToken")
+              window.location.replace("/login");
+            }
+          })
+        } else {
+          if (!data.expired) {
             Swal.fire({
               title: "Updated Successfully",
               icon: "success",
@@ -59,6 +75,8 @@ const UpdateDescriptionModal = ({descriptionlist}) => {
               text: "There is an error Updating This"
             })
           }
+        }
+          
       }) 
   }
   

@@ -245,45 +245,63 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/updatebuyer/${Buyer._id}`,{
                     method: "PUT",
                     headers: {
-                        'Accept': 'application/json'
+                        'Accept': 'application/json',
+                        Authorization: `Bearer ${auth?.token}`,
                     },
                     body: data,
                 }).then(result => result.json())
                 .then(data =>{
-                    
-                    if (data) {
-                        socket.emit("refreshcashierdata")
-                        
-                    Swal.fire({
-                        title: "User Upgraded Successfully",
-                        icon: "success",
-                        text: "You Successfully Upgraded a User, Ready for the next user?",
-                        allowOutsideClick: false,
-                        allowEscapeKey: false
-                    }).then(ok => {
-                        
-                    if(ok.isConfirmed){
-                        setUser(data.roomdetails)
-                        setIsLoading(false)
-                        setPrice("")
-                        setImage("")
-                        setBuyer([]);
-                        setFilename("")
-                        refreshtable();
-                        setBibiliUser("")
-                        setBibiliUserPlayfabid("")
-                        setTopUp("")
-                    }
-                    })
-                        
-                    } else {
-                        setIsLoading(false)
+                    if(data.expired){
                         Swal.fire({
-                            title: "User Upgrade Unsuccessfull",
-                            icon: "error",
-                            text: "There is an error Upgrading the Account"
+                          icon: "error",
+                          title: data.expired,
+                          text: "You Will Redirect to Login",
+                          allowOutsideClick: false,
+                          allowEscapeKey: false
+                        }).then(ok => {
+                          if(ok.isConfirmed){
+                            localStorage.removeItem("auth");
+                            localStorage.removeItem("playfabAdminAuthToken")
+                            window.location.replace("/login");
+                          }
                         })
+                    } else {
+                        if (!data.expired) {
+                            socket.emit("refreshcashierdata")
+                            
+                        Swal.fire({
+                            title: "User Upgraded Successfully",
+                            icon: "success",
+                            text: "You Successfully Upgraded a User, Ready for the next user?",
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        }).then(ok => {
+                            
+                        if(ok.isConfirmed){
+                            setUser(data.roomdetails)
+                            setIsLoading(false)
+                            setPrice("")
+                            setImage("")
+                            setBuyer([]);
+                            setFilename("")
+                            refreshtable();
+                            setBibiliUser("")
+                            setBibiliUserPlayfabid("")
+                            setTopUp("")
+                        }
+                        })
+                            
+                        } else {
+                            setIsLoading(false)
+                            Swal.fire({
+                                title: "User Upgrade Unsuccessfull",
+                                icon: "error",
+                                text: "There is an error Upgrading the Account"
+                            })
+                        }
                     }
+
+                    
                 })
                 
               }
@@ -295,13 +313,33 @@ const SubAdminUpgradeSubscriptionManual = () => {
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/iscashier`,{
             method:"POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({adminId: auth._id})
         })
         .then(result => result.json())
         .then(data => {
-            setIsCashier(data)
+
+            if(data.expired){
+                Swal.fire({
+                  icon: "error",
+                  title: data.expired,
+                  text: "You Will Redirect to Login",
+                  allowOutsideClick: false,
+                  allowEscapeKey: false
+                }).then(ok => {
+                  if(ok.isConfirmed){
+                    localStorage.removeItem("auth");
+                    localStorage.removeItem("playfabAdminAuthToken")
+                    window.location.replace("/login");
+                  }
+                })
+            } else {
+                setIsCashier(data)
+            }
+
+           
         })
       },[])
 

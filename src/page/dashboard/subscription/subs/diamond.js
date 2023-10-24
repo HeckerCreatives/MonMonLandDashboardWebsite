@@ -8,6 +8,7 @@ import PaginationPager from '../../../../component/pagination/index'
 import "./pearl.css"
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet"
 const UpdateDiamond = () => {
+    const auth = JSON.parse(localStorage.getItem("auth"));
     const [titles, setTitles] = useState('');
     const [pearldata, setPearlData] = useState("");
     const [amounts, setAmounts] = useState('');
@@ -47,33 +48,50 @@ const UpdateDiamond = () => {
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/update`, {
             method:'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 subscriptionName: titles ? titles : pearldata.subscriptionName,
             })            
         }).then(result => result.json())
         .then(data => {
-
-            if (data) {
-                setIsLoading(false)
-				Swal.fire({
-					title: "Updated Successfully",
-					icon: "success",
-					text: "You Successfully Updated This"
-				}).then(ok => {
-                    if(ok.isConfirmed){
-                      window.location.reload()
-                    }
-                  })				
-			} else {
-                setIsLoading(false)
-				Swal.fire({
-					title: "Update Unsuccessfully",
-					icon: "error",
-					text: "There is an error Updating This"
-				})
-			}
+            if(data.expired){
+                Swal.fire({
+                  icon: "error",
+                  title: data.expired,
+                  text: "You Will Redirect to Login",
+                  allowOutsideClick: false,
+                  allowEscapeKey: false
+                }).then(ok => {
+                  if(ok.isConfirmed){
+                    localStorage.removeItem("auth");
+                    localStorage.removeItem("playfabAdminAuthToken")
+                    window.location.replace("/login");
+                  }
+                })
+            } else {
+                if (!data.expired) {
+                    setIsLoading(false)
+                    Swal.fire({
+                        title: "Updated Successfully",
+                        icon: "success",
+                        text: "You Successfully Updated This"
+                    }).then(ok => {
+                        if(ok.isConfirmed){
+                          window.location.reload()
+                        }
+                      })				
+                } else {
+                    setIsLoading(false)
+                    Swal.fire({
+                        title: "Update Unsuccessfully",
+                        icon: "error",
+                        text: "There is an error Updating This"
+                    })
+                }
+            }
+            
         }) 
     }
 
@@ -83,32 +101,50 @@ const UpdateDiamond = () => {
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/update`, {
             method:'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 amount: amounts ? amounts : pearldata.amount,
             })            
         }).then(result => result.json())
         .then(data => {
-            if (data) {
-                setIsLoading(false)
-				Swal.fire({
-					title: "Updated Successfully",
-					icon: "success",
-					text: "You Successfully Updated This"
-				}).then(ok => {
-                    if(ok.isConfirmed){
-                      window.location.reload()
-                    }
-                  })				
-			} else {
-                setIsLoading(false)
-				Swal.fire({
-					title: "Update Unsuccessfully",
-					icon: "error",
-					text: "There is an error Updating This"
-				})
-			}
+            if(data.expired){
+                Swal.fire({
+                  icon: "error",
+                  title: data.expired,
+                  text: "You Will Redirect to Login",
+                  allowOutsideClick: false,
+                  allowEscapeKey: false
+                }).then(ok => {
+                  if(ok.isConfirmed){
+                    localStorage.removeItem("auth");
+                    localStorage.removeItem("playfabAdminAuthToken")
+                    window.location.replace("/login");
+                  }
+                })
+            } else {
+                if (!data.expired) {
+                    setIsLoading(false)
+                    Swal.fire({
+                        title: "Updated Successfully",
+                        icon: "success",
+                        text: "You Successfully Updated This"
+                    }).then(ok => {
+                        if(ok.isConfirmed){
+                          window.location.reload()
+                        }
+                      })				
+                } else {
+                    setIsLoading(false)
+                    Swal.fire({
+                        title: "Update Unsuccessfully",
+                        icon: "error",
+                        text: "There is an error Updating This"
+                    })
+                }
+            }
+            
         }) 
     }
 
@@ -118,33 +154,50 @@ const UpdateDiamond = () => {
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/update`, {
             method:'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 image: image ? image : pearldata.image,
             })            
         }).then(result => result.json())
         .then(data => {
-
-            if (data) {
-                setIsLoading(false)
-				Swal.fire({
-					title: "Updated Successfully",
-					icon: "success",
-					text: "You Successfully Updated This"
-				}).then(ok => {
-                    if(ok.isConfirmed){
-                      window.location.reload()
-                    }
-                  })				
-			} else {
-                setIsLoading(false)
-				Swal.fire({
-					title: "Update Unsuccessfully",
-					icon: "error",
-					text: "There is an error Updating This"
-				})
-			}
+            if(data.expired){
+                Swal.fire({
+                  icon: "error",
+                  title: data.expired,
+                  text: "You Will Redirect to Login",
+                  allowOutsideClick: false,
+                  allowEscapeKey: false
+                }).then(ok => {
+                  if(ok.isConfirmed){
+                    localStorage.removeItem("auth");
+                    localStorage.removeItem("playfabAdminAuthToken")
+                    window.location.replace("/login");
+                  }
+                })
+            } else {
+                if (!data.expired) {
+                    setIsLoading(false)
+                    Swal.fire({
+                        title: "Updated Successfully",
+                        icon: "success",
+                        text: "You Successfully Updated This"
+                    }).then(ok => {
+                        if(ok.isConfirmed){
+                          window.location.reload()
+                        }
+                      })				
+                } else {
+                    setIsLoading(false)
+                    Swal.fire({
+                        title: "Update Unsuccessfully",
+                        icon: "error",
+                        text: "There is an error Updating This"
+                    })
+                }
+            }
+            
         }) 
     }
     function adddescription (e) {
@@ -153,33 +206,51 @@ const UpdateDiamond = () => {
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/addnewdesc`,{
             method:'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 description: adddescriptions
             }) 
         }).then(result => result.json())
         .then(data => {
-            if (data) {
-                setIsLoading(false)
-				Swal.fire({
-					title: "Add Successfully",
-					icon: "success",
-					text: "Successfully Added"
-				}).then(ok => {
-                    if(ok.isConfirmed){
-                      window.location.reload()
-                    }
-                  })
-				
-			} else {
-                setIsLoading(false)
-				Swal.fire({
-					title: "Update Unsuccessfully",
-					icon: "error",
-					text: "There is an error Updating This"
-				})
-			}
+            if(data.expired){
+                Swal.fire({
+                  icon: "error",
+                  title: data.expired,
+                  text: "You Will Redirect to Login",
+                  allowOutsideClick: false,
+                  allowEscapeKey: false
+                }).then(ok => {
+                  if(ok.isConfirmed){
+                    localStorage.removeItem("auth");
+                    localStorage.removeItem("playfabAdminAuthToken")
+                    window.location.replace("/login");
+                  }
+                })
+            } else {
+                if (!data.expired) {
+                    setIsLoading(false)
+                    Swal.fire({
+                        title: "Add Successfully",
+                        icon: "success",
+                        text: "Successfully Added"
+                    }).then(ok => {
+                        if(ok.isConfirmed){
+                          window.location.reload()
+                        }
+                      })
+                    
+                } else {
+                    setIsLoading(false)
+                    Swal.fire({
+                        title: "Update Unsuccessfully",
+                        icon: "error",
+                        text: "There is an error Updating This"
+                    })
+                }
+            }
+            
         })
     }
 
@@ -206,12 +277,25 @@ const UpdateDiamond = () => {
                     fetch(`${process.env.REACT_APP_API_URL}subscription/${id}/destroy`,{
                         method: "DELETE",
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${auth?.token}`,
                         }
                     }).then(result => result.json())
                     .then(data => {
-                        if(data){
-                        window.location.reload()
+                        if (!data.expired) {
+                            setIsLoading(false)
+                            Swal.fire({
+                                title: "Add Successfully",
+                                icon: "success",
+                                text: "Successfully Added"
+                            }).then(ok => {
+                                if(ok.isConfirmed){
+                                  window.location.reload()
+                                }
+                              })
+                            
+                        } else {
+                            window.location.reload()
                         }
                     })
                     

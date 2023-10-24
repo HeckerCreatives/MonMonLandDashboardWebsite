@@ -22,10 +22,12 @@ import {
 } from "mdb-react-ui-kit";
 import Swal from "sweetalert2";
 const UpdateCashier = ({checkedItems, id}) => {
+  const auth = JSON.parse(localStorage.getItem("auth"))
   const [user, setuser] = useState('');
   const [show, setShow] = useState(false);
   const toggleShow = () => setShow(!show);
   const [isloading, setIsLoading] = useState(false);
+
   useEffect(()=>{
     if(!checkedItems){
     fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findone/${id}`)
@@ -51,7 +53,9 @@ const UpdateCashier = ({checkedItems, id}) => {
     fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/update/${user._id}`, {
       method:'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${auth?.token}`,
+
       },
       body: JSON.stringify({
           paymentmethod: paymentmethod.value ? paymentmethod.value : user.paymentmethod,
@@ -60,26 +64,44 @@ const UpdateCashier = ({checkedItems, id}) => {
       })
     }).then(result => result.json())
     .then(data => {
-      if (data) {
-        setIsLoading(false)
-				Swal.fire({
-					title: "Cashier Updated Successfully",
-					icon: "success",
-					text: "You Successfully Updated a Cashier"
-				}).then(ok => {
+      if(data.expired){
+        Swal.fire({
+          icon: "error",
+          title: data.expired,
+          text: "You Will Redirect to Login",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        }).then(ok => {
           if(ok.isConfirmed){
-            window.location.reload()
+            localStorage.removeItem("auth");
+            localStorage.removeItem("playfabAdminAuthToken")
+            window.location.replace("/login");
           }
         })
-				
-			} else {
-        setIsLoading(false)
-				Swal.fire({
-					title: "Cashier Update Unsuccessfully",
-					icon: "error",
-					text: "There is an error Updating the Account"
-				})
-			}
+      } else {
+        if (!data.expired) {
+          setIsLoading(false)
+          Swal.fire({
+            title: "Cashier Updated Successfully",
+            icon: "success",
+            text: "You Successfully Updated a Cashier"
+          }).then(ok => {
+            if(ok.isConfirmed){
+              window.location.reload()
+            }
+          })
+          
+        } else {
+          setIsLoading(false)
+          Swal.fire({
+            title: "Cashier Update Unsuccessfully",
+            icon: "error",
+            text: "There is an error Updating the Account"
+          })
+        }
+      }
+
+      
     })
   }
 

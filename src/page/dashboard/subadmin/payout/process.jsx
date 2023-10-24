@@ -32,7 +32,8 @@ const SubAdminPayoutProcess = () => {
         fetch(`${process.env.REACT_APP_API_URL}payout/agentfind`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 status: "process",
@@ -40,7 +41,23 @@ const SubAdminPayoutProcess = () => {
             })
         }).then(result => result.json())
         .then(data => {
-            if(data.message === "success"){
+            if(data.expired){
+                Swal.fire({
+                  icon: "error",
+                  title: data.expired,
+                  text: "You Will Redirect to Login",
+                  allowOutsideClick: false,
+                  allowEscapeKey: false
+                }).then(ok => {
+                  if(ok.isConfirmed){
+                    localStorage.removeItem("auth");
+                    localStorage.removeItem("playfabAdminAuthToken")
+                    window.location.replace("/login");
+                  }
+                })
+            } 
+
+            if(data.message === "success" && !data.expired){
                 setProcessed(data.data)
             }
         })
@@ -60,7 +77,8 @@ const SubAdminPayoutProcess = () => {
                 fetch(`${process.env.REACT_APP_API_URL}payout/done/${id}`, {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${auth?.token}`,
                     },
                     body: JSON.stringify({
                         admin: auth.userName,
@@ -71,27 +89,45 @@ const SubAdminPayoutProcess = () => {
                     })
                 }).then(result => result.json())
                 .then(data => {
-                    if(data.message === "success"){
-                        setIsLoading(false)
+                    if(data.expired){
                         Swal.fire({
-                            icon: "success",
-                            title: "Payout is now mark as done",
-                        }).then(ok=> {
-                            if(ok.isConfirmed){
-                                window.location.reload()
-                            }
+                          icon: "error",
+                          title: data.expired,
+                          text: "You Will Redirect to Login",
+                          allowOutsideClick: false,
+                          allowEscapeKey: false
+                        }).then(ok => {
+                          if(ok.isConfirmed){
+                            localStorage.removeItem("auth");
+                            localStorage.removeItem("playfabAdminAuthToken")
+                            window.location.replace("/login");
+                          }
                         })
                     } else {
-                        setIsLoading(false)
-                        Swal.fire({
-                            icon: "error",
-                            title: data.data,
-                        }).then(ok=> {
-                            if(ok.isConfirmed){
-                                window.location.reload()
-                            }
-                        })
+                        if(data.message === "success" && !data.expired){
+                            setIsLoading(false)
+                            Swal.fire({
+                                icon: "success",
+                                title: "Payout is now mark as done",
+                            }).then(ok=> {
+                                if(ok.isConfirmed){
+                                    window.location.reload()
+                                }
+                            })
+                        } else {
+                            setIsLoading(false)
+                            Swal.fire({
+                                icon: "error",
+                                title: data.data,
+                            }).then(ok=> {
+                                if(ok.isConfirmed){
+                                    window.location.reload()
+                                }
+                            })
+                        }
                     }
+
+                    
                 })
             } else {
                 setIsLoading(false)

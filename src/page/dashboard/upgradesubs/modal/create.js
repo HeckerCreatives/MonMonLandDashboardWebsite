@@ -22,6 +22,7 @@ import {
 } from "mdb-react-ui-kit";
 import Swal from "sweetalert2";
 const CreateCashier = () => {
+  const auth = JSON.parse(localStorage.getItem("auth"))
   const [adminaccounts, setAdminAcc] = useState([]);
   const [csraccounts, setCsrAcc] = useState([]);
   const [show, setShow] = useState(false);
@@ -53,7 +54,8 @@ const CreateCashier = () => {
     fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/add`, {
       method:'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({
           userId: userId.value,
@@ -63,26 +65,44 @@ const CreateCashier = () => {
       })
     }).then(result => result.json())
     .then(data => {
-      if (data) {
-        setIsLoading(false)
-				Swal.fire({
-					title: "Cashier Created Successfully",
-					icon: "success",
-					text: "You Successfully Created a Cashier"
-				}).then(ok => {
+      if(data.expired){
+        Swal.fire({
+          icon: "error",
+          title: data.expired,
+          text: "You Will Redirect to Login",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        }).then(ok => {
           if(ok.isConfirmed){
-            window.location.reload()
+            localStorage.removeItem("auth");
+            localStorage.removeItem("playfabAdminAuthToken")
+            window.location.replace("/login");
           }
         })
-				
-			} else {
-        setIsLoading(false)
-				Swal.fire({
-					title: "Cashier Creation Unsuccessfully",
-					icon: "error",
-					text: "There is an error Creating the Account"
-				})
-			}
+      } else {
+        if (!data.expired) {
+          setIsLoading(false)
+          Swal.fire({
+            title: "Cashier Created Successfully",
+            icon: "success",
+            text: "You Successfully Created a Cashier"
+          }).then(ok => {
+            if(ok.isConfirmed){
+              window.location.reload()
+            }
+          })
+          
+        } else {
+          setIsLoading(false)
+          Swal.fire({
+            title: "Cashier Creation Unsuccessfully",
+            icon: "error",
+            text: "There is an error Creating the Account"
+          })
+        }
+      }
+
+      
     })
   }
 

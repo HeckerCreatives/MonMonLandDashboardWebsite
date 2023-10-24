@@ -12,7 +12,7 @@ import diamond from "../../../assets/subscription/diamond.png"
 import ViewGames from "./modal/view";
 import UpdateGames from "./modal/edit";
 const Games = () => {
-
+    const auth = JSON.parse(localStorage.getItem("auth"))
     const [games, setGames] = useState([]),
             [page, setPage] = useState(1),
             [total, setTotal] = useState(0);
@@ -24,7 +24,13 @@ const Games = () => {
         }, [games]);
 
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_API_URL}games/find`)
+        fetch(`${process.env.REACT_APP_API_URL}games/find`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth?.token}`,
+            },
+        })
         .then(response => response.json())
         .then(result => {
             setGames(result)
@@ -55,8 +61,22 @@ const Games = () => {
                     }
                 }).then(result => result.json())
                 .then(data => {
-                    if(data){
-                    window.location.reload()
+                    if(data.expired){
+                        Swal.fire({
+                          icon: "error",
+                          title: data.expired,
+                          text: "You Will Redirect to Login",
+                          allowOutsideClick: false,
+                          allowEscapeKey: false
+                        }).then(ok => {
+                          if(ok.isConfirmed){
+                            localStorage.removeItem("auth");
+                            localStorage.removeItem("playfabAdminAuthToken")
+                            window.location.replace("/login");
+                          }
+                        })
+                    } else {
+                        window.location.reload()
                     }
                 })
                 

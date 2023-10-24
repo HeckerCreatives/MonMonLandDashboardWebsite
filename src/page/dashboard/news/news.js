@@ -19,6 +19,7 @@ import ViewNews from "./modal/view"
 import UpdateNewsModal from "./modal/update"
 
 const UpdateNews = () => {
+    const auth = JSON.parse(localStorage.getItem("auth"))
     const [titles, setTitles] = useState('');
     const [descriptions, setDescriptions] = useState('');
     const [newsid, setNewsId] = useState('')
@@ -57,12 +58,27 @@ const UpdateNews = () => {
                 fetch(`${process.env.REACT_APP_API_URL}news/${id}/destroy`,{
                     method: "DELETE",
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${auth?.token}`,
                     }
                 }).then(result => result.json())
                 .then(data => {
-                    if(data){
-                    window.location.reload()
+                    if(data.expired){
+                        Swal.fire({
+                          icon: "error",
+                          title: data.expired,
+                          text: "You Will Redirect to Login",
+                          allowOutsideClick: false,
+                          allowEscapeKey: false
+                        }).then(ok => {
+                          if(ok.isConfirmed){
+                            localStorage.removeItem("auth");
+                            localStorage.removeItem("playfabAdminAuthToken")
+                            window.location.replace("/login");
+                          }
+                        })
+                    } else {
+                        window.location.reload()
                     }
                 })
                 

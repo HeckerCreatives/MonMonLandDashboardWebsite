@@ -24,6 +24,7 @@ import Swal from "sweetalert2";
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet"
 // import "./create.css"
 const UpdateRoadmapSlot = ({roadmap}) => {
+  const auth = JSON.parse(localStorage.getItem("auth"))
   const [titles, setTitles] = useState('');
   const [descriptions, setDescriptions] = useState('');
   const [show, setShow] = useState(false);
@@ -40,7 +41,8 @@ const UpdateRoadmapSlot = ({roadmap}) => {
     fetch(`${process.env.REACT_APP_API_URL}roadmap/${roadmap._id}/update`, {
       method:'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({
           title: titles ? titles : roadmap.title,
@@ -49,26 +51,43 @@ const UpdateRoadmapSlot = ({roadmap}) => {
       })
     }).then(result => result.json())
     .then(data => {
-      if (data) {
-        setIsLoading(false)
-				Swal.fire({
-					title: "Updated Successfully",
-					icon: "success",
-					text: "You Successfully Updated This"
-				}).then(ok => {
+      if(data.expired){
+        Swal.fire({
+          icon: "error",
+          title: data.expired,
+          text: "You Will Redirect to Login",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        }).then(ok => {
           if(ok.isConfirmed){
-            window.location.reload()
+            localStorage.removeItem("auth");
+            localStorage.removeItem("playfabAdminAuthToken")
+            window.location.replace("/login");
           }
         })
-				
-			} else {
-        setIsLoading(false)
-				Swal.fire({
-					title: "Update Unsuccessfully",
-					icon: "error",
-					text: "There is an error Updating This"
-				})
-			}
+      } else {
+        if (!data.expired) {
+          setIsLoading(false)
+          Swal.fire({
+            title: "Updated Successfully",
+            icon: "success",
+            text: "You Successfully Updated This"
+          }).then(ok => {
+            if(ok.isConfirmed){
+              window.location.reload()
+            }
+          })
+          
+        } else {
+          setIsLoading(false)
+          Swal.fire({
+            title: "Update Unsuccessfully",
+            icon: "error",
+            text: "There is an error Updating This"
+          })
+        }
+      }
+      
     })
   }
 

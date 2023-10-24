@@ -13,6 +13,7 @@ import PaginationPager from "../../../component/pagination";
 import Swal from "sweetalert2";
 import { handlePagination } from "../../../component/utils";
 const AdminPayoutRequest = () => {
+    const auth = JSON.parse(localStorage.getItem("auth"))
     const [page, setPage] = useState(1),
     [total, setTotal] = useState(0),
     [payoutid, setPayoutId] = useState(""),
@@ -41,14 +42,31 @@ const AdminPayoutRequest = () => {
         fetch(`${process.env.REACT_APP_API_URL}payout/adminfind`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 status: "pending"
             })
         }).then(result => result.json())
         .then(data => {
-            if(data.message === "success"){
+            if(data.expired){
+                Swal.fire({
+                  icon: "error",
+                  title: data.expired,
+                  text: "You Will Redirect to Login",
+                  allowOutsideClick: false,
+                  allowEscapeKey: false
+                }).then(ok => {
+                  if(ok.isConfirmed){
+                    localStorage.removeItem("auth");
+                    localStorage.removeItem("playfabAdminAuthToken")
+                    window.location.replace("/login");
+                  }
+                })
+            }
+
+            if(data.message === "success" && !data.expired){
                 setRequest(data.data)
             }
         })
@@ -89,7 +107,8 @@ const AdminPayoutRequest = () => {
                     fetch(`${process.env.REACT_APP_API_URL}payout/process/${payoutid}`, {
                         method: "POST",
                         headers: {
-                            "Content-Type": "application/json"
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${auth?.token}`,
                         },
                         body: JSON.stringify({
                             admin: selectedcashier?.userId?.userName,
@@ -98,7 +117,23 @@ const AdminPayoutRequest = () => {
                         })
                     }).then(result => result.json())
                     .then(data => {
-                        if(data.message === "success"){
+                        if(data.expired){
+                            Swal.fire({
+                              icon: "error",
+                              title: data.expired,
+                              text: "You Will Redirect to Login",
+                              allowOutsideClick: false,
+                              allowEscapeKey: false
+                            }).then(ok => {
+                              if(ok.isConfirmed){
+                                localStorage.removeItem("auth");
+                                localStorage.removeItem("playfabAdminAuthToken")
+                                window.location.replace("/login");
+                              }
+                            })
+                        }
+
+                        if(data.message === "success" && !data.expired){
                             setIsLoading(false)
                             Swal.fire({
                                 icon: "success",

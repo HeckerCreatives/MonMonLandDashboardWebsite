@@ -118,7 +118,7 @@ const SignUp = () => {
         Swal.fire({
           title: "Failed",
           icon: "error",
-          text: error
+          text: "We are currently experiencing a high volume of user registrations. Please kindly consider trying again at a later time. Thank you for your patience."
         })
         setIsLoading(false)
       });

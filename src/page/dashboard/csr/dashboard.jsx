@@ -4,7 +4,7 @@ import DashCard from "../../../component/cards/dashcard";
 import Graph from "../../../component/graph";
 import Breadcrumb from "../../../component/breadcrumb";
 import { useNavigate } from "react-router-dom";
-
+import Swal from "sweetalert2";
 
 const CsrDashboard = () => {
   const auth = JSON.parse(localStorage.getItem("auth"))
@@ -35,14 +35,31 @@ const CsrDashboard = () => {
     fetch(`${process.env.REACT_APP_API_URL}payout/payoutwallet`,{
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({
         status: "pending"
       })
     }).then(result => result.json())
     .then(data => {
-        if(data.message === "success" && data.data.length !== 0){
+      if(data.expired){
+        Swal.fire({
+          icon: "error",
+          title: data.expired,
+          text: "You Will Redirect to Login",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        }).then(ok => {
+          if(ok.isConfirmed){
+            localStorage.removeItem("auth");
+            localStorage.removeItem("playfabAdminAuthToken")
+            window.location.replace("/login");
+          }
+        })
+      }
+
+        if(data.message === "success" && data.data.length !== 0 && !data.expired){
             setRequest(data?.data[0]?.amount)
         }
     })
@@ -50,7 +67,8 @@ const CsrDashboard = () => {
     fetch(`${process.env.REACT_APP_API_URL}payout/agentpayoutwallet`,{
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({
         adminId: auth._id,
@@ -59,7 +77,23 @@ const CsrDashboard = () => {
     })
     .then(result => result.json())
     .then(data => {
-      if(data.message === "success" && data.data.length !== 0){
+      if(data.expired){
+        Swal.fire({
+          icon: "error",
+          title: data.expired,
+          text: "You Will Redirect to Login",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        }).then(ok => {
+          if(ok.isConfirmed){
+            localStorage.removeItem("auth");
+            localStorage.removeItem("playfabAdminAuthToken")
+            window.location.replace("/login");
+          }
+        })
+      }
+
+      if(data.message === "success" && data.data.length !== 0 && !data.expired){
         setProcessed(data?.data[0]?.amount)
       }
     })
@@ -67,7 +101,8 @@ const CsrDashboard = () => {
     fetch(`${process.env.REACT_APP_API_URL}payout/agentpayoutwallet`,{
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({
         adminId: auth._id,
@@ -76,7 +111,23 @@ const CsrDashboard = () => {
     })
     .then(result => result.json())
     .then(data => {
-      if(data.message === "success" && data.data.length !== 0){
+      if(data.expired){
+        Swal.fire({
+          icon: "error",
+          title: data.expired,
+          text: "You Will Redirect to Login",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        }).then(ok => {
+          if(ok.isConfirmed){
+            localStorage.removeItem("auth");
+            localStorage.removeItem("playfabAdminAuthToken")
+            window.location.replace("/login");
+          }
+        })
+      }
+
+      if(data.message === "success" && data.data.length !== 0 && !data.expired){
         setDone(data?.data[0]?.amount)
       }
     })
@@ -157,7 +208,8 @@ useEffect(()=>{
   fetch(`${process.env.REACT_APP_API_URL}coin/agentmanualwallet`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${auth?.token}`,
     },
     body: JSON.stringify({
       adminId: auth._id,
@@ -166,7 +218,23 @@ useEffect(()=>{
   })
   .then(result => result.json())
   .then(data => {
-    if(data.message === "success" && data.data.length !== 0){
+    if(data.expired){
+      Swal.fire({
+        icon: "error",
+        title: data.expired,
+        text: "You Will Redirect to Login",
+        allowOutsideClick: false,
+        allowEscapeKey: false
+      }).then(ok => {
+        if(ok.isConfirmed){
+          localStorage.removeItem("auth");
+          localStorage.removeItem("playfabAdminAuthToken")
+          window.location.replace("/login");
+        }
+      })
+    }
+
+    if(data.message === "success" && data.data.length !== 0 && !data.expired){
       setPaidUsers(data?.data[0]?.amount)
   }
     

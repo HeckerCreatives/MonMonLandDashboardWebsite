@@ -7,6 +7,7 @@ import PaginationPager from "../../../component/pagination/index"
 import ViewRoadmap from "./modal/view";
 import UpdateRoadmapSlot from "./modal/edit";
 const UpdateRoadmap = () => {
+    const auth = JSON.parse(localStorage.getItem("auth"))
     const [titles, setTitles] = useState('');
     const [descriptions, setDescriptions] = useState('')
     const [rdlist, setRdList] = useState([]);
@@ -37,7 +38,9 @@ const UpdateRoadmap = () => {
         fetch(`${process.env.REACT_APP_API_URL}roadmap/addroadmap`, {
             method:'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${auth?.token}`,
+
             },
             body: JSON.stringify({
                 title: titles,
