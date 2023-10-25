@@ -274,7 +274,7 @@ const Subscription = () => {
             <br/>
             <MDBBtn
                 type="button"
-                className="zoom-badge subsbutton btn btn-warning fw-bold"
+                className="zoom-badge subsbuttonmobile btn btn-warning fw-bold"
                 size="lg"
                 onClick={() => {
                     if (sub.subscriptionName.toLowerCase() === "pearl") {
