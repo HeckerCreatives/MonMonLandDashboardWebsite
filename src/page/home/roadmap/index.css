@@ -185,7 +185,7 @@
        
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 769px) and (max-width: 1439px) {
     .roadmapbgcolor {
         background: #D2EEFF;
         height: 150vh !important;

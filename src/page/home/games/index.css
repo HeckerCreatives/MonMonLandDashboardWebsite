@@ -92,7 +92,7 @@
     transform: scale(1.1);
 }
 
-@media only screen and (min-width: 1440px) {
+@media (min-width: 1440px) {
     .gamesdesktopview {
       display: contents;
       
@@ -219,14 +219,15 @@
 
 /* TRBL */
 
-@media (min-width: 426px) and (max-width: 768px) {
+@media (min-width: 426px) and (max-width: 1200px) {
     .gamesdesktopview {
       display: contents;
-      
     }
+
     .gamesmobileview {
         display: none;
     }
+
     .badgesize {
         height: 24%;
         width: 24%;
@@ -258,11 +259,11 @@
     .badgesize {
         height: 100%;
         width: 100%;
-    }
+    }     
           
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 1201px) and (max-width: 1440px) {
     .gamesdesktopview {
       display: contents;
       

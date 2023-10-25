@@ -92,14 +92,14 @@ const Games = () => {
 
             
            {/* Description holder */}
-            <MDBCol className="col-12 col-xl-5 offset-xl-1"> 
+            <MDBCol className="col-12 col-xxl-5 offset-xxl-1"> 
                 <div className="descriptionholder">
-                <div className="d-none d-xl-block text-center">
+                <div className="d-none d-xxl-block text-center">
                 <img src={desc} alt="" className="holdersize"/>                       
                 </div>
                 <div className="descdiv">
-                <div className="d-xl-none d-block text-center">
-                <img src={desc} alt="" className="descriptionholdermobile"/>                       
+                <div className="d-xxl-none d-block text-center">
+                <img src={desc} alt="" className="d-xxl-none d-block descriptionholdermobile"/>                       
                 </div>
                 <Slider {...settings} className=' fw-bold' ref={sliderRef1}>
                 
@@ -158,7 +158,7 @@ const Games = () => {
             {/* End of Description holder */}
 
             {/* Character Holder */}
-            <MDBCol className="col-12 col-xl-5">
+            <MDBCol className="col-12 col-xxl-5">
             <div className="gamesmobileview">
             <div className="characterholder text-center"> 
             <div>
