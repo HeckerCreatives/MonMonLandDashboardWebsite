@@ -37,7 +37,8 @@ const UpdateProgressBar = () => {
         fetch(`${process.env.REACT_APP_API_URL}gameactivity/history`)
         .then(result => result.json())
         .then(data => {
-            setHistory(data)
+            const ey = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            setHistory(ey)
         })
     },[])
     
