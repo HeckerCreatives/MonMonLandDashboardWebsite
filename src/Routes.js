@@ -71,6 +71,7 @@ import Game3 from "./page/home/faq/contents/games/howtosubs";
 import Game4 from "./page/home/faq/contents/games/howtocashout";
 import Game5 from "./page/home/faq/contents/games/binancewallet";
 import Unilevel1 from "./page/home/faq/contents/unilevel/unilevel";
+import Privacy1 from "./page/home/faq/contents/privacy/privacypolicy";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -239,6 +240,9 @@ const Routers = () => {
         </Route>
         <Route path="unilevel">
           <Route path="whatisunilevel" element={<Unilevel1/>}/>
+        </Route>
+        <Route path="privacy">
+          <Route path="privacypolicy" element={<Privacy1/>}/>
         </Route>
       </Route>
       <Route path="/login" element={<Login />}/>

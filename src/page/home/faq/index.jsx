@@ -86,6 +86,14 @@ const FAQ = () => {
             ],
         },
         {
+          name: "Privacy Policy",
+          path: "/faq/privacy/privacypolicy",
+          icon: "shield-alt",
+          children: [
+            
+          ],
+        },
+        {
           name: "Back to Home",
           path: "/",
           icon: "chevron-circle-left",
@@ -93,6 +101,7 @@ const FAQ = () => {
             
           ],
       },
+      
     ]
 
 return(

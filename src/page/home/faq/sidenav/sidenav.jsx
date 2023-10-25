@@ -77,8 +77,8 @@ const Sidenav = ({ links, didToggle, setDidToggle, didToggle1, setDidToggle1, di
 
       <div className="sidebar-header pt-4 mb-2">
         <div className="text-center sidebar-logo-container d-flex align-items-center justify-content-center">
-          {/* <img src={smalllogo} alt="logo" className="img-fluid w-50" /> */}
-          <h1 className="text-wrap">F.A.Q</h1>
+          <img src={smalllogo} alt="logo" className="img-fluid w-50" />
+          {/* <h1 className="text-wrap">F.A.Q</h1> */}
         </div>
         <div className="text-center pt-3">
           
