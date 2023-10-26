@@ -21,7 +21,7 @@ import diamond from "../../../assets/subscription/diamond.png"
 const Header = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [initialbar, setInitialBar] = useState();
-    const [totalbar, setTotalBar] = useState(0);
+    const [totalbar, setTotalBar] = useState(0.00);
     const [progress, setProgress] = useState(0);
     const [mc, setMc] = useState(0)
     const [mg, setMg] = useState(0)
@@ -36,6 +36,8 @@ const Header = () => {
     const seperator = (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
+    let totalIncome = 0;
+    let totalCoins = 0;
 
     useEffect(()=> {
         setIsLoading(true)
@@ -43,7 +45,10 @@ const Header = () => {
         .then(result => result.json())
         .then(data => {
             setInitialBar(data.initial)
-            setTotalBar(data.total)
+            setTotalBar(parseFloat(data.total))
+            totalIncome = data.total
+            const price = parseFloat(totalIncome) / parseFloat(totalCoins)
+            setMcPrice(price)
             setIsLoading(false)
         })
 
@@ -59,6 +64,10 @@ const Header = () => {
         .then(result =>result.json())
         .then(data => {
                 setMc(data.data.amount)
+                totalCoins = data.data.amount
+                
+                const price = parseFloat(totalIncome) / parseFloat(totalCoins)
+                setMcPrice(price)
                 setIsLoading(false)
         }) 
 
@@ -218,9 +227,7 @@ const Header = () => {
     },[initialbar, totalbar])
 
     useEffect(() => {
-        const price = parseFloat(totalbar) / parseFloat(mc)
-        setMcPrice(price)
-    },[mc, totalbar])
+    },[totalIncome, totalCoins])
 
     useEffect(()=>{
         if(initialbar){
