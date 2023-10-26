@@ -7,13 +7,13 @@ import { MDBContainer, MDBTable, MDBTableHead, MDBTableBody, MDBBtn,MDBRow, MDBC
     MDBModalFooter,
     MDBSpinner } from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
-import PaginationPager from "../../../../component/pagination";
+import PaginationPagerQuery from "../../../../component/pagination/query";
 import Swal from "sweetalert2";
 import { handlePagination } from "../../../../component/utils";
 const CsrPayoutDone = () => {
     const auth = JSON.parse(localStorage.getItem("auth"));
     const playfabToken = localStorage.getItem("playfabAdminAuthToken")
-    const [page, setPage] = useState(1),
+    const [page, setPage] = useState(0),
     [total, setTotal] = useState(0),
     [done, setDone] = useState([]),
     [receipt, setReceipt] = useState(""),
@@ -21,14 +21,15 @@ const CsrPayoutDone = () => {
     const [basicModal, setBasicModal] = useState(false);
     const [isloading, setIsLoading] = useState(false);
     const toggleShow = () => setBasicModal(!basicModal);
-    useEffect(() => {
-        let totalPages = Math.floor(done.length / 5);
-        if (done.length % 5 > 0) totalPages += 1;
-        setTotal(totalPages);
-    }, [done]);
+    // useEffect(() => {
+    //     let totalPages = Math.floor(done.length / 5);
+    //     if (done.length % 5 > 0) totalPages += 1;
+    //     setTotal(totalPages);
+    // }, [done]);
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URL}payout/agentfind`, {
+        setIsLoading(true)
+        fetch(`${process.env.REACT_APP_API_URL}payout/agentfind?page=${page}&limit=5`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -57,11 +58,13 @@ const CsrPayoutDone = () => {
             }
 
             if(data.message === "success" && !data.expired){
+                setIsLoading(false)
                 setDone(data.data)
                 setBackup(data.data)
+                setTotal(data.pages)
             }
         })
-    },[])
+    },[total,page])
 
     const handleReprocessed = (id) => {
         setIsLoading(true)
@@ -175,7 +178,7 @@ const CsrPayoutDone = () => {
                 </MDBTableHead>
                 <MDBTableBody>
                 { done.length !== 0 ?
-                    handlePagination(done,page,5)?.map((data,i) => (
+                    done.map((data,i) => (
                     <tr key={`done-${i}`}>
                         <td>{data.id}</td>
                         <td>{data.username}</td>
@@ -209,8 +212,8 @@ const CsrPayoutDone = () => {
                 }
                 </MDBTableBody>
             </MDBTable>
-            <PaginationPager
-                total={total} page={page} setPage={setPage}
+            <PaginationPagerQuery
+                total={total} page={page} setPage={setPage} isLoading={isloading}
             />
         </MDBContainer>
 

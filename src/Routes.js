@@ -72,6 +72,7 @@ import Game4 from "./page/home/faq/contents/games/howtocashout";
 import Game5 from "./page/home/faq/contents/games/binancewallet";
 import Unilevel1 from "./page/home/faq/contents/unilevel/unilevel";
 import Privacy1 from "./page/home/faq/contents/privacy/privacypolicy";
+import TopUpResolver from "./page/dashboard/topupresolver";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -135,8 +136,9 @@ const Routers = () => {
           <Route path="adminloginlogs" element={<AdminLoginLogs/>}/>
           <Route path="csrloginlogs" element={<CsrLoginLogs/>}/>
         </Route>
+        <Route path="topupresolver" element={<TopUpResolver/>}/>
+        </Route> 
 
-        </Route>  
         <Route path="SubAdministrator" element={""}>
         <Route path="home" element={<SubAdminDashboard />}/>
         <Route path="manageaccount">
@@ -177,7 +179,8 @@ const Routers = () => {
 
         <Route path="userlogs">
         <Route path="csrloginlogs" element={<SubadminCsrLoginLogs/>}/>
-        </Route>      
+        </Route>  
+        <Route path="topupresolver" element={<TopUpResolver/>}/>    
         </Route>
 
         <Route path="Agent" element={""}>
@@ -203,6 +206,7 @@ const Routers = () => {
         <Route path="done" element={<CsrPayoutDone/>}/>
         </Route>
         <Route path="paymenthistory" element={<CsrPaymentHistory/>}/>
+        <Route path="topupresolver" element={<TopUpResolver/>}/>
         </Route>
 
         <Route path="Player" element={""}>

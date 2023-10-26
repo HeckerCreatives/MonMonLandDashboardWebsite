@@ -32,6 +32,7 @@ export const useActiveLinkObserver = (targetId) => {
   
     return { targetRef, isIntersecting };
   }
+  
 export const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',

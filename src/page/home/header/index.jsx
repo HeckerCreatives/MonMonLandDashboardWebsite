@@ -17,6 +17,7 @@ import Tab from "../../../assets/header/TAB.png"
 import donwloadnow from "../../../assets/header/download now BUTTON.png"
 import monstercoin from "../../../assets/header/MC coin.png"
 import monstergem from "../../../assets/header/Monster GEM.png"
+import diamond from "../../../assets/subscription/diamond.png"
 const Header = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [initialbar, setInitialBar] = useState();
@@ -26,6 +27,12 @@ const Header = () => {
     const [mg, setMg] = useState(0)
     const [totaluser, setTotaluser] = useState([])
     const [Mcprice, setMcPrice] = useState(0)
+    const [pearlaccumulated, setPearlAccumulated] = useState(0);
+    const [rubyaccumulated, setRubyAccumulated] = useState(0);
+    const [emeraldaccumulated, setEmeraldAccumulated] = useState(0);
+    const [diamondaccumulated, setDiamondAccumulated] = useState(0);
+    const [totalaccumulated, setTotalAccumulated] = useState(0);
+    const [diamonds, setDiamond] = useState(0);
     const seperator = (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
@@ -113,6 +120,96 @@ const Header = () => {
 
     },[])
 
+    useEffect(()=>{
+        fetch(`${process.env.REACT_APP_API_URL}subsaccu/find`,{
+          method: "POST",
+          headers:{
+            "Content-Type": "application/json",
+            
+          },
+          body: JSON.stringify({subsname: "pearl"})
+        })
+        .then(result => result.json())
+        .then(data => {
+          
+    
+          setPearlAccumulated(data.data)
+    
+          
+        })
+    
+        fetch(`${process.env.REACT_APP_API_URL}subsaccu/find`,{
+          method: "POST",
+          headers:{
+            "Content-Type": "application/json",
+            
+          },
+          body: JSON.stringify({subsname: "ruby"})
+        })
+        .then(result => result.json())
+        .then(data => {
+          
+    
+          setRubyAccumulated(data.data)
+    
+          
+        })
+    
+        fetch(`${process.env.REACT_APP_API_URL}subsaccu/find`,{
+          method: "POST",
+          headers:{
+            "Content-Type": "application/json",
+            
+          },
+          body: JSON.stringify({subsname: "emerald"})
+        })
+        .then(result => result.json())
+        .then(data => {
+          
+    
+          setEmeraldAccumulated(data.data)
+    
+          
+        })
+    
+        fetch(`${process.env.REACT_APP_API_URL}subsaccu/find`,{
+          method: "POST",
+          headers:{
+            "Content-Type": "application/json",
+            
+          },
+          body: JSON.stringify({subsname: "diamond"})
+        })
+        .then(result => result.json())
+        .then(data => {
+          
+    
+          setDiamondAccumulated(data.data)
+    
+          
+        })
+
+        fetch(`${process.env.REACT_APP_API_URL}subsuser/find`,{
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({subsname: "diamond"})
+          })
+          .then(result => result.json())
+          .then(data => {
+            
+      
+            setDiamond(data.data)
+      
+            
+          })
+    
+    
+        const total =  pearlaccumulated + rubyaccumulated + emeraldaccumulated + diamondaccumulated
+        const pool = total * 0.05
+        setTotalAccumulated(pool)
+      },[pearlaccumulated, rubyaccumulated, emeraldaccumulated,diamondaccumulated])
 
     useEffect(()=>{
         const percentage = (initialbar/totalbar) * 100     
@@ -206,6 +303,23 @@ const Header = () => {
                     <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>1.00</strong> 
                     </MDBCardBody>
                     <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Gems: {mg.toLocaleString()}</MDBCardFooter>
+                    </MDBCard> 
+
+                    </MDBCol>
+                    <MDBCol  className="col-lg-2 text-center  my-2">
+                    <MDBCard alignment='center' className="moncoin">
+                    
+                    <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
+                    <img src={diamond} alt="" style={{width: "40px"}}/>
+                    
+                    <span className="ms-2">Diamond Pools</span> 
+                    </MDBCardHeader>
+
+                    <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
+                    <img src={usdt} alt="" style={{width: "40px"}}/>
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{totalaccumulated}</strong> 
+                    </MDBCardBody>
+                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total User: {diamonds.toLocaleString()}</MDBCardFooter>
                     </MDBCard> 
 
                     </MDBCol>

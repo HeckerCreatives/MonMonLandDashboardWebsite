@@ -1,6 +1,6 @@
 import { MDBContainer, MDBTable, MDBTableHead, MDBTableBody, MDBBtn,MDBRow, MDBCol, MDBTypography, MDBSpinner } from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
-import PaginationPager from "../../../../component/pagination";
+import PaginationPagerQuery from "../../../../component/pagination/query";
 import Swal from "sweetalert2";
 import { Toast } from "../../../../component/utils"
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
@@ -8,7 +8,7 @@ import { handlePagination } from "../../../../component/utils";
 const CsrPayoutProcess = () => {
     const auth = JSON.parse(localStorage.getItem("auth"));
     const playfabToken = localStorage.getItem("playfabAdminAuthToken")
-    const [page, setPage] = useState(1),
+    const [page, setPage] = useState(0),
     [total, setTotal] = useState(0),
     [image, setImage] = useState(""),
     [filename, setFilename] = useState(""),
@@ -23,14 +23,15 @@ const CsrPayoutProcess = () => {
     const [imageStatus, setImageStatus] = useState(false)
       
 
-    useEffect(() => {
-        let totalPages = Math.floor(filteredRequest.length / 5);
-        if (filteredRequest.length % 5 > 0) totalPages += 1;
-        setTotal(totalPages);
-    }, [filteredRequest]);
+    // useEffect(() => {
+    //     let totalPages = Math.floor(filteredRequest.length / 5);
+    //     if (filteredRequest.length % 5 > 0) totalPages += 1;
+    //     setTotal(totalPages);
+    // }, [filteredRequest]);
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URL}payout/agentfind`, {
+        setIsLoading(true)
+        fetch(`${process.env.REACT_APP_API_URL}payout/agentfind?page=${page}&limit=5`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -58,10 +59,12 @@ const CsrPayoutProcess = () => {
                 })
             }
             if(data.message === "success" && !data.expired){
+                setIsLoading(false)
                 setProcessed(data.data)
+                setTotal(data.pages)
             }
         })
-    },[])
+    },[page, total])
 
     const handleDone = (id) => {
         setIsLoading(true)
@@ -200,7 +203,7 @@ const CsrPayoutProcess = () => {
                 </MDBTableHead>
                 <MDBTableBody className="text-white">
                 { filteredRequest.length !== 0 ?
-                    handlePagination(filteredRequest, page,5)?.map((data,i) => (
+                    filteredRequest.map((data,i) => (
                     <tr key={`processed-${i}`} className={`bg-${getRowColorClass(data.createdAt)}`}>
                         <td>{data.id}</td>
                         <td>{data.username}</td>
@@ -231,8 +234,8 @@ const CsrPayoutProcess = () => {
                 }
                 </MDBTableBody>
             </MDBTable>
-            <PaginationPager
-                total={total} page={page} setPage={setPage}
+            <PaginationPagerQuery
+                total={total} page={page} setPage={setPage} isLoading={isloading}
             />
         </MDBContainer>
     )

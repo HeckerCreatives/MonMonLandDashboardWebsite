@@ -180,6 +180,13 @@ const Dashboard = () => {
           },
         ],
       },
+      {
+        name: "Top Up Resolver",
+        path: "/dashboard/Administrator/topupresolver",
+        icon: "money-check-alt",
+        children: [
+        ],
+      },
     ];
     break;
     case "SubAdministrator":
@@ -334,6 +341,13 @@ const Dashboard = () => {
           
         ],
       },
+      {
+        name: "Top Up Resolver",
+        path: "/dashboard/SubAdministrator/topupresolver",
+        icon: "money-check-alt",
+        children: [
+        ],
+      },
       
     ];
     break;
@@ -436,6 +450,13 @@ const Dashboard = () => {
       icon: "book",
       children: [
         
+      ],
+    },
+    {
+      name: "Top Up Resolver",
+      path: "/dashboard/Agent/topupresolver",
+      icon: "money-check-alt",
+      children: [
       ],
     },
      ];

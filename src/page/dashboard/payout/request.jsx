@@ -9,12 +9,12 @@ import {
     MDBModalFooter,
     MDBSpinner } from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
-import PaginationPager from "../../../component/pagination";
+import PaginationPagerQuery from "../../../component/pagination/query";
 import Swal from "sweetalert2";
 import { handlePagination } from "../../../component/utils";
 const AdminPayoutRequest = () => {
     const auth = JSON.parse(localStorage.getItem("auth"))
-    const [page, setPage] = useState(1),
+    const [page, setPage] = useState(0),
     [total, setTotal] = useState(0),
     [payoutid, setPayoutId] = useState(""),
     [selectedcashier, setSelectedCashier] = useState([]),
@@ -32,14 +32,15 @@ const AdminPayoutRequest = () => {
     });
       
 
-    useEffect(() => {
-        let totalPages = Math.floor(filteredRequest.length / 5);
-        if (filteredRequest.length % 5 > 0) totalPages += 1;
-        setTotal(totalPages);
-    }, [filteredRequest]);
+    // useEffect(() => {
+    //     let totalPages = Math.floor(filteredRequest.length / 5);
+    //     if (filteredRequest.length % 5 > 0) totalPages += 1;
+    //     setTotal(totalPages);
+    // }, [filteredRequest]);
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URL}payout/adminfind`, {
+        setIsLoading(true)
+        fetch(`${process.env.REACT_APP_API_URL}payout/adminfind?page=${page}&limit=5`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -67,10 +68,12 @@ const AdminPayoutRequest = () => {
             }
 
             if(data.message === "success" && !data.expired){
+                setIsLoading(false)
                 setRequest(data.data)
+                setTotal(data.pages)
             }
         })
-    },[])
+    },[setPage,total, page])
 
     useEffect(()=>{
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`)
@@ -164,6 +167,7 @@ const AdminPayoutRequest = () => {
        
         
     }
+
     // Define a function to calculate the time difference in hours
     function calculateTimeDifference(createdAt) {
         const createdAtDate = new Date(createdAt);
@@ -221,7 +225,7 @@ const AdminPayoutRequest = () => {
                 </MDBTableHead>
                 <MDBTableBody className="text-white">
                 { filteredRequest.length !== 0 ?
-                    handlePagination(filteredRequest, page, 5)?.map((data,i) => (
+                    filteredRequest.map((data,i) => (
                     <tr key={`request-${i}`} className={`bg-${getRowColorClass(data.createdAt)}`}>
                         <td>{data.id}</td>
                         <td>{data.username}</td>
@@ -247,8 +251,8 @@ const AdminPayoutRequest = () => {
                     
                 </MDBTableBody>
             </MDBTable>
-            <PaginationPager
-                total={total} page={page} setPage={setPage}
+            <PaginationPagerQuery
+                total={total} page={page} setPage={setPage} isLoading={isloading}
             />
         </MDBContainer>
         <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1' staticBackdrop closeOnEsc={false}>

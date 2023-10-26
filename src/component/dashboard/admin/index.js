@@ -230,6 +230,7 @@ const AdminDashboard = () => {
     })
 
     const total = autopayment ? autopayment + ManualPayment : 0 + ManualPayment
+    
     setAutoAndManual(total)
   },[autopayment, ManualPayment])
 
