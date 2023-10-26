@@ -319,7 +319,7 @@ const Header = () => {
                     <img src={usdt} alt="" style={{width: "40px"}}/>
                     <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{totalaccumulated}</strong> 
                     </MDBCardBody>
-                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total User: {diamonds.toLocaleString()}</MDBCardFooter>
+                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total User: 0</MDBCardFooter>
                     </MDBCard> 
 
                     </MDBCol>
