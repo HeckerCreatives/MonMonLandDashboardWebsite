@@ -21,7 +21,7 @@ import
     MDBModalFooter, } 
 from "mdb-react-ui-kit";
 
-const DashCard = ({txtsup, icon, cardtoptext, colSpan, thtitle, td1, td1txttop, td1txtbot, td2, td2txttop, td2txtbot,td3, td3txttop, td3txtbot, td4, td4txttop, td4txtbot, flipbtn, basicModal, setBasicModal,distri}) => {
+const DashCard = ({txtsup, icon, cardtoptext, colSpan, thtitle, td1, td1txttop, td1txtbot, td2, td2txttop, td2txtbot,td3, td3txttop, td3txtbot, td4, td4txttop, td4txtbot, td0, td0txttop, td0txtbot, flipbtn, basicModal, setBasicModal,distri}) => {
     const [payin1, setpayin1] = useState(0)
     const [payin2, setpayin2] = useState(0)
     const [payin3, setpayin3] = useState(0)
@@ -31,19 +31,19 @@ const DashCard = ({txtsup, icon, cardtoptext, colSpan, thtitle, td1, td1txttop, 
     const [payin7, setpayin7] = useState(0)
     const [payin8, setpayin8] = useState(0)
     const [payin9, setpayin9] = useState(0)
-    // const [payin10, setpayin10] = useState(0)
+    const [payin10, setpayin10] = useState(0)
     // const distri = 20
     useEffect(()=>{
         setpayin1(distri * .25)
         setpayin2(distri * .05)
         setpayin3(distri * .08)
         setpayin4(distri * .04)
-        setpayin5(distri * .05)
+        setpayin5(distri * .03)
         setpayin6(distri * .05)
         setpayin7(distri * .05)
         setpayin8(distri * .40)
         setpayin9(distri * .03)
-        // setpayin10(distri * .5)
+        setpayin10(distri * .2)
     },[distri])
 return(
     <>
@@ -71,6 +71,13 @@ return(
                 </MDBTableHead>
                 <MDBTableBody className="fw-bold">
                     <tr>
+                    {td0 && 
+                    <td style={{borderTop:"1px solid",}}>                    
+                    <div>{td0txttop}
+                    </div>
+                    <div>{td0txtbot}</div>
+                    </td>
+                    } 
                     {td1 && 
                     <td style={{borderTop:"1px solid", borderRight: "1px solid"}}>                    
                     <div>{td1txttop}
@@ -162,7 +169,7 @@ return(
                         {payin9.toLocaleString()}
                      </td>
                      <td>
-                        0
+                        {payin10.toLocaleString()}
                      </td>           
                     </tr>
                 </MDBTableBody>

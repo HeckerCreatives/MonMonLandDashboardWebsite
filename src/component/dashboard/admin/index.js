@@ -41,6 +41,8 @@ const AdminDashboard = () => {
     const [totalmerchandise, setTotalMerchandise] = useState(0);
 
     const [adminfee, setAdminFee] = useState(0);
+
+    const [withdrawalfee, setWithdrawalFee] = useState(0)
   useEffect(() => {
     if (auth) {
       if (auth.roleId.display_name !== "Administrator") {
@@ -635,6 +637,41 @@ const AdminDashboard = () => {
         
     })
 
+    fetch(`${process.env.REACT_APP_API_URL}withdrawfee/find`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${auth?.token}`,
+      },
+      body: JSON.stringify({id: auth._id})
+    })
+    .then(result => result.json())
+    .then(data => {
+
+      if(data.expired){
+        Swal.fire({
+          icon: "error",
+          title: data.expired,
+          text: "You Will Redirect to Login",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        }).then(ok => {
+          if(ok.isConfirmed){
+            localStorage.removeItem("auth");
+            localStorage.removeItem("playfabAdminAuthToken")
+            window.location.replace("/login");
+          }
+        })
+      }
+
+      if(!data.expired && data.message === "success"){
+        setWithdrawalFee(data.data.withdrawalfee)
+      }
+      
+
+        
+    })
+
   })
     return (
       <>
@@ -664,6 +701,9 @@ const AdminDashboard = () => {
               thtitle={`Total Admin Fee`}
               cardtoptext={adminfee}
               txtsup={`USDT`} 
+              td0={true}
+              td0txttop={withdrawalfee ? `${withdrawalfee}`: 0}
+              td0txtbot={`Withdrawal Fee`} 
               />
           </MDBCol>
           <MDBCol className="my-2">
@@ -755,7 +795,15 @@ const AdminDashboard = () => {
               thtitle={`Unilevel Bonus`}
               cardtoptext={unilevel ? `${unilevel}`: 0}
               />
-          </MDBCol>         
+          </MDBCol>
+          {/* <MDBCol className="col-lg-4 my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`hand-holding-usd`}
+              thtitle={`Withdrawal Fee`}
+              cardtoptext={withdrawalfee ? `${withdrawalfee}`: 0}
+              />
+          </MDBCol>          */}
         </MDBRow>
         </MDBContainer>
     </>  

@@ -66,8 +66,6 @@ const Footer = ({links}) => {
             
             </MDBCol>
         </MDBRow>
-        
-        
         </MDBContainer>
 
         </MDBContainer>

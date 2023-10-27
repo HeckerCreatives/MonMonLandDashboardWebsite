@@ -47,8 +47,8 @@ const Header = () => {
             setInitialBar(data.initial)
             setTotalBar(parseFloat(data.total))
             totalIncome = data.total
-            const price = parseFloat(totalIncome) / parseFloat(totalCoins)
-            setMcPrice(price)
+            // const price = parseFloat(totalIncome) / parseFloat(totalCoins)
+            // setMcPrice(price)
             setIsLoading(false)
         })
 
@@ -66,8 +66,8 @@ const Header = () => {
                 setMc(data.data.amount)
                 totalCoins = data.data.amount
                 
-                const price = parseFloat(totalIncome) / parseFloat(totalCoins)
-                setMcPrice(price)
+                // const price = parseFloat(totalIncome) / parseFloat(totalCoins)
+                // setMcPrice(price)
                 setIsLoading(false)
         }) 
 
@@ -216,9 +216,14 @@ const Header = () => {
     
     
         const total =  pearlaccumulated + rubyaccumulated + emeraldaccumulated + diamondaccumulated
-        const pool = total * 0.05
+        const pool = total * 0.03
+        const gg = total * 0.08
+        const qr = total * 0.04
+        const tt = gg + qr
+        const emseeprice =  parseFloat(tt) / parseFloat(mc)
         setTotalAccumulated(pool)
-      },[pearlaccumulated, rubyaccumulated, emeraldaccumulated,diamondaccumulated])
+        setMcPrice(emseeprice)
+      },[pearlaccumulated, rubyaccumulated, emeraldaccumulated,diamondaccumulated, mc])
 
     useEffect(()=>{
         const percentage = (initialbar/totalbar) * 100     
@@ -324,7 +329,7 @@ const Header = () => {
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
                     <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{totalaccumulated}</strong> 
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{totalaccumulated.toFixed(2)}</strong> 
                     </MDBCardBody>
                     <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total User: 0</MDBCardFooter>
                     </MDBCard> 
