@@ -43,7 +43,7 @@ const DashCard = ({txtsup, icon, cardtoptext, colSpan, thtitle, td1, td1txttop, 
         setpayin7(distri * .05)
         setpayin8(distri * .40)
         setpayin9(distri * .03)
-        setpayin10(distri * .2)
+        setpayin10(distri * .02)
     },[distri])
 return(
     <>
