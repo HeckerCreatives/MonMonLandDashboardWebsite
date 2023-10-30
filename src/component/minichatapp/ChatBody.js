@@ -11,7 +11,8 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
   useEffect(() => {
     setBibiliUser(buyerid)
     setMessages(messages)
-  },[buyerid, messages])
+    console.log(bibiliuser)
+  },[buyerid, messages, bibiliuser])
 
   // dd/mm/yyyy, hh:mm:ss
   function formatDateFromTimestamp(timestamp) {
@@ -34,6 +35,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
         allowEscapeKey: false
       }).then(e => {
           if(e.isConfirmed){
+          
           fetch(`${process.env.REACT_APP_API_URL}upload/deletetemp`, {
               method: "POST",
               headers: {
@@ -41,10 +43,13 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
               },
               body: JSON.stringify({ownerId: room})
             }).then(result => result.json())
-            .then(()=> {
+            .then((data)=> {
+              if(data){
               socket.emit('doneTransactionAdmin', {room: room, buyer: buyerid});
               setBibiliUser("")
               setMessages([])
+              }
+              
             })
           }
       })
@@ -158,7 +163,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
     <>
       <header className='chat__mainHeader'>
       <div>
-      <p>Please make a payment within 60:00 mins. otherwise, the order will be cancelled</p>
+      <p>Please make a payment within 5:00 mins. otherwise, the order will be cancelled</p>
       </div>
       <div className='mx-2'>
       {
@@ -169,7 +174,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
               </MDBSpinner>
             </MDBBtn>
           ) : (
-            <MDBBtn className='mb-1 rounded' onClick={() => doneTransaction(room, buyerid)} disabled={bibiliuser === ""}>
+            <MDBBtn className='mb-1 rounded' onClick={() => doneTransaction(room, buyerid)} disabled={bibiliuser === "" ? true : false}>
               Done Transaction
             </MDBBtn>
           )

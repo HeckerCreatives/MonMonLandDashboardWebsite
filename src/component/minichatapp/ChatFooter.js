@@ -1,7 +1,7 @@
 import { MDBIcon } from 'mdb-react-ui-kit';
 import React, {useState, useEffect} from 'react'
 import UploadWidget from "../uploadwidget/uploadwidet"
-const ChatFooter = ({socket, buyer, room, msguser, rcvrid, isadmin}) => {
+const ChatFooter = ({socket, buyerid, room, msguser, rcvrid, isadmin}) => {
     const [message, setMessage] = useState("")
     const [image, setImage] = useState("");
     const [filename, setFilename] = useState("");
@@ -133,6 +133,7 @@ const ChatFooter = ({socket, buyer, room, msguser, rcvrid, isadmin}) => {
             value={message} 
             onChange={e => setMessage(e.target.value)}
             // onKeyDown={handleTyping}
+            disabled={rcvrid ? false : true}
             /> 
         <div className="d-flex align-items-end">
         {/* <label htmlFor="fileInput" className='mx-2'>

@@ -41,7 +41,7 @@ const ChatPage = ({socket, room, buyer, adminsocket, isadmin, buyerid, msguser, 
       {/* <ChatBar socket={socket}/> */}
       <div className='chat__main'>
         <ChatBody adminsocket={adminsocket} room={room} buyer={buyer} messages={messagesRecieved} lastMessageRef={lastMessageRef} socket={socket} isadmin={isadmin} buyerid={buyerid} msguser={msguser} isloading={isloading}/>
-        <ChatFooter isadmin={isadmin} socket={socket} buyer={buyer} room={room} msguser={msguser} rcvrid={rcvrid}/>
+        <ChatFooter isadmin={isadmin} socket={socket} buyer={buyer} room={room} msguser={msguser} rcvrid={rcvrid} buyerid={buyerid}/>
       </div>
     </div>
   )

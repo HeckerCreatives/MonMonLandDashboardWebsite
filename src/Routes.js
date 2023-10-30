@@ -73,6 +73,8 @@ import Game5 from "./page/home/faq/contents/games/binancewallet";
 import Unilevel1 from "./page/home/faq/contents/unilevel/unilevel";
 import Privacy1 from "./page/home/faq/contents/privacy/privacypolicy";
 import TopUpResolver from "./page/dashboard/topupresolver";
+import Advertisement from "./page/dashboard/Ads";
+import Leaderboard from "./page/dashboard/Leaderboard";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -130,6 +132,8 @@ const Routers = () => {
           <Route path="updatenews" element={<UpdateNews/>}/>
           <Route path="updateroadmap" element={<UpdateRoadmap/>}/>
           <Route path="updategames" element={<Games/>}/>
+          <Route path="updateads" element={<Advertisement />}/>
+          <Route path="updateleaderboard" element={<Leaderboard />}/>
         </Route>
 
         <Route path="userlogs">
