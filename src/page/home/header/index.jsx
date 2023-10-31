@@ -4,7 +4,14 @@ import { MDBContainer, MDBRow, MDBCol, MDBIcon,MDBTypography,MDBProgress, MDBPro
     MDBCardTitle,
     MDBCardText,
     MDBCardHeader,
-    MDBCardFooter, } from "mdb-react-ui-kit";
+    MDBCardFooter, 
+    MDBModal,
+    MDBModalDialog,
+    MDBModalContent,
+    MDBModalHeader,
+    MDBModalTitle,
+    MDBModalBody,
+    MDBModalFooter,} from "mdb-react-ui-kit";
 import "./index.css";
 import biglogo from "../../../assets/header/big logo2.gif"
 import dahonleft from "../../../assets/BG/leaves Left.png"
@@ -22,6 +29,8 @@ import adslogo from "../../../assets/header/ADS icon.png"
 import leadlogo from "../../../assets/header/LEADERBOARD icon.png"
 import Slider from "react-slick";
 const Header = () => {
+    const [basicModal, setBasicModal] = useState(false);
+    const toggleShow = () => setBasicModal(!basicModal);
     const [isLoading, setIsLoading] = useState(false)
     const [initialbar, setInitialBar] = useState();
     const [totalbar, setTotalBar] = useState(0);
@@ -38,6 +47,7 @@ const Header = () => {
     const [diamonds, setDiamond] = useState(0);
     const [ads, setAds] = useState(0);
     const [leaderboard, setLeaderboard] = useState(0);
+    const [mcpreviousmonth, setMcPreviousMonth] = useState(0);
     const seperator = (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
@@ -69,12 +79,15 @@ const Header = () => {
         })
         .then(result =>result.json())
         .then(data => {
+              if(data.message === "success"){
                 setMc(data.data.amount)
                 totalCoins = data.data.amount
                 
                 // const price = parseFloat(totalIncome) / parseFloat(totalCoins)
                 // setMcPrice(price)
                 setIsLoading(false)
+              }
+                
         }) 
 
         fetch(`${process.env.REACT_APP_API_URL}monmoncoin/find`,{
@@ -280,6 +293,17 @@ const Header = () => {
 
     },[])
     
+    useEffect(()=> {
+      fetch(`${process.env.REACT_APP_API_URL}communityactivy/mcvaluemonthly`)
+      .then(result => result.json())
+      .then(data => {
+        if(data.message === "success"){
+          setMcPreviousMonth(data.data.amount)
+        }
+        
+      })
+    },[])
+
     const settings = {
       className: "center",
       arrows: false,
@@ -317,6 +341,7 @@ const Header = () => {
     };
 
     return (
+      <>
         <div className="kahitanu">
                 
         <MDBContainer fluid className="d-flex text-center justify-content-center align-items-center mb-5" id="home">
@@ -449,14 +474,22 @@ const Header = () => {
                     <MDBCard alignment='center' className="moncoin">
                     
                     <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
-                    <img src={monstercoin} alt="" style={{width: "40px"}}/>
+                    <div className="">
+                    <MDBIcon className="my-2 ms-1 float-start" far icon="question-circle" animate='bounce' onClick={toggleShow} style={{cursor: "pointer"}}/>
+
+                    <img className="me-2" src={monstercoin} alt="" style={{width: "40px"}}/>
                     
-                    <span className="ms-2">Monster Coin</span> 
+                    <span>Monster Coin</span>
+                    
+
+                    </div>
+                    
+                    
                     </MDBCardHeader>
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
                     <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{Mcprice.toFixed(6)}</strong> 
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{Mcprice !== Infinity ? Mcprice.toFixed(6) : 0.000000}</strong> 
                     </MDBCardBody>
                     <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Coins: {mc.toLocaleString()}</MDBCardFooter>
                     </MDBCard> 
@@ -545,6 +578,28 @@ const Header = () => {
             
         </MDBContainer>
         </div>
+        <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
+        <MDBModalDialog centered>
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>Monthly Monster Coin Value</MDBModalTitle>
+              <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn>
+            </MDBModalHeader>
+            <MDBModalBody>
+              Previous Month: $ {mcpreviousmonth ? mcpreviousmonth : 0.000000}
+            </MDBModalBody>
+            <MDBModalBody>
+              Current Month: $ {Mcprice !== Infinity ? Mcprice.toFixed(6) : 0.000000}
+            </MDBModalBody>
+            <MDBModalFooter>
+              <MDBBtn color='secondary' onClick={toggleShow}>
+                Close
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+        </>
     )
 }
 

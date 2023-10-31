@@ -21,11 +21,11 @@ import
     MDBModalFooter, } 
 from "mdb-react-ui-kit";
 
-const DashCard = ({txtsup, icon, cardtoptext, colSpan, thtitle, td1, td1txttop, td1txtbot, td2, td2txttop, td2txtbot,td3, td3txttop, td3txtbot, td4, td4txttop, td4txtbot, td0, td0txttop, td0txtbot, flipbtn, basicModal, setBasicModal,distri}) => {
+const DashCard = ({txtsup, icon, cardtoptext, colSpan, thtitle, td1, td1txttop, td1txtbot, td2, td2txttop, td2txtbot,td3, td3txttop, td3txtbot, td4, td4txttop, td4txtbot, td0, td0txttop, td0txtbot, flipbtn, basicModal, setBasicModal,distri, leaderboard, grinding, quest}) => {
     const [payin1, setpayin1] = useState(0)
-    const [payin2, setpayin2] = useState(0)
-    const [payin3, setpayin3] = useState(0)
-    const [payin4, setpayin4] = useState(0)
+    // const [payin2, setpayin2] = useState(0)
+    // const [payin3, setpayin3] = useState(0)
+    // const [payin4, setpayin4] = useState(0)
     const [payin5, setpayin5] = useState(0)
     const [payin6, setpayin6] = useState(0)
     const [payin7, setpayin7] = useState(0)
@@ -35,9 +35,9 @@ const DashCard = ({txtsup, icon, cardtoptext, colSpan, thtitle, td1, td1txttop, 
     // const distri = 20
     useEffect(()=>{
         setpayin1(distri * .25)
-        setpayin2(distri * .05)
-        setpayin3(distri * .08)
-        setpayin4(distri * .04)
+        // setpayin2(leaderboard)
+        // setpayin3(grinding)
+        // setpayin4(quest)
         setpayin5(distri * .03)
         setpayin6(distri * .05)
         setpayin7(distri * .05)
@@ -145,13 +145,13 @@ return(
                      {payin1.toLocaleString()}
                      </td>
                      <td>
-                     {payin2.toLocaleString()}
+                     {leaderboard?.toLocaleString()}
                      </td>
                      <td>
-                     {payin3.toLocaleString()}
+                     {grinding?.toLocaleString()}
                      </td>
                      <td>
-                     {payin4.toLocaleString()}
+                     {quest?.toLocaleString()}
                      </td>
                      <td>
                      {payin5.toLocaleString()}

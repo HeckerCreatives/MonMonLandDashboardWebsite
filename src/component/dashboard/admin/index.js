@@ -43,6 +43,10 @@ const AdminDashboard = () => {
     const [adminfee, setAdminFee] = useState(0);
 
     const [withdrawalfee, setWithdrawalFee] = useState(0)
+
+    const [leaderboard, setLeaderboard] = useState(0)
+    const [grinding, setGrinding] = useState(0)
+    const [quest, setQuest] = useState(0)
   useEffect(() => {
     if (auth) {
       if (auth.roleId.display_name !== "Administrator") {
@@ -673,6 +677,19 @@ const AdminDashboard = () => {
     })
 
   })
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}communityactivy/find`)
+    .then(result => result.json())
+    .then(data => {
+      if(data.message === "success"){
+        console.log(data.data.leaderboard)
+        setLeaderboard(data.data.leaderboard)
+        setGrinding(data.data.grinding)
+        setQuest(data.data.quest)
+      }
+    })
+  },[])
     return (
       <>
         <MDBContainer fluid>
@@ -753,6 +770,9 @@ const AdminDashboard = () => {
               basicModal={basicModal}
               setBasicModal={setBasicModal}
               distri={totalaccumulated}
+              leaderboard={leaderboard}
+              grinding={grinding}
+              quest={quest}
               colSpan="4"
               icon={`dollar-sign`} 
               thtitle={`Subscription Accumulated`} 
