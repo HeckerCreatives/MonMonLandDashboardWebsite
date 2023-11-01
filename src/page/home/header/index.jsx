@@ -620,15 +620,19 @@ const Header = () => {
       <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
         <MDBModalDialog centered>
           <MDBModalContent>
-            <MDBModalHeader className="seamless">
-              <MDBModalTitle className="text-white fw-bold">Monthly Monster Coin Value</MDBModalTitle>
-              <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn>
+            <MDBModalHeader className="seamless justify-content-center">
+              <MDBModalTitle className="text-white fw-bold ">Monster Coin Value</MDBModalTitle>
+              {/* <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn> */}
             </MDBModalHeader>
-            <MDBModalBody>
-              Previous Month: $ {mcpreviousmonth ? mcpreviousmonth : 0.000000}
+            <MDBModalBody className="h4 text-center pb-0">
+              Previous Cut Off: 
+              {/* <div>$ 0.013143</div> */}
+              &nbsp; $ {mcpreviousmonth ? mcpreviousmonth : 0.000000}
             </MDBModalBody>
-            <MDBModalBody>
-              Current Month: $ {Mcprice !== Infinity ? Mcprice.toFixed(6) : 0.000000}
+            <MDBModalBody className="fw-bold text-center pt-0 h1">
+              Current Cut Off: 
+              &nbsp; <div>$ {Mcprice !== Infinity ? Mcprice.toFixed(6) : 0.000000}</div>
+              
             </MDBModalBody>
             <MDBModalFooter className="seamless">
               <MDBBtn color='secondary' onClick={toggleShow}>
