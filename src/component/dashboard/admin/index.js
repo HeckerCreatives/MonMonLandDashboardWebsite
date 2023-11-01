@@ -669,7 +669,7 @@ const AdminDashboard = () => {
       }
 
       if(!data.expired && data.message === "success"){
-        setWithdrawalFee(data.data.withdrawalfee)
+        setWithdrawalFee(data.data[0].withdrawalfee)
       }
       
 
