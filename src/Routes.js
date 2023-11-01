@@ -13,7 +13,7 @@ import FullTable from "./component/fulltablelist";
 import AdminDashboard from "./component/dashboard/admin";
 import SignUp from "./page/signupform/signup";
 import StepVerification from "./page/4stepverification";
-import UserDashboard from "./page/dashboard/user/userdashboard";
+// import UserDashboard from "./page/dashboard/user/userdashboard";
 import ActiveUsers from "./page/dashboard/manageplayers/activeusers";
 import BannedUsers from "./page/dashboard/manageplayers/bannedusers";
 import PaidUsers from "./page/dashboard/manageplayers/paidusers";
@@ -75,6 +75,8 @@ import Privacy1 from "./page/home/faq/contents/privacy/privacypolicy";
 import TopUpResolver from "./page/dashboard/topupresolver";
 import Advertisement from "./page/dashboard/Ads";
 import Leaderboard from "./page/dashboard/Leaderboard";
+import CreateMarketingAccount from "./page/dashboard/manageaccount/marketingarm";
+import MarketingDashboard from "./page/dashboard/marketingarm/marketingdashboard";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -98,6 +100,7 @@ const Routers = () => {
         <Route path="manageaccount">
         <Route path="createadminacc" element={<CreateAdminAccount/>}/>
         <Route path="createcsracc" element={<CreateCSRAccount/>}/>
+        <Route path="createmarketingacc" element={<CreateMarketingAccount/>}/>
         <Route path="manageplayers">
           <Route path="activeplayers" element={<ActiveUsers/>}/>
           <Route path="bannedplayers" element={<BannedUsers/>}/>
@@ -213,8 +216,8 @@ const Routers = () => {
         <Route path="topupresolver" element={<TopUpResolver/>}/>
         </Route>
 
-        <Route path="Player" element={""}>
-            <Route path="home" element={<UserDashboard/>}/>
+        <Route path="Marketing" element={""}>
+            <Route path="home" element={<MarketingDashboard/>}/>
         </Route>
       </Route>
       {/* <Route

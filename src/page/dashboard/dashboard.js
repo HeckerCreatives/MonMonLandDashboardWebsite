@@ -52,6 +52,10 @@ const Dashboard = () => {
               name: "CSR",
               path: "/dashboard/Administrator/manageaccount/createcsracc",
             },
+            {
+              name: "Marketing",
+              path: "/dashboard/Administrator/manageaccount/createmarketingacc",
+            },
             // {
             //   name: "Manage Users",
             //   path: "",
@@ -363,7 +367,7 @@ const Dashboard = () => {
      link = [
       {
         name: "DASHBOARD",
-        path: "/dashboard/Player/home",
+        path: "/dashboard/Marketing/home",
         icon: "home",
         children: [],
       },

@@ -11,7 +11,10 @@ import { MDBContainer, MDBRow, MDBCol, MDBIcon,MDBTypography,MDBProgress, MDBPro
     MDBModalHeader,
     MDBModalTitle,
     MDBModalBody,
-    MDBModalFooter,} from "mdb-react-ui-kit";
+    MDBModalFooter,
+    MDBTable, 
+    MDBTableHead, 
+    MDBTableBody} from "mdb-react-ui-kit";
 import "./index.css";
 import biglogo from "../../../assets/header/big logo2.gif"
 import dahonleft from "../../../assets/BG/leaves Left.png"
@@ -31,6 +34,8 @@ import Slider from "react-slick";
 const Header = () => {
     const [basicModal, setBasicModal] = useState(false);
     const toggleShow = () => setBasicModal(!basicModal);
+    const [basicModal1, setBasicModal1] = useState(false);
+    const toggleShow1 = () => setBasicModal1(!basicModal1);
     const [isLoading, setIsLoading] = useState(false)
     const [initialbar, setInitialBar] = useState();
     const [totalbar, setTotalBar] = useState(0);
@@ -39,11 +44,9 @@ const Header = () => {
     const [mg, setMg] = useState(0)
     const [totaluser, setTotaluser] = useState([])
     const [Mcprice, setMcPrice] = useState(0)
-    const [pearlaccumulated, setPearlAccumulated] = useState(0);
-    const [rubyaccumulated, setRubyAccumulated] = useState(0);
-    const [emeraldaccumulated, setEmeraldAccumulated] = useState(0);
-    const [diamondaccumulated, setDiamondAccumulated] = useState(0);
+    const [comact, setComAct] = useState([]);
     const [totalaccumulated, setTotalAccumulated] = useState(0);
+    const [totalpoolaccumulated, setTotalPoolAccumulated] = useState(0);
     const [diamonds, setDiamond] = useState(0);
     const [ads, setAds] = useState(0);
     const [leaderboard, setLeaderboard] = useState(0);
@@ -149,70 +152,20 @@ const Header = () => {
     },[])
 
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_API_URL}subsaccu/find`,{
-          method: "POST",
+        
+    
+        fetch(`${process.env.REACT_APP_API_URL}subsaccu/totalsubsaccu`,{
+          method: "GET",
           headers:{
             "Content-Type": "application/json",
             
           },
-          body: JSON.stringify({subsname: "pearl"})
         })
         .then(result => result.json())
         .then(data => {
           
     
-          setPearlAccumulated(data.data)
-    
-          
-        })
-    
-        fetch(`${process.env.REACT_APP_API_URL}subsaccu/find`,{
-          method: "POST",
-          headers:{
-            "Content-Type": "application/json",
-            
-          },
-          body: JSON.stringify({subsname: "ruby"})
-        })
-        .then(result => result.json())
-        .then(data => {
-          
-    
-          setRubyAccumulated(data.data)
-    
-          
-        })
-    
-        fetch(`${process.env.REACT_APP_API_URL}subsaccu/find`,{
-          method: "POST",
-          headers:{
-            "Content-Type": "application/json",
-            
-          },
-          body: JSON.stringify({subsname: "emerald"})
-        })
-        .then(result => result.json())
-        .then(data => {
-          
-    
-          setEmeraldAccumulated(data.data)
-    
-          
-        })
-    
-        fetch(`${process.env.REACT_APP_API_URL}subsaccu/find`,{
-          method: "POST",
-          headers:{
-            "Content-Type": "application/json",
-            
-          },
-          body: JSON.stringify({subsname: "diamond"})
-        })
-        .then(result => result.json())
-        .then(data => {
-          
-    
-          setDiamondAccumulated(data.data)
+          setTotalAccumulated(data.data)
     
           
         })
@@ -232,20 +185,19 @@ const Header = () => {
       
             
           })
+
+          fetch(`${process.env.REACT_APP_API_URL}communityactivy/find`)
+          .then(result => result.json())
+          .then(data => {
+            if(data.message === "success"){
+              setComAct(data.data)
+            }
+            
+          })
     
     
-        const total =  pearlaccumulated + rubyaccumulated + emeraldaccumulated + diamondaccumulated
         
-        const pool = total * 0.03
-        const gg = total * 0.08
-        const qr = total * 0.04
-        // const totalincome = totalbar.replaceAll(",","")
-        const tt = gg + qr + totalbar
-        const emseeprice =  parseFloat(tt) / parseFloat(mc)
-        setTotalAccumulated(pool)
-        setMcPrice(emseeprice)
-        // console.log(Math.floor(totalbar))
-    },[pearlaccumulated, rubyaccumulated, emeraldaccumulated,diamondaccumulated, mc, totalbar])
+    },[totalaccumulated, mc, totalbar])
 
     // useEffect(()=>{
     //     const percentage = (initialbar/totalbar) * 100     
@@ -254,7 +206,16 @@ const Header = () => {
     // },[initialbar, totalbar])
 
     useEffect(() => {
-    },[totalIncome, totalCoins])
+      const total =  totalaccumulated
+        
+        const pool = total * 0.03
+        const gg = comact.grinding
+        const qr = comact.quest
+        const tt = gg + qr + totalbar
+        const emseeprice =  parseFloat(tt) / parseFloat(mc)
+        setTotalPoolAccumulated(pool)
+        setMcPrice(emseeprice)
+    },[comact, mc, totalaccumulated, totalbar])
 
     // useEffect(()=>{
     //     if(initialbar){
@@ -340,6 +301,68 @@ const Header = () => {
         ]
     };
 
+    const leaderboardranking = [
+      {
+        number: 1,
+        percentage: "30%"
+      },
+      {
+        number: 2,
+        percentage: "25%"
+      },
+      {
+        number: 3,
+        percentage: "12%"
+      },
+      {
+        number: 4,
+        percentage: "8%"
+      },
+      {
+        number: 5,
+        percentage: "6%"
+      },
+      {
+        number: 6,
+        percentage: "5%"
+      },
+      {
+        number: 7,
+        percentage: "4%"
+      },
+      {
+        number: 8,
+        percentage: "3%"
+      },
+      {
+        number: 9,
+        percentage: "2%"
+      },
+      {
+        number: 10,
+        percentage: "1%"
+      },
+      {
+        number: 11,
+        percentage: "1%"
+      },
+      {
+        number: 12,
+        percentage: "1%"
+      },
+      {
+        number: 13,
+        percentage: "1%"
+      },
+      {
+        number: 14,
+        percentage: "1%"
+      },
+      {
+        number: 15,
+        percentage: "1%"
+      },
+    ]
     return (
       <>
         <div className="kahitanu">
@@ -474,13 +497,19 @@ const Header = () => {
                     <MDBCard alignment='center' className="moncoin">
                     
                     <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
-                    <div className="">
-                    <MDBIcon className="my-2 ms-1 float-start" far icon="question-circle" animate='bounce' onClick={toggleShow} style={{cursor: "pointer"}}/>
+                    <div className="row">
 
+                    <div className="col-3">
+                    <MDBIcon className="ms-4" size="2x" far icon="question-circle" animate='bounce' onClick={toggleShow} style={{cursor: "pointer"}}/>
+
+                    </div>
+
+                    <div className="col-8 d-flex align-items-center">
+                      
                     <img className="me-2" src={monstercoin} alt="" style={{width: "40px"}}/>
                     
                     <span>Monster Coin</span>
-                    
+                    </div>
 
                     </div>
                     
@@ -524,7 +553,7 @@ const Header = () => {
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
                     <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{totalaccumulated.toFixed(2)}</strong> 
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{totalpoolaccumulated.toFixed(2)}</strong> 
                     </MDBCardBody>
                     <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total User: 0</MDBCardFooter>
                     </MDBCard> 
@@ -553,9 +582,19 @@ const Header = () => {
                     <MDBCard alignment='center' className="moncoin">
                     
                     <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
+                    <div className="row">
+                    <div className="col-3">
+                    <MDBIcon className="ms-4" size="2x" far icon="question-circle" animate='bounce' onClick={toggleShow1} style={{cursor: "pointer"}}/>
+                    </div>
+                    <div className="col-8 d-flex align-items-center">
                     <img src={leadlogo} alt="" style={{width: "40px"}}/>
-                    
+
                     <span className="ms-2">Leaderboard</span> 
+                    </div>
+
+                    
+                    </div>
+                    
                     </MDBCardHeader>
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
@@ -578,11 +617,11 @@ const Header = () => {
             
         </MDBContainer>
         </div>
-        <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
+      <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
         <MDBModalDialog centered>
           <MDBModalContent>
-            <MDBModalHeader>
-              <MDBModalTitle>Monthly Monster Coin Value</MDBModalTitle>
+            <MDBModalHeader className="seamless">
+              <MDBModalTitle className="text-white fw-bold">Monthly Monster Coin Value</MDBModalTitle>
               <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn>
             </MDBModalHeader>
             <MDBModalBody>
@@ -591,7 +630,7 @@ const Header = () => {
             <MDBModalBody>
               Current Month: $ {Mcprice !== Infinity ? Mcprice.toFixed(6) : 0.000000}
             </MDBModalBody>
-            <MDBModalFooter>
+            <MDBModalFooter className="seamless">
               <MDBBtn color='secondary' onClick={toggleShow}>
                 Close
               </MDBBtn>
@@ -599,6 +638,45 @@ const Header = () => {
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>
+
+
+      <MDBModal show={basicModal1} setShow={setBasicModal1} tabIndex='-1'>
+        <MDBModalDialog centered>
+          <MDBModalContent centered>
+            <MDBModalHeader className="justify-content-center seamless">
+            <MDBModalTitle className="text-white fw-bold">Leaderboard Reward</MDBModalTitle>
+              {/* <MDBBtn className='btn-close' color='none' onClick={toggleShow1}></MDBBtn> */}
+            </MDBModalHeader>
+            <MDBModalBody>
+            <MDBTable small className="text-center">
+              <MDBTableHead>
+                <tr>
+                  <th scope='col'>Rank</th>
+                  <th scope='col'>Percentage</th>
+                </tr>
+              </MDBTableHead>
+              <MDBTableBody>
+              {
+                leaderboardranking.map((data,i) => (
+                <tr key={`${i}`}>
+                  <td>{data.number}</td>
+                  <td>{data.percentage}</td>
+                </tr>
+                ))
+              }
+              </MDBTableBody>
+            </MDBTable>
+            </MDBModalBody>
+            <MDBModalFooter className="seamless">
+              <MDBBtn color='secondary' onClick={toggleShow1}>
+                Close
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+
+      
         </>
     )
 }

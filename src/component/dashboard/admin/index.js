@@ -719,7 +719,7 @@ const AdminDashboard = () => {
               cardtoptext={adminfee}
               txtsup={`USDT`} 
               td0={true}
-              td0txttop={withdrawalfee ? `${withdrawalfee}`: 0}
+              td0txttop={withdrawalfee ? `${withdrawalfee.toLocaleString()}`: 0}
               td0txtbot={`Withdrawal Fee`} 
               />
           </MDBCol>
@@ -776,18 +776,18 @@ const AdminDashboard = () => {
               colSpan="4"
               icon={`dollar-sign`} 
               thtitle={`Subscription Accumulated`} 
-              cardtoptext={totalaccumulated}
+              cardtoptext={totalaccumulated?.toLocaleString()}
               td1={true}
-              td1txttop={pearlaccumulated}
+              td1txttop={pearlaccumulated?.toLocaleString()}
               td1txtbot={`Pearl`} 
               td2={true}
-              td2txttop={rubyaccumulated}
+              td2txttop={rubyaccumulated?.toLocaleString()}
               td2txtbot={`Ruby`} 
               td3={true}
-              td3txttop={emeraldaccumulated}
+              td3txttop={emeraldaccumulated?.toLocaleString()}
               td3txtbot={`Emerald`}
               td4={true}
-              td4txttop={diamondaccumulated}
+              td4txttop={diamondaccumulated?.toLocaleString()}
               td4txtbot={`Diamond`}
               />
           </MDBCol>
@@ -813,7 +813,7 @@ const AdminDashboard = () => {
               colSpan="4"
               icon={`coins`}
               thtitle={`Unilevel Bonus`}
-              cardtoptext={unilevel ? `${unilevel}`: 0}
+              cardtoptext={unilevel ? `${unilevel.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
           </MDBCol>
           {/* <MDBCol className="col-lg-4 my-2">

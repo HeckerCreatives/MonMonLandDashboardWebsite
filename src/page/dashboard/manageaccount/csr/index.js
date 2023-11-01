@@ -75,7 +75,8 @@ const CreateCSRAccount = () => {
         fetch(`${process.env.REACT_APP_API_URL}user/register`,{
           method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${auth?.token}`,
           },
           body: JSON.stringify({
             roleId: process.env.REACT_APP_AGENTROLE,

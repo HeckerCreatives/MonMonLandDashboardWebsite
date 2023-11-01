@@ -41,13 +41,25 @@ const Login = () =>{
       })
     }).then(result => result.json())
     .then(data =>{
+      console.log(data)
       if (data.message !== "success") {        
 				Swal.fire({
           title: data.message,
           icon: "info",
           text: data.data
         })
-			} else {
+			} else if (data.data.roleId.display_name === "Player"){
+        localStorage.setItem('auth', JSON.stringify(data.data))
+        Swal.fire({
+          title: "Login Successfully",
+          icon: "success",
+          text: `Welcome ${data.data.firstName}`
+        })
+        .then(result1 => {
+          if(result1.isConfirmed)
+          window.location.reload()
+        })
+      } else {
         const playFabUserData = {
           CreateAccount: false,            
           CustomId: data.data.playfabid,           
@@ -55,7 +67,6 @@ const Login = () =>{
         PlayFabClient.LoginWithCustomID(playFabUserData, (error, result) => {
           if (result){
             localStorage.setItem("playfabAdminAuthToken", result.data.SessionTicket)
-            console.log(result)
             localStorage.setItem('auth', JSON.stringify(data.data))
             Swal.fire({
               title: "Login Successfully",
