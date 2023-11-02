@@ -304,63 +304,79 @@ const Header = () => {
     const leaderboardranking = [
       {
         number: 1,
-        percentage: "30%"
+        percentage: "25%",
+        color: "#E1D647"
       },
       {
         number: 2,
-        percentage: "25%"
+        percentage: "20%",
+        color: "#E1D647"
       },
       {
         number: 3,
-        percentage: "12%"
+        percentage: "15%",
+        color: "#E1D647"
       },
       {
         number: 4,
-        percentage: "8%"
+        percentage: "10%",
+        color: "#FFAD01"
+        
       },
       {
         number: 5,
-        percentage: "6%"
+        percentage: "8%",
+        color: "#FFAD01"
       },
       {
         number: 6,
-        percentage: "5%"
+        percentage: "5%",
+        color: "#FFAD01"
       },
       {
         number: 7,
-        percentage: "4%"
+        percentage: "4%",
+        color: "#FFAD01"
       },
       {
         number: 8,
-        percentage: "3%"
+        percentage: "3%",
+        color: "#FFAD01"
       },
       {
         number: 9,
-        percentage: "2%"
+        percentage: "2%",
+        color: "#FF97CF"
       },
       {
         number: 10,
-        percentage: "1%"
+        percentage: "2%",
+        color: "#FF97CF"
       },
       {
         number: 11,
-        percentage: "1%"
+        percentage: "2%",
+        color: "#FF97CF"
       },
       {
         number: 12,
-        percentage: "1%"
+        percentage: "1%",
+        color: "#FD9789"
       },
       {
         number: 13,
-        percentage: "1%"
+        percentage: "1%",
+        color: "#FD9789"
       },
       {
         number: 14,
-        percentage: "1%"
+        percentage: "1%",
+        color: "#FD9789"
       },
       {
         number: 15,
-        percentage: "1%"
+        percentage: "1%",
+        color: "#FD9789"
       },
     ]
     return (
@@ -662,7 +678,7 @@ const Header = () => {
               <MDBTableBody>
               {
                 leaderboardranking.map((data,i) => (
-                <tr key={`${i}`}>
+                <tr key={`${i}`} style={{background: data.color}}>
                   <td>{data.number}</td>
                   <td>{data.percentage}</td>
                 </tr>
