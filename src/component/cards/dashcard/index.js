@@ -120,20 +120,23 @@ return(
               {/* <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn> */}
             </MDBModalHeader>
             <MDBModalBody>
-            <MDBTable hover bordered small responsive className=" mb-0">
+            <MDBTable hover bordered small responsive className="text-center mb-0">
                 <MDBTableHead >
                     <tr>
                     <th className="fw-bold" scope='col'>Particular</th>
-                    <th className="fw-bold" scope='col'>Complan</th>
-                    <th className="fw-bold" scope='col'>Leaderboard</th>
-                    <th className="fw-bold" scope='col'>Grinding / Games</th>
-                    <th className="fw-bold" scope='col'>Quest Reward</th>
-                    <th className="fw-bold" scope='col'>Diamond Pools Rewards</th>
-                    <th className="fw-bold" scope='col'>Developer Share</th>
-                    <th className="fw-bold" scope='col'>Company Share</th>
-                    <th className="fw-bold" scope='col'>Officers</th>
-                    <th className="fw-bold" scope='col'>Marketing Arm</th>
-                    <th className="fw-bold" scope='col'>Travel / Special Incentives</th>
+                    <th className="fw-bold" scope='col'>Complan 
+                    <span className="text-warning">(25%)</span></th>
+                    <th className="fw-bold" scope='col'>Leaderboard
+                    <span className="text-warning">(5%)</span></th>
+                    <th className="fw-bold" scope='col'>Grinding / Games
+                    <span className="text-warning">(8%)</span></th>
+                    <th className="fw-bold" scope='col'>Quest Reward<span className="text-warning">(4%)</span></th>
+                    <th className="fw-bold" scope='col'>Diamond Pools Rewards<span className="text-warning">(3%)</span></th>
+                    <th className="fw-bold" scope='col'>Developer Share<span className="text-warning">(5%)</span></th>
+                    <th className="fw-bold" scope='col'>Company Share<span className="text-warning">(5%)</span></th>
+                    <th className="fw-bold" scope='col'>Officers<span className="text-warning">(40%)</span></th>
+                    <th className="fw-bold" scope='col'>Marketing Arm<span className="text-warning">(3%)</span></th>
+                    <th className="fw-bold" scope='col'>Travel / Special Incentives<span className="text-warning">(2%)</span></th>
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody className="">
