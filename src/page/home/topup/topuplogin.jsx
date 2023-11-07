@@ -58,22 +58,23 @@ const TopUpLogin = ({toggleTwoModal, setToggleTwoModal,basicModal, setBasicModal
         e.preventDefault();
         setIsLoading(true)
         if(selectedtopup === "funds"){
-            fetch(`${process.env.REACT_APP_API_URL}coin/funds`, {
+            fetch(`${process.env.REACT_APP_API_URL}nowpay/funds`, {
                 method:"POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    name: username,
-                    playfabId: playfabId,
+                    username: username,
+                    playerPlayfabId: playfabId,
                     amount: amount,
                     playfabToken: playfabtoken
                 })
             })
             .then(result => result.json())
             .then(data => {
+
                 setIsLoading(false)
-                const url = data.hosted_url
+                const url = data.data.invoice_url
                 window.location.href = url
             })
             .catch(error =>{
@@ -86,14 +87,14 @@ const TopUpLogin = ({toggleTwoModal, setToggleTwoModal,basicModal, setBasicModal
                 setIsLoading(false)
             })
         } else if (selectedtopup === "bundles"){
-            fetch(`${process.env.REACT_APP_API_URL}coin/bundles`, {
+            fetch(`${process.env.REACT_APP_API_URL}nowpay/bundles`, {
                 method:"POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    name: username,
-                    playfabId: playfabId,
+                    username: username,
+                    playerPlayfabId: playfabId,
                     amount: amount,
                     bundle: bundle,
                     bundledescription: bundledes,
@@ -104,7 +105,7 @@ const TopUpLogin = ({toggleTwoModal, setToggleTwoModal,basicModal, setBasicModal
             .then(result => result.json())
             .then(data => {
                 setIsLoading(false)
-                const url = data.hosted_url
+                const url = data.data.invoice_url
                 window.location.href = url
                 
             })
