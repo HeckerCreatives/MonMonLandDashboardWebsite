@@ -50,6 +50,7 @@ const Header = () => {
     const [diamonds, setDiamond] = useState(0);
     const [ads, setAds] = useState(0);
     const [leaderboard, setLeaderboard] = useState(0);
+    const [diamondpool, setDiamondPool] = useState(0)
     const [mcpreviousmonth, setMcPreviousMonth] = useState(0);
     const seperator = (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -208,7 +209,7 @@ const Header = () => {
     useEffect(() => {
       const total =  totalaccumulated
         
-        const pool = total * 0.03
+        const pool = total * 0.01
         const gg = comact.grinding
         const qr = comact.quest
         const tt = gg + qr + totalbar
@@ -239,18 +240,18 @@ const Header = () => {
         
       })
 
-      fetch(`${process.env.REACT_APP_API_URL}leaderboard/find`,{
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then(result => result.json())
-      .then(data => {
+      // fetch(`${process.env.REACT_APP_API_URL}leaderboard/find`,{
+      //   method: "GET",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // })
+      // .then(result => result.json())
+      // .then(data => {
 
-        setLeaderboard(data.data)
+      //   setLeaderboard(data.data)
         
-      })
+      // })
 
     },[])
     
@@ -379,6 +380,18 @@ const Header = () => {
         color: "#FD9789"
       },
     ]
+
+    useEffect(() => {
+      fetch(`${process.env.REACT_APP_API_URL}communityactivy/find`)
+      .then(result => result.json())
+      .then(data => {
+        if(data.message === "success"){
+          setLeaderboard(data.data.leaderboard)
+          setDiamondPool(data.data.diamondpools)
+        }
+      })
+    },[])
+
     return (
       <>
         <div className="kahitanu">
@@ -534,7 +547,7 @@ const Header = () => {
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
                     <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{Mcprice !== Infinity ? Mcprice.toFixed(6) : 0.000000}</strong> 
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{Mcprice !== Infinity && !isNaN(Mcprice) ? Mcprice.toFixed(6) : 0}</strong> 
                     </MDBCardBody>
                     <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Coins: {mc.toLocaleString()}</MDBCardFooter>
                     </MDBCard> 
@@ -569,7 +582,7 @@ const Header = () => {
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
                     <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{totalpoolaccumulated.toFixed(2)}</strong> 
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{diamondpool.toFixed(2)}</strong> 
                     </MDBCardBody>
                     <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total User: 0</MDBCardFooter>
                     </MDBCard> 

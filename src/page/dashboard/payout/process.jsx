@@ -74,17 +74,20 @@ const AdminPayoutProcess = () => {
             denyButtonText: "Cancel",
         }).then(ok => {
             if(ok.isConfirmed){
+                const data = new FormData()
+                data.append("admin", auth.userName)
+                data.append("file", image)
+                data.append("adminId", auth._id)
+                data.append("playfabid", auth.playfabid)
+                data.append("playfabToken", playfabToken)
+                
                 fetch(`${process.env.REACT_APP_API_URL}payout/done/${id}`, {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json",
+                        "Accept": "application/json",
                         Authorization: `Bearer ${auth?.token}`,
                     },
-                    body: JSON.stringify({
-                        admin: auth.userName,
-                        receipt: image,
-                        playfabToken: playfabToken
-                    })
+                    body: data
                 }).then(result => result.json())
                 .then(data => {
                     if(data.expired){
@@ -164,13 +167,17 @@ const AdminPayoutProcess = () => {
     }
 
     const handleImgUrl = (url,rowIndex) => {
+    const file = url.target.files[0];
     // Use the uploaded image URL in the parent component or pass it to another component
     // When an image is uploaded for a specific row, update the imageStatus state
     setImageStatus(prevStatus => ({
         ...prevStatus,
         [rowIndex]: true, // Set the upload status for the specific row to true
-      }));
-    setImage(url);
+    }));
+
+      if(file){
+        setImage(file);
+      }
     };
 
     const handleFilename = (url) => {
@@ -226,14 +233,23 @@ const AdminPayoutProcess = () => {
                         <td>{data.paymentmethod}</td>
                         <td>{data.admin}</td>
                         <td>
-                            <MDBBtn disabled={!imageStatus[i]} className="mx-1" onClick={() => handleDone(data._id)}>
+                            <div>
+                                <input
+                                    type="file"
+                                    className="m-1"
+                                    accept="image/*" // Limit to image files only
+                                    onChange={(url) => handleImgUrl(url, i)}
+                                />
+                            </div>
+                            <MDBBtn block className="mx-1" onClick={() => copywallet(data.walletaddress)}>Copy Wallet</MDBBtn>
+                            <MDBBtn block disabled={!imageStatus[i]} className="mx-1" onClick={() => handleDone(data._id)}>
                             {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Done"}
                             </MDBBtn>
-                            <MDBBtn className="mx-1" onClick={() => copywallet(data.walletaddress)}>Copy Wallet</MDBBtn>
-                            <UploadWidget
+                            
+                            {/* <UploadWidget
                             setfileName={handleFilename} 
                             setImgUrl={(url) => handleImgUrl(url, i)}
-                            />
+                            /> */}
                         </td>
                     </tr>
                     ))

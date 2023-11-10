@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { MDBContainer, MDBBtn, MDBRow, MDBCol,MDBIcon, } from "mdb-react-ui-kit";
+import { MDBContainer, MDBBtn, MDBRow, MDBCol,MDBIcon, MDBTypography, } from "mdb-react-ui-kit";
 import DashCard from "../../cards/dashcard";
 import Graph from "../../graph";
 import MiniTableList from "../../minitablelist";
@@ -47,6 +47,13 @@ const AdminDashboard = () => {
     const [leaderboard, setLeaderboard] = useState(0)
     const [grinding, setGrinding] = useState(0)
     const [quest, setQuest] = useState(0)
+    const [diamondpool, setDiamondPool] = useState(0)
+    const [devsshare, setDevsShare] = useState(0)
+    const [companyshare, setCompanyShare] = useState(0)
+    const [officer, setOfficer] = useState(0)
+    const [marketing, setMarketing] = useState(0)
+    const [incentives, setIncentives] = useState(0)
+
   useEffect(() => {
     if (auth) {
       if (auth.roleId.display_name !== "Administrator") {
@@ -687,27 +694,37 @@ const AdminDashboard = () => {
         setLeaderboard(data.data.leaderboard)
         setGrinding(data.data.grinding)
         setQuest(data.data.quest)
+        setDiamondPool(data.data.diamondpools)
+        setDevsShare(data.data.devsshare)
+        setCompanyShare(data.data.companyshare)
+        setOfficer(data.data.officers)
+        setMarketing(data.data.marketing)
+        setIncentives(data.data.incentives)
       }
     })
   },[])
+
     return (
       <>
         <MDBContainer fluid>
         <Breadcrumb title='Dashboard' paths={[]}/>
         {/* Cards */}
+        <br/>
+        <MDBTypography tag={`h2`}>Income Wallets</MDBTypography>
+        <hr/>
         <MDBRow className="my-2">
           <MDBCol className="my-2">
             <DashCard 
               colSpan="4"
               icon={`dollar-sign`}
               thtitle={`Total Top-Up`}
-              cardtoptext={AutoAndManual  ? AutoAndManual?.toLocaleString(): 0}
+              cardtoptext={AutoAndManual  ? AutoAndManual?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }): 0}
               txtsup={`USDT`} 
               td1={true}
-              td1txttop={ManualPayment ? `${ManualPayment?.toLocaleString()} USDT`: "0 USDT"}
+              td1txttop={ManualPayment ? `${ManualPayment?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USDT`: "0 USDT"}
               td1txtbot={`Manual`} 
               td2={true}
-              td2txttop={autopayment ? `${autopayment?.toLocaleString()} USDT`: "0 USDT"}
+              td2txttop={autopayment ? `${autopayment?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USDT`: "0 USDT"}
               td2txtbot={`Automated`} 
               />
           </MDBCol>
@@ -716,10 +733,10 @@ const AdminDashboard = () => {
               colSpan="4"
               icon={`dollar-sign`}
               thtitle={`Total Admin Fee`}
-              cardtoptext={adminfee}
+              cardtoptext={adminfee.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               txtsup={`USDT`} 
               td0={true}
-              td0txttop={withdrawalfee ? `${withdrawalfee.toLocaleString()}`: 0}
+              td0txttop={withdrawalfee ? `${withdrawalfee.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               td0txtbot={`Withdrawal Fee`} 
               />
           </MDBCol>
@@ -728,21 +745,34 @@ const AdminDashboard = () => {
               colSpan="4"
               icon={`dollar-sign`}
               thtitle={`Total Pay-out`}
-              cardtoptext={done ? done?.toLocaleString() : 0}
+              cardtoptext={done ? done?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0}
               txtsup={`USDT`}  
               td1={true}
-              td1txttop={ request ? `${request?.toLocaleString()} USDT`: `0 USDT`}
+              td1txttop={ request ? `${request?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USDT`: `0 USDT`}
               td1txtbot={`Request`} 
               td2={true}
-              td2txttop={ processed? `${processed?.toLocaleString()} USDT`: `0 USDT`}
+              td2txttop={ processed? `${processed?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USDT`: `0 USDT`}
               td2txtbot={`Process`}
               td3={true}
-              td3txttop={done ? `${done?.toLocaleString()} USDT`: `0 USDT` }
+              td3txttop={done ? `${done?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USDT`: `0 USDT` }
               td3txtbot={`Done`}
               />
           </MDBCol>
           
         </MDBRow>
+        <MDBRow>
+        <MDBCol className="col-lg-4 my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`coins`}
+              thtitle={`Unilevel Bonus`}
+              cardtoptext={unilevel ? `${unilevel.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol>
+        </MDBRow>
+        <br/>
+        <MDBTypography tag={`h2`}>Products</MDBTypography>
+        <hr/>
         <MDBRow>
         <MDBCol className="my-2">
             <DashCard 
@@ -776,18 +806,18 @@ const AdminDashboard = () => {
               colSpan="4"
               icon={`dollar-sign`} 
               thtitle={`Subscription Accumulated`} 
-              cardtoptext={totalaccumulated?.toLocaleString()}
+              cardtoptext={totalaccumulated?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               td1={true}
-              td1txttop={pearlaccumulated?.toLocaleString()}
+              td1txttop={pearlaccumulated?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               td1txtbot={`Pearl`} 
               td2={true}
-              td2txttop={rubyaccumulated?.toLocaleString()}
+              td2txttop={rubyaccumulated?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               td2txtbot={`Ruby`} 
               td3={true}
-              td3txttop={emeraldaccumulated?.toLocaleString()}
+              td3txttop={emeraldaccumulated?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               td3txtbot={`Emerald`}
               td4={true}
-              td4txttop={diamondaccumulated?.toLocaleString()}
+              td4txttop={diamondaccumulated?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               td4txtbot={`Diamond`}
               />
           </MDBCol>
@@ -807,23 +837,90 @@ const AdminDashboard = () => {
           </MDBCol>
           
         </MDBRow>
+        <br/>
+        <MDBTypography tag={`h2`}>Complan</MDBTypography>
+        <hr/>
         <MDBRow>
-         <MDBCol className="col-lg-4 my-2">
+         
+          <MDBCol className="my-2">
           <DashCard 
               colSpan="4"
-              icon={`coins`}
-              thtitle={`Unilevel Bonus`}
-              cardtoptext={unilevel ? `${unilevel.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              icon={`chart-line`}
+              thtitle={`Leaderboard`}
+              cardtoptext={leaderboard ? `${leaderboard.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
           </MDBCol>
-          {/* <MDBCol className="col-lg-4 my-2">
+          <MDBCol className="my-2">
           <DashCard 
               colSpan="4"
-              icon={`hand-holding-usd`}
-              thtitle={`Withdrawal Fee`}
-              cardtoptext={withdrawalfee ? `${withdrawalfee}`: 0}
+              icon={`gamepad`}
+              thtitle={`Grinding / Games`}
+              cardtoptext={grinding ? `${grinding.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
-          </MDBCol>          */}
+          </MDBCol>   
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`trophy`}
+              thtitle={`Quest Reward`}
+              cardtoptext={quest ? `${quest.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol>
+        </MDBRow>
+        <MDBRow>
+          
+       
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`gem`}
+              thtitle={`Diamond Pools`}
+              cardtoptext={diamondpool ? `${diamondpool.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol>
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`chalkboard-teacher`}
+              thtitle={`Devs Share`}
+              cardtoptext={devsshare ? `${devsshare.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol>
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="3"
+              icon={`building`}
+              thtitle={`Company Share`}
+              cardtoptext={companyshare ? `${companyshare.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol>
+        </MDBRow>
+        <MDBRow>
+        
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="3"
+              icon={`users`}
+              thtitle={`Officers`}
+              cardtoptext={officer ? `${officer.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol>
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="3"
+              icon={`pen-fancy`}
+              thtitle={`Marketing Arm`}
+              cardtoptext={marketing ? `${marketing.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol>  
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="3"
+              icon={`plane-departure`}
+              thtitle={`Travel / Incentives`}
+              cardtoptext={incentives ? `${incentives.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol> 
         </MDBRow>
         </MDBContainer>
     </>  

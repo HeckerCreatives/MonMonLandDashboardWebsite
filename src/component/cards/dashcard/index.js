@@ -23,9 +23,9 @@ from "mdb-react-ui-kit";
 
 const DashCard = ({txtsup, icon, cardtoptext, colSpan, thtitle, td1, td1txttop, td1txtbot, td2, td2txttop, td2txtbot,td3, td3txttop, td3txtbot, td4, td4txttop, td4txtbot, td0, td0txttop, td0txtbot, flipbtn, basicModal, setBasicModal,distri, leaderboard, grinding, quest}) => {
     const [payin1, setpayin1] = useState(0)
-    // const [payin2, setpayin2] = useState(0)
-    // const [payin3, setpayin3] = useState(0)
-    // const [payin4, setpayin4] = useState(0)
+    const [payin2, setpayin2] = useState(0)
+    const [payin3, setpayin3] = useState(0)
+    const [payin4, setpayin4] = useState(0)
     const [payin5, setpayin5] = useState(0)
     const [payin6, setpayin6] = useState(0)
     const [payin7, setpayin7] = useState(0)
@@ -35,10 +35,10 @@ const DashCard = ({txtsup, icon, cardtoptext, colSpan, thtitle, td1, td1txttop, 
     // const distri = 20
     useEffect(()=>{
         setpayin1(distri * .25)
-        // setpayin2(leaderboard)
-        // setpayin3(grinding)
-        // setpayin4(quest)
-        setpayin5(distri * .03)
+        setpayin2(distri * .02)
+        setpayin3(distri * .12)
+        setpayin4(distri * .05)
+        setpayin5(distri * .01)
         setpayin6(distri * .05)
         setpayin7(distri * .05)
         setpayin8(distri * .40)
@@ -126,17 +126,27 @@ return(
                     <th className="fw-bold" scope='col'>Particular</th>
                     <th className="fw-bold" scope='col'>Complan 
                     <span className="text-warning">(25%)</span></th>
+
                     <th className="fw-bold" scope='col'>Leaderboard
-                    <span className="text-warning">(5%)</span></th>
+                    <span className="text-warning">(2%)</span></th>
+
                     <th className="fw-bold" scope='col'>Grinding / Games
-                    <span className="text-warning">(8%)</span></th>
-                    <th className="fw-bold" scope='col'>Quest Reward<span className="text-warning">(4%)</span></th>
-                    <th className="fw-bold" scope='col'>Diamond Pools Rewards<span className="text-warning">(3%)</span></th>
+                    <span className="text-warning">(12%)</span></th>
+
+                    <th className="fw-bold" scope='col'>Quest Reward<span className="text-warning">(5%)</span></th>
+
+                    <th className="fw-bold" scope='col'>Diamond Pools Rewards<span className="text-warning">(1%)</span></th>
+                    
                     <th className="fw-bold" scope='col'>Developer Share<span className="text-warning">(5%)</span></th>
+
                     <th className="fw-bold" scope='col'>Company Share<span className="text-warning">(5%)</span></th>
+
                     <th className="fw-bold" scope='col'>Officers<span className="text-warning">(40%)</span></th>
+
                     <th className="fw-bold" scope='col'>Marketing Arm<span className="text-warning">(3%)</span></th>
+
                     <th className="fw-bold" scope='col'>Travel / Special Incentives<span className="text-warning">(2%)</span></th>
+
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody className="">
@@ -148,13 +158,13 @@ return(
                      {payin1.toLocaleString()}
                      </td>
                      <td>
-                     {leaderboard?.toLocaleString()}
+                     {payin2.toLocaleString()}
                      </td>
                      <td>
-                     {grinding?.toLocaleString()}
+                     {payin3.toLocaleString()}
                      </td>
                      <td>
-                     {quest?.toLocaleString()}
+                     {payin4.toLocaleString()}
                      </td>
                      <td>
                      {payin5.toLocaleString()}

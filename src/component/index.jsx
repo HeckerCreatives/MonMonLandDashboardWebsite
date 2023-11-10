@@ -33,7 +33,7 @@ const Navbar = ({ links }) => {
   const roadmaplink = useActiveLinkObserver("roadmap");
   // const [tapaps, setTapap] = useState("")
   const toggleShowCalled = useRef(false);
-
+  const [url, setURL] = useState("")
   const handleActive = str => {
     setActive(str);
     setCurrentLink(str);
@@ -41,19 +41,20 @@ const Navbar = ({ links }) => {
 
   
 
-  // useEffect(() => {
-  //   const url = new URL(window.location.href);
-  //   const value = new URLSearchParams(url.search);
-  //   const tapap = value.get('topup');
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    setURL(url)
+    // const value = new URLSearchParams(url.search);
+    // const tapap = value.get('topup');
 
-  //   if (tapap && !toggleShowCalled.current) {
-  //     setBasicModal(true);
-  //     toggleShowCalled.current = true;
-  //   }
-  //   return () => {
-  //     setBasicModal(false)
-  //   }
-  // }, []);
+    // if (tapap && !toggleShowCalled.current) {
+    //   setBasicModal(true);
+    //   toggleShowCalled.current = true;
+    // }
+    // return () => {
+    //   setBasicModal(false)
+    // }
+  }, []);
 
   return (
     <>
@@ -99,7 +100,8 @@ const Navbar = ({ links }) => {
                 <MDBNavbarLink
                   
                   aria-current="page"
-                  href={link.path}
+                  href = {url.pathname === "/media" ? `${url.origin}${link.path}` : link.path}
+                  
                   className={`${currentLink === link.path && "activenavlink" && newsLink.isIntersecting ? 'activenavlink' : ''}`}
                   disabled={link.name === "MEDIA" ? true : false}                  
                   onClick={() => {
@@ -107,7 +109,10 @@ const Navbar = ({ links }) => {
                     window.innerWidth <= 900 && setShowNav(!showNav);                    
                   }}
                 >
-                  <span className={`fw-bold p-4 mb-2 navbar-link ${currentLink === link.path && "activenavlink"}`} style={link.name === "MEDIA" ? { color: "gray"} : { color: "white"}}>{link.name}</span>
+                  <span 
+                  className={`fw-bold p-4 mb-2 navbar-link ${currentLink === link.path && "activenavlink"}`} 
+                  style={link.name === "MEDIA" ? { color: "gray"} : { color: "white"}}
+                  >{link.name}</span>
                 </MDBNavbarLink>
               </MDBNavbarItem>
             ))}

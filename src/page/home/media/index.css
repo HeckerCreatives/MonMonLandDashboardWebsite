@@ -53,3 +53,15 @@
     object-fit: cover;
     width: 22.5rem;
 }
+
+.custom-card-play {
+    color: hsla(0,24%,87%,.5);
+    display: grid;
+    font-size: 8rem;
+    height: 100%;
+    left: 0;
+    place-items: center;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
