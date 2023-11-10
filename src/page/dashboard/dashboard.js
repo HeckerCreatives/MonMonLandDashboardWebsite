@@ -125,7 +125,7 @@ const Dashboard = () => {
           icon: "cog",
           children: [
             {
-              name: "Header",
+              name: "Ads",
               path: "/dashboard/Administrator/settings/updatetotalincome",
             },                
             {
@@ -140,14 +140,14 @@ const Dashboard = () => {
               name: "Roadmap",
               path: "/dashboard/Administrator/settings/updateroadmap",
             },
-            {
-              name: "Ads",
-              path: "/dashboard/Administrator/settings/updateads",
-            },
-            {
-              name: "Leaderboard",
-              path: "/dashboard/Administrator/settings/updateleaderboard",
-            },
+            // {
+            //   name: "Ads",
+            //   path: "/dashboard/Administrator/settings/updateads",
+            // },
+            // {
+            //   name: "Leaderboard",
+            //   path: "/dashboard/Administrator/settings/updateleaderboard",
+            // },
           ],
       },
       {
