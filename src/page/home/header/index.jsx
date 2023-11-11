@@ -558,16 +558,16 @@ const Header = () => {
                     <MDBCard alignment='center' className="moncoin">
                     
                     <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
-                    <img src={monstergem} alt="" style={{width: "40px"}}/>
+                    <img src={monstercoin} alt="" style={{width: "40px"}}/>
                     
-                    <span className="ms-2">Monster Gem</span> 
+                    <span className="ms-2">Investor Funds</span> 
                     </MDBCardHeader>
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
                     <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>1.00</strong> 
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>0.00</strong>
                     </MDBCardBody>
-                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Gems: {mg.toLocaleString()}</MDBCardFooter>
+                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}></MDBCardFooter>
                     </MDBCard> 
 
                     </MDBCol>
