@@ -546,8 +546,8 @@ const Header = () => {
                     </MDBCardHeader>
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
-                    <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{Mcprice !== Infinity && !isNaN(Mcprice) ? Mcprice.toFixed(6) : 0}</strong> 
+                    {/* <img src={usdt} alt="" style={{width: "40px"}}/> */}
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{Mcprice !== Infinity && !isNaN(Mcprice) ? `$ ${Mcprice.toFixed(6)}` : 0}</strong> 
                     </MDBCardBody>
                     <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Coins: {mc.toLocaleString()}</MDBCardFooter>
                     </MDBCard> 
@@ -564,10 +564,10 @@ const Header = () => {
                     </MDBCardHeader>
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
-                    <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>0.00</strong>
+                    {/* <img src={usdt} alt="" style={{width: "40px"}}/> */}
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>$ 0.00</strong>
                     </MDBCardBody>
-                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}></MDBCardFooter>
+                    <MDBCardFooter className='fw-bold p-4' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}></MDBCardFooter>
                     </MDBCard> 
 
                     </MDBCol>
@@ -581,8 +581,8 @@ const Header = () => {
                     </MDBCardHeader>
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
-                    <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{diamondpool.toFixed(2)}</strong> 
+                    {/* <img src={usdt} alt="" style={{width: "40px"}}/> */}
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{`$ ${diamondpool.toFixed(2)}`}</strong> 
                     </MDBCardBody>
                     <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total User: 0</MDBCardFooter>
                     </MDBCard> 
@@ -599,8 +599,8 @@ const Header = () => {
                     </MDBCardHeader>
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
-                    <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{ads.toFixed(2)}</strong> 
+                    {/* <img src={usdt} alt="" style={{width: "40px"}}/> */}
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{`$ ${ads.toFixed(2)}`}</strong> 
                     </MDBCardBody>
                     <MDBCardFooter className='fw-bold p-4' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}></MDBCardFooter>
                     </MDBCard> 
@@ -627,8 +627,8 @@ const Header = () => {
                     </MDBCardHeader>
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
-                    <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{leaderboard.toFixed(2)}</strong> 
+                    {/* <img src={usdt} alt="" style={{width: "40px"}}/> */}
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{`$ ${leaderboard.toFixed(2)}`}</strong> 
                     </MDBCardBody>
                     <MDBCardFooter className='fw-bold p-4' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}></MDBCardFooter>
                     </MDBCard> 
