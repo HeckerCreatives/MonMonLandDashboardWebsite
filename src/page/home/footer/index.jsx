@@ -48,7 +48,7 @@ const Footer = ({links}) => {
             <a href="https://www.facebook.com/monmonlandgames" target="_blank" rel="noreferrer">
             <img src={fb} className="socials zoom-socials" alt=""/>
             </a>
-            <a href="https://discord.gg/Rku52unvuH" target="_blank" rel="noreferrer">
+            <a href="https://discord.gg/chKqAkKEEu" target="_blank" rel="noreferrer">
             <img src={discord} className="socials zoom-socials" alt=""/>
             </a>
             <a href="https://www.instagram.com/monmonlandgames_/" target="_blank" rel="noreferrer">
