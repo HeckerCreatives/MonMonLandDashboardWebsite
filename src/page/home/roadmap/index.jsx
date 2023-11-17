@@ -72,7 +72,7 @@ const Roadmap = () => {
         <MDBTypography className="mb-1 fw-bold text-white" >{roadmaps?.title?.length > 50 ? `${roadmaps?.title.substring(0,50)}...`: roadmaps?.title}</MDBTypography>
 
         <MDBCol  className="woodcharbg">
-        <img src={roadmaps?.image} alt="" id="woodchar" />
+        <img src={`${process.env.REACT_APP_API_URL}${roadmaps?.image}`} alt="" id="woodchar" />
         </MDBCol>            
 
         <MDBTypography className="mb-1 fw-bold text-wrap text-white m-lg-2" >{roadmaps?.subtitle?.length > 50 ? `${roadmaps.subtitle.substring(0,50)}...`: roadmaps?.subtitle}</MDBTypography>
@@ -108,7 +108,7 @@ const Roadmap = () => {
                 <MDBModalBody>
                 <MDBCard  style={{background: "#EDCAB4",}}>
                     <MDBCardBody className="d-flex  justify-content-center">
-                    <img alt="" src={roadmapimage}/>
+                    <img alt="" src={`${process.env.REACT_APP_API_URL}${roadmapimage}`}/>
                     </MDBCardBody>
                 </MDBCard>
                 <MDBCardText className="text-dark mt-3 mb-0 fw-bold">Description</MDBCardText>

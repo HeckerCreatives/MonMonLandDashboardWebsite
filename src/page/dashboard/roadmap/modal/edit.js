@@ -48,7 +48,7 @@ const UpdateRoadmapSlot = ({roadmap}) => {
     fetch(`${process.env.REACT_APP_API_URL}roadmap/${roadmap._id}/update`, {
       method:'PUT',
       headers: {
-        'Content-Type': 'application/json',
+        'Accept': 'application/json',
         Authorization: `Bearer ${auth?.token}`,
       },
       body: data
