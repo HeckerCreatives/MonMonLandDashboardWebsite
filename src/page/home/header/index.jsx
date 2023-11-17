@@ -289,7 +289,7 @@ const Header = () => {
       centerMode: true,
       infinite: true,
       centerPadding: "60px",
-      slidesToShow: 3,        
+      slidesToShow: 5,        
       adaptiveHeight: false,
       focusOnSelect: true,
       responsive: [
