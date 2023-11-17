@@ -284,7 +284,7 @@ const Header = () => {
     },[])
 
     const settings = {
-      // className: "center",
+      className: "moncoin",
       arrows: false,
       centerMode: true,
       infinite: true,
