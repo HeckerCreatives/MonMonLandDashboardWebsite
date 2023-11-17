@@ -53,6 +53,7 @@ const AdminDashboard = () => {
     const [officer, setOfficer] = useState(0)
     const [marketing, setMarketing] = useState(0)
     const [incentives, setIncentives] = useState(0)
+    const [monstergem, setMonstergem] = useState(0)
     const [unilevelmonstergem, setUnilevelMg] = useState(0)
 
   useEffect(() => {
@@ -702,6 +703,7 @@ const AdminDashboard = () => {
         setMarketing(data.data.marketing)
         setIncentives(data.data.incentives)
         setUnilevelMg(data.data.unilevelmonstergem)
+        setMonstergem(data.data.monstergem)
       }
     })
   },[])
@@ -937,7 +939,7 @@ const AdminDashboard = () => {
               colSpan="3"
               icon={`coins`}
               thtitle={`Monster Gem`}
-              cardtoptext={incentives ? `${incentives.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              cardtoptext={monstergem ? `${monstergem.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
           </MDBCol> 
         </MDBRow>

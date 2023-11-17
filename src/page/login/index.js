@@ -24,7 +24,12 @@ const Login = () =>{
   // const {userId} = useParams();
   useEffect(()=>{
     if(auth){
-      window.location.href = `/dashboard/${auth.roleId?.display_name}/home`
+      if(auth.roleId.display_name === "Player"){
+        window.location.href = `/dashboard/Marketing/home`
+      } else {
+        window.location.href = `/dashboard/${auth.roleId?.display_name}/home`
+      }
+      
     } 
   },[auth])
 

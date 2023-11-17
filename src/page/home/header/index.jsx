@@ -435,9 +435,10 @@ const Header = () => {
           setLeaderboard(data.data.leaderboard)
           setDiamondPool(data.data.diamondpools)
           setMonmongem(data.data.monstergem)
+          console.log(data.data.monstergem)
         }
       })
-    },[])
+    },[]) 
 
     return (
       <>
