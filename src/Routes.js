@@ -77,6 +77,7 @@ import Advertisement from "./page/dashboard/Ads";
 import Leaderboard from "./page/dashboard/Leaderboard";
 import CreateMarketingAccount from "./page/dashboard/manageaccount/marketingarm";
 import MarketingDashboard from "./page/dashboard/marketingarm/marketingdashboard";
+import Investorfunds from "./page/dashboard/investorfunds";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -137,6 +138,7 @@ const Routers = () => {
           <Route path="updategames" element={<Games/>}/>
           <Route path="updateads" element={<Advertisement />}/>
           <Route path="updateleaderboard" element={<Leaderboard />}/>
+          <Route path="updateinvestorfunds" element={<Investorfunds />}/>
         </Route>
 
         <Route path="userlogs">

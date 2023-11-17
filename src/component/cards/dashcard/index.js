@@ -22,29 +22,29 @@ import
 from "mdb-react-ui-kit";
 
 const DashCard = ({txtsup, icon, cardtoptext, colSpan, thtitle, td1, td1txttop, td1txtbot, td2, td2txttop, td2txtbot,td3, td3txttop, td3txtbot, td4, td4txttop, td4txtbot, td0, td0txttop, td0txtbot, flipbtn, basicModal, setBasicModal,distri, leaderboard, grinding, quest}) => {
-    const [payin1, setpayin1] = useState(0)
-    const [payin2, setpayin2] = useState(0)
-    const [payin3, setpayin3] = useState(0)
-    const [payin4, setpayin4] = useState(0)
-    const [payin5, setpayin5] = useState(0)
-    const [payin6, setpayin6] = useState(0)
-    const [payin7, setpayin7] = useState(0)
-    const [payin8, setpayin8] = useState(0)
-    const [payin9, setpayin9] = useState(0)
-    const [payin10, setpayin10] = useState(0)
+    // const [payin1, setpayin1] = useState(0)
+    // const [payin2, setpayin2] = useState(0)
+    // const [payin3, setpayin3] = useState(0)
+    // const [payin4, setpayin4] = useState(0)
+    // const [payin5, setpayin5] = useState(0)
+    // const [payin6, setpayin6] = useState(0)
+    // const [payin7, setpayin7] = useState(0)
+    // const [payin8, setpayin8] = useState(0)
+    // const [payin9, setpayin9] = useState(0)
+    // const [payin10, setpayin10] = useState(0)
     // const distri = 20
-    useEffect(()=>{
-        setpayin1(distri * .25)
-        setpayin2(distri * .02)
-        setpayin3(distri * .12)
-        setpayin4(distri * .05)
-        setpayin5(distri * .01)
-        setpayin6(distri * .05)
-        setpayin7(distri * .05)
-        setpayin8(distri * .40)
-        setpayin9(distri * .03)
-        setpayin10(distri * .02)
-    },[distri])
+    // useEffect(()=>{
+    //     setpayin1(distri * .25)
+    //     setpayin2(distri * .02)
+    //     setpayin3(distri * .12)
+    //     setpayin4(distri * .05)
+    //     setpayin5(distri * .01)
+    //     setpayin6(distri * .05)
+    //     setpayin7(distri * .05)
+    //     setpayin8(distri * .40)
+    //     setpayin9(distri * .03)
+    //     setpayin10(distri * .02)
+    // },[distri])
 return(
     <>
     <MDBCard className="text-center text-light fw-bold" style={{background: "linear-gradient(to right, #fd9566 , #feb697)"}}>          
@@ -125,65 +125,220 @@ return(
                     <tr>
                     <th className="fw-bold" scope='col'>Particular</th>
                     <th className="fw-bold" scope='col'>Complan 
-                    <span className="text-warning">(25%)</span></th>
+                    </th>
 
                     <th className="fw-bold" scope='col'>Leaderboard
-                    <span className="text-warning">(2%)</span></th>
+                    </th>
 
                     <th className="fw-bold" scope='col'>Grinding / Games
-                    <span className="text-warning">(12%)</span></th>
+                    </th>
 
-                    <th className="fw-bold" scope='col'>Quest Reward<span className="text-warning">(5%)</span></th>
+                    <th className="fw-bold" scope='col'>Quest Reward</th>
 
-                    <th className="fw-bold" scope='col'>Diamond Pools Rewards<span className="text-warning">(1%)</span></th>
+                    <th className="fw-bold" scope='col'>Diamond Pools Rewards</th>
                     
-                    <th className="fw-bold" scope='col'>Developer Share<span className="text-warning">(5%)</span></th>
+                    <th className="fw-bold" scope='col'>Developer Share</th>
 
-                    <th className="fw-bold" scope='col'>Company Share<span className="text-warning">(5%)</span></th>
+                    <th className="fw-bold" scope='col'>Company Share</th>
 
-                    <th className="fw-bold" scope='col'>Officers<span className="text-warning">(40%)</span></th>
+                    <th className="fw-bold" scope='col'>Officers</th>
 
-                    <th className="fw-bold" scope='col'>Marketing Arm<span className="text-warning">(3%)</span></th>
+                    <th className="fw-bold" scope='col'>Marketing Arm</th>
 
-                    <th className="fw-bold" scope='col'>Travel / Special Incentives<span className="text-warning">(2%)</span></th>
-
+                    <th className="fw-bold" scope='col'>Travel / Special Incentives</th>
+                    <th className="fw-bold" scope='col'>Monster Gem</th>
                     </tr>
                 </MDBTableHead>
-                <MDBTableBody className="">
+                <MDBTableBody className="text-center">
                     <tr>
                      <td className="fw-bold text-warning">
                         Payin
                      </td>
                      <td>
-                     {payin1.toLocaleString()}
+                     25%
                      </td>
                      <td>
-                     {payin2.toLocaleString()}
+                     1%
                      </td>
                      <td>
-                     {payin3.toLocaleString()}
+                     22%
                      </td>
                      <td>
-                     {payin4.toLocaleString()}
+                     5%
                      </td>
                      <td>
-                     {payin5.toLocaleString()}
+                     2%
                      </td>
                      <td>
-                     {payin6.toLocaleString()}
+                     5%
                      </td>
                      <td>
-                     {payin7.toLocaleString()}
+                     5%
                      </td>
                      <td>
-                     {payin8.toLocaleString()}
+                     30%
                      </td>
                      <td>
-                        {payin9.toLocaleString()}
+                      3%
                      </td>
                      <td>
-                        {payin10.toLocaleString()}
-                     </td>           
+                       2%
+                     </td>  
+                     <td>
+                       0%
+                     </td>    
+                    </tr>
+                    <tr>
+                     <td className="fw-bold text-warning">
+                        Merchandise
+                     </td>
+                     <td>
+                     25%
+                     </td>
+                     <td>
+                     2%
+                     </td>
+                     <td>
+                     30%
+                     </td>
+                     <td>
+                     5%
+                     </td>
+                     <td>
+                     5%
+                     </td>
+                     <td>
+                     5%
+                     </td>
+                     <td>
+                     5%
+                     </td>
+                     <td>
+                     15%
+                     </td>
+                     <td>
+                      2%
+                     </td>
+                     <td>
+                       3%
+                     </td> 
+                     <td>
+                       3%
+                     </td>   
+                    </tr>
+                    <tr>
+                     <td className="fw-bold text-warning">
+                        Tools
+                     </td>
+                     <td>
+                     25%
+                     </td>
+                     <td>
+                     2%
+                     </td>
+                     <td>
+                     30%
+                     </td>
+                     <td>
+                     5%
+                     </td>
+                     <td>
+                     5%
+                     </td>
+                     <td>
+                     5%
+                     </td>
+                     <td>
+                     5%
+                     </td>
+                     <td>
+                     15%
+                     </td>
+                     <td>
+                      2%
+                     </td>
+                     <td>
+                       3%
+                     </td> 
+                     <td>
+                       3%
+                     </td>       
+                    </tr>
+                    <tr>
+                     <td className="fw-bold text-warning">
+                        Ads
+                     </td>
+                     <td>
+                     0%
+                     </td>
+                     <td>
+                     5%
+                     </td>
+                     <td>
+                     50%
+                     </td>
+                     <td>
+                     5%
+                     </td>
+                     <td>
+                     5%
+                     </td>
+                     <td>
+                     5%
+                     </td>
+                     <td>
+                     5%
+                     </td>
+                     <td>
+                     20%
+                     </td>
+                     <td>
+                      3%
+                     </td>
+                     <td>
+                      2%
+                     </td>  
+                     <td>
+                       0%
+                     </td>        
+                    </tr>
+                    <tr>
+                     <td className="fw-bold text-warning">
+                      Trade
+                     </td>
+                     <td>
+                     0%
+                     </td>
+                     <td>
+                     0%
+                     </td>
+                     <td>
+                     50%
+                     </td>
+                     <td>
+                     0%
+                     </td>
+                     <td>
+                     0%
+                     </td>
+                     <td>
+                     0%
+                     </td>
+                     <td>
+                     0%
+                     </td>
+                     <td>
+                     50%
+                     </td>
+                     <td>
+                      0%
+                     </td>
+                     <td>
+                      0%
+                     </td>   
+                     <td>
+                       0%
+                     </td>       
                     </tr>
                 </MDBTableBody>
             </MDBTable>

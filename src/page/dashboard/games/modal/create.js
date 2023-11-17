@@ -44,18 +44,20 @@ const CreateGames = () => {
 
   function addgame () {
     setIsLoading(true)
+    const data = new FormData()
+    data.append("gametitle", titles)
+    data.append("description", descriptions)
+    data.append("file", image ? image : defaultimg)
+    subscription.forEach((selectedSubscription, index) => {
+      data.append(`selectsubscription[${index}]`, selectedSubscription);
+    });
     fetch(`${process.env.REACT_APP_API_URL}games/addgame`, {
       method:'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Accept': 'application/json',
         Authorization: `Bearer ${auth?.token}`,
       },
-      body: JSON.stringify({
-          gametitle: titles,
-          description: descriptions,
-          image: image ? image : defaultimg ,
-          selectsubscription: subscription,
-      })
+      body: data
     }).then(result => result.json())
     .then(data => {
       if(data.expired){
@@ -76,11 +78,13 @@ const CreateGames = () => {
       if (!data.expired) {
         setIsLoading(false)
 				Swal.fire({
-					title: "Updated Successfully",
+					title: "Added Successfully",
 					icon: "success",
-					text: "You Successfully Updated This"
-				}).then(ok => {
-          if(ok.isConfirmed){
+					text: "You Successfully Added News",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+				}).then(result1 => {
+          if(result1.isConfirmed){
             window.location.reload()
           }
         })
@@ -88,9 +92,9 @@ const CreateGames = () => {
 			} else {
         setIsLoading(false)
 				Swal.fire({
-					title: "Update Unsuccessfully",
+					title: "Add Unsuccessfull",
 					icon: "error",
-					text: "There is an error Updating This"
+					text: "There is an error adding news"
 				})
 			}
     }
@@ -113,9 +117,10 @@ const CreateGames = () => {
     }
   };
 
-  const handleImgUrl = (url) => {
+  const handleImgUrl = (e) => {
+    const file = e.target.files[0];
     // Use the uploaded image URL in the parent component or pass it to another component
-    setImage(url);
+    setImage(file);
   };
 
   const handleFileUrl = (url) => {
@@ -134,7 +139,7 @@ return (
         &nbsp; Add Games
       </MDBBtn>
       <MDBModal show={show} setShow={setShow} tabIndex="-1" staticBackdrop>
-        <MDBModalDialog centered size="lg">
+        <MDBModalDialog centered size="xl">
           <MDBModalContent className={``}>
             <form autoComplete="off" onSubmit={addgame}>
               <MDBModalHeader style={{background:"#A57552"}}>
@@ -155,7 +160,7 @@ return (
                 <MDBCol className="d-flex align-items-center flex-column justify-content-center" lg={4}>
                 {image ? 
                 <img
-                  src={image}
+                  src={URL.createObjectURL(image)}
                   alt="preview"
                   className="img-fluid"
                 /> : 
@@ -166,7 +171,14 @@ return (
                   </div>
                   </label>
                 </form> }                  
-                    <UploadWidget setImgUrl={handleImgUrl} setfileName={handleFileUrl}/>
+                <div>
+                    <input
+                        type="file"
+                        className="m-1"
+                        accept="image/*" // Limit to image files only
+                        onChange={(e) => handleImgUrl(e)}
+                    />
+                </div>
                     </MDBCol>
                     <MDBCol lg={8}>
                     <MDBCardText className="text-color mt-3 mb-0 fw-bold">

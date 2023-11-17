@@ -92,7 +92,7 @@ const News = () => {
           <div>
           <MDBCard className="mx-2" key={balita._id} alignment="center">
           <div className="d-flex justify-content-center">
-          <MDBCardImage src={balita.image} alt='...' position='top' id="banner" />
+          <MDBCardImage src={`${process.env.REACT_APP_API_URL}${balita.image}`} alt='...' position='top' id="banner" />
           </div>
                 
                 <MDBCardBody>
@@ -127,7 +127,7 @@ const News = () => {
                 </MDBModalHeader>
                 <MDBModalBody>
                 <MDBCard  className="d-flex justify-content-center bg-transparent">
-                    <img alt="" src={imahe} id="bannermodal"/>
+                    <img alt="" src={`${process.env.REACT_APP_API_URL}${imahe}`} id="bannermodal"/>
                 </MDBCard>
                 <MDBCardText className="text-dark mt-3 mb-0 fw-bold">Description</MDBCardText>
                 <MDBCard  style={{background: "#EDCAB4",}}>

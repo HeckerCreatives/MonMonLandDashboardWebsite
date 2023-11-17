@@ -38,17 +38,20 @@ const UpdateRoadmapSlot = ({roadmap}) => {
   function updategame (e) {
     e.preventDefault()
     setIsLoading(true)
+    const data = new FormData()
+    data.append("title", titles ? titles : roadmap.title)
+    data.append("description", descriptions ? descriptions : roadmap.description)
+    if(image !== ""){
+      data.append("file", image)
+    }
+    
     fetch(`${process.env.REACT_APP_API_URL}roadmap/${roadmap._id}/update`, {
       method:'PUT',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${auth?.token}`,
       },
-      body: JSON.stringify({
-          title: titles ? titles : roadmap.title,
-          description: descriptions ? descriptions : roadmap.description ,
-          image: image ? image : roadmap.image,
-      })
+      body: data
     }).then(result => result.json())
     .then(data => {
       if(data.expired){
@@ -92,9 +95,10 @@ const UpdateRoadmapSlot = ({roadmap}) => {
   }
 
 
-  const handleImgUrl = (url) => {
+  const handleImgUrl = (e) => {
+    const file = e.target.files[0];
     // Use the uploaded image URL in the parent component or pass it to another component
-    setImage(url);
+    setImage(file);
   };
 
   const handleFileUrl = (url) => {
@@ -134,11 +138,19 @@ return (
                 <MDBCol className="d-flex align-items-center flex-column justify-content-center" lg={4}>
                 
                 <img
-                  src={image ? image : roadmap.image}
+                  src={image ? URL.createObjectURL(image) : `${process.env.REACT_APP_API_URL}${roadmap.image}`}
                   alt="preview"
                   className="img-fluid"
-                />                 
-                    <UploadWidget setImgUrl={handleImgUrl} setfileName={handleFileUrl}/>
+                />       
+                <div>
+                    <input
+                        type="file"
+                        className="m-1"
+                        accept="image/*" // Limit to image files only
+                        onChange={(e) => handleImgUrl(e)}
+                    />
+                </div>          
+                    {/* <UploadWidget setImgUrl={handleImgUrl} setfileName={handleFileUrl}/> */}
                     </MDBCol>
                     <MDBCol lg={8}>
                     <MDBCardText className="text-color mt-3 mb-0 fw-bold">

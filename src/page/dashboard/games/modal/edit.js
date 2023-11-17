@@ -44,18 +44,23 @@ const UpdateGames = ({games}) => {
   function updategame (e) {
     e.preventDefault()
     setIsLoading(true)
+    const data = new FormData()
+    data.append("gametitle", titles ? titles : games.gametitle)
+    data.append("description", descriptions ? descriptions : games.description)
+    if(image !== ""){
+      data.append("file", image)
+    }
+    subscription.forEach((selectedSubscription, index) => {
+      data.append(`selectsubscription[${index}]`, selectedSubscription);
+    });
+    // data.append("selectsubscription", subscription)
     fetch(`${process.env.REACT_APP_API_URL}games/${games._id}/update`, {
       method:'PUT',
       headers: {
-        'Content-Type': 'application/json',
+        'Accept': 'application/json',
         Authorization: `Bearer ${auth?.token}`,
       },
-      body: JSON.stringify({
-          gametitle: titles ? titles : games.gametitle,
-          description: descriptions ? descriptions : games.description ,
-          image: image ? image : games.image,
-          selectsubscription: subscription,
-      })
+      body: data
     }).then(result => result.json())
     .then(data => {
       if(data.expired){
@@ -84,7 +89,6 @@ const UpdateGames = ({games}) => {
             window.location.reload()
           }
         })
-				
 			} else {
         setIsLoading(false)
 				Swal.fire({
@@ -118,9 +122,10 @@ const UpdateGames = ({games}) => {
   }, [games.selectsubscription]);
 
 
-  const handleImgUrl = (url) => {
+  const handleImgUrl = (e) => {
+    const file = e.target.files[0];
     // Use the uploaded image URL in the parent component or pass it to another component
-    setImage(url);
+    setImage(file);
   };
   const handleFileUrl = (url) => {
     // Use the uploaded image URL in the parent component or pass it to another component
@@ -159,11 +164,19 @@ return (
                 <MDBCol className="d-flex align-items-center flex-column justify-content-center" lg={4}>
                 
                 <img
-                  src={image ? image : games.image}
+                  src={image ? URL.createObjectURL(image) : `${process.env.REACT_APP_API_URL}${games.image}`}
                   alt="preview"
                   className="img-fluid"
-                />                 
-                    <UploadWidget setImgUrl={handleImgUrl} setfileName={handleFileUrl}/>
+                />      
+                <div>
+                    <input
+                        type="file"
+                        className="m-1"
+                        accept="image/*" // Limit to image files only
+                        onChange={(e) => handleImgUrl(e)}
+                    />
+                </div>           
+                    {/* <UploadWidget setImgUrl={handleImgUrl} setfileName={handleFileUrl}/> */}
                     </MDBCol>
                     <MDBCol lg={8}>
                     <MDBCardText className="text-color mt-3 mb-0 fw-bold">
@@ -181,7 +194,7 @@ return (
                         <input 
                         type="checkbox"
                         checked={subscription.includes("Pearl")}  
-                        onChange={handleCheckboxChange} 
+                        onChange={(e) => handleCheckboxChange(e)} 
                         style={{transform: "scale(1.5)"}}/>                        
                         </label>
                         </MDBCol>
@@ -192,7 +205,7 @@ return (
                         <input 
                         type="checkbox"  
                         checked={subscription.includes("Ruby")} 
-                        onChange={handleCheckboxChange} 
+                        onChange={(e) => handleCheckboxChange(e)} 
                         style={{transform: "scale(1.5)"}}/>
                         </label>
                         </MDBCol>
@@ -203,7 +216,7 @@ return (
                         <input 
                         type="checkbox" 
                         checked={subscription.includes("Emerald")}  
-                        onChange={handleCheckboxChange} 
+                        onChange={(e) => handleCheckboxChange(e)} 
                         style={{transform: "scale(1.5)"}}/>
                         
                         </label>
@@ -215,7 +228,7 @@ return (
                         <input 
                         type="checkbox"  
                         checked={subscription.includes("Diamond")} 
-                        onChange={handleCheckboxChange} 
+                        onChange={(e) => handleCheckboxChange(e)} 
                         style={{transform: "scale(1.5)"}}/>                        
                         </label>
                         </MDBCol>

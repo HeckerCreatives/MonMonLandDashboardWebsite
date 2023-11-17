@@ -49,7 +49,7 @@ const ViewRoadmap = ({ theme, roadmap }) => {
                   // style={{ width: "30rem", height: "auto" }}
                 >
                   <img
-                    src={`${roadmap.image}`}
+                    src={`${process.env.REACT_APP_API_URL}${roadmap.image}`}
                     alt={roadmap.image}
                     className="img-fluid"
                   />

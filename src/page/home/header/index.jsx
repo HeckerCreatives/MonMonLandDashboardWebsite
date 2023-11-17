@@ -16,6 +16,7 @@ import { MDBContainer, MDBRow, MDBCol, MDBIcon,MDBTypography,MDBProgress, MDBPro
     MDBTableHead, 
     MDBTableBody} from "mdb-react-ui-kit";
 import "./index.css";
+import appstore from "../../../assets/header/appstore.png"
 import biglogo from "../../../assets/header/big logo2.gif"
 import dahonleft from "../../../assets/BG/leaves Left.png"
 import dahonright from "../../../assets/BG/leaves Right.png"
@@ -42,8 +43,11 @@ const Header = () => {
     const [progress, setProgress] = useState(0);
     const [mc, setMc] = useState(0)
     const [mg, setMg] = useState(0)
+    const [investorfund, setinvestorfund] = useState(0)
     const [totaluser, setTotaluser] = useState([])
     const [Mcprice, setMcPrice] = useState(0)
+    const [Mgprice, setMgPrice] = useState(0)
+    const [Mctofarm, setMctofarm] = useState(0)
     const [comact, setComAct] = useState([]);
     const [totalaccumulated, setTotalAccumulated] = useState(0);
     const [totalpoolaccumulated, setTotalPoolAccumulated] = useState(0);
@@ -51,6 +55,7 @@ const Header = () => {
     const [ads, setAds] = useState(0);
     const [leaderboard, setLeaderboard] = useState(0);
     const [diamondpool, setDiamondPool] = useState(0)
+    const [monmongem, setMonmongem] = useState(0)
     const [mcpreviousmonth, setMcPreviousMonth] = useState(0);
     const seperator = (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -196,7 +201,14 @@ const Header = () => {
             
           })
     
-    
+          fetch(`${process.env.REACT_APP_API_URL}investor/find`)
+          .then(result => result.json())
+          .then(data => {
+            if(data.message === "success"){
+              setinvestorfund(data.data)
+            }
+            
+          })
         
     },[totalaccumulated, mc, totalbar])
 
@@ -207,16 +219,21 @@ const Header = () => {
     // },[initialbar, totalbar])
 
     useEffect(() => {
-      const total =  totalaccumulated
-        
+        const mgprice = initialbar + monmongem
+        const total =  totalaccumulated
+        const adsamount = ads
+        const investoramount = investorfund
         const pool = total * 0.01
         const gg = comact.grinding
         const qr = comact.quest
-        const tt = gg + qr + totalbar
+        const tt = adsamount + investoramount + gg + qr + totalbar
         const emseeprice =  parseFloat(tt) / parseFloat(mc)
+        const emsetofarm = (adsamount + investoramount + gg + qr + totalbar) * 1000
         setTotalPoolAccumulated(pool)
         setMcPrice(emseeprice)
-    },[comact, mc, totalaccumulated, totalbar])
+        setMctofarm(emsetofarm)
+        setMgPrice(mgprice)
+    },[comact, mc, totalaccumulated, totalbar, ads, investorfund, initialbar, monmongem])
 
     // useEffect(()=>{
     //     if(initialbar){
@@ -267,11 +284,11 @@ const Header = () => {
     },[])
 
     const settings = {
-      className: "center",
+      // className: "center",
       arrows: false,
       centerMode: true,
       infinite: true,
-      // centerPadding: "60px",
+      centerPadding: "60px",
       slidesToShow: 3,        
       adaptiveHeight: false,
       focusOnSelect: true,
@@ -281,8 +298,12 @@ const Header = () => {
             settings: {
               slidesToShow: 1,
               slidesToScroll: 1,
+              arrows: false,
+              centerMode: false,
               infinite: true,
-              dots: true
+              // centerPadding: "60px",
+              // adaptiveHeight: false,
+              focusOnSelect: true,
             }
           },
           {
@@ -290,17 +311,38 @@ const Header = () => {
             settings: {
               slidesToShow: 1,
               slidesToScroll: 1,
+              arrows: false,
+              centerMode: false,
+              infinite: true,
+              // centerPadding: "60px",
+              // adaptiveHeight: false,
+              focusOnSelect: true,
             }
           },
           {
             breakpoint: 425,
             settings: {
               slidesToShow: 1,
-              slidesToScroll: 1
+              slidesToScroll: 1,
+              arrows: false,
+              centerMode: false,
+              infinite: true,
+              // centerPadding: "60px",
+              // adaptiveHeight: false,
+              focusOnSelect: true,
             }
           }
         ]
     };
+
+    // const settings = {
+    //   dots: false,
+    //   infinite: true,
+    //   speed: 500,
+    //   slidesToShow: 3,
+    //   slidesToScroll: 1,
+    //   width: 600
+    // };
 
     const leaderboardranking = [
       {
@@ -388,6 +430,7 @@ const Header = () => {
         if(data.message === "success"){
           setLeaderboard(data.data.leaderboard)
           setDiamondPool(data.data.diamondpools)
+          setMonmongem(data.data.monstergem)
         }
       })
     },[])
@@ -431,98 +474,161 @@ const Header = () => {
                 </MDBCol>
             </MDBRow>
                 <MDBRow className="align-items-center justify-content-center">
-
-                {/* <Slider {...settings}>
-                  <div className="col-lg-2 text-center mx-2">
-                    <MDBCard alignment='center' className="moncoin">
+                {/* <div> */}
+                <Slider {...settings}>
+                <MDBCol className="col-lg-2 text-center ">
+                    <MDBCard alignment='center' className=" mt-0 moncoin mx-2">
                     
                     <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
-                    <img src={monstercoin} alt="" style={{width: "40px"}}/>
+                    <div className="row">
+
+                    <div className="col-3">
+                    <MDBIcon className="ms-4" size="2x" far icon="question-circle" animate='bounce' onClick={toggleShow} style={{cursor: "pointer"}}/>
+
+                    </div>
+
+                    <div className="col-6 offset-1 d-flex align-items-center">
+                      
+                    <img className="me-2" src={monstercoin} alt="" style={{width: "40px"}}/>
                     
-                    <span className="ms-2">Monster Coin</span> 
+                    <span>Monster Coin</span>
+                    </div>
+
+                    </div>
+                    
+                    
                     </MDBCardHeader>
 
-                    <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
-                    <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{Mcprice.toFixed(6)}</strong> 
+                    <MDBCardBody className="" style={{backgroundColor: "#838383"}}>
+                    <div>
+                    <MDBTypography className="fw-bold" style={{fontSize: "2rem", color: "white"}}>{Mcprice !== Infinity && !isNaN(Mcprice) ? `$ ${Mcprice.toFixed(6)}` : 0}</MDBTypography>
+                    </div>
+                    <div>
+                    <MDBTypography tag="p" className="text-white">
+                    Total MC to Farm :
+                    &nbsp;{Mctofarm !== Infinity && !isNaN(Mctofarm) ? `${Mctofarm.toLocaleString()}` : 0}
+                    </MDBTypography> 
+                    </div>
                     </MDBCardBody>
                     <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Coins: {mc.toLocaleString()}</MDBCardFooter>
                     </MDBCard> 
 
-                  </div>
+                </MDBCol>
 
-                    <MDBCol  className="col-lg-2 text-center  mx-2">
-                    <MDBCard alignment='center' className="moncoin">
+                    <MDBCol  className="col-lg-2 text-center  ">
+                    <MDBCard alignment='center' className="moncoin mx-2">
                     
                     <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
-                    <img src={monstergem} alt="" style={{width: "40px"}}/>
+                    <div>
+                    <div className="d-flex align-items-center justify-content-center">
+                    <img src={monstercoin} alt="" style={{width: "40px"}}/>
+                    <span className="ms-2">Investor Funds</span> 
+                    </div>
+                    </div>
                     
-                    <span className="ms-2">Monster Gem</span> 
                     </MDBCardHeader>
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
-                    <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>1.00</strong> 
+                    
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>$ {investorfund.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
                     </MDBCardBody>
-                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Gems: {mg.toLocaleString()}</MDBCardFooter>
+                    <MDBCardFooter className='fw-bold p-4' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}></MDBCardFooter>
                     </MDBCard> 
 
                     </MDBCol>
-                    <MDBCol  className="col-lg-2 text-center  mx-2">
-                    <MDBCard alignment='center' className="moncoin">
+                    <MDBCol  className="col-lg-2 text-center  ">
+                    <MDBCard alignment='center' className="moncoin mx-2">
                     
                     <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
-                    <img src={diamond} alt="" style={{width: "40px"}}/>
+                    <div className="d-flex align-items-center justify-content-center">
+                    <img src={monstergem} alt="" style={{width: "40px"}}/>
                     
-                    <span className="ms-2">Diamond Pools</span> 
+                    <span className="ms-2">Monster Gem</span> 
+                    </div>
+                    
                     </MDBCardHeader>
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
-                    <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{totalaccumulated.toFixed(2)}</strong> 
+                    
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>$ {Mgprice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong> 
+                    </MDBCardBody>
+                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Gem Farmed: 0</MDBCardFooter>
+                    </MDBCard> 
+
+                    </MDBCol>
+
+                    <MDBCol  className="col-lg-2 text-center  ">
+                    <MDBCard alignment='center' className="moncoin mx-2">
+                    
+                    <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
+                    <div className="d-flex align-items-center justify-content-center">
+                    <img src={diamond} alt="" style={{width: "40px"}}/>
+                    
+                    <span className="ms-2">Diamond Pools</span> 
+                    </div>
+                   
+                    </MDBCardHeader>
+
+                    <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
+                    
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{`$ ${diamondpool.toFixed(2)}`}</strong> 
                     </MDBCardBody>
                     <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total User: 0</MDBCardFooter>
                     </MDBCard> 
 
                     </MDBCol>
-
-                    <MDBCol  className="col-lg-2 text-center  mx-2">
-                    <MDBCard alignment='center' className="moncoin">
+                    
+                    <MDBCol  className="col-lg-2 text-center  ">
+                    <MDBCard alignment='center' className="moncoin mx-2">
                     
                     <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
-                    <img src={diamond} alt="" style={{width: "40px"}}/>
+                    <div className="d-flex align-items-center justify-content-center">
+                    <img src={adslogo} alt="" style={{width: "40px"}}/>
                     
-                    <span className="ms-2">Advertisement</span> 
+                    <span className="ms-2">Advertisement</span>
+                    </div>
+                     
                     </MDBCardHeader>
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
-                    <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{totalaccumulated.toFixed(2)}</strong> 
+                    
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{`$ ${ads.toFixed(2)}`}</strong> 
                     </MDBCardBody>
-                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Advertisement: 0</MDBCardFooter>
+                    <MDBCardFooter className='fw-bold p-4' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}></MDBCardFooter>
                     </MDBCard> 
 
                     </MDBCol>
 
-                    <MDBCol  className="col-lg-2 text-center  mx-2">
-                    <MDBCard alignment='center' className="moncoin">
+                    <MDBCol  className="col-lg-2 text-center  ">
+                    <MDBCard alignment='center' className="moncoin mx-2">
                     
                     <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
-                    <img src={diamond} alt="" style={{width: "40px"}}/>
-                    
+                    <div className="row">
+                    <div className="col-3">
+                    <MDBIcon className="ms-4" size="2x" far icon="question-circle" animate='bounce' onClick={toggleShow1} style={{cursor: "pointer"}}/>
+                    </div>
+                    <div className="col-6 offset-1 d-flex align-items-center">
+                    <img src={leadlogo} alt="" style={{width: "40px"}}/>
+
                     <span className="ms-2">Leaderboard</span> 
+                    </div>
+
+                    
+                    </div>
+                    
                     </MDBCardHeader>
 
-                    <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
-                    <img src={usdt} alt="" style={{width: "40px"}}/>
-                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{totalaccumulated.toFixed(2)}</strong> 
+                    <MDBCardBody className="d-flex align-items-center justify-content-center" style={{backgroundColor: "#838383"}}>
+                    
+                    <MDBTypography className="fw-bold d-flex align-items-center" style={{fontSize: "2rem", color: "white"}}>{`$ ${leaderboard.toFixed(2)}`}</MDBTypography> 
                     </MDBCardBody>
-                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total leaderboard: 0</MDBCardFooter>
+                    <MDBCardFooter className='fw-bold p-4' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}></MDBCardFooter>
                     </MDBCard> 
 
                     </MDBCol>
-                </Slider>  */}
-                    <MDBCol className="col-lg-2 text-center my-2">
+                </Slider> 
+                {/* </div> */}
+                    {/* <MDBCol className="col-lg-2 text-center my-2">
                     <MDBCard alignment='center' className="moncoin">
                     
                     <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
@@ -546,7 +652,7 @@ const Header = () => {
                     </MDBCardHeader>
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
-                    {/* <img src={usdt} alt="" style={{width: "40px"}}/> */}
+                    
                     <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{Mcprice !== Infinity && !isNaN(Mcprice) ? `$ ${Mcprice.toFixed(6)}` : 0}</strong> 
                     </MDBCardBody>
                     <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Coins: {mc.toLocaleString()}</MDBCardFooter>
@@ -564,7 +670,7 @@ const Header = () => {
                     </MDBCardHeader>
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
-                    {/* <img src={usdt} alt="" style={{width: "40px"}}/> */}
+                    
                     <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>$ 0.00</strong>
                     </MDBCardBody>
                     <MDBCardFooter className='fw-bold p-4' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}></MDBCardFooter>
@@ -581,14 +687,30 @@ const Header = () => {
                     </MDBCardHeader>
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
-                    {/* <img src={usdt} alt="" style={{width: "40px"}}/> */}
+                    
                     <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{`$ ${diamondpool.toFixed(2)}`}</strong> 
                     </MDBCardBody>
                     <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total User: 0</MDBCardFooter>
                     </MDBCard> 
 
                     </MDBCol>
+                    <MDBCol  className="col-lg-2 text-center  my-2">
+                    <MDBCard alignment='center' className="moncoin">
+                    
+                    <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
+                    <img src={monstergem} alt="" style={{width: "40px"}}/>
+                    
+                    <span className="ms-2">Monster Gem</span> 
+                    </MDBCardHeader>
 
+                    <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
+                    
+                    <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>$ 1.00</strong> 
+                    </MDBCardBody>
+                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Gem: 0</MDBCardFooter>
+                    </MDBCard> 
+
+                    </MDBCol>
                     <MDBCol  className="col-lg-2 text-center  my-2">
                     <MDBCard alignment='center' className="moncoin">
                     
@@ -599,7 +721,7 @@ const Header = () => {
                     </MDBCardHeader>
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
-                    {/* <img src={usdt} alt="" style={{width: "40px"}}/> */}
+                    
                     <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{`$ ${ads.toFixed(2)}`}</strong> 
                     </MDBCardBody>
                     <MDBCardFooter className='fw-bold p-4' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}></MDBCardFooter>
@@ -627,19 +749,28 @@ const Header = () => {
                     </MDBCardHeader>
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
-                    {/* <img src={usdt} alt="" style={{width: "40px"}}/> */}
+                    
                     <strong className="mx-2" style={{fontSize: "2rem", color: "white"}}>{`$ ${leaderboard.toFixed(2)}`}</strong> 
                     </MDBCardBody>
                     <MDBCardFooter className='fw-bold p-4' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}></MDBCardFooter>
                     </MDBCard> 
 
-                    </MDBCol>
+                    </MDBCol> */}
                 </MDBRow>
                 <MDBRow> 
-                    <MDBCol className="my-3 text-center">
-                    <img src={donwloadnow} className="img-fluid zoom-playnow" alt="" onClick={() => {
+                    <MDBCol className="my-3">
+                    <img src={donwloadnow} className="mx-lg-3 my-lg-0 my-2 img-fluid zoom-playnow" alt="" onClick={() => {
                         window.location.href =  `${process.env.REACT_APP_API_URL}uploads/Monmonland.apk`
-                    }}/>                       
+                    }}/> 
+                    {/* <img 
+                    src={appstore} 
+                    className="mx-lg-3 my-lg-0 my-2 img-fluid zoom-playnow" 
+                    alt="" 
+                    // onClick={() => {
+                    //     window.location.href =  `${process.env.REACT_APP_API_URL}uploads/Monmonland.apk`
+                    // }}
+                    />  */}
+                                            
                     </MDBCol>
                 </MDBRow>
         </MDBContainer>

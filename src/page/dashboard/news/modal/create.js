@@ -62,17 +62,17 @@ const CreateNews = () => {
     e.preventDefault()
     setIsLoading(true)
     // const {title, description} = e.target
+    const data = new FormData()
+    data.append("title", titles)
+    data.append("description", descriptions)
+    data.append("file", image)
     fetch(`${process.env.REACT_APP_API_URL}news/addnews`, {
       method:'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Accept': 'application/json',
         Authorization: `Bearer ${auth?.token}`,
       },
-      body: JSON.stringify({
-          title: titles,
-          description: descriptions,
-          image: image
-      })
+      body: data
     }).then(result => result.json())
     .then(data => {
       if(data.expired){
@@ -93,9 +93,9 @@ const CreateNews = () => {
       if (!data.expired) {
         setIsLoading(false)
 				Swal.fire({
-					title: "Updated Successfully",
+					title: "Added Successfully",
 					icon: "success",
-					text: "You Successfully Updated This"
+					text: "You Successfully Added News"
 				}).then(result1 => {
           if(result1.isConfirmed){
             window.location.reload()
@@ -105,9 +105,9 @@ const CreateNews = () => {
 			} else {
         setIsLoading(false)
 				Swal.fire({
-					title: "Update Unsuccessfully",
+					title: "Add Unsuccessfull",
 					icon: "error",
-					text: "There is an error Updating This"
+					text: "There is an error adding news"
 				})
 			}
     }
@@ -115,10 +115,10 @@ const CreateNews = () => {
      
     })
   }
-  const handleImgUrl = (url) => {
+  const handleImgUrl = (e) => {
+    const file = e.target.files[0];
     // Use the uploaded image URL in the parent component or pass it to another component
-    setImage(url);
-    setPreviewUrl(url)
+    setImage(file);
   };
   const handleFileUrl = (url) => {
     // Use the uploaded image URL in the parent component or pass it to another component
@@ -136,7 +136,7 @@ return (
         &nbsp;&nbsp;<MDBIcon far icon="plus-square" />
       </MDBBtn>
       <MDBModal show={show} setShow={setShow} tabIndex="-1" staticBackdrop>
-        <MDBModalDialog centered size="lg">
+        <MDBModalDialog centered size="xl">
           <MDBModalContent className={``}>
             <form autoComplete="off" onSubmit={addnews}>
               <MDBModalHeader style={{background:"#A57552"}}>
@@ -156,7 +156,7 @@ return (
                 <MDBCol className="d-flex align-items-center flex-column justify-content-center" lg={4}>
                 {image ? 
                 <img
-                  src={image}
+                  src={URL.createObjectURL(image)}
                   alt="preview"
                   className="img-fluid"
                 /> : 
@@ -166,8 +166,16 @@ return (
                   {/* <p>Drag files to upload</p> */}
                   </div>
                   </label>
-                </form> }                  
-                    <UploadWidget setImgUrl={handleImgUrl} setfileName={handleFileUrl}/>
+                </form> } 
+                <div>
+                    <input
+                        type="file"
+                        className="m-1"
+                        accept="image/*" // Limit to image files only
+                        onChange={(e) => handleImgUrl(e)}
+                    />
+                </div>                 
+                    {/* <UploadWidget setImgUrl={handleImgUrl} setfileName={handleFileUrl}/> */}
                     </MDBCol>
                   <MDBCol>
                   <MDBCardText className="text-color mb-0 fw-bold">

@@ -17,7 +17,7 @@ import PaginationPager from "../../../component/pagination";
 import CreateNews from "./modal/create";
 import ViewNews from "./modal/view"
 import UpdateNewsModal from "./modal/update"
-
+import { handlePagination } from "../../../component/utils";
 const UpdateNews = () => {
     const auth = JSON.parse(localStorage.getItem("auth"))
     const [titles, setTitles] = useState('');
@@ -108,11 +108,11 @@ const UpdateNews = () => {
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody className="text-center">
-                {news.map((balita, i) =>(
+                {handlePagination(news, page, 5).map((balita, i) =>(
                 <tr key={`balita-${i}`}>
                 <td>{balita.title}</td>
                 <td>
-                    <img src={balita.image} alt="" style={{height:"50px", width:"50px"}}/>
+                    <img src={(`${process.env.REACT_APP_API_URL}${balita.image}`)} alt="" style={{height:"50px", width:"50px"}}/>
                 </td>                
                 <td>{balita.description.length > 25 ? `${balita.description.substring(0,25)}...`: balita.description}</td>
                 <td>{new Date(balita.createdAt).toLocaleString()}</td>

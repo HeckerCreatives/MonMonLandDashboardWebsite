@@ -57,7 +57,8 @@ const Games = () => {
                 fetch(`${process.env.REACT_APP_API_URL}games/${id}/destroy`,{
                     method: "DELETE",
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${auth?.token}`,
                     }
                 }).then(result => result.json())
                 .then(data => {
@@ -109,7 +110,7 @@ const Games = () => {
                 <tr key={`game-${i}`}>
                 <td>{game.gametitle}</td>
                 <td>
-                    <img src={game.image} alt="" style={{height:"50px", width:"50px"}}/>
+                    <img src={`${process.env.REACT_APP_API_URL}${game.image}`} alt="" style={{height:"50px", width:"50px"}}/>
                 </td>
                 <td> 
                 <div className="d-flex align-items-center justify-content-center">

@@ -102,8 +102,8 @@ const UpdateRoadmap = () => {
                     <td>
                     {data.image !== "Empty" ? 
                     <img
-                        src={data.image}
-                        alt=""
+                        src={`${process.env.REACT_APP_API_URL}${data.image}`}
+                        alt={data.image}
                         style={{ height: "50px", width: "50px"}}
                     />
                     :

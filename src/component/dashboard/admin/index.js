@@ -53,6 +53,7 @@ const AdminDashboard = () => {
     const [officer, setOfficer] = useState(0)
     const [marketing, setMarketing] = useState(0)
     const [incentives, setIncentives] = useState(0)
+    const [unilevelmonstergem, setUnilevelMg] = useState(0)
 
   useEffect(() => {
     if (auth) {
@@ -700,6 +701,7 @@ const AdminDashboard = () => {
         setOfficer(data.data.officers)
         setMarketing(data.data.marketing)
         setIncentives(data.data.incentives)
+        setUnilevelMg(data.data.unilevelmonstergem)
       }
     })
   },[])
@@ -768,7 +770,16 @@ const AdminDashboard = () => {
               thtitle={`Unilevel Bonus`}
               cardtoptext={unilevel ? `${unilevel.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
+        </MDBCol>
+        <MDBCol className="col-lg-4 my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`money-bill`}
+              thtitle={`Unilevel Monster Gem`}
+              cardtoptext={unilevelmonstergem ? `${unilevelmonstergem.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
           </MDBCol>
+
         </MDBRow>
         <br/>
         <MDBTypography tag={`h2`}>Products</MDBTypography>
@@ -918,6 +929,14 @@ const AdminDashboard = () => {
               colSpan="3"
               icon={`plane-departure`}
               thtitle={`Travel / Incentives`}
+              cardtoptext={incentives ? `${incentives.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol> 
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="3"
+              icon={`coins`}
+              thtitle={`Monster Gem`}
               cardtoptext={incentives ? `${incentives.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
           </MDBCol> 

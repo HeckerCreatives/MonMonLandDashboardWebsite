@@ -5,6 +5,8 @@ import Swal from "sweetalert2"
 import Breadcrumb from "../../../component/breadcrumb";
 import PaginationPager from "../../../component/pagination/index"
 import {handlePagination} from "../../../component/utils"
+import mgimg from "../../../assets/header/Monster GEM.png"
+import mcimg from "../../../assets/header/MC coin.png"
 const UpdateProgressBar = () => {
     const [list, setlist] = useState("");
     const [totalnum, setTotalNum] = useState("");
@@ -59,7 +61,7 @@ const UpdateProgressBar = () => {
     const updateinitial = async (e) => {
        e.preventDefault();
        const { initial } = e.target
-       const value = "Initial"
+       const value = "Monster Gem Additional"
        await fetch(`${process.env.REACT_APP_API_URL}gameactivity/${process.env.REACT_APP_PROGRESSID}/update`, {
             method:'PUT',
             headers: {
@@ -72,12 +74,28 @@ const UpdateProgressBar = () => {
                 value: value,
                 enteredamount: initial.value,
                 createdby: auth.userName,
+                playfabid: auth.playfabid,
                 playfabToken: playfabToken
             })
         }).then(result => result.json())
         .then(data => {
-            console.log("as")
-            if (data) {
+            if(data.expired){
+                Swal.fire({
+                  icon: "error",
+                  title: data.expired,
+                  text: "You Will Redirect to Login",
+                  allowOutsideClick: false,
+                  allowEscapeKey: false
+                }).then(ok => {
+                  if(ok.isConfirmed){
+                    localStorage.removeItem("auth");
+                    localStorage.removeItem("playfabAdminAuthToken")
+                    window.location.replace("/login");
+                  }
+                })
+            }
+
+            if (!data.expired) {
 				Swal.fire({
 					title: "Updated Successfully",
 					icon: "success",
@@ -100,7 +118,7 @@ const UpdateProgressBar = () => {
 
     function updatetargetvalue (e) {
         e.preventDefault();
-        const value = "Target"
+        const value = "Monster Coin Additional"
         fetch(`${process.env.REACT_APP_API_URL}gameactivity/${process.env.REACT_APP_PROGRESSID}/update`, {
             method:'PUT',
             headers: {
@@ -176,17 +194,18 @@ const UpdateProgressBar = () => {
 
         <MDBRow className="my-4 align-items-center justify-content-center">
         
-        {/* <MDBCol md={6}  className="mt-3">
+        <MDBCol md={6}  className="mt-3">
         <form onSubmit={updateinitial}>
         <MDBCard className="" alignment="end">
             <MDBCardBody>
             <MDBRow>
-            <div style={{background: "#34C38F", padding: "8px", borderRadius: "5px", height: "50px", width: "50px"}}>
-            <MDBIcon size="2x" icon='coins' color="white"></MDBIcon>
+            <div style={{background: "#EDCAB4", padding: "8px", borderRadius: "5px", height: "50px", width: "50px"}}>
+            <img src={mgimg} alt="" className="img-fluid"/>
+            {/* <MDBIcon size="2x" icon='coins' color="white"></MDBIcon> */}
             </div>
 
             <MDBCol>
-            <MDBInput label='Initial Number' id='form1' type='number'  name="initial" className="mb-3"/>
+            <MDBInput label='Monster Gem Additional' id='form1' type='number'  name="initial" className="mb-3"/>
             </MDBCol>
             </MDBRow>
 
@@ -197,18 +216,20 @@ const UpdateProgressBar = () => {
         </MDBCard>
         </form>
         
-        </MDBCol> */}
+        </MDBCol>
+
         <MDBCol md={6}  className="mt-3">
         <form onSubmit={e => updatetargetvalue(e)}>
         <MDBCard className="" alignment="end">
             <MDBCardBody>
             <MDBRow>
                 
-                <div style={{background: "#556EE6", padding: "8px", borderRadius: "5px", height: "50px", width: "50px"}}>
-                <MDBIcon size="2x" icon='coins' color="white"/>
+                <div style={{background: "#EDCAB4", padding: "8px", borderRadius: "5px", height: "50px", width: "50px"}}>
+                <img src={mcimg} alt="" className="img-fluid"/>
+                {/* <MDBIcon size="2x" icon='coins' color="white"/> */}
                 </div>
                 <MDBCol>
-                <MDBInput label='Total Income' id='form2' type='number'  onChange={e => setTotalNum(e.target.value)} className="mb-3"/>
+                <MDBInput label='Monster Coin Additional' id='form2' type='number'  onChange={e => setTotalNum(e.target.value)} className="mb-3"/>
                 </MDBCol>
             </MDBRow>
 
@@ -254,7 +275,7 @@ const UpdateProgressBar = () => {
                     
                 </MDBTableBody>
                 </MDBTable>
-                </MDBCol>
+            </MDBCol>
             </MDBRow>
             <PaginationPager
                 total={total} page={page} setPage={setPage}

@@ -49,7 +49,7 @@ const ViewGames = ({ theme, games }) => {
                   // style={{ width: "30rem", height: "auto" }}
                 >
                   <img
-                    src={`${games.image}`}
+                    src={`${process.env.REACT_APP_API_URL}${games.image}`}
                     alt={games.image}
                     className="img-fluid"
                   />

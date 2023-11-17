@@ -52,7 +52,7 @@ const ViewNews = ({ theme, news }) => {
                   // style={{ width: "30rem", height: "auto" }}
                 >
                   <img
-                    src={`${news.image}`}
+                    src={(`${process.env.REACT_APP_API_URL}${news.image}`)}
                     alt={news.image}
                     className="img-fluid"
                   />
@@ -68,7 +68,7 @@ const ViewNews = ({ theme, news }) => {
                 style={{ whiteSpace: "pre-wrap" }}
                 className="text-start"
                 >
-                {news.description}
+                {news.description}  
               </MDBTypography>
                 </MDBCardBody>
                 </MDBCard>
