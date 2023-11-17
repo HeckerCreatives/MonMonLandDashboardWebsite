@@ -41,6 +41,7 @@ const Header = () => {
     const [basicModal2, setBasicModal2] = useState(false);
     const toggleShow2 = () => setBasicModal2(!basicModal2);
     const [isLoading, setIsLoading] = useState(false)
+    const [countdown, setCountdown] = useState(false)
     const [initialbar, setInitialBar] = useState();
     const [totalbar, setTotalBar] = useState(0);
     const [progress, setProgress] = useState(0);
@@ -763,10 +764,14 @@ const Header = () => {
                 <MDBRow> 
                     <MDBCol className="my-3">
                     <img src={donwloadnow} className="mx-lg-3 my-lg-0 my-2 img-fluid zoom-playnow" alt="" 
-                    // onClick={() => {
-                    //     window.location.href =  `${process.env.REACT_APP_API_URL}uploads/Monmonland.apk`
-                    // }}
-                    onClick={toggleShow2}
+                    onClick={() => {
+                      if(countdown){
+                        window.location.href =  `${process.env.REACT_APP_API_URL}uploads/Monmonland.apk`
+                      } else {
+                        toggleShow2()
+                      }
+                    }}
+                    // onClick={toggleShow2}
                     /> 
                     {/* <img 
                     src={appstore} 
@@ -871,8 +876,9 @@ const Header = () => {
               hideMonth
               hideDay
               size='small'
-              endAt={'2023-11-18 08:00:00'} // Date/Time
-              onTimeUp={() => console.log("Time's up ⏳")}
+              // endAt={'2023-11-18 00:36:00'}
+              endAt={'2023-11-18 08:00:00'}
+              onTimeUp={() => setCountdown(true)}
             />
             </MDBModalBody>
             <MDBModalFooter className="seamless">
