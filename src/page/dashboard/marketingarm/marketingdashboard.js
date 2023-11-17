@@ -12,7 +12,7 @@ const MarketingDashboard = () => {
     const [users, setUsers] = useState([]);
     const [totalsubsaccu, setTotalSubsAccu] = useState(0);
     const navigate = useNavigate()
-    
+    const [marketing, setMarketing] = useState(0)
   useEffect(() => {
       if (auth) {
         if (auth.roleId.display_name !== "Player") {
@@ -21,6 +21,16 @@ const MarketingDashboard = () => {
         }
       }
     }, [auth, navigate]);
+
+    useEffect(() => {
+      fetch(`${process.env.REACT_APP_API_URL}communityactivy/find`)
+      .then(result => result.json())
+      .then(data => {
+        if(data.message === "success"){
+          setMarketing(data.data.marketing)
+        }
+      })
+    },[])
   
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}subsaccu/totalsubsaccu`,{
@@ -75,7 +85,7 @@ const MarketingDashboard = () => {
               colSpan="4"
               icon={`dollar-sign`}
               thtitle={`Total Marketing Arm`}
-              cardtoptext={totalsubsaccu ? totalsubsaccu : 0}
+              cardtoptext={marketing ? `${marketing.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               txtsup={`USDT`} 
               />
           </MDBCol>
