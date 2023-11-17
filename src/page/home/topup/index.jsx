@@ -199,12 +199,12 @@ const TopUp = () =>{
                 </MDBCardBody>
                 <MDBCardFooter className="d-flex justify-content-end align-items-center" style={{background: "#FADDBF"}}>
                 <span className="fw-bold" style={{fontSize: "1.5rem"}}>
-                $ 65
+                $ 70
                 </span>
                 {/* <MDBBtn className="p-0 mx-2" onClick={() =>handleBundles(65,"Steel Pack","Emerald Subscription + Steel Tool","emerald")}>
                 <img src={addfundsbtn} alt=""/>
                 </MDBBtn> */}
-                <img className="zoom-playnow mx-2" src={addfundsbtn} alt="" onClick={() =>handleBundles(65,"Steel Pack","Emerald Subscription + Steel Tool","steelpack")}/>
+                <img className="zoom-playnow mx-2" src={addfundsbtn} alt="" onClick={() =>handleBundles(70,"Steel Pack","Emerald Subscription + Steel Tool","steelpack")}/>
                 </MDBCardFooter>
                 </MDBCard>
                 </MDBCol>
@@ -222,12 +222,12 @@ const TopUp = () =>{
                 </MDBCardBody>
                 <MDBCardFooter className="d-flex justify-content-end align-items-center" style={{background: "#FADDBF"}}>
                 <span className="fw-bold" style={{fontSize: "1.5rem"}}>
-                $ 120
+                $ 130
                 </span>
                 {/* <MDBBtn className="p-0 mx-2" onClick={() =>handleBundles(120,"Mithril Pack","Diamond Subscription + Mithril Tool","diamond")}>
                 <img src={addfundsbtn} alt=""/>
                 </MDBBtn> */}
-                <img className="zoom-playnow mx-2" src={addfundsbtn} alt="" onClick={() =>handleBundles(120,"Mithril Pack","Diamond Subscription + Mithril Tool","mithrilpack")}/>
+                <img className="zoom-playnow mx-2" src={addfundsbtn} alt="" onClick={() =>handleBundles(130,"Mithril Pack","Diamond Subscription + Mithril Tool","mithrilpack")}/>
                 </MDBCardFooter>
                 </MDBCard>
                 </MDBCol>
@@ -242,18 +242,18 @@ const TopUp = () =>{
                     
 
                     <MDBCardText className="p-4 text-white" style={{background: "#838383", width: "100%", height: "92px"}}>
-                    Diamond Subscription + Adamant Tool + 5 hours clock
+                    Diamond Subscription + Adamant Tool + 6 hours clock
                     </MDBCardText>
                     
                 </MDBCardBody>
                 <MDBCardFooter className="d-flex justify-content-end align-items-center" style={{background: "#FADDBF"}}>
                 <span className="fw-bold" style={{fontSize: "1.5rem"}}>
-                $ 180
+                $ 190
                 </span>
                 {/* <MDBBtn className="p-0 mx-2" onClick={() =>handleBundles(180,"Adamant Pack","Diamond Subscription + Adamant Tool + 5 hours clock", "diamond")}>
                 <img src={addfundsbtn} alt=""/>
                 </MDBBtn> */}
-                <img className="zoom-playnow mx-2" src={addfundsbtn} alt="" onClick={() =>handleBundles(180,"Adamant Pack","Diamond Subscription + Adamant Tool + 5 hours clock", "adamantpack")}/>
+                <img className="zoom-playnow mx-2" src={addfundsbtn} alt="" onClick={() =>handleBundles(190,"Adamant Pack","Diamond Subscription + Adamant Tool + 5 hours clock", "adamantpack")}/>
                 </MDBCardFooter>
                 </MDBCard>
                 </MDBCol>

@@ -15,6 +15,7 @@ import { MDBContainer, MDBRow, MDBCol, MDBIcon,MDBTypography,MDBProgress, MDBPro
     MDBTable, 
     MDBTableHead, 
     MDBTableBody} from "mdb-react-ui-kit";
+import FlipCountdown from '@rumess/react-flip-countdown';
 import "./index.css";
 import appstore from "../../../assets/header/appstore.png"
 import biglogo from "../../../assets/header/big logo2.gif"
@@ -37,6 +38,8 @@ const Header = () => {
     const toggleShow = () => setBasicModal(!basicModal);
     const [basicModal1, setBasicModal1] = useState(false);
     const toggleShow1 = () => setBasicModal1(!basicModal1);
+    const [basicModal2, setBasicModal2] = useState(false);
+    const toggleShow2 = () => setBasicModal2(!basicModal2);
     const [isLoading, setIsLoading] = useState(false)
     const [initialbar, setInitialBar] = useState();
     const [totalbar, setTotalBar] = useState(0);
@@ -759,9 +762,12 @@ const Header = () => {
                 </MDBRow>
                 <MDBRow> 
                     <MDBCol className="my-3">
-                    <img src={donwloadnow} className="mx-lg-3 my-lg-0 my-2 img-fluid zoom-playnow" alt="" onClick={() => {
-                        window.location.href =  `${process.env.REACT_APP_API_URL}uploads/Monmonland.apk`
-                    }}/> 
+                    <img src={donwloadnow} className="mx-lg-3 my-lg-0 my-2 img-fluid zoom-playnow" alt="" 
+                    // onClick={() => {
+                    //     window.location.href =  `${process.env.REACT_APP_API_URL}uploads/Monmonland.apk`
+                    // }}
+                    onClick={toggleShow2}
+                    /> 
                     {/* <img 
                     src={appstore} 
                     className="mx-lg-3 my-lg-0 my-2 img-fluid zoom-playnow" 
@@ -769,9 +775,19 @@ const Header = () => {
                     // onClick={() => {
                     //     window.location.href =  `${process.env.REACT_APP_API_URL}uploads/Monmonland.apk`
                     // }}
-                    />  */}
-                                            
+                    />  */}       
                     </MDBCol>
+                    {/* <MDBCol>
+                    <FlipCountdown
+                        endAtZero
+                        hideYear
+                        hideMonth
+                        hideDay
+                        size='small'
+                        endAt={'2023-11-17 23:00:00'} // Date/Time
+                        onTimeUp={() => console.log("Time's up ⏳")}
+                    />
+                    </MDBCol> */}
                 </MDBRow>
         </MDBContainer>
             
@@ -840,6 +856,33 @@ const Header = () => {
         </MDBModalDialog>
       </MDBModal>
 
+      <MDBModal show={basicModal2} setShow={setBasicModal2} tabIndex='-1'>
+        <MDBModalDialog centered>
+          <MDBModalContent>
+            <MDBModalHeader className="seamless justify-content-center">
+              <MDBModalTitle className="text-white fw-bold ">Count Down</MDBModalTitle>
+              {/* <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn> */}
+            </MDBModalHeader>
+            <MDBModalBody className="h4 text-center pb-0">
+            <FlipCountdown
+              titlePosition='bottom'
+              endAtZero
+              hideYear
+              hideMonth
+              hideDay
+              size='small'
+              endAt={'2023-11-18 08:00:00'} // Date/Time
+              onTimeUp={() => console.log("Time's up ⏳")}
+            />
+            </MDBModalBody>
+            <MDBModalFooter className="seamless">
+              <MDBBtn color='secondary' onClick={toggleShow2}>
+                Close
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
       
         </>
     )
