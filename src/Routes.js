@@ -261,7 +261,7 @@ const Routers = () => {
       <Route path="/login" element={<Login />}/>
       <Route path="/media" element={<Media />}/>
       <Route path="/cashier" element={<AvailableCashiers/>}/>
-      <Route path="/topup" element={<TopUp />}/>
+      {/* <Route path="/topup" element={<TopUp />}/> */}
       <Route path="/payment/success" element={<SuccessPage/>} />
       <Route path="/payment/cancel" element={<CancelPage/>} />
       <Route path="/redirect" element={<TopUpRedirect/>} />

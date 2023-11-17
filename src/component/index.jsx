@@ -117,9 +117,9 @@ const Navbar = ({ links }) => {
               </MDBNavbarItem>
             ))}
             <MDBNavbarItem className="ms-lg-auto text-center px-4">
-                  <MDBNavbarLink>
+                  {/* <MDBNavbarLink>
                   <img src={playnow} id="joinnow" alt="" className="zoom-playnow mb-2" onClick={toggleShow}></img>
-                  </MDBNavbarLink>
+                  </MDBNavbarLink> */}
             </MDBNavbarItem>
             
           </MDBNavbarNav>
