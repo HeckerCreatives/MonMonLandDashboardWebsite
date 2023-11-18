@@ -60,6 +60,8 @@ const Header = () => {
     const [leaderboard, setLeaderboard] = useState(0);
     const [diamondpool, setDiamondPool] = useState(0)
     const [monmongem, setMonmongem] = useState(0)
+    const [mgaccumulated, setMgaccumulated] = useState(0)
+    
     const [mcpreviousmonth, setMcPreviousMonth] = useState(0);
     const seperator = (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -435,7 +437,21 @@ const Header = () => {
           setLeaderboard(data.data.leaderboard)
           setDiamondPool(data.data.diamondpools)
           setMonmongem(data.data.monstergem)
-          console.log(data.data.monstergem)
+        }
+      })
+      fetch(`${process.env.REACT_APP_API_URL}monmoncoin/find`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          coin: "Monster Gem"
+        })
+      })
+      .then(result => result.json())
+      .then(data => {
+        if(data.message === "success"){
+          setMgaccumulated(data.data.amount)
         }
       })
     },[]) 
@@ -557,7 +573,7 @@ const Header = () => {
                     
                     <MDBTypography className="fw-bold d-flex align-items-center" style={{fontSize: "2rem", color: "white"}}>$ {Mgprice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</MDBTypography> 
                     </MDBCardBody>
-                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Gem Farmed: 0</MDBCardFooter>
+                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Gem Farmed: {mgaccumulated.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</MDBCardFooter>
                     </MDBCard> 
 
                     </MDBCol>
@@ -878,7 +894,7 @@ const Header = () => {
               hideDay
               size='small'
               // endAt={'2023-11-18 00:36:00'}
-              endAt={'2023-11-18 08:00:00'}
+              endAt={'2023-11-19 12:00:00'}
               onTimeUp={() => setCountdown(true)}
             />
             </MDBModalBody>
