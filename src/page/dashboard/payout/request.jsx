@@ -252,7 +252,10 @@ const AdminPayoutRequest = () => {
                 </MDBTableBody>
             </MDBTable>
             <PaginationPagerQuery
-                total={total} page={page} setPage={setPage} isLoading={isloading}
+                total={total} 
+                page={page} 
+                setPage={setPage} 
+                isLoading={isloading}
             />
         </MDBContainer>
         <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1' staticBackdrop closeOnEsc={false}>

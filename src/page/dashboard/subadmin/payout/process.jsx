@@ -139,6 +139,78 @@ const SubAdminPayoutProcess = () => {
         })
     }
 
+    const handleReject = (id) => {
+        setIsLoading(true)
+        Swal.fire({
+            icon: "warning",
+            title: "Are you sure you want to reject this payout?",
+            text: "You won't be able to revert this",
+            showDenyButton: true,
+            confirmButtonText: "Confirm",
+            denyButtonText: "Cancel",
+        }).then(ok => {
+            if(ok.isConfirmed){
+                setIsLoading(false)
+                fetch(`${process.env.REACT_APP_API_URL}payout/reject/${id}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${auth?.token}`,
+                    },
+                    body: JSON.stringify({
+                        admin: auth.userName,
+                        adminId: auth._id,
+                        playfabid: auth.playfabid,
+                        playfabToken: playfabToken,
+                    })
+                }).then(result => result.json())
+                .then(data => {
+                    if(data.expired){
+                        Swal.fire({
+                          icon: "error",
+                          title: data.expired,
+                          text: "You Will Redirect to Login",
+                          allowOutsideClick: false,
+                          allowEscapeKey: false
+                        }).then(ok => {
+                          if(ok.isConfirmed){
+                            localStorage.removeItem("auth");
+                            localStorage.removeItem("playfabAdminAuthToken")
+                            window.location.replace("/login");
+                          }
+                        })
+                    } else {
+                        if(data.message === "success" && !data.expired){
+                            setIsLoading(false)
+                            Swal.fire({
+                                icon: "success",
+                                title: "Payout Rejected",
+                            }).then(ok=> {
+                                if(ok.isConfirmed){
+                                    window.location.reload()
+                                }
+                            })
+                        } else {
+                            setIsLoading(false)
+                            Swal.fire({
+                                icon: "error",
+                                title: data.data,
+                            }).then(ok=> {
+                                if(ok.isConfirmed){
+                                    window.location.reload()
+                                }
+                            })
+                        }
+                    }
+
+                    
+                })
+            } else {
+                setIsLoading(false)
+            }
+        })
+    }
+    
     // Define a function to calculate the time difference in hours
     function calculateTimeDifference(createdAt) {
         const createdAtDate = new Date(createdAt);
@@ -247,7 +319,9 @@ const SubAdminPayoutProcess = () => {
                             <MDBBtn block disabled={!imageStatus[i]} className="m-1" onClick={() => handleDone(data._id)}>
                             {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Done"}
                             </MDBBtn>
-                            
+                            <MDBBtn onClick={() => handleReject(data._id)}>
+                            {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Reject"}
+                            </MDBBtn>
                             {/* <UploadWidget
                             setfileName={handleFilename} 
                             setImgUrl={(url) => handleImgUrl(url, i)}
