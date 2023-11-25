@@ -721,7 +721,7 @@ const AdminDashboard = () => {
             <DashCard 
               colSpan="4"
               icon={`dollar-sign`}
-              thtitle={`Total Top-Up`}
+              thtitle={`Total Sales`}
               cardtoptext={AutoAndManual  ? AutoAndManual?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }): 0}
               txtsup={``} 
               td1={true}
@@ -743,7 +743,7 @@ const AdminDashboard = () => {
               quest={quest}
               colSpan="4"
               icon={`dollar-sign`} 
-              thtitle={`Subscription Accumulated`} 
+              thtitle={`Total Subscription`} 
               cardtoptext={totalaccumulated?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               td1={true}
               td1txttop={pearlaccumulated?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -763,7 +763,7 @@ const AdminDashboard = () => {
           <DashCard 
               colSpan="4"
               icon={`shopping-bag`}
-              thtitle={`Merchandise`}
+              thtitle={`Total Merchandise`}
               cardtoptext={totalmerchandise ? `${totalmerchandise}`: 0}
               td1={true}
               td1txttop={tools}
