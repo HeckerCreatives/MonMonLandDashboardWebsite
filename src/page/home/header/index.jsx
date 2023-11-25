@@ -894,7 +894,7 @@ const Header = () => {
               hideDay
               size='small'
               // endAt={'2023-11-18 00:36:00'}
-              endAt={'2023-11-19 12:00:00'}
+              endAt={'2023-11-25 21:00:00'}
               onTimeUp={() => setCountdown(true)}
             />
             </MDBModalBody>
