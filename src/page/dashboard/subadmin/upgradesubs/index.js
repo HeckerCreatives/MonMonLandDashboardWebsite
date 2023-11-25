@@ -5,7 +5,8 @@ import { MDBContainer, MDBBtn, MDBBadge, MDBRow, MDBCol, MDBTable, MDBTableHead,
     MDBModalHeader,
     MDBModalTitle,
     MDBModalBody,
-    MDBModalFooter,} from "mdb-react-ui-kit";
+    MDBModalFooter,
+    MDBTypography,} from "mdb-react-ui-kit";
 import Swal from "sweetalert2";
 import { Toast } from "../../../../component/utils";
 import Breadcrumb from "../../../../component/breadcrumb";
@@ -18,6 +19,8 @@ import { handlePagination } from "../../../../component/utils"
 import  { UpgradeSubscriptionApi }  from "../../../../component/playfab/playfabupgrade";
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
 import io from "socket.io-client"
+import { Howl } from 'howler'
+import chatsound from '../../../../assets/chatsound.mp3'
 const socket = io(process.env.REACT_APP_API_URL)
 const SubAdminUpgradeSubscriptionManual = () => {
     const [bibiliuserid, setBibiliUserId] = useState("");
@@ -34,6 +37,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
           [receipt, setReceipt] = useState(""),
           [filename, setFilename] = useState(""),
           [isloading, setIsLoading] = useState(false),
+          [userinline, setUserinline] = useState([]),
           [total, setTotal] = useState(0);
     const auth = JSON.parse(localStorage.getItem("auth"))
     const playfabToken = localStorage.getItem("playfabAdminAuthToken")
@@ -83,6 +87,14 @@ const SubAdminUpgradeSubscriptionManual = () => {
         })
         },[])
 
+        const playBellSound = () => {
+            const sound = new Howl({
+              src: [chatsound], // Replace with the actual path to your sound file
+            });
+        
+            sound.play();
+        };
+
         useEffect(()=>{
             socket.on('playerdetails', (data) => {
                 currenturn = data.username;
@@ -90,6 +102,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 setBibiliUser(data?.username)
                 setBibiliUserPlayfabid(data?.playfabid)
                 setBuyer(data?.transaction)
+                playBellSound()
             })
 
             return () => {
@@ -155,6 +168,12 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 setTopUp("")
             })
 
+            
+            socket.on("playersinline", (data) => {
+                setUserinline(data)
+                console.log(data)
+            })
+
             return () => {
                 // Clean up your socket event listener when the component unmounts
                 socket.off('adminrefreshlist');
@@ -162,6 +181,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 socket.off('onlinenga');
                 socket.off('canceleduse');
                 socket.off('selectsubs');
+                socket.off("usersinline");
             }
         },[currenturn, topup])
 
@@ -431,6 +451,37 @@ const SubAdminUpgradeSubscriptionManual = () => {
         setFilename(url);
       };
 
+      const Ikick = () => {
+        Swal.fire({
+            icon: "warning",
+            title: "Are you sure ?",
+            text: "You want to finish transaction",
+            showDenyButton: true,
+            confirmButtonText: "Confirm",
+            denyButtonText: "Cancel",
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          }).then(e => {
+              if(e.isConfirmed){
+              
+              fetch(`${process.env.REACT_APP_API_URL}upload/deletetemp`, {
+                  method: "POST",
+                  headers: {
+                    "Accept": "application/json"
+                  },
+                  body: JSON.stringify({ownerId: auth._id})
+                }).then(result => result.json())
+                .then((data)=> {
+                  if(data){
+                  socket.emit('doneTransactionAdmin', {room: auth._id, buyer: bibiliuserid});
+                  
+                  }
+                  
+                })
+              }
+          })
+      }
+
       return(
           <>
           <MDBRow>
@@ -588,57 +639,106 @@ const SubAdminUpgradeSubscriptionManual = () => {
                           </MDBRow>
                           <hr/>
                           <MDBRow>
+                                  <MDBCol>
+                                    <MDBTypography className="fw-bold">
+                                        Current Transaction User
+                                    </MDBTypography>
+                                  <div className="offset-lg-2 col-lg-10">
+                                  <MDBCardText className="text-mute d-flex mt-2">Username:
+                                  &nbsp; {userinline.length !== 0 ? userinline[0][Object.keys(userinline[0])[0]].username : ""}
+                                  </MDBCardText>                                
+                                  </div>
+                                  <div className="offset-lg-2 col-lg-10">
+                                  <MDBBtn type="button" className="text-mute d-flex mt-2" onClick={Ikick}>
+                                  Kick
+                                  </MDBBtn>                                
+                                  </div>
+                                    <MDBTypography className="fw-bold mt-4">
+                                        Transaction Queue
+                                    </MDBTypography>
+                                    <MDBTable align='middle' className="border mt-4" responsive>
+                                        <MDBTableHead className="head text-center">
+                                            <tr >
+                                            <th className="fw-bold" scope='col'>Queue Number</th>
+                                            <th className="fw-bold" scope='col'>Username</th>
+                                            </tr>
+                                        </MDBTableHead>
+                                        <MDBTableBody className="text-center">
+                                        {
+                                            userinline.length > 1 ? 
+                                            userinline.slice(1).map((item, index) => {
+                                            const userId = Object.keys(item)[0];
+                                            const username = item[userId].username;
+                                            return (
+                                                <tr key={userId}>
+                                                <td>{index + 1}</td>
+                                                <td>{username}</td>
+                                                </tr>
+                                            );
+                                            }) 
+                                            : 
+                                        <tr>
+                                            <td colSpan={2}>No Data</td>
+                                        </tr>
+                                        }                
+                                        
+                                        </MDBTableBody>
+                                    </MDBTable>
+                                  </MDBCol>
+                          </MDBRow>
+                          <hr/>
+                          <MDBRow>
                               <MDBCol>
                               <div>
                               <MDBCardText className="fw-bold">Payment History</MDBCardText>
                               </div>
                               <MDBTable align='middle' className="border mt-4" responsive>
-                  <MDBTableHead className="head text-center">
-                      <tr >
-                      <th className="fw-bold" scope='col'>Date Created</th>
-                      <th className="fw-bold" scope='col'>Cashier Username</th>
-                      <th className="fw-bold" scope='col'>Transaction Number</th>
-                      <th className="fw-bold" scope='col'>Price</th>
-                      <th className="fw-bold" scope='col'>Client Username</th>
-                      <th className="fw-bold" scope='col'>Receipt</th>
-                      </tr>
-                  </MDBTableHead>
-                  <MDBTableBody className="text-center">                
-                  {history.length !== 0 ? 
-                      <>
-                  {handlePagination(history, page, 2)?.map((data,i) =>(
-                  <tr key={`game-${i}`}>
-                  <td>{new Date(data.createdAt).toLocaleString()}</td>
-                  <td>
-                      {data.cashier}
-                  </td>
-                  <td>
-                      {data.transactionnumber}
-                  </td>
-                  <td>
-                      {`$${data.price}`}
-                  </td>
-                  <td>
-                      {data.clientusername}
-                  </td>
-                  <td>
-                  <MDBBtn 
-                  onClick={() => {
-                    setReceipt(data.image)
-                    toggleShow()
-                  }}>
-                    View Receipt
-                  </MDBBtn>
-                  </td>                
-                  </tr>
-                  ))}
-                  </>
-                  :
-                  <tr>
-                    <td colSpan={6}>No Data</td>
-                  </tr>}
-                      
-                  </MDBTableBody>
+                                <MDBTableHead className="head text-center">
+                                    <tr >
+                                    <th className="fw-bold" scope='col'>Date Created</th>
+                                    <th className="fw-bold" scope='col'>Cashier Username</th>
+                                    <th className="fw-bold" scope='col'>Transaction Number</th>
+                                    <th className="fw-bold" scope='col'>Price</th>
+                                    <th className="fw-bold" scope='col'>Client Username</th>
+                                    <th className="fw-bold" scope='col'>Receipt</th>
+                                    </tr>
+                                </MDBTableHead>
+                                    <MDBTableBody className="text-center">                
+                                    {history.length !== 0 ? 
+                                        <>
+                                    {handlePagination(history, page, 2)?.map((data,i) =>(
+                                    <tr key={`game-${i}`}>
+                                    <td>{new Date(data.createdAt).toLocaleString()}</td>
+                                    <td>
+                                        {data.cashier}
+                                    </td>
+                                    <td>
+                                        {data.transactionnumber}
+                                    </td>
+                                    <td>
+                                        {`$${data.price}`}
+                                    </td>
+                                    <td>
+                                        {data.clientusername}
+                                    </td>
+                                    <td>
+                                    <MDBBtn 
+                                    onClick={() => {
+                                        setReceipt(data.image)
+                                        toggleShow()
+                                    }}>
+                                        View Receipt
+                                    </MDBBtn>
+                                    </td>                
+                                    </tr>
+                                    ))}
+                                    </>
+                                    :
+                                    <tr>
+                                        <td colSpan={6}>No Data</td>
+                                    </tr>}
+                                        
+                                    </MDBTableBody>
                               </MDBTable>
                               <PaginationPager
                               total={total} page={page} setPage={setPage}/>

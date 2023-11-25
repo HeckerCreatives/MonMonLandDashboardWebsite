@@ -14,6 +14,8 @@ import CashierStep1 from "./steps/step1";
 import CashierStep2 from "./steps/step2";
 import io from "socket.io-client"
 import "./index.css"
+import { Howl } from 'howler'
+import chatsound from '../../../assets/chatsound.mp3'
 const socket = io(process.env.REACT_APP_API_URL)
 
 const AvailableCashiers = () => {
@@ -39,6 +41,15 @@ const AvailableCashiers = () => {
     const toggleShow1 = () => setBasicModal(!basicModal);
     const [ isLoading, setIsLoading ] = useState(false)
     const [kasyer, setkasyer] = useState([])
+
+    const playBellSound = () => {
+        const sound = new Howl({
+          src: [chatsound], // Replace with the actual path to your sound file
+        });
+    
+        sound.play();
+    };
+
     function generateRandomString() {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         let randomString = '';
@@ -150,12 +161,13 @@ const AvailableCashiers = () => {
                         allowEscapeKey: false,                    
                     }).then(ok => {
                         if(ok.isConfirmed){
-                            const url = new URL(window.location.href);
-                    const params = new URLSearchParams(url.search);
+                        const url = new URL(window.location.href);
+                        const params = new URLSearchParams(url.search);
 
-                    const username = params.get('username');
-                    
-                    socket.emit('playerready', {room: cashier?.item[0]?.userId._id, username: username})
+                        const username = params.get('username');
+                        
+                        socket.emit('playerready', {room: cashier?.item[0]?.userId._id, username: username})
+                        playBellSound()
                         }
                     })
                 }
@@ -248,6 +260,7 @@ const AvailableCashiers = () => {
     
                         localStorage.setItem("userbuyer", JSON.stringify(byr))
                         socket.emit('joinroom', { username: username, roomid: user.item[0].userId._id, playfabid: id, transaction: data, reconnect: false, isplayer: true});
+                        // socket.emit("usersinline", {room: user.item[0].userId._id})
                         setIsLoading(false)
                     
                 } else if (!username || !id){
