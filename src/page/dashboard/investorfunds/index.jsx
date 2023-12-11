@@ -157,7 +157,7 @@ const Investorfunds = () => {
                     
                 </MDBTableBody>
             
-            </MDBTable>
+        </MDBTable>
             <PaginationPager
                 total={total} page={page} setPage={setPage}
             />

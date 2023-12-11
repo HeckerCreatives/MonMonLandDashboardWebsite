@@ -78,6 +78,18 @@ import Leaderboard from "./page/dashboard/Leaderboard";
 import CreateMarketingAccount from "./page/dashboard/manageaccount/marketingarm";
 import MarketingDashboard from "./page/dashboard/marketingarm/marketingdashboard";
 import Investorfunds from "./page/dashboard/investorfunds";
+import Exchangerate from "./page/dashboard/exchangerate";
+import PlayerDashboard from "./page/dashboard/player";
+import Network from "./page/dashboard/player/network";
+import PlayerLeaderboard from "./page/dashboard/player/leaderboard";
+import PlayerNews from "./page/dashboard/player/news";
+import PlayerProfile from "./page/dashboard/player/Profile";
+import PlayerWalletHistory from "./page/dashboard/player/history/wallethistory";
+import PlayerIncomeHistory from "./page/dashboard/player/history/totalincomehistory";
+import PlayerMCHistory from "./page/dashboard/player/history/monstercoinhistory";
+import PlayerMGUnilevelHistory from "./page/dashboard/player/history/monstergemunilevel";
+import PlayerMGGrindHistory from "./page/dashboard/player/history/monstergemgrind";
+import Trade from "./page/dashboard/trade";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -139,6 +151,8 @@ const Routers = () => {
           <Route path="updateads" element={<Advertisement />}/>
           <Route path="updateleaderboard" element={<Leaderboard />}/>
           <Route path="updateinvestorfunds" element={<Investorfunds />}/>
+          <Route path="updateusdrate" element={<Exchangerate />}/>
+          <Route path="updatetrade" element={<Trade />}/>
         </Route>
 
         <Route path="userlogs">
@@ -184,6 +198,7 @@ const Routers = () => {
           <Route path="updatenews" element={<UpdateNews/>}/>
           <Route path="updateroadmap" element={<UpdateRoadmap/>}/>
           <Route path="updategames" element={<Games/>}/>
+          <Route path="updateusdrate" element={<Exchangerate />}/>
         </Route>  
 
         <Route path="userlogs">
@@ -220,6 +235,19 @@ const Routers = () => {
 
         <Route path="Marketing" element={""}>
             <Route path="home" element={<MarketingDashboard/>}/>
+        </Route>
+
+        <Route path="Player" element={""}>
+            <Route path="home" element={<PlayerDashboard/>}/>
+            <Route path="network" element={<Network/>}/>
+            <Route path="leaderboard" element={<PlayerLeaderboard/>}/>
+            <Route path="news" element={<PlayerNews/>}/>
+            <Route path="profile" element={<PlayerProfile/>}/>
+            <Route path="wallethistory" element={<PlayerWalletHistory/>}/>
+            <Route path="totalincomehistory" element={<PlayerIncomeHistory/>}/>
+            <Route path="monstercoinhistory" element={<PlayerMCHistory/>}/>
+            <Route path="monstergemunilevel" element={<PlayerMGUnilevelHistory/>}/>
+            <Route path="monstergemgrind" element={<PlayerMGGrindHistory/>}/>
         </Route>
       </Route>
       {/* <Route

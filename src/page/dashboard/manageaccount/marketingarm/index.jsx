@@ -47,7 +47,7 @@ import { MDBBtn, MDBCol, MDBContainer, MDBIcon, MDBInput, MDBRow,
       .then(result => result.json())
       .then(data => {
         const today = new Date().toLocaleDateString();
-        const filtercsr = data.filter(e => e.roleId.display_name === "Player" && e.banned === false)
+        const filtercsr = data.filter(e => e.roleId.display_name === "Marketing" && e.banned === false)
         const todays = filtercsr.filter(e => {
           const createdAtDate = new Date(e.createdAt).toLocaleDateString();
           return createdAtDate === today;

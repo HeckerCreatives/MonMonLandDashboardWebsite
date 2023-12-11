@@ -31,7 +31,7 @@ const Dashboard = () => {
   
     let link;
     switch (auth.roleId?.display_name) {
-      case "Administrator":
+    case "Administrator":
       link = [
         {
             name: "Dashboard",
@@ -124,10 +124,7 @@ const Dashboard = () => {
           path: "",
           icon: "cog",
           children: [
-            {
-              name: "Additional",
-              path: "/dashboard/Administrator/settings/updatetotalincome",
-            },                
+                           
             {
               name: "Games",
               path: "/dashboard/Administrator/settings/updategames",
@@ -140,15 +137,35 @@ const Dashboard = () => {
               name: "Roadmap",
               path: "/dashboard/Administrator/settings/updateroadmap",
             },
-            {
-              name: "Advertisement",
-              path: "/dashboard/Administrator/settings/updateads",
-            },
-            {
-              name: "Investor Funds",
-              path: "/dashboard/Administrator/settings/updateinvestorfunds",
-            },
+            
           ],
+      },
+      {
+        name: "Currency",
+        path: "",
+        icon: "dollar-sign",
+        children: [
+          {
+            name: "Additional",
+            path: "/dashboard/Administrator/settings/updatetotalincome",
+          },  
+          {
+            name: "Advertisement",
+            path: "/dashboard/Administrator/settings/updateads",
+          },
+          {
+            name: "Investor Funds",
+            path: "/dashboard/Administrator/settings/updateinvestorfunds",
+          },
+          {
+            name: "Usd Exchange Rate",
+            path: "/dashboard/Administrator/settings/updateusdrate",
+          },
+          {
+            name: "Trade",
+            path: "/dashboard/Administrator/settings/updatetrade",
+          },
+        ],
       },
       {
         name: "Subscription",
@@ -363,7 +380,7 @@ const Dashboard = () => {
       
     ];
     break;
-    case "Player": 
+    case "Marketing": 
      link = [
       {
         name: "DASHBOARD",
@@ -373,7 +390,7 @@ const Dashboard = () => {
       },
      ];
      break;
-     case "Agent": 
+    case "Agent": 
      link = [
       {
         name: "DASHBOARD",
@@ -473,6 +490,79 @@ const Dashboard = () => {
     },
      ];
      break;
+    case "Player": 
+     link = [
+      {
+        name: "DASHBOARD",
+        path: "/dashboard/Player/home",
+        icon: "home",
+        children: [],
+      },
+      {
+        name: "Network",
+        path: "/dashboard/Player/network",
+        icon: "bezier-curve",
+        children: [],
+      },
+      {
+        name: "Add Funds",
+        path: "/topup",
+        icon: "credit-card",
+        children: [],
+      },
+      {
+        name: "Leaderboard",
+        path: "/dashboard/Player/leaderboard",
+        icon: "trophy",
+        children: [],
+      },
+      {
+        name: "Payout",
+        path: "/dashboard/Player/home",
+        icon: "money-bill-alt",
+        children: [],
+      },
+      {
+        name: "News",
+        path: "/dashboard/Player/news",
+        icon: "newspaper",
+        children: [],
+      },
+      {
+        name: "Profile",
+        path: "/dashboard/Player/profile",
+        icon: "user-edit",
+        children: [],
+      },
+      {
+        name: "History",
+        path: "",
+        icon: "history",
+        children: [
+          {
+            name: "Wallet",
+            path: "/dashboard/Player/wallethistory",
+          },
+          {
+            name: "Total Income Wallet",
+            path: "/dashboard/Player/totalincomehistory",
+          },
+          {
+            name: "Monster Coin Wallet",
+            path: "/dashboard/Player/monstercoinhistory",
+          },
+          {
+            name: "Monster Gem Unilevel",
+            path: "/dashboard/Player/monstergemunilevel",
+          },
+          {
+            name: "Monster Gem Grind",
+            path: "/dashboard/Player/monstergemgrind",
+          },
+        ],
+      },
+     ];
+     break
      default:
     }
     

@@ -13,9 +13,10 @@ const MarketingDashboard = () => {
     const [totalsubsaccu, setTotalSubsAccu] = useState(0);
     const navigate = useNavigate()
     const [marketing, setMarketing] = useState(0)
+
   useEffect(() => {
       if (auth) {
-        if (auth.roleId.display_name !== "Player") {
+        if (auth.roleId.display_name !== "Marketing") {
           localStorage.removeItem("auth");
           navigate("/login");
         }

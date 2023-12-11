@@ -55,7 +55,8 @@ const AdminDashboard = () => {
     const [incentives, setIncentives] = useState(0)
     const [monstergem, setMonstergem] = useState(0)
     const [unilevelmonstergem, setUnilevelMg] = useState(0)
-
+    const [tradepayin, setTradepayin] = useState(0)
+    const [trademerchandise, setTrademerchandise] = useState(0)
   useEffect(() => {
     if (auth) {
       if (auth.roleId.display_name !== "Administrator") {
@@ -704,6 +705,8 @@ const AdminDashboard = () => {
         setIncentives(data.data.incentives)
         setUnilevelMg(data.data.unilevelmonstergem)
         setMonstergem(data.data.monstergem)
+        setTradepayin(data.data.tradepayin)
+        setTrademerchandise(data.data.trademerchandise)
       }
     })
   },[])
@@ -832,7 +835,20 @@ const AdminDashboard = () => {
               td4txtbot={`Diamond`}
               />
           </MDBCol>
-          
+          <MDBCol className="col-lg-4 my-2">
+            <DashCard 
+              colSpan="4"
+              icon={`chart-line`} 
+              thtitle={`Trade`}
+              cardtoptext={tradepayin + trademerchandise}
+              td1={true}
+              td1txttop={tradepayin}
+              td1txtbot={`Payin`} 
+              td2={true}
+              td2txttop={trademerchandise}
+              td2txtbot={`Merchandise`}
+              />
+          </MDBCol>
         </MDBRow>
         <br/>
         <MDBTypography tag={`h2`}>Complan</MDBTypography>

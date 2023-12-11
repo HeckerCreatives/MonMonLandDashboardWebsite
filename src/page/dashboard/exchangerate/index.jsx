@@ -1,58 +1,59 @@
-import { MDBContainer, MDBRow, MDBCol ,MDBCard , MDBCardBody, MDBIcon, MDBInput, MDBBtn, MDBTable, MDBTableHead, MDBTableBody} from "mdb-react-ui-kit";
-import React , {useEffect, useState} from "react";
+import { MDBContainer,MDBRow, MDBCol ,MDBCard , MDBCardBody, MDBIcon, MDBInput, MDBBtn, MDBTable, MDBTableHead, MDBTableBody} from "mdb-react-ui-kit";
+import React , {useState} from "react";
 import Breadcrumb from "../../../component/breadcrumb";
-import { handlePagination } from "../../../component/utils";
 import Swal from "sweetalert2";
+import { useEffect } from "react";
+import { handlePagination } from "../../../component/utils";
 import PaginationPager from "../../../component/pagination";
-const Advertisement = () => {
+const Exchangerate = () => {
+    const auth = JSON.parse(localStorage.getItem("auth"))
+    const [usdratehistory, setUsdratehistory] = useState([]);
     const [totalnum, setTotalNum] = useState(0);
-    const [adshistory, setAdshistory] = useState([]);
-    const auth = JSON.parse(localStorage.getItem("auth")),
-    [page, setPage] = useState(1),
-    [total, setTotal] = useState(0);
+    const [page, setPage] = useState(1)
+    const [total, setTotal] = useState(0);
 
     useEffect(() => {
-    let totalPages = Math.floor(adshistory.length / 5);
-    if (adshistory.length % 5 > 0) totalPages += 1;
+    let totalPages = Math.floor(usdratehistory.length / 5);
+    if (usdratehistory.length % 5 > 0) totalPages += 1;
     setTotal(totalPages);
-    }, [adshistory]);
+    }, [usdratehistory]);
 
     useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}ads/findhistory`, {
-        method:'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${auth?.token}`,
-        }
-    })
-    .then(result => result.json())
-    .then(data => {
-        if(data.expired){
-            Swal.fire({
-              icon: "error",
-              title: data.expired,
-              text: "You Will Redirect to Login",
-              allowOutsideClick: false,
-              allowEscapeKey: false
-            }).then(ok => {
-              if(ok.isConfirmed){
-                localStorage.removeItem("auth");
-                localStorage.removeItem("playfabAdminAuthToken")
-                window.location.replace("/login");
-              }
-            })
-        } else {
-            if(!data.expired){
-                setAdshistory(data.data)
+        fetch(`${process.env.REACT_APP_API_URL}usdrate/findhistory`, {
+            method:'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${auth?.token}`,
             }
-        }
-    })
+        })
+        .then(result => result.json())
+        .then(data => {
+            if(data.expired){
+                Swal.fire({
+                  icon: "error",
+                  title: data.expired,
+                  text: "You Will Redirect to Login",
+                  allowOutsideClick: false,
+                  allowEscapeKey: false
+                }).then(ok => {
+                  if(ok.isConfirmed){
+                    localStorage.removeItem("auth");
+                    localStorage.removeItem("playfabAdminAuthToken")
+                    window.location.replace("/login");
+                  }
+                })
+            } else {
+                if(!data.expired){
+                    setUsdratehistory(data.data)
+                }
+            }
+        })
     },[])
-    
+
     const updateadsamount = (e) => {
         e.preventDefault();
 
-        fetch(`${process.env.REACT_APP_API_URL}ads/update`, {
+        fetch(`${process.env.REACT_APP_API_URL}usdrate/update`, {
             method:'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -103,9 +104,9 @@ const Advertisement = () => {
 
     }
 
-    return(
-        <MDBContainer fluid>
-        <Breadcrumb title="Landing Page Ads" paths={[]}/>
+    return (
+        <MDBContainer>
+        <Breadcrumb title="Landing Page Exchange Rate" paths={[]}/>
         <MDBRow className="my-4 align-items-center justify-content-center">
         <MDBCol md={6}  className="mt-3">
         <form onSubmit={e => updateadsamount(e)}>
@@ -113,15 +114,16 @@ const Advertisement = () => {
             <MDBCardBody>
             <MDBRow>
                 
-                <div style={{background: "#556EE6", padding: "8px", borderRadius: "5px", height: "50px", width: "50px"}}>
-                <MDBIcon size="2x" icon='coins' color="white"/>
+                <div style={{background: "#556EE6", padding: "8px", borderRadius: "5px", height: "50px", width: "50px"}} className="text-center">
+                <MDBIcon size="2x" fas icon='dollar-sign' color="white"/>
                 </div>
                 <MDBCol>
                 <MDBInput 
-                label='Total Ads' 
-                id='form2' type='number'
-                step="any"
-                pattern="[0-9]+([.,][0-9]+)?"  
+                label='Exchange Rate' 
+                id='form2' 
+                type='number'
+                step="any" 
+                pattern="[0-9]+([.,][0-9]+)?" 
                 onChange={e => setTotalNum(e.target.value)} className="mb-3"/>
                 </MDBCol>
             </MDBRow>
@@ -135,10 +137,9 @@ const Advertisement = () => {
         
         </MDBCol> 
         </MDBRow>
-        
         <MDBContainer>
         <MDBTable align='middle' className="border mt-4" responsive>
-                <MDBTableHead className="head">
+                <MDBTableHead className="head text-center">
                     <tr >
                     <th className="fw-bold" scope='col'>Entered Amount</th>
                     <th className="fw-bold" scope='col'>Date Created</th>
@@ -146,8 +147,8 @@ const Advertisement = () => {
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody>
-                {handlePagination(adshistory, page, 5)?.map((history, i)=>(
-                    <tr key={i}>
+                {handlePagination(usdratehistory, page, 5)?.map((history, i)=>(
+                    <tr key={i} className="text-center">
                     <td>
                     {history.enteredamount}
                     </td>
@@ -162,7 +163,7 @@ const Advertisement = () => {
                     
                 </MDBTableBody>
             
-            </MDBTable>
+        </MDBTable>
             <PaginationPager
                 total={total} page={page} setPage={setPage}
             />
@@ -171,4 +172,4 @@ const Advertisement = () => {
     )
 }
 
-export default Advertisement;
+export default Exchangerate;

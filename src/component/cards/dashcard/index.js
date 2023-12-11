@@ -22,29 +22,7 @@ import
 from "mdb-react-ui-kit";
 
 const DashCard = ({txtsup, icon, cardtoptext, colSpan, thtitle, td1, td1txttop, td1txtbot, td2, td2txttop, td2txtbot,td3, td3txttop, td3txtbot, td4, td4txttop, td4txtbot, td0, td0txttop, td0txtbot, flipbtn, basicModal, setBasicModal,distri, leaderboard, grinding, quest}) => {
-    // const [payin1, setpayin1] = useState(0)
-    // const [payin2, setpayin2] = useState(0)
-    // const [payin3, setpayin3] = useState(0)
-    // const [payin4, setpayin4] = useState(0)
-    // const [payin5, setpayin5] = useState(0)
-    // const [payin6, setpayin6] = useState(0)
-    // const [payin7, setpayin7] = useState(0)
-    // const [payin8, setpayin8] = useState(0)
-    // const [payin9, setpayin9] = useState(0)
-    // const [payin10, setpayin10] = useState(0)
-    // const distri = 20
-    // useEffect(()=>{
-    //     setpayin1(distri * .25)
-    //     setpayin2(distri * .02)
-    //     setpayin3(distri * .12)
-    //     setpayin4(distri * .05)
-    //     setpayin5(distri * .01)
-    //     setpayin6(distri * .05)
-    //     setpayin7(distri * .05)
-    //     setpayin8(distri * .40)
-    //     setpayin9(distri * .03)
-    //     setpayin10(distri * .02)
-    // },[distri])
+   
 return(
     <>
     <MDBCard className="text-center text-light fw-bold" style={{background: "linear-gradient(to right, #fd9566 , #feb697)"}}>          
@@ -158,34 +136,34 @@ return(
                      25%
                      </td>
                      <td>
-                     1%
+                     0%
                      </td>
                      <td>
-                     22%
+                     15%
                      </td>
                      <td>
-                     5%
+                     0%
                      </td>
                      <td>
-                     2%
-                     </td>
-                     <td>
-                     5%
+                     0%
                      </td>
                      <td>
                      5%
                      </td>
                      <td>
-                     25%
+                     5%
                      </td>
                      <td>
-                      2%
+                     10%
                      </td>
                      <td>
-                       2%
+                      0%
+                     </td>
+                     <td>
+                       0%
                      </td>  
                      <td>
-                       6%
+                       5%
                      </td>    
                     </tr>
                     <tr>
@@ -193,37 +171,37 @@ return(
                         Merchandise
                      </td>
                      <td>
-                     25%
+                     17%
                      </td>
                      <td>
-                     2%
+                     0%
                      </td>
                      <td>
-                     30%
+                     20%
                      </td>
                      <td>
-                     5%
+                     0%
                      </td>
                      <td>
-                     3%
-                     </td>
-                     <td>
-                     5%
+                     0%
                      </td>
                      <td>
                      5%
                      </td>
                      <td>
-                     10%
+                     5%
                      </td>
                      <td>
-                      2%
+                     5%
                      </td>
                      <td>
-                       3%
+                      0%
+                     </td>
+                     <td>
+                      0%
                      </td> 
                      <td>
-                       10%
+                       13%
                      </td>   
                     </tr>
                     <tr>
@@ -231,37 +209,37 @@ return(
                         Tools
                      </td>
                      <td>
-                     25%
+                     17%
                      </td>
                      <td>
-                     2%
+                     0%
                      </td>
                      <td>
-                     30%
+                     20%
                      </td>
                      <td>
-                     5%
+                     0%
                      </td>
                      <td>
-                     3%
-                     </td>
-                     <td>
-                     5%
+                     0%
                      </td>
                      <td>
                      5%
                      </td>
                      <td>
-                     10%
+                     5%
                      </td>
                      <td>
-                      2%
+                     5%
                      </td>
                      <td>
-                       3%
+                      0%
+                     </td>
+                     <td>
+                      0%
                      </td> 
                      <td>
-                       10%
+                       13%
                      </td>       
                     </tr>
                     <tr>
@@ -310,13 +288,10 @@ return(
                      0%
                      </td>
                      <td>
-                     0%
+                     10%
                      </td>
                      <td>
-                     50%
-                     </td>
-                     <td>
-                     0%
+                     20%
                      </td>
                      <td>
                      0%
@@ -325,19 +300,22 @@ return(
                      0%
                      </td>
                      <td>
+                     10%
+                     </td>
+                     <td>
                      0%
                      </td>
                      <td>
-                     50%
+                     25%
                      </td>
                      <td>
-                      0%
+                      5%
                      </td>
                      <td>
-                      0%
+                      5%
                      </td>   
                      <td>
-                       0%
+                       20%
                      </td>       
                     </tr>
                 </MDBTableBody>
