@@ -125,6 +125,7 @@ return(
 
                     <th className="fw-bold" scope='col'>Travel / Special Incentives</th>
                     <th className="fw-bold" scope='col'>Monster Gem</th>
+                    <th className="fw-bold" scope='col'>Trading (from payin/tools)</th>
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody className="text-center">
@@ -136,54 +137,57 @@ return(
                      25%
                      </td>
                      <td>
-                     0%
-                     </td>
-                     <td>
-                     15%
-                     </td>
-                     <td>
-                     0%
-                     </td>
-                     <td>
-                     0%
+                     3%
                      </td>
                      <td>
                      5%
                      </td>
                      <td>
+                     0%
+                     </td>
+                     <td>
+                     2%
+                     </td>
+                     <td>
+                     2%
+                     </td>
+                     <td>
+                     3%
+                     </td>
+                     <td>
                      5%
                      </td>
                      <td>
-                     10%
+                      3%
                      </td>
                      <td>
-                      0%
-                     </td>
-                     <td>
-                       0%
+                       2%
                      </td>  
                      <td>
                        5%
-                     </td>    
+                     </td> 
+                     <td>
+                       45%
+                     </td>   
                     </tr>
                     <tr>
                      <td className="fw-bold text-warning">
                         Merchandise
                      </td>
                      <td>
-                     17%
+                     22%
+                     </td>
+                     <td>
+                     3%
+                     </td>
+                     <td>
+                     5%
                      </td>
                      <td>
                      0%
                      </td>
                      <td>
-                     20%
-                     </td>
-                     <td>
-                     0%
-                     </td>
-                     <td>
-                     0%
+                     3%
                      </td>
                      <td>
                      5%
@@ -195,13 +199,16 @@ return(
                      5%
                      </td>
                      <td>
-                      0%
+                      2%
                      </td>
                      <td>
-                      0%
+                      5%
                      </td> 
                      <td>
-                       13%
+                      5%
+                     </td> 
+                     <td>
+                     40%
                      </td>   
                     </tr>
                     <tr>
@@ -209,19 +216,19 @@ return(
                         Tools
                      </td>
                      <td>
-                     17%
+                     22%
+                     </td>
+                     <td>
+                     3%
+                     </td>
+                     <td>
+                     5%
                      </td>
                      <td>
                      0%
                      </td>
                      <td>
-                     20%
-                     </td>
-                     <td>
-                     0%
-                     </td>
-                     <td>
-                     0%
+                     3%
                      </td>
                      <td>
                      5%
@@ -233,13 +240,16 @@ return(
                      5%
                      </td>
                      <td>
-                      0%
+                      2%
                      </td>
                      <td>
-                      0%
+                      5%
                      </td> 
                      <td>
-                       13%
+                      5%
+                     </td> 
+                     <td>
+                     40%
                      </td>       
                     </tr>
                     <tr>
@@ -278,7 +288,10 @@ return(
                      </td>  
                      <td>
                        0%
-                     </td>        
+                     </td> 
+                     <td>
+                       0%
+                     </td>       
                     </tr>
                     <tr>
                      <td className="fw-bold text-warning">
@@ -288,35 +301,38 @@ return(
                      0%
                      </td>
                      <td>
-                     10%
+                     4%
                      </td>
                      <td>
-                     20%
-                     </td>
-                     <td>
-                     0%
+                     40%
                      </td>
                      <td>
                      0%
                      </td>
                      <td>
-                     10%
+                     5%
+                     </td>
+                     <td>
+                     4%
+                     </td>
+                     <td>
+                     3%
                      </td>
                      <td>
                      0%
                      </td>
                      <td>
-                     25%
+                      0%
                      </td>
                      <td>
-                      5%
-                     </td>
-                     <td>
-                      5%
+                      4%
                      </td>   
                      <td>
-                       20%
-                     </td>       
+                       40%
+                     </td> 
+                     <td>
+                       0%
+                     </td>      
                     </tr>
                 </MDBTableBody>
             </MDBTable>
