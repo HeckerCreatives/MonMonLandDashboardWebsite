@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 // const WebpackObfuscator = require('webpack-obfuscator');
 // const HtmlWebpackPlugin = require("html-webpack-plugin")
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
+// const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 module.exports = function override(config) {
     const fallback = config.resolve.fallback || {};
     Object.assign(fallback, {
@@ -45,19 +45,19 @@ module.exports = function override(config) {
         //     // Add files you want to exclude from obfuscation
         //     []
         // ),
-        new UglifyJsPlugin({
-            uglifyOptions: {
-              warnings: false,
-              parse: {},
-              compress: {},
-              mangle: true, // Note mangle.properties is false by default.
-              output: null,
-              toplevel: false,
-              nameCache: null,
-              ie8: false,
-              keep_fnames: false,
-            },
-          }),
+        // new UglifyJsPlugin({
+        //     uglifyOptions: {
+        //       warnings: false,
+        //       parse: {},
+        //       compress: {},
+        //       mangle: true, // Note mangle.properties is false by default.
+        //       output: null,
+        //       toplevel: false,
+        //       nameCache: null,
+        //       ie8: false,
+        //       keep_fnames: false,
+        //     },
+        //   }),
     );
     return config;
 }
