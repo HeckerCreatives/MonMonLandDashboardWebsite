@@ -1,6 +1,6 @@
 const webpack = require('webpack');
-const WebpackObfuscator = require('webpack-obfuscator');
-const HtmlWebpackPlugin = require("html-webpack-plugin")
+// const WebpackObfuscator = require('webpack-obfuscator');
+// const HtmlWebpackPlugin = require("html-webpack-plugin")
 module.exports = function override(config) {
     const fallback = config.resolve.fallback || {};
     Object.assign(fallback, {
@@ -36,14 +36,14 @@ module.exports = function override(config) {
         //     },
         //   }),
        
-        new WebpackObfuscator(
-            {
-              // Add your obfuscation options here
-              rotateStringArray: true,
-            },
-            // Add files you want to exclude from obfuscation
-            []
-        ),
+        // new WebpackObfuscator(
+        //     {
+        //       // Add your obfuscation options here
+        //       rotateStringArray: true,
+        //     },
+        //     // Add files you want to exclude from obfuscation
+        //     []
+        // ),
     );
     return config;
 }
