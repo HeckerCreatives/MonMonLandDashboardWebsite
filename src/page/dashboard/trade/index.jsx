@@ -5,8 +5,9 @@ import Swal from "sweetalert2";
 import { useEffect } from "react";
 import { handlePagination } from "../../../component/utils";
 import PaginationPager from "../../../component/pagination";
+import Cookies from 'js-cookie';
 const Trade = () => {
-    const auth = JSON.parse(localStorage.getItem("auth"))
+    const auth = JSON.parse(Cookies.get("auth"))
     const [usdratehistory, setUsdratehistory] = useState([]);
     const [totalnum, setTotalNum] = useState(0);
     const [page, setPage] = useState(1)
@@ -21,6 +22,7 @@ const Trade = () => {
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}trade/findhistory`, {
             method:'GET',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${auth?.token}`,
@@ -37,8 +39,8 @@ const Trade = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });;
+                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })
@@ -55,6 +57,7 @@ const Trade = () => {
 
         fetch(`${process.env.REACT_APP_API_URL}trade/updatetradepayin`, {
             method:'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${auth?.token}`,
@@ -76,8 +79,8 @@ const Trade = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });;
+                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })

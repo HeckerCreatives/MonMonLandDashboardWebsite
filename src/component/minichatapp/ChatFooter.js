@@ -20,6 +20,7 @@ const ChatFooter = ({socket, buyerid, room, msguser, rcvrid, isadmin}) => {
       data.append("file", file)
       fetch(`${process.env.REACT_APP_API_URL}upload/uploadimg`, {
         method: "POST",
+        credentials: 'include',
         headers: {
           "Accept": "application/json"
         },

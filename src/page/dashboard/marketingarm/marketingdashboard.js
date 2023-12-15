@@ -5,10 +5,10 @@ import Graph from "../../../component/graph";
 import Breadcrumb from "../../../component/breadcrumb";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-
+import Cookies from 'js-cookie';
 const MarketingDashboard = () => {
     
-    const auth = JSON.parse(localStorage.getItem("auth"))
+    const auth = JSON.parse(Cookies.get("auth"))
     const [users, setUsers] = useState([]);
     const [totalsubsaccu, setTotalSubsAccu] = useState(0);
     const navigate = useNavigate()
@@ -17,14 +17,16 @@ const MarketingDashboard = () => {
   useEffect(() => {
       if (auth) {
         if (auth.roleId.display_name !== "Marketing") {
-          localStorage.removeItem("auth");
+          Cookies.remove("auth", { path: '/' });;
           navigate("/login");
         }
       }
     }, [auth, navigate]);
 
     useEffect(() => {
-      fetch(`${process.env.REACT_APP_API_URL}communityactivy/find`)
+      fetch(`${process.env.REACT_APP_API_URL}communityactivy/find`,{
+        credentials: 'include',
+      })
       .then(result => result.json())
       .then(data => {
         if(data.message === "success"){
@@ -36,6 +38,7 @@ const MarketingDashboard = () => {
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}subsaccu/totalsubsaccu`,{
       method: "POST",
+      credentials: 'include',
       headers:{
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth?.token}`,
@@ -52,8 +55,8 @@ const MarketingDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
             window.location.replace("/login");
           }
         })
@@ -67,7 +70,9 @@ const MarketingDashboard = () => {
   
 
   useEffect(()=> {
-    fetch(`${process.env.REACT_APP_API_URL}user/find`)
+    fetch(`${process.env.REACT_APP_API_URL}user/find`,{
+      credentials: 'include',
+    })
     .then(result => result.json())
     .then(data => {
       const active = data.filter(e => e.isVerified === true)

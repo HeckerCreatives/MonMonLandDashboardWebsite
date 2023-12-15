@@ -2,9 +2,10 @@ import { MDBContainer, MDBRow, MDBCol ,MDBCard , MDBCardBody, MDBIcon, MDBInput,
 import React , {useState} from "react";
 import Breadcrumb from "../../../component/breadcrumb";
 import Swal from "sweetalert2";
+import Cookies from 'js-cookie';
 const Leaderboard = () => {
     const [totalnum, setTotalNum] = useState(0);
-    const auth = JSON.parse(localStorage.getItem("auth"))
+    const auth = JSON.parse(Cookies.get("auth"))
 
     
     const updateadsamount = (e) => {
@@ -12,6 +13,7 @@ const Leaderboard = () => {
 
         fetch(`${process.env.REACT_APP_API_URL}leaderboard/update`, {
             method:'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${auth?.token}`,
@@ -29,8 +31,8 @@ const Leaderboard = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });
+                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })

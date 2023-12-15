@@ -15,9 +15,9 @@ import {
   MDBTextArea,
 } from "mdb-react-ui-kit";
 import Swal from "sweetalert2";
-
+import Cookies from 'js-cookie';
 const UpdateDescriptionModal = ({descriptionlist}) => {
-    const auth = JSON.parse(localStorage.getItem("auth"));
+    const auth = JSON.parse(Cookies.get("auth"))
     const [show, setShow] = useState(false);
     const toggleShow = () => setShow(!show);
     // const [image, setImage] = useState("");
@@ -34,6 +34,7 @@ const UpdateDescriptionModal = ({descriptionlist}) => {
       e.preventDefault();
       fetch(`${process.env.REACT_APP_API_URL}subscription/${descriptionlist._id}/updatedesc`, {
           method:'PUT',
+          credentials: 'include',
           headers: {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${auth?.token}`,
@@ -52,8 +53,8 @@ const UpdateDescriptionModal = ({descriptionlist}) => {
             allowEscapeKey: false
           }).then(ok => {
             if(ok.isConfirmed){
-              localStorage.removeItem("auth");
-              localStorage.removeItem("playfabAdminAuthToken")
+              Cookies.remove("auth", { path: '/' });;
+              Cookies.remove("playfabAdminAuthToken", { path: '/' });
               window.location.replace("/login");
             }
           })

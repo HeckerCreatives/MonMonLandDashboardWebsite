@@ -10,8 +10,9 @@ import React, {useState, useEffect} from "react";
 import PaginationPagerQuery from "../../../component/pagination/query";
 import Swal from "sweetalert2";
 import { handlePagination } from "../../../component/utils";
+import Cookies from 'js-cookie';
 const AdminPayoutDone = () => {
-    const auth = JSON.parse(localStorage.getItem("auth"));
+    const auth = JSON.parse(Cookies.get("auth"))
     const [page, setPage] = useState(0),
     [total, setTotal] = useState(0),
     [done, setDone] = useState([]),
@@ -19,7 +20,7 @@ const AdminPayoutDone = () => {
     [backup, setBackup] = useState([]);
     const [basicModal, setBasicModal] = useState(false);
     const [isloading, setIsLoading] = useState(false);
-    const playfabToken = localStorage.getItem("playfabAdminAuthToken")
+    const playfabToken = Cookies.get("playfabAdminAuthToken")
 
     const toggleShow = () => setBasicModal(!basicModal);
     // useEffect(() => {
@@ -31,6 +32,7 @@ const AdminPayoutDone = () => {
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}payout/adminfind?page=${page}&limit=5`, {
             method: "POST",
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${auth?.token}`,
@@ -49,8 +51,8 @@ const AdminPayoutDone = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });;
+                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })
@@ -77,6 +79,7 @@ const AdminPayoutDone = () => {
             if(ok.isConfirmed){
                 fetch(`${process.env.REACT_APP_API_URL}payout/reprocess/${id}`, {
                     method: "POST",
+                    credentials: 'include',
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${auth?.token}`,
@@ -94,8 +97,8 @@ const AdminPayoutDone = () => {
                           allowEscapeKey: false
                         }).then(ok => {
                           if(ok.isConfirmed){
-                            localStorage.removeItem("auth");
-                            localStorage.removeItem("playfabAdminAuthToken")
+                            Cookies.remove("auth", { path: '/' });;
+                            Cookies.remove("playfabAdminAuthToken", { path: '/' });
                             window.location.replace("/login");
                           }
                         })

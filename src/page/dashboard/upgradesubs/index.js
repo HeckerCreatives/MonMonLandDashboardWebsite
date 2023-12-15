@@ -7,8 +7,9 @@ import CreateCashier from "./modal/create";
 import ViewCashier from "./modal/view";
 import UpdateCashier from "./modal/edit";
 import { handlePagination } from "../../../component/utils";
+import Cookies from 'js-cookie';
   const UpgradeSubscriptionManual = () => {
-    const auth = JSON.parse(localStorage.getItem("auth"))
+    const auth = JSON.parse(Cookies.get("auth"))
     const [games, setGames] = useState([]),
             [checkedItems, setCheckedItems] = useState([]),
             [page, setPage] = useState(1),
@@ -22,7 +23,9 @@ import { handlePagination } from "../../../component/utils";
         }, [games]);
 
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`)
+        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`,{
+          credentials: 'include',
+        })
         .then(response => response.json())
         .then(result => {
             setGames(result)
@@ -52,6 +55,7 @@ import { handlePagination } from "../../../component/utils";
             // Delete multiple items by sending the array of IDs
             fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/destroymultiple`, {
               method: "DELETE",
+              credentials: 'include',
               headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${auth?.token}`,
@@ -69,8 +73,8 @@ import { handlePagination } from "../../../component/utils";
                     allowEscapeKey: false
                   }).then(ok => {
                     if(ok.isConfirmed){
-                      localStorage.removeItem("auth");
-                      localStorage.removeItem("playfabAdminAuthToken")
+                      Cookies.remove("auth", { path: '/' });;
+                      Cookies.remove("playfabAdminAuthToken", { path: '/' });
                       window.location.replace("/login");
                     }
                   })
@@ -88,6 +92,7 @@ import { handlePagination } from "../../../component/utils";
     const stats = "Close"
     fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/update/${ID}`, {
       method:'PUT',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${auth?.token}`,
@@ -106,8 +111,8 @@ import { handlePagination } from "../../../component/utils";
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
             window.location.replace("/login");
           }
         })
@@ -141,6 +146,7 @@ import { handlePagination } from "../../../component/utils";
         const stats = "Open"
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/update/${ID}`, {
           method:'PUT',
+          credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${auth?.token}`,
@@ -159,8 +165,8 @@ import { handlePagination } from "../../../component/utils";
               allowEscapeKey: false
             }).then(ok => {
               if(ok.isConfirmed){
-                localStorage.removeItem("auth");
-                localStorage.removeItem("playfabAdminAuthToken")
+                Cookies.remove("auth", { path: '/' });;
+                Cookies.remove("playfabAdminAuthToken", { path: '/' });
                 window.location.replace("/login");
               }
             })

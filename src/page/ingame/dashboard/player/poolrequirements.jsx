@@ -21,7 +21,7 @@ import
     MDBModalFooter, } 
 from "mdb-react-ui-kit";
 
-const DiamondPoolRequirements = () => {
+const DiamondPoolRequirements = ({adspoints, purchasepoints, recruitpoints}) => {
     
 return(
     <>
@@ -40,7 +40,7 @@ return(
                             Watch Ads Points
                         </td>
                         <td>
-                            0
+                            {adspoints}
                         </td>
                     </tr>
                     <tr>
@@ -48,7 +48,7 @@ return(
                             Purchase Points
                         </td>
                         <td>
-                            0
+                            {purchasepoints}
                         </td>
                     </tr>
                     <tr>
@@ -56,7 +56,7 @@ return(
                             Recruit Points
                         </td>
                         <td>
-                            0
+                            {recruitpoints}
                         </td>
                     </tr>
                 </MDBTableBody>

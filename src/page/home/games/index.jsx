@@ -64,7 +64,9 @@ const Games = () => {
       
 
       useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URL}games/find`)
+        fetch(`${process.env.REACT_APP_API_URL}games/find`,{
+            credentials: 'include',
+        })
           .then(response => response.json())
           .then(result => {       
             setGames(result)

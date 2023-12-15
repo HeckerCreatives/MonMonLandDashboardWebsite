@@ -30,7 +30,9 @@ const News = () => {
 
   useEffect(()=>{
     setIsLoading(true)
-    fetch(`${process.env.REACT_APP_API_URL}news/find`)
+    fetch(`${process.env.REACT_APP_API_URL}news/find`,{
+      credentials: 'include',
+    })
     .then(result => result.json())
     .then(data => {
         setNews(data)

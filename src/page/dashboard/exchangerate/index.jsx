@@ -5,8 +5,9 @@ import Swal from "sweetalert2";
 import { useEffect } from "react";
 import { handlePagination } from "../../../component/utils";
 import PaginationPager from "../../../component/pagination";
+import Cookies from 'js-cookie';
 const Exchangerate = () => {
-    const auth = JSON.parse(localStorage.getItem("auth"))
+    const auth = JSON.parse(Cookies.get("auth"))
     const [usdratehistory, setUsdratehistory] = useState([]);
     const [totalnum, setTotalNum] = useState(0);
     const [page, setPage] = useState(1)
@@ -21,6 +22,7 @@ const Exchangerate = () => {
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}usdrate/findhistory`, {
             method:'GET',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${auth?.token}`,
@@ -37,8 +39,8 @@ const Exchangerate = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });
+                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })
@@ -55,6 +57,7 @@ const Exchangerate = () => {
 
         fetch(`${process.env.REACT_APP_API_URL}usdrate/update`, {
             method:'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${auth?.token}`,
@@ -75,8 +78,8 @@ const Exchangerate = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });
+                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })

@@ -4,15 +4,8 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const PlayerProfile = () => {
-    const auth = JSON.parse(localStorage.getItem("auth"))
-    const [users, setUsers] = useState([]);
-    const [paidusers, setPaidUsers] = useState(0);
-
-    // const [totalautopayment, setTotalAutoPayment] = useState([]);
-    // const [AutoAndManual, setAutoAndManual] = useState([]);
-    // const [autopayment, setAutoPayment] = useState([]);
-    // const [totalpaidusers, setTotalPaidUsers] = useState([]);
-    const navigate = useNavigate()
+    const user = JSON.parse(localStorage.getItem("user"))
+    const [details, setDetails] = useState([]);
 
     const [request, setRequest] = useState(0)
     const [done, setDone] = useState(0)
@@ -27,7 +20,25 @@ const PlayerProfile = () => {
     //   }
     // }, [auth, navigate]);
 
-   
+    useEffect(()=> {
+      fetch(`${process.env.REACT_APP_API_URL}playerdetails/find`,{
+        method: "POST",
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          id: user._id
+        })
+      })
+      .then(result => result.json())
+      .then(data => {
+        if(data.message === "success"){
+          setDetails(data.data) 
+        }
+      })
+          
+    },[]) 
     
 
 
@@ -44,15 +55,26 @@ const PlayerProfile = () => {
             <div className="d-flex align-items-center my-1">
             <MDBCardText className="m-0">Username:</MDBCardText>
             <div className="mx-2">
-            <MDBInput disabled/>
+            <MDBInput label={user.username} disabled/>
             </div>
             </div>
+            <div className="d-flex align-items-center">
+              <MDBTypography className="m-0">Phone:</MDBTypography>
+
+              <div className="mx-2">
+              <MDBInput label={details.phone} disabled/>
+              </div>
               
+              <div className="mx-2">
+              <MDBBtn size="sm">Change Phone number</MDBBtn>
+              </div>
+              
+            </div>
               <div className="d-flex align-items-center">
               <MDBTypography className="m-0">Email:</MDBTypography>
 
               <div className="mx-2">
-              <MDBInput/>
+              <MDBInput label={details.email} disabled/>
               </div>
               
               <div className="mx-2">

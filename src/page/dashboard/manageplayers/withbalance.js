@@ -33,7 +33,9 @@ setTxtHead(
 
 ]
 )
-fetch(`${process.env.REACT_APP_API_URL}manage/userwithbalance`)
+fetch(`${process.env.REACT_APP_API_URL}manage/userwithbalance`,{
+  credentials: 'include',
+})
 .then(result => result.json())
 .then(data =>{
   setTxtTable(data)

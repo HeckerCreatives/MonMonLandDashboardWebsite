@@ -32,7 +32,9 @@ setTxtHead(
 ]
 )
 
-fetch(`${process.env.REACT_APP_API_URL}manage/banneduser`)
+fetch(`${process.env.REACT_APP_API_URL}manage/banneduser`,{
+  credentials: 'include',
+})
 .then(result => result.json())
 .then(data =>{
   setTxtTable(data)

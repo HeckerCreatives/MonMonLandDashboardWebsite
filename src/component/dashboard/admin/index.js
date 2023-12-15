@@ -8,9 +8,11 @@ import FullTable from "../../fulltablelist";
 import Breadcrumb from "../../breadcrumb";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-
+import Cookies from 'js-cookie';
 const AdminDashboard = () => {
-    const auth = JSON.parse(localStorage.getItem("auth"))
+  // const encryptauth = decodeURIComponent(Cookies.get('auth'))
+  // const auth = JSON.parse(encryptauth)
+    const auth = JSON.parse(Cookies.get("auth"))
     const [basicModal, setBasicModal] = useState(false);
     const toggleShow = () => setBasicModal(!basicModal);
     const [users, setUsers] = useState([]);
@@ -62,7 +64,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     if (auth) {
       if (auth.roleId.display_name !== "Administrator") {
-        localStorage.removeItem("auth");
+        Cookies.remove("auth", { path: '/' });;
         navigate("/sessions/login");
       }
     }
@@ -73,6 +75,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}payout/payoutwallet`,{
       method: "POST",
+      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth?.token}`,
@@ -92,8 +95,8 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
             window.location.replace("/login");
           }
         })
@@ -108,6 +111,7 @@ const AdminDashboard = () => {
 
     fetch(`${process.env.REACT_APP_API_URL}payout/payoutwallet`,{
       method: "POST",
+      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth?.token}`,
@@ -127,8 +131,10 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
@@ -143,6 +149,7 @@ const AdminDashboard = () => {
 
     fetch(`${process.env.REACT_APP_API_URL}payout/payoutwallet`,{
       method: "POST",
+      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth?.token}`,
@@ -162,8 +169,10 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
@@ -178,6 +187,7 @@ const AdminDashboard = () => {
 
     fetch(`${process.env.REACT_APP_API_URL}coin/topupwallet`,{
       method: "POST",
+      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth?.token}`,
@@ -196,8 +206,10 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
@@ -213,6 +225,7 @@ const AdminDashboard = () => {
 
     fetch(`${process.env.REACT_APP_API_URL}coin/topupwallet`,{
       method: "POST",
+      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth?.token}`,
@@ -231,8 +244,10 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
@@ -254,11 +269,11 @@ const AdminDashboard = () => {
 
 
   useEffect(()=> {
-    fetch(`${process.env.REACT_APP_API_URL}user/find`)
+    fetch(`${process.env.REACT_APP_API_URL}user/find`,{
+      credentials: 'include',
+    })
     .then(result => result.json())
     .then(data => {
-      const active = data.filter(e => e.isVerified === true)
-      const inactive = data.filter(e => e.isVerified === false)
       setUsers(data)
       // setActiveUsers(active)
       // setInActiveUsers(inactive)        
@@ -270,6 +285,7 @@ const AdminDashboard = () => {
     setTotalSubsUser(total)
     fetch(`${process.env.REACT_APP_API_URL}subsuser/find`,{
       method: "POST",
+      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth?.token}`,
@@ -287,8 +303,10 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
@@ -301,6 +319,7 @@ const AdminDashboard = () => {
 
     fetch(`${process.env.REACT_APP_API_URL}subsuser/find`,{
       method: "POST",
+      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth?.token}`,
@@ -318,8 +337,10 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
@@ -332,6 +353,7 @@ const AdminDashboard = () => {
 
     fetch(`${process.env.REACT_APP_API_URL}subsuser/find`,{
       method: "POST",
+      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth?.token}`,
@@ -349,8 +371,10 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
@@ -363,6 +387,7 @@ const AdminDashboard = () => {
 
     fetch(`${process.env.REACT_APP_API_URL}subsuser/find`,{
       method: "POST",
+      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth?.token}`,
@@ -380,8 +405,10 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
@@ -397,6 +424,7 @@ const AdminDashboard = () => {
   useEffect(()=>{
     fetch(`${process.env.REACT_APP_API_URL}subsaccu/find`,{
       method: "POST",
+      credentials: 'include',
       headers:{
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth?.token}`,
@@ -414,8 +442,10 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
@@ -428,6 +458,7 @@ const AdminDashboard = () => {
 
     fetch(`${process.env.REACT_APP_API_URL}subsaccu/find`,{
       method: "POST",
+      credentials: 'include',
       headers:{
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth?.token}`,
@@ -445,8 +476,10 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
@@ -459,6 +492,7 @@ const AdminDashboard = () => {
 
     fetch(`${process.env.REACT_APP_API_URL}subsaccu/find`,{
       method: "POST",
+      credentials: 'include',
       headers:{
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth?.token}`,
@@ -476,8 +510,10 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
@@ -490,6 +526,7 @@ const AdminDashboard = () => {
 
     fetch(`${process.env.REACT_APP_API_URL}subsaccu/find`,{
       method: "POST",
+      credentials: 'include',
       headers:{
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth?.token}`,
@@ -507,8 +544,10 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
@@ -527,6 +566,7 @@ const AdminDashboard = () => {
   useEffect(()=>{
     fetch(`${process.env.REACT_APP_API_URL}merchandise/find`,{
       method: "POST",
+      credentials: 'include',
       headers:{
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth?.token}`,
@@ -544,8 +584,10 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
@@ -558,6 +600,7 @@ const AdminDashboard = () => {
 
     fetch(`${process.env.REACT_APP_API_URL}merchandise/find`,{
       method: "POST",
+      credentials: 'include',
       headers:{
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth?.token}`,
@@ -575,8 +618,10 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
@@ -593,6 +638,8 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/adminfee`, {
+      method: "GET",
+      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth?.token}`,
@@ -609,20 +656,21 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
       }
-
       setAdminFee(data.data)
 
-      
     })
 
     fetch(`${process.env.REACT_APP_API_URL}wallet/find`, {
       method: "POST",
+      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth?.token}`,
@@ -641,8 +689,10 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
@@ -655,6 +705,7 @@ const AdminDashboard = () => {
 
     fetch(`${process.env.REACT_APP_API_URL}withdrawfee/find`, {
       method: "POST",
+      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth?.token}`,
@@ -673,8 +724,10 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
@@ -688,14 +741,15 @@ const AdminDashboard = () => {
         
     })
 
-  })
+  },[])
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}communityactivy/find`)
+    fetch(`${process.env.REACT_APP_API_URL}communityactivy/find`,{
+      credentials: 'include',
+    })
     .then(result => result.json())
     .then(data => {
       if(data.message === "success"){
-        console.log(data.data.leaderboard)
         setLeaderboard(data.data.leaderboard)
         setGrinding(data.data.grinding)
         setQuest(data.data.quest)

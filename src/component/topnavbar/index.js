@@ -15,7 +15,7 @@ import "./index.css"
 import Swal from "sweetalert2";
 import { ThemeContext, themes } from '../../component/theme/themecontext';
 import ReferralButton from "../../component/dashboard/referral/referral";
-
+import Cookies from 'js-cookie';
 const TopNavbar = ({auth, didToggle, setDidToggle}) => {
     const [visibility, setVisibility] = useState(false),
     [word, setword] = useState(""),
@@ -51,7 +51,10 @@ const TopNavbar = ({auth, didToggle, setDidToggle}) => {
   
         setVisibility(false);
         setTimeout(() => {
-          localStorage.removeItem("auth");
+          Cookies.remove("auth", { path: '/' });
+          Cookies.remove("user", { path: '/' });
+          // localStorage.removeItem("auth");
+          // localStorage.removeItem("user");
         //   localStorage.removeItem("my-secret");
           window.location.href = "/login";
         }, 5100);
@@ -59,15 +62,20 @@ const TopNavbar = ({auth, didToggle, setDidToggle}) => {
 
     const items = [
         {
-          name: "My Profile",
+          name: "Change Password",
           icon: "user",
         //   path: `${auth?.roleId.name}/profile`,
         },
         {
-            name: "Change Password",
+            name: "Change Email",
             icon: "user",
           //   path: `${auth?.roleId.name}/profile`,
         },
+        {
+          name: "Payment Details",
+          icon: "user",
+        //   path: `${auth?.roleId.name}/profile`,
+      },
       ];
 
     //   const handleEvent = e => e.target.id !== "My Profile" && setVisibility(false);
@@ -80,12 +88,12 @@ const TopNavbar = ({auth, didToggle, setDidToggle}) => {
     return (
         <>
           
-        <MDBContainer
-        fluid
-        className="topnavbg p-0 d-flex align-items-end"
-        >        
+      <MDBContainer
+      fluid
+      className="topnavbg p-0 d-flex align-items-end"
+      >        
 
-        <MDBRow className="topnavbgcolor m-0">
+      <MDBRow className="topnavbgcolor m-0">
         
       <MDBCol className="text d-flex justify-content-between align-items-center">
       {window.innerWidth <= 768 ? <div className="me-2">
@@ -133,7 +141,7 @@ const TopNavbar = ({auth, didToggle, setDidToggle}) => {
         <MDBCol className="dropdown text d-lg-flex justify-content-end align-items-center panel-zoom" onClick={() => setVisibility(!visibility)}>
           <MDBIcon fas icon="user-circle" size="lg" />
           <div className="d-lg-block d-none">
-          &nbsp;{auth.userName}
+          &nbsp;{auth.userName ? auth.userName : auth.username}
           </div>
           {/* &nbsp;<MDBIcon fas icon="angle-down" size="lg" /> */}
         </MDBCol>

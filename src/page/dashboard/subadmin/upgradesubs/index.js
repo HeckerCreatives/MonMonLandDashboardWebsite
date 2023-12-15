@@ -21,6 +21,7 @@ import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
 import io from "socket.io-client"
 import { Howl } from 'howler'
 import chatsound from '../../../../assets/chatsound.mp3'
+import Cookies from 'js-cookie';
 const socket = io(process.env.REACT_APP_API_URL)
 const SubAdminUpgradeSubscriptionManual = () => {
     const [bibiliuserid, setBibiliUserId] = useState("");
@@ -39,8 +40,8 @@ const SubAdminUpgradeSubscriptionManual = () => {
           [isloading, setIsLoading] = useState(false),
           [userinline, setUserinline] = useState([]),
           [total, setTotal] = useState(0);
-    const auth = JSON.parse(localStorage.getItem("auth"))
-    const playfabToken = localStorage.getItem("playfabAdminAuthToken")
+          const auth = JSON.parse(Cookies.get("auth"))
+          const playfabToken = Cookies.get("playfabAdminAuthToken")
     const [topup, setTopUp] = useState("");
     const [basicModal, setBasicModal] = useState(false);
     const toggleShow = () => setBasicModal(!basicModal);
@@ -52,7 +53,9 @@ const SubAdminUpgradeSubscriptionManual = () => {
       }, [history]);
   
       useEffect(()=> {
-          fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
+          fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`,{
+            credentials: 'include',
+          })
           .then(response => response.json())
           .then(result => {
             // console.log(result)
@@ -65,7 +68,9 @@ const SubAdminUpgradeSubscriptionManual = () => {
       },[])
       
       const refreshtable = () => {
-        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
+        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`,{
+            credentials: 'include',
+        })
           .then(response => response.json())
           .then(result => {
               const data = result?.filter(e => e.cashier === auth.userName)
@@ -76,6 +81,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
       useEffect(()=>{
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`, {
           method: "GET",
+          credentials: 'include',
           headers: {
               "Content-Type": "application/json"
           }
@@ -264,6 +270,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
 
                 fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/updatebuyer/${Buyer._id}`,{
                     method: "PUT",
+                    credentials: 'include',
                     headers: {
                         'Accept': 'application/json',
                         Authorization: `Bearer ${auth?.token}`,
@@ -280,8 +287,8 @@ const SubAdminUpgradeSubscriptionManual = () => {
                           allowEscapeKey: false
                         }).then(ok => {
                           if(ok.isConfirmed){
-                            localStorage.removeItem("auth");
-                            localStorage.removeItem("playfabAdminAuthToken")
+                            Cookies.remove("auth", { path: '/' });
+                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
                             window.location.replace("/login");
                           }
                         })
@@ -332,6 +339,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
       useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/iscashier`,{
             method:"POST",
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${auth?.token}`,
@@ -350,8 +358,8 @@ const SubAdminUpgradeSubscriptionManual = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });
+                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })
@@ -368,6 +376,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
         if(!color && iscashier){
             fetch(`${process.env.REACT_APP_API_URL}upload/deletetemp`, {
                 method: "POST",
+                credentials: 'include',
                 headers: {
                   "Accept": "application/json"
                 },
@@ -466,6 +475,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
               
               fetch(`${process.env.REACT_APP_API_URL}upload/deletetemp`, {
                   method: "POST",
+                  credentials: 'include',
                   headers: {
                     "Accept": "application/json"
                   },

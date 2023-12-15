@@ -12,8 +12,10 @@ import React, {useState, useEffect} from "react";
 import PaginationPagerQuery from "../../../component/pagination/query";
 import Swal from "sweetalert2";
 import { handlePagination } from "../../../component/utils";
+import Cookies from 'js-cookie';
 const AdminPayoutRequest = () => {
-    const auth = JSON.parse(localStorage.getItem("auth"))
+    const auth = JSON.parse(Cookies.get("auth"))
+    const playfabToken = Cookies.get("playfabAdminAuthToken")
     const [page, setPage] = useState(0),
     [total, setTotal] = useState(0),
     [payoutid, setPayoutId] = useState(""),
@@ -25,7 +27,6 @@ const AdminPayoutRequest = () => {
     const [selectedColor, setSelectedColor] = useState('all'); // Initialize with an empty string
     const [isloading, setIsLoading] = useState(false);
     
-    const playfabToken = localStorage.getItem("playfabAdminAuthToken")
     const filteredRequest = request.filter((data) => {
         const rowColorClass = getRowColorClass(data.createdAt);
         return selectedColor === 'all' || rowColorClass === selectedColor;
@@ -42,6 +43,7 @@ const AdminPayoutRequest = () => {
         setIsLoading(true)
         fetch(`${process.env.REACT_APP_API_URL}payout/adminfind?page=${page}&limit=5`, {
             method: "POST",
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${auth?.token}`,
@@ -60,8 +62,8 @@ const AdminPayoutRequest = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });;
+                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })
@@ -76,7 +78,9 @@ const AdminPayoutRequest = () => {
     },[setPage,total, page])
 
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`)
+        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`,{
+            credentials: 'include',
+        })
         .then(result => result.json())
         .then(data => {
             if(data){
@@ -109,6 +113,7 @@ const AdminPayoutRequest = () => {
                 if(ok.isConfirmed){
                     fetch(`${process.env.REACT_APP_API_URL}payout/process/${payoutid}`, {
                         method: "POST",
+                        credentials: 'include',
                         headers: {
                             "Content-Type": "application/json",
                             Authorization: `Bearer ${auth?.token}`,
@@ -129,8 +134,8 @@ const AdminPayoutRequest = () => {
                               allowEscapeKey: false
                             }).then(ok => {
                               if(ok.isConfirmed){
-                                localStorage.removeItem("auth");
-                                localStorage.removeItem("playfabAdminAuthToken")
+                                Cookies.remove("auth", { path: '/' });;
+                                Cookies.remove("playfabAdminAuthToken", { path: '/' });
                                 window.location.replace("/login");
                               }
                             })

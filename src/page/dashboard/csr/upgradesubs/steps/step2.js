@@ -24,7 +24,9 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room}) 
     }, [history]);
 
     useEffect(()=> {
-        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
+        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`,{
+            credentials: 'include',
+        })
         .then(response => response.json())
         .then(result => {
             const data = result.filter(e => e.cashier === user.userId.userName)
@@ -67,6 +69,7 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room}) 
                 const stats = "Open"
                 fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/${id}/destroybuyer`,{
                     method: "DELETE",
+                    credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -99,6 +102,7 @@ const Step2 = ({user, step2toggle, setstep2toggle, Buyer, socket, buyer, room}) 
             if(result.isConfirmed){
                 fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/updatebuyer/${Buyer._id}`,{
                     method: "PUT",
+                    credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json'
                     },

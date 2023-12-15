@@ -34,7 +34,9 @@ setTxtHead(
 ]
 )
 
-fetch(`${process.env.REACT_APP_API_URL}manage/alluser`)
+fetch(`${process.env.REACT_APP_API_URL}manage/alluser`,{
+  credentials: 'include',
+})
 .then(result => result.json())
 .then(data =>{
   setTxtTable(data)

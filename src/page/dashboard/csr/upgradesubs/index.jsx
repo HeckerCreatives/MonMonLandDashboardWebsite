@@ -18,6 +18,7 @@ import { handlePagination } from "../../../../component/utils"
 import  { UpgradeSubscriptionApi }  from "../../../../component/playfab/playfabupgrade";
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
 import io from "socket.io-client"
+import Cookies from 'js-cookie';
 const socket = io(process.env.REACT_APP_API_URL)
 const CsrAdminUpgradeSubscriptionManual = () => {
     const [bibiliuserid, setBibiliUserId] = useState("");
@@ -35,8 +36,8 @@ const CsrAdminUpgradeSubscriptionManual = () => {
           [filename, setFilename] = useState(""),
           [isloading, setIsLoading] = useState(false),
           [total, setTotal] = useState(0);
-    const auth = JSON.parse(localStorage.getItem("auth"))
-    const playfabToken = localStorage.getItem("playfabAdminAuthToken")
+          const auth = JSON.parse(Cookies.get("auth"))
+          const playfabToken = Cookies.get("playfabAdminAuthToken")
     const [topup, setTopUp] = useState("");
     const [basicModal, setBasicModal] = useState(false);
     const toggleShow = () => setBasicModal(!basicModal);
@@ -48,7 +49,9 @@ const CsrAdminUpgradeSubscriptionManual = () => {
       }, [history]);
   
       useEffect(()=> {
-          fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
+          fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`,{
+            credentials: 'include',
+          })
           .then(response => response.json())
           .then(result => {
             // console.log(result)
@@ -61,7 +64,9 @@ const CsrAdminUpgradeSubscriptionManual = () => {
       },[])
       
       const refreshtable = () => {
-        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
+        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`,{
+            credentials: 'include',
+        })
           .then(response => response.json())
           .then(result => {
               const data = result?.filter(e => e.cashier === auth.userName)
@@ -72,6 +77,7 @@ const CsrAdminUpgradeSubscriptionManual = () => {
       useEffect(()=>{
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`, {
           method: "GET",
+          credentials: 'include',
           headers: {
               "Content-Type": "application/json"
           }
@@ -176,6 +182,7 @@ const CsrAdminUpgradeSubscriptionManual = () => {
               if(result.isConfirmed){
                   fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/${id}/destroybuyer`,{
                       method: "DELETE",
+                      credentials: 'include',
                       headers: {
                           'Content-Type': 'application/json'
                       },
@@ -218,6 +225,7 @@ const CsrAdminUpgradeSubscriptionManual = () => {
               if(result.isConfirmed){
                 fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/updatebuyer/${Buyer._id}`,{
                     method: "PUT",
+                    credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -281,6 +289,7 @@ const CsrAdminUpgradeSubscriptionManual = () => {
       useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/iscashier`,{
             method:"POST",
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json"
             },

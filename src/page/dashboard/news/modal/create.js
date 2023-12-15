@@ -23,8 +23,10 @@ import {
 import logo from "../../../../assets/header/big logo.png"
 import Swal from "sweetalert2";
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
+import Cookies from 'js-cookie';
+
 const CreateNews = () => {
-  const auth = JSON.parse(localStorage.getItem("auth"))
+  const auth = JSON.parse(Cookies.get("auth"))
   const [titles, setTitles] = useState('');
   const [descriptions, setDescriptions] = useState('');
   const [show, setShow] = useState(false);
@@ -68,6 +70,7 @@ const CreateNews = () => {
     data.append("file", image)
     fetch(`${process.env.REACT_APP_API_URL}news/addnews`, {
       method:'POST',
+      credentials: 'include',
       headers: {
         'Accept': 'application/json',
         Authorization: `Bearer ${auth?.token}`,
@@ -84,8 +87,8 @@ const CreateNews = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
             window.location.replace("/login");
           }
         })

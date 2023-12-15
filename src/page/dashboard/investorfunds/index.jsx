@@ -4,10 +4,11 @@ import Breadcrumb from "../../../component/breadcrumb";
 import { handlePagination } from "../../../component/utils";
 import Swal from "sweetalert2";
 import PaginationPager from "../../../component/pagination";
+import Cookies from 'js-cookie';
 const Investorfunds = () => {
     const [totalnum, setTotalNum] = useState(0);
     const [investorhistory, setInvetorhistory] = useState([]);
-    const auth = JSON.parse(localStorage.getItem("auth")),
+    const auth = JSON.parse(Cookies.get("auth")),
     [page, setPage] = useState(1),
     [total, setTotal] = useState(0);
 
@@ -20,6 +21,7 @@ const Investorfunds = () => {
     useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}investor/findhistory`, {
         method:'GET',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${auth?.token}`,
@@ -36,8 +38,8 @@ const Investorfunds = () => {
               allowEscapeKey: false
             }).then(ok => {
               if(ok.isConfirmed){
-                localStorage.removeItem("auth");
-                localStorage.removeItem("playfabAdminAuthToken")
+                Cookies.remove("auth", { path: '/' });
+                Cookies.remove("playfabAdminAuthToken", { path: '/' });
                 window.location.replace("/login");
               }
             })
@@ -54,6 +56,7 @@ const Investorfunds = () => {
 
         fetch(`${process.env.REACT_APP_API_URL}investor/update`, {
             method:'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${auth?.token}`,
@@ -74,8 +77,8 @@ const Investorfunds = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });
+                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })

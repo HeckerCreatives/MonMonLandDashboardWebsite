@@ -16,8 +16,9 @@ import io from "socket.io-client"
 import "./index.css"
 import { Howl } from 'howler'
 import chatsound from '../../../assets/chatsound.mp3'
-const socket = io(process.env.REACT_APP_API_URL)
+import Cookies from 'js-cookie';
 
+const socket = io(process.env.REACT_APP_API_URL)
 const AvailableCashiers = () => {
     const [username, setUsername] = useState(''); // Add this
     let room = "";
@@ -29,7 +30,7 @@ const AvailableCashiers = () => {
             // [currenturn, setCurrentTurn] = useState(""),
             [q, setQ] = useState(false),
             [total, setTotal] = useState(0);
-    const auth = JSON.parse(localStorage.getItem("auth"))
+    const auth = JSON.parse(Cookies.get("auth"))
     const buyer = JSON.parse(localStorage.getItem("userbuyer"))
     const [toggle, settoggle] = useState(false)        
     const toggleShow = () => settoggle(!toggle);
@@ -229,6 +230,7 @@ const AvailableCashiers = () => {
             setIsLoading(true)
             fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/addbuyer`, {
                 method:'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json'
                 },

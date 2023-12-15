@@ -8,7 +8,7 @@ import { Outlet } from "react-router-dom";
 // import { ThemeContext, themes } from '../../component/theme/themecontext';
 // import ReferralButton from "../../component/dashboard/referral/referral";
 import TopNavbar from "../../component/topnavbar";
-
+import Cookies from 'js-cookie';
 const Dashboard = () => {
   // const [links, setLinks] = useState([]);
   const [didToggle, setDidToggle] = useState(
@@ -23,7 +23,7 @@ const Dashboard = () => {
   [didToggle3, setDidToggle3] = useState(
     window.innerWidth > 768 ? false : true
   );
-  const auth = JSON.parse(localStorage.getItem("auth"))
+  const auth = JSON.parse(Cookies.get("auth"))
   // const [darkMode, setDarkMode] = React.useState(true);
   const navigate = useNavigate() 
 

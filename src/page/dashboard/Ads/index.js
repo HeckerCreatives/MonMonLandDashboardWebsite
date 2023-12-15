@@ -4,10 +4,11 @@ import Breadcrumb from "../../../component/breadcrumb";
 import { handlePagination } from "../../../component/utils";
 import Swal from "sweetalert2";
 import PaginationPager from "../../../component/pagination";
+import Cookies from 'js-cookie';
 const Advertisement = () => {
     const [totalnum, setTotalNum] = useState(0);
     const [adshistory, setAdshistory] = useState([]);
-    const auth = JSON.parse(localStorage.getItem("auth")),
+    const auth = JSON.parse(Cookies.get("auth")),
     [page, setPage] = useState(1),
     [total, setTotal] = useState(0);
 
@@ -20,6 +21,7 @@ const Advertisement = () => {
     useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}ads/findhistory`, {
         method:'GET',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${auth?.token}`,
@@ -36,8 +38,10 @@ const Advertisement = () => {
               allowEscapeKey: false
             }).then(ok => {
               if(ok.isConfirmed){
-                localStorage.removeItem("auth");
-                localStorage.removeItem("playfabAdminAuthToken")
+                Cookies.remove("auth", { path: '/' });
+                Cookies.remove("playfabAdminAuthToken", { path: '/' });
+                // localStorage.removeItem("auth");
+                // localStorage.removeItem("playfabAdminAuthToken")
                 window.location.replace("/login");
               }
             })
@@ -54,6 +58,7 @@ const Advertisement = () => {
 
         fetch(`${process.env.REACT_APP_API_URL}ads/update`, {
             method:'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${auth?.token}`,
@@ -74,8 +79,8 @@ const Advertisement = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });;
+                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })

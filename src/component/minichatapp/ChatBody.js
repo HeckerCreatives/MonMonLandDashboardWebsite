@@ -38,6 +38,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
           
           fetch(`${process.env.REACT_APP_API_URL}upload/deletetemp`, {
               method: "POST",
+              credentials: 'include',
               headers: {
                 "Accept": "application/json"
               },
@@ -68,6 +69,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef, buyer, room, socket, 
           if(e.isConfirmed){
           fetch(`${process.env.REACT_APP_API_URL}upload/deletetemp`, {
             method: "POST",
+            credentials: 'include',
             headers: {
               "Accept": "application/json"
             },

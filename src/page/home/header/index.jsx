@@ -71,7 +71,9 @@ const Header = () => {
 
     useEffect(()=> {
         setIsLoading(true)
-        fetch(`${process.env.REACT_APP_API_URL}gameactivity/${process.env.REACT_APP_PROGRESSID}/find`)
+        fetch(`${process.env.REACT_APP_API_URL}gameactivity/${process.env.REACT_APP_PROGRESSID}/find`,{
+          credentials: 'include',
+        })
         .then(result => result.json())
         .then(data => {
           // console.log(data.total)
@@ -85,6 +87,7 @@ const Header = () => {
 
         fetch(`${process.env.REACT_APP_API_URL}monmoncoin/find`,{
             method: "POST",
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json"
             },
@@ -107,6 +110,7 @@ const Header = () => {
 
         fetch(`${process.env.REACT_APP_API_URL}monmoncoin/find`,{
             method: "POST",
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json"
             },
@@ -120,7 +124,9 @@ const Header = () => {
             setIsLoading(false)
         })
 
-        fetch(`${process.env.REACT_APP_API_URL}totalusers/find`)
+        fetch(`${process.env.REACT_APP_API_URL}totalusers/find`,{
+          credentials: 'include',
+        })
         .then(result => result.json())
         .then(data => {
         const totalUsers = data.data.count;
@@ -168,6 +174,7 @@ const Header = () => {
     
         fetch(`${process.env.REACT_APP_API_URL}subsaccu/totalsubsaccu`,{
           method: "GET",
+          credentials: 'include',
           headers:{
             "Content-Type": "application/json",
             
@@ -184,6 +191,7 @@ const Header = () => {
 
         fetch(`${process.env.REACT_APP_API_URL}subsuser/find`,{
             method: "POST",
+            credentials: 'include',
             headers: {
               "Content-Type": "application/json",
             },
@@ -198,7 +206,9 @@ const Header = () => {
             
           })
 
-          fetch(`${process.env.REACT_APP_API_URL}communityactivy/find`)
+          fetch(`${process.env.REACT_APP_API_URL}communityactivy/find`,{
+            credentials: 'include',
+          })
           .then(result => result.json())
           .then(data => {
             if(data.message === "success"){
@@ -207,7 +217,9 @@ const Header = () => {
             
           })
     
-          fetch(`${process.env.REACT_APP_API_URL}investor/find`)
+          fetch(`${process.env.REACT_APP_API_URL}investor/find`,{
+            credentials: 'include',
+          })
           .then(result => result.json())
           .then(data => {
             if(data.message === "success"){
@@ -253,6 +265,7 @@ const Header = () => {
     useEffect(() => {
       fetch(`${process.env.REACT_APP_API_URL}ads/find`,{
         method: "GET",
+        credentials: 'include',
         headers: {
           "Content-Type": "application/json",
         },
@@ -279,7 +292,9 @@ const Header = () => {
     },[])
     
     useEffect(()=> {
-      fetch(`${process.env.REACT_APP_API_URL}communityactivy/mcvaluemonthly`)
+      fetch(`${process.env.REACT_APP_API_URL}communityactivy/mcvaluemonthly`,{
+        credentials: 'include',
+      })
       .then(result => result.json())
       .then(data => {
         if(data.message === "success"){
@@ -430,7 +445,9 @@ const Header = () => {
     ]
 
     useEffect(() => {
-      fetch(`${process.env.REACT_APP_API_URL}communityactivy/find`)
+      fetch(`${process.env.REACT_APP_API_URL}communityactivy/find`,{
+        credentials: 'include',
+      })
       .then(result => result.json())
       .then(data => {
         if(data.message === "success"){
@@ -441,6 +458,7 @@ const Header = () => {
       })
       fetch(`${process.env.REACT_APP_API_URL}monmoncoin/find`, {
         method: "POST",
+        credentials: 'include',
         headers: {
           "Content-Type": "application/json"
         },

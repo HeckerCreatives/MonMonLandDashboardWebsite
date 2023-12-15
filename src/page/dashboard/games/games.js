@@ -11,8 +11,9 @@ import emerald from "../../../assets/subscription/emerald.png"
 import diamond from "../../../assets/subscription/diamond.png"
 import ViewGames from "./modal/view";
 import UpdateGames from "./modal/edit";
+import Cookies from 'js-cookie';
 const Games = () => {
-    const auth = JSON.parse(localStorage.getItem("auth"))
+    const auth = JSON.parse(Cookies.get("auth"))
     const [games, setGames] = useState([]),
             [page, setPage] = useState(1),
             [total, setTotal] = useState(0);
@@ -26,6 +27,7 @@ const Games = () => {
     useEffect(()=>{
         fetch(`${process.env.REACT_APP_API_URL}games/find`, {
             method: "GET",
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${auth?.token}`,
@@ -56,6 +58,7 @@ const Games = () => {
             if(result1.isConfirmed){
                 fetch(`${process.env.REACT_APP_API_URL}games/${id}/destroy`,{
                     method: "DELETE",
+                    credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${auth?.token}`,
@@ -71,8 +74,8 @@ const Games = () => {
                           allowEscapeKey: false
                         }).then(ok => {
                           if(ok.isConfirmed){
-                            localStorage.removeItem("auth");
-                            localStorage.removeItem("playfabAdminAuthToken")
+                            Cookies.remove("auth", { path: '/' });
+                            Cookies.remove("playfabAdminAuthToken", { path: '/' });
                             window.location.replace("/login");
                           }
                         })

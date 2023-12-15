@@ -23,6 +23,7 @@ import PaginationPager from "../../../../component/pagination";
 import Swal from "sweetalert2";
 import UpdateCSRAccount from "./modal/edit";
 import { handlePagination } from "../../../../component/utils"
+import Cookies from 'js-cookie';
 const CreateCSRAccount = () => {
   const [confirmpass, setConfirmPass] = useState(""),
         [csraccounts, setCsrAcc] = useState([]),
@@ -30,7 +31,7 @@ const CreateCSRAccount = () => {
         [todayjoin, setTodaysJoin] = useState([]);
         // [txttable, setTxtTable] = useState([]);
   const [centredModal, setCentredModal] = useState(false);
-  const auth = JSON.parse(localStorage.getItem("auth"))
+  const auth = JSON.parse(Cookies.get("auth"))
   const toggleShow = () => setCentredModal(!centredModal),
   [page, setPage] = useState(1),
   [isloading, setIsLoading] = useState(false),
@@ -43,7 +44,9 @@ const CreateCSRAccount = () => {
         }, [csraccounts]);
 
     useEffect(()=>{
-    fetch(`${process.env.REACT_APP_API_URL}user/find`)
+    fetch(`${process.env.REACT_APP_API_URL}user/find`,{
+      credentials: 'include',
+    })
     .then(result => result.json())
     .then(data => {
       const today = new Date().toLocaleDateString();
@@ -74,6 +77,7 @@ const CreateCSRAccount = () => {
       if(password.value === confirmpass){
         fetch(`${process.env.REACT_APP_API_URL}user/register`,{
           method: "POST",
+          credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${auth?.token}`,
@@ -99,8 +103,8 @@ const CreateCSRAccount = () => {
               allowEscapeKey: false
             }).then(ok => {
               if(ok.isConfirmed){
-                localStorage.removeItem("auth");
-                localStorage.removeItem("playfabAdminAuthToken")
+                Cookies.remove("auth", { path: '/' });;
+                Cookies.remove("playfabAdminAuthToken", { path: '/' });
                 window.location.replace("/login");
               }
             })
@@ -151,6 +155,7 @@ const CreateCSRAccount = () => {
           if(result1.isConfirmed){
               fetch(`${process.env.REACT_APP_API_URL}user/${id}/destroy`,{
                   method: "DELETE",
+                  credentials: 'include',
                   headers: {
                       'Content-Type': 'application/json',
                       Authorization: `Bearer ${auth?.token}`,
@@ -166,8 +171,8 @@ const CreateCSRAccount = () => {
                     allowEscapeKey: false
                   }).then(ok => {
                     if(ok.isConfirmed){
-                      localStorage.removeItem("auth");
-                      localStorage.removeItem("playfabAdminAuthToken")
+                      Cookies.remove("auth", { path: '/' });;
+                      Cookies.remove("playfabAdminAuthToken", { path: '/' });
                       window.location.replace("/login");
                     }
                   })
@@ -193,6 +198,7 @@ const CreateCSRAccount = () => {
         // Delete multiple items by sending the array of IDs
         fetch(`${process.env.REACT_APP_API_URL}user/destroymultiple`, {
           method: "DELETE",
+          credentials: 'include',
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${auth?.token}`,
@@ -210,8 +216,8 @@ const CreateCSRAccount = () => {
                 allowEscapeKey: false
               }).then(ok => {
                 if(ok.isConfirmed){
-                  localStorage.removeItem("auth");
-                  localStorage.removeItem("playfabAdminAuthToken")
+                  Cookies.remove("auth", { path: '/' });;
+                  Cookies.remove("playfabAdminAuthToken", { path: '/' });
                   window.location.replace("/login");
                 }
               })

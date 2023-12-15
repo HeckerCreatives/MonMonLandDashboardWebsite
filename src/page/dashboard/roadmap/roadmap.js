@@ -6,8 +6,9 @@ import Breadcrumb from "../../../component/breadcrumb";
 import PaginationPager from "../../../component/pagination/index"
 import ViewRoadmap from "./modal/view";
 import UpdateRoadmapSlot from "./modal/edit";
+import Cookies from 'js-cookie';
 const UpdateRoadmap = () => {
-    const auth = JSON.parse(localStorage.getItem("auth"))
+    const auth = JSON.parse(Cookies.get("auth"))
     const [titles, setTitles] = useState('');
     const [descriptions, setDescriptions] = useState('')
     const [rdlist, setRdList] = useState([]);
@@ -26,7 +27,9 @@ const UpdateRoadmap = () => {
 
 
       useEffect(()=>{
-        fetch(`${process.env.REACT_APP_API_URL}roadmap/find`)
+        fetch(`${process.env.REACT_APP_API_URL}roadmap/find`,{
+            credentials: 'include',
+        })
         .then(result => result.json())
         .then(data => {
             setRdList(data)
@@ -37,6 +40,7 @@ const UpdateRoadmap = () => {
         e.preventDefault();
         fetch(`${process.env.REACT_APP_API_URL}roadmap/addroadmap`, {
             method:'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${auth?.token}`,

@@ -21,8 +21,9 @@ import {
   MDBSpinner
 } from "mdb-react-ui-kit";
 import Swal from "sweetalert2";
+import Cookies from 'js-cookie';
 const CreateCashier = () => {
-  const auth = JSON.parse(localStorage.getItem("auth"))
+  const auth = JSON.parse(Cookies.get("auth"))
   const [adminaccounts, setAdminAcc] = useState([]);
   const [csraccounts, setCsrAcc] = useState([]);
   const [show, setShow] = useState(false);
@@ -30,7 +31,9 @@ const CreateCashier = () => {
   const [isloading, setIsLoading] = useState(false);
 
   useEffect(()=>{
-    fetch(`${process.env.REACT_APP_API_URL}user/find`)
+    fetch(`${process.env.REACT_APP_API_URL}user/find`,{
+      credentials: 'include',
+    })
     .then(result => result.json())
     .then(data => {
 
@@ -53,6 +56,7 @@ const CreateCashier = () => {
     const {userId, paymentmethod, paymentdetail, paymentlimit} = e.target
     fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/add`, {
       method:'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${auth?.token}`,
@@ -74,8 +78,8 @@ const CreateCashier = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
             window.location.replace("/login");
           }
         })

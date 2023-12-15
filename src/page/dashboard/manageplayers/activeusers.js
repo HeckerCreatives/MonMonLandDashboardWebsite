@@ -95,7 +95,9 @@ setTxtHead(
 // ]
 // )
 
-fetch(`${process.env.REACT_APP_API_URL}manage/activeuser`)
+fetch(`${process.env.REACT_APP_API_URL}manage/activeuser`,{
+  credentials: 'include',
+})
 .then(result => result.json())
 .then(data => {
   setTxtTable(data)

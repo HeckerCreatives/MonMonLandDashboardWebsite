@@ -7,8 +7,9 @@ import UpdateDescriptionModal from "../modal/editmodal";
 import PaginationPager from '../../../../component/pagination/index'
 import "./pearl.css"
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet"
+import Cookies from 'js-cookie';
 const UpdatePearl = () => {
-    const auth = JSON.parse(localStorage.getItem("auth"));
+    const auth = JSON.parse(Cookies.get("auth"))
     const [titles, setTitles] = useState('');
     const [pearldata, setPearlData] = useState("");
     const [amounts, setAmounts] = useState('');
@@ -27,7 +28,9 @@ const UpdatePearl = () => {
         }, [descriptionlist]);    
 
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/find`)
+        fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/find`,{
+            credentials: 'include',
+        })
         .then(result => result.json())
         .then(data => {
             setPearlData(data)
@@ -35,7 +38,9 @@ const UpdatePearl = () => {
     },[badge])
 
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/finddesc`)
+        fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/finddesc`,{
+            credentials: 'include',
+        })
         .then(result => result.json())
         .then(data => {            
             setDescriptionList(data)
@@ -47,6 +52,7 @@ const UpdatePearl = () => {
         setIsLoading(true)
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/update`, {
             method:'PUT',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${auth?.token}`,
@@ -65,8 +71,8 @@ const UpdatePearl = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });;
+                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })
@@ -100,6 +106,7 @@ const UpdatePearl = () => {
         setIsLoading(true)
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/update`, {
             method:'PUT',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${auth?.token}`,
@@ -118,8 +125,8 @@ const UpdatePearl = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });;
+                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })
@@ -151,15 +158,18 @@ const UpdatePearl = () => {
     function updatesubsimage (e) {
         e.preventDefault();
         setIsLoading(true)
+        const data = new FormData()
+        if(image !== ""){
+            data.append("file", image)
+        }
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/update`, {
             method:'PUT',
+            credentials: 'include',
             headers: {
-                'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 Authorization: `Bearer ${auth?.token}`,
             },
-            body: JSON.stringify({
-                image: image ? image : pearldata.image,
-            })            
+            body: data           
         }).then(result => result.json())
         .then(data => {
             if(data.expired){
@@ -171,8 +181,8 @@ const UpdatePearl = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });;
+                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })
@@ -205,6 +215,7 @@ const UpdatePearl = () => {
         setIsLoading(true)
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/addnewdesc`,{
             method:'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${auth?.token}`,
@@ -223,8 +234,8 @@ const UpdatePearl = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });;
+                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })
@@ -255,9 +266,10 @@ const UpdatePearl = () => {
         })
     }
 
-    const handleImgUrl = (url) => {
+    const handleImgUrl = (e) => {
+        const file = e.target.files[0];
         // Use the uploaded image URL in the parent component or pass it to another component
-        setImage(url);
+        setImage(file);
     };
 
     const handleFilename = (url) => {
@@ -277,6 +289,7 @@ const UpdatePearl = () => {
                 if(result1.isConfirmed){
                     fetch(`${process.env.REACT_APP_API_URL}subscription/${id}/destroy`,{
                         method: "DELETE",
+                        credentials: 'include',
                         headers: {
                             'Content-Type': 'application/json',
                             Authorization: `Bearer ${auth?.token}`,
@@ -292,8 +305,8 @@ const UpdatePearl = () => {
                               allowEscapeKey: false
                             }).then(ok => {
                               if(ok.isConfirmed){
-                                localStorage.removeItem("auth");
-                                localStorage.removeItem("playfabAdminAuthToken")
+                                Cookies.remove("auth", { path: '/' });;
+                                Cookies.remove("playfabAdminAuthToken", { path: '/' });
                                 window.location.replace("/login");
                               }
                             })
@@ -314,14 +327,21 @@ const UpdatePearl = () => {
             <form onSubmit={e => updatesubsimage(e)}>
                     <MDBCol className="form-file-upload">
                         <div className="label-file-upload">
-                        <img src={image ? image : pearldata.image} alt="" className="label-file-upload"/>                    
-                        </div>                                        
+                        <img src={image ? URL.createObjectURL(image) : `${process.env.REACT_APP_API_URL}${pearldata.image}`} alt="" className="label-file-upload"/>                    
+                        </div>                                       
                     </MDBCol>
-                    <div className="text-center">
-
-                    <UploadWidget 
+                    <div className="">
+                    <div>
+                    <input
+                        type="file"
+                        className="m-1"
+                        accept="image/*" // Limit to image files only
+                        onChange={(e) => handleImgUrl(e)}
+                    />
+                    </div>
+                    {/* <UploadWidget 
                     setImgUrl={handleImgUrl} 
-                    setFilename={handleFilename}/>
+                    setFilename={handleFilename}/> */}
 
                     <MDBBtn 
                     outline color="dark" 

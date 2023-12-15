@@ -22,11 +22,11 @@ import {
 import Swal from "sweetalert2";
 import PaginationPager from "../../../component/pagination/index"
 import { handlePagination } from "../../../component/utils"
-
+import Cookies from 'js-cookie';
 const SubAdminPaymentHistory = () => {
     const [basicModal, setBasicModal] = useState(false);
     const toggleShow = () => setBasicModal(!basicModal);
-    const auth = JSON.parse(localStorage.getItem("auth"))
+    const auth = JSON.parse(Cookies.get("auth"))
     const [history, setHistory] = useState("");
     const [view, setView] = useState("");
     const [page, setPage] = useState(1),
@@ -39,7 +39,9 @@ const SubAdminPaymentHistory = () => {
     }, [history]);
 
     useEffect(()=> {
-        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
+        fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`,{
+          credentials: 'include',
+        })
         .then(response => response.json())
         .then(result => {
             const data = result.filter(e => e.cashier === auth.userName)

@@ -5,7 +5,7 @@ import Swal from "sweetalert2"
 import { PlayFabClient } from "playfab-sdk";
 // export default DataContext;
 let increment = 3;
-const auth = JSON.parse(localStorage.getItem("auth"))
+// const auth = JSON.parse(localStorage.getItem("auth"))
 
 export const handlePagination = (data, page, size) =>
     data.slice((page - 1) * size, size + (page - 1) * size);

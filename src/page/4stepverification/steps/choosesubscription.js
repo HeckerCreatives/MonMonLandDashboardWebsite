@@ -26,7 +26,9 @@ const ChooseSubscription = ({nextStep, handleFormData, values}) => {
       }; 
 
       useEffect(()=>{
-        fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/find`)
+        fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/find`,{
+          credentials: 'include',
+        })
         .then(result => result.json())
         .then(data => {
         })

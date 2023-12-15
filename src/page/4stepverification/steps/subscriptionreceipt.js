@@ -3,10 +3,11 @@ import React, {useEffect, useState} from "react";
 import './subscriptionreceipt.css'
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import Cookies from 'js-cookie';
 const SubscriptionReceipt = ({values}) => {
     const [substitle, setSubsTitle] = useState('');
     const [subsamount, setSubsAmount] = useState('');
-    const auth = JSON.parse(localStorage.getItem('auth'))
+    const auth = JSON.parse(Cookies.get("auth"))
     const firstName = auth.firstName;
     const lastName = auth.lastName;
     const { userId } = useParams();
@@ -17,7 +18,9 @@ const SubscriptionReceipt = ({values}) => {
     const amountdue = payment - totalamount;
     const verify = true;
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_API_URL}subscription/${subsid.subsid}/find`)
+        fetch(`${process.env.REACT_APP_API_URL}subscription/${subsid.subsid}/find`,{
+            credentials: 'include',
+        })
         .then(result => result.json())
         .then(data => {
             // console.log(data)
@@ -30,6 +33,7 @@ const SubscriptionReceipt = ({values}) => {
         e.preventDefault();
         fetch(`${process.env.REACT_APP_API_URL}user/update/${userId}`,{
             method:"PUT",
+            credentials: 'include',
             headers: {
                 "Content-type": "application/json",
                 Authorization: `Bearer ${auth?.token}`,

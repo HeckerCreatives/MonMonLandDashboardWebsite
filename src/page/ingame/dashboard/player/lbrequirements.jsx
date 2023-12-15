@@ -21,7 +21,7 @@ import
     MDBModalFooter, } 
 from "mdb-react-ui-kit";
 
-const LeaderboardRequirements = () => {
+const LeaderboardRequirements = ({activitypoints, taskpoints, recruitpoints}) => {
     
 return(
     <>
@@ -40,7 +40,7 @@ return(
                             Activity Points
                         </td>
                         <td>
-                            0
+                            {activitypoints}
                         </td>
                     </tr>
                     <tr>
@@ -48,7 +48,7 @@ return(
                             Task Points
                         </td>
                         <td>
-                            0
+                            {taskpoints}
                         </td>
                     </tr>
                     <tr>
@@ -56,7 +56,7 @@ return(
                             Recruit Points
                         </td>
                         <td>
-                            0
+                            {recruitpoints}
                         </td>
                     </tr>
                     

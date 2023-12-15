@@ -21,8 +21,9 @@ import {
   MDBSpinner
 } from "mdb-react-ui-kit";
 import Swal from "sweetalert2";
+import Cookies from 'js-cookie';
 const UpdateCashier = ({checkedItems, id}) => {
-  const auth = JSON.parse(localStorage.getItem("auth"))
+  const auth = JSON.parse(Cookies.get("auth"))
   const [user, setuser] = useState('');
   const [show, setShow] = useState(false);
   const toggleShow = () => setShow(!show);
@@ -30,7 +31,9 @@ const UpdateCashier = ({checkedItems, id}) => {
 
   useEffect(()=>{
     if(!checkedItems){
-    fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findone/${id}`)
+    fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findone/${id}`,{
+      credentials: 'include',
+    })
     .then(response => response.json())
     .then(result => {
       setuser(result)
@@ -52,6 +55,7 @@ const UpdateCashier = ({checkedItems, id}) => {
     const {paymentmethod, paymentdetail, paymentlimit} = e.target
     fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/update/${user._id}`, {
       method:'PUT',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${auth?.token}`,
@@ -73,8 +77,8 @@ const UpdateCashier = ({checkedItems, id}) => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
             window.location.replace("/login");
           }
         })

@@ -5,9 +5,9 @@ import Swal from "sweetalert2"
 import Breadcrumb from "../../../component/breadcrumb";
 import UpdateDescriptionModal from "./modal/editmodal";
 import PaginationPager from '../../../component/pagination/index'
-
+import Cookies from 'js-cookie';
 const UpdateSubs = () => {
-    const auth = JSON.parse(localStorage.getItem("auth"));
+    const auth = JSON.parse(Cookies.get("auth"))
     const [titles, setTitles] = useState('');
     const [gettitles, setGetTitles] = useState('');
     const [amounts, setAmounts] = useState('');
@@ -40,7 +40,9 @@ const UpdateSubs = () => {
       }; 
 
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/find`)
+        fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/find`,{
+            credentials: 'include',
+        })
         .then(result => result.json())
         .then(data => {
             setGetTitles(data.subscriptionName)
@@ -50,7 +52,9 @@ const UpdateSubs = () => {
     },[badge])
 
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/finddesc`)
+        fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/finddesc`,{
+            credentials: 'include',
+        })
         .then(result => result.json())
         .then(data => {
             
@@ -62,6 +66,7 @@ const UpdateSubs = () => {
         e.preventDefault();
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/update`, {
             method:'PUT',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${auth?.token}`,
@@ -81,8 +86,8 @@ const UpdateSubs = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });;
+                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })
@@ -111,6 +116,7 @@ const UpdateSubs = () => {
         e.preventDefault();
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/addnewdesc`,{
             method:'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${auth?.token}`,
@@ -129,8 +135,8 @@ const UpdateSubs = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });;
+                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })

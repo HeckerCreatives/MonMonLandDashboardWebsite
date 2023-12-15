@@ -18,6 +18,7 @@ const CancelPage = () => {
         const ids = params.get('id');
         fetch(`${process.env.REACT_APP_API_URL}coin/cancel`, {
             method: "POST",
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
             },

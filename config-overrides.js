@@ -1,5 +1,6 @@
 const webpack = require('webpack');
-
+const WebpackObfuscator = require('webpack-obfuscator');
+const HtmlWebpackPlugin = require("html-webpack-plugin")
 module.exports = function override(config) {
     const fallback = config.resolve.fallback || {};
     Object.assign(fallback, {
@@ -27,6 +28,22 @@ module.exports = function override(config) {
                     throw new Error(`Not found ${mod}`);
             }
         }),
+        // new HtmlWebpackPlugin({
+        //     minify: {
+        //       removeAttributeQuotes: true,
+        //       collapseWhitespace: true,
+        //       removeComments: true,
+        //     },
+        //   }),
+       
+        new WebpackObfuscator(
+            {
+              // Add your obfuscation options here
+              rotateStringArray: true,
+            },
+            // Add files you want to exclude from obfuscation
+            []
+        ),
     );
     return config;
 }

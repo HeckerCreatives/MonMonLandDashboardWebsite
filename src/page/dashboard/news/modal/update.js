@@ -21,9 +21,9 @@ import {
 } from "mdb-react-ui-kit";
 import Swal from "sweetalert2";
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
-
+import Cookies from 'js-cookie';
 const UpdateNewsModal = ({ theme, news }) => {
-  const auth = JSON.parse(localStorage.getItem("auth"))
+  const auth = JSON.parse(Cookies.get("auth"))
   const [show, setShow] = useState(false);
   const toggleShow = () => setShow(!show);
   const [image, setImage] = useState("");
@@ -49,6 +49,7 @@ const UpdateNewsModal = ({ theme, news }) => {
     }
     fetch(`${process.env.REACT_APP_API_URL}news/${news._id}/update`, {
         method:'PUT',
+        credentials: 'include',
         headers: {
             'Accept': 'application/json',
             Authorization: `Bearer ${auth?.token}`,
@@ -65,8 +66,8 @@ const UpdateNewsModal = ({ theme, news }) => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
             window.location.replace("/login");
           }
         })

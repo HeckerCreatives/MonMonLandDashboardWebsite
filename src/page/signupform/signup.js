@@ -80,6 +80,7 @@ const SignUp = () => {
       setIsLoading(true)
       fetch(`${process.env.REACT_APP_API_URL}monmon/register`, {
         method:'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },

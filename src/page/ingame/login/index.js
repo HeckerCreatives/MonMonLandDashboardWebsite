@@ -12,75 +12,55 @@ import {
     MDBTypography,
     MDBCheckbox
   } from "mdb-react-ui-kit";
-import logo from "../../assets/header/small logo for navi.png"
+import logo from "../../../assets/header/small logo for navi.png"
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
 import { PlayFabClient } from "playfab-sdk";
-import Cookies from 'js-cookie';
-const Login = () =>{
+const IngameLogin = () =>{
   const [email, setEmail]= useState('');
   const [password, setPassword] = useState("");
-  let auth = Cookies.get('auth')
-  auth = auth !== undefined ? JSON.parse(auth) : null
+  const user = JSON.parse(localStorage.getItem("user"))
+  const navigate = useNavigate();
 
   useEffect(()=>{
-    console.log(typeof auth)
-    if(auth){
-      window.location.href = `/dashboard/${auth.roleId?.display_name}/home`
-    }
-  },[])
+    if(user){
+      window.location.href = `/dashboard/User/home`
+    } 
+  },[user])
 
   const login = (e) =>{
     e.preventDefault()
-    fetch(`${process.env.REACT_APP_API_URL}auth/login`,{
+    fetch(`${process.env.REACT_APP_API_URL}gameauth/login`,{
       method: 'POST',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        email: email,
+        username: email,
         password: password
       })
     }).then(result => result.json())
     .then(data =>{
-      console.log(data)
-      if (data.message !== "success") {        
+       if (data.message !== "success") {        
 				Swal.fire({
-          title: data.message,
-          icon: "info",
-          text: data.data
+                title: data.message,
+                icon: "info",
+                text: data.data
+                })
+		} else {
+        localStorage.setItem('user', JSON.stringify(data.data))
+        Swal.fire({
+          title: "Login Successfully",
+          icon: "success",
+          text: `Welcome ${data.data.username}`
         })
-			} else {
-        const playFabUserData = {
-          CreateAccount: false,            
-          CustomId: data.data.playfabid,           
-        }
-        PlayFabClient.LoginWithCustomID(playFabUserData, (error, result) => {
-          if (result){
-            Cookies.set("playfabAdminAuthToken", result.data.SessionTicket, { expires: 8, path: '/' })
-            // Cookies.set('auth', JSON.stringify(data.data), { expires: 8, path: '/' })
-            Swal.fire({
-              title: "Login Successfully",
-              icon: "success",
-              text: `Welcome Admin`
-            })
-            .then(result1 => {
-              if(result1.isConfirmed)
-              window.location.reload()
-            })
-          } else if (error) {
-            Swal.fire({
-                icon: "warning",
-                title: error.error,
-                allowOutsideClick: false,
-                allowEscapeKey: false
-            })
-            // setIsLoading(false)
-          }
+        .then(result1 => {
+          if(result1.isConfirmed)
+          window.location.reload()
         })
-      }  
-      
+      }
+       
     })
   }
 
@@ -93,7 +73,7 @@ const Login = () =>{
       <MDBCol lg={4} className="sidebg d-flex align-items-center text-dark text-center">
         <MDBContainer fluid >
         <MDBCol className="text fs-6">
-        <h1 >Welcome Admin</h1>
+        <h1 >Welcome Monmon</h1>
           <p >Join us on this extraordinary adventure, and together, let's travel on an epic journey that will lead us through the lands of Monmonland.  Become a Monmon master, honing our skills and forging unbreakable bonds with our Money Monsters. Create your account by filling up the requirements. So, what are you waiting for? Let's band together and make our mark on the ever-expanding tapestry of Monmonland, creating unforgettable memories and stories that will be told for generations to come!</p>
         </MDBCol>          
           </MDBContainer>
@@ -171,4 +151,4 @@ const Login = () =>{
   )
 }
 
-export default Login;
+export default IngameLogin;

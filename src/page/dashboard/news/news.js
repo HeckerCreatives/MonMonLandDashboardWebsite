@@ -18,8 +18,9 @@ import CreateNews from "./modal/create";
 import ViewNews from "./modal/view"
 import UpdateNewsModal from "./modal/update"
 import { handlePagination } from "../../../component/utils";
+import Cookies from 'js-cookie';
 const UpdateNews = () => {
-    const auth = JSON.parse(localStorage.getItem("auth"))
+    const auth = JSON.parse(Cookies.get("auth"))
     const [titles, setTitles] = useState('');
     const [descriptions, setDescriptions] = useState('');
     const [newsid, setNewsId] = useState('')
@@ -38,7 +39,9 @@ const UpdateNews = () => {
       }, [news]);
 
     useEffect(()=>{
-      fetch(`${process.env.REACT_APP_API_URL}news/find`)
+      fetch(`${process.env.REACT_APP_API_URL}news/find`,{
+        credentials: 'include',
+      })
       .then(result => result.json())
       .then(data => {
           setNews(data)
@@ -57,6 +60,7 @@ const UpdateNews = () => {
             if(result1.isConfirmed){
                 fetch(`${process.env.REACT_APP_API_URL}news/${id}/destroy`,{
                     method: "DELETE",
+                    credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${auth?.token}`,
@@ -72,8 +76,8 @@ const UpdateNews = () => {
                           allowEscapeKey: false
                         }).then(ok => {
                           if(ok.isConfirmed){
-                            localStorage.removeItem("auth");
-                            localStorage.removeItem("playfabAdminAuthToken")
+                            Cookies.remove("auth", { path: '/' });;
+                            Cookies.remove("playfabAdminAuthToken", { path: '/' });
                             window.location.replace("/login");
                           }
                         })

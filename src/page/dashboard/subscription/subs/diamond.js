@@ -7,8 +7,9 @@ import UpdateDescriptionModal from "../modal/editmodal";
 import PaginationPager from '../../../../component/pagination/index'
 import "./pearl.css"
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet"
+import Cookies from 'js-cookie';
 const UpdateDiamond = () => {
-    const auth = JSON.parse(localStorage.getItem("auth"));
+    const auth = JSON.parse(Cookies.get("auth"))
     const [titles, setTitles] = useState('');
     const [pearldata, setPearlData] = useState("");
     const [amounts, setAmounts] = useState('');
@@ -27,7 +28,9 @@ const UpdateDiamond = () => {
         }, [descriptionlist]);    
 
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/find`)
+        fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/find`,{
+            credentials: 'include',
+        })
         .then(result => result.json())
         .then(data => {
             setPearlData(data)
@@ -35,7 +38,9 @@ const UpdateDiamond = () => {
     },[badge])
 
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/finddesc`)
+        fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/finddesc`, {
+            credentials: 'include',
+        })
         .then(result => result.json())
         .then(data => {            
             setDescriptionList(data)
@@ -47,6 +52,7 @@ const UpdateDiamond = () => {
         setIsLoading(true)
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/update`, {
             method:'PUT',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${auth?.token}`,
@@ -65,8 +71,8 @@ const UpdateDiamond = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });;
+                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })
@@ -100,6 +106,7 @@ const UpdateDiamond = () => {
         setIsLoading(true)
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/update`, {
             method:'PUT',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${auth?.token}`,
@@ -118,8 +125,8 @@ const UpdateDiamond = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });;
+              Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })
@@ -153,6 +160,7 @@ const UpdateDiamond = () => {
         setIsLoading(true)
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/update`, {
             method:'PUT',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${auth?.token}`,
@@ -171,8 +179,8 @@ const UpdateDiamond = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });;
+              Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })
@@ -205,6 +213,7 @@ const UpdateDiamond = () => {
         setIsLoading(true)
         fetch(`${process.env.REACT_APP_API_URL}subscription/${badge}/addnewdesc`,{
             method:'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${auth?.token}`,
@@ -223,8 +232,8 @@ const UpdateDiamond = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });;
+              Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })
@@ -276,6 +285,7 @@ const UpdateDiamond = () => {
                 if(result1.isConfirmed){
                     fetch(`${process.env.REACT_APP_API_URL}subscription/${id}/destroy`,{
                         method: "DELETE",
+                        credentials: 'include',
                         headers: {
                             'Content-Type': 'application/json',
                             Authorization: `Bearer ${auth?.token}`,

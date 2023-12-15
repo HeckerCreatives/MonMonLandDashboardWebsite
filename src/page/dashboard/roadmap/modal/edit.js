@@ -23,8 +23,10 @@ import {
 import Swal from "sweetalert2";
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet"
 // import "./create.css"
+import Cookies from 'js-cookie';
+
 const UpdateRoadmapSlot = ({roadmap}) => {
-  const auth = JSON.parse(localStorage.getItem("auth"))
+  const auth = JSON.parse(Cookies.get("auth"))
   const [titles, setTitles] = useState('');
   const [descriptions, setDescriptions] = useState('');
   const [show, setShow] = useState(false);
@@ -47,6 +49,7 @@ const UpdateRoadmapSlot = ({roadmap}) => {
     
     fetch(`${process.env.REACT_APP_API_URL}roadmap/${roadmap._id}/update`, {
       method:'PUT',
+      credentials: 'include',
       headers: {
         'Accept': 'application/json',
         Authorization: `Bearer ${auth?.token}`,
@@ -63,8 +66,8 @@ const UpdateRoadmapSlot = ({roadmap}) => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
             window.location.replace("/login");
           }
         })
@@ -105,6 +108,7 @@ const UpdateRoadmapSlot = ({roadmap}) => {
     // Use the uploaded image URL in the parent component or pass it to another component
     setFilename(url);
   };
+  
 return (
     <>
       <MDBBtn

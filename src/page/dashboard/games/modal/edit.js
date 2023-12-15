@@ -28,8 +28,9 @@ import diamond from "../../../../assets/subscription/diamond.png"
 import Swal from "sweetalert2";
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet"
 import "./create.css"
+import Cookies from 'js-cookie';
 const UpdateGames = ({games}) => {
-  const auth = JSON.parse(localStorage.getItem("auth"))
+  const auth = JSON.parse(Cookies.get("auth"))
   const [titles, setTitles] = useState('');
   const [descriptions, setDescriptions] = useState('');
   const [subscription, setSubscription] = useState([]);
@@ -56,6 +57,7 @@ const UpdateGames = ({games}) => {
     // data.append("selectsubscription", subscription)
     fetch(`${process.env.REACT_APP_API_URL}games/${games._id}/update`, {
       method:'PUT',
+      credentials: 'include',
       headers: {
         'Accept': 'application/json',
         Authorization: `Bearer ${auth?.token}`,
@@ -72,8 +74,8 @@ const UpdateGames = ({games}) => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            localStorage.removeItem("auth");
-            localStorage.removeItem("playfabAdminAuthToken")
+            Cookies.remove("auth", { path: '/' });
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
             window.location.replace("/login");
           }
         })

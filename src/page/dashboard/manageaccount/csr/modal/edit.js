@@ -13,11 +13,11 @@ import {
   import React, {useState, useEffect} from "react";
   import "../index.css"
   import Swal from "sweetalert2";
-
+  import Cookies from 'js-cookie';
   const UpdateCSRAccount = ({account}) => {
     const [confirmpass, setConfirmPass] = useState("")
     const [centredModal, setCentredModal] = useState(false);
-    const auth = JSON.parse(localStorage.getItem("auth"))
+    const auth = JSON.parse(Cookies.get("auth"))
     const toggleShow = () => setCentredModal(!centredModal);
     
   
@@ -39,6 +39,7 @@ import {
 
           fetch(`${process.env.REACT_APP_API_URL}user/update/${account._id}`,{
             method: "PUT",
+            credentials: 'include',
             headers: {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${auth?.token}`,
@@ -55,8 +56,8 @@ import {
                 allowEscapeKey: false
               }).then(ok => {
                 if(ok.isConfirmed){
-                  localStorage.removeItem("auth");
-                  localStorage.removeItem("playfabAdminAuthToken")
+                  Cookies.remove("auth", { path: '/' });;
+                  Cookies.remove("playfabAdminAuthToken", { path: '/' });
                   window.location.replace("/login");
                 }
               })

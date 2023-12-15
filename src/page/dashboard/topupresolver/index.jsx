@@ -21,9 +21,10 @@ import {
     MDBSpinner,} from "mdb-react-ui-kit";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import Cookies from 'js-cookie';
 const TopUpResolver = () => {
-    const auth = JSON.parse(localStorage.getItem("auth"))
-    const playfabToken = localStorage.getItem("playfabAdminAuthToken")
+    const auth = JSON.parse(Cookies.get("auth"))
+    const playfabToken = Cookies.get("playfabAdminAuthToken")
     const [pending, setpending] = useState(0)
     const [success, setsuccess] = useState(0)
     const [playfabid, setplayfabid] = useState("")
@@ -38,6 +39,7 @@ const TopUpResolver = () => {
     useEffect(() => {   
         fetch(`${process.env.REACT_APP_API_URL}topupresolver/find`,{
             method: "POST",
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json"
             },
@@ -59,6 +61,7 @@ const TopUpResolver = () => {
         const {searchtype, input} = e.target
         fetch(`${process.env.REACT_APP_API_URL}topupresolver/search`,{
             method: "POST",
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${auth?.token}`,
@@ -79,8 +82,8 @@ const TopUpResolver = () => {
                   allowEscapeKey: false
                 }).then(ok => {
                   if(ok.isConfirmed){
-                    localStorage.removeItem("auth");
-                    localStorage.removeItem("playfabAdminAuthToken")
+                    Cookies.remove("auth", { path: '/' });;
+                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
                     window.location.replace("/login");
                   }
                 })
@@ -120,6 +123,7 @@ const TopUpResolver = () => {
                 data.append("admin", auth.userName)
                 fetch(`${process.env.REACT_APP_API_URL}topupresolver/resolve`,{
                     method: "POST",
+                    credentials: 'include',
                     headers: {
                         "Accept": "application/json",
                         Authorization: `Bearer ${auth?.token}`,
@@ -136,8 +140,8 @@ const TopUpResolver = () => {
                           allowEscapeKey: false
                         }).then(ok => {
                           if(ok.isConfirmed){
-                            localStorage.removeItem("auth");
-                            localStorage.removeItem("playfabAdminAuthToken")
+                            Cookies.remove("auth", { path: '/' });;
+                            Cookies.remove("playfabAdminAuthToken", { path: '/' });
                             window.location.replace("/login");
                           }
                         })

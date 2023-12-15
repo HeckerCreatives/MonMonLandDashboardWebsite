@@ -19,6 +19,7 @@ const unban = false;
 useEffect(()=>{
     fetch(`${process.env.REACT_APP_API_URL}manage/oneuser/${userId}`,{
         method:'GET',
+        credentials: 'include',
         headers:{
             "Content": "application/json"
         }
@@ -41,6 +42,7 @@ function handleUpdate  (e) {
     const {email, firstname, lastname} = e.target;
     fetch(`${process.env.REACT_APP_API_URL}manage/update/${userId}`, {
         method: 'PUT',
+        credentials: 'include',
         headers: {
             "Content-Type": "application/json"
         },
@@ -87,6 +89,7 @@ function handleunban (e) {
                 if(result.isConfirmed){                    
                     fetch(`${process.env.REACT_APP_API_URL}manage/ban/${userId}`, {
                         method: 'PUT',
+                        credentials: 'include',
                         headers: {
                             "Content-Type": "application/json"
                         },
@@ -129,6 +132,7 @@ function handleban (e) {
                 if(result.isConfirmed){
                     fetch(`${process.env.REACT_APP_API_URL}manage/ban/${userId}`, {
                         method: 'PUT',
+                        credentials: 'include',
                         headers: {
                             "Content-Type": "application/json"
                         },

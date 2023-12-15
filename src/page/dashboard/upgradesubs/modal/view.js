@@ -39,7 +39,9 @@ const ViewCashier = ({ theme, id, checkedItems}) => {
   useEffect(()=> {
     const fetchdata = async () => {
       if(!checkedItems){  
-      await  fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`)
+      await  fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findbuyer`,{
+        credentials: 'include',
+      })
           .then(response => response.json())
           .then(result => {
                 const data = result.filter(e => e.cashier ===  user?.userId?.userName)
@@ -52,7 +54,9 @@ const ViewCashier = ({ theme, id, checkedItems}) => {
   useEffect(()=>{
     const fetchData = async () =>{
       if(!checkedItems){
-      await fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findone/${id}`)
+      await fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/findone/${id}`,{
+        credentials: 'include',
+      })
         .then(response => response.json())
         .then(result => {
           setuser(result)

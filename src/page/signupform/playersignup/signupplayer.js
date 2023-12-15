@@ -21,7 +21,9 @@ const SignUpPlayer = () => {
   useEffect(()=> {
     if (userId) {
       const validateReferrer = async () =>{
-       await fetch(`${process.env.REACT_APP_API_URL}user/findone/${userId}`)
+       await fetch(`${process.env.REACT_APP_API_URL}user/findone/${userId}`,{
+        credentials: 'include',
+       })
        .then(result => result.json())
        .then(data => {
         setUser(data)
@@ -55,6 +57,7 @@ const SignUpPlayer = () => {
     
     fetch(`${process.env.REACT_APP_API_URL}user/register`, {
       method:'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
       },

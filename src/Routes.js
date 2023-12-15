@@ -79,17 +79,29 @@ import CreateMarketingAccount from "./page/dashboard/manageaccount/marketingarm"
 import MarketingDashboard from "./page/dashboard/marketingarm/marketingdashboard";
 import Investorfunds from "./page/dashboard/investorfunds";
 import Exchangerate from "./page/dashboard/exchangerate";
-import PlayerDashboard from "./page/dashboard/player";
-import Network from "./page/dashboard/player/network";
-import PlayerLeaderboard from "./page/dashboard/player/leaderboard";
-import PlayerNews from "./page/dashboard/player/news";
-import PlayerProfile from "./page/dashboard/player/Profile";
-import PlayerWalletHistory from "./page/dashboard/player/history/wallethistory";
-import PlayerIncomeHistory from "./page/dashboard/player/history/totalincomehistory";
-import PlayerMCHistory from "./page/dashboard/player/history/monstercoinhistory";
-import PlayerMGUnilevelHistory from "./page/dashboard/player/history/monstergemunilevel";
-import PlayerMGGrindHistory from "./page/dashboard/player/history/monstergemgrind";
+// import PlayerDashboard from "./page/dashboard/player";
+// import Network from "./page/dashboard/player/network";
+// import PlayerLeaderboard from "./page/dashboard/player/leaderboard";
+// import PlayerNews from "./page/dashboard/player/news";
+// import PlayerProfile from "./page/dashboard/player/Profile";
+// import PlayerWalletHistory from "./page/dashboard/player/history/wallethistory";
+// import PlayerIncomeHistory from "./page/dashboard/player/history/totalincomehistory";
+// import PlayerMCHistory from "./page/dashboard/player/history/monstercoinhistory";
+// import PlayerMGUnilevelHistory from "./page/dashboard/player/history/monstergemunilevel";
+// import PlayerMGGrindHistory from "./page/dashboard/player/history/monstergemgrind";
 import Trade from "./page/dashboard/trade";
+import IngameLogin from "./page/ingame/login";
+import UserDashboard from "./page/ingame/dashboard/dashboard";
+import PlayerDashboard from "./page/ingame/dashboard/player";
+import Network from "./page/ingame/dashboard/player/network";
+import PlayerLeaderboard from "./page/ingame/dashboard/player/leaderboard";
+import PlayerNews from "./page/ingame/dashboard/player/news";
+import PlayerProfile from "./page/ingame/dashboard/player/Profile";
+import PlayerWalletHistory from "./page/ingame/dashboard/player/history/wallethistory";
+import PlayerIncomeHistory from "./page/ingame/dashboard/player/history/totalincomehistory";
+import PlayerMCHistory from "./page/ingame/dashboard/player/history/monstercoinhistory";
+import PlayerMGUnilevelHistory from "./page/ingame/dashboard/player/history/monstergemunilevel";
+import PlayerMGGrindHistory from "./page/ingame/dashboard/player/history/monstergemgrind";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -237,7 +249,25 @@ const Routers = () => {
             <Route path="home" element={<MarketingDashboard/>}/>
         </Route>
 
-        <Route path="Player" element={""}>
+        {/* <Route path="Player" element={""}>
+            <Route path="home" element={<PlayerDashboard/>}/>
+            <Route path="network" element={<Network/>}/>
+            <Route path="leaderboard" element={<PlayerLeaderboard/>}/>
+            <Route path="news" element={<PlayerNews/>}/>
+            <Route path="profile" element={<PlayerProfile/>}/>
+            <Route path="wallethistory" element={<PlayerWalletHistory/>}/>
+            <Route path="totalincomehistory" element={<PlayerIncomeHistory/>}/>
+            <Route path="monstercoinhistory" element={<PlayerMCHistory/>}/>
+            <Route path="monstergemunilevel" element={<PlayerMGUnilevelHistory/>}/>
+            <Route path="monstergemgrind" element={<PlayerMGGrindHistory/>}/>
+        </Route> */}
+
+        
+
+      </Route>
+      
+      <Route path="/Dashboard" element={<UserDashboard />}>
+      <Route path="User" element={""}>
             <Route path="home" element={<PlayerDashboard/>}/>
             <Route path="network" element={<Network/>}/>
             <Route path="leaderboard" element={<PlayerLeaderboard/>}/>
@@ -287,6 +317,7 @@ const Routers = () => {
         </Route>
       </Route>
       <Route path="/login" element={<Login />}/>
+      <Route path="/gamelogin" element={<IngameLogin />}/>
       <Route path="/media" element={<Media />}/>
       <Route path="/cashier" element={<AvailableCashiers/>}/>
       <Route path="/topup" element={<TopUp />}/>
