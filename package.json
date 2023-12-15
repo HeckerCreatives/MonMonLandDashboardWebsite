@@ -40,7 +40,7 @@
   "scripts": {
     "dev": "react-scripts start",
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "react-app-rewired build --legacy-peer-deps",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
@@ -72,6 +72,7 @@
     "react-app-rewired": "^2.2.1",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "url": "^0.11.1"
   }
 }
