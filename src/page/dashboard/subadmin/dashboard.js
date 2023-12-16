@@ -7,10 +7,10 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Cookies from 'js-cookie';
 const SubAdminDashboard = () => {
-    const auth = JSON.parse(Cookies.get("auth"))
+    const auth = JSON.parse(decodeURIComponent(Cookies.get("auth")))
     const [users, setUsers] = useState([]);
     const [paidusers, setPaidUsers] = useState(0);
-
+    
     // const [totalautopayment, setTotalAutoPayment] = useState([]);
     // const [AutoAndManual, setAutoAndManual] = useState([]);
     // const [autopayment, setAutoPayment] = useState([]);
@@ -27,6 +27,7 @@ const SubAdminDashboard = () => {
           navigate("/sessions/login");
         }
       }
+      console.log(auth)
     }, [auth, navigate]);
 
     useEffect(() => {
