@@ -23,15 +23,17 @@ const Dashboard = () => {
   [didToggle3, setDidToggle3] = useState(
     window.innerWidth > 768 ? false : true
   );
+  
   useEffect(()=>{
+    console.log(Cookies.get('playfabAdminAuthToken'))
     console.log(Cookies.get('auth'))
   },[])
 
-  let auth = decodeURIComponent(Cookies.get('auth'))
+  let auth = Cookies.get('auth')
   auth = JSON.parse(auth)
   // const [darkMode, setDarkMode] = React.useState(true);
   const navigate = useNavigate() 
-
+  
 
   
     let link;
