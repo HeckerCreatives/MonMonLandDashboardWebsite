@@ -30,7 +30,7 @@ const AvailableCashiers = () => {
             // [currenturn, setCurrentTurn] = useState(""),
             [q, setQ] = useState(false),
             [total, setTotal] = useState(0);
-    const auth = JSON.parse(Cookies.get("auth"))
+    // const auth = JSON.parse(Cookies.get("auth"))
     const buyer = JSON.parse(localStorage.getItem("userbuyer"))
     const [toggle, settoggle] = useState(false)        
     const toggleShow = () => settoggle(!toggle);
