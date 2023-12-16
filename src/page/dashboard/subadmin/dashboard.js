@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Cookies from 'js-cookie';
 const SubAdminDashboard = () => {
-    const auth = JSON.parse(decodeURIComponent(Cookies.get("auth")))
+    const auth = JSON.parse(decodeURIComponent(Cookies.get('auth')))
     const [users, setUsers] = useState([]);
     const [paidusers, setPaidUsers] = useState(0);
     

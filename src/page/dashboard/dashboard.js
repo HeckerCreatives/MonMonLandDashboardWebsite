@@ -24,10 +24,10 @@ const Dashboard = () => {
     window.innerWidth > 768 ? false : true
   );
   useEffect(()=>{
-    console.log(Cookies.get("auth"))
+    console.log(Cookies.get('auth'))
   },[])
 
-  let auth = decodeURIComponent(Cookies.get("auth"))
+  let auth = decodeURIComponent(Cookies.get('auth'))
   auth = JSON.parse(auth)
   // const [darkMode, setDarkMode] = React.useState(true);
   const navigate = useNavigate() 
