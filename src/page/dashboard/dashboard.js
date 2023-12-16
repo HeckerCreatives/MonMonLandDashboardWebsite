@@ -23,10 +23,10 @@ const Dashboard = () => {
   [didToggle3, setDidToggle3] = useState(
     window.innerWidth > 768 ? false : true
   );
-  
+  console.log(Cookies.get('playfabAdminAuthToken'))
+  console.log(Cookies.get('auth'))
   useEffect(()=>{
-    console.log(Cookies.get('playfabAdminAuthToken'))
-    console.log(Cookies.get('auth'))
+    
   },[])
 
   let auth = Cookies.get('auth')
