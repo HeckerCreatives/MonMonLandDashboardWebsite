@@ -24,11 +24,10 @@ const Login = () =>{
   auth = auth !== undefined ? JSON.parse(auth) : null
 
   useEffect(()=>{
-    console.log(typeof auth)
     if(auth){
       window.location.href = `/dashboard/${auth.roleId?.display_name}/home`
     }
-  },[])
+  },[auth]) 
 
   const login = (e) =>{
     e.preventDefault()
