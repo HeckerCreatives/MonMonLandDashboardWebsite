@@ -66,7 +66,7 @@ const Login = () =>{
             })
             .then(result1 => {
               if(result1.isConfirmed)
-              window.location.reload()
+              window.location.href = `/dashboard/${data.data.roleId?.display_name}/home`
             })
           } else if (error) {
             Swal.fire({
