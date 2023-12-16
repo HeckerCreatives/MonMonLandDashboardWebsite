@@ -23,7 +23,7 @@ const Dashboard = () => {
   [didToggle3, setDidToggle3] = useState(
     window.innerWidth > 768 ? false : true
   );
-  const auth = JSON.parse(Cookies.get("auth"))
+  const auth = JSON.parse(decodeURIComponent(Cookies.get("auth")))
   // const [darkMode, setDarkMode] = React.useState(true);
   const navigate = useNavigate() 
 
