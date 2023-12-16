@@ -7,7 +7,7 @@ import UpdateDescriptionModal from "./modal/editmodal";
 import PaginationPager from '../../../component/pagination/index'
 import Cookies from 'js-cookie';
 const UpdateSubs = () => {
-    const auth = JSON.parse(Cookies.get("auth"))
+    // const auth = JSON.parse(Cookies.get("auth"))
     const [titles, setTitles] = useState('');
     const [gettitles, setGetTitles] = useState('');
     const [amounts, setAmounts] = useState('');
@@ -69,7 +69,7 @@ const UpdateSubs = () => {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 subscriptionName: titles,
@@ -119,7 +119,7 @@ const UpdateSubs = () => {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 description: adddescriptions

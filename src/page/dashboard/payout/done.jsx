@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 import { handlePagination } from "../../../component/utils";
 import Cookies from 'js-cookie';
 const AdminPayoutDone = () => {
-    const auth = JSON.parse(Cookies.get("auth"))
+    // const auth = JSON.parse(Cookies.get("auth"))
     const [page, setPage] = useState(0),
     [total, setTotal] = useState(0),
     [done, setDone] = useState([]),
@@ -35,7 +35,7 @@ const AdminPayoutDone = () => {
             credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 status: "done"
@@ -82,7 +82,7 @@ const AdminPayoutDone = () => {
                     credentials: 'include',
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${auth?.token}`,
+                        // Authorization: `Bearer ${auth?.token}`,
                     },
                     body: JSON.stringify({admin: admin, playfabToken: playfabToken})
                 }).then(result => result.json())

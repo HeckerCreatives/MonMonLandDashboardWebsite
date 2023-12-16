@@ -17,7 +17,7 @@ import {
 import Swal from "sweetalert2";
 import Cookies from 'js-cookie';
 const UpdateDescriptionModal = ({descriptionlist}) => {
-    const auth = JSON.parse(Cookies.get("auth"))
+    // const auth = JSON.parse(Cookies.get("auth"))
     const [show, setShow] = useState(false);
     const toggleShow = () => setShow(!show);
     // const [image, setImage] = useState("");
@@ -37,7 +37,7 @@ const UpdateDescriptionModal = ({descriptionlist}) => {
           credentials: 'include',
           headers: {
               'Content-Type': 'application/json',
-              Authorization: `Bearer ${auth?.token}`,
+              // Authorization: `Bearer ${auth?.token}`,
           },
           body: JSON.stringify({              
               description: descriptions,              

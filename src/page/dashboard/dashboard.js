@@ -4,6 +4,7 @@ import { Link, json, useNavigate } from "react-router-dom";
 import { MDBContainer, MDBBtn, MDBRow, MDBCol,MDBIcon } from "mdb-react-ui-kit";
 import Sidebarnav from "../../component/sidebarnav";
 import { Outlet } from "react-router-dom";
+import { isLogin } from "../../component/utils";
 // import Navbar from "../../component/navbar";
 // import { ThemeContext, themes } from '../../component/theme/themecontext';
 // import ReferralButton from "../../component/dashboard/referral/referral";
@@ -23,21 +24,24 @@ const Dashboard = () => {
   [didToggle3, setDidToggle3] = useState(
     window.innerWidth > 768 ? false : true
   );
-  console.log(Cookies.get('playfabAdminAuthToken'))
-  console.log(Cookies.get('auth'))
-  useEffect(()=>{
+  
+  // let auth = Cookies.get('auth')
+  // auth = JSON.parse(auth)
+  const navigate = useNavigate()
+  const [role, setrole]= useState('');
+  const [name, setname]= useState('');
+
+  useEffect(() => {
+    isLogin()
+    .then(data => {
+      setrole(data.role)
+      setname(data.name)
+    })
+  },[role])
+
     
-  },[])
-
-  let auth = Cookies.get('auth')
-  auth = JSON.parse(auth)
-  // const [darkMode, setDarkMode] = React.useState(true);
-  const navigate = useNavigate() 
-  
-
-  
     let link;
-    switch (auth.roleId?.display_name) {
+    switch (role){
     case "Administrator":
       link = [
         {
@@ -578,7 +582,7 @@ const Dashboard = () => {
 
     return(
       <>
-        {auth ? 
+        {role ? 
         <MDBContainer fluid className="p-0">
         
         <Sidebarnav
@@ -606,7 +610,7 @@ const Dashboard = () => {
               : "0rem",
         }}
         >
-        <TopNavbar auth={auth} didToggle={didToggle}
+        <TopNavbar auth={name} didToggle={didToggle}
           setDidToggle={setDidToggle}/>
         
         

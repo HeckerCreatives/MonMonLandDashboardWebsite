@@ -26,7 +26,7 @@ import UploadWidget from "../../../../component/uploadwidget/uploadwidet"
 import Cookies from 'js-cookie';
 
 const UpdateRoadmapSlot = ({roadmap}) => {
-  const auth = JSON.parse(Cookies.get("auth"))
+  // const auth = JSON.parse(Cookies.get("auth"))
   const [titles, setTitles] = useState('');
   const [descriptions, setDescriptions] = useState('');
   const [show, setShow] = useState(false);
@@ -52,7 +52,7 @@ const UpdateRoadmapSlot = ({roadmap}) => {
       credentials: 'include',
       headers: {
         'Accept': 'application/json',
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: data
     }).then(result => result.json())

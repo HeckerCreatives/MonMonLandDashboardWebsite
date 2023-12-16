@@ -20,7 +20,7 @@ import UpdateNewsModal from "./modal/update"
 import { handlePagination } from "../../../component/utils";
 import Cookies from 'js-cookie';
 const UpdateNews = () => {
-    const auth = JSON.parse(Cookies.get("auth"))
+    // const auth = JSON.parse(Cookies.get("auth"))
     const [titles, setTitles] = useState('');
     const [descriptions, setDescriptions] = useState('');
     const [newsid, setNewsId] = useState('')
@@ -63,7 +63,7 @@ const UpdateNews = () => {
                     credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json',
-                        Authorization: `Bearer ${auth?.token}`,
+                        // Authorization: `Bearer ${auth?.token}`,
                     }
                 }).then(result => result.json())
                 .then(data => {

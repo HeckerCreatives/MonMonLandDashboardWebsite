@@ -9,7 +9,7 @@ import "./pearl.css"
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet"
 import Cookies from 'js-cookie';
 const UpdatePearl = () => {
-    const auth = JSON.parse(Cookies.get("auth"))
+    // const auth = JSON.parse(Cookies.get("auth"))
     const [titles, setTitles] = useState('');
     const [pearldata, setPearlData] = useState("");
     const [amounts, setAmounts] = useState('');
@@ -55,7 +55,7 @@ const UpdatePearl = () => {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 subscriptionName: titles ? titles : pearldata.subscriptionName,
@@ -109,7 +109,7 @@ const UpdatePearl = () => {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 amount: amounts ? amounts : pearldata.amount,
@@ -167,7 +167,7 @@ const UpdatePearl = () => {
             credentials: 'include',
             headers: {
                 'Accept': 'application/json',
-                Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
             },
             body: data           
         }).then(result => result.json())
@@ -218,7 +218,7 @@ const UpdatePearl = () => {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 description: adddescriptions
@@ -292,7 +292,7 @@ const UpdatePearl = () => {
                         credentials: 'include',
                         headers: {
                             'Content-Type': 'application/json',
-                            Authorization: `Bearer ${auth?.token}`,
+                            // Authorization: `Bearer ${auth?.token}`,
                         }
                     }).then(result => result.json())
                     .then(data => {

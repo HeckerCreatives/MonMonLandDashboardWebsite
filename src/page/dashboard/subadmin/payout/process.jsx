@@ -7,7 +7,7 @@ import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
 import { handlePagination } from "../../../../component/utils";
 import Cookies from 'js-cookie';
 const SubAdminPayoutProcess = () => {
-    const auth = JSON.parse(Cookies.get("auth"))
+    // const auth = JSON.parse(Cookies.get("auth"))
     const playfabToken = Cookies.get("playfabAdminAuthToken")
     const [page, setPage] = useState(0),
     [total, setTotal] = useState(0),
@@ -36,11 +36,10 @@ const SubAdminPayoutProcess = () => {
             credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 status: "process",
-                admin: auth.userName
+                // admin: auth.userName
             })
         }).then(result => result.json())
         .then(data => {
@@ -80,10 +79,10 @@ const SubAdminPayoutProcess = () => {
         }).then(ok => {
             if(ok.isConfirmed){
                 const data = new FormData()
-                data.append("admin", auth.userName)
+                // data.append("admin", auth.userName)
                 data.append("file", image)
-                data.append("adminId", auth._id)
-                data.append("playfabid", auth.playfabid)
+                // data.append("adminId", auth._id)
+                // data.append("playfabid", auth.playfabid)
                 data.append("playfabToken", playfabToken)
 
                 fetch(`${process.env.REACT_APP_API_URL}payout/done/${id}`, {
@@ -91,7 +90,7 @@ const SubAdminPayoutProcess = () => {
                     credentials: 'include',
                     headers: {
                         'Accept': 'application/json',
-                        Authorization: `Bearer ${auth?.token}`,
+                        // Authorization: `Bearer ${auth?.token}`,
                     },
                     body: data
                 }).then(result => result.json())
@@ -159,12 +158,12 @@ const SubAdminPayoutProcess = () => {
                     credentials: 'include',
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${auth?.token}`,
+                        // Authorization: `Bearer ${auth?.token}`,
                     },
                     body: JSON.stringify({
-                        admin: auth.userName,
-                        adminId: auth._id,
-                        playfabid: auth.playfabid,
+                        // admin: auth.userName,
+                        // adminId: auth._id,
+                        // playfabid: auth.playfabid,
                         playfabToken: playfabToken,
                     })
                 }).then(result => result.json())

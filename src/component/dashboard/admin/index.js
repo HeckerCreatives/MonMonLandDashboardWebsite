@@ -9,10 +9,11 @@ import Breadcrumb from "../../breadcrumb";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Cookies from 'js-cookie';
+import { isLogin, logout } from "../../utils";
 const AdminDashboard = () => {
   // const encryptauth = decodeURIComponent(Cookies.get('auth'))
   // const auth = JSON.parse(encryptauth)
-    const auth = JSON.parse(Cookies.get("auth"))
+    // const auth = JSON.parse(Cookies.get("auth"))
     const [basicModal, setBasicModal] = useState(false);
     const toggleShow = () => setBasicModal(!basicModal);
     const [users, setUsers] = useState([]);
@@ -61,14 +62,27 @@ const AdminDashboard = () => {
     const [trademerchandise, setTrademerchandise] = useState(0)
     const [complanpayin, setComplanpayin] = useState(0)
     const [complanmerchandise, setComplanmerchandise] = useState(0)
-  useEffect(() => {
-    if (auth) {
-      if (auth.roleId.display_name !== "Administrator") {
-        Cookies.remove("auth", { path: '/' });;
-        navigate("/sessions/login");
+    const [role, setrole]= useState('');
+    const [name, setname]= useState('');
+    const [id, setid]= useState('');
+
+    useEffect(() => {
+      isLogin()
+        .then(data => {
+          setrole(data.role)
+          setname(data.name)
+          setid(data.id)
+      })
+    },[role, id, name])
+
+    useEffect(() => {
+      if (role) {
+        if (role !== "Administrator") {
+          Cookies.remove("auth", { path: '/' });;
+          navigate("/login");
+        }
       }
-    }
-  }, [auth, navigate]);
+    }, [role, navigate]);
 
   
   
@@ -78,10 +92,10 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({
-        adminId: auth._id,
+        // adminId: auth._id,
         name: "request"
       })
     }).then(result => result.json())
@@ -114,10 +128,10 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({
-        adminId: auth._id,
+        // adminId: auth._id,
         name: "process"
       })
     }).then(result => result.json())
@@ -152,10 +166,10 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({
-        adminId: auth._id,
+        // adminId: auth._id,
         name: "done"
       })
     }).then(result => result.json())
@@ -190,7 +204,7 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({
         name: "automatic"
@@ -228,7 +242,7 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({
         name: "manual"
@@ -288,7 +302,7 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({subsname: "pearl"})
     })
@@ -322,7 +336,7 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({subsname: "ruby"})
     })
@@ -356,7 +370,7 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({subsname: "emerald"})
     })
@@ -390,7 +404,7 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({subsname: "diamond"})
     })
@@ -427,7 +441,7 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers:{
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({subsname: "pearl"})
     })
@@ -461,7 +475,7 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers:{
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({subsname: "ruby"})
     })
@@ -495,7 +509,7 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers:{
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({subsname: "emerald"})
     })
@@ -529,7 +543,7 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers:{
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({subsname: "diamond"})
     })
@@ -569,7 +583,7 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers:{
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({item: "tools"})
     })
@@ -603,7 +617,7 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers:{
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({item: "clock"})
     })
@@ -642,7 +656,7 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
     })
     .then(result => result.json())
@@ -673,9 +687,9 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
-      body: JSON.stringify({id: auth._id})
+      // body: JSON.stringify({id: id})
     })
     .then(result => result.json())
     .then(data => {
@@ -708,9 +722,9 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
-      body: JSON.stringify({id: auth._id})
+      // body: JSON.stringify({id: id})
     })
     .then(result => result.json())
     .then(data => {

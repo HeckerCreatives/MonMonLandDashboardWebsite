@@ -33,7 +33,7 @@ const CreateAdminAccount = () => {
         [todayjoin, setTodaysJoin] = useState([]);
         // [txttable, setTxtTable] = useState([]);
   const [centredModal, setCentredModal] = useState(false);
-  const auth = JSON.parse(Cookies.get("auth"))
+  // const auth = JSON.parse(Cookies.get("auth"))
   const toggleShow = () => setCentredModal(!centredModal),
   [page, setPage] = useState(1),
   [isloading, setIsLoading] = useState(false),
@@ -51,7 +51,7 @@ const CreateAdminAccount = () => {
       credentials: 'include',
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       }
     })
     .then(result => result.json())
@@ -104,11 +104,11 @@ const CreateAdminAccount = () => {
           credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${auth?.token}`,
+            // Authorization: `Bearer ${auth?.token}`,
           },
           body: JSON.stringify({
             roleId: process.env.REACT_APP_SUBADMINROLE,
-            referrerId: auth.referrerId,
+            // referrerId: auth.referrerId,
             firstName: firstName.value,
             lastName: lastName.value,
             userName: userName.value,
@@ -183,7 +183,7 @@ const CreateAdminAccount = () => {
                   credentials: 'include',
                   headers: {
                       'Content-Type': 'application/json',
-                      Authorization: `Bearer ${auth?.token}`,
+                      // Authorization: `Bearer ${auth?.token}`,
                   }
               }).then(result => result.json())
               .then(data => {
@@ -228,7 +228,7 @@ const CreateAdminAccount = () => {
           credentials: 'include',
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${auth?.token}`,
+            // Authorization: `Bearer ${auth?.token}`,
           },
           body: JSON.stringify({ ids: checkedItems }),
         })

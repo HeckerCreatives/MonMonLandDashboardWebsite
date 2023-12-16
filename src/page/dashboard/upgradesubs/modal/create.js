@@ -23,7 +23,7 @@ import {
 import Swal from "sweetalert2";
 import Cookies from 'js-cookie';
 const CreateCashier = () => {
-  const auth = JSON.parse(Cookies.get("auth"))
+  // const auth = JSON.parse(Cookies.get("auth"))
   const [adminaccounts, setAdminAcc] = useState([]);
   const [csraccounts, setCsrAcc] = useState([]);
   const [show, setShow] = useState(false);
@@ -59,7 +59,7 @@ const CreateCashier = () => {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({
           userId: userId.value,

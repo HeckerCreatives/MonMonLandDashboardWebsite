@@ -30,7 +30,7 @@ import UploadWidget from "../../../../component/uploadwidget/uploadwidet"
 import "./create.css"
 import Cookies from 'js-cookie';
 const UpdateGames = ({games}) => {
-  const auth = JSON.parse(Cookies.get("auth"))
+  // const auth = JSON.parse(Cookies.get("auth"))
   const [titles, setTitles] = useState('');
   const [descriptions, setDescriptions] = useState('');
   const [subscription, setSubscription] = useState([]);
@@ -60,7 +60,7 @@ const UpdateGames = ({games}) => {
       credentials: 'include',
       headers: {
         'Accept': 'application/json',
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: data
     }).then(result => result.json())

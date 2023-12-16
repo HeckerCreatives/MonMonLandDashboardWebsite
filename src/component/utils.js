@@ -45,6 +45,22 @@ export const Toast = Swal.mixin({
     }
 })
 
+export const isLogin = async () => {
+  return fetch(`${process.env.REACT_APP_API_URL}auth/islogin`,{
+      credentials: 'include'
+    })
+    .then(result => result.json())
+    .then(data => {
+      return data
+    })
+}
+
+export const logout = async () => {
+  return fetch(`${process.env.REACT_APP_API_URL}auth/logout`,{
+    credentials: 'include'
+  })
+}
+
 // export const login = async (email, password, action = "") =>{
 //   // e.preventDefault()
 //   await fetch(`${process.env.REACT_APP_API_URL}auth/login`,{

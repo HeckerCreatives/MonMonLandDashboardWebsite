@@ -26,7 +26,7 @@ import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
 import Cookies from 'js-cookie';
 
 const CreateNews = () => {
-  const auth = JSON.parse(Cookies.get("auth"))
+  // const auth = JSON.parse(Cookies.get("auth"))
   const [titles, setTitles] = useState('');
   const [descriptions, setDescriptions] = useState('');
   const [show, setShow] = useState(false);
@@ -73,7 +73,7 @@ const CreateNews = () => {
       credentials: 'include',
       headers: {
         'Accept': 'application/json',
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: data
     }).then(result => result.json())

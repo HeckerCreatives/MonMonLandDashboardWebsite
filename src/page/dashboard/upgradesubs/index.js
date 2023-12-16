@@ -9,7 +9,7 @@ import UpdateCashier from "./modal/edit";
 import { handlePagination } from "../../../component/utils";
 import Cookies from 'js-cookie';
   const UpgradeSubscriptionManual = () => {
-    const auth = JSON.parse(Cookies.get("auth"))
+    // const auth = JSON.parse(Cookies.get("auth"))
     const [games, setGames] = useState([]),
             [checkedItems, setCheckedItems] = useState([]),
             [page, setPage] = useState(1),
@@ -58,7 +58,7 @@ import Cookies from 'js-cookie';
               credentials: 'include',
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
               },
               body: JSON.stringify({ ids: checkedItems }),
             })
@@ -95,7 +95,7 @@ import Cookies from 'js-cookie';
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({
           status: stats
@@ -149,7 +149,7 @@ import Cookies from 'js-cookie';
           credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${auth?.token}`,
+            // Authorization: `Bearer ${auth?.token}`,
           },
           body: JSON.stringify({
               status: stats

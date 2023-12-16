@@ -7,8 +7,8 @@ import PaginationPager from "../../../component/pagination";
 import Cookies from 'js-cookie';
 const Investorfunds = () => {
     const [totalnum, setTotalNum] = useState(0);
-    const [investorhistory, setInvetorhistory] = useState([]);
-    const auth = JSON.parse(Cookies.get("auth")),
+    const [investorhistory, setInvetorhistory] = useState([]),
+    // const auth = JSON.parse(Cookies.get("auth")),
     [page, setPage] = useState(1),
     [total, setTotal] = useState(0);
 
@@ -24,7 +24,7 @@ const Investorfunds = () => {
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${auth?.token}`,
+            // Authorization: `Bearer ${auth?.token}`,
         }
     })
     .then(result => result.json())
@@ -59,11 +59,11 @@ const Investorfunds = () => {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 amount: totalnum,
-                createdby: auth.userName
+                // createdby: auth.userName
             })
         })
         .then(result => result.json())

@@ -16,6 +16,7 @@ import Swal from "sweetalert2";
 import { ThemeContext, themes } from '../../component/theme/themecontext';
 import ReferralButton from "../../component/dashboard/referral/referral";
 import Cookies from 'js-cookie';
+import { logout } from "../utils";
 const TopNavbar = ({auth, didToggle, setDidToggle}) => {
     const [visibility, setVisibility] = useState(false),
     [word, setword] = useState(""),
@@ -48,11 +49,16 @@ const TopNavbar = ({auth, didToggle, setDidToggle}) => {
             showConfirmButton: false,
             timer: 5100
         })
-  
+        logout()
+        // function deleteCookie(cookieName) {
+        //   document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        // }
+
+        // deleteCookie("sessionToken");
+        // deleteCookie("playfabAdminAuthToken");
         setVisibility(false);
         setTimeout(() => {
-          Cookies.remove("auth", { path: '/' });
-          Cookies.remove("user", { path: '/' });
+
           // localStorage.removeItem("auth");
           // localStorage.removeItem("user");
         //   localStorage.removeItem("my-secret");
@@ -141,7 +147,7 @@ const TopNavbar = ({auth, didToggle, setDidToggle}) => {
         <MDBCol className="dropdown text d-lg-flex justify-content-end align-items-center panel-zoom" onClick={() => setVisibility(!visibility)}>
           <MDBIcon fas icon="user-circle" size="lg" />
           <div className="d-lg-block d-none">
-          &nbsp;{auth.userName ? auth.userName : auth.username}
+          &nbsp;{auth}
           </div>
           {/* &nbsp;<MDBIcon fas icon="angle-down" size="lg" /> */}
         </MDBCol>

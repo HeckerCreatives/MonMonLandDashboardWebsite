@@ -35,7 +35,8 @@
     "socket.io-client": "^4.7.1",
     "sweetalert2": "^11.7.3",
     "web-vitals": "^2.1.4",
-    "webpack": "^5.89.0"
+    "webpack": "^5.89.0",
+    "zustand": "^4.4.7"
   },
   "scripts": {
     "dev": "react-scripts start",

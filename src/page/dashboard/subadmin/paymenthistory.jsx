@@ -26,7 +26,7 @@ import Cookies from 'js-cookie';
 const SubAdminPaymentHistory = () => {
     const [basicModal, setBasicModal] = useState(false);
     const toggleShow = () => setBasicModal(!basicModal);
-    const auth = JSON.parse(Cookies.get("auth"))
+    // const auth = JSON.parse(Cookies.get("auth"))
     const [history, setHistory] = useState("");
     const [view, setView] = useState("");
     const [page, setPage] = useState(1),
@@ -44,14 +44,16 @@ const SubAdminPaymentHistory = () => {
         })
         .then(response => response.json())
         .then(result => {
-            const data = result.filter(e => e.cashier === auth.userName)
-            setHistory(data)
+            // const data = result.filter(e => e.cashier === auth.userName)
+            setHistory(result)
         })
     },[])
+
     const handleview = (data) => {
         setView(data)
         toggleShow()
     }
+    
     return (
 <>
     <MDBContainer>

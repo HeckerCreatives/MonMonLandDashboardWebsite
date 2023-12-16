@@ -17,23 +17,33 @@ import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
 import { PlayFabClient } from "playfab-sdk";
 import Cookies from 'js-cookie';
+import { isLogin } from "../../component/utils";
 const Login = () =>{
   const [email, setEmail]= useState('');
   const [password, setPassword] = useState("");
-
+  const [role, setrole]= useState('');
+  const [name, setname]= useState('');
   console.log(Cookies.get('playfabAdminAuthToken'))
   console.log(Cookies.get('auth'))
-  
-  let auth = Cookies.get('auth')
-  auth = auth !== undefined ? JSON.parse(auth) : null
+
+  // let auth = Cookies.get('auth')
+  // auth = auth !== undefined ? JSON.parse(auth) : null
 
   useEffect(()=>{
-    console.log(auth)
-    if(auth){
-      window.location.href = `/dashboard/${auth.roleId?.display_name}/home`
+    if(role){
+      window.location.href = `/dashboard/${role}/home`
     }
+  },[role])
 
-  },[auth]) 
+  
+  useEffect(() => {
+    isLogin()
+    .then(data => {
+      console.log(data)
+      setrole(data.role)
+      setname(data.name)
+    })
+  },[])
 
   const login = (e) =>{
     e.preventDefault()
@@ -49,7 +59,6 @@ const Login = () =>{
       })
     }).then(result => result.json())
     .then(data =>{
-      console.log(data)
       if (data.message !== "success") {        
 				Swal.fire({
           title: data.message,
@@ -63,7 +72,7 @@ const Login = () =>{
         }
         PlayFabClient.LoginWithCustomID(playFabUserData, (error, result) => {
           if (result){
-            Cookies.set("playfabAdminAuthToken", result.data.SessionTicket, { expires: 8, path: '/' })
+            Cookies.set("playfabAdminAuthToken", result.data.SessionTicket, { expires: 8 })
             // Cookies.set('auth', JSON.stringify(data.data), { expires: 8, path: '/' })
             Swal.fire({
               title: "Login Successfully",

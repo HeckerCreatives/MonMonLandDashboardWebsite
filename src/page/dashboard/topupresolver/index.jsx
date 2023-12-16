@@ -23,7 +23,7 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import Cookies from 'js-cookie';
 const TopUpResolver = () => {
-    const auth = JSON.parse(Cookies.get("auth"))
+    // const auth = JSON.parse(Cookies.get("auth"))
     const playfabToken = Cookies.get("playfabAdminAuthToken")
     const [pending, setpending] = useState(0)
     const [success, setsuccess] = useState(0)
@@ -43,7 +43,7 @@ const TopUpResolver = () => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({admin: auth.userName})
+            // body: JSON.stringify({admin: auth.userName})
         }).then(result => result.json())
         .then(data => {
             if(data.message === "success"){
@@ -64,7 +64,7 @@ const TopUpResolver = () => {
             credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 searchtype: searchtype.value,
@@ -120,13 +120,13 @@ const TopUpResolver = () => {
                 data.append("playfabToken", playfabToken)
                 data.append("username", username.value)
                 data.append("file", image)
-                data.append("admin", auth.userName)
+                // data.append("admin", auth.userName)
                 fetch(`${process.env.REACT_APP_API_URL}topupresolver/resolve`,{
                     method: "POST",
                     credentials: 'include',
                     headers: {
                         "Accept": "application/json",
-                        Authorization: `Bearer ${auth?.token}`,
+                        // Authorization: `Bearer ${auth?.token}`,
                     },
                     body: data
                 }).then(result => result.json())

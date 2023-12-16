@@ -14,7 +14,7 @@ import Swal from "sweetalert2";
 import { handlePagination } from "../../../component/utils";
 import Cookies from 'js-cookie';
 const AdminPayoutRequest = () => {
-    const auth = JSON.parse(Cookies.get("auth"))
+    // const auth = JSON.parse(Cookies.get("auth"))
     const playfabToken = Cookies.get("playfabAdminAuthToken")
     const [page, setPage] = useState(0),
     [total, setTotal] = useState(0),
@@ -46,7 +46,7 @@ const AdminPayoutRequest = () => {
             credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 status: "pending"
@@ -116,7 +116,7 @@ const AdminPayoutRequest = () => {
                         credentials: 'include',
                         headers: {
                             "Content-Type": "application/json",
-                            Authorization: `Bearer ${auth?.token}`,
+                            // Authorization: `Bearer ${auth?.token}`,
                         },
                         body: JSON.stringify({
                             admin: selectedcashier?.userId?.userName,

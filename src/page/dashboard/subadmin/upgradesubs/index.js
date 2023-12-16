@@ -22,6 +22,7 @@ import io from "socket.io-client"
 import { Howl } from 'howler'
 import chatsound from '../../../../assets/chatsound.mp3'
 import Cookies from 'js-cookie';
+import { isLogin } from "../../../../component/utils";
 const socket = io(process.env.REACT_APP_API_URL)
 const SubAdminUpgradeSubscriptionManual = () => {
     const [bibiliuserid, setBibiliUserId] = useState("");
@@ -40,12 +41,26 @@ const SubAdminUpgradeSubscriptionManual = () => {
           [isloading, setIsLoading] = useState(false),
           [userinline, setUserinline] = useState([]),
           [total, setTotal] = useState(0);
-          const auth = JSON.parse(Cookies.get("auth"))
+        //   const auth = JSON.parse(Cookies.get("auth"))
           const playfabToken = Cookies.get("playfabAdminAuthToken")
     const [topup, setTopUp] = useState("");
     const [basicModal, setBasicModal] = useState(false);
     const toggleShow = () => setBasicModal(!basicModal);
     let currenturn = "";
+
+    const [role, setrole]= useState('');
+    const [name, setname]= useState('');
+    const [id, setid]= useState('');
+
+    useEffect(() => {
+        isLogin()
+        .then(data => {
+            setrole(data.role)
+            setname(data.name)
+            setid(data.id)
+        })
+    },[role, id, name])
+
       useEffect(() => {
           let totalPages = Math.floor(history.length / 2);
           if (history.length % 2 > 0) totalPages += 1;
@@ -60,7 +75,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
           .then(result => {
             // console.log(result)
             if(result.length !== 0){
-                const data = result?.filter(e => e.cashier === auth.userName)
+                const data = result?.filter(e => e.cashier === name)
                 setHistory(data)
             }
               
@@ -73,7 +88,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
         })
           .then(response => response.json())
           .then(result => {
-              const data = result?.filter(e => e.cashier === auth.userName)
+              const data = result?.filter(e => e.cashier === name)
               setHistory(data)
           })
       }
@@ -88,7 +103,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
         })
         .then(response => response.json())
         .then(result => {
-            const filter = result.filter(e => e.userId._id === auth._id)            
+            const filter = result.filter(e => e.userId._id === id)            
             setUser(filter[0])            
         })
         },[])
@@ -258,11 +273,11 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 data.append("cashierId", user._id)
                 data.append("amount", totalprice)
                 data.append("stats", stats)
-                data.append("cashier", auth.userName)
+                data.append("cashier", name)
                 data.append("price", totalprice)
                 data.append("clientusername", bibiliuser)
                 data.append("file", image)
-                data.append("adminId", auth._id)
+                // data.append("adminId", auth._id)
                 data.append("idnitopup", process.env.REACT_APP_MANUALID)
                 data.append("playfabId", bibiliuserplayfabid)
                 data.append("playfabPrice", price)
@@ -273,7 +288,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                     credentials: 'include',
                     headers: {
                         'Accept': 'application/json',
-                        Authorization: `Bearer ${auth?.token}`,
+                        // Authorization: `Bearer ${auth?.token}`,
                     },
                     body: data,
                 }).then(result => result.json())
@@ -342,9 +357,9 @@ const SubAdminUpgradeSubscriptionManual = () => {
             credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
             },
-            body: JSON.stringify({adminId: auth._id})
+            // body: JSON.stringify({adminId: auth._id})
         })
         .then(result => result.json())
         .then(data => {
@@ -380,10 +395,10 @@ const SubAdminUpgradeSubscriptionManual = () => {
                 headers: {
                   "Accept": "application/json"
                 },
-                body: JSON.stringify({ownerId: auth._id})
+                body: JSON.stringify({ownerId: id})
             }).then(result => result.json())
             .then(() => {
-            socket.emit('joinroom', { username: auth.userName, roomid: auth._id, isplayer: false});
+            socket.emit('joinroom', { username: name, roomid: id, isplayer: false});
             setColor(true)
             setIsLoading(false)
             })
@@ -426,7 +441,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
       }
 
       const handleTopupChange = (topup) => {
-        socket.emit('selectsubs', {room: auth._id, subs: topup})
+        socket.emit('selectsubs', {room: id, subs: topup})
         setPrice(topup)
       }
 
@@ -479,11 +494,11 @@ const SubAdminUpgradeSubscriptionManual = () => {
                   headers: {
                     "Accept": "application/json"
                   },
-                  body: JSON.stringify({ownerId: auth._id})
+                  body: JSON.stringify({ownerId: id})
                 }).then(result => result.json())
                 .then((data)=> {
                   if(data){
-                  socket.emit('doneTransactionAdmin', {room: auth._id, buyer: bibiliuserid});
+                  socket.emit('doneTransactionAdmin', {room: id, buyer: bibiliuserid});
                   
                   }
                   
@@ -500,7 +515,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                       <MDBCardBody>
                           <MDBRow>
                               <MDBCol className="">
-                              <MDBCardText className="d-flex justify-content-between fw-bold mt-2">Cashier Username: {auth.userName}
+                              <MDBCardText className="d-flex justify-content-between fw-bold mt-2">Cashier Username: {name}
                               {isloading ? 
                                 <MDBSpinner grow size="sm"/>
                               :
@@ -763,7 +778,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
               <MDBCardBody>
                   <MDBRow>
                       <MDBCol>
-                          <ChatPage socket={socket} buyerid={bibiliuserid} buyer={bibiliuser} room={auth._id} isadmin={true} msguser={auth.userName} rcvrid={bibiliuserid} isloading={isloading}/>
+                          <ChatPage socket={socket} buyerid={bibiliuserid} buyer={bibiliuser} room={id} isadmin={true} msguser={name} rcvrid={bibiliuserid} isloading={isloading}/>
                       </MDBCol>
                   </MDBRow>
               </MDBCardBody>

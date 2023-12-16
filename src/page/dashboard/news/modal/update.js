@@ -23,7 +23,7 @@ import Swal from "sweetalert2";
 import UploadWidget from "../../../../component/uploadwidget/uploadwidet";
 import Cookies from 'js-cookie';
 const UpdateNewsModal = ({ theme, news }) => {
-  const auth = JSON.parse(Cookies.get("auth"))
+  // const auth = JSON.parse(Cookies.get("auth"))
   const [show, setShow] = useState(false);
   const toggleShow = () => setShow(!show);
   const [image, setImage] = useState("");
@@ -52,7 +52,7 @@ const UpdateNewsModal = ({ theme, news }) => {
         credentials: 'include',
         headers: {
             'Accept': 'application/json',
-            Authorization: `Bearer ${auth?.token}`,
+            // Authorization: `Bearer ${auth?.token}`,
         },
         body: data          
     }).then(result => result.json())

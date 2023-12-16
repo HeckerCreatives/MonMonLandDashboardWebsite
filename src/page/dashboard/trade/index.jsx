@@ -7,7 +7,7 @@ import { handlePagination } from "../../../component/utils";
 import PaginationPager from "../../../component/pagination";
 import Cookies from 'js-cookie';
 const Trade = () => {
-    const auth = JSON.parse(Cookies.get("auth"))
+    // const auth = JSON.parse(Cookies.get("auth"))
     const [usdratehistory, setUsdratehistory] = useState([]);
     const [totalnum, setTotalNum] = useState(0);
     const [page, setPage] = useState(1)
@@ -25,7 +25,7 @@ const Trade = () => {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
             }
         })
         .then(result => result.json())
@@ -60,12 +60,12 @@ const Trade = () => {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 amount: totalnum,
                 value: "Trade",
-                createdby: auth.userName
+                // createdby: auth.userName
             })
         })
         .then(result => result.json())
@@ -115,7 +115,7 @@ const Trade = () => {
     //         method:'POST',
     //         headers: {
     //             'Content-Type': 'application/json',
-    //             Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
     //         },
     //         body: JSON.stringify({
     //             amount: totalnum,

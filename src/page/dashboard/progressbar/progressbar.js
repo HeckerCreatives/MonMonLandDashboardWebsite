@@ -12,7 +12,7 @@ const UpdateProgressBar = () => {
     const [list, setlist] = useState("");
     const [totalnum, setTotalNum] = useState("");
     const [initialbar, setInitialBar] = useState("");
-    const auth = JSON.parse(Cookies.get("auth"))
+    // const auth = JSON.parse(Cookies.get("auth"))
     const playfabToken = Cookies.get("playfabAdminAuthToken")
     const [totalbar, setTotalBar] = useState("");
     const [progress, setProgress] = useState("");
@@ -72,16 +72,16 @@ const UpdateProgressBar = () => {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
               },
             body: JSON.stringify({
                 initial: initial.value,
                 barId: process.env.REACT_APP_PROGRESSID,
                 value: value,
                 enteredamount: initial.value,
-                createdby: auth.userName,
-                playfabid: auth.playfabid,
-                playfabToken: playfabToken
+                // createdby: auth.userName,
+                // playfabid: auth.playfabid,
+                // playfabToken: playfabToken
             })
         }).then(result => result.json())
         .then(data => {
@@ -130,16 +130,16 @@ const UpdateProgressBar = () => {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
               },
             body: JSON.stringify({
                 total: totalnum,
                 barId: process.env.REACT_APP_PROGRESSID,
                 value: value,
                 enteredamount: totalnum,
-                createdby: auth.userName,
-                playfabid: auth.playfabid,
-                playfabToken: playfabToken
+                // createdby: auth.userName,
+                // playfabid: auth.playfabid,
+                // playfabToken: playfabToken
             })
         }).then(result => result.json())
         .then(data => {

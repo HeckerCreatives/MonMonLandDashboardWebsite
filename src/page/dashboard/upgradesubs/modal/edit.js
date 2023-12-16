@@ -23,7 +23,7 @@ import {
 import Swal from "sweetalert2";
 import Cookies from 'js-cookie';
 const UpdateCashier = ({checkedItems, id}) => {
-  const auth = JSON.parse(Cookies.get("auth"))
+  // const auth = JSON.parse(Cookies.get("auth"))
   const [user, setuser] = useState('');
   const [show, setShow] = useState(false);
   const toggleShow = () => setShow(!show);
@@ -58,7 +58,7 @@ const UpdateCashier = ({checkedItems, id}) => {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
 
       },
       body: JSON.stringify({

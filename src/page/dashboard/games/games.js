@@ -13,7 +13,7 @@ import ViewGames from "./modal/view";
 import UpdateGames from "./modal/edit";
 import Cookies from 'js-cookie';
 const Games = () => {
-    const auth = JSON.parse(Cookies.get("auth"))
+    // const auth = JSON.parse(Cookies.get("auth"))
     const [games, setGames] = useState([]),
             [page, setPage] = useState(1),
             [total, setTotal] = useState(0);
@@ -30,7 +30,7 @@ const Games = () => {
             credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
             },
         })
         .then(response => response.json())
@@ -61,7 +61,7 @@ const Games = () => {
                     credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json',
-                        Authorization: `Bearer ${auth?.token}`,
+                        // Authorization: `Bearer ${auth?.token}`,
                     }
                 }).then(result => result.json())
                 .then(data => {

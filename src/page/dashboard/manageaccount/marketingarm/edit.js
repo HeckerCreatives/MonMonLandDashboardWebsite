@@ -17,7 +17,7 @@ import {
   const UpdateMarketingAccount = ({account}) => {
     const [confirmpass, setConfirmPass] = useState("")
     const [centredModal, setCentredModal] = useState(false);
-    const auth = JSON.parse(Cookies.get("auth"))
+    // const auth = JSON.parse(Cookies.get("auth"))
     const toggleShow = () => setCentredModal(!centredModal);
     
   
@@ -42,7 +42,7 @@ import {
             credentials: 'include',
             headers: {
               'Content-Type': 'application/json',
-              Authorization: `Bearer ${auth?.token}`,
+              // Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify(requestBody)
           }).then(result => result.json())

@@ -5,14 +5,27 @@ import Swal from "sweetalert2";
 import { handlePagination } from "../../../../component/utils"
 import PaginationPagerQuery from "../../../../component/pagination/query";
 import Cookies from 'js-cookie';
+import { isLogin } from "../../../../component/utils";
 const SubAdminPayoutRequest = () => {
-    const auth = JSON.parse(Cookies.get("auth"))
+    // const auth = JSON.parse(Cookies.get("auth"))
     const playfabToken = Cookies.get("playfabAdminAuthToken")
     const [page, setPage] = useState(0),
     [total, setTotal] = useState(0),
     [request, setRequest] = useState([]);
     const [selectedColor, setSelectedColor] = useState('all'); // Initialize with an empty string
     const [isloading, setIsLoading] = useState(false);
+    const [role, setrole]= useState('');
+    const [name, setname]= useState('');
+    const [id, setid]= useState('');
+
+    useEffect(() => {
+        isLogin()
+        .then(data => {
+            setrole(data.role)
+            setname(data.name)
+            setid(data.id)
+        })
+    },[role, id, name])
 
     const filteredRequest = request.filter((data) => {
         const rowColorClass = getRowColorClass(data.createdAt);
@@ -32,7 +45,7 @@ const SubAdminPayoutRequest = () => {
             credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
             },
             body: JSON.stringify({
                 status: "pending",
@@ -80,12 +93,8 @@ const SubAdminPayoutRequest = () => {
                     credentials: 'include',
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${auth?.token}`,
                     },
                     body: JSON.stringify({
-                        admin: auth.userName,
-                        adminId: auth._id,
-                        playfabid: auth.playfabid,
                         playfabToken: playfabToken,
                     })
                 }).then(result => result.json())
@@ -153,12 +162,8 @@ const SubAdminPayoutRequest = () => {
                     credentials: 'include',
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${auth?.token}`,
                     },
                     body: JSON.stringify({
-                        admin: auth.userName,
-                        adminId: auth._id,
-                        playfabid: auth.playfabid,
                         playfabToken: playfabToken,
                     })
                 }).then(result => result.json())

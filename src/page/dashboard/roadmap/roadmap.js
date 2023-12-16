@@ -8,7 +8,7 @@ import ViewRoadmap from "./modal/view";
 import UpdateRoadmapSlot from "./modal/edit";
 import Cookies from 'js-cookie';
 const UpdateRoadmap = () => {
-    const auth = JSON.parse(Cookies.get("auth"))
+    // const auth = JSON.parse(Cookies.get("auth"))
     const [titles, setTitles] = useState('');
     const [descriptions, setDescriptions] = useState('')
     const [rdlist, setRdList] = useState([]);
@@ -43,7 +43,7 @@ const UpdateRoadmap = () => {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${auth?.token}`,
+                // Authorization: `Bearer ${auth?.token}`,
 
             },
             body: JSON.stringify({

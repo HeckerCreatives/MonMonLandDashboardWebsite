@@ -6,8 +6,9 @@ import Breadcrumb from "../../../component/breadcrumb";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Cookies from 'js-cookie';
+import { isLogin } from "../../../component/utils";
 const SubAdminDashboard = () => {
-    const auth = JSON.parse(decodeURIComponent(Cookies.get('auth')))
+    // const auth = JSON.parse(decodeURIComponent(Cookies.get('auth')))
     const [users, setUsers] = useState([]);
     const [paidusers, setPaidUsers] = useState(0);
     
@@ -20,14 +21,27 @@ const SubAdminDashboard = () => {
     const [request, setRequest] = useState(0)
     const [done, setDone] = useState(0)
     const [processed, setProcessed] = useState(0);
+    const [role, setrole]= useState('');
+    const [name, setname]= useState('');
+    const [id, setid]= useState('');
+
   useEffect(() => {
-      if (auth) {
-        if (auth.roleId.display_name !== "SubAdministrator") {
-          Cookies.remove("auth", { path: '/' });;
-          navigate("/sessions/login");
+    isLogin()
+      .then(data => {
+        setrole(data.role)
+        setname(data.name)
+        setid(data.id)
+    })
+  },[role, id, name])
+
+  useEffect(() => {
+      if (role) {
+        if (role !== "SubAdministrator") {
+          Cookies.remove("sessionToken");;
+          navigate("/login");
         }
       }
-    }, [auth, navigate]);
+    }, [role, navigate]);
 
     useEffect(() => {
       fetch(`${process.env.REACT_APP_API_URL}payout/payoutwallet`,{
@@ -35,7 +49,7 @@ const SubAdminDashboard = () => {
         credentials: 'include',
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth?.token}`,
+          // Authorization: `Bearer ${auth?.token}`,
         },
         body: JSON.stringify({
           status: "pending"
@@ -68,10 +82,10 @@ const SubAdminDashboard = () => {
         credentials: 'include',
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth?.token}`,
+          // Authorization: `Bearer ${auth?.token}`,
         },
         body: JSON.stringify({
-          adminId: auth._id,
+          
           item: "process"
         })
       })
@@ -86,8 +100,8 @@ const SubAdminDashboard = () => {
             allowEscapeKey: false
           }).then(ok => {
             if(ok.isConfirmed){
-              Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+              Cookies.remove("auth");;
+              Cookies.remove("playfabAdminAuthToken");
               window.location.replace("/login");
             }
           })
@@ -103,10 +117,10 @@ const SubAdminDashboard = () => {
         credentials: 'include',
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth?.token}`,
+          // Authorization: `Bearer ${auth?.token}`,
         },
         body: JSON.stringify({
-          adminId: auth._id,
+          
           item: "done"
         })
       })
@@ -213,10 +227,10 @@ const SubAdminDashboard = () => {
       credentials: 'include',
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({
-        adminId: auth._id,
+          
         name: "manual"
       })
     })
