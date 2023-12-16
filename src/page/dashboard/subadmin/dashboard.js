@@ -27,7 +27,6 @@ const SubAdminDashboard = () => {
           navigate("/sessions/login");
         }
       }
-      console.log(auth)
     }, [auth, navigate]);
 
     useEffect(() => {
