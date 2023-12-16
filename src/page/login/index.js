@@ -20,6 +20,10 @@ import Cookies from 'js-cookie';
 const Login = () =>{
   const [email, setEmail]= useState('');
   const [password, setPassword] = useState("");
+
+  console.log(Cookies.get('playfabAdminAuthToken'))
+  console.log(Cookies.get('auth'))
+  
   let auth = Cookies.get('auth')
   auth = auth !== undefined ? JSON.parse(auth) : null
 
