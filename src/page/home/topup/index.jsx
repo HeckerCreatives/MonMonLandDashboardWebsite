@@ -8,9 +8,13 @@ import { MDBContainer, MDBTypography,MDBCard,
     MDBCardHeader,
     MDBCardFooter,
     MDBIcon,
-    MDBCardImage} from "mdb-react-ui-kit";
+    MDBCardImage,
+    MDBRipple,
+    MDBListGroup,
+    MDBListGroupItem,} from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
 import TopUpLogin from "./topuplogin";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import topnavimg from "../../../assets/topup/banner.png"
 import userholder from "../../../assets/topup/username holder.png"
@@ -23,11 +27,16 @@ import steelpak from "../../../assets/topup/emerald + steel icon.png"
 import mithrilpak from "../../../assets/topup/diamond + mithril icon.png"
 import adamantpak from "../../../assets/topup/siamon + adamant + 5hrs icon.png"
 import "./index.css"
+import { isgamelogin } from '../../../component/utils'
 const TopUp = () =>{
     const [basicModal, setBasicModal] = useState(false);
+    const [visibility, setVisibility] = useState(false)
+    const navigate = useNavigate();
     // const [toggleTwoModal, setToggleTwoModal] = useState(false);
     // const [hasquery, setHasQuery] = useState(false)
     const [username, setUsername] = useState("")
+    const [email, setEmail] = useState("")
+    const [usdrate, setUsdrate] = useState(0)
     const [amount, setAmount] = useState(0);
     const [selectedtopup, setSelectedTopUp] = useState("");
     const [bundle, setBundle] = useState("");
@@ -37,6 +46,53 @@ const TopUp = () =>{
     const toggleShow = () => setBasicModal(!basicModal);
     // const toggleShow1 = () => setToggleTwoModal(!toggleTwoModal);
 
+    const handleLogout = () => {
+      
+        Swal.fire({
+            position: 'top-end',
+            icon: 'info',
+            title: 'See ya Later',
+            showConfirmButton: false,
+            timer: 5100
+        })
+  
+        setVisibility(false);
+        setTimeout(() => {
+          localStorage.removeItem("user");
+        //   localStorage.removeItem("my-secret");
+          window.location.href = "/";
+        }, 5100);
+      };
+
+      useEffect(() => {
+        isgamelogin()
+        .then(data => {
+            setUsername(data.name)
+            setEmail(data.email)
+
+            if(!data.name && !data.email){
+                Swal.fire({
+                    icon: "warning",
+                    title: "Please Login First",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                }).then(() => {
+                    window.location.href = "/gamelogin"
+                })
+            } 
+        })
+        .catch(err => {
+            Swal.fire({
+                icon: "warning",
+                title: "Please Login First",
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            }).then(() => {
+                window.location.href = "/gamelogin"
+            })
+        })
+      },[])
+
     useEffect(() => {
         const queryParams = new URL(window.location.href);
         const value = new URLSearchParams(queryParams.search);
@@ -45,41 +101,53 @@ const TopUp = () =>{
         const final = atob(decrypt)
         const decrypted = new URLSearchParams(final);
         const username = decrypted.get('username');
+        const email = decrypted.get('email');
+        setEmail(email)
         setUsername(username)
-        
-        // if(decrypt !== null){
-        //     setHasQuery(true)
-        // }
+       
+    },[])
 
-       if(!decrypt && !auth){
-        Swal.fire({
-            icon: "warning",
-            title: "Do not Tamper Url",
-            allowOutsideClick: false,
-            allowEscapeKey: false
-        }).then(() => {
-            window.location.href = "/"
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_API_URL}usdrate/find`,{
+            credentials: 'include',
         })
-       } else {
-
-       }
-    },[auth])
+        .then(result => result.json())
+        .then(data => {
+            setUsdrate(data.data)
+        })
+    },[])
 
     const handleFunds = (e) => {
-        setAmount(e)
+        const amawnt = e * usdrate
+        setAmount(amawnt)
         setSelectedTopUp("funds")
         toggleShow()
         
     }
 
     const handleBundles = (e,bundle,des,subs) => {
-        setAmount(e)
+        const amawnt = e * usdrate
+        setAmount(amawnt)
         setSelectedTopUp("bundles")
         setBundle(bundle)
         setBundleDes(des)
         setBundleSubs(subs)
         toggleShow()
     }
+
+    const items = [
+        {
+          name: "My Profile",
+          icon: "user",
+          path: `/Dashboard/User/home`,
+        },
+        // {
+        //     name: "Change Password",
+        //     icon: "user",
+        //   //   path: `${auth?.roleId.name}/profile`,
+        // },
+      ];
+
     return(
         <>
             <div className="kontainer">
@@ -91,11 +159,53 @@ const TopUp = () =>{
             </div>
             <div className="" style={{backgroundColor: "#432808"}}>
                 <div className="d-flex justify-content-end align-items-center">
-                <MDBIcon fas icon="user-circle" color="primary"/>
-                    <span className=" text-white mx-3">Login as: {auth ? auth.Username : username}</span> 
-                </div>   
+                <div className="dropdown">
+      
+      <MDBCol className="dropdown text d-lg-flex justify-content-end align-items-center panel-zoom" onClick={() => setVisibility(!visibility)}>
+          <MDBIcon fas icon="user-circle"/>
+          <div className="d-lg-block d-none">
+          &nbsp;{auth ? auth.Username : username}
+          </div>
+          {/* &nbsp;<MDBIcon fas icon="angle-down" size="lg" /> */}
+      </MDBCol>
+          <div className={`custom-dropdown-content ${visibility ? 'd-block' : 'd-none'}`}>
+              <MDBListGroup>
+              {items.map((item, index) => (
+                  <MDBRipple
+                  key={`profile-item-${index}`}
+                  rippleTag="span"
+                  // rippleColor={theme.border}
+                  >
+                  <MDBListGroupItem
+                      onClick={() => {
+                      setVisibility(!visibility);
+                      navigate(item.path);
+                      }}
+                      className={`bg-transparent  border-0 cursor-pointer`}
+                  >
+                      <MDBIcon icon={item.icon} />
+                      &nbsp;
+                      {item.name}
+                  </MDBListGroupItem>
+                  </MDBRipple>
+              ))}
+
+              <MDBRipple rippleTag="span">
+                  <MDBListGroupItem
+                  onClick={handleLogout}
+                  className={`bg-transparent text-danger border-0 cursor-pointer`}
+                  >
+                  <MDBIcon icon="sign-out-alt" />
+                  &nbsp;Logout
+                  </MDBListGroupItem>
+              </MDBRipple>
+              </MDBListGroup>
+          </div>
+      </div> 
+                </div>  
+               
             </div>
-        
+            
         <MDBContainer fluid className="">            
             
 

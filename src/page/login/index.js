@@ -23,10 +23,9 @@ const Login = () =>{
   const [password, setPassword] = useState("");
   const [role, setrole]= useState('');
   const [name, setname]= useState('');
-  console.log(Cookies.get('playfabAdminAuthToken'))
-  console.log(Cookies.get('auth'))
+  console.log(Cookies.get('sessionToken'))
 
-  // let auth = Cookies.get('auth')
+  let auth = Cookies.get('sessionToken')
   // auth = auth !== undefined ? JSON.parse(auth) : null
 
   useEffect(()=>{
@@ -37,12 +36,13 @@ const Login = () =>{
 
   
   useEffect(() => {
-    isLogin()
-    .then(data => {
-      console.log(data)
-      setrole(data.role)
-      setname(data.name)
-    })
+    if(auth){
+      isLogin()
+      .then(data => {
+        setrole(data.role)
+        setname(data.name)
+      })
+    }
   },[])
 
   const login = (e) =>{

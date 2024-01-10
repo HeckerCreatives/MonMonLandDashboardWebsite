@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import smalllogo from "../assets/header/small logo for navi.png"
-import playnow from "../assets/header/add funds BUTTON.png"
+import playnow from "../assets/header/Register BUTTON.png"
+import login from "../assets/header/login BUTTON1.png"
+import migrate from "../assets/header/migrate account BUTTON.png"
 import navholder from "../assets/header/navigation holder.png"
 import { useActiveLinkObserver } from "./utils";
 import {
@@ -19,6 +21,7 @@ import {
 import "./index.css";
 import { useNavigate } from "react-router-dom";
 import AddFundsModal from "../page/home/addfunds";
+import MigrateLogin from "./migration/phase1/migratelogin";
 const Navbar = ({ links }) => {
   const [basicModal, setBasicModal] = useState(false);
   const toggleShow = () => setBasicModal(!basicModal);
@@ -114,20 +117,54 @@ const Navbar = ({ links }) => {
                   style={link.name === "MEDIA" ? { color: "gray"} : { color: "white"}}
                   >{link.name}</span>
                 </MDBNavbarLink>
+                
               </MDBNavbarItem>
             ))}
-            <MDBNavbarItem className="ms-lg-auto text-center px-4">
+            <MDBNavbarItem className="ms-lg-auto text-center" >
                   <MDBNavbarLink>
-                  <img src={playnow} id="joinnow" alt="" className="zoom-playnow mb-2" onClick={toggleShow}></img>
+                  <div >
+                  <img src={login} id="joinnow" alt="" className="zoom-playnow mb-2"  onClick={() => {
+                    window.location.href = `/gamelogin`
+                  }} ></img>
+                  {/* <MDBBtn onClick={() => {
+                    window.location.href = `/gamelogin`
+                  }} >Login</MDBBtn> */}
+                  </div>
+                  
+            </MDBNavbarLink>
+            </MDBNavbarItem>
+            <MDBNavbarItem className=" text-center px-2" >
+                  <MDBNavbarLink>
+                  <div >
+                  <img src={playnow} id="joinnow" alt="" className=" zoom-playnow mb-2"  onClick={() => {
+                    window.location.href = `${window.location.origin}/register?id=${process.env.REACT_APP_MONMONID}`;
+                  }} ></img>
+                  {/* <MDBBtn  onClick={() => {
+                    window.location.href = `${window.location.origin}/register?id=${process.env.REACT_APP_MONMONID}`;
+                  }} >Register</MDBBtn> */}
+                  </div>
+                  
                   </MDBNavbarLink>
             </MDBNavbarItem>
-            
+            <MDBNavbarItem className=" text-center pe-3" >
+                  <MDBNavbarLink>
+                  <div >
+                  <img src={migrate} id="joinnow" alt="" className=" zoom-playnow mb-2"  onClick={() => {
+                    toggleShow()
+                  }} ></img>
+                  {/* <MDBBtn  onClick={() => {
+                    window.location.href = `${window.location.origin}/register?id=${process.env.REACT_APP_MONMONID}`;
+                  }} >Register</MDBBtn> */}
+                  </div>
+                  
+                  </MDBNavbarLink>
+            </MDBNavbarItem>
           </MDBNavbarNav>
         </MDBCollapse> 
               
       </MDBContainer>      
     </MDBNavbar>
-    <AddFundsModal basicModal={basicModal} setBasicModal={setBasicModal}/>
+    <MigrateLogin basicModal={basicModal} setBasicModal={setBasicModal}/>
     </>
   );
 };

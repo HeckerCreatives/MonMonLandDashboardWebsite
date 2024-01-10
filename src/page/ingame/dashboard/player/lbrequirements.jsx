@@ -21,7 +21,7 @@ import
     MDBModalFooter, } 
 from "mdb-react-ui-kit";
 
-const LeaderboardRequirements = ({activitypoints, taskpoints, recruitpoints}) => {
+const LeaderboardRequirements = ({activitypoints, taskpoints, recruitpoints, purchasepoints, watchadspoints}) => {
     
 return(
     <>
@@ -29,32 +29,48 @@ return(
           <MDBCardBody>
           <MDBTable responsive className="text-mute mb-0">
                 <MDBTableHead >
-                    <tr>
-                    <th className="fw-bold" scope='col'>Leaderboard Requirements</th>
-                    <th className="fw-bold" scope='col'></th>
+                    <tr className="text-center">
+                    <th className="fw-bold" scope='col' colSpan={2}>Leaderboard Requirements</th>
+                    {/* <th className="fw-bold" scope='col'></th> */}
                     </tr>
                 </MDBTableHead>
-                <MDBTableBody className="fw-bold">
+                <MDBTableBody className="">
                     <tr>
-                        <td>
+                        <th>
                             Activity Points
-                        </td>
+                        </th>
                         <td>
                             {activitypoints}
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <th>
                             Task Points
-                        </td>
+                        </th>
                         <td>
                             {taskpoints}
                         </td>
                     </tr>
                     <tr>
+                        <th>
+                            Purchase Points
+                        </th>
                         <td>
-                            Recruit Points
+                            {purchasepoints}
                         </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Watch Ads Points
+                        </th>
+                        <td>
+                            {watchadspoints}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Direct Points
+                        </th>
                         <td>
                             {recruitpoints}
                         </td>

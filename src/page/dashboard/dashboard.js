@@ -67,6 +67,14 @@ const Dashboard = () => {
               name: "Marketing",
               path: "/dashboard/Administrator/manageaccount/createmarketingacc",
             },
+            {
+              name: "Members",
+              path: "/dashboard/Administrator/manageaccount/members",
+            },
+            {
+              name: "Banned",
+              path: "/dashboard/Administrator/manageaccount/bannedmembers",
+            },
             // {
             //   name: "Manage Users",
             //   path: "",
@@ -101,6 +109,36 @@ const Dashboard = () => {
           ],
         },
         {
+          name: "Leaderboard",
+          path: "",
+          icon: "trophy",
+          children: [
+            {
+              name: "Top Earners",
+              path: "/dashboard/Administrator/ingameleaderboard/topearners"
+            },
+            {
+              name: "Fiesta",
+              path: "/dashboard/Administrator/ingameleaderboard/fiesta"
+            }
+          ],
+        },
+        {
+          name: "Sponsor",
+          path: "",
+          icon: "dice",
+          children: [
+            {
+              name: "Monmonbonanza",
+              path: "/dashboard/Administrator/sponsor/monmonbonanza"
+            },
+            // {
+            //   name: "Fiesta",
+            //   path: "/dashboard/Administrator/ingameleaderboard/fiesta"
+            // }
+          ],
+        },
+        {
           name: "Manage Top Up",
           path: "",
           icon: "arrow-alt-circle-up",
@@ -128,6 +166,25 @@ const Dashboard = () => {
               name: "Done",
               path: "/dashboard/Administrator/payout/done",
             },
+          ],
+        },
+        {
+          name: "Dragonpay Payout",
+          path: "",
+          icon: "money-check",
+          children: [
+            {
+              name: "Request",
+              path: "/dashboard/Administrator/dragonpayout/request",
+            },                
+            // {
+            //   name: "Process",
+            //   path: "/dashboard/Administrator/payout/process",
+            // },
+            // {
+            //   name: "Done",
+            //   path: "/dashboard/Administrator/payout/done",
+            // },
           ],
         },
         {
@@ -220,13 +277,13 @@ const Dashboard = () => {
           },
         ],
       },
-      {
-        name: "Top Up Resolver",
-        path: "/dashboard/Administrator/topupresolver",
-        icon: "money-check-alt",
-        children: [
-        ],
-      },
+      // {
+      //   name: "Top Up Resolver",
+      //   path: "/dashboard/Administrator/topupresolver",
+      //   icon: "money-check-alt",
+      //   children: [
+      //   ],
+      // },
     ];
     break;
     case "SubAdministrator":
@@ -381,13 +438,13 @@ const Dashboard = () => {
           
         ],
       },
-      {
-        name: "Top Up Resolver",
-        path: "/dashboard/SubAdministrator/topupresolver",
-        icon: "money-check-alt",
-        children: [
-        ],
-      },
+      // {
+      //   name: "Top Up Resolver",
+      //   path: "/dashboard/SubAdministrator/topupresolver",
+      //   icon: "money-check-alt",
+      //   children: [
+      //   ],
+      // },
       
     ];
     break;

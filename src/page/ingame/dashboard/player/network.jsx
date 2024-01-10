@@ -1,270 +1,104 @@
 import React, {useState, useEffect} from "react";
 import 
 {   MDBContainer, 
-    MDBBtn, 
-    MDBRow, 
-    MDBCol,
-    MDBIcon, 
-    MDBCard, 
-    MDBCardBody,
-    MDBTypography, 
-    MDBCardText,
     MDBTable, 
     MDBTableHead, 
     MDBTableBody,
-    MDBModal,
-    MDBModalDialog,
-    MDBModalContent,
-    MDBModalHeader,
-    MDBModalTitle,
-    MDBModalBody,
-    MDBModalFooter,
     MDBTabs,
     MDBTabsItem,
     MDBTabsLink,
     MDBTabsContent,
     MDBTabsPane } 
 from "mdb-react-ui-kit";
-import "./network.css"
+// import "./network.css"
+import PlayerPerlevel from "./network/index";
 const Network = () => {
-    const [basicActive, setBasicActive] = useState('tab1');
-
+    const [basicActive, setBasicActive] = useState('1');
+    const [network1, setNetwork1] = useState([])
+    const [network2, setNetwork2] = useState([])
+    const [network3, setNetwork3] = useState([])
+    const [network4, setNetwork4] = useState([])
+    const [network5, setNetwork5] = useState([])
+    const [network6, setNetwork6] = useState([])
     const handleBasicClick = (value) => {
         if (value === basicActive) {
           return;
         }
     
         setBasicActive(value);
-      };
+    };
+
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_API_URL}gameusers/findnetwork`,{
+            credentials: 'include',
+        })
+        .then(result => result.json())
+        .then(data => {
+          if(data.message === "success"){
+            setNetwork1(data.data.find(item => item._id === 1))
+            setNetwork2(data.data.find(item => item._id === 2))
+            setNetwork3(data.data.find(item => item._id === 3))
+            setNetwork4(data.data.find(item => item._id === 4))
+            setNetwork5(data.data.find(item => item._id === 5))
+            setNetwork6(data.data.find(item => item._id === 6))
+          }
+        })
+    },[])
     
 return(
    <MDBContainer>
     <MDBTabs className='my-3'>
         <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleBasicClick('tab1')} active={basicActive === 'tab1'}>
+          <MDBTabsLink onClick={() => handleBasicClick('1')} active={basicActive === '1'}>
             1 level
           </MDBTabsLink>
         </MDBTabsItem>
         <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleBasicClick('tab2')} active={basicActive === 'tab2'}>
+          <MDBTabsLink onClick={() => handleBasicClick('2')} active={basicActive === '2'}>
             2 level
           </MDBTabsLink>
         </MDBTabsItem>
         <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleBasicClick('tab3')} active={basicActive === 'tab3'}>
+          <MDBTabsLink onClick={() => handleBasicClick('3')} active={basicActive === '3'}>
             3 level
           </MDBTabsLink>
         </MDBTabsItem>
         <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleBasicClick('tab4')} active={basicActive === 'tab4'}>
+          <MDBTabsLink onClick={() => handleBasicClick('4')} active={basicActive === '4'}>
             4 level
           </MDBTabsLink>
         </MDBTabsItem>
         <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleBasicClick('tab5')} active={basicActive === 'tab5'}>
+          <MDBTabsLink onClick={() => handleBasicClick('5')} active={basicActive === '5'}>
             5 level
           </MDBTabsLink>
         </MDBTabsItem>
         <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleBasicClick('tab6')} active={basicActive === 'tab6'}>
+          <MDBTabsLink onClick={() => handleBasicClick('6')} active={basicActive === '6'}>
             6 level
           </MDBTabsLink>
         </MDBTabsItem>
       </MDBTabs>
 
-      <MDBTabsContent >
-        {basicActive === "tab1" && (
-            <>
-            <div className="d-flex justify-content-center">
-            <div className="p-3 w-50 my-2 text-center bg-secondary rounded fw-bold text-light">
-            Level 1 Total Commission:
-            </div>
-            </div>
-            
-            <MDBTable responsive className="text-mute mb-0">
-                <MDBTableHead >
-                    <tr>
-                    <th className="fw-bold" scope='col'>Username</th>
-                    <th className="fw-bold" scope='col'>Subscription</th>
-                    <th className="fw-bold" scope='col'>Commission</th>
-                    </tr>
-                </MDBTableHead>
-                    <MDBTableBody className="fw-bold">
-                        <tr>
-                            <td>
-                                Watch Ads Points
-                            </td>
-                            <td>
-                                paerl
-                            </td>
-                            <td>
-                                0
-                            </td>
-                        </tr>
-                    </MDBTableBody>
-            </MDBTable>
-            </>
-        )}
-        {basicActive === "tab2" && (
-            <>
-            <div className="d-flex justify-content-center">
-            <div className="p-3 w-50 my-2 text-center bg-secondary rounded fw-bold text-light">
-            Level 2 Total Commission:
-            </div>
-            </div>
-            
-            <MDBTable responsive className="text-mute mb-0">
-                <MDBTableHead >
-                    <tr>
-                    <th className="fw-bold" scope='col'>Username</th>
-                    <th className="fw-bold" scope='col'>Subscription</th>
-                    <th className="fw-bold" scope='col'>Commission</th>
-                    </tr>
-                </MDBTableHead>
-                    <MDBTableBody className="fw-bold">
-                        <tr>
-                            <td>
-                                Watch Ads Points
-                            </td>
-                            <td>
-                                emerald
-                            </td>
-                            <td>
-                                0
-                            </td>
-                        </tr>
-                    </MDBTableBody>
-            </MDBTable>
-            </>
-        )}
-        {basicActive === "tab3" && (
-            <>
-            <div className="d-flex justify-content-center">
-            <div className="p-3 w-50 my-2 text-center bg-secondary rounded fw-bold text-light">
-            Level 3 Total Commission:
-            </div>
-            </div> 
-            
-            <MDBTable responsive className="text-mute mb-0">
-                <MDBTableHead >
-                    <tr>
-                    <th className="fw-bold" scope='col'>Username</th>
-                    <th className="fw-bold" scope='col'>Subscription</th>
-                    <th className="fw-bold" scope='col'>Commission</th>
-                    </tr>
-                </MDBTableHead>
-                    <MDBTableBody className="fw-bold">
-                        <tr>
-                            <td>
-                                Watch Ads Points
-                            </td>
-                            <td>
-                                ruby
-                            </td>
-                            <td>
-                                0
-                            </td>
-                        </tr>
-                    </MDBTableBody>
-            </MDBTable>
-            </>
-        )}
-        {basicActive === "tab4" && (
-            <>
-            <div className="d-flex justify-content-center">
-            <div className="p-3 w-50 my-2 text-center bg-secondary rounded fw-bold text-light">
-            Level 4 Total Commission:
-            </div>
-            </div> 
-            
-            <MDBTable responsive className="text-mute mb-0">
-                <MDBTableHead >
-                    <tr>
-                    <th className="fw-bold" scope='col'>Username</th>
-                    <th className="fw-bold" scope='col'>Subscription</th>
-                    <th className="fw-bold" scope='col'>Commission</th>
-                    </tr>
-                </MDBTableHead>
-                    <MDBTableBody className="fw-bold">
-                        <tr>
-                            <td>
-                                Watch Ads Points
-                            </td>
-                            <td>
-                                ruby
-                            </td>
-                            <td>
-                                0
-                            </td>
-                        </tr>
-                    </MDBTableBody>
-            </MDBTable>
-            </>
-        )}
-        {basicActive === "tab5" && (
-            <>
-            <div className="d-flex justify-content-center">
-            <div className="p-3 w-50 my-2 text-center bg-secondary rounded fw-bold text-light">
-            Level 5 Total Commission:
-            </div>
-            </div> 
-            
-            <MDBTable responsive className="text-mute mb-0">
-                <MDBTableHead >
-                    <tr>
-                    <th className="fw-bold" scope='col'>Username</th>
-                    <th className="fw-bold" scope='col'>Subscription</th>
-                    <th className="fw-bold" scope='col'>Commission</th>
-                    </tr>
-                </MDBTableHead>
-                    <MDBTableBody className="fw-bold">
-                        <tr>
-                            <td>
-                                Watch Ads Points
-                            </td>
-                            <td>
-                                ruby
-                            </td>
-                            <td>
-                                0
-                            </td>
-                        </tr>
-                    </MDBTableBody>
-            </MDBTable>
-            </>
-        )}
-        {basicActive === "tab6" && (
-            <>
-            <div className="d-flex justify-content-center">
-            <div className="p-3 w-50 my-2 text-center bg-secondary rounded fw-bold text-light">
-            Level 6 Total Commission:
-            </div>
-            </div> 
-            
-            <MDBTable responsive className="text-mute mb-0">
-                <MDBTableHead >
-                    <tr>
-                    <th className="fw-bold" scope='col'>Username</th>
-                    <th className="fw-bold" scope='col'>Subscription</th>
-                    <th className="fw-bold" scope='col'>Commission</th>
-                    </tr>
-                </MDBTableHead>
-                    <MDBTableBody className="fw-bold">
-                        <tr>
-                            <td>
-                                Watch Ads Points
-                            </td>
-                            <td>
-                                ruby
-                            </td>
-                            <td>
-                                0
-                            </td>
-                        </tr>
-                    </MDBTableBody>
-            </MDBTable>
-            </>
-        )}
+      <MDBTabsContent>
+        <MDBTabsPane show={basicActive === '1'}>
+            <PlayerPerlevel data={network1} level={'1'}/>
+        </MDBTabsPane>
+        <MDBTabsPane show={basicActive === '2'}>
+            <PlayerPerlevel data={network2} level={'2'}/>
+        </MDBTabsPane>
+        <MDBTabsPane show={basicActive === '3'}>
+            <PlayerPerlevel data={network3} level={'3'}/>
+        </MDBTabsPane>
+        <MDBTabsPane show={basicActive === '4'}>
+            <PlayerPerlevel data={network4} level={'4'}/>
+        </MDBTabsPane>
+        <MDBTabsPane show={basicActive === '5'}>
+            <PlayerPerlevel data={network5} level={'5'}/>
+        </MDBTabsPane>
+        <MDBTabsPane show={basicActive === '6'}>
+            <PlayerPerlevel data={network6} level={'6'}/>
+        </MDBTabsPane>
       </MDBTabsContent>
    </MDBContainer>
 )

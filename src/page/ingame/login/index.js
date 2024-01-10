@@ -13,19 +13,28 @@ import {
     MDBCheckbox
   } from "mdb-react-ui-kit";
 import logo from "../../../assets/header/small logo for navi.png"
+import { isgamelogin } from "../../../component/utils";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
 import { PlayFabClient } from "playfab-sdk";
 const IngameLogin = () =>{
+  const [user, setuser] = useState('');
   const [email, setEmail]= useState('');
   const [password, setPassword] = useState("");
-  const user = JSON.parse(localStorage.getItem("user"))
+  // const user = JSON.parse(localStorage.getItem("user"))
   const navigate = useNavigate();
 
   useEffect(()=>{
     if(user){
-      window.location.href = `/dashboard/User/home`
+      window.location.href = `/Dashboard/User/home`
     } 
+  },[user])
+
+  useEffect(()=> {
+    isgamelogin()
+    .then(data => {
+      setuser(data.name)
+    })
   },[user])
 
   const login = (e) =>{
@@ -49,16 +58,20 @@ const IngameLogin = () =>{
                 text: data.data
                 })
 		} else {
-        localStorage.setItem('user', JSON.stringify(data.data))
-        Swal.fire({
-          title: "Login Successfully",
-          icon: "success",
-          text: `Welcome ${data.data.username}`
-        })
-        .then(result1 => {
-          if(result1.isConfirmed)
-          window.location.reload()
-        })
+        if(data.message === "success"){
+          Swal.fire({
+            title: "Login Successfully",
+            icon: "success",
+            text: `Welcome Monmon`,
+            allowEscapeKey: false,
+            allowOutsideClick: false
+          })
+          .then(result1 => {
+            if(result1.isConfirmed)
+            window.location.href = `/Dashboard/User/home`
+          })
+        }
+        
       }
        
     })
@@ -95,7 +108,7 @@ const IngameLogin = () =>{
       <img src={logo} alt=""/>
       <MDBTypography className="mb-0 mt-4">Welcome back,</MDBTypography>
       <MDBTypography className="mb-0">Please sign in to your account</MDBTypography>
-      <MDBTypography >No account yet? <a href={`/register?sponsor=monmonland&id=${process.env.REACT_APP_MONMONID}`}>Register now</a></MDBTypography>
+      <MDBTypography >No account yet? <a href={`/register?id=${process.env.REACT_APP_MONMONID}`}>Register now</a></MDBTypography>
       </MDBCol>
       
         <form onSubmit={login}>

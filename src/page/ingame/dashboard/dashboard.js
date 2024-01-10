@@ -4,13 +4,11 @@ import { Link, json, useNavigate } from "react-router-dom";
 import { MDBContainer, MDBBtn, MDBRow, MDBCol,MDBIcon } from "mdb-react-ui-kit";
 import Sidebarnav from "../../../component/sidebarnav";
 import { Outlet } from "react-router-dom";
-// import Navbar from "../../component/navbar";
-// import { ThemeContext, themes } from '../../component/theme/themecontext';
-// import ReferralButton from "../../component/dashboard/referral/referral";
+import { isgamelogin } from "../../../component/utils";
 import TopNavbar from "../../../component/topnavbar";
 
 const UserDashboard = () => {
-  // const [links, setLinks] = useState([]);
+  const [user, setuser] = useState('');
   const [didToggle, setDidToggle] = useState(
     window.innerWidth > 768 ? false : true
   ),
@@ -23,22 +21,28 @@ const UserDashboard = () => {
   [didToggle3, setDidToggle3] = useState(
     window.innerWidth > 768 ? false : true
   );
-  const user = JSON.parse(localStorage.getItem("user"))
+  // const user = JSON.parse(localStorage.getItem("user"))
   // const [darkMode, setDarkMode] = React.useState(true);
   const navigate = useNavigate() 
-
+  
+  useEffect(()=> {
+    isgamelogin()
+    .then(data => {
+      setuser(data.name)
+    })
+  },[user])
 
   
     const  link = [
         {
           name: "DASHBOARD",
-          path: "/dashboard/User/home",
+          path: "/Dashboard/User/home",
           icon: "home",
           children: [],
         },
         {
           name: "Network",
-          path: "/dashboard/User/network",
+          path: "/Dashboard/User/network",
           icon: "bezier-curve",
           children: [],
         },
@@ -50,56 +54,77 @@ const UserDashboard = () => {
         },
         {
           name: "Leaderboard",
-          path: "/dashboard/User/leaderboard",
+          path: "/Dashboard/User/leaderboard",
           icon: "trophy",
           children: [],
         },
         {
           name: "Payout",
-          path: "/dashboard/User/home",
+          path: "",
           icon: "money-bill-alt",
+          children: [
+            {
+              name: "Request Payout",
+              path: "/Dashboard/User/payoutrequest",
+            },
+            {
+              name: "Payout History",
+              path: "/Dashboard/User/payouthistory",
+            },
+          ],
+        },
+        {
+          name: "Mail",
+          path: "",
+          icon: "envelope",
           children: [],
         },
         {
           name: "News",
-          path: "/dashboard/User/news",
+          path: "/Dashboard/User/news",
           icon: "newspaper",
           children: [],
         },
         {
           name: "Profile",
-          path: "/dashboard/User/profile",
+          path: "/Dashboard/User/profile",
           icon: "user-edit",
           children: [],
         },
+        // {
+        //   name: "Set up Refferer",
+        //   path: "/Dashboard/User/referral",
+        //   icon: "user-lock",
+        //   children: [],
+        // },
         {
-          name: "History",
-          path: "",
+          name: "Wallet History",
+          path: "/Dashboard/User/wallethistory",
           icon: "history",
           children: [
-            {
-              name: "Wallet",
-              path: "/dashboard/User/wallethistory",
-            },
-            {
-              name: "Total Income Wallet",
-              path: "/dashboard/User/totalincomehistory",
-            },
-            {
-              name: "Monster Coin Wallet",
-              path: "/dashboard/User/monstercoinhistory",
-            },
-            {
-              name: "Monster Gem Unilevel",
-              path: "/dashboard/User/monstergemunilevel",
-            },
-            {
-              name: "Monster Gem Grind",
-              path: "/dashboard/User/monstergemgrind",
-            },
+            // {
+            //   name: "",
+            //   path: "",
+            // },
+            // {
+            //   name: "Total Income Wallet",
+            //   path: "/Dashboard/User/totalincomehistory",
+            // },
+            // {
+            //   name: "Monster Coin Wallet",
+            //   path: "/Dashboard/User/monstercoinhistory",
+            // },
+            // {
+            //   name: "Monster Gem Unilevel",
+            //   path: "/Dashboard/User/monstergemunilevel",
+            // },
+            // {
+            //   name: "Monster Gem Grind",
+            //   path: "/Dashboard/User/monstergemgrind",
+            // },
           ],
         },
-       ];
+    ];
     
   
 

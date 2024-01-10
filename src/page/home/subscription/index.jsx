@@ -33,10 +33,12 @@ import logoutbtn from "../../../assets/header/logout BUTTON.png"
 import topupbtn from "../../../assets/header/TOP UP BUTTON.png"
 import signupbtn from "../../../assets/header/sign up BUTTON.png"
 import clsbtn from "../../../assets/header/X BUTTON.png"
+import Cookies from 'js-cookie';
 const Subscription = () => {
     const [isLoading, setIsLoading] = useState(false);
     const user = JSON.parse(localStorage.getItem("user"))
     const playfabToken = localStorage.getItem("playfabAuthToken")
+    const email = localStorage.getItem("email")
     const [playfabId, setPlayfabID] = useState("")
     const [playfabtoken, setPlayfabToken] = useState("")
     const [subs, setSubs] = useState([]);
@@ -85,26 +87,11 @@ const Subscription = () => {
                     code: btoa(password)
                 }
 
-                fetch(`${process.env.REACT_APP_API_URL}coin/${subsname}`, {
-                    method:"POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        name: username,
-                        playfabId: result.data.PlayFabId,
-                        playfabToken: result.data.SessionTicket,
-                    })
-                })
-                .then(result => result.json())
-                .then(data => {
-                    setIsLoading(false)
+                setIsLoading(false)
                     localStorage.setItem("user", JSON.stringify(users))
                     localStorage.setItem("playfabAuthToken", result.data.SessionTicket)
-                    const url = data.hosted_url
-                    window.open(url, '_blank')
-                    window.location.reload()
-                })
+                    localStorage.setItem("email", "jimmy@gmail.com")
+                    window.location.href = "/topup"
 
             }
         })
@@ -112,13 +99,17 @@ const Subscription = () => {
 
     useEffect(()=>{
         setIsLoading(true)
-        fetch(`${process.env.REACT_APP_API_URL}subscription/find`)
+        fetch(`${process.env.REACT_APP_API_URL}subscription/find`,{
+            credentials: 'include',
+        })
         .then(result => result.json())
         .then(data => {
             setSubs(data)
             setIsLoading(false)
         })
-        fetch(`${process.env.REACT_APP_API_URL}subscription/finddesc`)
+        fetch(`${process.env.REACT_APP_API_URL}subscription/finddesc`,{
+            credentials: 'include',
+        })
         .then(result => result.json())
         .then(data => {
             setSubsDescription(data)
@@ -216,11 +207,11 @@ const Subscription = () => {
                     onClick={() => {
                         
                         if (sub.subscriptionName.toLowerCase() === "pearl") {
-                        window.location.href = `${window.location.origin}/register?sponsor=monmonland&id=${process.env.REACT_APP_MONMONID}`;
+                        window.location.href = `${window.location.origin}/register?id=${process.env.REACT_APP_MONMONID}`;
                         
                         } else {
-                        toggleShow()
-                        setSubsName(sub.subscriptionName.toLowerCase());
+                        window.location.href = '/topup'
+                        setSubsName(sub.subscriptionName);
                         }
                     }}
                     >
@@ -281,8 +272,8 @@ const Subscription = () => {
                         window.location.href = `${window.location.origin}/register?sponsor=monmonland&id=${process.env.REACT_APP_MONMONID}`;
                         
                     } else {
-                    toggleShow()
-                    setSubsName(sub.subscriptionName.toLowerCase());
+                    window.location.href = '/topup'
+                    setSubsName(sub.subscriptionName);
                     }
                 }}
                 >
@@ -350,7 +341,8 @@ const Subscription = () => {
             </MDBModalBody>
             <MDBModalBody className="text-center">
             <div className="text-white p-1" style={{backgroundColor: "#40290A", textAlign: "justify"}}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            <h2 className="text-center">Welcome to MonMonland</h2>
+            come and join us as we reach the world filled with adorable MonMons. Just click Login/Sign-up your account and start earning.
             </div>
             
             </MDBModalBody>
@@ -391,7 +383,7 @@ const Subscription = () => {
                 </MDBCol>
                 
                 <MDBCol className="d-flex justify-content-between align-items-center">
-                    <MDBBtn className="bg-transparent p-0" href={`${window.location.origin}/register?sponsor=monmonland&id=${process.env.REACT_APP_MONMONID}`} block>
+                    <MDBBtn className="bg-transparent p-0" href={`${window.location.origin}/register?id=${process.env.REACT_APP_MONMONID}`} block>
                     <img src={signupbtn} alt="" className="img-fluid"/>
                     </MDBBtn>
                 </MDBCol>

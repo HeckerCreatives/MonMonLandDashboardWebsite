@@ -102,12 +102,24 @@ import PlayerIncomeHistory from "./page/ingame/dashboard/player/history/totalinc
 import PlayerMCHistory from "./page/ingame/dashboard/player/history/monstercoinhistory";
 import PlayerMGUnilevelHistory from "./page/ingame/dashboard/player/history/monstergemunilevel";
 import PlayerMGGrindHistory from "./page/ingame/dashboard/player/history/monstergemgrind";
+import Phase1 from "./component/migration/phase1";
+import Tracker from "./page/tracker";
+import ChooseReferrer from "./page/ingame/dashboard/player/setreferrer";
+import MembersAccount from "./page/dashboard/manageaccount/members";
+import MembersProfile from "./page/dashboard/manageaccount/members/memberdashboard";
+import BannedMembers from "./page/dashboard/manageaccount/banned";
+import TopEarners from "./page/dashboard/Ingameleaderboard/topearners";
+import Fiesta from "./page/dashboard/Ingameleaderboard/fiesta";
+import MonmonBonanza from "./page/dashboard/sponsor/monmonbonanza";
+import PlayerPayoutHistory from "./page/ingame/dashboard/player/payout/payouthistory";
+import PlayerRequestPayout from "./page/ingame/dashboard/player/payout/requestpayout";
+import AdminDragonPayoutRequest from "./page/dashboard/dragonpayout/request";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
     const url = new URL(window.location.href);
     if(url.href === `${window.location.origin}/register`){
-      navigate(`/register?sponsor=monmonland&id=${process.env.REACT_APP_MONMONID}`)
+      navigate(`/register?id=${process.env.REACT_APP_MONMONID}`)
     } 
     
   },[])
@@ -122,10 +134,13 @@ const Routers = () => {
        
         <Route path="Administrator" element={""}>
         <Route path="home" element={<AdminDashboard />}/>
+        <Route path="memberprofile" element={<MembersProfile/>}/>
         <Route path="manageaccount">
         <Route path="createadminacc" element={<CreateAdminAccount/>}/>
         <Route path="createcsracc" element={<CreateCSRAccount/>}/>
         <Route path="createmarketingacc" element={<CreateMarketingAccount/>}/>
+        <Route path="members" element={<MembersAccount/>}/>
+        <Route path="bannedmembers" element={<BannedMembers/>}/>
         <Route path="manageplayers">
           <Route path="activeplayers" element={<ActiveUsers/>}/>
           <Route path="bannedplayers" element={<BannedUsers/>}/>
@@ -137,15 +152,30 @@ const Routers = () => {
           <Route path="usersdetails/:userId" element={<ManageDashboard/>}/>                           
         </Route>
         </Route>
-        
+
+        <Route path="ingameleaderboard">
+          <Route path="topearners" element={<TopEarners/>}/>
+          <Route path="fiesta" element={<Fiesta/>}/>
+        </Route>
+
+        <Route path="sponsor">
+          <Route path="monmonbonanza" element={<MonmonBonanza/>}/>
+        </Route>
+
         <Route path="upgradesubscription">
-        <Route path="managetopup" element={<UpgradeSubscriptionManual/>}/>
+          <Route path="managetopup" element={<UpgradeSubscriptionManual/>}/>
         </Route>
 
         <Route path="payout">
         <Route path="request" element={<AdminPayoutRequest/>}/>
         <Route path="process" element={<AdminPayoutProcess/>}/>
         <Route path="done" element={<AdminPayoutDone/>}/>
+        </Route>
+
+        <Route path="dragonpayout">
+        <Route path="request" element={<AdminDragonPayoutRequest/>}/>
+        {/* <Route path="process" element={<AdminPayoutProcess/>}/>
+        <Route path="done" element={<AdminPayoutDone/>}/> */}
         </Route>
 
         <Route path="settings">
@@ -278,6 +308,8 @@ const Routers = () => {
             <Route path="monstercoinhistory" element={<PlayerMCHistory/>}/>
             <Route path="monstergemunilevel" element={<PlayerMGUnilevelHistory/>}/>
             <Route path="monstergemgrind" element={<PlayerMGGrindHistory/>}/>
+            <Route path="payouthistory" element={<PlayerPayoutHistory/>}/>
+            <Route path="payoutrequest" element={<PlayerRequestPayout/>}/>
         </Route>
       </Route>
       {/* <Route
@@ -316,6 +348,9 @@ const Routers = () => {
           <Route path="privacypolicy" element={<Privacy1/>}/>
         </Route>
       </Route>
+
+      <Route path='/migrateph1' element={<Phase1/>}/>
+      <Route path='/track' element={<Tracker/>}/>
       <Route path="/login" element={<Login />}/>
       <Route path="/gamelogin" element={<IngameLogin />}/>
       <Route path="/media" element={<Media />}/>

@@ -50,19 +50,9 @@ const TopNavbar = ({auth, didToggle, setDidToggle}) => {
             timer: 5100
         })
         logout()
-        // function deleteCookie(cookieName) {
-        //   document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-        // }
-
-        // deleteCookie("sessionToken");
-        // deleteCookie("playfabAdminAuthToken");
         setVisibility(false);
         setTimeout(() => {
-
-          // localStorage.removeItem("auth");
-          // localStorage.removeItem("user");
-        //   localStorage.removeItem("my-secret");
-          window.location.href = "/login";
+          window.location.reload()
         }, 5100);
       };
 

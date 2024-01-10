@@ -26,6 +26,7 @@ import {
   import topupbtn from "../../../assets/header/TOP UP BUTTON.png"
   import signupbtn from "../../../assets/header/sign up BUTTON.png"
   import clsbtn from "../../../assets/header/X BUTTON.png"
+  import Cookies from 'js-cookie';
 const AddFundsModal = ({basicModal, setBasicModal}) => {
     const auth = JSON.parse(localStorage.getItem("auth"))
     const user = JSON.parse(localStorage.getItem("user"))
@@ -51,6 +52,7 @@ const AddFundsModal = ({basicModal, setBasicModal}) => {
         };
         setIsLoading(true)
         PlayFabClient.LoginWithPlayFab(playFabUserData, (error, result) => {
+            console.log(result)
             if(result){
                 const user = {
                     Username: username,
@@ -60,6 +62,7 @@ const AddFundsModal = ({basicModal, setBasicModal}) => {
                 setIsLoading(false)
                 localStorage.setItem("user", JSON.stringify(user))
                 localStorage.setItem("playfabAuthToken", result.data.SessionTicket)
+                localStorage.setItem("email", "jimmy@gmail.com")
                 window.location.href = "/topup"
             } else if (error) {
                 Swal.fire({

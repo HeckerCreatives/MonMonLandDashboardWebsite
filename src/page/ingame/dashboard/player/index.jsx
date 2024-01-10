@@ -7,47 +7,37 @@ import Dashboardstatistics from "./statistics";
 import Breadcrumb from "../../../../component/breadcrumb";
 import { useNavigate } from "react-router-dom";
 import DiamondPoolRequirements from "./poolrequirements";
-
+import { isgamelogin } from "../../../../component/utils";
+import ChooseReferrer from "./setreferrer";
+import PointDetails from "./pointdetail";
 const PlayerDashboard = () => {
-    const user = JSON.parse(localStorage.getItem("user"))
     const [wallets, setWallets] = useState([]);
-    const [paidusers, setPaidUsers] = useState(0);
+    const [walletscutoff, setWalletsCutOff] = useState([]);
+    const [basicModal, setBasicModal] = useState(false);
 
-    // const [totalautopayment, setTotalAutoPayment] = useState([]);
-    // const [AutoAndManual, setAutoAndManual] = useState([]);
-    // const [autopayment, setAutoPayment] = useState([]);
-    // const [totalpaidusers, setTotalPaidUsers] = useState([]);
-    const navigate = useNavigate()
-
-    const [request, setRequest] = useState(0)
-    const [done, setDone] = useState(0)
-    const [processed, setProcessed] = useState(0);
-  
-    // useEffect(() => {
-    //   if (auth) {
-    //     if (auth.roleId.display_name !== "SubAdministrator") {
-    //       localStorage.removeItem("auth");
-    //       navigate("/sessions/login");
-    //     }
-    //   }
-    // }, [auth, navigate]);
+    useEffect(()=> {
+      isgamelogin()
+      .then(data => {
+        if(!data.referrer) {
+          setBasicModal(true)
+        }
+      })
+    },[])
 
 
   useEffect(()=> {
     fetch(`${process.env.REACT_APP_API_URL}gamewallet/find`, {
-      method: "POST",
+      method: "GET",
       credentials: 'include',
       headers:{
         "Content-Type": 'application/json'
-      },
-      body: JSON.stringify({
-        id: user._id
-      })
+      }
     })
     .then(result => result.json())
     .then(data => {
       if(data.message === "success"){
         setWallets(data.data)
+        setWalletsCutOff(data.data2)
       }
          
     })
@@ -65,7 +55,11 @@ const PlayerDashboard = () => {
               colSpan="4"
               icon={`dollar-sign`}
               cardtoptext={'Current Wallet Balance'}
-              txtsup={wallets.balance}
+              txtsup={wallets.balance?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
               />
           </MDBCol>
           <MDBCol className="my-2">
@@ -73,8 +67,16 @@ const PlayerDashboard = () => {
               colSpan="4"
               icon={`dollar-sign`}
               cardtoptext={'Total Monster Coin'}
-              txtsup={wallets.monstercoin}
-              txtsup1='0'
+              txtsup={wallets.monstercoin?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              txtsup1={wallets.subscriberincome?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
               />
           </MDBCol>
           <MDBCol className="my-2">
@@ -82,8 +84,16 @@ const PlayerDashboard = () => {
               colSpan="4"
               icon={`dollar-sign`}
               cardtoptext={'Total Monster Gem'}
-              txtsup={wallets.monstergem}
-              txtsup1='0'
+              txtsup={wallets.monstergemfarm?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              txtsup1={wallets.monstergemfarm?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
               />
           </MDBCol>
           
@@ -91,21 +101,90 @@ const PlayerDashboard = () => {
 
         <MDBRow className="my-2">
 
-          <MDBCol md={6} className="my-2">
+          <MDBCol md={4} className="my-2">
           <LeaderboardRequirements
-            activitypoints={wallets.personalpoints}
-            taskpoints={wallets.taskpoints}
-            recruitpoints={wallets.recruitpoints}
+            activitypoints={walletscutoff.activitypoints?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+            taskpoints={walletscutoff.taskpoints?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+            recruitpoints={walletscutoff.recruitpoints?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+            purchasepoints={walletscutoff.purchasepoints?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+            watchadspoints={walletscutoff.adspoints?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
           />
           </MDBCol>
-          <MDBCol md={6} className="my-2">
+          <MDBCol md={4} className="my-2">
           <DiamondPoolRequirements
-            adspoints={wallets.adspoints}
-            purchasepoints={wallets.purchasepoints}
-            recruitpoints={wallets.recruitpoints}
+            poolstatus={wallets.poolstatus}
+            rank={wallets.rank}
+            grouppoints={wallets.grouppoints?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+            purchasepoints={wallets.purchasepoints?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+            recruitpoints={wallets.recruitpoints?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
           />
           </MDBCol>
-          
+          <MDBCol md={4} className="my-2">
+          <PointDetails
+            grouppoints={wallets.grouppoints?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+            purchasepoints={wallets.purchasepoints?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+            recruitpoints={wallets.recruitpoints?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              watchadspoints={wallets.adspoints?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              activitypoints={wallets.activitypoints?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              taskpoints={wallets.taskpoints?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+          />
+          </MDBCol>
         </MDBRow>
 
         <MDBRow className="my-2">
@@ -121,7 +200,11 @@ const PlayerDashboard = () => {
                                   Total Points
                               </td>
                               <td>
-                              {wallets.totalpoints}
+                              {walletscutoff.totalpoints?.toLocaleString('en-US', {
+                              style: 'decimal',
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2
+                              })}
                               </td>
                           </tr>
                       </MDBTableBody>
@@ -152,10 +235,11 @@ const PlayerDashboard = () => {
           
         </MDBRow>
         
+        <ChooseReferrer 
+        // setBasicModal={setBasicModal} 
+        basicModal={basicModal}/>
         
-
         </MDBContainer>
-        
     )
 }
 

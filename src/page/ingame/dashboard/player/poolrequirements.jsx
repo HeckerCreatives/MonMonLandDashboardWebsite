@@ -21,7 +21,34 @@ import
     MDBModalFooter, } 
 from "mdb-react-ui-kit";
 
-const DiamondPoolRequirements = ({adspoints, purchasepoints, recruitpoints}) => {
+const DiamondPoolRequirements = ({grouppoints, purchasepoints, recruitpoints, poolstatus, rank}) => {
+
+    let pp;
+    let dp;
+    let gp;
+
+    switch(rank){
+        case "Diamond":
+        pp = 50.00
+        dp = 64.00
+        gp = 200.00
+        break
+        case "Diamond Pink":
+        pp = 150.00
+        dp = 128.00
+        gp = 500.00
+        break
+        case "Diamond Blue":
+        pp = 300.00
+        dp = 256.00
+        gp = 750.00
+        break
+        default:
+        pp = 0.00
+        dp = 0.00
+        gp = 0.00
+    }
+    
     
 return(
     <>
@@ -29,34 +56,49 @@ return(
           <MDBCardBody>
           <MDBTable responsive className="text-mute mb-0">
                 <MDBTableHead >
-                    <tr>
-                    <th className="fw-bold" scope='col'>Diamond Pool Requirements</th>
-                    <th className="fw-bold" scope='col'></th>
+                    <tr className="text-center">
+                    <th className="fw-bold" scope='col' colSpan={2}>Diamond Pool Requirements</th>
                     </tr>
                 </MDBTableHead>
-                <MDBTableBody className="fw-bold">
+                <MDBTableBody className="">
                     <tr>
+                        <th>
+                            Pool Status
+                        </th>
                         <td>
-                            Watch Ads Points
-                        </td>
-                        <td>
-                            {adspoints}
+                            {poolstatus}
                         </td>
                     </tr>
                     <tr>
+                        <th>
+                            Rank
+                        </th>
                         <td>
+                            {rank}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             Purchase Points
-                        </td>
+                        </th>
                         <td>
-                            {purchasepoints}
+                            {purchasepoints} / {pp.toFixed(2)}
                         </td>
                     </tr>
                     <tr>
+                        <th>
+                            Direct Points
+                        </th>
                         <td>
-                            Recruit Points
+                            {recruitpoints} / {dp.toFixed(2)}
                         </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Group Points
+                        </th>
                         <td>
-                            {recruitpoints}
+                            {grouppoints} / {gp.toFixed(2)}
                         </td>
                     </tr>
                 </MDBTableBody>

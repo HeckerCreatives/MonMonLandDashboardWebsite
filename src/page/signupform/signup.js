@@ -32,29 +32,29 @@ const SignUp = () => {
     const url = new URL(window.location.href);
     const params = new URLSearchParams(url.search);
     
-    const sponsor = params.get('sponsor');
     const id = params.get('id');
-    setReferrerId(id)
-    setReferrer(sponsor)
+    fetch(`${process.env.REACT_APP_API_URL}gameusers/findreferrer/${id}`)
+    .then(result => result.json())
+    .then(data => {
+      if(data.message === "success"){
+        setReferrerId(id)
+        setReferrer(data.data)
+      } else {
+        Swal.fire({
+          title: "Warning",
+          icon: "info",
+          text: data.data,
+          allowEscapeKey: false,
+          allowOutsideClick: false
+        }).then(ok => {
+          if(ok.isConfirmed){
+            window.location.reload()
+          }
+        })
+      }
+    })
+    
 
-    // if(sponsor && id){
-      
-    // } else {
-    //   Swal.fire({
-    //     icon: "warning",
-    //     title:"Please do not alter the registration link",
-    //     text: "Please Use Ingame Registration Link Thank You",
-    //     allowOutsideClick: false,
-    //     allowEscapeKey: false,
-    //   })
-    //   .then(ok => {
-    //     if(ok.isConfirmed){
-    //       window.location.href="https://monmonland.games/"
-    //     }
-    //   })
-    // }
-    
-    
   },[])
 
   
@@ -78,15 +78,15 @@ const SignUp = () => {
         return 
       }
       setIsLoading(true)
-      fetch(`${process.env.REACT_APP_API_URL}monmon/register`, {
+      fetch(`${process.env.REACT_APP_API_URL}gameusers/register`, {
         method:'POST',
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          sponsor: referrerid,
-          username: userName,
+          referral: referrerid,
+          username: userName.toLowerCase(),
           phone: phone,
           email: email,
           password: password,
@@ -99,7 +99,7 @@ const SignUp = () => {
           Swal.fire({
             title: "Registered Successfully",
             icon: "success",
-            text: "You Successfully Registered"
+            text: data.data
           }).then(ok => {
             if(ok.isConfirmed){
               // setRefreshReCaptcha(r => !r);
@@ -164,13 +164,13 @@ const SignUp = () => {
           <MDBTypography className="fw-bold">Create your account in <span className="text-warning">few seconds</span></MDBTypography>
           </MDBCol>
           
-          <GoogleReCaptchaProvider
+          {/* <GoogleReCaptchaProvider
           reCaptchaKey={process.env.REACT_APP_SITE_KEY}
           >
           <GoogleReCaptcha 
             onVerify={onVerify}
             refreshReCaptcha={refreshReCaptcha}
-            />
+            /> */}
           <form  autoComplete="off" onSubmit={register}>
           <MDBCard className="shadow-3 ">
           <MDBCardBody>
@@ -231,7 +231,7 @@ const SignUp = () => {
           
           </MDBRow>
           </form>
-          </GoogleReCaptchaProvider>
+          {/* </GoogleReCaptchaProvider> */}
 
                   
           

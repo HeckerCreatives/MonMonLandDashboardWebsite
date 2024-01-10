@@ -22,7 +22,7 @@ import
 from "mdb-react-ui-kit";
 
 const PlayerLeaderboard = () => {
-    const user = JSON.parse(localStorage.getItem("user"))
+    // const user = JSON.parse(localStorage.getItem("user"))
     const [leaderboard, setLeaderboard] = useState([]);
 
     useEffect(()=> {
@@ -41,21 +41,24 @@ const PlayerLeaderboard = () => {
 return(
     <>
     <MDBContainer>
-    <MDBTable responsive className="text-mute mb-0">
+    <div className="text-center my-3">
+        <MDBTypography tag={'h1'}>Top 15 Earner's</MDBTypography>
+    </div>
+    <MDBTable responsive className="text-mute mt-5 mb-0">
                 <MDBTableHead >
                     <tr className="text-center">
                     <th className="fw-bold" scope='col'>Rank</th>
-                    <th className="fw-bold" scope='col'>Name</th>
+                    <th className="fw-bold" scope='col'>Username</th>
                     <th className="fw-bold" scope='col'>Total Points</th>
                     </tr>
                 </MDBTableHead>
-                <MDBTableBody className="fw-bold">
+                <MDBTableBody className="">
                 {
                     leaderboard.map((data, i) => (
                     <tr key={i} className="text-center">
-                        <td>
+                        <th>
                             {i+1}
-                        </td>
+                        </th>
                         <td>
                             {data.owner.username}
                         </td>
