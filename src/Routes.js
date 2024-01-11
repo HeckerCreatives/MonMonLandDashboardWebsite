@@ -316,7 +316,7 @@ const Routers = () => {
         </Route>
       </Route>
 
-      {/* <Route path="/register" element={<SignUp />}/> */}
+      <Route path="/register" element={<SignUp />}/>
       
       
       <Route path="referral">
