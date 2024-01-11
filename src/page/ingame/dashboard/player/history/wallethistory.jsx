@@ -51,7 +51,7 @@ return(
         </select>
     </div>
     <MDBTable small responsive className="text-mute mt-5 mb-0">
-                <MDBTableHead >
+                <MDBTableHead>
                     <tr className="text-center">
                     <th className="fw-bold" scope='col'>Date</th>
                     <th className="fw-bold" scope='col'>Amount</th>

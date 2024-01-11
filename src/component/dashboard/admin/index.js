@@ -27,6 +27,14 @@ const AdminDashboard = () => {
     const [AutoAndManual, setAutoAndManual] = useState(0);
     const [ManualPayment, setManualPayment] = useState(0);
 
+    const [softlaunchauto, setSoftLaunchAuto] = useState(0);
+    const [softlaunchtotal, setSoftLaunchTotal] = useState(0);
+    const [softlaunchmanual, setSoftLaunchManual] = useState(0);
+
+    const [totalauto, setTotalAuto] = useState(0);
+    const [combinetotal, setCombineTotal] = useState(0);
+    const [totalmanual, setTotalManual] = useState(0);
+
     const [pearl, setPearl] = useState(0);
     const [ruby, setRuby] = useState(0);
     const [emerald, setEmerald] = useState(0);
@@ -274,6 +282,74 @@ const AdminDashboard = () => {
 
       
 
+    })
+
+    fetch(`${process.env.REACT_APP_API_URL}wallet/softlaunchwallet`,{
+      method: "GET",
+      credentials: 'include',
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${auth?.token}`,
+      },
+    }).then(result => result.json())
+    .then(data => {
+      if(data.expired){
+        Swal.fire({
+          icon: "error",
+          title: data.expired,
+          text: "You Will Redirect to Login",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        }).then(ok => {
+          if(ok.isConfirmed){
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
+            window.location.replace("/login");
+          }
+        })
+      }
+
+      if(data?.data !== null && !data.expired){
+        setSoftLaunchAuto(data.data.softlaunchauto)
+        setSoftLaunchManual(data.data.softlaunchmanual)
+        setSoftLaunchTotal(data.data.softlaunchtotal)
+      }
+    })
+
+    fetch(`${process.env.REACT_APP_API_URL}wallet/totalsalewallet`,{
+      method: "GET",
+      credentials: 'include',
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${auth?.token}`,
+      },
+    }).then(result => result.json())
+    .then(data => {
+      if(data.expired){
+        Swal.fire({
+          icon: "error",
+          title: data.expired,
+          text: "You Will Redirect to Login",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        }).then(ok => {
+          if(ok.isConfirmed){
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
+            window.location.replace("/login");
+          }
+        })
+      }
+
+      if(data?.data !== null && !data.expired){
+        setTotalAuto(data.data.totalauto)
+        setTotalManual(data.data.totalmanual)
+        setCombineTotal(data.data.combinetotal)
+      }
     })
 
     const total = autopayment ? autopayment + ManualPayment : 0 + ManualPayment
@@ -791,9 +867,55 @@ const AdminDashboard = () => {
         {/* Cards */}
         <br/>
         <MDBTypography tag={`h2`}>Income Wallets</MDBTypography>
-        <hr/>
-        <MDBRow className="my-2">
+        <hr/><MDBRow className="my-2">
           <MDBCol className="my-2">
+            <DashCard 
+              colSpan="4"
+              icon={`dollar-sign`}
+              thtitle={`Grand Launch Sales`}
+              cardtoptext={AutoAndManual  ? AutoAndManual?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }): 0}
+              txtsup={``} 
+              td1={true}
+              td1txttop={ManualPayment ? `${ManualPayment?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} `: "0 "}
+              td1txtbot={`Manual`} 
+              td2={true}
+              td2txttop={autopayment ? `${autopayment?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} `: "0 "}
+              td2txtbot={`Automated`} 
+              />
+          </MDBCol>
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`dollar-sign`}
+              thtitle={`Soft Launch Sales`}
+              cardtoptext={softlaunchtotal  ? softlaunchtotal?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }): 0}
+              txtsup={``} 
+              td1={true}
+              td1txttop={softlaunchmanual ? `${softlaunchmanual?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} `: "0 "}
+              td1txtbot={`Manual`} 
+              td2={true}
+              td2txttop={softlaunchauto ? `${softlaunchauto?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} `: "0 "}
+              td2txtbot={`Automated`} 
+              />
+          </MDBCol>
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`dollar-sign`}
+              thtitle={`Total Sales`}
+              cardtoptext={combinetotal  ? combinetotal?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }): 0}
+              txtsup={``} 
+              td1={true}
+              td1txttop={totalmanual ? `${totalmanual?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} `: "0 "}
+              td1txtbot={`Manual`} 
+              td2={true}
+              td2txttop={totalauto ? `${totalauto?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} `: "0 "}
+              td2txtbot={`Automated`} 
+              />
+          </MDBCol>
+        </MDBRow>
+        <MDBRow className="my-2">
+          {/* <MDBCol className="my-2">
             <DashCard 
               colSpan="4"
               icon={`dollar-sign`}
@@ -807,7 +929,7 @@ const AdminDashboard = () => {
               td2txttop={autopayment ? `${autopayment?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} `: "0 "}
               td2txtbot={`Automated`} 
               />
-          </MDBCol>
+          </MDBCol> */}
           <MDBCol className="my-2">
             <DashCard
               flipbtn={true}

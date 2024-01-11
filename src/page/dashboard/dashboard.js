@@ -139,6 +139,14 @@ const Dashboard = () => {
           ],
         },
         {
+          name: "Game Announcement",
+          path: "/dashboard/Administrator/gameannouncement",
+          icon: "bullhorn",
+          children: [
+           
+          ],
+        },
+        {
           name: "Manage Top Up",
           path: "",
           icon: "arrow-alt-circle-up",

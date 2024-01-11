@@ -16,7 +16,8 @@ import {
     MDBCard,
     MDBCardHeader, 
     MDBCardBody,
-    MDBTypography} from "mdb-react-ui-kit";
+    MDBTypography,
+    MDBSpinner} from "mdb-react-ui-kit";
 import React, {useEffect, useState} from "react";
 import FlipCountdown from '@rumess/react-flip-countdown';
 import { PlayFabClient } from "playfab-sdk";
@@ -76,6 +77,7 @@ const Phase1 = () => {
     
     const login = (e) => {
         e.preventDefault()
+        setIsOk(true)
         const { username, password } = e.target
 
         const userdata = {
@@ -85,7 +87,7 @@ const Phase1 = () => {
 
         PlayFabClient.LoginWithPlayFab(userdata, (error, result) => {
             if(result){
-
+                setIsOk(false)
                 const user = {
                     name: username.value,
                     code: btoa(password.value),
@@ -108,13 +110,16 @@ const Phase1 = () => {
     const wew = new Worker(workerScript)
 
     const migrates = (username, password, session, referral) => {
+        
         return () => {
+            setIsOk(true)
             wew.postMessage([username, password, session, thetime, referral]);
         };
     };
     
     wew.onmessage = (m) => {
         if(m.data[0] === 'success'){
+            setIsOk(false)
             Swal.fire({
                 title: m.data[0],
                 icon: 'success',
@@ -143,6 +148,7 @@ const Phase1 = () => {
             })
 
         } else {
+            setIsOk(false)
             Swal.fire({
                 title: m.data[0],
                 icon: 'warning',
@@ -181,8 +187,9 @@ const Phase1 = () => {
             <MDBCardBody>
             <MDBRow>
                 <MDBCol>
-                    <div className="center">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                    <div className="text-center">
+                    <p>Get ready for the Grand Launch! Upgrade your account from Version 1 to Version 2, Starting January 16, 2024 valid until January 31, 2024.</p>
+                     <p>Visit our Official Website at www.monmonland.games, log in, and migrate your account. Choose the Upline you want to be, and you will use their migration referral link into your account. Additionally, If you haven't switched your account yet, it's time to do so! Starting from Version 2, accounts that haven't migrated will no longer be available. Make sure to migrate soon to keep enjoying all the great features without any interruptions.</p>
                     </div>
                 </MDBCol>
             </MDBRow>
@@ -198,12 +205,12 @@ const Phase1 = () => {
                 </div>
                 
                 <div className="col-md-4 flex-wrap">
-                <MDBInput name="username" className="" label={ref}/>
+                <MDBInput name="username" className="" value={ref} readOnly/>
                 </div>
-                <div className="col-md-2">
+                {/* <div className="col-md-2">
                     <MDBBtn type="submit"  className="m-2" size="sm" 
                     >Set</MDBBtn>
-                </div>
+                </div> */}
                 
                 </div>
                 </form>
@@ -212,18 +219,22 @@ const Phase1 = () => {
                 <div className="text-center">
                 {
                     data ? 
+                    ( isOk ? 
+                    <MDBSpinner className="mt-3" color="primary"/> 
+                    : 
                     <MDBBtn 
                     type='button' 
                     className="mt-3" 
                     onClick={migrates(data.name, atob(data.code), data.session, id)}
                     disabled={id !== '' ? false: true}
                     >Migrate Account</MDBBtn>
+                    )
+                    
                     :
                     <div className="text-center">
-                        <MDBBtn onClick={toggleOpen}>Login Here</MDBBtn>
+                        <MDBBtn className="mt-3" onClick={toggleOpen}>Login Here</MDBBtn>
                     </div>
                 }
-                
                 </div>
                 
                 </MDBCol>
@@ -253,9 +264,14 @@ const Phase1 = () => {
                 
                 </MDBModalBody> */}
                 <MDBModalFooter>
+                {
+                isOk ? 
+                <MDBSpinner color="success"/> 
+                : 
                 <MDBBtn type="submit" className="bg-transparent p-0 ">
                 <img src={logins} id="joinnow" alt="" className=""></img>
                 </MDBBtn>
+                }
                 </MDBModalFooter>
             </MDBModalContent>
             </form>

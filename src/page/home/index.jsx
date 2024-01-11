@@ -23,9 +23,9 @@ const Initial = () => {
 
     const toggleOpen = () => setBasicModal(!basicModal);
 
-    useEffect(() => {
-        setBasicModal(true)
-    },[])
+    // useEffect(() => {
+    //     setBasicModal(true)
+    // },[])
 
     const Links = [
         {

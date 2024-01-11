@@ -13,7 +13,8 @@ import {
     MDBModalFooter,
     MDBCardText,
     MDBInput,
-    MDBSpinner, } from "mdb-react-ui-kit";
+    MDBSpinner,
+    MDBTypography, } from "mdb-react-ui-kit";
 import { PlayFabClient } from "playfab-sdk";
 import Swal from "sweetalert2";
 import logins from "../../../assets/header/login BUTTON1.png"
@@ -53,7 +54,8 @@ const MigrateLogin = ({basicModal, setBasicModal}) => {
     }
 
     return (
-        <MDBModal show={basicModal}  tabIndex='-1'>
+        <>
+        {/* <MDBModal show={basicModal}  tabIndex='-1'>
             <MDBModalDialog>
             <form autoComplete="off" onSubmit={login}>
             <MDBModalContent>
@@ -67,13 +69,6 @@ const MigrateLogin = ({basicModal, setBasicModal}) => {
                 <MDBCardText>Password:</MDBCardText>
                 <MDBInput name="password" type="password"/>
                 </MDBModalBody>
-                {/* <MDBModalBody className="text-center">
-                <div className="text-white p-1" style={{backgroundColor: "#40290A", textAlign: "justify"}}>
-                <h2 className="text-center">Monmonland Migration</h2>
-                come and join us as we reach the world filled with adorable MonMons. Just click Login/Sign-up your account and start earning.
-                </div>
-                
-                </MDBModalBody> */}
                 <MDBModalFooter>
                 {
                 loading ? 
@@ -88,7 +83,28 @@ const MigrateLogin = ({basicModal, setBasicModal}) => {
             </MDBModalContent>
             </form>
             </MDBModalDialog>
+        </MDBModal> */}
+
+        <MDBModal show={basicModal} staticBackdrop tabIndex='-1'>
+            <MDBModalDialog centered>
+            <MDBModalContent>
+                <MDBModalHeader className="justify-content-center">
+                    <MDBModalTitle className="text-center">Announcement</MDBModalTitle>
+                </MDBModalHeader>
+                <MDBModalBody className="text-center">
+                <MDBTypography tag={'h2'}>The migration of accounts will commence from January 16 to 31, 2024.</MDBTypography>
+                </MDBModalBody>
+
+                <MDBModalFooter>
+                <MDBBtn color='secondary' onClick={() => setBasicModal(false)}>
+                    Close
+                </MDBBtn>
+                </MDBModalFooter>
+            </MDBModalContent>
+            </MDBModalDialog>
         </MDBModal>
+        </>
+        
     )
 }
 

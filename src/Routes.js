@@ -114,6 +114,7 @@ import MonmonBonanza from "./page/dashboard/sponsor/monmonbonanza";
 import PlayerPayoutHistory from "./page/ingame/dashboard/player/payout/payouthistory";
 import PlayerRequestPayout from "./page/ingame/dashboard/player/payout/requestpayout";
 import AdminDragonPayoutRequest from "./page/dashboard/dragonpayout/request";
+import GameAnnouncement from "./page/dashboard/gameannouncement";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -153,6 +154,8 @@ const Routers = () => {
         </Route>
         </Route>
 
+        <Route path="gameannouncement" element={<GameAnnouncement/>}/>
+
         <Route path="ingameleaderboard">
           <Route path="topearners" element={<TopEarners/>}/>
           <Route path="fiesta" element={<Fiesta/>}/>
@@ -167,9 +170,9 @@ const Routers = () => {
         </Route>
 
         <Route path="payout">
-        <Route path="request" element={<AdminPayoutRequest/>}/>
-        <Route path="process" element={<AdminPayoutProcess/>}/>
-        <Route path="done" element={<AdminPayoutDone/>}/>
+          <Route path="request" element={<AdminPayoutRequest/>}/>
+          <Route path="process" element={<AdminPayoutProcess/>}/>
+          <Route path="done" element={<AdminPayoutDone/>}/>
         </Route>
 
         <Route path="dragonpayout">
@@ -312,11 +315,8 @@ const Routers = () => {
             <Route path="payoutrequest" element={<PlayerRequestPayout/>}/>
         </Route>
       </Route>
-      {/* <Route
-          path="/register"
-          element={<Navigate to="/register?sponsor=monmonland&id=ECBFE0CB217B1E12" replace />}
-      /> */}
-      <Route path="/register" element={<SignUp />}/>
+
+      {/* <Route path="/register" element={<SignUp />}/> */}
       
       
       <Route path="referral">
@@ -355,7 +355,7 @@ const Routers = () => {
       <Route path="/gamelogin" element={<IngameLogin />}/>
       <Route path="/media" element={<Media />}/>
       <Route path="/cashier" element={<AvailableCashiers/>}/>
-      <Route path="/topup" element={<TopUp />}/>
+      {/* <Route path="/topup" element={<TopUp />}/> */}
       <Route path="/payment/success" element={<SuccessPage/>} />
       <Route path="/payment/cancel" element={<CancelPage/>} />
       <Route path="/redirect" element={<TopUpRedirect/>} />
