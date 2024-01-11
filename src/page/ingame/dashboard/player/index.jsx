@@ -1,7 +1,24 @@
 import React, {useState, useEffect} from "react";
-import { MDBContainer, MDBBtn, MDBRow, MDBCol,MDBIcon, MDBCard, MDBCardBody, MDBTypography,MDBTable, 
+import { 
+  MDBContainer, 
+  MDBBtn, 
+  MDBRow, 
+  MDBCol,
+  MDBIcon, 
+  MDBCard, 
+  MDBCardBody, 
+  MDBTypography,
+  MDBTable, 
   MDBTableHead, 
-  MDBTableBody, } from "mdb-react-ui-kit";
+  MDBTableBody,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter, 
+  MDBCardText} from "mdb-react-ui-kit";
 import LeaderboardRequirements from "./lbrequirements";
 import Dashboardstatistics from "./statistics";
 import Breadcrumb from "../../../../component/breadcrumb";
@@ -13,15 +30,12 @@ import PointDetails from "./pointdetail";
 const PlayerDashboard = () => {
     const [wallets, setWallets] = useState([]);
     const [walletscutoff, setWalletsCutOff] = useState([]);
+    const [announcement, setAnnouncement] = useState([])
     const [basicModal, setBasicModal] = useState(false);
+    const toggleOpen = () => setBasicModal(!basicModal);
 
     useEffect(()=> {
-      isgamelogin()
-      .then(data => {
-        if(!data.referrer) {
-          setBasicModal(true)
-        }
-      })
+      
     },[])
 
 
@@ -42,10 +56,29 @@ const PlayerDashboard = () => {
          
     })
         
+    fetch(`${process.env.REACT_APP_API_URL}gameusers/gameannouncement`, {
+      method: "GET",
+      credentials: 'include',
+      headers:{
+        "Content-Type": 'application/json'
+      }
+    })
+    .then(result => result.json())
+    .then(data => {
+      if(data.message === "success"){
+        setAnnouncement(data.data)
+        setBasicModal(true)
+      } else if(data.message === "noannouncement"){
+        setBasicModal(false)
+      }
+         
+    })
+
   },[]) 
 
 
     return (
+      <>
         <MDBContainer fluid>
         <Breadcrumb title='Dashboard' paths={[]}/>
         {/* Cards */}
@@ -235,11 +268,32 @@ const PlayerDashboard = () => {
           
         </MDBRow>
         
-        <ChooseReferrer 
+        {/* <ChooseReferrer 
         // setBasicModal={setBasicModal} 
-        basicModal={basicModal}/>
+        basicModal={basicModal}/> */}
         
         </MDBContainer>
+        <MDBModal show={basicModal} staticBackdrop  tabIndex='-1'>
+        <MDBModalDialog centered>
+          <MDBModalContent>
+            <MDBModalHeader className="justify-content-center seamless">
+              <MDBModalTitle className="text-white fw-bold">{announcement.title}</MDBModalTitle>
+            </MDBModalHeader>
+            <MDBModalBody className="text-center">
+              <MDBCardText className="fw-bold">
+                {announcement.description}
+              </MDBCardText>
+            </MDBModalBody>
+
+            <MDBModalFooter className="seamless">
+              <MDBBtn color='secondary' onClick={toggleOpen}>
+                Close
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+      </>
     )
 }
 

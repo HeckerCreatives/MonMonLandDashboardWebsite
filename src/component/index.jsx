@@ -17,6 +17,13 @@ import {
   MDBIcon,
   MDBBtn,
   MDBTypography,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter,
 } from "mdb-react-ui-kit";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +32,8 @@ import MigrateLogin from "./migration/phase1/migratelogin";
 const Navbar = ({ links }) => {
   const [basicModal, setBasicModal] = useState(false);
   const toggleShow = () => setBasicModal(!basicModal);
+  const [basicModal1, setBasicModal1] = useState(false);
+  const toggleShow1 = () => setBasicModal1(!basicModal1);
   const [showNav, setShowNav] = useState(false);
   const [active, setActive] = useState("");
   const navigate = useNavigate();
@@ -136,8 +145,10 @@ const Navbar = ({ links }) => {
             <MDBNavbarItem className=" text-center px-2" >
                   <MDBNavbarLink>
                   <div >
-                  <img src={playnow} id="joinnow" alt="" className=" zoom-playnow mb-2"  onClick={() => {
-                    window.location.href = `${window.location.origin}/register?id=${process.env.REACT_APP_MONMONID}`;
+                  <img src={playnow} id="joinnow" alt="" className=" zoom-playnow mb-2"  
+                  onClick={() => {
+                    // window.location.href = `${window.location.origin}/register?id=${process.env.REACT_APP_MONMONID}`;
+                    toggleShow1()
                   }} ></img>
                   {/* <MDBBtn  onClick={() => {
                     window.location.href = `${window.location.origin}/register?id=${process.env.REACT_APP_MONMONID}`;
@@ -165,6 +176,24 @@ const Navbar = ({ links }) => {
       </MDBContainer>      
     </MDBNavbar>
     <MigrateLogin basicModal={basicModal} setBasicModal={setBasicModal}/>
+    <MDBModal show={basicModal1}  tabIndex='-1'>
+        <MDBModalDialog centered>
+          <MDBModalContent>
+            <MDBModalHeader className="justify-content-center">
+              <MDBModalTitle>Announcement</MDBModalTitle>
+            </MDBModalHeader>
+            <MDBModalBody className="text-center">
+            <MDBTypography tag={'h2'}>The registration of new accounts will commence from January 16, 2024.</MDBTypography>
+            </MDBModalBody>
+
+            <MDBModalFooter>
+              <MDBBtn color='secondary' onClick={toggleShow1}>
+                Close
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
     </>
   );
 };

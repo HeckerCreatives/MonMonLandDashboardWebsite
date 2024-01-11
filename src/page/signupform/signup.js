@@ -463,7 +463,9 @@ const SignUp = () => {
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>
-      </MDBModal>
+        </MDBModal>
+
+        
       </>
     )
 }
