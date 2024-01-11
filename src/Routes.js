@@ -311,8 +311,8 @@ const Routers = () => {
             <Route path="monstercoinhistory" element={<PlayerMCHistory/>}/>
             <Route path="monstergemunilevel" element={<PlayerMGUnilevelHistory/>}/>
             <Route path="monstergemgrind" element={<PlayerMGGrindHistory/>}/>
-            <Route path="payouthistory" element={<PlayerPayoutHistory/>}/>
-            <Route path="payoutrequest" element={<PlayerRequestPayout/>}/>
+            {/* <Route path="payouthistory" element={<PlayerPayoutHistory/>}/> */}
+            {/* <Route path="payoutrequest" element={<PlayerRequestPayout/>}/> */}
         </Route>
       </Route>
 
