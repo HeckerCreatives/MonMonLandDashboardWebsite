@@ -98,6 +98,7 @@ const Phase1 = () => {
                 window.location.reload()
 
             } else {
+                setIsOk(false)
                 Swal.fire({
                     icon: 'error',
                     title: 'Login Failed',
@@ -242,7 +243,7 @@ const Phase1 = () => {
             </MDBCardBody>
         </MDBCard>
         </MDBContainer>
-        <MDBModal show={basicModal}  tabIndex='-1'>
+        <MDBModal show={basicModal}  tabIndex='-1' staticBackdrop closeOnEsc>
             <MDBModalDialog>
             <form autoComplete="off" onSubmit={login}>
             <MDBModalContent>

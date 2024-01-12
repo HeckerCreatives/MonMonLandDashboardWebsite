@@ -185,14 +185,14 @@ const Dashboard = () => {
               name: "Request",
               path: "/dashboard/Administrator/dragonpayout/request",
             },                
-            // {
-            //   name: "Process",
-            //   path: "/dashboard/Administrator/payout/process",
-            // },
-            // {
-            //   name: "Done",
-            //   path: "/dashboard/Administrator/payout/done",
-            // },
+            {
+              name: "Process",
+              path: "/dashboard/Administrator/dragonpayout/process",
+            },
+            {
+              name: "Done",
+              path: "/dashboard/Administrator/dragonpayout/done",
+            },
           ],
         },
         {
@@ -370,6 +370,25 @@ const Dashboard = () => {
             {
               name: "Done",
               path: "/dashboard/SubAdministrator/payout/done",
+            },
+          ],
+        },
+        {
+          name: "Dragonpay Payout",
+          path: "",
+          icon: "money-check",
+          children: [
+            {
+              name: "Request",
+              path: "/dashboard/SubAdministrator/dragonpayout/request",
+            },                
+            {
+              name: "Process",
+              path: "/dashboard/SubAdministrator/dragonpayout/process",
+            },
+            {
+              name: "Done",
+              path: "/dashboard/SubAdministrator/dragonpayout/done",
             },
           ],
         },

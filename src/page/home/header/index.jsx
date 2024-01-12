@@ -26,7 +26,9 @@ import cloudB from "../../../assets/BG/cloud B.png"
 import cloudC from "../../../assets/BG/cloud C.png"
 import usdt from "../../../assets/usdt.png"
 import Tab from "../../../assets/header/TAB.png"
-import donwloadnow from "../../../assets/header/download now BUTTON.png"
+import donwloadnow from "../../../assets/header/APK button.png"
+import downloadIOS from "../../../assets/header/IOS button.png"
+import downloadPS from "../../../assets/header/playstore button.png"
 import monstercoin from "../../../assets/header/MC coin.png"
 import monstergem from "../../../assets/header/Monster GEM.png"
 import diamond from "../../../assets/subscription/diamond.png"
@@ -808,14 +810,22 @@ const Header = () => {
                     }}
                     // onClick={toggleShow2}
                     /> 
-                    {/* <img 
-                    src={appstore} 
+                    <img 
+                    src={downloadPS} 
                     className="mx-lg-3 my-lg-0 my-2 img-fluid zoom-playnow" 
                     alt="" 
                     // onClick={() => {
                     //     window.location.href =  `${process.env.REACT_APP_API_URL}uploads/Monmonland.apk`
                     // }}
-                    />  */}       
+                    /> 
+                    <img 
+                    src={downloadIOS} 
+                    className="mx-lg-3 my-lg-0 my-2 img-fluid zoom-playnow" 
+                    alt="" 
+                    // onClick={() => {
+                    //     window.location.href =  `${process.env.REACT_APP_API_URL}uploads/Monmonland.apk`
+                    // }}
+                    />        
                     </MDBCol>
                     {/* <MDBCol>
                     <FlipCountdown

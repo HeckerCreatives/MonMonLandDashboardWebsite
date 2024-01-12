@@ -58,21 +58,21 @@ const UserDashboard = () => {
           icon: "trophy",
           children: [],
         },
-        // {
-        //   name: "Payout",
-        //   path: "",
-        //   icon: "money-bill-alt",
-        //   children: [
-        //     {
-        //       name: "Request Payout",
-        //       path: "/Dashboard/User/payoutrequest",
-        //     },
-        //     {
-        //       name: "Payout History",
-        //       path: "/Dashboard/User/payouthistory",
-        //     },
-        //   ],
-        // },
+        {
+          name: "Payout",
+          path: "",
+          icon: "money-bill-alt",
+          children: [
+            {
+              name: "Request Payout",
+              path: "/Dashboard/User/payoutrequest",
+            },
+            {
+              name: "Payout History",
+              path: "/Dashboard/User/payouthistory",
+            },
+          ],
+        },
         {
           name: "Mail",
           path: "",

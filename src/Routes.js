@@ -115,6 +115,11 @@ import PlayerPayoutHistory from "./page/ingame/dashboard/player/payout/payouthis
 import PlayerRequestPayout from "./page/ingame/dashboard/player/payout/requestpayout";
 import AdminDragonPayoutRequest from "./page/dashboard/dragonpayout/request";
 import GameAnnouncement from "./page/dashboard/gameannouncement";
+import AdminDragonPayoutProcess from "./page/dashboard/dragonpayout/process";
+import AdminDragonPayoutDone from "./page/dashboard/dragonpayout/done";
+import SubAdminPayoutDragonRequest from "./page/dashboard/subadmin/dragonpayout/request";
+import SubAdminPayoutDragonProcess from "./page/dashboard/subadmin/dragonpayout/process";
+import SubAdminPayoutDragonDone from "./page/dashboard/subadmin/dragonpayout/done";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -177,8 +182,8 @@ const Routers = () => {
 
         <Route path="dragonpayout">
         <Route path="request" element={<AdminDragonPayoutRequest/>}/>
-        {/* <Route path="process" element={<AdminPayoutProcess/>}/>
-        <Route path="done" element={<AdminPayoutDone/>}/> */}
+        <Route path="process" element={<AdminDragonPayoutProcess/>}/>
+        <Route path="done" element={<AdminDragonPayoutDone/>}/>
         </Route>
 
         <Route path="settings">
@@ -225,11 +230,19 @@ const Routers = () => {
         </Route>
         
         <Route path="upgradesubscription" element={<SubAdminUpgradeSubscriptionManual/>}/>
+
         <Route path="payout">
         <Route path="request" element={<SubAdminPayoutRequest/>}/>
         <Route path="process" element={<SubAdminPayoutProcess/>}/>
         <Route path="done" element={<SubAdminPayoutDone/>}/>
         </Route>
+
+        <Route path="dragonpayout">
+        <Route path="request" element={<SubAdminPayoutDragonRequest/>}/>
+        <Route path="process" element={<SubAdminPayoutDragonProcess/>}/>
+        <Route path="done" element={<SubAdminPayoutDragonDone/>}/>
+        </Route>
+
         <Route path="paymenthistory" element={<SubAdminPaymentHistory/>}/>
         <Route path="settings">
           <Route path="updatetotalincome" element={<UpdateProgressBar/>}/>
@@ -311,8 +324,8 @@ const Routers = () => {
             <Route path="monstercoinhistory" element={<PlayerMCHistory/>}/>
             <Route path="monstergemunilevel" element={<PlayerMGUnilevelHistory/>}/>
             <Route path="monstergemgrind" element={<PlayerMGGrindHistory/>}/>
-            {/* <Route path="payouthistory" element={<PlayerPayoutHistory/>}/> */}
-            {/* <Route path="payoutrequest" element={<PlayerRequestPayout/>}/> */}
+            <Route path="payouthistory" element={<PlayerPayoutHistory/>}/>
+            <Route path="payoutrequest" element={<PlayerRequestPayout/>}/>
         </Route>
       </Route>
 
