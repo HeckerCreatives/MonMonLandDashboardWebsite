@@ -220,11 +220,11 @@ const TopUp = () =>{
             <MDBCol className="p-5">
             <MDBCard alignment="center" className="fundbdy">
             <MDBCardBody className="fundbdy d-flex align-items-center justify-content-between">
-                <MDBTypography tag="h1">$ 20</MDBTypography>
+                <MDBTypography tag="h1">$ 10</MDBTypography>
                 {/* <MDBBtn className="p-0" onClick={()=>handleFunds(20)}>
                 <img src={addfundsbtn} alt=""/>
                 </MDBBtn> */}
-                <img className="zoom-playnow" src={addfundsbtn} alt="" onClick={()=>handleFunds(20)}/>
+                <img className="zoom-playnow" src={addfundsbtn} alt="" onClick={()=>handleFunds(10)}/>
             </MDBCardBody>
             </MDBCard>
             </MDBCol>

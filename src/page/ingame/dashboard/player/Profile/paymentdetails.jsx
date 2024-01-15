@@ -11,8 +11,8 @@ const PlayerPaymentDetails = () => {
   const [edit, setEdit] = useState(true)
   const [paymentmethod, setPaymentMethod] = useState("")
   const [detail, setdetail] = useState([])
-  // const [cities, setcities] = useState([])
-  // const [barangay, setbarangay] = useState([])
+  const [country, setcountry] = useState('')
+  const [kantry, setkantry] = useState(false)
 
   const list = [
     { name: "Asia United Bank", accountType: "AUB" },
@@ -70,8 +70,13 @@ const PlayerPaymentDetails = () => {
       }
       
     })
-
-  },[])
+    
+    if(country.toUpperCase() !== "PH"){
+      setkantry(true)
+    } else {
+      setkantry(false)
+    }
+  },[country])
 
   const handlepaymethod = (value) => {
     setPaymentMethod(value)
@@ -231,7 +236,7 @@ const PlayerPaymentDetails = () => {
                     </div>
                     
                     <div className="col-md-3">
-                      <MDBInput name="firstname" disabled={edit} label={detail?.firstname}/>
+                      <MDBInput name="firstname" disabled={edit} label={detail?.firstname} required={detail?.firstname ? false: true}/>
                     </div>
                   </div>
                   <div className="row d-flex align-items-center my-1">
@@ -240,7 +245,7 @@ const PlayerPaymentDetails = () => {
                       <MDBCardText className="m-0">Middle Name:</MDBCardText>
                     </div>
                     <div className="col-md-3">
-                      <MDBInput name="middlename" disabled={edit} label={detail?.middlename}/>
+                      <MDBInput name="middlename" disabled={edit} label={detail?.middlename} required={detail?.middlename ? false : true}/>
                     </div>
                   </div>
                   <div className="row d-flex align-items-center my-1">
@@ -248,7 +253,7 @@ const PlayerPaymentDetails = () => {
                     <MDBCardText className="m-0">Last Name:</MDBCardText>
                     </div>
                     <div className="col-md-3">
-                      <MDBInput name="lastname" disabled={edit} label={detail?.lastname}/>
+                      <MDBInput name="lastname" disabled={edit} label={detail?.lastname} required={detail?.lastname ? false : true}/>
                     </div>
                   </div>
                   <div className="row d-flex align-items-center my-1">
@@ -257,7 +262,7 @@ const PlayerPaymentDetails = () => {
                     </div>
                     
                     <div className="col-md-3">
-                      <MDBInput name="email" disabled={edit} label={detail?.email}/>
+                      <MDBInput name="email" disabled={edit} label={detail?.email} required={detail?.email ? false : true}/>
                     </div>
                   </div>
                   <div className="row d-flex align-items-center my-1">
@@ -266,7 +271,7 @@ const PlayerPaymentDetails = () => {
                     </div>
                     
                     <div className="col-md-3">
-                      <MDBInput name="mobilenumber" disabled={edit} label={detail?.mobilenumber}/>
+                      <MDBInput name="mobilenumber" disabled={edit} label={detail?.mobilenumber} required={detail?.mobilenumber ? false : true}/>
                     </div>
                   </div>
                   <div className="row d-flex align-items-center my-1">
@@ -275,7 +280,7 @@ const PlayerPaymentDetails = () => {
                     </div>
                     
                     <div className="col-md-3">
-                      <MDBInput name="birthdate" type="date" disabled={edit} label={detail?.birthdate}/>
+                      <MDBInput name="birthdate" type="date" disabled={edit} label={detail?.birthdate} required={detail?.birthdate ? false : true}/>
                     </div>
                   </div>
                   <div className="row d-flex align-items-center my-1">
@@ -284,7 +289,7 @@ const PlayerPaymentDetails = () => {
                     </div>
                     
                     <div className="col-md-3">
-                      <MDBInput name="nationality"  disabled={edit} label={detail?.nationality}/>
+                      <MDBInput name="nationality"  disabled={edit} label={detail?.nationality} required={detail?.nationality ? false : true}/>
                     </div>
                   </div>
                   <div>
@@ -295,7 +300,8 @@ const PlayerPaymentDetails = () => {
                           <MDBCardText className="m-0">Country:</MDBCardText>
                         </div>
                         <div className="col-md-3">
-                          <MDBInput name="country" disabled={edit} label={detail?.address?.Country} />
+                          <MDBInput name="country" disabled={edit} label={detail?.address?.Country} required={detail?.address?.Country ? false : true} 
+                          onChange={(e) => setcountry(e.target.value)}/>
                           <div  className='form-text'>
                           ISO Country code (ex. PH)
                           </div>
@@ -307,7 +313,10 @@ const PlayerPaymentDetails = () => {
                         </div>
                         
                         <div className="col-md-3">
-                          <MDBInput name="street1" type="" disabled={edit} label={detail?.address?.Street1}/>
+                          <MDBInput 
+                          name="street1" type="" 
+                          disabled={kantry} label={detail?.address?.Street1} 
+                          required={detail?.address?.Street1 ? detail?.address?.Country !== "PH" ? false : true : true}/>
                         </div>
                       </div>
                       <div className="row d-flex align-items-center my-1">
@@ -315,7 +324,8 @@ const PlayerPaymentDetails = () => {
                           <MDBCardText className="m-0">Street2:</MDBCardText>
                         </div>
                         <div className="col-md-3">
-                          <MDBInput name="street2" disabled={edit} label={detail?.address?.Street2}/>
+                          <MDBInput name="street2" disabled={kantry} label={detail?.address?.Street2} 
+                          required={detail?.address?.Street2 ? detail?.address?.Country !== "PH" ? false : true : true}/>
                         </div>
                       </div>
                       <div className="row d-flex align-items-center my-1">
@@ -323,7 +333,8 @@ const PlayerPaymentDetails = () => {
                           <MDBCardText className="m-0">Barangay:</MDBCardText>
                         </div>
                         <div className="col-md-3">
-                          <MDBInput name="barangay" disabled={edit} label={detail?.address?.Barangay}/>
+                          <MDBInput name="barangay" disabled={kantry} label={detail?.address?.Barangay} 
+                          required={detail?.address?.Barangay ? detail?.address?.Country !== "PH" ? false : true : true}/>
                         </div>
                       </div>
                       <div className="row d-flex align-items-center my-1">
@@ -332,7 +343,8 @@ const PlayerPaymentDetails = () => {
                         </div>
                         
                         <div className="col-md-3">
-                          <MDBInput name="city" disabled={edit} label={detail?.address?.City}/>
+                          <MDBInput name="city" disabled={kantry} label={detail?.address?.City} 
+                          required={detail?.address?.City ? detail?.address?.Country !== "PH" ? false : true : true}/>
                         </div>
                       </div>
                       <div className="row d-flex align-items-center my-1">
@@ -340,7 +352,8 @@ const PlayerPaymentDetails = () => {
                           <MDBCardText className="m-0">Province:</MDBCardText>
                         </div>
                         <div className="col-md-3">
-                        <MDBInput name="province" disabled={edit} label={detail?.address?.Province}/>
+                        <MDBInput name="province" disabled={kantry} label={detail?.address?.Province} 
+                        required={detail?.address?.Province ? detail?.address?.Country !== "PH" ? false : true : true}/>
                         <div  className='form-text'>
                           Province name (ex. Metro Manila)
                         </div>
@@ -350,13 +363,13 @@ const PlayerPaymentDetails = () => {
                     </MDBCol>
                   </div>
                   <div>
-                    <MDBTypography tag={'h4'}>Account Detail?s</MDBTypography>
+                    <MDBTypography tag={'h4'}>Account Details</MDBTypography>
                     <div className="row d-flex align-items-center my-1">
                         <div className="col-md-2">
                           <MDBCardText className="m-0">Payment Method:</MDBCardText>
                         </div>
                         <div className="col-md-3">
-                          <select id="bankSelect" name="bank" disabled={edit} onChange={(e) => handlepaymethod(e.target.value)}>
+                          <select id="bankSelect" name="bank" disabled={edit} onChange={(e) => handlepaymethod(e.target.value)} required={detail?.paymentmethod ? false : true}>
                             {/* Use map to generate options dynamically */}
                             <option selected disabled>{detail?.paymentmethod}</option>
                             {list.map((bank, index) => (
@@ -370,13 +383,13 @@ const PlayerPaymentDetails = () => {
                           <MDBCardText className="m-0">Account/Mobile/Wallet Address:</MDBCardText>
                         </div>
                         <div className="col-md-3">
-                          <MDBInput name="paymentdetail" disabled={edit} label={detail?.paymentdetail}/>
+                          <MDBInput name="paymentdetail" disabled={edit} label={detail?.paymentdetail} required={detail?.paymentdetail ? false : true}/>
                         </div>
                       </div>  
                   </div>
                   <div className="d-flex justify-content-end">
                     <MDBBtn type="button" className="mx-2" onClick={() =>setEdit(!edit)}>Edit</MDBBtn>
-                    <MDBBtn type="submit" className="mx-2">Save</MDBBtn>
+                    <MDBBtn type="submit" className="mx-2" disabled={edit}>Save</MDBBtn>
                   </div>
                 </MDBCardBody>
               </MDBCard>

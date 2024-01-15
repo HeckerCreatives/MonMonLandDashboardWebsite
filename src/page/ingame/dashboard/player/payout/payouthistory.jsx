@@ -15,7 +15,7 @@ import
     } 
 from "mdb-react-ui-kit";
 import { handlePagination } from "../../../../../component/utils"
-import PaginationPager from "../../../../../component/pagination";
+import PaginationPager from "../../../../../component/pagination/index";
 
 const PlayerPayoutHistory = () => {
     const [ payouthistory, setPayouthistory ] = useState([]),
@@ -23,12 +23,19 @@ const PlayerPayoutHistory = () => {
     [total, setTotal] = useState(0);
 
     useEffect(() => {
+        let totalPages = Math.floor(payouthistory.length / 10 );
+        if (payouthistory.length % 10 > 0 ) totalPages += 1;
+        setTotal(totalPages);
+    },[payouthistory])
+
+    useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}gamewallet/findcashouthistory`,{
             credentials: 'include'
         })
         .then(result => result.json())
         .then(data => {
-            if(data.message === 'success'){
+            if(data.message === 'success'){ 
+                // console.log(data)
                 setPayouthistory(data.data)
             }
         })
@@ -72,7 +79,6 @@ return(
                         </td>
                     </tr>
                 }
-                    
                 </MDBTableBody>
             </MDBTable>
             <PaginationPager
@@ -82,7 +88,7 @@ return(
     </MDBRow>
     
     </MDBContainer>
-      </>
+    </>
 )
 }
 

@@ -120,6 +120,7 @@ import AdminDragonPayoutDone from "./page/dashboard/dragonpayout/done";
 import SubAdminPayoutDragonRequest from "./page/dashboard/subadmin/dragonpayout/request";
 import SubAdminPayoutDragonProcess from "./page/dashboard/subadmin/dragonpayout/process";
 import SubAdminPayoutDragonDone from "./page/dashboard/subadmin/dragonpayout/done";
+import Maintenance from "./page/dashboard/Maintenance";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -160,6 +161,8 @@ const Routers = () => {
         </Route>
 
         <Route path="gameannouncement" element={<GameAnnouncement/>}/>
+
+        <Route path="maintenance" element={<Maintenance/>}/>
 
         <Route path="ingameleaderboard">
           <Route path="topearners" element={<TopEarners/>}/>
@@ -368,7 +371,7 @@ const Routers = () => {
       <Route path="/gamelogin" element={<IngameLogin />}/>
       <Route path="/media" element={<Media />}/>
       <Route path="/cashier" element={<AvailableCashiers/>}/>
-      {/* <Route path="/topup" element={<TopUp />}/> */}
+      <Route path="/topup" element={<TopUp />}/>
       <Route path="/payment/success" element={<SuccessPage/>} />
       <Route path="/payment/cancel" element={<CancelPage/>} />
       <Route path="/redirect" element={<TopUpRedirect/>} />

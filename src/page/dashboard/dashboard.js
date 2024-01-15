@@ -147,6 +147,14 @@ const Dashboard = () => {
           ],
         },
         {
+          name: "Maintenance",
+          path: "/dashboard/Administrator/maintenance",
+          icon: "cog",
+          children: [
+           
+          ],
+        },
+        {
           name: "Manage Top Up",
           path: "",
           icon: "arrow-alt-circle-up",
@@ -198,7 +206,7 @@ const Dashboard = () => {
         {
           name: "Tools",
           path: "",
-          icon: "cog",
+          icon: "tools",
           children: [
                            
             {
