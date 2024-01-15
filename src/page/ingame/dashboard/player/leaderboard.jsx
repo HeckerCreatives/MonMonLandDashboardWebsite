@@ -63,7 +63,11 @@ return(
                             {data.owner.username}
                         </td>
                         <td>
-                            {data.amount}
+                            {data.amount?.toLocaleString('en-US', {
+                            style: 'decimal',
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                            })}
                         </td>
                     </tr>
                     ))
