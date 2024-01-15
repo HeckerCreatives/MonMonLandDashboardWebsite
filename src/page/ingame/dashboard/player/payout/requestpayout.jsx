@@ -33,7 +33,17 @@ const PlayerRequestPayout = () => {
                     text: data.data,
                     icon: "success"
                 })
-            } else if (data.message === 'failed'){
+            } 
+            
+            else if (data.message === 'maintenance'){
+                Swal.fire({
+                    title: data.message,
+                    text: "Payout is Currently Maintenance",
+                    icon: "error"
+                })
+            }
+            
+            else if (data.message === 'failed'){
                 Swal.fire({
                     title: data.message,
                     text: data.data,

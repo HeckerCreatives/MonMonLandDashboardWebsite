@@ -154,9 +154,18 @@ const TopUpLogin = ({toggleTwoModal, setToggleTwoModal,basicModal, setBasicModal
             .then(result => result.json())
             .then(data => {
 
-                setIsLoading(false)
-                const url = data.data.Url
-                window.location.href = url
+                if(data.message == "success"){
+                    setIsLoading(false)
+                    const url = data.data.Url
+                    window.location.href = url
+                }  else if (data.message === 'maintenance'){
+                    setIsLoading(false)
+                    Swal.fire({
+                        title: data.message,
+                        text: "Add Funds is Currently Maintenance",
+                        icon: "error"
+                    })
+                }
             })
             .catch(error =>{
                 Swal.fire({
@@ -187,9 +196,18 @@ const TopUpLogin = ({toggleTwoModal, setToggleTwoModal,basicModal, setBasicModal
             })
             .then(result => result.json())
             .then(data => {
-                setIsLoading(false)
-                const url = data.data.Url
-                window.location.href = url
+                if(data.message == "success"){
+                    setIsLoading(false)
+                    const url = data.data.Url
+                    window.location.href = url
+                }  else if (data.message === 'maintenance'){
+                    setIsLoading(false)
+                    Swal.fire({
+                        title: data.message,
+                        text: "Add Funds is Currently Maintenance",
+                        icon: "error"
+                    })
+                }
                 
             })
             .catch(error =>{
