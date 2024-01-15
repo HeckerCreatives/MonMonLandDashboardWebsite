@@ -143,7 +143,7 @@ const PlayerMyProfile = ({user}) => {
 
                 <div className="col-md-3">
                   <MDBBtn floating tag={'a'} size="sm" 
-                  onClick={() => kapy(`${window.location.origin}/?id=${details.owner}`)}
+                  onClick={() => kapy(`${window.location.origin}/register??id=${details.owner}`)}
                   >
                   <MDBIcon fas icon="clone" />
                   </MDBBtn>
@@ -179,7 +179,7 @@ const PlayerMyProfile = ({user}) => {
 
                 <div className="col-md-3">
                   <MDBBtn floating tag={'a'} size="sm" 
-                  onClick={() => kapy(`${window.location.origin}/?username=${user}`)}
+                  onClick={() => kapy(`${window.location.origin}/migrateph1?username=${user}`)}
                   >
                   <MDBIcon fas icon="clone" />
                   </MDBBtn>
