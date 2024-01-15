@@ -152,7 +152,7 @@ const TopUp = () =>{
         <>
             <div className="kontainer">
 
-            <MDBBtn className="bg-transparent p-0 mt-2" onClick={() => window.location.href="/"}>
+            <MDBBtn className="bg-transparent p-0 mt-2" onClick={() => window.location.href="/gamelogin"}>
                 <img className="" src={backbtn} alt="" />
             </MDBBtn>
             
