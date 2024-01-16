@@ -49,6 +49,7 @@ const AdminDashboard = () => {
 
     const [tools, setTools] = useState(0);
     const [clock, setClock] = useState(0);
+    const [shop, setShop] = useState(0);
     const [totalmerchandise, setTotalMerchandise] = useState(0);
 
     const [adminfee, setAdminFee] = useState(0);
@@ -370,146 +371,6 @@ const AdminDashboard = () => {
     })    
   },[]) 
 
-  useEffect(()=> {
-    const total = pearl + ruby + emerald + diamond
-    setTotalSubsUser(total)
-    fetch(`${process.env.REACT_APP_API_URL}subsuser/find`,{
-      method: "POST",
-      credentials: 'include',
-      headers: {
-        "Content-Type": "application/json",
-        // Authorization: `Bearer ${auth?.token}`,
-      },
-      body: JSON.stringify({subsname: "pearl"})
-    })
-    .then(result => result.json())
-    .then(data => {
-      if(data.expired){
-        Swal.fire({
-          icon: "error",
-          title: data.expired,
-          text: "You Will Redirect to Login",
-          allowOutsideClick: false,
-          allowEscapeKey: false
-        }).then(ok => {
-          if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
-            window.location.replace("/login");
-          }
-        })
-      }
-
-      setPearl(data.data)
-
-      
-    })
-
-    fetch(`${process.env.REACT_APP_API_URL}subsuser/find`,{
-      method: "POST",
-      credentials: 'include',
-      headers: {
-        "Content-Type": "application/json",
-        // Authorization: `Bearer ${auth?.token}`,
-      },
-      body: JSON.stringify({subsname: "ruby"})
-    })
-    .then(result => result.json())
-    .then(data => {
-      if(data.expired){
-        Swal.fire({
-          icon: "error",
-          title: data.expired,
-          text: "You Will Redirect to Login",
-          allowOutsideClick: false,
-          allowEscapeKey: false
-        }).then(ok => {
-          if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
-            window.location.replace("/login");
-          }
-        })
-      }
-
-      setRuby(data.data)
-
-      
-    })
-
-    fetch(`${process.env.REACT_APP_API_URL}subsuser/find`,{
-      method: "POST",
-      credentials: 'include',
-      headers: {
-        "Content-Type": "application/json",
-        // Authorization: `Bearer ${auth?.token}`,
-      },
-      body: JSON.stringify({subsname: "emerald"})
-    })
-    .then(result => result.json())
-    .then(data => {
-      if(data.expired){
-        Swal.fire({
-          icon: "error",
-          title: data.expired,
-          text: "You Will Redirect to Login",
-          allowOutsideClick: false,
-          allowEscapeKey: false
-        }).then(ok => {
-          if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
-            window.location.replace("/login");
-          }
-        })
-      }
-
-      setEmerald(data.data)
-      
-
-    })
-
-    fetch(`${process.env.REACT_APP_API_URL}subsuser/find`,{
-      method: "POST",
-      credentials: 'include',
-      headers: {
-        "Content-Type": "application/json",
-        // Authorization: `Bearer ${auth?.token}`,
-      },
-      body: JSON.stringify({subsname: "diamond"})
-    })
-    .then(result => result.json())
-    .then(data => {
-      if(data.expired){
-        Swal.fire({
-          icon: "error",
-          title: data.expired,
-          text: "You Will Redirect to Login",
-          allowOutsideClick: false,
-          allowEscapeKey: false
-        }).then(ok => {
-          if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
-            window.location.replace("/login");
-          }
-        })
-      }
-
-      setDiamond(data.data)
-
-      
-    })
-
-  },[ruby,pearl,emerald,diamond])
 
   useEffect(()=>{
     fetch(`${process.env.REACT_APP_API_URL}subsaccu/find`,{
@@ -721,10 +582,44 @@ const AdminDashboard = () => {
 
       
     })
+
+    fetch(`${process.env.REACT_APP_API_URL}merchandise/find`,{
+      method: "POST",
+      credentials: 'include',
+      headers:{
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${auth?.token}`,
+      },
+      body: JSON.stringify({item: "shop"})
+    })
+    .then(result => result.json())
+    .then(data => {
+      if(data.expired){
+        Swal.fire({
+          icon: "error",
+          title: data.expired,
+          text: "You Will Redirect to Login",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        }).then(ok => {
+          if(ok.isConfirmed){
+            Cookies.remove("auth", { path: '/' });
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
+            window.location.replace("/login");
+          }
+        })
+      }
+
+      setShop(data.data)
+
+      
+    })
     
-    const total = tools + clock
+    const total = tools + clock + shop
     setTotalMerchandise(total)
-  },[tools,clock])
+  },[tools,clock, shop])
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/adminfee`, {
@@ -860,6 +755,22 @@ const AdminDashboard = () => {
     })
   },[])
 
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}totalusers/subscriptionusers`,{
+      credentials: 'include',
+    })
+    .then(result => result.json())
+    .then(data => {
+      if(data.message === "success"){
+        setPearl(data.data.Pearl?.count)
+        setRuby(data.data.Ruby?.count)
+        setEmerald(data.data.Emerald?.count)
+        setDiamond(data.data.Diamond?.count)
+        setTotalSubsUser(data.data?.total.count)
+      }
+    })
+  },[])
+
     return (
       <>
         <MDBContainer fluid>
@@ -969,6 +880,9 @@ const AdminDashboard = () => {
               td2={true}
               td2txttop={clock}
               td2txtbot={`Clock`}
+              td3={true}
+              td3txttop={0}
+              td3txtbot={`Shop`}
               />
           </MDBCol>
         </MDBRow>
@@ -1017,16 +931,16 @@ const AdminDashboard = () => {
               thtitle={`Subscription User`} 
               cardtoptext={totalsubsuser}
               td1={true}
-              td1txttop={pearl}
+              td1txttop={pearl ? pearl : 0 }
               td1txtbot={`Pearl`} 
               td2={true}
-              td2txttop={ruby}
+              td2txttop={ruby ? ruby : 0}
               td2txtbot={`Ruby`} 
               td3={true}
-              td3txttop={emerald}
+              td3txttop={emerald ? emerald : 0}
               td3txtbot={`Emerald`}
               td4={true}
-              td4txttop={diamond}
+              td4txttop={diamond ? diamond : 0}
               td4txtbot={`Diamond`}
               />
           </MDBCol>

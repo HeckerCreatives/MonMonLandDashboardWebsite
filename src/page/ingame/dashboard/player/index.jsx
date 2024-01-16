@@ -18,7 +18,12 @@ import {
   MDBModalTitle,
   MDBModalBody,
   MDBModalFooter, 
-  MDBCardText} from "mdb-react-ui-kit";
+  MDBCardText, 
+  MDBCardTitle,
+  MDBCardOverlay,
+  MDBCardImage,
+  MDBCardHeader} from "mdb-react-ui-kit";
+  import Slider from "react-slick";
 import LeaderboardRequirements from "./lbrequirements";
 import Dashboardstatistics from "./statistics";
 import Breadcrumb from "../../../../component/breadcrumb";
@@ -27,11 +32,22 @@ import DiamondPoolRequirements from "./poolrequirements";
 import { isgamelogin } from "../../../../component/utils";
 import ChooseReferrer from "./setreferrer";
 import PointDetails from "./pointdetail";
+import pointicon from "../../../../assets/Ingame/assetsdashboard/total points icon.png"
+import walleticon from "../../../../assets/Ingame/assetsdashboard/wallet icon.png"
+import mcicon from "../../../../assets/Ingame/assetsdashboard/total MC icon.png"
+import mgcomiicon from "../../../../assets/Ingame/assetsdashboard/total MG commission icon.png"
+import mgfarm from "../../../../assets/Ingame/assetsdashboard/total MG commission icon copy.png"
+import currentrank from "../../../../assets/Ingame/assetsdashboard/current rank.png"
+import diamonpool from "../../../../assets/Ingame/assetsdashboard/Diamond pool req. title.png"
+import lbreq from "../../../../assets/Ingame/assetsdashboard/leaderboard req. title.png"
+import pointdetail from "../../../../assets/Ingame/assetsdashboard/piont details title.png"
+import './dash.css'
 const PlayerDashboard = () => {
     const [wallets, setWallets] = useState([]);
     const [walletscutoff, setWalletsCutOff] = useState([]);
     const [announcement, setAnnouncement] = useState([])
     const [basicModal, setBasicModal] = useState(false);
+    const [image, setImage] = useState(1)
     const toggleOpen = () => setBasicModal(!basicModal);
 
     useEffect(()=> {
@@ -76,19 +92,135 @@ const PlayerDashboard = () => {
 
   },[]) 
 
+  
+  const settings = {
+    className: "",
+    dots: true,
+    arrows: false,
+    centerMode: false,
+    infinite: false,
+    slidesToShow: 5,  
+    slidesToScroll: 5,      
+    adaptiveHeight: false,
+    focusOnSelect: false,
+    afterChange: (currentSlide) => {
+      setImage(currentSlide + 1);
+      console.log(currentSlide)
+    },
+    responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            centerMode: false,
+            infinite: true,
+            // centerPadding: "60px",
+            // adaptiveHeight: false,
+            focusOnSelect: true,
+          }
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            centerMode: false,
+            infinite: true,
+            // centerPadding: "60px",
+            // adaptiveHeight: false,
+            focusOnSelect: true,
+          }
+        },
+        {
+          breakpoint: 425,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            centerMode: false,
+            infinite: true,
+            // centerPadding: "60px",
+            // adaptiveHeight: false,
+            focusOnSelect: true,
+          }
+        }
+      ]
+  };
 
     return (
       <>
         <MDBContainer fluid>
         <Breadcrumb title='Dashboard' paths={[]}/>
         {/* Cards */}
-        <MDBRow className="my-2">
-          <MDBCol className="my-2">
+        <MDBRow className="my-3">
+        <MDBCol className="">
+        <MDBCard className='text-dark bg-topbase p-md-5' shadow="3">
+            <MDBCardBody className="">
+            <MDBRow className="justify-content-between align-items-center">
+            <MDBCol md={3}>
+            <div  className="my-3">
+            <MDBCardTitle>Lorem Ipsum dolor sir amet</MDBCardTitle>
+              <MDBCardText>
+                This is a wider card with supporting text below as a natural lead-in to additional content. This
+                content is a little bit longer.
+              </MDBCardText>
+            </div>
+            </MDBCol>
+
+            <MDBCol md={5} className="">
+            <MDBRow className="justify-content-between align-items-center">
+            <MDBCol md={5}>
+            <MDBCard className="position-relative text-mute fw-bold my-3"> 
+            <img className="corner-image" src={pointicon} alt=""/>     
+                <MDBCardBody>
+                <div className="mt-3">
+                  <p className="text-start">Total Points</p>
+                  <h2 className="text-end">
+                  {walletscutoff.totalpoints?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}
+                  </h2>
+                </div>
+                </MDBCardBody>
+          </MDBCard>
+            </MDBCol>
+            <MDBCol md={5}>
+            <MDBCard className="position-relative text-mute fw-bold my-3">  
+            <img className="corner-image" src={currentrank} alt=""/>         
+                <MDBCardBody>
+                <div className="mt-3">
+                  <p className="text-start">Current Rank</p>
+                  <h2 className="text-end">0</h2>
+                </div>
+                </MDBCardBody>
+          </MDBCard>
+            </MDBCol>
+            </MDBRow>
+            
+            </MDBCol>
+            </MDBRow>
+            
+          </MDBCardBody>
+          
+        </MDBCard>
+        </MDBCol> 
+        
+          
+        </MDBRow>
+
+
+        <MDBRow className="my-3">
+
+        <MDBCol className="my-2">
             <Dashboardstatistics 
-              colSpan="4"
-              icon={`dollar-sign`}
-              cardtoptext={'Current Wallet Balance'}
-              txtsup={wallets.balance?.toLocaleString('en-US', {
+              image={walleticon}
+              title={'Current Wallet Balance'}
+              number={wallets.balance?.toLocaleString('en-US', {
               style: 'decimal',
               minimumFractionDigits: 2,
               maximumFractionDigits: 2
@@ -97,10 +229,9 @@ const PlayerDashboard = () => {
           </MDBCol>
           <MDBCol className="my-2">
           <Dashboardstatistics 
-              colSpan="4"
-              icon={`dollar-sign`}
-              cardtoptext={'Total Monster Coin'}
-              txtsup={wallets.monstercoin?.toLocaleString('en-US', {
+              image={mcicon}
+              title={'Total Monster Coin'}
+              number={wallets.monstercoin?.toLocaleString('en-US', {
               style: 'decimal',
               minimumFractionDigits: 2,
               maximumFractionDigits: 2
@@ -115,9 +246,26 @@ const PlayerDashboard = () => {
           <MDBCol className="my-2">
           <Dashboardstatistics 
               colSpan="4"
-              icon={`dollar-sign`}
-              cardtoptext={'Total Monster Gem'}
-              txtsup={wallets.monstergemfarm?.toLocaleString('en-US', {
+              image={mgcomiicon}
+              title={'Total Monster Gem Commission'}
+              number={wallets.monstergemfarm?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              txtsup1={wallets.monstergemfarm?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              />
+          </MDBCol>
+          <MDBCol className="my-2">
+          <Dashboardstatistics 
+              colSpan="4"
+              image={mgfarm}
+              title={'Total Monster Gem Grinding'}
+              number={wallets.monstergemfarm?.toLocaleString('en-US', {
               style: 'decimal',
               minimumFractionDigits: 2,
               maximumFractionDigits: 2
@@ -130,11 +278,178 @@ const PlayerDashboard = () => {
               />
           </MDBCol>
           
+
         </MDBRow>
 
-        <MDBRow className="my-2">
+        <MDBRow className="my-3">
+        
+        <MDBCol className="">
 
-          <MDBCol md={4} className="my-2">
+        <MDBCard style={{background: '#FCF2E1'}} shadow="1">
+        <MDBCardHeader className="bg-bottabhead p-4"></MDBCardHeader>
+          <MDBCardBody className="">
+          
+          <MDBCol>
+            <MDBCard className="bg-botbase">
+            
+              <MDBCardBody>
+              <div>
+              <div className="col-4 offset-4">
+                <img src={image === 1 ? diamonpool : image === 2 ? lbreq : pointdetail} alt="" className="img-fluid"/>
+              </div>
+              <Slider {...settings}>
+                <div className="px-md-5">
+                <MDBCard className="text-center">
+                  <MDBCardBody>
+                  <MDBIcon fab icon="android" />
+                  <p>Text here</p>
+                  <h2>999</h2>
+                  </MDBCardBody>
+                </MDBCard>
+                </div>
+                <div className="px-md-5">
+                <MDBCard className="text-center">
+                  <MDBCardBody>
+                  <MDBIcon fab icon="android" />
+                  <p>Text here</p>
+                  <h2>999</h2>
+                  </MDBCardBody>
+                </MDBCard>
+                </div>
+                <div className="px-md-5">
+                <MDBCard className="text-center">
+                  <MDBCardBody>
+                  <MDBIcon fab icon="android" />
+                  <p>Text here</p>
+                  <h2>999</h2>
+                  </MDBCardBody>
+                </MDBCard>
+                </div>
+                <div className="px-md-5">
+                <MDBCard className="text-center">
+                  <MDBCardBody>
+                  <MDBIcon fab icon="android" />
+                  <p>Text here</p>
+                  <h2>999</h2>
+                  </MDBCardBody>
+                </MDBCard>
+                </div>
+                <div className="px-md-5">
+                <MDBCard className="text-center">
+                  <MDBCardBody>
+                  <MDBIcon fab icon="android" />
+                  <p>Text here</p>
+                  <h2>999</h2>
+                  </MDBCardBody>
+                </MDBCard>
+                </div>
+
+                <div className="px-md-5">
+                <MDBCard className="text-center">
+                  <MDBCardBody>
+                  <MDBIcon fab icon="android" />
+                  <p>Text here</p>
+                  <h2>999</h2>
+                  </MDBCardBody>
+                </MDBCard>
+                </div>
+                <div className="px-md-5">
+                <MDBCard className="text-center">
+                  <MDBCardBody>
+                  <MDBIcon fab icon="android" />
+                  <p>Text here</p>
+                  <h2>999</h2>
+                  </MDBCardBody>
+                </MDBCard>
+                </div>
+                <div className="px-md-5">
+                <MDBCard className="text-center">
+                  <MDBCardBody>
+                  <MDBIcon fab icon="android" />
+                  <p>Text here</p>
+                  <h2>999</h2>
+                  </MDBCardBody>
+                </MDBCard>
+                </div>
+                <div className="px-md-5">
+                <MDBCard className="text-center">
+                  <MDBCardBody>
+                  <MDBIcon fab icon="android" />
+                  <p>Text here</p>
+                  <h2>999</h2>
+                  </MDBCardBody>
+                </MDBCard>
+                </div>
+                <div className="px-md-5">
+                <MDBCard className="text-center">
+                  <MDBCardBody>
+                  <MDBIcon fab icon="android" />
+                  <p>Text here</p>
+                  <h2>999</h2>
+                  </MDBCardBody>
+                </MDBCard>
+                </div>
+
+                <div className="px-md-5">
+                <MDBCard className="text-center">
+                  <MDBCardBody>
+                  <MDBIcon fab icon="android" />
+                  <p>Text here</p>
+                  <h2>999</h2>
+                  </MDBCardBody>
+                </MDBCard>
+                </div>
+                <div className="px-md-5">
+                <MDBCard className="text-center">
+                  <MDBCardBody>
+                  <MDBIcon fab icon="android" />
+                  <p>Text here</p>
+                  <h2>999</h2>
+                  </MDBCardBody>
+                </MDBCard>
+                </div>
+                <div className="px-md-5">
+                <MDBCard className="text-center">
+                  <MDBCardBody>
+                  <MDBIcon fab icon="android" />
+                  <p>Text here</p>
+                  <h2>999</h2>
+                  </MDBCardBody>
+                </MDBCard>
+                </div>
+                <div className="px-md-5">
+                <MDBCard className="text-center">
+                  <MDBCardBody>
+                  <MDBIcon fab icon="android" />
+                  <p>Text here</p>
+                  <h2>999</h2>
+                  </MDBCardBody>
+                </MDBCard>
+                </div>
+                <div className="px-md-5">
+                <MDBCard className="text-center">
+                  <MDBCardBody>
+                  <MDBIcon fab icon="android" />
+                  <p>Text here</p>
+                  <h2>999</h2>
+                  </MDBCardBody>
+                </MDBCard>
+                </div>
+                </Slider>
+              </div>
+                
+                
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>
+          
+          </MDBCardBody>
+        </MDBCard>
+
+        </MDBCol>
+        
+       
+          {/* <MDBCol md={4} className="my-2">
           <LeaderboardRequirements
             activitypoints={walletscutoff.activitypoints?.toLocaleString('en-US', {
               style: 'decimal',
@@ -217,56 +532,10 @@ const PlayerDashboard = () => {
               maximumFractionDigits: 2
               })}
           />
-          </MDBCol>
+          </MDBCol> */}
         </MDBRow>
 
-        <MDBRow className="my-2">
-
-          <MDBCol md={6} className="my-2">
-          <MDBCard className="text-mute fw-bold">          
-                <MDBCardBody>
-                  <MDBTable responsive borderless className="text-mute mb-0">
-                
-                      <MDBTableBody className="fw-bold">
-                          <tr>
-                              <td>
-                                  Total Points
-                              </td>
-                              <td>
-                              {walletscutoff.totalpoints?.toLocaleString('en-US', {
-                              style: 'decimal',
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 2
-                              })}
-                              </td>
-                          </tr>
-                      </MDBTableBody>
-                  </MDBTable>
-                </MDBCardBody>
-          </MDBCard>
-          </MDBCol>
-
-          <MDBCol md={6} className="my-2">
-          <MDBCard className="text-mute fw-bold">          
-                <MDBCardBody>
-                  <MDBTable responsive borderless className="text-mute mb-0">
-                
-                      <MDBTableBody className="fw-bold">
-                          <tr>
-                              <td>
-                                  Current Rank
-                              </td>
-                              <td>
-                                  0
-                              </td>
-                          </tr>
-                      </MDBTableBody>
-                  </MDBTable>
-                </MDBCardBody>
-          </MDBCard>
-          </MDBCol>
-          
-        </MDBRow>
+        
         
         {/* <ChooseReferrer 
         // setBasicModal={setBasicModal} 

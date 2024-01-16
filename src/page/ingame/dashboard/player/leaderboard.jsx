@@ -20,7 +20,7 @@ import
     MDBModalBody,
     MDBModalFooter, } 
 from "mdb-react-ui-kit";
-
+import lbtitle from "../../../../assets/Ingame/leaderboardtitle.png"
 const PlayerLeaderboard = () => {
     // const user = JSON.parse(localStorage.getItem("user"))
     const [leaderboard, setLeaderboard] = useState([]);
@@ -42,9 +42,11 @@ return(
     <>
     <MDBContainer>
     <div className="text-center my-3">
-        <MDBTypography tag={'h1'}>Top 15 Earner's</MDBTypography>
+        <img src={lbtitle} alt=""/>
     </div>
-    <MDBTable responsive className="text-mute mt-5 mb-0">
+    <MDBCard className="my-3" shadow="5">
+      <MDBCardBody>
+      <MDBTable responsive className="text-mute mt-5 mb-0">
                 <MDBTableHead >
                     <tr className="text-center">
                     <th className="fw-bold" scope='col'>Rank</th>
@@ -75,6 +77,9 @@ return(
                     
                 </MDBTableBody>
             </MDBTable>
+      </MDBCardBody>
+    </MDBCard>
+    
     </MDBContainer>
       </>
 )

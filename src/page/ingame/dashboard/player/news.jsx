@@ -20,14 +20,14 @@ import
     MDBModalBody,
     MDBModalFooter, } 
 from "mdb-react-ui-kit";
-
+import announcetitle from "../../../../assets/Ingame/announcementtitle.png"
 const PlayerNews = () => {
     
 return(
     <>
     <MDBContainer>
     <div className="text-center my-3">
-        <MDBTypography tag={'h1'}>Announcement</MDBTypography>
+        <img src={announcetitle} alt=""/>
     </div>
     <MDBRow>
         <MDBCol md={6} className="offset-3">
