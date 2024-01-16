@@ -42,6 +42,8 @@ const Header = () => {
     const toggleShow1 = () => setBasicModal1(!basicModal1);
     const [basicModal2, setBasicModal2] = useState(false);
     const toggleShow2 = () => setBasicModal2(!basicModal2);
+    const [basicModal3, setBasicModal3] = useState(false);
+    const toggleShow3 = () => setBasicModal3(!basicModal3);
     const [isLoading, setIsLoading] = useState(false)
     const [countdown, setCountdown] = useState(false)
     const [initialbar, setInitialBar] = useState();
@@ -802,11 +804,12 @@ const Header = () => {
                     <MDBCol className="my-3">
                     <img src={donwloadnow} className="mx-lg-3 my-lg-0 my-2 img-fluid zoom-playnow" alt="" 
                     onClick={() => {
-                      if(countdown){
-                        window.location.href =  `${process.env.REACT_APP_API_URL}uploads/Monmonland.apk`
-                      } else {
-                        toggleShow2()
-                      }
+                      // if(countdown){
+                      //   window.location.href =  `${process.env.REACT_APP_API_URL}uploads/Monmonland.apk`
+                      // } else {
+                      //   toggleShow2()
+                      // }
+                      toggleShow3()
                     }}
                     // onClick={toggleShow2}
                     /> 
@@ -814,17 +817,19 @@ const Header = () => {
                     src={downloadPS} 
                     className="mx-lg-3 my-lg-0 my-2 img-fluid zoom-playnow" 
                     alt="" 
-                    // onClick={() => {
-                    //     window.location.href =  `${process.env.REACT_APP_API_URL}uploads/Monmonland.apk`
-                    // }}
+                    onClick={() => {
+                        // window.location.href =  `${process.env.REACT_APP_API_URL}uploads/Monmonland.apk`
+                        toggleShow3()
+                    }}
                     /> 
                     <img 
                     src={downloadIOS} 
                     className="mx-lg-3 my-lg-0 my-2 img-fluid zoom-playnow" 
                     alt="" 
-                    // onClick={() => {
-                    //     window.location.href =  `${process.env.REACT_APP_API_URL}uploads/Monmonland.apk`
-                    // }}
+                    onClick={() => {
+                        // window.location.href =  `${process.env.REACT_APP_API_URL}uploads/Monmonland.apk`
+                        toggleShow3()
+                    }}
                     />        
                     </MDBCol>
                     {/* <MDBCol>
@@ -914,7 +919,7 @@ const Header = () => {
               {/* <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn> */}
             </MDBModalHeader>
             <MDBModalBody className="h4 text-center pb-0">
-            <FlipCountdown
+            {/* <FlipCountdown
               titlePosition='bottom'
               endAtZero
               hideYear
@@ -924,7 +929,7 @@ const Header = () => {
               // endAt={'2023-11-18 00:36:00'}
               // endAt={'2023-11-25 21:00:00'}
               onTimeUp={() => setCountdown(true)}
-            />
+            /> */}
             </MDBModalBody>
             <MDBModalFooter className="seamless">
               <MDBBtn color='secondary' onClick={toggleShow2}>
@@ -935,6 +940,24 @@ const Header = () => {
         </MDBModalDialog>
       </MDBModal>
       
+      <MDBModal show={basicModal3} setShow={setBasicModal3} tabIndex='-1'>
+        <MDBModalDialog centered>
+          <MDBModalContent>
+            <MDBModalHeader className="seamless justify-content-center">
+              <MDBModalTitle className="text-white fw-bold ">Coming Soon</MDBModalTitle>
+            </MDBModalHeader>
+            <MDBModalBody className="h4 text-center pb-0">
+              Please stay tuned for updates
+            </MDBModalBody>
+            <MDBModalFooter className="seamless">
+              <MDBBtn color='secondary' onClick={toggleShow3}>
+                Close
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+
         </>
     )
 }
