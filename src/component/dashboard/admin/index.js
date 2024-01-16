@@ -69,8 +69,10 @@ const AdminDashboard = () => {
     const [unilevelmonstergem, setUnilevelMg] = useState(0)
     const [tradepayin, setTradepayin] = useState(0)
     const [trademerchandise, setTrademerchandise] = useState(0)
+    const [totaltrade, setTotalTrade] = useState(0)
     const [complanpayin, setComplanpayin] = useState(0)
     const [complanmerchandise, setComplanmerchandise] = useState(0)
+    const [complantotal, setComplantotal] = useState(0)
     const [role, setrole]= useState('');
     const [name, setname]= useState('');
     const [id, setid]= useState('');
@@ -769,7 +771,9 @@ const AdminDashboard = () => {
         setTotalSubsUser(data.data?.total.count)
       }
     })
-  },[])
+    setComplantotal(complanpayin + complanmerchandise)
+    setTotalTrade(tradepayin + trademerchandise)
+  },[complanpayin, complanmerchandise, tradepayin, trademerchandise])
 
     return (
       <>
@@ -881,7 +885,7 @@ const AdminDashboard = () => {
               td2txttop={clock}
               td2txtbot={`Clock`}
               td3={true}
-              td3txttop={0}
+              td3txttop={shop}
               td3txtbot={`Shop`}
               />
           </MDBCol>
@@ -949,12 +953,24 @@ const AdminDashboard = () => {
               colSpan="4"
               icon={`chart-line`} 
               thtitle={`Trade`}
-              cardtoptext={tradepayin + trademerchandise}
+              cardtoptext={totaltrade?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
               td1={true}
-              td1txttop={tradepayin}
+              td1txttop={tradepayin?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
               td1txtbot={`Payin`} 
               td2={true}
-              td2txttop={trademerchandise}
+              td2txttop={trademerchandise?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
               td2txtbot={`Merchandise`}
               />
           </MDBCol>
@@ -963,12 +979,24 @@ const AdminDashboard = () => {
               colSpan="4"
               icon={`clipboard-list`} 
               thtitle={`Complan`}
-              cardtoptext={complanpayin + complanmerchandise}
+              cardtoptext={complantotal?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
               td1={true}
-              td1txttop={complanpayin}
+              td1txttop={complanpayin?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
               td1txtbot={`Payin`} 
               td2={true}
-              td2txttop={complanmerchandise}
+              td2txttop={complanmerchandise?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
               td2txtbot={`Merchandise`}
               />
           </MDBCol>

@@ -6,9 +6,18 @@ import
     MDBTableBody,
     MDBTypography} 
 from "mdb-react-ui-kit";
-
+import PaginationPager from "../../../component/pagination/index"
+import { handlePagination } from "../../../component/utils"
 const TopEarners = () => {
-    const [topearners, setTopEarners] = useState([]);
+    const [topearners, setTopEarners] = useState([]),
+    [page, setPage] = useState(1),
+    [total, setTotal] = useState(0);
+      
+    useEffect(() => {
+        let totalPages = Math.floor(topearners.length / 15);
+        if (topearners.length % 15 > 0) totalPages += 1;
+        setTotal(totalPages);
+    },[topearners])
 
     useEffect(()=> {
         fetch(`${process.env.REACT_APP_API_URL}members/topearners`,{
@@ -39,7 +48,7 @@ return(
                 </MDBTableHead>
                 <MDBTableBody className="">
                 {
-                    topearners.map((data, i) => (
+                    handlePagination(topearners, page, 15)?.map((data, i) => (
                     <tr key={i} className="text-center">
                         <th>
                             {i+1}
@@ -48,13 +57,20 @@ return(
                             {data.owner.username}
                         </td>
                         <td>
-                            {data.amount}
+                            {data.amount?.toLocaleString('en-US', {
+                            style: 'decimal',
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                            })}
                         </td>
                     </tr>
                     ))
                 }
                 </MDBTableBody>
             </MDBTable>
+            <PaginationPager
+              total={total} page={page} setPage={setPage}
+            />
     </MDBContainer>
       </>
 )

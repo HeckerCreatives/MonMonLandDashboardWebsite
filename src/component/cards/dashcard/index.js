@@ -140,7 +140,7 @@ return(
                      3%
                      </td>
                      <td>
-                     5%
+                     45%
                      </td>
                      <td>
                      0%
@@ -164,10 +164,10 @@ return(
                        2%
                      </td>  
                      <td>
-                       5%
+                       10%
                      </td> 
                      <td>
-                       45%
+                       0%
                      </td>   
                     </tr>
                     <tr>
@@ -181,7 +181,7 @@ return(
                      3%
                      </td>
                      <td>
-                     5%
+                     45%
                      </td>
                      <td>
                      0%
@@ -208,7 +208,7 @@ return(
                       5%
                      </td> 
                      <td>
-                     40%
+                     0%
                      </td>   
                     </tr>
                     <tr>
@@ -222,7 +222,7 @@ return(
                      3%
                      </td>
                      <td>
-                     5%
+                     45%
                      </td>
                      <td>
                      0%
@@ -249,7 +249,48 @@ return(
                       5%
                      </td> 
                      <td>
-                     40%
+                     0%
+                     </td>       
+                    </tr>
+                    <tr>
+                     <td className="fw-bold text-warning">
+                        Shop
+                     </td>
+                     <td>
+                     17%
+                     </td>
+                     <td>
+                     3%
+                     </td>
+                     <td>
+                     45%
+                     </td>
+                     <td>
+                     0%
+                     </td>
+                     <td>
+                     3%
+                     </td>
+                     <td>
+                     5%
+                     </td>
+                     <td>
+                     5%
+                     </td>
+                     <td>
+                     5%
+                     </td>
+                     <td>
+                      2%
+                     </td>
+                     <td>
+                      5%
+                     </td> 
+                     <td>
+                      10%
+                     </td> 
+                     <td>
+                     0%
                      </td>       
                     </tr>
                     <tr>

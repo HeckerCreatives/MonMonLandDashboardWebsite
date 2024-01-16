@@ -21,7 +21,7 @@ const IngameLogin = () =>{
   const [user, setuser] = useState('');
   const [email, setEmail]= useState('');
   const [password, setPassword] = useState("");
-  // const user = JSON.parse(localStorage.getItem("user"))
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -39,6 +39,7 @@ const IngameLogin = () =>{
 
   const login = (e) =>{
     e.preventDefault()
+    setLoading(true)
     fetch(`${process.env.REACT_APP_API_URL}gameauth/login`,{
       method: 'POST',
       credentials: 'include',
@@ -51,7 +52,8 @@ const IngameLogin = () =>{
       })
     }).then(result => result.json())
     .then(data =>{
-       if (data.message !== "success") {        
+       if (data.message !== "success") {  
+        setLoading(false)      
 				Swal.fire({
                 title: data.message,
                 icon: "info",
@@ -59,6 +61,7 @@ const IngameLogin = () =>{
                 })
 		} else {
         if(data.message === "success"){
+          setLoading(false)
           Swal.fire({
             title: "Login Successfully",
             icon: "success",
@@ -150,8 +153,9 @@ const IngameLogin = () =>{
         
         <MDBTypography className="d-flex align-items-center justify-content-end mt-4">
           <a href="#">Recover password</a>
-          <MDBBtn className='ms-3' type="submit">
-          Login to dashboard
+        <MDBBtn className='ms-3' type="submit">
+          {loading ? <MDBSpinner color='primary'/> : "Login to dashboard"
+          }
         </MDBBtn>
         </MDBTypography>
         </form>
