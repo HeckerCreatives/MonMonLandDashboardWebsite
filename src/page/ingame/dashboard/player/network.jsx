@@ -8,10 +8,16 @@ import
     MDBTabsItem,
     MDBTabsLink,
     MDBTabsContent,
-    MDBTabsPane } 
+    MDBTabsPane,
+    MDBCard,
+    MDBCardBody,
+    MDBRow,
+    MDBCol } 
 from "mdb-react-ui-kit";
-// import "./network.css"
+import "./dash.css"
 import PlayerPerlevel from "./network/index";
+import image from "../../../../assets/Ingame/assetsnetwork/total commission icon.png"
+
 const Network = () => {
     const [basicActive, setBasicActive] = useState('1');
     const [network1, setNetwork1] = useState([])
@@ -47,35 +53,58 @@ const Network = () => {
     
 return(
    <MDBContainer>
-    <MDBTabs className='my-3'>
-        <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleBasicClick('1')} active={basicActive === '1'}>
-            1 level
+   <MDBCard className="mt-5" shadow="5">
+    <MDBRow>
+      <MDBCol lg={4} className="m-lg-3">
+      <MDBCard className="bg-commi p-0">          
+          <MDBCardBody>
+            <MDBRow className="justify-content-between align-items-center">
+              <MDBCol lg={3} className="text-center">
+              <img src={image} alt=""/>
+              </MDBCol>
+              <MDBCol className="my-2 p-0">
+              <div>
+                <p className="text-end">Total Commission</p>
+                <h4 className="m-0 p-0 text-end">0.00</h4>
+              </div>
+              </MDBCol>
+            </MDBRow>
+          </MDBCardBody>
+      </MDBCard>
+      </MDBCol>
+    </MDBRow>
+   
+
+    <MDBCardBody>
+    <MDBTabs pills  className=''>
+        <MDBTabsItem className="network-nav-pills">
+          <MDBTabsLink className="network-nav-link"  onClick={() => handleBasicClick('1')} active={basicActive === '1'}>
+            Level 1
           </MDBTabsLink>
         </MDBTabsItem>
-        <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleBasicClick('2')} active={basicActive === '2'}>
-            2 level
+        <MDBTabsItem className="network-nav-pills">
+          <MDBTabsLink className="network-nav-link" onClick={() => handleBasicClick('2')} active={basicActive === '2'}>
+            Level 2
           </MDBTabsLink>
         </MDBTabsItem>
-        <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleBasicClick('3')} active={basicActive === '3'}>
-            3 level
+        <MDBTabsItem  className="network-nav-pills">
+          <MDBTabsLink className="network-nav-link" onClick={() => handleBasicClick('3')} active={basicActive === '3'}>
+            Level 3
           </MDBTabsLink>
         </MDBTabsItem>
-        <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleBasicClick('4')} active={basicActive === '4'}>
-            4 level
+        <MDBTabsItem className="network-nav-pills">
+          <MDBTabsLink className="network-nav-link" onClick={() => handleBasicClick('4')} active={basicActive === '4'}>
+            Level 4
           </MDBTabsLink>
         </MDBTabsItem>
-        <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleBasicClick('5')} active={basicActive === '5'}>
-            5 level
+        <MDBTabsItem className="network-nav-pills">
+          <MDBTabsLink className="network-nav-link" onClick={() => handleBasicClick('5')} active={basicActive === '5'}>
+            Level 5
           </MDBTabsLink>
         </MDBTabsItem>
-        <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleBasicClick('6')} active={basicActive === '6'}>
-            6 level
+        <MDBTabsItem className="network-nav-pills">
+          <MDBTabsLink className="network-nav-link" onClick={() => handleBasicClick('6')} active={basicActive === '6'}>
+           Level 6
           </MDBTabsLink>
         </MDBTabsItem>
       </MDBTabs>
@@ -100,6 +129,9 @@ return(
             <PlayerPerlevel data={network6} level={'6'}/>
         </MDBTabsPane>
       </MDBTabsContent>
+    </MDBCardBody>
+   </MDBCard>
+    
    </MDBContainer>
 )
 }

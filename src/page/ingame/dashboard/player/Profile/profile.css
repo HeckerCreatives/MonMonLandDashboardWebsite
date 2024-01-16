@@ -1,0 +1,40 @@
+
+
+.profile-nav-pills .profile-nav-link.active, .profile-nav-pills .show>.profile-nav-link {
+    color: #000000 !important;
+    /* background-color: #DBB6A2 !important; */
+    background-image: url("../../../../../assets/Ingame/profile/my\ profile\ button\ \(on\).png") !important;
+    background-size: 100% 100%;
+}
+
+.changepass-nav-pills .changepass-nav-link.active, .changepass-nav-pills .show>.changepass-nav-link {
+    color: #000000 !important;
+    /* background-color: #DBB6A2 !important; */
+    background-image: url("../../../../../assets/Ingame/profile/change\ pasword\ button\ \(on\).png") !important;
+    background-size: 100% 100%;
+}
+
+.pay-nav-pills .pay-nav-link.active, .pay-nav-pills .show>.pay-nav-link {
+    color: #000000 !important;
+    /* background-color: #DBB6A2 !important; */
+    background-image: url("../../../../../assets/Ingame/profile/payments\ details\ button\ \(on\).png") !important;
+    background-size: 100% 100%;
+}
+
+.profile-nav-pills .profile-nav-link {
+    color: #fff !important;
+    background-image: url("../../../../../assets/Ingame/profile/my\ profile\ button\ \(off\).png") !important;
+    background-size: 100% 100%;
+}
+
+.changepass-nav-pills .changepass-nav-link {
+    color: #fff !important;
+    background-image: url("../../../../../assets/Ingame/profile/change\ pasword\ button\ \(off\).png") !important;
+    background-size: 100% 100%;
+}
+
+.pay-nav-pills .pay-nav-link {
+    color: #fff !important;
+    background-image: url("../../../../../assets/Ingame/profile/payments\ details\ button\ \(off\).png") !important;
+    background-size: 100% 100%;
+}

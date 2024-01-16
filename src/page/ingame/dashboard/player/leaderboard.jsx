@@ -42,7 +42,7 @@ return(
     <>
     <MDBContainer>
     <div className="text-center my-3">
-        <img src={lbtitle} alt=""/>
+        <img src={lbtitle} alt="" className="img-fluid"/>
     </div>
     <MDBCard className="my-3" shadow="5">
       <MDBCardBody>

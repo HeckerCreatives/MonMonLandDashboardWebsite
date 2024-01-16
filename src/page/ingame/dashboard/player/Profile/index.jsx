@@ -11,6 +11,7 @@ import { isgamelogin } from "../../../../../component/utils";
 import PlayerPaymentDetails from "./paymentdetails";
 import PlayerChangePass from "./changepass";
 import PlayerMyProfile from "./myprofile";
+import "./profile.css"
 const PlayerProfile = () => {
     const [user, setuser] = useState('');
     const [iconsActive, setIconsActive] = useState('pill1');
@@ -35,19 +36,19 @@ const PlayerProfile = () => {
         <MDBContainer >
         
         <MDBTabs pills className='mb-3'>
-        <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleIconsClick('pill1')} active={iconsActive === 'pill1'}>
-            <MDBIcon fas icon='chart-pie' className='me-2' /> My Profile
+        <MDBTabsItem className="profile-nav-pills">
+          <MDBTabsLink className="profile-nav-link" onClick={() => handleIconsClick('pill1')} active={iconsActive === 'pill1'}>
+             My Profile
           </MDBTabsLink>
         </MDBTabsItem>
-        <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleIconsClick('pill2')} active={iconsActive === 'pill2'}>
-            <MDBIcon fas icon='chart-line' className='me-2' /> Change Password
+        <MDBTabsItem className="changepass-nav-pills">
+          <MDBTabsLink className="changepass-nav-link" onClick={() => handleIconsClick('pill2')} active={iconsActive === 'pill2'}>
+             Change Password
           </MDBTabsLink>
         </MDBTabsItem>
-        <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleIconsClick('pill3')} active={iconsActive === 'pill3'}>
-            <MDBIcon fas icon='cogs' className='me-2' /> Payment Details
+        <MDBTabsItem className="pay-nav-pills">
+          <MDBTabsLink className="pay-nav-link" onClick={() => handleIconsClick('pill3')} active={iconsActive === 'pill3'}>
+             Payment Details
           </MDBTabsLink>
         </MDBTabsItem>
       </MDBTabs>

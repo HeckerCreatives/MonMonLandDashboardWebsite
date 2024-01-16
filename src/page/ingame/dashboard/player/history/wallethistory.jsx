@@ -5,10 +5,13 @@ import
     MDBTableHead, 
     MDBTableBody,
     MDBTypography,
-    MDBIcon} 
+    MDBIcon,
+    MDBCard,
+    MDBCardBody} 
 from "mdb-react-ui-kit";
 import { handlePagination } from "../../../../../component/utils";
 import PaginationPager from "../../../../../component/pagination";
+import walleticon from "../../../../../assets/Ingame/wallethistory.png"
 const PlayerWalletHistory = () => {
     const [wallethistory, setWalletHistory] = useState([]),
     [page, setPage] = useState(1),
@@ -36,9 +39,11 @@ return(
     <>
     <MDBContainer>
     <div className="text-center my-3">
-        <MDBTypography tag={'h1'}>Wallet History</MDBTypography>
+        <img src={walleticon} alt="" className="img-fluid"/>
     </div>
-    <div class="select-container">
+    <MDBCard shadow="5">
+        <MDBCardBody>
+        <div class="select-container">
         <MDBIcon fas icon="filter" fixed/> &nbsp;
         <select name="filter" >
             <option value="All">All</option>
@@ -85,6 +90,9 @@ return(
             <PaginationPager
               total={total} page={page} setPage={setPage}
             />
+        </MDBCardBody>
+    </MDBCard>
+   
     </MDBContainer>
       </>
 )

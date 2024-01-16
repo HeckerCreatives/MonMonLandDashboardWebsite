@@ -76,7 +76,9 @@ const PlayerChangePass = () => {
     }
  return(
     <MDBContainer>
-    <MDBRow>
+    <MDBCard shadow="5" style={{background: '#FCF2E1'}}>
+      <MDBCardBody>
+      <MDBRow>
         <MDBCol>
             <div>
               <MDBTypography tag={'h2'} className="my-2">
@@ -122,6 +124,9 @@ const PlayerChangePass = () => {
           </MDBCol>
 
         </MDBRow>
+      </MDBCardBody>
+    </MDBCard>
+    
     </MDBContainer>
     
  )

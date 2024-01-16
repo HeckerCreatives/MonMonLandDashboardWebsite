@@ -221,7 +221,9 @@ const PlayerPaymentDetails = () => {
     
  return(
     <MDBContainer>
-        <MDBRow>
+    <MDBCard shadow="5" style={{background: '#FCF2E1'}}>
+      <MDBCardBody>
+      <MDBRow>
           <MDBCol>
             <div>
               <MDBTypography tag={'h2'} className="my-2">
@@ -230,146 +232,20 @@ const PlayerPaymentDetails = () => {
               <form autoComplete="off" onSubmit={savedetails}>
               <MDBCard>
                 <MDBCardBody>
-                  <div className="row d-flex align-items-center my-1">
-                    <div className="col-md-2">
-                    <MDBCardText className="m-0">First Name:</MDBCardText>
-                    </div>
-                    
-                    <div className="col-md-3">
-                      <MDBInput name="firstname" disabled={edit} label={detail?.firstname} required={detail?.firstname ? false: true}/>
-                    </div>
-                  </div>
-                  <div className="row d-flex align-items-center my-1">
-                    
-                    <div className="col-md-2">
-                      <MDBCardText className="m-0">Middle Name:</MDBCardText>
-                    </div>
-                    <div className="col-md-3">
-                      <MDBInput name="middlename" disabled={edit} label={detail?.middlename} required={detail?.middlename ? false : true}/>
-                    </div>
-                  </div>
-                  <div className="row d-flex align-items-center my-1">
-                    <div className="col-md-2">
-                    <MDBCardText className="m-0">Last Name:</MDBCardText>
-                    </div>
-                    <div className="col-md-3">
-                      <MDBInput name="lastname" disabled={edit} label={detail?.lastname} required={detail?.lastname ? false : true}/>
-                    </div>
-                  </div>
-                  <div className="row d-flex align-items-center my-1">
-                    <div className="col-md-2">
-                        <MDBCardText className="m-0">Email:</MDBCardText>
-                    </div>
-                    
-                    <div className="col-md-3">
-                      <MDBInput name="email" disabled={edit} label={detail?.email} required={detail?.email ? false : true}/>
-                    </div>
-                  </div>
-                  <div className="row d-flex align-items-center my-1">
-                    <div className="col-md-2">
-                    <MDBCardText className="m-0">Mobile Number:</MDBCardText>
-                    </div>
-                    
-                    <div className="col-md-3">
-                      <MDBInput name="mobilenumber" disabled={edit} label={detail?.mobilenumber} required={detail?.mobilenumber ? false : true}/>
-                    </div>
-                  </div>
-                  <div className="row d-flex align-items-center my-1">
-                    <div className="col-md-2">
-                    <MDBCardText className="m-0">Birthdate:</MDBCardText>
-                    </div>
-                    
-                    <div className="col-md-3">
-                      <MDBInput name="birthdate" type="date" disabled={edit} label={detail?.birthdate} required={detail?.birthdate ? false : true}/>
-                    </div>
-                  </div>
-                  <div className="row d-flex align-items-center my-1">
-                    <div className="col-md-2">
-                    <MDBCardText className="m-0">Nationality:</MDBCardText>
-                    </div>
-                    
-                    <div className="col-md-3">
-                      <MDBInput name="nationality"  disabled={edit} label={detail?.nationality} required={detail?.nationality ? false : true}/>
-                    </div>
-                  </div>
-                  <div>
-                    <MDBTypography tag={'h4'}>Address:</MDBTypography>
-                    <MDBCol className=" ">
-                      <div className="row d-flex align-items-center my-1">
-                        <div className="col-md-2">
-                          <MDBCardText className="m-0">Country:</MDBCardText>
-                        </div>
-                        <div className="col-md-3">
-                          <MDBInput name="country" disabled={edit} label={detail?.address?.Country} required={detail?.address?.Country ? false : true} 
-                          onChange={(e) => setcountry(e.target.value)}/>
-                          <div  className='form-text'>
-                          ISO Country code (ex. PH)
-                          </div>
-                        </div>
-                      </div>
-                      <div className="row d-flex align-items-center my-1">
-                        <div className="col-md-2">
-                          <MDBCardText className="m-0">Street1:</MDBCardText>
-                        </div>
-                        
-                        <div className="col-md-3">
-                          <MDBInput 
-                          name="street1" type="" 
-                          disabled={kantry} label={detail?.address?.Street1} 
-                          required={detail?.address?.Street1 ? detail?.address?.Country !== "PH" ? false : true : true}/>
-                        </div>
-                      </div>
-                      <div className="row d-flex align-items-center my-1">
-                        <div className="col-md-2">
-                          <MDBCardText className="m-0">Street2:</MDBCardText>
-                        </div>
-                        <div className="col-md-3">
-                          <MDBInput name="street2" disabled={kantry} label={detail?.address?.Street2} 
-                          required={detail?.address?.Street2 ? detail?.address?.Country !== "PH" ? false : true : true}/>
-                        </div>
-                      </div>
-                      <div className="row d-flex align-items-center my-1">
-                        <div className="col-md-2">
-                          <MDBCardText className="m-0">Barangay:</MDBCardText>
-                        </div>
-                        <div className="col-md-3">
-                          <MDBInput name="barangay" disabled={kantry} label={detail?.address?.Barangay} 
-                          required={detail?.address?.Barangay ? detail?.address?.Country !== "PH" ? false : true : true}/>
-                        </div>
-                      </div>
-                      <div className="row d-flex align-items-center my-1">
-                        <div className="col-md-2">
-                        <MDBCardText className="m-0">City:</MDBCardText>
-                        </div>
-                        
-                        <div className="col-md-3">
-                          <MDBInput name="city" disabled={kantry} label={detail?.address?.City} 
-                          required={detail?.address?.City ? detail?.address?.Country !== "PH" ? false : true : true}/>
-                        </div>
-                      </div>
-                      <div className="row d-flex align-items-center my-1">
-                        <div className="col-md-2">
-                          <MDBCardText className="m-0">Province:</MDBCardText>
-                        </div>
-                        <div className="col-md-3">
-                        <MDBInput name="province" disabled={kantry} label={detail?.address?.Province} 
-                        required={detail?.address?.Province ? detail?.address?.Country !== "PH" ? false : true : true}/>
-                        <div  className='form-text'>
-                          Province name (ex. Metro Manila)
-                        </div>
-                        </div>
-                      </div>
-                      
-                    </MDBCol>
-                  </div>
-                  <div>
+                <div>
                     <MDBTypography tag={'h4'}>Account Details</MDBTypography>
-                    <div className="row d-flex align-items-center my-1">
-                        <div className="col-md-2">
-                          <MDBCardText className="m-0">Payment Method:</MDBCardText>
-                        </div>
-                        <div className="col-md-3">
-                          <select id="bankSelect" name="bank" disabled={edit} onChange={(e) => handlepaymethod(e.target.value)} required={detail?.paymentmethod ? false : true}>
+                    <hr/>
+                    <div className="mt-2">
+                    <MDBCardText className="m-0">Payment Method:</MDBCardText>
+                        <div className="col-lg-3">
+                          <select 
+                          id="bankSelect" 
+                          name="bank" 
+                          disabled={edit} 
+                          onChange={(e) => handlepaymethod(e.target.value)} 
+                          required={detail?.paymentmethod ? false : true}
+                          style={{width: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}
+                          >
                             {/* Use map to generate options dynamically */}
                             <option selected disabled>{detail?.paymentmethod}</option>
                             {list.map((bank, index) => (
@@ -378,16 +254,147 @@ const PlayerPaymentDetails = () => {
                           </select>
                         </div>
                       </div>
-                      <div className="row d-flex align-items-center my-1">
-                        <div className="col-md-2">
-                          <MDBCardText className="m-0">Account/Mobile/Wallet Address:</MDBCardText>
-                        </div>
-                        <div className="col-md-3">
-                          <MDBInput name="paymentdetail" disabled={edit} label={detail?.paymentdetail} required={detail?.paymentdetail ? false : true}/>
+                      <div className="mt-2">
+                      <MDBCardText className="m-0">Account/Mobile/Wallet Address:</MDBCardText>
+                        <div className="col-lg-3">
+                          
+                          <MDBInput 
+                          name="paymentdetail" 
+                          disabled={edit} 
+                          label={detail?.paymentdetail} 
+                          required={detail?.paymentdetail ? false : true}/>
                         </div>
                       </div>  
                   </div>
-                  <div className="d-flex justify-content-end">
+                
+                  
+
+                  <div className="mt-2">
+                    <MDBTypography tag={'h4'}>Basic Info and Address:</MDBTypography>
+                    <hr/>
+                    <MDBCol className="mt-2">
+                    <div className="row">
+                    
+                    <div className="col-lg-3">
+                    <MDBCardText className="m-0">First Name:</MDBCardText>
+                      <MDBInput 
+                      name="firstname" 
+                      disabled={edit} 
+                      label={detail?.firstname} 
+                      required={detail?.firstname ? false: true}/>
+                    </div>
+                    <div className="col-lg-3">
+                    <MDBCardText className="m-0">Middle Name:</MDBCardText>
+                      <MDBInput 
+                      name="middlename" 
+                      disabled={edit} 
+                      label={detail?.middlename} 
+                      required={detail?.middlename ? false : true}/>
+                    </div>
+                    <div className="col-lg-3">
+                    <MDBCardText className="m-0">Last Name:</MDBCardText>
+                      <MDBInput 
+                      name="lastname" 
+                      disabled={edit} 
+                      label={detail?.lastname} 
+                      required={detail?.lastname ? false : true}/>
+                    </div>
+                  </div>
+
+                  <div className="row mt-2">
+                  <div className="col-lg-3">
+                    <MDBCardText className="m-0">Email:</MDBCardText>
+                      <MDBInput 
+                      name="email" 
+                      disabled={edit} 
+                      label={detail?.email} 
+                      required={detail?.email ? false : true}/>
+                  </div>
+                  <div className="col-lg-3">
+                    <MDBCardText className="m-0">Mobile Number:</MDBCardText>
+                      <MDBInput 
+                      name="mobilenumber" 
+                      disabled={edit} 
+                      label={detail?.mobilenumber} 
+                      required={detail?.mobilenumber ? false : true}/>
+                  </div>
+                  <div className="col-lg-3">
+                    <MDBCardText className="m-0">Birthdate:</MDBCardText>
+                      <MDBInput 
+                      name="birthdate" 
+                      type="date" 
+                      disabled={edit} 
+                      label={detail?.birthdate} 
+                      required={detail?.birthdate ? false : true}/>
+                    </div>
+                    <div className="col-lg-3">
+                    <MDBCardText className="m-0">Nationality:</MDBCardText>
+                      <MDBInput 
+                      name="nationality"  
+                      disabled={edit} 
+                      label={detail?.nationality} 
+                      required={detail?.nationality ? false : true}/>
+                    </div>
+                  </div>
+
+                  <div className="row mt-2">
+                    <div className="col-lg-3">
+                      <MDBCardText className="m-0">Country: ISO Country code (ex. PH)</MDBCardText>
+                        <MDBInput 
+                        name="country" 
+                        disabled={edit} 
+                        label={detail?.address?.Country} 
+                        required={detail?.address?.Country ? false : true} 
+                        onChange={(e) => setcountry(e.target.value)}/>
+                    </div>
+                    <div className="col-lg-3">
+                        <MDBCardText className="m-0">Street1:</MDBCardText>
+                          <MDBInput 
+                          name="street1" type="" 
+                          disabled={kantry} label={detail?.address?.Street1} 
+                          required={detail?.address?.Street1 ? detail?.address?.Country !== "PH" ? false : true : true}/>
+                    </div>
+                    <div className="col-lg-3">
+                          <MDBCardText className="m-0">Street2:</MDBCardText>
+                          <MDBInput 
+                          name="street2" 
+                          disabled={kantry} 
+                          label={detail?.address?.Street2} 
+                          required={detail?.address?.Street2 ? detail?.address?.Country !== "PH" ? false : true : true}/>
+                    </div>
+                  </div>
+                  
+                  <div className="row mt-2">
+                    <div className="col-lg-3">
+                        <MDBCardText className="m-0">Barangay:</MDBCardText>
+                        <MDBInput 
+                        name="barangay" 
+                        disabled={kantry} 
+                        label={detail?.address?.Barangay} 
+                        required={detail?.address?.Barangay ? detail?.address?.Country !== "PH" ? false : true : true}/>
+                    </div>
+                    <div className="col-md-3">
+                        <MDBCardText className="m-0">City:</MDBCardText>  
+                        <MDBInput 
+                        name="city" 
+                        disabled={kantry} 
+                        label={detail?.address?.City} 
+                        required={detail?.address?.City ? detail?.address?.Country !== "PH" ? false : true : true}/>
+                    </div>
+                    <div className="col-md-3">
+                        <MDBCardText className="m-0">Province: (ex. Metro Manila)</MDBCardText>
+                        <MDBInput
+                        name="province" 
+                        disabled={kantry} 
+                        label={detail?.address?.Province} 
+                        required={detail?.address?.Province ? detail?.address?.Country !== "PH" ? false : true : true}/>
+                    </div>
+                  </div>
+                  
+                    </MDBCol>
+                  </div>
+                  
+                  <div className="d-flex justify-content-end m-2">
                     <MDBBtn type="button" className="mx-2" onClick={() =>setEdit(!edit)}>Edit</MDBBtn>
                     <MDBBtn type="submit" className="mx-2" disabled={edit}>Save</MDBBtn>
                   </div>
@@ -397,6 +404,9 @@ const PlayerPaymentDetails = () => {
             </div>
           </MDBCol>
         </MDBRow>
+      </MDBCardBody>
+    </MDBCard>
+        
     </MDBContainer>
     
  )

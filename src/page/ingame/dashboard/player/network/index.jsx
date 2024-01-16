@@ -4,6 +4,8 @@ import
     MDBTable, 
     MDBTableHead, 
     MDBTableBody,
+    MDBCard,
+    MDBCardBody,
      } 
 from "mdb-react-ui-kit";
 import { handlePagination } from "../../../../../component/utils"
@@ -20,12 +22,12 @@ const PlayerPerlevel = ({data, level}) => {
     
 return(
    <MDBContainer>
-    <>
-            <div className="d-flex justify-content-center">
+   <>
+            {/* <div className="d-flex justify-content-center">
             <div className="p-3 w-50 my-2 text-center bg-secondary rounded fw-bold text-light">
             Level {level}
             </div>
-            </div>
+            </div> */}
             
             <MDBTable responsive className="text-mute mb-0">
                 <MDBTableHead >

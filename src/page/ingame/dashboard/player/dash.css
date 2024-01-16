@@ -16,6 +16,12 @@
     background-repeat: no-repeat;
 }
 
+.bg-commi {
+    background-image: url("../../../../assets/Ingame/assetsnetwork/total\ commission\ TAB.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 .corner-image {
     position: absolute;
     top: -20%;
@@ -23,4 +29,18 @@
     /* Adjust the size as needed */
     width: 50px;
     height: 50px;
-  }
+}
+
+.network-nav-pills .network-nav-link.active, .network-nav-pills .show>.network-nav-link {
+    color: #000000 !important;
+    background-color: #DBB6A2 !important;
+}
+
+.network-nav-pills .network-nav-link{
+    color: rgba(0, 0, 0, 0.55) !important;
+    background-color: #FCF2E1 !important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+    text-transform: capitalize !important;
+}
+

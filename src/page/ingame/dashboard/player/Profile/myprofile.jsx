@@ -77,6 +77,8 @@ const PlayerMyProfile = ({user}) => {
       }
  return(
     <MDBContainer>
+    <MDBCard shadow="5" style={{background: '#FCF2E1'}}>
+      <MDBCardBody>
       <MDBRow>
           <MDBCol>
           <div>
@@ -194,6 +196,9 @@ const PlayerMyProfile = ({user}) => {
           </MDBCol>
           
       </MDBRow>
+      </MDBCardBody>
+    </MDBCard>
+     
     </MDBContainer>
     
  )

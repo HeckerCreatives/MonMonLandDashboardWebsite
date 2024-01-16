@@ -28,7 +28,7 @@ return(
     <MDBCard className="text-mute h-100">          
           <MDBCardBody>
             <MDBRow className="justify-content-between align-items-center">
-              <MDBCol md={3} className="text-center">
+              <MDBCol lg={3} className="text-center">
               <img src={image} alt=""/>
               </MDBCol>
               <MDBCol className="my-2 p-0">

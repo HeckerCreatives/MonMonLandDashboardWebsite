@@ -47,12 +47,8 @@ const PlayerDashboard = () => {
     const [walletscutoff, setWalletsCutOff] = useState([]);
     const [announcement, setAnnouncement] = useState([])
     const [basicModal, setBasicModal] = useState(false);
-    const [image, setImage] = useState(1)
+    const [image, setImage] = useState(0)
     const toggleOpen = () => setBasicModal(!basicModal);
-
-    useEffect(()=> {
-      
-    },[])
 
 
   useEffect(()=> {
@@ -104,7 +100,7 @@ const PlayerDashboard = () => {
     adaptiveHeight: false,
     focusOnSelect: false,
     afterChange: (currentSlide) => {
-      setImage(currentSlide + 1);
+      setImage(currentSlide);
       console.log(currentSlide)
     },
     responsive: [
@@ -113,6 +109,7 @@ const PlayerDashboard = () => {
           settings: {
             slidesToShow: 1,
             slidesToScroll: 1,
+            dots: false,
             arrows: false,
             centerMode: false,
             infinite: true,
@@ -126,6 +123,7 @@ const PlayerDashboard = () => {
           settings: {
             slidesToShow: 1,
             slidesToScroll: 1,
+            dots: false,
             arrows: false,
             centerMode: false,
             infinite: true,
@@ -139,6 +137,7 @@ const PlayerDashboard = () => {
           settings: {
             slidesToShow: 1,
             slidesToScroll: 1,
+            dots: false,
             arrows: false,
             centerMode: false,
             infinite: true,
@@ -162,10 +161,9 @@ const PlayerDashboard = () => {
             <MDBRow className="justify-content-between align-items-center">
             <MDBCol md={3}>
             <div  className="my-3">
-            <MDBCardTitle>Lorem Ipsum dolor sir amet</MDBCardTitle>
+            <MDBCardTitle>Welcome Master,</MDBCardTitle>
               <MDBCardText>
-                This is a wider card with supporting text below as a natural lead-in to additional content. This
-                content is a little bit longer.
+              Join us on this extraordinary adventure, and together, let's travel on an epic journey that will lead us through the lands of Monmonland.
               </MDBCardText>
             </div>
             </MDBCol>
@@ -216,7 +214,7 @@ const PlayerDashboard = () => {
 
         <MDBRow className="my-3">
 
-        <MDBCol className="my-2">
+        <MDBCol lg={3} className="my-2">
             <Dashboardstatistics 
               image={walleticon}
               title={'Current Wallet Balance'}
@@ -227,7 +225,7 @@ const PlayerDashboard = () => {
               })}
               />
           </MDBCol>
-          <MDBCol className="my-2">
+          <MDBCol lg={3} className="my-2">
           <Dashboardstatistics 
               image={mcicon}
               title={'Total Monster Coin'}
@@ -243,7 +241,7 @@ const PlayerDashboard = () => {
               })}
               />
           </MDBCol>
-          <MDBCol className="my-2">
+          <MDBCol lg={3} className="my-2">
           <Dashboardstatistics 
               colSpan="4"
               image={mgcomiicon}
@@ -260,7 +258,7 @@ const PlayerDashboard = () => {
               })}
               />
           </MDBCol>
-          <MDBCol className="my-2">
+          <MDBCol lg={3} className="my-2">
           <Dashboardstatistics 
               colSpan="4"
               image={mgfarm}
@@ -287,151 +285,223 @@ const PlayerDashboard = () => {
 
         <MDBCard style={{background: '#FCF2E1'}} shadow="1">
         <MDBCardHeader className="bg-bottabhead p-4"></MDBCardHeader>
-          <MDBCardBody className="">
+          <MDBCardBody className="mt-5">
           
           <MDBCol>
             <MDBCard className="bg-botbase">
             
               <MDBCardBody>
               <div>
-              <div className="col-4 offset-4">
-                <img src={image === 1 ? diamonpool : image === 2 ? lbreq : pointdetail} alt="" className="img-fluid"/>
+              <div className="col-md-4 offset-md-4">
+                <img src={
+                    [0, 1, 2, 3, 4].includes(image)
+                      ? diamonpool
+                      : [5, 6, 7, 8, 9].includes(image)
+                      ? lbreq
+                      : pointdetail
+                  } 
+                  alt="" className="img-fluid"/>
               </div>
               <Slider {...settings}>
                 <div className="px-md-5">
                 <MDBCard className="text-center">
                   <MDBCardBody>
-                  <MDBIcon fab icon="android" />
-                  <p>Text here</p>
-                  <h2>999</h2>
+                  <MDBIcon fas icon="star" size="2x"/>
+                  <p>Pool Status</p>
+                  <h2>{wallets.poolstatus}</h2>
                   </MDBCardBody>
                 </MDBCard>
                 </div>
                 <div className="px-md-5">
                 <MDBCard className="text-center">
                   <MDBCardBody>
-                  <MDBIcon fab icon="android" />
-                  <p>Text here</p>
-                  <h2>999</h2>
+                  <MDBIcon fas icon="chart-line" size="2x"/>
+                  <p>Rank</p>
+                  <h2>{wallets.rank}</h2>
                   </MDBCardBody>
                 </MDBCard>
                 </div>
                 <div className="px-md-5">
                 <MDBCard className="text-center">
                   <MDBCardBody>
-                  <MDBIcon fab icon="android" />
-                  <p>Text here</p>
-                  <h2>999</h2>
+                  <MDBIcon fas icon="hand-holding-usd" size="2x"/>
+                  <p>Purchase Points</p>
+                  <h2>{wallets.purchasepoints?.toLocaleString('en-US', {
+                    style: 'decimal',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                    })}</h2>
                   </MDBCardBody>
                 </MDBCard>
                 </div>
                 <div className="px-md-5">
                 <MDBCard className="text-center">
                   <MDBCardBody>
-                  <MDBIcon fab icon="android" />
-                  <p>Text here</p>
-                  <h2>999</h2>
+                  <MDBIcon fas icon="check-circle" size="2x"/>
+                  <p>Direct Points</p>
+                  <h2>{wallets.recruitpoints?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}</h2>
                   </MDBCardBody>
                 </MDBCard>
                 </div>
                 <div className="px-md-5">
                 <MDBCard className="text-center">
                   <MDBCardBody>
-                  <MDBIcon fab icon="android" />
-                  <p>Text here</p>
-                  <h2>999</h2>
+                  <MDBIcon fas icon="users" size="2x"/>
+                  <p>Group Points</p>
+                  <h2>{wallets.grouppoints?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}</h2>
                   </MDBCardBody>
                 </MDBCard>
                 </div>
-
+                  {/* LB Req */}
                 <div className="px-md-5">
                 <MDBCard className="text-center">
                   <MDBCardBody>
-                  <MDBIcon fab icon="android" />
-                  <p>Text here</p>
-                  <h2>999</h2>
-                  </MDBCardBody>
-                </MDBCard>
-                </div>
-                <div className="px-md-5">
-                <MDBCard className="text-center">
-                  <MDBCardBody>
-                  <MDBIcon fab icon="android" />
-                  <p>Text here</p>
-                  <h2>999</h2>
-                  </MDBCardBody>
-                </MDBCard>
-                </div>
-                <div className="px-md-5">
-                <MDBCard className="text-center">
-                  <MDBCardBody>
-                  <MDBIcon fab icon="android" />
-                  <p>Text here</p>
-                  <h2>999</h2>
+                  <MDBIcon fas icon="gamepad" size="2x"/>
+                  <p>Activity Points</p>
+                  <h2>{walletscutoff.activitypoints?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}</h2>
                   </MDBCardBody>
                 </MDBCard>
                 </div>
                 <div className="px-md-5">
                 <MDBCard className="text-center">
                   <MDBCardBody>
-                  <MDBIcon fab icon="android" />
-                  <p>Text here</p>
-                  <h2>999</h2>
+                  <MDBIcon fas icon="tasks" size="2x"/>
+                  <p>Task Points</p>
+                  <h2>{walletscutoff.taskpoints?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}</h2>
                   </MDBCardBody>
                 </MDBCard>
                 </div>
                 <div className="px-md-5">
                 <MDBCard className="text-center">
                   <MDBCardBody>
-                  <MDBIcon fab icon="android" />
-                  <p>Text here</p>
-                  <h2>999</h2>
-                  </MDBCardBody>
-                </MDBCard>
-                </div>
-
-                <div className="px-md-5">
-                <MDBCard className="text-center">
-                  <MDBCardBody>
-                  <MDBIcon fab icon="android" />
-                  <p>Text here</p>
-                  <h2>999</h2>
+                  <MDBIcon fas icon="hand-holding-usd" size="2x"/>
+                  <p>Purchase Points</p>
+                  <h2>{walletscutoff.purchasepoints?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}</h2>
                   </MDBCardBody>
                 </MDBCard>
                 </div>
                 <div className="px-md-5">
                 <MDBCard className="text-center">
                   <MDBCardBody>
-                  <MDBIcon fab icon="android" />
-                  <p>Text here</p>
-                  <h2>999</h2>
+                  <MDBIcon fas icon="video" size="2x"/>
+                  <p>Watch Ads Points</p>
+                  <h2>{walletscutoff.adspoints?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}</h2>
                   </MDBCardBody>
                 </MDBCard>
                 </div>
                 <div className="px-md-5">
                 <MDBCard className="text-center">
                   <MDBCardBody>
-                  <MDBIcon fab icon="android" />
-                  <p>Text here</p>
-                  <h2>999</h2>
+                  <MDBIcon fas icon="check-circle" size="2x"/>
+                  <p>Direct Points</p>
+                  <h2>{walletscutoff.recruitpoints?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}</h2>
+                  </MDBCardBody>
+                </MDBCard>
+                </div>
+                  {/* Point Details */}
+                <div className="px-md-5">
+                <MDBCard className="text-center">
+                  <MDBCardBody>
+                  <MDBIcon fas icon="gamepad" size="2x"/>
+                  <p>Activity Points</p>
+                  <h2>{wallets.activitypoints?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}</h2>
                   </MDBCardBody>
                 </MDBCard>
                 </div>
                 <div className="px-md-5">
                 <MDBCard className="text-center">
                   <MDBCardBody>
-                  <MDBIcon fab icon="android" />
-                  <p>Text here</p>
-                  <h2>999</h2>
+                  <MDBIcon fas icon="tasks" size="2x"/>
+                  <p>Task Points</p>
+                  <h2>{wallets.taskpoints?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}</h2>
                   </MDBCardBody>
                 </MDBCard>
                 </div>
                 <div className="px-md-5">
                 <MDBCard className="text-center">
                   <MDBCardBody>
-                  <MDBIcon fab icon="android" />
-                  <p>Text here</p>
-                  <h2>999</h2>
+                  <MDBIcon fas icon="hand-holding-usd" size="2x"/>
+                  <p>Purchase Points</p>
+                  <h2>{wallets.purchasepoints?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}</h2>
+                  </MDBCardBody>
+                </MDBCard>
+                </div>
+                <div className="px-md-5">
+                <MDBCard className="text-center">
+                  <MDBCardBody>
+                  <MDBIcon fas icon="video" size="2x"/>
+                  <p>Watch Ads Points</p>
+                  <h2>{wallets.adspoints?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}</h2>
+                  </MDBCardBody>
+                </MDBCard>
+                </div>
+                <div className="px-md-5">
+                <MDBCard className="text-center">
+                  <MDBCardBody>
+                  <MDBIcon fas icon="check-circle" size="2x"/>
+                  <p>Direct Points</p>
+                  <h2>{wallets.recruitpoints?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}</h2>
+                  </MDBCardBody>
+                </MDBCard>
+                </div>
+                <div className="px-md-5">
+                <MDBCard className="text-center">
+                  <MDBCardBody>
+                  <MDBIcon fas icon="users" size="2x"/>
+                  <p>Group Points</p>
+                  <h2>{wallets.grouppoints?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}</h2>
                   </MDBCardBody>
                 </MDBCard>
                 </div>
@@ -449,97 +519,9 @@ const PlayerDashboard = () => {
         </MDBCol>
         
        
-          {/* <MDBCol md={4} className="my-2">
-          <LeaderboardRequirements
-            activitypoints={walletscutoff.activitypoints?.toLocaleString('en-US', {
-              style: 'decimal',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-              })}
-            taskpoints={walletscutoff.taskpoints?.toLocaleString('en-US', {
-              style: 'decimal',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-              })}
-            recruitpoints={walletscutoff.recruitpoints?.toLocaleString('en-US', {
-              style: 'decimal',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-              })}
-            purchasepoints={walletscutoff.purchasepoints?.toLocaleString('en-US', {
-              style: 'decimal',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-              })}
-            watchadspoints={walletscutoff.adspoints?.toLocaleString('en-US', {
-              style: 'decimal',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-              })}
-          />
-          </MDBCol>
-          <MDBCol md={4} className="my-2">
-          <DiamondPoolRequirements
-            poolstatus={wallets.poolstatus}
-            rank={wallets.rank}
-            grouppoints={wallets.grouppoints?.toLocaleString('en-US', {
-              style: 'decimal',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-              })}
-            purchasepoints={wallets.purchasepoints?.toLocaleString('en-US', {
-              style: 'decimal',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-              })}
-            recruitpoints={wallets.recruitpoints?.toLocaleString('en-US', {
-              style: 'decimal',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-              })}
-          />
-          </MDBCol>
-          <MDBCol md={4} className="my-2">
-          <PointDetails
-            grouppoints={wallets.grouppoints?.toLocaleString('en-US', {
-              style: 'decimal',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-              })}
-            purchasepoints={wallets.purchasepoints?.toLocaleString('en-US', {
-              style: 'decimal',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-              })}
-            recruitpoints={wallets.recruitpoints?.toLocaleString('en-US', {
-              style: 'decimal',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-              })}
-              watchadspoints={wallets.adspoints?.toLocaleString('en-US', {
-              style: 'decimal',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-              })}
-              activitypoints={wallets.activitypoints?.toLocaleString('en-US', {
-              style: 'decimal',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-              })}
-              taskpoints={wallets.taskpoints?.toLocaleString('en-US', {
-              style: 'decimal',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-              })}
-          />
-          </MDBCol> */}
+          
         </MDBRow>
 
-        
-        
-        {/* <ChooseReferrer 
-        // setBasicModal={setBasicModal} 
-        basicModal={basicModal}/> */}
         
         </MDBContainer>
         <MDBModal show={basicModal} staticBackdrop  tabIndex='-1'>

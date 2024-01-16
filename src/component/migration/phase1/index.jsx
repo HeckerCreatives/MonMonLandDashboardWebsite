@@ -148,7 +148,21 @@ const Phase1 = () => {
                 
             })
 
-        } else {
+        } else if (m.data[0] === 'failed') {
+            setIsOk(false)
+            Swal.fire({
+                title: m.data[0],
+                icon: 'warning',
+                text: m.data[1],
+                allowEscapeKey: false,
+                allowOutsideClick: false
+            }).then(ok => {
+                localStorage.removeItem("uid")
+                window.location.href='/'
+            })
+        }
+        
+        else {
             setIsOk(false)
             Swal.fire({
                 title: m.data[0],
