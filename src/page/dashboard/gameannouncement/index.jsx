@@ -15,7 +15,8 @@ const GameAnnouncement = () => {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
 
-    const create = () => {
+    const create = (e) => {
+        e.preventDefault();
         fetch(`${process.env.REACT_APP_API_URL}members/gameannouncement`,{
             method: "POST",
             credentials: 'include',
@@ -26,14 +27,17 @@ const GameAnnouncement = () => {
                 title: title,
                 description: description
             })
-            .then(result => result.json())
-            .then(data => {
+        })
+        .then(result => result.json())
+        .then(data => {
+            if(data.message === "success"){
                 Swal.fire({
                     icon: 'success',
                     title: 'Success',
                     text: 'Announcement Created'
                 })
-            })
+            }
+            
         })
     }
 
