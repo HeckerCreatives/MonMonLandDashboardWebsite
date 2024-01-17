@@ -92,7 +92,7 @@ const MigrateLogin = ({basicModal, setBasicModal}) => {
                     <MDBModalTitle className="text-center">Announcement</MDBModalTitle>
                 </MDBModalHeader>
                 <MDBModalBody className="text-center">
-                <MDBTypography tag={'h2'}>The migration of accounts will commence from January 16 to 31, 2024.</MDBTypography>
+                <MDBTypography tag={'h2'}>The migration of accounts will commence from January 20 to 31, 2024.</MDBTypography>
                 </MDBModalBody>
 
                 <MDBModalFooter>

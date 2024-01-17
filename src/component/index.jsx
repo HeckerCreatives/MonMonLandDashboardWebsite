@@ -183,7 +183,7 @@ const Navbar = ({ links }) => {
               <MDBModalTitle>Announcement</MDBModalTitle>
             </MDBModalHeader>
             <MDBModalBody className="text-center">
-            <MDBTypography tag={'h2'}>The registration of new accounts will commence from January 16, 2024.</MDBTypography>
+            <MDBTypography tag={'h2'}>The registration of new accounts will commence from January 20, 2024.</MDBTypography>
             </MDBModalBody>
 
             <MDBModalFooter>
