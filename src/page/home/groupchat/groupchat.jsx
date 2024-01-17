@@ -19,7 +19,7 @@ import backbtn from "../../../assets/topup/back BUTTON.png"
 import teamdragon from "../../../assets/groupchat/teamdragon.jpg"
 import icon from "../../../assets/character/Wood Cutting.png"
 import paranoia from "../../../assets/groupchat/teamparanoia.png"
-import monmonwarriors from "../../../assets/groupchat/monmonwarriors.gif"
+import monmonwarriors from "../../../assets/groupchat/monmonwarriors.png"
 import { isgamelogin } from '../../../component/utils'
 import {isMobile} from 'react-device-detect'
 import "./groupchat.css"
@@ -65,7 +65,7 @@ const Groupchat = () =>{
                             </div>
                             <div className="d-flex align-items-end">
                             <MDBCardText className="p-4 text-white" style={{background: "#838383", width: "100%",height: "92px"}}>
-                            Team MonMonwarriors
+                            Team MonMon Warriors
                             </MDBCardText>
                             </div>
                             

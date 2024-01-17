@@ -203,7 +203,7 @@ const Phase1 = () => {
             <MDBRow>
                 <MDBCol>
                     <div className="text-center">
-                    <p>Get ready for the Grand Launch! Upgrade your account from Version 1 to Version 2, Starting January 16, 2024 valid until January 31, 2024.</p>
+                    <p>Get ready for the Grand Launch! Upgrade your account from Version 1 to Version 2, Starting January 16, 2024 valid until February 29, 2024.</p>
                      <p>Visit our Official Website at www.monmonland.games, log in, and migrate your account. Choose the Upline you want to be, and you will use their migration referral link into your account. Additionally, If you haven't switched your account yet, it's time to do so! Starting from Version 2, accounts that haven't migrated will no longer be available. Make sure to migrate soon to keep enjoying all the great features without any interruptions.</p>
                     </div>
                 </MDBCol>
