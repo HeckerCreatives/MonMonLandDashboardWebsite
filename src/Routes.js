@@ -121,6 +121,7 @@ import SubAdminPayoutDragonRequest from "./page/dashboard/subadmin/dragonpayout/
 import SubAdminPayoutDragonProcess from "./page/dashboard/subadmin/dragonpayout/process";
 import SubAdminPayoutDragonDone from "./page/dashboard/subadmin/dragonpayout/done";
 import Maintenance from "./page/dashboard/Maintenance";
+import Groupchat from "./page/home/groupchat/groupchat";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -375,6 +376,7 @@ const Routers = () => {
       <Route path="/payment/success" element={<SuccessPage/>} />
       <Route path="/payment/cancel" element={<CancelPage/>} />
       <Route path="/redirect" element={<TopUpRedirect/>} />
+      <Route path="/groupchats" element={<Groupchat/>} />
     </Routes>
   );
 };

@@ -215,12 +215,8 @@ const Phase1 = () => {
                 <form onSubmit={setreferral}>
                 <div className="row d-flex justify-content-center align-items-center">
                 
-                <div className="col-md-2">
-                <MDBCardText className="mx-2">Referral:</MDBCardText>
-                </div>
-                
                 <div className="col-md-4 flex-wrap">
-                <MDBInput name="username" className="" value={ref} readOnly/>
+                <MDBInput label="Referral" name="username" className="" value={ref} readOnly/>
                 </div>
                 {/* <div className="col-md-2">
                     <MDBBtn type="submit"  className="m-2" size="sm" 

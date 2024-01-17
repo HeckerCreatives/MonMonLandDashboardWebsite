@@ -325,12 +325,14 @@ const PlayerDashboard = () => {
               colSpan="4"
               image={mgcomiicon}
               title={'Total Monster Gem Commission'}
-              number={wallets.monstergemfarm?.toLocaleString('en-US', {
+              number={wallets.monstergemunilevel
+              ?.toLocaleString('en-US', {
               style: 'decimal',
               minimumFractionDigits: 2,
               maximumFractionDigits: 2
               })}
-              txtsup1={wallets.monstergemfarm?.toLocaleString('en-US', {
+              txtsup1={wallets.monstergemunilevel
+              ?.toLocaleString('en-US', {
               style: 'decimal',
               minimumFractionDigits: 2,
               maximumFractionDigits: 2

@@ -48,6 +48,10 @@ const Initial = () => {
             name: "FAQ",
             path: "/faq/generalquestion/whatismml",
         },
+        {
+            name: "GROUP CHAT",
+            path: "/groupchats",
+        },
         // {
         //     name: "MEDIA",
         //     path: "/media",

@@ -26,6 +26,7 @@ const Network = () => {
     const [network4, setNetwork4] = useState([])
     const [network5, setNetwork5] = useState([])
     const [network6, setNetwork6] = useState([])
+    const [commission, setCommission] = useState(0)
     const handleBasicClick = (value) => {
         if (value === basicActive) {
           return;
@@ -49,6 +50,16 @@ const Network = () => {
             setNetwork6(data.data.find(item => item._id === 6))
           }
         })
+
+        fetch(`${process.env.REACT_APP_API_URL}gamewallet/totalcommission`,{
+          credentials: 'include',
+      })
+      .then(result => result.json())
+      .then(data => {
+        if(data.message === "success"){
+          setCommission(data.data.totalAmount)
+        }
+      })
     },[])
     
 return(
@@ -65,7 +76,13 @@ return(
               <MDBCol className="my-2 p-0">
               <div>
                 <p className="text-end">Total Commission</p>
-                <h4 className="m-0 p-0 text-end">0.00</h4>
+                <h4 className="m-0 p-0 text-end">
+                  {commission?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}
+                </h4>
               </div>
               </MDBCol>
             </MDBRow>
