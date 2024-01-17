@@ -129,7 +129,7 @@ const Navbar = ({ links }) => {
                 
               </MDBNavbarItem>
             ))}
-            <MDBNavbarItem className="ms-lg-auto text-center" >
+            <MDBNavbarItem className="ms-xl-auto text-center" >
                   <MDBNavbarLink>
                   <div >
                   <img src={login} id="joinnow" alt="" className="zoom-playnow mb-2"  onClick={() => {

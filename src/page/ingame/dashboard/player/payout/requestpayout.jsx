@@ -8,9 +8,27 @@ import {
     MDBCardText,
     MDBBtn, 
     MDBInput} from "mdb-react-ui-kit";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 const PlayerRequestPayout = () => {
+    const [balance, setBalance] = useState(0);
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_API_URL}gamewallet/find`, {
+            method: "GET",
+            credentials: 'include',
+            headers:{
+              "Content-Type": 'application/json'
+            }
+          })
+          .then(result => result.json())
+          .then(data => {
+            if(data.message === "success"){
+              setBalance(data.data.balance)
+              
+            }
+               
+          })
+    },[])
     
     const requestpayout = (e) => {
        e.preventDefault()
@@ -67,7 +85,11 @@ const PlayerRequestPayout = () => {
                 <form onSubmit={requestpayout}>
                     <MDBCard>
                         <MDBCardBody>
-                            <MDBCardTitle>Request Payout</MDBCardTitle>
+                            <MDBCardTitle>Request Payout: Balance:({balance?.toLocaleString('en-US', {
+                            style: 'decimal',
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                            })}) </MDBCardTitle>
                             <MDBInput name="amount" type="number" label='Input Amount' min={'10'} max={'999'} maxLength={'3'}/>
                             <MDBBtn type="submit" className="mt-3">Request</MDBBtn>
                         </MDBCardBody>

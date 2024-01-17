@@ -41,14 +41,18 @@ import currentrank from "../../../../assets/Ingame/assetsdashboard/current rank.
 import diamonpool from "../../../../assets/Ingame/assetsdashboard/Diamond pool req. title.png"
 import lbreq from "../../../../assets/Ingame/assetsdashboard/leaderboard req. title.png"
 import pointdetail from "../../../../assets/Ingame/assetsdashboard/piont details title.png"
+import monies from "../../../../assets/Ingame/assetsdashboard/Monster Monies icon.png"
 import './dash.css'
+import Swal from "sweetalert2";
 const PlayerDashboard = () => {
     const [wallets, setWallets] = useState([]);
     const [walletscutoff, setWalletsCutOff] = useState([]);
+    const [totalpoints, setTotalPoints] = useState(0);
     const [announcement, setAnnouncement] = useState([])
     const [basicModal, setBasicModal] = useState(false);
     const [image, setImage] = useState(0)
     const toggleOpen = () => setBasicModal(!basicModal);
+    const [mycurrentrank, setCurrentRank] = useState(0);
 
 
   useEffect(()=> {
@@ -64,6 +68,8 @@ const PlayerDashboard = () => {
       if(data.message === "success"){
         setWallets(data.data)
         setWalletsCutOff(data.data2)
+        const points = (data.data2.activitypoints + data.data2.adspoints + data.data2.recruitpoints + data.data2.taskpoints + data.data2.purchasepoints)
+        setTotalPoints(points)
       }
          
     })
@@ -77,6 +83,48 @@ const PlayerDashboard = () => {
     })
     .then(result => result.json())
     .then(data => {
+      if(data.message == "You are not authorized" || data.message == "Unathorized"){
+        Swal.fire({
+          icon: "info",
+          title: "Unathorized",
+          text: "Hi Master redirecting to login page",
+          allowEscapeKey: false,
+          allowOutsideClick: false
+        }).then(ok => {
+          if(ok.isConfirmed){
+            window.location.href = "/gamelogin"
+          }
+        })
+      }
+
+      if(data.message == "duallogin"){
+        Swal.fire({
+          icon: "info",
+          title: "Dual Login",
+          text: "Hi Master redirecting to login page",
+          allowEscapeKey: false,
+          allowOutsideClick: false
+        }).then(ok => {
+          if(ok.isConfirmed){
+            window.location.href = "/gamelogin"
+          }
+        })
+      }
+
+      if(data.message == "banned"){
+        Swal.fire({
+          icon: "info",
+          title: "Your Account is Banned",
+          text: "Hi Master please contact admin",
+          allowEscapeKey: false,
+          allowOutsideClick: false
+        }).then(ok => {
+          if(ok.isConfirmed){
+            window.location.href = "/gamelogin"
+          }
+        })
+      }
+
       if(data.message === "success"){
         setAnnouncement(data.data)
         setBasicModal(true)
@@ -86,6 +134,20 @@ const PlayerDashboard = () => {
          
     })
 
+    fetch(`${process.env.REACT_APP_API_URL}gameusers/currentrank`, {
+      method: "GET",
+      credentials: 'include',
+      headers:{
+        "Content-Type": 'application/json'
+      }
+    })
+    .then(result => result.json())
+    .then(data => {
+      if(data.message === "success"){
+        setCurrentRank(data.data)
+      }
+         
+    })
   },[]) 
 
   
@@ -158,7 +220,7 @@ const PlayerDashboard = () => {
         <MDBCol className="">
         <MDBCard className='text-dark bg-topbase p-md-5' shadow="3">
             <MDBCardBody className="">
-            <MDBRow className="justify-content-between align-items-center">
+            <MDBRow className="justify-content-between align-items-center ">
             <MDBCol md={3}>
             <div  className="my-3">
             <MDBCardTitle>Welcome Master,</MDBCardTitle>
@@ -168,16 +230,33 @@ const PlayerDashboard = () => {
             </div>
             </MDBCol>
 
-            <MDBCol md={5} className="">
-            <MDBRow className="justify-content-between align-items-center">
-            <MDBCol md={5}>
-            <MDBCard className="position-relative text-mute fw-bold my-3"> 
+            <MDBCol md={7} className="">
+            <MDBRow className="justify-content-around align-items-center ">
+            <MDBCol md={4}>
+            <MDBCard className="position-relative text-mute fw-bold my-4 "> 
+            <img className="corner-image" src={monies} alt=""/>     
+                <MDBCardBody>
+                <div className="mt-3">
+                  <p className="text-start">Monster Monies Token</p>
+                  <h2 className="text-end">0
+                  {/* {totalpoints?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })} */}
+                  </h2>
+                </div>
+                </MDBCardBody>
+            </MDBCard>
+            </MDBCol>
+            <MDBCol md={4}>
+            <MDBCard className="position-relative text-mute fw-bold my-4 "> 
             <img className="corner-image" src={pointicon} alt=""/>     
                 <MDBCardBody>
                 <div className="mt-3">
                   <p className="text-start">Total Points</p>
                   <h2 className="text-end">
-                  {walletscutoff.totalpoints?.toLocaleString('en-US', {
+                  {totalpoints?.toLocaleString('en-US', {
                   style: 'decimal',
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
@@ -185,15 +264,15 @@ const PlayerDashboard = () => {
                   </h2>
                 </div>
                 </MDBCardBody>
-          </MDBCard>
+            </MDBCard>
             </MDBCol>
-            <MDBCol md={5}>
-            <MDBCard className="position-relative text-mute fw-bold my-3">  
+            <MDBCol md={4}>
+            <MDBCard className="position-relative text-mute fw-bold my-4">  
             <img className="corner-image" src={currentrank} alt=""/>         
                 <MDBCardBody>
                 <div className="mt-3">
                   <p className="text-start">Current Rank</p>
-                  <h2 className="text-end">0</h2>
+                  <h2 className="text-end">{mycurrentrank}</h2>
                 </div>
                 </MDBCardBody>
           </MDBCard>

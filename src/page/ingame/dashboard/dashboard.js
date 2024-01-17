@@ -6,7 +6,7 @@ import Sidebarnav from "../../../component/sidebarnav";
 import { Outlet } from "react-router-dom";
 import { isgamelogin } from "../../../component/utils";
 import TopNavbar from "../../../component/topnavbar";
-
+import Swal from "sweetalert2";
 const UserDashboard = () => {
   const [user, setuser] = useState('');
   const [didToggle, setDidToggle] = useState(
@@ -21,8 +21,6 @@ const UserDashboard = () => {
   [didToggle3, setDidToggle3] = useState(
     window.innerWidth > 768 ? false : true
   );
-  // const user = JSON.parse(localStorage.getItem("user"))
-  // const [darkMode, setDarkMode] = React.useState(true);
   const navigate = useNavigate() 
   
   useEffect(()=> {
@@ -30,8 +28,21 @@ const UserDashboard = () => {
     .then(data => {
       setuser(data.name)
     })
-  },[user])
+  },[])
 
+  // const pleaselogin = () => {
+  //   Swal.fire({
+  //     icon: "info",
+  //     title: "Need to Login",
+  //     text: "Hi Master we need to login first",
+  //     allowEscapeKey: false,
+  //     allowOutsideClick: false
+  //   }).then(ok => {
+  //     if(ok.isConfirmed){
+  //       navigate("/gamelogin")
+  //     }
+  //   })
+  // }
   
     const  link = [
         {
@@ -169,9 +180,9 @@ const UserDashboard = () => {
         </main>                    
         </MDBContainer>
         :
-          navigate("/")
+          navigate("/gamelogin")
         }
-        
+        {/* {!user && pleaselogin()} */}
         </>
     )
 }

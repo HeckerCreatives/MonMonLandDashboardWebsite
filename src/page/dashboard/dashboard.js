@@ -10,6 +10,7 @@ import { isLogin } from "../../component/utils";
 // import ReferralButton from "../../component/dashboard/referral/referral";
 import TopNavbar from "../../component/topnavbar";
 import Cookies from 'js-cookie';
+import Swal from "sweetalert2";
 const Dashboard = () => {
   // const [links, setLinks] = useState([]);
   const [didToggle, setDidToggle] = useState(
@@ -39,6 +40,19 @@ const Dashboard = () => {
     })
   },[role])
 
+  // const pleaselogin = () => {
+  //   Swal.fire({
+  //     icon: "info",
+  //     title: "Need to Login",
+  //     text: "Hi Admin we need to login first",
+  //     allowEscapeKey: false,
+  //     allowOutsideClick: false
+  //   }).then(ok => {
+  //     if(ok.isConfirmed){
+  //       navigate("/login")
+  //     }
+  //   })
+  // }
     
     let link;
     switch (role){
@@ -713,7 +727,7 @@ const Dashboard = () => {
         </main>                    
         </MDBContainer>
         :
-          navigate("/")
+        navigate("/login")
         }
         
         </>

@@ -111,11 +111,21 @@ const MembersAccount = () => {
                                 window.location.replace("/login");
                                 }
                             })
-                            } else {
+                            } else if(data.message === "success") {
                                 Swal.fire({
                                     icon: "success",
                                     title: 'Success',
                                     text: `You successfully ban ${username}`,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false
+                                }).then(() => {
+                                    window.location.reload()
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: data.message,
+                                    text: data.error,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false
                                 }).then(() => {
@@ -404,7 +414,12 @@ const MembersAccount = () => {
                         window.open(url, '_blank');
                       }}
                       >View</MDBBtn>
-                      <MDBBtn className="mx-2 fw-bold" type="button" outline color="dark" onClick={() => deleteitem(acc.username)}>Ban</MDBBtn>
+                      <MDBBtn 
+                      className="mx-2 fw-bold" 
+                      type="button" 
+                      outline 
+                      color="dark" 
+                      onClick={() => deleteitem(acc.username)}>Ban</MDBBtn>
                   </td>
                   </tr>
                   ))}

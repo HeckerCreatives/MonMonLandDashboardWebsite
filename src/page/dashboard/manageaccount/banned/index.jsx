@@ -43,7 +43,7 @@ import { MDBBtn, MDBCol, MDBContainer, MDBIcon, MDBInput, MDBRow,
       })
       .then(result => result.json())
       .then(data => {
-        
+        console.log(data)
         setBannedList(data.data)
       })
 
