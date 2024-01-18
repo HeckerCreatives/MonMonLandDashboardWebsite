@@ -272,7 +272,12 @@ const PlayerDashboard = () => {
                 <MDBCardBody>
                 <div className="mt-3">
                   <p className="text-start">Current Rank</p>
+                  {walletscutoff.recruitpoints !== 0 ? 
                   <h2 className="text-end">{mycurrentrank}</h2>
+                  : 
+                  <p className="">1 Direct point required</p>
+                  }
+                  
                 </div>
                 </MDBCardBody>
           </MDBCard>

@@ -54,7 +54,7 @@ const Groupchat = () =>{
                     <MDBRow >
                     <MDBCol lg={3} className="my-2">
                         <MDBCard alignment="center" >
-                        <MDBCardHeader className="fw-bold" style={{background: "#FADDBF"}}>Team Leader: earlyxyz</MDBCardHeader>
+                        <MDBCardHeader className="fw-bold" style={{background: "#FADDBF"}}>Team Leader: earlxyz</MDBCardHeader>
                         <MDBCardBody className="bundlesbdy p-0">
                             <div className="d-flex justify-content-center">
                                 <img

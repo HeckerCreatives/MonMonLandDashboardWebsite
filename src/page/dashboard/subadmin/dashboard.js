@@ -252,8 +252,8 @@ const SubAdminDashboard = () => {
         })
       }
 
-      if(data.message === "success" && data.data.length !== 0 && !data.expired){
-        setPaidUsers(data?.data[0]?.amount)
+      if(data.message === "success" && !data.expired){
+        setPaidUsers(data?.data?.amount)
     }
       
     })

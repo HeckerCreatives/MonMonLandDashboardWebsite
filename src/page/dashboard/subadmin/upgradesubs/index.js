@@ -48,18 +48,25 @@ const SubAdminUpgradeSubscriptionManual = () => {
     const toggleShow = () => setBasicModal(!basicModal);
     let currenturn = "";
 
-    const [role, setrole]= useState('');
-    const [name, setname]= useState('');
-    const [id, setid]= useState('');
+    const [role, setRole] = useState(null);
+    const [name, setName] = useState(null);
+    const [id, setId] = useState(null);
+
+    const fetchData = async () => {
+        try {
+            const data = await isLogin();
+            setRole(data.role);
+            setName(data.name);
+            setId(data.id);
+        } catch (error) {
+            // Handle error if isLogin fails
+            console.error('Error fetching login data:', error);
+        }
+    };
 
     useEffect(() => {
-        isLogin()
-        .then(data => {
-            setrole(data.role)
-            setname(data.name)
-            setid(data.id)
-        })
-    },[role, id, name])
+        fetchData();
+    },[]);
 
       useEffect(() => {
           let totalPages = Math.floor(history.length / 2);
@@ -72,10 +79,11 @@ const SubAdminUpgradeSubscriptionManual = () => {
             credentials: 'include',
           })
           .then(response => response.json())
-          .then(result => {
+          .then(async result => {
             // console.log(result)
             if(result.length !== 0){
-                const data = result?.filter(e => e.cashier === name)
+                const data1 = await isLogin();
+                const data = result?.filter(e => e.cashier === data1.name)
                 setHistory(data)
             }
               
@@ -87,9 +95,10 @@ const SubAdminUpgradeSubscriptionManual = () => {
             credentials: 'include',
         })
           .then(response => response.json())
-          .then(result => {
-              const data = result?.filter(e => e.cashier === name)
-              setHistory(data)
+          .then(async result => {
+            const data1 = await isLogin();
+            const data = result?.filter(e => e.cashier === data1.name)
+            setHistory(data)
           })
       }
 
@@ -102,8 +111,9 @@ const SubAdminUpgradeSubscriptionManual = () => {
           }
         })
         .then(response => response.json())
-        .then(result => {
-            const filter = result.filter(e => e.userId._id === id)            
+        .then(async result => {
+            const data1 = await isLogin();
+            const filter = result.filter(e => e.userId._id === data1.id)            
             setUser(filter[0])            
         })
         },[])
@@ -206,54 +216,6 @@ const SubAdminUpgradeSubscriptionManual = () => {
             }
         },[currenturn, topup])
 
-    //   const cancelorder = (id, room, normalUserId) => {
-    //   const stats = "Open"
-    //   Swal.fire({
-    //       icon: "warning",
-    //       title: "Are you sure to delete these items?",
-    //       text: "You won't be able to revert this",
-    //       showDenyButton: true,
-    //       confirmButtonText: "Delete",
-    //       denyButtonText: "Cancel",
-    //       }).then(result => {
-    //           if(result.isConfirmed){
-    //               fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/${id}/destroybuyer`,{
-    //                   method: "DELETE",
-    //                   headers: {
-    //                       'Content-Type': 'application/json'
-    //                   },
-    //                   body: JSON.stringify({
-    //                   cashierId: user._id,
-    //                   stats: stats,
-    //                   })
-    //               }).then(result => result.json())
-    //               .then(data => {
-    //                   if(data){
-    //                     fetch(`${process.env.REACT_APP_API_URL}upload/deleteemp`, {
-    //                         method: "POST",
-    //                         headers: {
-    //                           "Accept": "application/json"
-    //                         },
-    //                         body: JSON.stringify({ownerId: room})
-    //                     })
-    //                     setPrice("")
-    //                     setBuyer([]);
-    //                     setFilename("")
-    //                     refreshtable();
-    //                     setBibiliUser("")
-    //                     setBibiliUserPlayfabid("")
-    //                     setTopUp("")
-    //                     socket.emit('cancelTransactionAdmin', {room: room, buyer: bibiliuserid});
-    //                   }
-    //               })
-    //           } else {
-    //             setIsLoading(false)
-    //           }
-    //       })     
-      
-    //   //        
-    //   }
-  
       const upgradebuyer = (e) => {
           e.preventDefault();
           const stats = "Open"
@@ -268,19 +230,18 @@ const SubAdminUpgradeSubscriptionManual = () => {
           }).then(async result =>{
             setIsLoading(true)
               if(result.isConfirmed){
-                console.log(user.userId.userName)
                 const data = new FormData()
-                data.append("cashierId", user._id)
+                // data.append("cashierId", user._id)
                 data.append("amount", totalprice)
                 data.append("stats", stats)
-                data.append("cashier", name)
+                // data.append("cashier", name)
                 data.append("price", totalprice)
                 data.append("clientusername", bibiliuser)
                 data.append("file", image)
                 // data.append("adminId", auth._id)
                 data.append("idnitopup", process.env.REACT_APP_MANUALID)
-                data.append("playfabId", bibiliuserplayfabid)
-                data.append("playfabPrice", price)
+                data.append("owner", bibiliuserplayfabid)
+                data.append("actualprice", price)
                 data.append("playfabToken", playfabToken)
 
                 fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/updatebuyer/${Buyer._id}`,{

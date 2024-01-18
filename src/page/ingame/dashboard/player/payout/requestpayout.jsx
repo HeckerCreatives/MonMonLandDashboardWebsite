@@ -81,11 +81,11 @@ const PlayerRequestPayout = () => {
     return (
         <MDBContainer>
             <MDBRow>
-                <MDBCol md={4} className="offset-4 mt-5">
+                <MDBCol lg={4} className="offset-lg-4 mt-5">
                 <form onSubmit={requestpayout}>
                     <MDBCard>
                         <MDBCardBody>
-                            <MDBCardTitle>Request Payout: Balance:({balance?.toLocaleString('en-US', {
+                            <MDBCardTitle>Request Payout: balance:({balance?.toLocaleString('en-US', {
                             style: 'decimal',
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2

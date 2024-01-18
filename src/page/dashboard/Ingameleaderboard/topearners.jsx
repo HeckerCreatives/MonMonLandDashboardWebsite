@@ -54,7 +54,7 @@ return(
                             {i+1}
                         </th>
                         <td>
-                            {data.owner.username}
+                            {data.username}
                         </td>
                         <td>
                             {data.amount?.toLocaleString('en-US', {

@@ -14,6 +14,7 @@ import PaginationPager from "../../../../../component/pagination";
 import walleticon from "../../../../../assets/Ingame/wallethistory.png"
 const PlayerWalletHistory = () => {
     const [wallethistory, setWalletHistory] = useState([]),
+    [backup, setBackup] = useState([]),
     [page, setPage] = useState(1),
     [total, setTotal] = useState(0);
       
@@ -31,9 +32,32 @@ const PlayerWalletHistory = () => {
         .then(data => {
           if(data.message === "success"){
             setWalletHistory(data.data)
+            setBackup(data.data)
           }
         })
     },[])
+
+    const filterwallet = (e) => {
+        const str = e.target.value
+        if(str !== 'All'){
+          fetch(`${process.env.REACT_APP_API_URL}gamewallet/filterwallet`, {
+            method: "POST",
+            credentials: 'include',
+            headers:{
+              "Content-Type": 'application/json'
+            },
+            body: JSON.stringify({
+              filter: str
+            })
+          })
+          .then(result => result.json())
+          .then(data => {
+            setWalletHistory(data.data)
+          })
+        } else {
+            setWalletHistory(backup)
+        }
+      }
     
 return(
     <>
@@ -43,16 +67,22 @@ return(
     </div>
     <MDBCard shadow="5">
         <MDBCardBody>
-        <div class="select-container">
+    <div class="select-container">
         <MDBIcon fas icon="filter" fixed/> &nbsp;
-        <select name="filter" >
+        <select name="filter" onChange={filterwallet}>
             <option value="All">All</option>
-            <option value="Top Up">Top Up</option>
+            <option value="Monster Gem Farm Convert">Monster Gem Farm Convert</option>
+            <option value="Monster Gem Unilevel Convert">Monster Gem Unilevel Convert</option>
+            <option value="Monster Coin Convert">Monster Coin Convert</option>
+            <option value="Leaderboards Convert">Leaderboards Convert</option>
+            <option value="Clocks Unilevel">Clocks Unilevel</option>
             <option value="Tools Unilevel">Tools Unilevel</option>
-            <option value="Missed Clock Unilevel">Missed Clock Unilevel</option>
+            <option value="Missed Clocks Unilevel">Missed Clocks Unilevel</option>
             <option value="Missed Tools Unilevel">Missed Tools Unilevel</option>
-            <option value="Unilevel Bonus">Unilevel Bonus</option>
-            <option value="Clock Unilevel">Clock Unilevel</option>
+            <option value="Missed Monster Gem Farm Convert">Missed Monster Gem Farm Convert</option>
+            <option value="Missed Monster Gem Unilevel Convert">Missed Monster Gem Unilevel Convert</option>
+            <option value="Missed Monster Coin Convert">Missed Monster Coin Convert</option>
+            <option value="Topup Balance">Topup Balance</option>
         </select>
     </div>
     <MDBTable small responsive className="text-mute mt-5 mb-0">
@@ -73,7 +103,7 @@ return(
                             <td>
                             {item.amount.toFixed(2)}
                             </td>
-                            <td>
+                            <td style={item.description.includes('Missed') ? { color: 'red'} : {}}>
                              {item.description}
                             </td>
                         </tr>

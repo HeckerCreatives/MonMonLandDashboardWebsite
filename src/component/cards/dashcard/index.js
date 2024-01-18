@@ -140,7 +140,7 @@ return(
                      3%
                      </td>
                      <td>
-                     45%
+                     35%
                      </td>
                      <td>
                      0%
@@ -149,10 +149,10 @@ return(
                      2%
                      </td>
                      <td>
-                     2%
+                     5%
                      </td>
                      <td>
-                     3%
+                     5%
                      </td>
                      <td>
                      5%
@@ -164,7 +164,7 @@ return(
                        2%
                      </td>  
                      <td>
-                       10%
+                       15%
                      </td> 
                      <td>
                        0%
@@ -181,7 +181,7 @@ return(
                      3%
                      </td>
                      <td>
-                     45%
+                     15%
                      </td>
                      <td>
                      0%
@@ -205,7 +205,7 @@ return(
                       5%
                      </td> 
                      <td>
-                      5%
+                      35%
                      </td> 
                      <td>
                      0%
@@ -222,7 +222,7 @@ return(
                      3%
                      </td>
                      <td>
-                     45%
+                     15%
                      </td>
                      <td>
                      0%
@@ -246,11 +246,11 @@ return(
                       5%
                      </td> 
                      <td>
-                      5%
+                      35%
                      </td> 
                      <td>
                      0%
-                     </td>       
+                     </td>        
                     </tr>
                     <tr>
                      <td className="fw-bold text-warning">
@@ -263,7 +263,7 @@ return(
                      3%
                      </td>
                      <td>
-                     45%
+                     25%
                      </td>
                      <td>
                      0%
@@ -287,7 +287,7 @@ return(
                       5%
                      </td> 
                      <td>
-                      10%
+                      30%
                      </td> 
                      <td>
                      0%
