@@ -269,7 +269,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                           }
                         })
                     } else {
-                        if (!data.expired) {
+                        if (!data.expired && data.message === "success") {
                             socket.emit("refreshcashierdata")
                             
                         Swal.fire({
@@ -299,7 +299,7 @@ const SubAdminUpgradeSubscriptionManual = () => {
                             Swal.fire({
                                 title: "User Upgrade Unsuccessfull",
                                 icon: "error",
-                                text: "There is an error Upgrading the Account"
+                                text: data.data
                             })
                         }
                     }
