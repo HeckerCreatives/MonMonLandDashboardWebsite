@@ -16,6 +16,7 @@ import Dashboardstatistics from "./statistics";
 import DiamondPoolRequirements from "./poolrequirements";
 import MemberPointDetails from "./pointdetail";
 const MembersDashboard = ({username}) => {
+    const [rank, setRank] = useState(0);
     const [wallets, setWallets] = useState([]);
     const [walletscutoff, setWalletsCutOff] = useState([]);
 
@@ -36,6 +37,23 @@ const MembersDashboard = ({username}) => {
       if(data.message === "success"){
         setWallets(data.data)
         setWalletsCutOff(data.data2)
+      }
+    })
+
+    fetch(`${process.env.REACT_APP_API_URL}members/getcurrentrank`, {
+      method: "POST",
+      credentials: 'include',
+      headers:{
+        "Content-Type": 'application/json'
+      },
+      body: JSON.stringify({
+        username: username
+      })
+    })
+    .then(result => result.json())
+    .then(data => {
+      if(data.message === "success"){
+        setRank(data.data)
       }
     })
   },[]) 
@@ -78,7 +96,24 @@ const MembersDashboard = ({username}) => {
           <Dashboardstatistics 
               colSpan="4"
               icon={`dollar-sign`}
-              cardtoptext={'Total Monster Gem'}
+              cardtoptext={'Monster Gem Commission'}
+              txtsup={wallets.monstergemunilevel?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              txtsup1={wallets.monstergemunilevel?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              />
+          </MDBCol>
+          <MDBCol className="my-2">
+          <Dashboardstatistics 
+              colSpan="4"
+              icon={`dollar-sign`}
+              cardtoptext={'Monster Gem Grinding'}
               txtsup={wallets.monstergemfarm?.toLocaleString('en-US', {
               style: 'decimal',
               minimumFractionDigits: 2,
@@ -218,9 +253,16 @@ const MembersDashboard = ({username}) => {
                               <td>
                                   Current Rank
                               </td>
+                              {walletscutoff.recruitpoints !== 0 ? 
                               <td>
-                                  0
+                              {rank}
                               </td>
+                                : 
+                              <td>
+                                1 Direct point required
+                              </td>
+                                
+                              }
                           </tr>
                       </MDBTableBody>
                   </MDBTable>
