@@ -147,8 +147,8 @@ const Navbar = ({ links }) => {
                   <div >
                   <img src={playnow} id="joinnow" alt="" className=" zoom-playnow mb-2"  
                   onClick={() => {
-                    // window.location.href = `${window.location.origin}/register?id=${process.env.REACT_APP_MONMONID}`;
-                    toggleShow1()
+                    window.location.href = `${window.location.origin}/register?id=${process.env.REACT_APP_MONMONID}`;
+                    // toggleShow1()
                   }} ></img>
                   {/* <MDBBtn  onClick={() => {
                     window.location.href = `${window.location.origin}/register?id=${process.env.REACT_APP_MONMONID}`;
@@ -161,7 +161,8 @@ const Navbar = ({ links }) => {
                   <MDBNavbarLink>
                   <div >
                   <img src={migrate} id="joinnow" alt="" className=" zoom-playnow mb-2"  onClick={() => {
-                    toggleShow()
+                    window.location.href = `${window.location.origin}/migrateph1?username=monmonland`;
+                    // toggleShow()
                   }} ></img>
                   {/* <MDBBtn  onClick={() => {
                     window.location.href = `${window.location.origin}/register?id=${process.env.REACT_APP_MONMONID}`;
