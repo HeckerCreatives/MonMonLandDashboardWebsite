@@ -9,6 +9,7 @@ import TopNavbar from "../../../component/topnavbar";
 import Swal from "sweetalert2";
 const UserDashboard = () => {
   const [user, setuser] = useState('');
+  const [uid, setuid] = useState('');
   const [didToggle, setDidToggle] = useState(
     window.innerWidth > 768 ? false : true
   ),
@@ -27,6 +28,7 @@ const UserDashboard = () => {
     isgamelogin()
     .then(data => {
       setuser(data.name)
+      setuid(data.uid)
     })
   },[])
 
@@ -59,9 +61,18 @@ const UserDashboard = () => {
         },
         {
           name: "Add Funds",
-          path: "/topup",
+          path: "",
           icon: "credit-card",
-          children: [],
+          children: [
+            {
+              name: "Automatic",
+              path: "/topup",
+            },
+            {
+              name: "Manual",
+              path: `/cashier?username=${user}&id=${uid}`,
+            },
+          ],
         },
         {
           name: "Leaderboard",
