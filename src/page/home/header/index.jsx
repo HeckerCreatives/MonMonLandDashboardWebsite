@@ -805,11 +805,11 @@ const Header = () => {
                     <img src={donwloadnow} className="mx-lg-3 my-lg-0 my-2 img-fluid zoom-playnow" alt="" 
                     onClick={() => {
                       // if(countdown){
-                      //   window.location.href =  `${process.env.REACT_APP_API_URL}uploads/Monmonland.apk`
+                        window.location.href =  `${process.env.REACT_APP_API_URL}uploads/Monmonland.apk`
                       // } else {
                       //   toggleShow2()
                       // }
-                      toggleShow3()
+                      // toggleShow3()
                     }}
                     // onClick={toggleShow2}
                     /> 
@@ -818,8 +818,8 @@ const Header = () => {
                     className="mx-lg-3 my-lg-0 my-2 img-fluid zoom-playnow" 
                     alt="" 
                     onClick={() => {
-                        // window.location.href =  `${process.env.REACT_APP_API_URL}uploads/Monmonland.apk`
-                        toggleShow3()
+                        window.location.href =  `https://play.google.com/store/apps/details?id=com.moneymonster.island&pcampaignid=web_share`
+                        // toggleShow3()
                     }}
                     /> 
                     <img 

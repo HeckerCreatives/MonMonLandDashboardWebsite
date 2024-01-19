@@ -52,7 +52,7 @@ const PlayerPaymentDetails = () => {
     { name: "Smart PayMaya", accountType: "PYMY" },
     { name: "GrabPay E-Wallet", accountType: "GRPY" },
     { name: "Coins.ph E-Wallet", accountType: "BITC" },
-    { name: "Crypto - USDT (TRX20)", accountType: "CRYPTO" }
+    { name: "Crypto - USDT (TRC20)", accountType: "CRYPTO" }
   ]
 
   useEffect(() => {
