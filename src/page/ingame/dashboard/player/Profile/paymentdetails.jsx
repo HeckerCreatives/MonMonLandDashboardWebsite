@@ -101,7 +101,7 @@ const PlayerPaymentDetails = () => {
       country,
       paymentdetail } = e.target
 
-      if(country.value.toUpperCase() !== "PH" && detail.address.Country !== "PH"){
+      if(country.value.toUpperCase() !== "PH" && detail?.address?.Country !== "PH"){
         Swal.fire({
           title: "Are you sure?",
           text: "You want to save this payment details",
