@@ -20,6 +20,7 @@ import teamdragon from "../../../assets/groupchat/teamdragon.jpg"
 import icon from "../../../assets/character/Wood Cutting.png"
 import paranoia from "../../../assets/groupchat/teamparanoia.png"
 import monmonwarriors from "../../../assets/groupchat/monmonwarriors.png"
+import highbreed from "../../../assets/groupchat/highbreed.jpg"
 import { isgamelogin } from '../../../component/utils'
 import {isMobile} from 'react-device-detect'
 import "./groupchat.css"
@@ -142,34 +143,33 @@ const Groupchat = () =>{
 
                         
 
-                        {/* <MDBCol lg={3} className="my-2">
+                        <MDBCol lg={3} className="my-2">
                         <MDBCard alignment="center" >
-                        <MDBCardHeader className="fw-bold p-3" style={{background: "#FADDBF"}}></MDBCardHeader>
+                        <MDBCardHeader className="fw-bold p-3" style={{background: "#FADDBF"}}>Team leader: highbreed</MDBCardHeader>
                         <MDBCardBody className="bundlesbdy p-0">
                             <div className="d-flex justify-content-center">
                                 <img
-                                src={icon} 
-                                className="img-fluid"
+                                src={highbreed} 
+                                className="imahe"
                                 alt=""
-                                style={{width: '200px', height: '200px'}}
                                 />
                             </div>
                             <div className="d-flex justify-content-center align-items-end">
                             <MDBCardText className="p-4 text-white" style={{background: "#838383", width: "100%", height: "92px"}}>
-                            Team Dragon
+                            Team Highbreed
                             </MDBCardText>
                             </div>
                             
                         </MDBCardBody>
                         <MDBCardFooter className="d-flex justify-content-center align-items-center" style={{background: "#FADDBF"}}>
                         <MDBBtn color="warning" href='#'
-                        // onClick={() => isMobile ? window.location.href = "fb-messenger://m.me/j/AbZ1W--9dFHDZ2g9/" : window.location.href = "https://m.me/j/AbZ1W--9dFHDZ2g9/"}
+                        onClick={() => isMobile ? window.location.href = "fb-messenger://m.me/j/Aba5QLvXitteyRw3/" : window.location.href = "https://m.me/j/Aba5QLvXitteyRw3/"}
                         >
                         <MDBIcon className="me-2" fab icon="facebook-messenger" /> Join Group
                         </MDBBtn>
                         </MDBCardFooter>
                         </MDBCard>
-                        </MDBCol> */}
+                        </MDBCol>
                     </MDBRow>
                     
                 </MDBCardBody>
