@@ -125,7 +125,7 @@ return(
 
                     <th className="fw-bold" scope='col'>Travel / Special Incentives</th>
                     <th className="fw-bold" scope='col'>Monster Gem</th>
-                    <th className="fw-bold" scope='col'>Trading (from payin/tools)</th>
+                    {/* <th className="fw-bold" scope='col'>Trading (from payin/tools)</th> */}
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody className="text-center">
@@ -140,7 +140,7 @@ return(
                      3%
                      </td>
                      <td>
-                     35%
+                     30%
                      </td>
                      <td>
                      0%
@@ -155,7 +155,7 @@ return(
                      5%
                      </td>
                      <td>
-                     5%
+                     10%
                      </td>
                      <td>
                       3%
@@ -166,9 +166,9 @@ return(
                      <td>
                        15%
                      </td> 
-                     <td>
+                     {/* <td>
                        0%
-                     </td>   
+                     </td>    */}
                     </tr>
                     <tr>
                      <td className="fw-bold text-warning">
@@ -196,20 +196,20 @@ return(
                      5%
                      </td>
                      <td>
-                     5%
+                     10%
                      </td>
                      <td>
-                      2%
+                      1%
                      </td>
                      <td>
-                      5%
+                      1%
                      </td> 
                      <td>
                       35%
                      </td> 
-                     <td>
+                     {/* <td>
                      0%
-                     </td>   
+                     </td>    */}
                     </tr>
                     <tr>
                      <td className="fw-bold text-warning">
@@ -237,20 +237,20 @@ return(
                      5%
                      </td>
                      <td>
-                     5%
+                     10%
                      </td>
                      <td>
-                      2%
+                      1%
                      </td>
                      <td>
-                      5%
+                      1%
                      </td> 
                      <td>
                       35%
                      </td> 
-                     <td>
+                     {/* <td>
                      0%
-                     </td>        
+                     </td>         */}
                     </tr>
                     <tr>
                      <td className="fw-bold text-warning">
@@ -263,7 +263,7 @@ return(
                      3%
                      </td>
                      <td>
-                     25%
+                     15%
                      </td>
                      <td>
                      0%
@@ -278,22 +278,22 @@ return(
                      5%
                      </td>
                      <td>
-                     5%
+                     10%
                      </td>
                      <td>
-                      2%
+                      1%
                      </td>
                      <td>
-                      5%
+                      1%
                      </td> 
                      <td>
-                      30%
+                      40%
                      </td> 
-                     <td>
+                     {/* <td>
                      0%
-                     </td>       
+                     </td>        */}
                     </tr>
-                    <tr>
+                    {/* <tr>
                      <td className="fw-bold text-warning">
                         Ads
                      </td>
@@ -333,8 +333,8 @@ return(
                      <td>
                        0%
                      </td>       
-                    </tr>
-                    <tr>
+                    </tr> */}
+                    {/* <tr>
                      <td className="fw-bold text-warning">
                       Trade
                      </td>
@@ -374,7 +374,7 @@ return(
                      <td>
                        0%
                      </td>      
-                    </tr>
+                    </tr> */}
                 </MDBTableBody>
             </MDBTable>
             </MDBModalBody>
