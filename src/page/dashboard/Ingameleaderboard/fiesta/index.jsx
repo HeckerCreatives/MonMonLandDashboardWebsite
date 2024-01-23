@@ -27,7 +27,6 @@ const Fiesta = () => {
     .then(data => {
       if(data.message === "success"){
         setSupermonmon(data.data) 
-        console.log(data.data)
       }
     })
 
@@ -83,7 +82,7 @@ return(
           <FiestaGame game={palosebo} prizepool={palosebo?.prizepools}/>
         </MDBTabsPane>
         <MDBTabsPane show={basicActive === 'tab2'}>
-          <FiestaGame game={supermonmon} prizepool={supermonmon.prizepools}/>
+          <FiestaGame game={supermonmon} prizepool={supermonmon?.prizepools}/>
         </MDBTabsPane>
         {/* <MDBTabsPane show={basicActive === 'tab3'}>Tab 3 content</MDBTabsPane> */}
       </MDBTabsContent>
