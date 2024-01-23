@@ -47,7 +47,7 @@ return(
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody className="fw-bold text-center">
-                { game?.length !== 0 ? 
+                { game?.leaderboard !== undefined && game?.leaderboard !== null ?
                     Object.keys(game?.leaderboard).map((key) => {
                         const entry = game?.leaderboard[key];
                         return (
