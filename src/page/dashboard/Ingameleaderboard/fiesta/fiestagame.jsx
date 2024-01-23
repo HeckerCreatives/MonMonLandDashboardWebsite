@@ -11,16 +11,27 @@ import
     MDBBtn,
     MDBIcon} 
 from "mdb-react-ui-kit";
-
+import mcicon from "../../../../assets/header/MC coin.png"
 const FiestaGame = ({game, prizepool}) => {
     
 return(
     <>
     <MDBContainer>
-    <div className="col-md-6 offset-3">
+    <div className="col-md-4 offset-4">
     <MDBCard>
-      <MDBCardBody className="d-flex justify-content-between">
-      <div>
+      <MDBCardBody className="d-flex justify-content-center">
+      <div className="d-flex align-items-center">
+      {/* <MDBIcon fas icon="dollar-sign" size="4x"/> */}
+      <img src={mcicon} alt="" style={{width: "50px", height: '50px'}}/>
+        <MDBCardText className="ms-2 fw-bold">
+          {prizepool?.toLocaleString('en-US', {
+            style: 'decimal',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          })}
+        </MDBCardText>
+      </div>
+      {/* <div>
       <MDBIcon fas icon="dollar-sign" size="4x"/>
       </div>
       <div className="d-flex align-items-center">
@@ -32,7 +43,7 @@ return(
             maximumFractionDigits: 2
           })}
         </MDBCardText>
-      </div>
+      </div> */}
       
       </MDBCardBody>
     </MDBCard>
