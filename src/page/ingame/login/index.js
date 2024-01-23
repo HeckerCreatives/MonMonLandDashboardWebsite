@@ -154,7 +154,7 @@ const IngameLogin = () =>{
         <MDBTypography className="d-flex align-items-center justify-content-end mt-4">
           <a href="#">Recover password</a>
         <MDBBtn className='ms-3' type="submit">
-          {loading ? <MDBSpinner color='primary'/> : "Login to dashboard"
+          {loading ? <MDBSpinner/> : "Login to dashboard"
           }
         </MDBBtn>
         </MDBTypography>

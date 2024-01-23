@@ -174,11 +174,14 @@ const AdminPayoutDone = () => {
                 </MDBTableHead>
                 <MDBTableBody >
                 { done.length !== 0 ?
-                    done.map((data,i) => (
-                    <tr key={`done-${i}`}>
+                    done.map((data,i) => {
+                        const tenpercent = data.amount * 0.10;
+                        const bawas = data.amount - tenpercent
+                    return(
+                        <tr key={`done-${i}`}>
                         <td >{data.id}</td>
                         <td>{data.username}</td>
-                        <td>{data.amount}</td>
+                        <td>{bawas}</td>
                         <td>{new Date(data.createdAt).toLocaleString()}</td>
                         <td>{data.walletaddress}</td>
                         <td>{data.network}</td>
@@ -199,7 +202,8 @@ const AdminPayoutDone = () => {
                             </MDBBtn>
                         </td>
                     </tr>
-                    ))
+                    )
+                })
                 :
                     <tr>
                         <td colSpan={10}>

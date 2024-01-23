@@ -22,7 +22,8 @@ import {
   MDBCardTitle,
   MDBCardOverlay,
   MDBCardImage,
-  MDBCardHeader} from "mdb-react-ui-kit";
+  MDBCardHeader,
+  MDBInput} from "mdb-react-ui-kit";
   import Slider from "react-slick";
 import LeaderboardRequirements from "./lbrequirements";
 import Dashboardstatistics from "./statistics";
@@ -150,6 +151,7 @@ const PlayerDashboard = () => {
     })
   },[]) 
 
+ 
   
   const settings = {
     className: "",

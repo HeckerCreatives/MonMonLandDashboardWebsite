@@ -230,22 +230,27 @@ const AdminPayoutRequest = () => {
                 </MDBTableHead>
                 <MDBTableBody className="text-white">
                 { filteredRequest.length !== 0 ?
-                    filteredRequest.map((data,i) => (
-                    <tr key={`request-${i}`} className={`bg-${getRowColorClass(data.createdAt)}`}>
-                        <td>{data.id}</td>
-                        <td>{data.username}</td>
-                        <td>{data.amount}</td>
-                        <td>{new Date(data.createdAt).toLocaleString()}</td>
-                        <td>{data.walletaddress}</td>
-                        <td>{data.network}</td>
-                        <td>{data.paymentmethod}</td>
-                        <td>
-                            <MDBBtn onClick={() => handleCashierData(data._id)}>
-                            {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Process"}
-                            </MDBBtn>
-                        </td>
-                    </tr>
-                    ))
+                    filteredRequest.map((data,i) => {
+                        const tenpercent = data.amount * 0.10;
+                        const bawas = data.amount - tenpercent
+                        return(
+                        <tr key={`request-${i}`} className={`bg-${getRowColorClass(data.createdAt)}`}>
+                            <td>{data.id}</td>
+                            <td>{data.username}</td>
+                            <td>{bawas}</td>
+                            <td>{new Date(data.createdAt).toLocaleString()}</td>
+                            <td>{data.walletaddress}</td>
+                            <td>{data.network}</td>
+                            <td>{data.paymentmethod}</td>
+                            <td>
+                                <MDBBtn onClick={() => handleCashierData(data._id)}>
+                                {isloading ? <MDBSpinner size="sm" role='status' grow/> : "Process"}
+                                </MDBBtn>
+                            </td>
+                        </tr>
+                        )
+                    
+                })
                 :
                     <tr>
                         <td colSpan={8}>

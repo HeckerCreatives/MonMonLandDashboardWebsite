@@ -225,11 +225,14 @@ const AdminPayoutProcess = () => {
                 </MDBTableHead>
                 <MDBTableBody className="text-white">
                 { filteredRequest.length !== 0 ?
-                    filteredRequest.map((data,i) => (
-                    <tr key={`processed-${i}`} className={`bg-${getRowColorClass(data.createdAt)}`}>
+                    filteredRequest.map((data,i) => {
+                        const tenpercent = data.amount * 0.10;
+                        const bawas = data.amount - tenpercent
+                    return(
+                        <tr key={`processed-${i}`} className={`bg-${getRowColorClass(data.createdAt)}`}>
                         <td>{data.id}</td>
                         <td>{data.username}</td>
-                        <td>{data.amount}</td>
+                        <td>{bawas}</td>
                         <td>{new Date(data.createdAt).toLocaleString()}</td>
                         <td>{data.walletaddress}</td>
                         <td>{data.network}</td>
@@ -255,7 +258,8 @@ const AdminPayoutProcess = () => {
                             /> */}
                         </td>
                     </tr>
-                    ))
+                    )
+                })
                 :
                     <tr>
                         <td colSpan={9}>

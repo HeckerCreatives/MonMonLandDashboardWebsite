@@ -289,11 +289,14 @@ const SubAdminPayoutDragonProcess = () => {
                 </MDBTableHead>
                 <MDBTableBody className="text-white">
                 { filteredRequest.length !== 0 ?
-                    handlePagination(filteredRequest, page, 10)?.map((data,i) => (
-                    <tr key={`request-${i}`} className={`bg-${getRowColorClass(data.createdAt)}`}>
+                    handlePagination(filteredRequest, page, 10)?.map((data,i) => {
+                        const tenpercent = data.amount * 0.10;
+                        const bawas = data.amount - tenpercent
+                    return(
+                        <tr key={`request-${i}`} className={`bg-${getRowColorClass(data.createdAt)}`}>
                         <td>{data.id}</td>
                         <td>{data.username}</td>
-                        <td>{data.amount}</td>
+                        <td>{bawas}</td>
                         <td>
                         <MDBBtn onClick={() => {
                             toggleShow1()
@@ -303,7 +306,8 @@ const SubAdminPayoutDragonProcess = () => {
                         <td>{data.status}</td>
                         <td>{new Date(data.createdAt).toLocaleString()}</td>
                     </tr>
-                    ))
+                    )
+                })
                 :
                     <tr>
                         <td colSpan={8}>

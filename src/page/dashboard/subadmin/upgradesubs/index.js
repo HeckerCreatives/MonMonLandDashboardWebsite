@@ -254,6 +254,17 @@ const SubAdminUpgradeSubscriptionManual = () => {
                     body: data,
                 }).then(result => result.json())
                 .then(data =>{
+
+                    if (data.message === 'maintenance'){
+                        setIsLoading(false)
+                        Swal.fire({
+                            title: data.message,
+                            text: "Manual Cashin is Currently Maintenance",
+                            icon: "error"
+                        })
+                        return
+                    }
+
                     if(data.expired){
                         Swal.fire({
                           icon: "error",
@@ -264,11 +275,12 @@ const SubAdminUpgradeSubscriptionManual = () => {
                         }).then(ok => {
                           if(ok.isConfirmed){
                             Cookies.remove("auth", { path: '/' });
-                    Cookies.remove("playfabAdminAuthToken", { path: '/' });
+                            Cookies.remove("playfabAdminAuthToken", { path: '/' });
                             window.location.replace("/login");
                           }
                         })
-                    } else {
+                    } 
+                    else {
                         if (!data.expired && data.message === "success") {
                             socket.emit("refreshcashierdata")
                             

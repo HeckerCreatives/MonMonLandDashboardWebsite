@@ -28,6 +28,7 @@ const PlayerPayoutHistory = () => {
         setTotal(totalPages);
     },[payouthistory])
 
+
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}gamewallet/findcashouthistory`,{
             credentials: 'include'
@@ -35,10 +36,11 @@ const PlayerPayoutHistory = () => {
         .then(result => result.json())
         .then(data => {
             if(data.message === 'success'){ 
-                // console.log(data)
                 setPayouthistory(data.data)
             }
         })
+
+       
     },[])
 
 return(
@@ -59,19 +61,24 @@ return(
                 </MDBTableHead>
                 <MDBTableBody className="text-center">
                 { payouthistory.length !== 0 ?
-                    handlePagination(payouthistory, page, 10)?.map((item,i) => (
-                    <tr key={i}>
-                        <td>
-                            {new Date(item.createdAt).toLocaleDateString()}
-                        </td>
-                        <td>
-                            {item.amount}
-                        </td>
-                        <td>
-                            {item.status}
-                        </td>
-                    </tr>
-                    ))
+                    handlePagination(payouthistory, page, 10)?.map((item,i) => {
+                        const tenpercent = item.amount * 0.10;
+                        const bawas = item.amount - tenpercent
+                        return(
+                        <tr key={i}>
+                            <td>
+                                {new Date(item.createdAt).toLocaleDateString()}
+                            </td>
+                            <td>
+                                {bawas}
+                            </td>
+                            <td>
+                            {item.payoutHistoryStatus !== null ? item.payoutHistoryStatus : item.payoutRequestStatus}
+                            </td>
+                        </tr>
+                        )
+                    
+                })
                     :
                     <tr>
                         <td colSpan={3}>
@@ -86,6 +93,7 @@ return(
             />
         </MDBCol>
     </MDBRow>
+    
     
     </MDBContainer>
     </>

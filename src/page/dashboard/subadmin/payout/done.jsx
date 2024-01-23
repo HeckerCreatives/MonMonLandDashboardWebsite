@@ -182,11 +182,14 @@ const SubAdminPayoutDone = () => {
                 </MDBTableHead>
                 <MDBTableBody>
                 { done.length !== 0 ?
-                    done.map((data,i) => (
-                    <tr key={`done-${i}`}>
+                    done.map((data,i) => {
+                    const tenpercent = data.amount * 0.10;
+                    const bawas = data.amount - tenpercent
+                    return(
+                        <tr key={`done-${i}`}>
                         <td>{data.id}</td>
                         <td>{data.username}</td>
-                        <td>{data.amount}</td>
+                        <td>{bawas}</td>
                         <td>{new Date(data.createdAt).toLocaleString()}</td>
                         <td>{data.walletaddress}</td>
                         <td>{data.network}</td>
@@ -206,7 +209,9 @@ const SubAdminPayoutDone = () => {
                             </MDBBtn>
                         </td>
                     </tr>
-                    ))
+                    )
+                    
+                })
                 :
                     <tr>
                         <td colSpan={10}>
@@ -229,7 +234,8 @@ const SubAdminPayoutDone = () => {
               {/* <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn> */}
             </MDBModalHeader>
             <MDBModalBody>
-            <img src={receipt} alt="" className="img-fluid"/>
+            
+            <img src={`${process.env.REACT_APP_API_URL}${receipt}`} alt="" className="img-fluid"/>
             </MDBModalBody>
 
             <MDBModalFooter>

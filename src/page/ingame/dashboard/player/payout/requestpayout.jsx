@@ -49,7 +49,13 @@ const PlayerRequestPayout = () => {
                 Swal.fire({
                     title: data.message,
                     text: data.data,
-                    icon: "success"
+                    icon: "success",
+                    allowEscapeKey : false,
+                    allowOutsideClick: false
+                }).then((ok) => {
+                    if(ok.isConfirmed){
+                        window.location.reload()
+                    }
                 })
             } 
             
