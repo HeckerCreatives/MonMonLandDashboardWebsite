@@ -67,9 +67,13 @@ return(
     </div>
     <MDBCard shadow="5">
         <MDBCardBody>
-    <div class="select-container">
+    <div class="col-md-4">
         <MDBIcon fas icon="filter" fixed/> &nbsp;
-        <select name="filter" onChange={filterwallet}>
+        <select 
+        name="filter" 
+        onChange={filterwallet}
+        style={{width: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}
+        >
             <option value="All">All</option>
             <option value="Monster Gem Farm Convert">Monster Gem Farm Convert</option>
             <option value="Monster Gem Unilevel Convert">Monster Gem Unilevel Convert</option>

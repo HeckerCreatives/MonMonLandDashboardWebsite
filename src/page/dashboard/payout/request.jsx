@@ -231,7 +231,7 @@ const AdminPayoutRequest = () => {
                 <MDBTableBody className="text-white">
                 { filteredRequest.length !== 0 ?
                     filteredRequest.map((data,i) => {
-                        const tenpercent = data.amount * 0.10;
+                        const tenpercent = data.amount * 0.05;
                         const bawas = data.amount - tenpercent
                         return(
                         <tr key={`request-${i}`} className={`bg-${getRowColorClass(data.createdAt)}`}>

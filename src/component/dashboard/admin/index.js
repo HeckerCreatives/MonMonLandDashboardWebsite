@@ -23,6 +23,12 @@ const AdminDashboard = () => {
     const [request, setRequest] = useState(0);
     const [processed, setProcessed] = useState(0);
     const [done, setDone] = useState(0);
+
+    const [dragonrequest, setDragonRequest] = useState(0);
+    const [dragonprocessed, setDragonProcessed] = useState(0);
+    const [dragondone, setDragonDone] = useState(0);
+    const [dragontotal, setDragonTotal] = useState(0);
+
     const [autopayment, setAutoPayment] = useState(0);
     const [AutoAndManual, setAutoAndManual] = useState(0);
     const [ManualPayment, setManualPayment] = useState(0);
@@ -352,6 +358,41 @@ const AdminDashboard = () => {
         setTotalAuto(data.data.totalauto)
         setTotalManual(data.data.totalmanual)
         setCombineTotal(data.data.combinetotal)
+      }
+    })
+
+    fetch(`${process.env.REACT_APP_API_URL}wallet/dragonpayoutwallet`,{
+      method: "GET",
+      credentials: 'include',
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${auth?.token}`,
+      },
+    }).then(result => result.json())
+    .then(data => {
+      if(data.expired){
+        Swal.fire({
+          icon: "error",
+          title: data.expired,
+          text: "You Will Redirect to Login",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        }).then(ok => {
+          if(ok.isConfirmed){
+            Cookies.remove("auth", { path: '/' });;
+            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+            // localStorage.removeItem("auth");
+            // localStorage.removeItem("playfabAdminAuthToken")
+            window.location.replace("/login");
+          }
+        })
+      }
+
+      if(data.message === "success" && data?.data !== null && !data.expired){
+       setDragonRequest(data.data.dragonrequest)
+        setDragonProcessed(data.data.dragonprocess)
+        setDragonDone(data.data.dragondone)
+        setDragonTotal(data.data.dragontotal)
       }
     })
 
@@ -889,9 +930,7 @@ const AdminDashboard = () => {
               td3txtbot={`Shop`}
               />
           </MDBCol>
-        </MDBRow>
-        <MDBRow>
-        <MDBCol className="my-2">
+          <MDBCol className="my-2">
             <DashCard 
               colSpan="4"
               icon={`dollar-sign`}
@@ -903,11 +942,14 @@ const AdminDashboard = () => {
               td0txtbot={`Withdrawal Fee`} 
               />
           </MDBCol>
+        </MDBRow>
+        <MDBRow>
+        
           <MDBCol className="my-2">
           <DashCard 
               colSpan="4"
               icon={`dollar-sign`}
-              thtitle={`Total Pay-out`}
+              thtitle={`Total Manual Pay-out`}
               cardtoptext={done ? done?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0}
               // txtsup={`USDT`}  
               td1={true}
@@ -922,7 +964,24 @@ const AdminDashboard = () => {
               />
           </MDBCol>
         
-
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`dollar-sign`}
+              thtitle={`Total Dragon Pay-out`}
+              cardtoptext={dragondone ? dragondone?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0}
+              // txtsup={`USDT`}  
+              td1={true}
+              td1txttop={ dragonrequest ? `${dragonrequest?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: `0`}
+              td1txtbot={`Request`} 
+              td2={true}
+              td2txttop={ dragonprocessed? `${dragonprocessed?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: `0`}
+              td2txtbot={`Process`}
+              td3={true}
+              td3txttop={dragondone ? `${dragondone?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: `0` }
+              td3txtbot={`Done`}
+              />
+          </MDBCol>
         </MDBRow>
         <br/>
         <MDBTypography tag={`h2`}>Products</MDBTypography>

@@ -62,15 +62,17 @@ return(
                 <MDBTableBody className="text-center">
                 { payouthistory.length !== 0 ?
                     handlePagination(payouthistory, page, 10)?.map((item,i) => {
-                        const tenpercent = item.amount * 0.10;
-                        const bawas = item.amount - tenpercent
+                        const tenpercent = item.amount * 0.10
+                        const fivepercent = item.amount * 0.05
+                        const bawas10 = item.amount - tenpercent
+                        const bawas5 = item.amount - fivepercent
                         return(
                         <tr key={i}>
                             <td>
                                 {new Date(item.createdAt).toLocaleDateString()}
                             </td>
                             <td>
-                                {bawas}
+                            {item.payoutHistoryStatus !== null ? bawas5 : bawas10}
                             </td>
                             <td>
                             {item.payoutHistoryStatus !== null ? item.payoutHistoryStatus : item.payoutRequestStatus}

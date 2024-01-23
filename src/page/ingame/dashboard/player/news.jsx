@@ -50,7 +50,7 @@ return(
         <img src={announcetitle} alt="" className="img-fluid"/>
     </div>
     <MDBRow>
-        <MDBCol md={6} className="offset-3">
+        <MDBCol md={6} className="offset-md-3">
         <MDBCard>
       <MDBCardBody className="text-center">
       <MDBCardTitle>{announcement.title}</MDBCardTitle>

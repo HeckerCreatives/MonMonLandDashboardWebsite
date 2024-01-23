@@ -9,25 +9,26 @@ from "mdb-react-ui-kit";
 const SuperMonmon = () => {
     const [supermonmon, setSupermonmon] = useState([]);
 
-    useEffect(()=> {
-        fetch(`${process.env.REACT_APP_API_URL}members/fiesta`,{
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include',
-            body: JSON.stringify({
-                type: 'supermonmon'
-            })
-        })
-        .then(result => result.json())
-        .then(data => {
-          if(data.message === "success"){
-            setSupermonmon(data.data) 
-          }
-        })
+    // useEffect(()=> {
+    //     fetch(`${process.env.REACT_APP_API_URL}members/fiesta`,{
+    //         method: "POST",
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         credentials: 'include',
+    //         body: JSON.stringify({
+    //             type: 'supermonmon'
+    //         })
+    //     })
+    //     .then(result => result.json())
+    //     .then(data => {
+    //       if(data.message === "success"){
+    //         // setSupermonmon(data.data) 
+    //         // console.log(data.data)
+    //       }
+    //     })
             
-    },[]) 
+    // },[]) 
 
 return(
     <>

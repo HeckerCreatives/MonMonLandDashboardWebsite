@@ -12,7 +12,6 @@ const Fiesta = () => {
   const [basicActive, setBasicActive] = useState('tab1');
   const [palosebo, setPalosebo] = useState([]);
   const [supermonmon, setSupermonmon] = useState([]);
-
   useEffect(()=> {
     fetch(`${process.env.REACT_APP_API_URL}members/fiesta`,{
         method: "POST",
@@ -28,6 +27,7 @@ const Fiesta = () => {
     .then(data => {
       if(data.message === "success"){
         setSupermonmon(data.data) 
+        console.log(data.data)
       }
     })
 
@@ -80,10 +80,10 @@ return(
 
       <MDBTabsContent>
         <MDBTabsPane show={basicActive === 'tab1'}>
-          <FiestaGame game={palosebo} prizepool={'1,000'}/>
+          <FiestaGame game={palosebo} prizepool={palosebo?.prizepools}/>
         </MDBTabsPane>
         <MDBTabsPane show={basicActive === 'tab2'}>
-          <FiestaGame game={supermonmon} prizepool={'1,000'}/>
+          <FiestaGame game={supermonmon} prizepool={supermonmon.prizepools}/>
         </MDBTabsPane>
         {/* <MDBTabsPane show={basicActive === 'tab3'}>Tab 3 content</MDBTabsPane> */}
       </MDBTabsContent>

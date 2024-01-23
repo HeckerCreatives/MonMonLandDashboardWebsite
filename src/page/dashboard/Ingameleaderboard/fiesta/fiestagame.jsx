@@ -26,7 +26,11 @@ return(
       <div className="d-flex align-items-center">
       <MDBIcon fas icon="dollar-sign" size="3x"/>
         <MDBCardText className="ms-2 fw-bold">
-          {prizepool}
+          {prizepool?.toLocaleString('en-US', {
+            style: 'decimal',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          })}
         </MDBCardText>
       </div>
       
@@ -44,25 +48,22 @@ return(
                 </MDBTableHead>
                 <MDBTableBody className="fw-bold text-center">
                 { game.length !== 0 ? 
-                    game.map((data, i) => (
-                    <tr key={i} className="">
-                        <td>
-                            {i+1}
-                        </td>
-                        <td>
-                            {data.owner.username}
-                        </td>
-                        <td>
-                            {data.amount}
-                        </td>
-                    </tr>
-                    ))
-                    :
-                    <tr>
-                        <td colSpan={3}>
-                        No Data
-                        </td>
-                    </tr>
+                    Object.keys(game.leaderboard).map((key) => {
+                        const entry = game.leaderboard[key];
+                        return (
+                        <tr key={key}>
+                            <td>{Math.floor(key) + 1}</td>
+                            <td>{entry.username}</td>
+                            <td>{entry.score}</td>
+                        </tr>
+                        );
+                    })
+                        :
+                        <tr>
+                            <td colSpan={3}>
+                            No Data
+                            </td>
+                        </tr>
                 }
                 </MDBTableBody>
             </MDBTable>

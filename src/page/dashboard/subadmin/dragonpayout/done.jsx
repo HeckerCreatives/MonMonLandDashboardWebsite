@@ -287,7 +287,7 @@ const SubAdminPayoutDragonDone = () => {
                         
                     </tr>
                 </MDBTableHead>
-                <MDBTableBody className="text-white">
+                <MDBTableBody className="">
                 { filteredRequest.length !== 0 ?
                     handlePagination(filteredRequest, page, 10)?.map((data,i) => {
                         const tenpercent = data.amount * 0.10;
