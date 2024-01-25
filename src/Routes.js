@@ -122,6 +122,7 @@ import SubAdminPayoutDragonProcess from "./page/dashboard/subadmin/dragonpayout/
 import SubAdminPayoutDragonDone from "./page/dashboard/subadmin/dragonpayout/done";
 import Maintenance from "./page/dashboard/Maintenance";
 import Groupchat from "./page/home/groupchat/groupchat";
+import GrantItems from "./page/dashboard/grantitems";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -164,6 +165,8 @@ const Routers = () => {
         <Route path="gameannouncement" element={<GameAnnouncement/>}/>
 
         <Route path="maintenance" element={<Maintenance/>}/>
+
+        <Route path="grantitems" element={<GrantItems/>}/>
 
         <Route path="ingameleaderboard">
           <Route path="topearners" element={<TopEarners/>}/>
@@ -234,7 +237,8 @@ const Routers = () => {
         </Route>
         
         <Route path="upgradesubscription" element={<SubAdminUpgradeSubscriptionManual/>}/>
-
+        <Route path="grantitems" element={<GrantItems/>}/>
+        
         <Route path="payout">
         <Route path="request" element={<SubAdminPayoutRequest/>}/>
         <Route path="process" element={<SubAdminPayoutProcess/>}/>

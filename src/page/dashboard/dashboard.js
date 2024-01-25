@@ -153,6 +153,14 @@ const Dashboard = () => {
           ],
         },
         {
+          name: "Grant Game Items",
+          path: "/dashboard/Administrator/grantitems",
+          icon: "gift",
+          children: [
+           
+          ],
+        },
+        {
           name: "Game Announcement",
           path: "/dashboard/Administrator/gameannouncement",
           icon: "bullhorn",
@@ -412,6 +420,14 @@ const Dashboard = () => {
               name: "Done",
               path: "/dashboard/SubAdministrator/dragonpayout/done",
             },
+          ],
+        },
+        {
+          name: "Grant Game Items",
+          path: "/dashboard/SubAdministrator/grantitems",
+          icon: "gift",
+          children: [
+           
           ],
         },
         {
