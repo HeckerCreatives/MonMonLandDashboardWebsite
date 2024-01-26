@@ -358,7 +358,7 @@ const GrantItems = () => {
                     </select>
 
                     <MDBInput name="username" className="mt-3" label='Input Players Username' required/>
-                    <MDBInput name="expiration" className="mt-3" label='Input Energy Quantity' type="number" min={"1"} max={"999"} maxLength={"3"} required/>
+                    <MDBInput name="expiration" className="mt-3" label='Input Days To Be Granted' type="number" min={"1"} max={"999"} maxLength={"3"} required/>
                     
                     <MDBBtn type="submit" className="mt-3">
                         {
