@@ -19,224 +19,479 @@ const GrantItems = () => {
         e.preventDefault();
         setIsLoading(true)
         const { energytype, username, quantity } = e.target
-        fetch(`${process.env.REACT_APP_API_URL}members/grantenergy`,{
-            method: "POST",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username: username.value,
-                name: energytype.value,
-                quantity: quantity.value
-            })
-        })
-        .then(result => result.json())
-        .then(data => {
-            if(data.message === "success"){
-                setIsLoading(false)
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: `Energy Granted to ${username.value}`
-                }).then(ok => {
-                    if(ok.isConfirmed){
-                        window.location.reload()
-                    }
+        Swal.fire({ 
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, grant it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`${process.env.REACT_APP_API_URL}members/grantenergy`,{
+                    method: "POST",
+                    credentials: 'include',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        username: username.value,
+                        name: energytype.value,
+                        quantity: quantity.value
+                    })
                 })
-            } else if (data.message === "failed"){
-                setIsLoading(false)
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Failed',
-                    text: data.data
-                }).then(ok => {
-                    if(ok.isConfirmed){
-                        window.location.reload()
+                .then(result => result.json())
+                .then(data => {
+                    if(data.message === "success"){
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: `Energy Granted to ${username.value}`
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    } else if (data.message === "failed"){
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: data.data
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    } else {
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: data.data
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
                     }
-                })
-            } else {
-                setIsLoading(false)
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Failed',
-                    text: data.data
-                }).then(ok => {
-                    if(ok.isConfirmed){
-                        window.location.reload()
-                    }
+                    
                 })
             }
-            
-        })
+          });
+
+       
     }
 
     const toolitem = (e) => {
         e.preventDefault();
         setIsLoading(true)
         const { tooltype, username, expiration } = e.target
-        fetch(`${process.env.REACT_APP_API_URL}members/granttool`,{
-            method: "POST",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username: username.value,
-                type: tooltype.value,
-                expiration: expiration.value
-            })
-        })
-        .then(result => result.json())
-        .then(data => {
-            if(data.message === "success"){
-                setIsLoading(false)
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: `Tool Granted to ${username.value}`
-                }).then(ok => {
-                    if(ok.isConfirmed){
-                        window.location.reload()
-                    }
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, grant it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`${process.env.REACT_APP_API_URL}members/granttool`,{
+                    method: "POST",
+                    credentials: 'include',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        username: username.value,
+                        type: tooltype.value,
+                        expiration: expiration.value
+                    })
                 })
-            } else if (data.message === "failed"){
-                setIsLoading(false)
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Failed',
-                    text: data.data
-                }).then(ok => {
-                    if(ok.isConfirmed){
-                        window.location.reload()
+                .then(result => result.json())
+                .then(data => {
+                    if(data.message === "success"){
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: `Tool Granted to ${username.value}`
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    } else if (data.message === "failed"){
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: data.data
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    } else {
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: data.data
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
                     }
-                })
-            } else {
-                setIsLoading(false)
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Failed',
-                    text: data.data
-                }).then(ok => {
-                    if(ok.isConfirmed){
-                        window.location.reload()
-                    }
+                    
                 })
             }
-            
-        })
+          });
+        
     }
 
     const clockitem = (e) => {
         e.preventDefault();
         setIsLoading(true)
         const { clocktype, username, expiration } = e.target
-        fetch(`${process.env.REACT_APP_API_URL}members/grantclock`,{
-            method: "POST",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username: username.value,
-                type: clocktype.value,
-                expiration: expiration.value
-            })
-        })
-        .then(result => result.json())
-        .then(data => {
-            if(data.message === "success"){
-                setIsLoading(false)
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: `Clock Granted to ${username.value}`
-                }).then(ok => {
-                    if(ok.isConfirmed){
-                        window.location.reload()
-                    }
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, grant it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`${process.env.REACT_APP_API_URL}members/grantclock`,{
+                    method: "POST",
+                    credentials: 'include',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        username: username.value,
+                        type: clocktype.value,
+                        expiration: expiration.value
+                    })
                 })
-            } else if (data.message === "failed"){
-                setIsLoading(false)
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Failed',
-                    text: data.data
-                }).then(ok => {
-                    if(ok.isConfirmed){
-                        window.location.reload()
+                .then(result => result.json())
+                .then(data => {
+                    if(data.message === "success"){
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: `Clock Granted to ${username.value}`
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    } else if (data.message === "failed"){
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: data.data
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    } else {
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: data.data
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
                     }
-                })
-            } else {
-                setIsLoading(false)
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Failed',
-                    text: data.data
-                }).then(ok => {
-                    if(ok.isConfirmed){
-                        window.location.reload()
-                    }
+                    
                 })
             }
-            
-        })
+          });
     }
 
     const cosmeticitem = (e) => {
         e.preventDefault();
         setIsLoading(true)
         const { cosmetictype, username, expiration } = e.target
-        fetch(`${process.env.REACT_APP_API_URL}members/grantcosmetic`,{
-            method: "POST",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username: username.value,
-                name: cosmetictype.value,
-                expiration: expiration.value
-            })
-        })
-        .then(result => result.json())
-        .then(data => {
-            if(data.message === "success"){
-                setIsLoading(false)
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: `Clock Granted to ${username.value}`
-                }).then(ok => {
-                    if(ok.isConfirmed){
-                        window.location.reload()
-                    }
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, grant it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`${process.env.REACT_APP_API_URL}members/grantcosmetic`,{
+                    method: "POST",
+                    credentials: 'include',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        username: username.value,
+                        name: cosmetictype.value,
+                        expiration: expiration.value
+                    })
                 })
-            } else if (data.message === "failed"){
-                setIsLoading(false)
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Failed',
-                    text: data.data
-                }).then(ok => {
-                    if(ok.isConfirmed){
-                        window.location.reload()
+                .then(result => result.json())
+                .then(data => {
+                    if(data.message === "success"){
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: `Clock Granted to ${username.value}`
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    } else if (data.message === "failed"){
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: data.data
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    } else {
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: data.data
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
                     }
-                })
-            } else {
-                setIsLoading(false)
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Failed',
-                    text: data.data
-                }).then(ok => {
-                    if(ok.isConfirmed){
-                        window.location.reload()
-                    }
+                    
                 })
             }
-            
-        })
+          });
+    }
+
+    const walletbalance = (e) => {
+        e.preventDefault();
+        setIsLoading(true)
+        const { amount, username, description } = e.target
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, grant it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`${process.env.REACT_APP_API_URL}members/grantbalance`,{
+                    method: "POST",
+                    credentials: 'include',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        username: username.value,
+                        amount: amount.value,
+                        description: description.value
+                    })
+                })
+                .then(result => result.json())
+                .then(data => {
+                    if(data.message === "success"){
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: `${amount.value} Wallet Balance Granted to ${username.value}`
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    } else if (data.message === "failed"){
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: data.data
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    } else {
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: data.data
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    }
+                    
+                })
+            }
+          });
+    }
+
+    const monstercoin = (e) => {
+        e.preventDefault();
+        setIsLoading(true)
+        const { amount, username, description } = e.target
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, grant it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`${process.env.REACT_APP_API_URL}members/grantmonstercoin`,{
+                    method: "POST",
+                    credentials: 'include',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        username: username.value,
+                        amount: amount.value,
+                        description: description.value
+                    })
+                })
+                .then(result => result.json())
+                .then(data => {
+                    if(data.message === "success"){
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: `${amount.value} Monster Coin Granted to ${username.value}`
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    } else if (data.message === "failed"){
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: data.data
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    } else {
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: data.data
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    }
+                    
+                })
+            }
+          });
+    }
+
+    const monstergem = (e) => {
+        e.preventDefault();
+        setIsLoading(true)
+        const { amount, username, description } = e.target
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, grant it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`${process.env.REACT_APP_API_URL}members/grantmonstergem`,{
+                    method: "POST",
+                    credentials: 'include',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        username: username.value,
+                        amount: amount.value,
+                        description: description.value
+                    })
+                })
+                .then(result => result.json())
+                .then(data => {
+                    if(data.message === "success"){
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: `${amount.value} Monster Gem Granted to ${username.value}`
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    } else if (data.message === "failed"){
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: data.data
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    } else {
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: data.data
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    }
+                    
+                })
+            }
+          });
     }
 
     return (
@@ -360,6 +615,72 @@ const GrantItems = () => {
                     <MDBInput name="username" className="mt-3" label='Input Players Username' required/>
                     <MDBInput name="expiration" className="mt-3" label='Input Days To Be Granted' type="number" min={"1"} max={"999"} maxLength={"3"} required/>
                     
+                    <MDBBtn type="submit" className="mt-3">
+                        {
+                            isloading ?
+                            <MDBSpinner size="sm"/>
+                            :
+                            "Grant"
+                        }
+                    </MDBBtn>
+                </MDBCardBody>
+            </MDBCard>
+            </form>
+            </MDBCol>
+        </MDBRow>
+
+        <MDBRow>
+            <MDBCol md={4} className=" mt-5 ">
+            <form onSubmit={walletbalance}>
+            <MDBCard>
+                <MDBCardBody>
+                    <MDBCardTitle className="text-center">Grant Wallet Balance</MDBCardTitle>
+
+                    <MDBInput name="username" className="mt-3" label='Input Players Username' required/>
+                    <MDBInput name="amount" className="mt-3" label='Input Amount To Be Granted' type="number" min={"1"} max={"999"} maxLength={"3"} required/>
+                    <MDBTextArea name="description" className="mt-3" rows={5} label='Input Description Here' required/>
+                    <MDBBtn type="submit" className="mt-3">
+                        {
+                            isloading ?
+                            <MDBSpinner size="sm"/>
+                            :
+                            "Grant"
+                        }
+                    </MDBBtn>
+                </MDBCardBody>
+            </MDBCard>
+            </form>
+            </MDBCol>
+            <MDBCol md={4} className=" mt-5 ">
+            <form onSubmit={monstercoin}>
+            <MDBCard>
+                <MDBCardBody>
+                    <MDBCardTitle className="text-center">Grant Monster Coin</MDBCardTitle>
+
+                    <MDBInput name="username" className="mt-3" label='Input Players Username' required/>
+                    <MDBInput name="amount" className="mt-3" label='Input Amount To Be Granted' type="number" min={"1"} max={"999"} maxLength={"3"} required/>
+                    <MDBTextArea name="description" className="mt-3" rows={5} label='Input Description Here' required/>
+                    <MDBBtn type="submit" className="mt-3">
+                        {
+                            isloading ?
+                            <MDBSpinner size="sm"/>
+                            :
+                            "Grant"
+                        }
+                    </MDBBtn>
+                </MDBCardBody>
+            </MDBCard>
+            </form>
+            </MDBCol>
+            <MDBCol md={4} className=" mt-5 ">
+            <form onSubmit={monstergem}>
+            <MDBCard>
+                <MDBCardBody>
+                    <MDBCardTitle className="text-center">Grant Monster Gem</MDBCardTitle>
+
+                    <MDBInput name="username" className="mt-3" label='Input Players Username' required/>
+                    <MDBInput name="amount" className="mt-3" label='Input Amount To Be Granted' type="number" min={"1"} max={"999"} maxLength={"3"} required/>
+                    <MDBTextArea name="description" className="mt-3" rows={5} label='Input Description Here' required/>
                     <MDBBtn type="submit" className="mt-3">
                         {
                             isloading ?
