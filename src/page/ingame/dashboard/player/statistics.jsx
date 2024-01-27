@@ -50,7 +50,7 @@ const Dashboardstatistics = ({image, title, number, number1}) => {
     })
   },[])
 
-  const peso = Math.floor(number) * rate
+  const peso = parseFloat(number) * parseFloat(rate)
   const mcval = (number1 * mc)
   const mcpeso = (mcval * rate)
 return(
