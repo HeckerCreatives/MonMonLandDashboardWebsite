@@ -49,8 +49,7 @@ const Dashboardstatistics = ({image, title, number, number1}) => {
       setMc(data.data)
     })
   },[])
-
-  const peso = parseFloat(number) * parseFloat(rate)
+  const peso = (number * rate)
   const mcval = (number1 * mc)
   const mcpeso = (mcval * rate)
 return(
@@ -66,11 +65,19 @@ return(
                 <p className="text-end">{title}</p>
                 {
                   number &&
-                  <h2 className="text-end">${number}</h2>
+                  <h2 className="text-end">${number?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}</h2>
                 }
                 {
                   number1 &&
-                  <h2 className="text-end">{number1}</h2>
+                  <h2 className="text-end">{number1?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}</h2>
                 }
               </div>
               {
