@@ -73,6 +73,7 @@ const AdminDashboard = () => {
     const [incentives, setIncentives] = useState(0)
     const [monstergem, setMonstergem] = useState(0)
     const [unilevelmonstergem, setUnilevelMg] = useState(0)
+    const [sponsorwallet, setSponsorWallet] = useState(0)
     const [tradepayin, setTradepayin] = useState(0)
     const [trademerchandise, setTrademerchandise] = useState(0)
     const [totaltrade, setTotalTrade] = useState(0)
@@ -794,6 +795,7 @@ const AdminDashboard = () => {
         setComplanpayin(data.data.complanpayin)
         setComplanmerchandise(data.data.complanmerchandise)
         setUnilevel(data.data.unilevelbonus)
+        setSponsorWallet(data.data.sponsorwallet)
       }
     })
   },[])
@@ -1057,6 +1059,34 @@ const AdminDashboard = () => {
               maximumFractionDigits: 2
               })}
               td2txtbot={`Merchandise`}
+              />
+          </MDBCol>
+        </MDBRow>
+        <MDBRow>
+        <MDBCol className="col-lg-4 my-2">
+            <DashCard 
+              colSpan="4"
+              icon={`wallet`} 
+              thtitle={`Sponsor Wallet`}
+              cardtoptext={sponsorwallet?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              // td1={true}
+              // td1txttop={complanpayin?.toLocaleString('en-US', {
+              // style: 'decimal',
+              // minimumFractionDigits: 2,
+              // maximumFractionDigits: 2
+              // })}
+              // td1txtbot={`Payin`} 
+              // td2={true}
+              // td2txttop={complanmerchandise?.toLocaleString('en-US', {
+              // style: 'decimal',
+              // minimumFractionDigits: 2,
+              // maximumFractionDigits: 2
+              // })}
+              // td2txtbot={`Merchandise`}
               />
           </MDBCol>
         </MDBRow>

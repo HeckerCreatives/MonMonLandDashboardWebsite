@@ -123,6 +123,7 @@ import SubAdminPayoutDragonDone from "./page/dashboard/subadmin/dragonpayout/don
 import Maintenance from "./page/dashboard/Maintenance";
 import Groupchat from "./page/home/groupchat/groupchat";
 import GrantItems from "./page/dashboard/grantitems";
+import Sponsorprize from "./page/dashboard/sponsor/setting";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -175,6 +176,7 @@ const Routers = () => {
 
         <Route path="sponsor">
           <Route path="monmonbonanza" element={<MonmonBonanza/>}/>
+          <Route path="setting" element={<Sponsorprize/>}/>
         </Route>
 
         <Route path="upgradesubscription">

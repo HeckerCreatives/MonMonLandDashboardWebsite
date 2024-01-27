@@ -449,7 +449,7 @@ const Header = () => {
     ]
 
     useEffect(() => {
-      fetch(`${process.env.REACT_APP_API_URL}communityactivy/find`,{
+      fetch(`${process.env.REACT_APP_API_URL}communityactivy/findcoin`,{
         credentials: 'include',
       })
       .then(result => result.json())

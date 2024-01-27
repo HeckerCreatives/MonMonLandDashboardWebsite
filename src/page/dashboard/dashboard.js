@@ -146,10 +146,10 @@ const Dashboard = () => {
               name: "Monmonbonanza",
               path: "/dashboard/Administrator/sponsor/monmonbonanza"
             },
-            // {
-            //   name: "Fiesta",
-            //   path: "/dashboard/Administrator/ingameleaderboard/fiesta"
-            // }
+            {
+              name: "Settings",
+              path: "/dashboard/Administrator/sponsor/setting"
+            }
           ],
         },
         {
