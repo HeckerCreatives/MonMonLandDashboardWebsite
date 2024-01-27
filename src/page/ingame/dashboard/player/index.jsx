@@ -304,14 +304,18 @@ const PlayerDashboard = () => {
             <Dashboardstatistics 
               image={walleticon}
               title={'Current Wallet Balance'}
-              number={wallets.balance}
+              number={wallets?.balance}
               />
           </MDBCol>
           <MDBCol lg={3} className="my-2">
           <Dashboardstatistics 
               image={mcicon}
               title={'Total Monster Coin'}
-              number1={wallets.monstercoin}
+              number1={wallets.monstercoin?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
               txtsup1={wallets.subscriberincome?.toLocaleString('en-US', {
               style: 'decimal',
               minimumFractionDigits: 2,
@@ -324,7 +328,11 @@ const PlayerDashboard = () => {
               colSpan="4"
               image={mgcomiicon}
               title={'Total Monster Gem Commission'}
-              number={wallets.monstergemunilevel
+              number={wallets?.monstergemunilevel?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })
               }
               txtsup1={wallets.monstergemunilevel
               ?.toLocaleString('en-US', {
@@ -339,7 +347,11 @@ const PlayerDashboard = () => {
               colSpan="4"
               image={mgfarm}
               title={'Total Monster Gem Grinding'}
-              number={wallets.monstergemfarm}
+              number={wallets?.monstergemfarm?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
               txtsup1={wallets.monstergemfarm?.toLocaleString('en-US', {
               style: 'decimal',
               minimumFractionDigits: 2,

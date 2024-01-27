@@ -65,7 +65,7 @@ return(
                 <p className="text-end">{title}</p>
                 {
                   number &&
-                  <h2 className="text-end">${number?.toLocaleString('en-US', {
+                  <h2 className="text-end">${number.toLocaleString('en-US', {
                   style: 'decimal',
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
@@ -73,7 +73,7 @@ return(
                 }
                 {
                   number1 &&
-                  <h2 className="text-end">{number1?.toLocaleString('en-US', {
+                  <h2 className="text-end">{number1.toLocaleString('en-US', {
                   style: 'decimal',
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
@@ -82,7 +82,7 @@ return(
               </div>
               {
                 number &&
-                <p className="text-end">₱ {peso?.toLocaleString('en-US', {
+                <p className="text-end">₱ {peso.toLocaleString('en-US', {
                   style: 'decimal',
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
@@ -90,11 +90,11 @@ return(
               }
               {
                 number1 &&
-                <p className="text-end">${mcval?.toLocaleString('en-US', {
+                <p className="text-end">${mcval.toLocaleString('en-US', {
                   style: 'decimal',
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
-                  })} (₱{mcpeso?.toLocaleString('en-US', {
+                  })} (₱{mcpeso.toLocaleString('en-US', {
                   style: 'decimal',
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
