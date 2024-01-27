@@ -52,7 +52,7 @@ const Dashboardstatistics = ({image, title, number, number1}) => {
 
   const peso = Math.floor(number) * rate
   const mcval = (number1 * mc)
-  const mcpeso = (number1 * rate)
+  const mcpeso = (mcval * rate)
 return(
     <>
     <MDBCard className="text-mute h-100">          
