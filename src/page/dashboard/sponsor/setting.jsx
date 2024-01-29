@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import PaginationPager from "../../../component/pagination";
 import Cookies from 'js-cookie';
 import CreatePrize from "./createprize";
+import EditPrize from "./editprize";
 const Sponsorprize = () => {
     const [basicModal, setBasicModal] = useState(false);
     const toggleOpen = () => setBasicModal(!basicModal);
@@ -174,6 +175,7 @@ const Sponsorprize = () => {
                         {prize.isprize == "1" ? "Active" : "Inactive"}
                         </td>
                         <td>
+                        <EditPrize data={prize}/>
                         <MDBBtn 
                         className="m-1"
                         size="sm"

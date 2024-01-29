@@ -120,22 +120,22 @@ const UserDashboard = () => {
         //   children: [],
         // },
         {
-          name: "Wallet History",
-          path: "/Dashboard/User/wallethistory",
+          name: "History",
+          path: "",
           icon: "history",
           children: [
-            // {
-            //   name: "",
-            //   path: "",
-            // },
-            // {
-            //   name: "Total Income Wallet",
-            //   path: "/Dashboard/User/totalincomehistory",
-            // },
-            // {
-            //   name: "Monster Coin Wallet",
-            //   path: "/Dashboard/User/monstercoinhistory",
-            // },
+            {
+              name: "Wallet History",
+              path: "/Dashboard/User/wallethistory",
+            },
+            {
+              name: "Transaction History",
+              path: "/Dashboard/User/transactionhistory",
+            },
+            {
+              name: "Grinding History",
+              path: "/Dashboard/User/grindinghistory",
+            },
             // {
             //   name: "Monster Gem Unilevel",
             //   path: "/Dashboard/User/monstergemunilevel",

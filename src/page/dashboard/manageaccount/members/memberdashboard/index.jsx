@@ -19,6 +19,8 @@ import MemberNetwork from './network';
 import MemberInventory from './inventory';
 import Task from './task';
 import MemberPaymentdetails from './paymentdetails';
+import MemberTransactionHistory from './transactionhistory';
+import MemberGrindingHistory from './grindinghistory';
 const MembersProfile = () => {
     const [iconsActive, setIconsActive] = useState('pill1');
     const [searchParams] = useSearchParams();
@@ -72,6 +74,18 @@ return (
             <MDBIcon fas icon='history' className='me-2' /> Wallet History
             </MDBTabsLink>
         </MDBTabsItem>
+        <MDBTabsItem>
+            <MDBTabsLink onClick={() => handleIconsClick('pill8')} active={iconsActive === 'pill8'}>
+            
+            <MDBIcon fas icon='history' className='me-2' /> Transaction History
+            </MDBTabsLink>
+        </MDBTabsItem>
+        <MDBTabsItem>
+            <MDBTabsLink onClick={() => handleIconsClick('pill9')} active={iconsActive === 'pill9'}>
+            
+            <MDBIcon fas icon='history' className='me-2' /> Grinding History
+            </MDBTabsLink>
+        </MDBTabsItem>
         </MDBTabs>
 
         <MDBTabsContent>
@@ -95,6 +109,12 @@ return (
         </MDBTabsPane>
         <MDBTabsPane show={iconsActive === 'pill7'}>
             <MemberPaymentdetails username={username}/>
+        </MDBTabsPane>
+        <MDBTabsPane show={iconsActive === 'pill8'}>
+            <MemberTransactionHistory username={username}/>
+        </MDBTabsPane>
+        <MDBTabsPane show={iconsActive === 'pill9'}>
+            <MemberGrindingHistory username={username}/>
         </MDBTabsPane>
         </MDBTabsContent>
     </MDBContainer>

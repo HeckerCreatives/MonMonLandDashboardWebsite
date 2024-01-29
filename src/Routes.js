@@ -124,6 +124,8 @@ import Maintenance from "./page/dashboard/Maintenance";
 import Groupchat from "./page/home/groupchat/groupchat";
 import GrantItems from "./page/dashboard/grantitems";
 import Sponsorprize from "./page/dashboard/sponsor/setting";
+import PlayerTransactionHistory from "./page/ingame/dashboard/player/history/transactionhistory";
+import PlayerGrindingHistory from "./page/ingame/dashboard/player/history/grindinghistory";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -336,6 +338,8 @@ const Routers = () => {
             <Route path="monstergemgrind" element={<PlayerMGGrindHistory/>}/>
             <Route path="payouthistory" element={<PlayerPayoutHistory/>}/>
             <Route path="payoutrequest" element={<PlayerRequestPayout/>}/>
+            <Route path="transactionhistory" element={<PlayerTransactionHistory/>}/>
+            <Route path="grindinghistory" element={<PlayerGrindingHistory/>}/>
         </Route>
       </Route>
 
