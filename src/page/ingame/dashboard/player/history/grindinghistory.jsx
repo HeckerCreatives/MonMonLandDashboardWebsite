@@ -28,7 +28,7 @@ const PlayerGrindingHistory = () => {
 
     useEffect(()=> {
         fetch(`${process.env.REACT_APP_API_URL}gamewallet/findgrindinghistory`, {
-            method: "POST",
+            method: "GET",
             credentials: 'include',
             headers:{
               "Content-Type": 'application/json'
@@ -65,7 +65,7 @@ const PlayerGrindingHistory = () => {
         })
       } else {
         fetch(`${process.env.REACT_APP_API_URL}gamewallet/findgrindinghistory`, {
-          method: "POST",
+          method: "GET",
           credentials: 'include',
           headers:{
             "Content-Type": 'application/json'

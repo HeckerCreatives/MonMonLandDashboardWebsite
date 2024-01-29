@@ -26,7 +26,7 @@ const PlayerTransactionHistory = () => {
 
     useEffect(()=> {
         fetch(`${process.env.REACT_APP_API_URL}gamewallet/findtransactionhistory`, {
-            method: "POST",
+            method: "GET",
             credentials: 'include',
             headers:{
               "Content-Type": 'application/json'
@@ -57,7 +57,7 @@ const PlayerTransactionHistory = () => {
         })
       } else {
         fetch(`${process.env.REACT_APP_API_URL}gamewallet/findtransactionhistory`, {
-          method: "POST",
+          method: "GET",
           credentials: 'include',
           headers:{
             "Content-Type": 'application/json'
