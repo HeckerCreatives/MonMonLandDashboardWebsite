@@ -26,6 +26,10 @@ const Network = () => {
     const [network4, setNetwork4] = useState([])
     const [network5, setNetwork5] = useState([])
     const [network6, setNetwork6] = useState([])
+    const [network7, setNetwork7] = useState([])
+    const [network8, setNetwork8] = useState([])
+    const [network9, setNetwork9] = useState([])
+    const [network10, setNetwork10] = useState([])
     const [commission, setCommission] = useState(0)
     const handleBasicClick = (value) => {
         if (value === basicActive) {
@@ -48,6 +52,10 @@ const Network = () => {
             setNetwork4(data.data.find(item => item._id === 4))
             setNetwork5(data.data.find(item => item._id === 5))
             setNetwork6(data.data.find(item => item._id === 6))
+            setNetwork7(data.data.find(item => item._id === 7))
+            setNetwork8(data.data.find(item => item._id === 8))
+            setNetwork9(data.data.find(item => item._id === 9))
+            setNetwork10(data.data.find(item => item._id === 10))
           }
         })
 
@@ -124,6 +132,26 @@ return(
            Level 6
           </MDBTabsLink>
         </MDBTabsItem>
+        <MDBTabsItem className="network-nav-pills">
+          <MDBTabsLink className="network-nav-link" onClick={() => handleBasicClick('7')} active={basicActive === '7'}>
+           Level 7
+          </MDBTabsLink>
+        </MDBTabsItem>
+        <MDBTabsItem className="network-nav-pills">
+          <MDBTabsLink className="network-nav-link" onClick={() => handleBasicClick('8')} active={basicActive === '8'}>
+           Level 8
+          </MDBTabsLink>
+        </MDBTabsItem>
+        <MDBTabsItem className="network-nav-pills">
+          <MDBTabsLink className="network-nav-link" onClick={() => handleBasicClick('9')} active={basicActive === '9'}>
+           Level 9
+          </MDBTabsLink>
+        </MDBTabsItem>
+        <MDBTabsItem className="network-nav-pills">
+          <MDBTabsLink className="network-nav-link" onClick={() => handleBasicClick('10')} active={basicActive === '10'}>
+           Level 10
+          </MDBTabsLink>
+        </MDBTabsItem>
       </MDBTabs>
 
       <MDBTabsContent>
@@ -144,6 +172,18 @@ return(
         </MDBTabsPane>
         <MDBTabsPane show={basicActive === '6'}>
             <PlayerPerlevel data={network6} level={'6'}/>
+        </MDBTabsPane>
+        <MDBTabsPane show={basicActive === '7'}>
+            <PlayerPerlevel data={network7} level={'7'}/>
+        </MDBTabsPane>
+        <MDBTabsPane show={basicActive === '8'}>
+            <PlayerPerlevel data={network8} level={'8'}/>
+        </MDBTabsPane>
+        <MDBTabsPane show={basicActive === '9'}>
+            <PlayerPerlevel data={network9} level={'9'}/>
+        </MDBTabsPane>
+        <MDBTabsPane show={basicActive === '10'}>
+            <PlayerPerlevel data={network10} level={'10'}/>
         </MDBTabsPane>
       </MDBTabsContent>
     </MDBCardBody>
