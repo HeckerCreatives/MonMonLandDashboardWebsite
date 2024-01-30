@@ -187,22 +187,22 @@ return(
                      0%
                      </td>
                      <td>
-                     3%
+                     2%
                      </td>
                      <td>
                      5%
                      </td>
                      <td>
+                     2%
+                     </td>
+                     <td>
                      5%
                      </td>
                      <td>
-                     10%
-                     </td>
-                     <td>
                       1%
                      </td>
                      <td>
-                      1%
+                      2%
                      </td> 
                      <td>
                       30%
@@ -216,47 +216,47 @@ return(
                         Tools
                      </td>
                      <td>
-                     22%
+                     30% 
                      </td>
                      <td>
                      3%
                      </td>
                      <td>
-                     15%
+                     20%
                      </td>
                      <td>
                      0%
                      </td>
                      <td>
-                     3%
+                     2%
                      </td>
                      <td>
                      5%
                      </td>
                      <td>
+                     2%
+                     </td>
+                     <td>
                      5%
                      </td>
                      <td>
-                     10%
-                     </td>
-                     <td>
                       1%
                      </td>
                      <td>
-                      1%
+                      2%
                      </td> 
                      <td>
-                      35%
+                      30%
                      </td> 
-                     {/* <td>
+                     <td>
                      0%
-                     </td>         */}
+                     </td>
                     </tr>
                     <tr>
                      <td className="fw-bold text-warning">
                         Shop
                      </td>
-                     <td>
+                     {/* <td>
                      17%
                      </td>
                      <td>
@@ -289,11 +289,47 @@ return(
                      <td>
                       40%
                      </td> 
-                     {/* <td>
+                     <td>
                      0%
                      </td>        */}
+                     <td>
+                     30% 
+                     </td>
+                     <td>
+                     3%
+                     </td>
+                     <td>
+                     20%
+                     </td>
+                     <td>
+                     0%
+                     </td>
+                     <td>
+                     2%
+                     </td>
+                     <td>
+                     5%
+                     </td>
+                     <td>
+                     2%
+                     </td>
+                     <td>
+                     5%
+                     </td>
+                     <td>
+                      1%
+                     </td>
+                     <td>
+                      2%
+                     </td> 
+                     <td>
+                      30%
+                     </td> 
+                     <td>
+                     0%
+                     </td>
                     </tr>
-                    {/* <tr>
+                    <tr>
                      <td className="fw-bold text-warning">
                         Ads
                      </td>
@@ -301,39 +337,39 @@ return(
                      0%
                      </td>
                      <td>
-                     5%
+                     0%
                      </td>
                      <td>
-                     50%
+                     35%
                      </td>
                      <td>
-                     5%
+                     0%
                      </td>
                      <td>
-                     5%
-                     </td>
-                     <td>
-                     5%
+                     0%
                      </td>
                      <td>
                      5%
                      </td>
                      <td>
-                     20%
+                     3%
                      </td>
                      <td>
-                      3%
+                     10%
                      </td>
                      <td>
-                      2%
+                      1%
+                     </td>
+                     <td>
+                      1%
                      </td>  
                      <td>
-                       0%
+                       35%
                      </td> 
                      <td>
-                       0%
+                       10%
                      </td>       
-                    </tr> */}
+                    </tr>
                     {/* <tr>
                      <td className="fw-bold text-warning">
                       Trade
