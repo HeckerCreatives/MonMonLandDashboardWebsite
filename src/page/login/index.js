@@ -66,32 +66,14 @@ const Login = () =>{
           text: data.data
         })
 			} else {
-        const playFabUserData = {
-          CreateAccount: false,            
-          CustomId: data.data.playfabid,           
-        }
-        PlayFabClient.LoginWithCustomID(playFabUserData, (error, result) => {
-          if (result){
-            Cookies.set("playfabAdminAuthToken", result.data.SessionTicket, { expires: 8 })
-            // Cookies.set('auth', JSON.stringify(data.data), { expires: 8, path: '/' })
-            Swal.fire({
-              title: "Login Successfully",
-              icon: "success",
-              text: `Welcome Admin`
-            })
-            .then(result1 => {
-              if(result1.isConfirmed)
-              window.location.href = `/dashboard/${data.data.roleId?.display_name}/home`
-            })
-          } else if (error) {
-            Swal.fire({
-                icon: "warning",
-                title: error.error,
-                allowOutsideClick: false,
-                allowEscapeKey: false
-            })
-            // setIsLoading(false)
-          }
+        Swal.fire({
+          title: "Login Successfully",
+          icon: "success",
+          text: `Welcome Admin`
+        })
+        .then(result1 => {
+          if(result1.isConfirmed)
+          window.location.href = `/dashboard/${data.data.roleId?.display_name}/home`
         })
       }  
       

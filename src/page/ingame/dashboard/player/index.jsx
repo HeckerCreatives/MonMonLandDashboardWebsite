@@ -304,7 +304,7 @@ const PlayerDashboard = () => {
             <Dashboardstatistics 
               image={walleticon}
               title={'Current Wallet Balance'}
-              number={wallets?.balance}
+              number={wallets?.balance ? wallets?.balance : 0}
               />
           </MDBCol>
           <MDBCol lg={3} className="my-2">

@@ -104,11 +104,9 @@ const CreateAdminAccount = () => {
           credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
-            // Authorization: `Bearer ${auth?.token}`,
           },
           body: JSON.stringify({
             roleId: process.env.REACT_APP_SUBADMINROLE,
-            // referrerId: auth.referrerId,
             firstName: firstName.value,
             lastName: lastName.value,
             userName: userName.value,
@@ -133,7 +131,7 @@ const CreateAdminAccount = () => {
               }
             })
           } else {
-            if (!data.expired) {
+            if (!data.expired && data.message == "success") {
               setIsLoading(false)
               Swal.fire({
                 title: "Admin Account Created Successfully",

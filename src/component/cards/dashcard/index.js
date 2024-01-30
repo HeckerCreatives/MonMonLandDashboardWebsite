@@ -125,7 +125,7 @@ return(
 
                     <th className="fw-bold" scope='col'>Travel / Special Incentives</th>
                     <th className="fw-bold" scope='col'>Monster Gem</th>
-                    {/* <th className="fw-bold" scope='col'>Trading (from payin/tools)</th> */}
+                    <th className="fw-bold" scope='col'>Investor Fund</th>
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody className="text-center">
@@ -134,54 +134,54 @@ return(
                         Payin
                      </td>
                      <td>
-                     25%
-                     </td>
-                     <td>
-                     3%
-                     </td>
-                     <td>
-                     30%
-                     </td>
-                     <td>
-                     0%
+                     40%
                      </td>
                      <td>
                      2%
                      </td>
                      <td>
-                     5%
+                     20%
+                     </td>
+                     <td>
+                     0%
+                     </td>
+                     <td>
+                     1%
                      </td>
                      <td>
                      5%
                      </td>
                      <td>
-                     10%
+                     2%
                      </td>
                      <td>
-                      3%
+                     8%
                      </td>
                      <td>
-                       2%
+                      2%
+                     </td>
+                     <td>
+                       3%
                      </td>  
                      <td>
                        15%
                      </td> 
-                     {/* <td>
-                       0%
-                     </td>    */}
+                     <td>
+                       2%
+                     </td>   
                     </tr>
                     <tr>
                      <td className="fw-bold text-warning">
                         Merchandise
                      </td>
                      <td>
-                     22%
+                     30% 
                      </td>
                      <td>
                      3%
                      </td>
                      <td>
-                     15%
+                     20%
                      </td>
                      <td>
                      0%
@@ -205,11 +205,11 @@ return(
                       1%
                      </td> 
                      <td>
-                      35%
+                      30%
                      </td> 
-                     {/* <td>
+                     <td>
                      0%
-                     </td>    */}
+                     </td>   
                     </tr>
                     <tr>
                      <td className="fw-bold text-warning">

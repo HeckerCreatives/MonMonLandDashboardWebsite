@@ -65,7 +65,7 @@ const Network = () => {
       .then(result => result.json())
       .then(data => {
         if(data.message === "success"){
-          setCommission(data.data.totalAmount)
+          setCommission(data.data?.totalAmount)
         }
       })
     },[])
@@ -85,11 +85,11 @@ return(
               <div>
                 <p className="text-end">Total Commission</p>
                 <h4 className="m-0 p-0 text-end">
-                  {commission?.toLocaleString('en-US', {
+                  {commission ? commission?.toLocaleString('en-US', {
                   style: 'decimal',
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
-                  })}
+                  }): 0}
                 </h4>
               </div>
               </MDBCol>
