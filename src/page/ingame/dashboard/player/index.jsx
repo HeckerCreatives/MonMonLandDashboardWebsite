@@ -43,6 +43,7 @@ import diamonpool from "../../../../assets/Ingame/assetsdashboard/Diamond pool r
 import lbreq from "../../../../assets/Ingame/assetsdashboard/leaderboard req. title.png"
 import pointdetail from "../../../../assets/Ingame/assetsdashboard/piont details title.png"
 import monies from "../../../../assets/Ingame/assetsdashboard/Monster Monies icon.png"
+import income from "../../../../assets/Ingame/assetsdashboard/total Income icon.png"
 import './dash.css'
 import Swal from "sweetalert2";
 const PlayerDashboard = () => {
@@ -236,7 +237,7 @@ const PlayerDashboard = () => {
             <MDBRow className="justify-content-around align-items-center ">
             <MDBCol md={4}>
             <MDBCard className="position-relative text-mute fw-bold my-4 "> 
-            <img className="corner-image" src={monies} alt=""/>     
+            <img className="corner-image" src={income} alt=""/>     
                 <MDBCardBody>
                 <div className="mt-3">
                   <p className="text-start">Total Income</p>

@@ -13,7 +13,7 @@ import
 from "mdb-react-ui-kit";
 import { handlePagination } from "../../../../../component/utils"
 import PaginationPager from "../../../../../component/pagination";
-import walleticon from "../../../../../assets/Ingame/wallethistory.png"
+import walleticon from "../../../../../assets/Ingame/Grinding History title tab.png"
 const PlayerGrindingHistory = () => {
     const [history, sethistory] = useState([]),
     [page, setPage] = useState(1),
