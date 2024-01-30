@@ -239,8 +239,25 @@ const PlayerDashboard = () => {
             <img className="corner-image" src={monies} alt=""/>     
                 <MDBCardBody>
                 <div className="mt-3">
+                  <p className="text-start">Total Income</p>
+                  <h2 className="text-end">
+                  {wallets.totalincome?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}
+                  </h2>
+                </div>
+                </MDBCardBody>
+            </MDBCard>
+            </MDBCol>
+            <MDBCol md={4}>
+            <MDBCard className="position-relative text-mute fw-bold my-4 "> 
+            <img className="corner-image" src={monies} alt=""/>     
+                <MDBCardBody>
+                <div className="mt-3">
                   <p className="text-start">Monster Monies Token</p>
-                  <h2 className="text-end">0
+                  <h2 className="text-end">0.00
                   {/* {totalpoints?.toLocaleString('en-US', {
                   style: 'decimal',
                   minimumFractionDigits: 2,
@@ -255,20 +272,35 @@ const PlayerDashboard = () => {
             <MDBCard className="position-relative text-mute fw-bold my-4 "> 
             <img className="corner-image" src={pointicon} alt=""/>     
                 <MDBCardBody>
-                <div className="mt-3">
+                <div className="row mt-3">
+                <div className="col-8">
                   <p className="text-start">Total Points</p>
-                  <h2 className="text-end">
+                </div>
+                <div className="col-4">
+                  <p className="text-end">
                   {totalpoints?.toLocaleString('en-US', {
                   style: 'decimal',
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
                   })}
-                  </h2>
+                  </p>
+                </div>
+                <div className="col-4">
+                <p className="text-start">Rank</p>
+                </div>
+                <div className="col-8">
+                {walletscutoff.recruitpoints !== 0 ? 
+                  <p className="text-end">{mycurrentrank}</p>
+                  : 
+                  <p className="text-end">1 Direct point</p>
+                  }
+                </div>
+                  
                 </div>
                 </MDBCardBody>
             </MDBCard>
             </MDBCol>
-            <MDBCol md={4}>
+            {/* <MDBCol md={4}>
             <MDBCard className="position-relative text-mute fw-bold my-4">  
             <img className="corner-image" src={currentrank} alt=""/>         
                 <MDBCardBody>
@@ -283,7 +315,7 @@ const PlayerDashboard = () => {
                 </div>
                 </MDBCardBody>
           </MDBCard>
-            </MDBCol>
+            </MDBCol> */}
             </MDBRow>
             
             </MDBCol>
@@ -323,6 +355,7 @@ const PlayerDashboard = () => {
               })}
               />
           </MDBCol>
+          
           <MDBCol lg={3} className="my-2">
           <Dashboardstatistics 
               colSpan="4"
