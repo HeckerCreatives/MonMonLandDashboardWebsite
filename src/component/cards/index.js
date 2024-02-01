@@ -10,7 +10,7 @@ import {
 } from "mdb-react-ui-kit"
 import "./index.css"
 
-const Cards = ({icon,texts,title, showviewbtn, url, iconstyle, cardstyle, textstyle, titlestyle,itemcol,cardclassname}) => {
+const Cards = ({icon,texts,title, showviewbtn, url, iconstyle, cardstyle, textstyle, titlestyle,itemcol,cardclassname, image}) => {
     return(
         <MDBCol          
         className="my-2 mt-md-2">
@@ -20,8 +20,15 @@ const Cards = ({icon,texts,title, showviewbtn, url, iconstyle, cardstyle, textst
                 <MDBCol className={itemcol}>
                     <div className="d-flex justify-content-between">
                     <div style={iconstyle}>
-                    <MDBIcon size="2x" icon={icon} color="white">
+                    {
+                        icon &&
+                    <MDBIcon className="img-fluid" size="2x" icon={icon} color="white">
                     </MDBIcon>
+                    }
+                    {
+                        image && 
+                        <img src={image} alt="" className="img-fluid"/>
+                    }
                     </div>                        
                     { showviewbtn && <a href={url} className={``}>View All</a>} 
                     </div>

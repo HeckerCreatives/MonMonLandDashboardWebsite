@@ -20,6 +20,11 @@ import Swal from "sweetalert2";
 import { handlePagination } from "../../../../component/utils"
 import Cookies from 'js-cookie';
 import MembersProfile from "./memberdashboard";
+import pearl from "../../../../assets/subscription/pearl badge.png"
+import ruby from "../../../../assets/subscription/ruby badge.png"
+import emerald from "../../../../assets/subscription/emerald.png"
+import diamond from "../../../../assets/subscription/diamond.png"
+
 const MembersAccount = () => {
     const [confirmpass, setConfirmPass] = useState(""),
         [member, setMember] = useState([]),
@@ -224,8 +229,9 @@ const MembersAccount = () => {
         })
         .then(result => result.json())
         .then(data => {
-            console.log(data)
+            
             setMember(data.data)
+            setPage(1)
         })
     }
 
@@ -245,6 +251,45 @@ const MembersAccount = () => {
         .then(result => result.json())
         .then(data => {
             setMember(data.data)
+            setPage(1)
+        })
+    }
+
+    const searchsubs = (e, subs) => {
+        e.preventDefault();
+        fetch(`${process.env.REACT_APP_API_URL}members/filterbysubscription`,{
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                subscription: subs
+            })
+        })
+        .then(result => result.json())
+        .then(data => {
+            setMember(data.data)
+            setPage(1)
+        })
+    }
+
+    const searchwallet = (e, wallet) => {
+        e.preventDefault();
+        fetch(`${process.env.REACT_APP_API_URL}members/filterbywallet`,{
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                wallet: wallet
+            })
+        })
+        .then(result => result.json())
+        .then(data => {
+            setMember(data.data)
+            setPage(1)
         })
     }
 
@@ -284,7 +329,7 @@ const MembersAccount = () => {
             texts="Today Joinings" 
             icon="user-friends" 
             cardclassname={'shadow-3'}
-            iconstyle={{background: "#556EE6", padding: "8px", borderRadius: "5px"}}
+            iconstyle={{background: "#556EE6",  padding: "8px", borderRadius: "5px"}}
             itemcol={`d-flex align-items-center gap-3`}  
             titlestyle={{marginTop:"0px",marginBottom:"0px"}}  
             />
@@ -293,9 +338,9 @@ const MembersAccount = () => {
           <Cards 
           title={joined.pearl}
           texts="Pearl" 
-          icon="user-plus"
+          image={pearl}
           cardstyle={{padding: "0px",}} 
-          iconstyle={{background: "#34C38F", padding: "8px", borderRadius: "5px"}}
+          iconstyle={{background: "skyblue", height: "50px" ,width: "50px", padding: "8px", borderRadius: "5px"}}
           itemcol={`d-flex align-items-center gap-3`}
           cardclassname={'shadow-3'}
           titlestyle={{ marginTop:"0px",marginBottom:"0px"}}    
@@ -305,9 +350,9 @@ const MembersAccount = () => {
           <Cards 
           title={joined.ruby} 
           texts="Ruby" 
-          icon="user-friends" 
-          cardclassname={'shadow-3'}
-          iconstyle={{background: "#556EE6", padding: "8px", borderRadius: "5px"}}
+          image={ruby}
+          cardstyle={{padding: "0px",}} 
+          iconstyle={{background: "red", height: "50px" ,width: "50px", padding: "8px", borderRadius: "5px"}}
           itemcol={`d-flex align-items-center gap-3`}  
           titlestyle={{marginTop:"0px",marginBottom:"0px"}}  
           />
@@ -316,9 +361,9 @@ const MembersAccount = () => {
           <Cards 
           title={joined.emerald}
           texts="Emerald" 
-          icon="user-plus"
+          image={emerald}
           cardstyle={{padding: "0px",}} 
-          iconstyle={{background: "#34C38F", padding: "8px", borderRadius: "5px"}}
+          iconstyle={{background: "green", height: "50px" ,width: "50px", padding: "8px", borderRadius: "5px"}}
           itemcol={`d-flex align-items-center gap-3`}
           cardclassname={'shadow-3'}
           titlestyle={{ marginTop:"0px",marginBottom:"0px"}}    
@@ -328,9 +373,9 @@ const MembersAccount = () => {
           <Cards 
           title={joined.diamond} 
           texts="Diamond" 
-          icon="user-friends" 
-          cardclassname={'shadow-3'}
-          iconstyle={{background: "#556EE6", padding: "8px", borderRadius: "5px"}}
+          image={diamond}
+          cardstyle={{padding: "0px",}} 
+          iconstyle={{background: "gray", height: "50px" ,width: "50px", padding: "8px", borderRadius: "5px"}}
           itemcol={`d-flex align-items-center gap-3`}  
           titlestyle={{marginTop:"0px",marginBottom:"0px"}}  
           />
@@ -338,7 +383,7 @@ const MembersAccount = () => {
           </MDBRow> 
 
           <MDBRow className="mt-4">
-          <MDBCol md={4}>
+          <MDBCol md={3}>
           <form onSubmit={searchusername}>
             <MDBInputGroup>
             
@@ -348,7 +393,7 @@ const MembersAccount = () => {
             </MDBInputGroup>
           </form>
           </MDBCol>
-          <MDBCol md={4}>
+          <MDBCol md={3}>
           <form onSubmit={searchemail}>
           <MDBInputGroup>
             
@@ -358,13 +403,38 @@ const MembersAccount = () => {
             </MDBInputGroup>
             </form>
           </MDBCol>
-          <MDBCol md={4}>
+          <MDBCol md={6}>
             <MDBBtn className="mt-1 mx-2 fw-bold" 
             type="button" 
             color="danger"
             onClick={deleteItems}
             disabled={checkedItems.length === 0}
+            size="sm"
             >Ban Multiple
+            </MDBBtn>
+            <select className="mx-2" name="subscription" onChange={(e) => searchsubs(e, e.target.value)}>
+                <option selected disabled value="">Select Subscription</option>
+                <option value="Pearl">Pearl</option>
+                <option value="Ruby">Ruby</option>
+                <option value="Emerald">Emerald</option>
+                <option value="Diamond">Diamond</option>
+            </select>
+            <select className="mx-2" name="wallet" onChange={(e) => searchwallet(e, e.target.value)}>
+                 <option selected disabled value="">Select Wallet Type</option>
+                <option value="monstercoin">Monster Coin</option>
+                <option value="monstergemfarm">Monster Gem Farm</option>
+                <option value="monstergemunilevel">Monster Gem Unilevel</option>
+                <option value="balance">Wallet Balance</option>
+                <option value="totalincome">Total Income</option>
+            </select>
+            <MDBBtn className="mt-1 mx-2 fw-bold" 
+            type="button" 
+            color="info"
+            onClick={() => {
+                window.location.reload()
+            }}
+            size="sm"
+            >Reset Filter
             </MDBBtn>
           </MDBCol>
           
@@ -379,6 +449,7 @@ const MembersAccount = () => {
                       <th className="fw-bold" scope='col'>Sponsor</th>
                       <th className="fw-bold" scope='col'>Details</th>
                       <th className="fw-bold" scope='col'>Status</th>
+                      <th className="fw-bold" scope='col'>Wallets</th>
                       <th className="fw-bold" scope='col'>Date Joined</th>
                       <th className="fw-bold" scope='col'>Action</th>
                       </tr>
@@ -396,7 +467,11 @@ const MembersAccount = () => {
                   </td>
                   
                   <td>
-                  {acc.username}
+                    <div className="d-flex flex-column">
+                    
+                    <p className="m-0 p-0">{acc.username}</p> 
+                    <p className="m-0 p-0">{`(${acc.subscription})`}</p> 
+                    </div>
                   </td>  
                   <td>{acc.referral}</td> 
                   <td>
@@ -406,6 +481,45 @@ const MembersAccount = () => {
                   </div>
                   </td>            
                   <td>{acc.status}</td> 
+                  <td>
+                    <div className="d-flex flex-column text-justify">
+                    <p>Wallet Balance: &nbsp;
+                    {acc.walletbalance?.toLocaleString('en-US', {
+                    style: 'decimal',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                    })}
+                    </p> 
+                    <p>Total Income: &nbsp;
+                    {acc.totalincome?.toLocaleString('en-US', {
+                    style: 'decimal',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                    })}
+                    </p> 
+                    <p>Monster Coin: &nbsp;
+                    {acc.monstercoin?.toLocaleString('en-US', {
+                    style: 'decimal',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                    })}
+                    </p> 
+                    <p>Monster Gem: &nbsp;
+                    {acc.monstergem?.toLocaleString('en-US', {
+                    style: 'decimal',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                    })}
+                    </p> 
+                    <p>Monster Gem Unilevel: &nbsp;
+                    {acc.monstergemunilevel?.toLocaleString('en-US', {
+                    style: 'decimal',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                    })}
+                    </p> 
+                    </div>
+                  </td>
                   <td>{new Date(acc.createdAt).toLocaleString()}</td>              
                   <td>
                       <MDBBtn 

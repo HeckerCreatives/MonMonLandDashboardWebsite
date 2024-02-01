@@ -74,6 +74,7 @@ const AdminDashboard = () => {
     const [monstergem, setMonstergem] = useState(0)
     const [unilevelmonstergem, setUnilevelMg] = useState(0)
     const [sponsorwallet, setSponsorWallet] = useState(0)
+    const [investorwallet, setInvestorWallet] = useState(0)
     const [tradepayin, setTradepayin] = useState(0)
     const [trademerchandise, setTrademerchandise] = useState(0)
     const [totaltrade, setTotalTrade] = useState(0)
@@ -796,6 +797,7 @@ const AdminDashboard = () => {
         setComplanmerchandise(data.data.complanmerchandise)
         setUnilevel(data.data.unilevelbonus)
         setSponsorWallet(data.data.sponsorwallet)
+        setInvestorWallet(data.data.investorfunds)
       }
     })
   },[])
@@ -1200,6 +1202,32 @@ const AdminDashboard = () => {
               cardtoptext={monstergem ? `${monstergem.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
           </MDBCol>
+        </MDBRow>
+        <MDBRow>
+        <MDBCol lg={4} className="my-2">
+          <DashCard 
+              colSpan="3"
+              icon={`hand-holding-usd`}
+              thtitle={`Investor Fund`}
+              cardtoptext={investorwallet ? `${investorwallet.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol>  
+          {/* <MDBCol className="my-2">
+          <DashCard 
+              colSpan="3"
+              icon={`plane-departure`}
+              thtitle={`Travel / Incentives`}
+              cardtoptext={incentives ? `${incentives.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol> 
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="3"
+              icon={`coins`}
+              thtitle={`Monster Gem`}
+              cardtoptext={monstergem ? `${monstergem.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol> */}
         </MDBRow>
         </MDBContainer>
     </>  

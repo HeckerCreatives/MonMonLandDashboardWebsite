@@ -126,6 +126,7 @@ import GrantItems from "./page/dashboard/grantitems";
 import Sponsorprize from "./page/dashboard/sponsor/setting";
 import PlayerTransactionHistory from "./page/ingame/dashboard/player/history/transactionhistory";
 import PlayerGrindingHistory from "./page/ingame/dashboard/player/history/grindinghistory";
+import GameReset from "./page/dashboard/gameresets/gamereset";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -164,6 +165,8 @@ const Routers = () => {
           <Route path="usersdetails/:userId" element={<ManageDashboard/>}/>                           
         </Route>
         </Route>
+
+        <Route path="gamereset" element={<GameReset/>}/>
 
         <Route path="gameannouncement" element={<GameAnnouncement/>}/>
 

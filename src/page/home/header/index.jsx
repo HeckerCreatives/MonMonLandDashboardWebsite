@@ -56,7 +56,7 @@ const Header = () => {
     const [Mcprice, setMcPrice] = useState(0)
     const [Mgprice, setMgPrice] = useState(0)
     const [Mctofarm, setMctofarm] = useState(0)
-    const [comact, setComAct] = useState([]);
+    const [investorfundca, setInvestorfundca] = useState(0);
     const [totalaccumulated, setTotalAccumulated] = useState(0);
     const [totalpoolaccumulated, setTotalPoolAccumulated] = useState(0);
     const [diamonds, setDiamond] = useState(0);
@@ -64,6 +64,8 @@ const Header = () => {
     const [leaderboard, setLeaderboard] = useState(0);
     const [diamondpool, setDiamondPool] = useState(0)
     const [monmongem, setMonmongem] = useState(0)
+    const [grinding, setGrinding] = useState(0)
+    const [quest, setQuest] = useState(0)
     const [mgaccumulated, setMgaccumulated] = useState(0)
     
     const [mcpreviousmonth, setMcPreviousMonth] = useState(0);
@@ -210,16 +212,6 @@ const Header = () => {
             
           })
 
-          fetch(`${process.env.REACT_APP_API_URL}communityactivy/find`,{
-            credentials: 'include',
-          })
-          .then(result => result.json())
-          .then(data => {
-            if(data.message === "success"){
-              setComAct(data.data)
-            }
-            
-          })
     
           fetch(`${process.env.REACT_APP_API_URL}investor/find`,{
             credentials: 'include',
@@ -246,16 +238,16 @@ const Header = () => {
         const adsamount = ads
         const investoramount = investorfund
         const pool = total * 0.01
-        const gg = comact.grinding
-        const qr = comact.quest
+        const gg = grinding
+        const qr = quest
         const tt = adsamount + investoramount + gg + qr + totalbar
         const emseeprice =  parseFloat(tt) / parseFloat(mc)
-        const emsetofarm = (adsamount + investoramount + gg + qr + totalbar) * 1000
+        const emsetofarm = (adsamount + investoramount + gg + qr + totalbar + investorfundca) * 1000
         setTotalPoolAccumulated(pool)
         setMcPrice(emseeprice)
         setMctofarm(emsetofarm)
         setMgPrice(mgprice)
-    },[comact, mc, totalaccumulated, totalbar, ads, investorfund, initialbar, monmongem])
+    },[quest,grinding, mc, totalaccumulated, totalbar, ads, investorfund, initialbar, monmongem, investorfundca])
 
     // useEffect(()=>{
     //     if(initialbar){
@@ -458,6 +450,9 @@ const Header = () => {
           setLeaderboard(data.data.leaderboard)
           setDiamondPool(data.data.diamondpools)
           setMonmongem(data.data.monstergem)
+          setGrinding(data.data.grinding)
+          setQuest(data.data.quest)
+          setInvestorfundca(data.data.investorfunds)
         }
       })
       fetch(`${process.env.REACT_APP_API_URL}monmoncoin/find`, {

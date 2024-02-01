@@ -177,6 +177,14 @@ const Dashboard = () => {
           ],
         },
         {
+          name: "Game Reset",
+          path: "/dashboard/Administrator/gamereset",
+          icon: "redo",
+          children: [
+           
+          ],
+        },
+        {
           name: "Manage Top Up",
           path: "",
           icon: "arrow-alt-circle-up",

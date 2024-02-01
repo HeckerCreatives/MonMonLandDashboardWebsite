@@ -9,7 +9,8 @@ import {
     MDBBtn, 
     MDBTextArea,
     MDBInput,
-    MDBSpinner} from "mdb-react-ui-kit";
+    MDBSpinner,
+    MDBCheckbox} from "mdb-react-ui-kit";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 const GrantItems = () => {
@@ -361,7 +362,7 @@ const GrantItems = () => {
     const monstercoin = (e) => {
         e.preventDefault();
         setIsLoading(true)
-        const { amount, username, description } = e.target
+        const { amount, username, description, addmc } = e.target
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -381,7 +382,8 @@ const GrantItems = () => {
                     body: JSON.stringify({
                         username: username.value,
                         amount: amount.value,
-                        description: description.value
+                        description: description.value,
+                        checked: addmc.checked ? true : false
                     })
                 })
                 .then(result => result.json())
@@ -429,7 +431,7 @@ const GrantItems = () => {
     const monstergem = (e) => {
         e.preventDefault();
         setIsLoading(true)
-        const { amount, username, description } = e.target
+        const { amount, username, description, addmg } = e.target
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -449,7 +451,8 @@ const GrantItems = () => {
                     body: JSON.stringify({
                         username: username.value,
                         amount: amount.value,
-                        description: description.value
+                        description: description.value,
+                        checked: addmg.checked ? true : false
                     })
                 })
                 .then(result => result.json())
@@ -658,8 +661,9 @@ const GrantItems = () => {
                     <MDBCardTitle className="text-center">Grant Monster Coin</MDBCardTitle>
 
                     <MDBInput name="username" className="mt-3" label='Input Players Username' required/>
-                    <MDBInput name="amount" className="mt-3" label='Input Amount To Be Granted' type="number" min={"1"} max={"999"} maxLength={"3"} required/>
+                    <MDBInput name="amount" className="mt-3" label='Input Amount To Be Granted' type="number" min={"1"}  maxLength={"3"} required/>
                     <MDBTextArea name="description" className="mt-3" rows={5} label='Input Description Here' required/>
+                    <MDBCheckbox name="addmc" label="check if you want to add to total monster coin farm"/>
                     <MDBBtn type="submit" className="mt-3">
                         {
                             isloading ?
@@ -681,6 +685,7 @@ const GrantItems = () => {
                     <MDBInput name="username" className="mt-3" label='Input Players Username' required/>
                     <MDBInput name="amount" className="mt-3" label='Input Amount To Be Granted' type="number" min={"1"} max={"999"} maxLength={"3"} required/>
                     <MDBTextArea name="description" className="mt-3" rows={5} label='Input Description Here' required/>
+                    <MDBCheckbox name="addmg" label="check if you want to add to total monster gem farm"/>
                     <MDBBtn type="submit" className="mt-3">
                         {
                             isloading ?
