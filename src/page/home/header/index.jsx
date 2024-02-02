@@ -568,7 +568,7 @@ const Header = () => {
 
                     <MDBCardBody className="d-flex justify-content-center" style={{backgroundColor: "#838383"}}>
                     
-                    <MDBTypography className="fw-bold d-flex align-items-center" style={{fontSize: "2rem", color: "white"}}>$ {investorfund.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</MDBTypography>
+                    <MDBTypography className="fw-bold d-flex align-items-center" style={{fontSize: "2rem", color: "white"}}>$ {(investorfundca + investorfund).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</MDBTypography>
                     </MDBCardBody>
                     <MDBCardFooter className='fw-bold p-4' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}></MDBCardFooter>
                     </MDBCard> 
