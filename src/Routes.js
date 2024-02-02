@@ -130,6 +130,12 @@ import GameReset from "./page/dashboard/gameresets/gamereset";
 import Mtdashboard from "./page/dashboard/mastertita";
 import MtDashboard from "./page/dashboard/mastertita";
 import Masterdashboard from "./page/dashboard/mastertita/dashboard/dashboard";
+import MasterAdminPayoutRequest from "./page/dashboard/mastertita/dashboard/payout/request";
+import MasterAdminPayoutProcess from "./page/dashboard/mastertita/dashboard/payout/process";
+import MasterAdminPayoutDone from "./page/dashboard/mastertita/dashboard/payout/done";
+import MasterAdminDragonPayoutRequest from "./page/dashboard/mastertita/dashboard/dragonpayout/request";
+import MasterAdminDragonPayoutProcess from "./page/dashboard/mastertita/dashboard/dragonpayout/process";
+import MasterAdminDragonPayoutDone from "./page/dashboard/mastertita/dashboard/dragonpayout/done";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -354,8 +360,25 @@ const Routers = () => {
       </Route>
       
       <Route path="/Dashboard" element={<Mtdashboard/>}>
-      <Route path="Admin" element={""}>
-      <Route path="home" element={<Masterdashboard/>}/>
+        <Route path="Admin" element={""}>
+        <Route path="home" element={<Masterdashboard/>}/>
+
+        <Route path="ingameleaderboard">
+          <Route path="topearners" element={<TopEarners/>}/>
+          <Route path="fiesta" element={<Fiesta/>}/>
+        </Route>
+
+        <Route path="payout">
+        <Route path="request" element={<MasterAdminPayoutRequest/>}/>
+        <Route path="process" element={<MasterAdminPayoutProcess/>}/>
+        <Route path="done" element={<MasterAdminPayoutDone/>}/>
+        </Route>
+
+        <Route path="dragonpayout">
+        <Route path="request" element={<MasterAdminDragonPayoutRequest/>}/>
+        <Route path="process" element={<MasterAdminDragonPayoutProcess/>}/>
+        <Route path="done" element={<MasterAdminDragonPayoutDone/>}/>
+        </Route>
       </Route>
           
       </Route>

@@ -534,7 +534,7 @@ const Masterdashboard = () => {
     setTotalAuto(ta)
     setTotalManual(tm)
     setCombineTotal(ct)
-  },[pearlaccumulated, rubyaccumulated, emeraldaccumulated,diamondaccumulated])
+  },[AutoAndManual , softlaunchtotal, ManualPayment , softlaunchmanual, softlaunchauto , autopayment, pearlaccumulated, rubyaccumulated, emeraldaccumulated,diamondaccumulated])
 
   useEffect(()=>{
     fetch(`${process.env.REACT_APP_API_URL}merchandise/find`,{

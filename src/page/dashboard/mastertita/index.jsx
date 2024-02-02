@@ -36,7 +36,60 @@ const MtDashboard = () => {
       path: "/Dashboard/Admin/home",
       icon: "home",
       children: [],
-    }
+    },
+    {
+      name: "Leaderboard",
+      path: "",
+      icon: "trophy",
+      children: [
+        {
+          name: "Top Earners",
+          path: "/Dashboard/Admin/ingameleaderboard/topearners"
+        },
+        {
+          name: "Fiesta",
+          path: "/Dashboard/Admin/ingameleaderboard/fiesta"
+        }
+      ],
+    },
+    {
+      name: "Payout",
+      path: "",
+      icon: "money-bill-alt",
+      children: [
+        {
+          name: "Request",
+          path: "/Dashboard/Admin/payout/request",
+        },                
+        {
+          name: "Process",
+          path: "/Dashboard/Admin/payout/process",
+        },
+        {
+          name: "Done",
+          path: "/Dashboard/Admin/payout/done",
+        },
+      ],
+    },
+    {
+      name: "Dragonpay Payout",
+      path: "",
+      icon: "money-check",
+      children: [
+        {
+          name: "Request",
+          path: "/Dashboard/Admin/dragonpayout/request",
+        },                
+        {
+          name: "Process",
+          path: "/Dashboard/Admin/dragonpayout/process",
+        },
+        {
+          name: "Done",
+          path: "/Dashboard/Admin/dragonpayout/done",
+        },
+      ],
+    },
   ]
 
   
