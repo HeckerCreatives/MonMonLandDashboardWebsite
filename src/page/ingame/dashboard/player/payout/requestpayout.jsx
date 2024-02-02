@@ -96,7 +96,7 @@ const PlayerRequestPayout = () => {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2
                             })}) </MDBCardTitle>
-                            <MDBInput name="amount" type="number" label='Input Amount' min={'11'} max={'999'} maxLength={'3'}/>
+                            <MDBInput name="amount" type="number" label='Input Amount' min={'10'} max={'999'} maxLength={'3'}/>
                             <MDBBtn type="submit" className="mt-3">Request</MDBBtn>
                         </MDBCardBody>
                     </MDBCard>
