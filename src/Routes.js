@@ -127,6 +127,9 @@ import Sponsorprize from "./page/dashboard/sponsor/setting";
 import PlayerTransactionHistory from "./page/ingame/dashboard/player/history/transactionhistory";
 import PlayerGrindingHistory from "./page/ingame/dashboard/player/history/grindinghistory";
 import GameReset from "./page/dashboard/gameresets/gamereset";
+import Mtdashboard from "./page/dashboard/mastertita";
+import MtDashboard from "./page/dashboard/mastertita";
+import Masterdashboard from "./page/dashboard/mastertita/dashboard/dashboard";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -310,6 +313,9 @@ const Routers = () => {
             <Route path="home" element={<MarketingDashboard/>}/>
         </Route>
 
+       
+        
+
         {/* <Route path="Player" element={""}>
             <Route path="home" element={<PlayerDashboard/>}/>
             <Route path="network" element={<Network/>}/>
@@ -344,6 +350,14 @@ const Routers = () => {
             <Route path="transactionhistory" element={<PlayerTransactionHistory/>}/>
             <Route path="grindinghistory" element={<PlayerGrindingHistory/>}/>
         </Route>
+        
+      </Route>
+      
+      <Route path="/Dashboard" element={<Mtdashboard/>}>
+      <Route path="Admin" element={""}>
+      <Route path="home" element={<Masterdashboard/>}/>
+      </Route>
+          
       </Route>
 
       <Route path="/register" element={<SignUp />}/>

@@ -1,25 +1,16 @@
+import { MDBContainer, MDBRow, MDBCol, MDBTypography } from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
-import { MDBContainer, MDBBtn, MDBRow, MDBCol,MDBIcon, MDBTypography, } from "mdb-react-ui-kit";
-import DashCard from "../../cards/dashcard";
-import Graph from "../../graph";
-import MiniTableList from "../../minitablelist";
-import MiniDescription from "../../minidescription";
-import FullTable from "../../fulltablelist";
-import Breadcrumb from "../../breadcrumb";
 import { useNavigate } from "react-router-dom";
+import DashCard from "../../../../component/cards/dashcard/index"
+import { isLogin, logout } from "../../../../component/utils";
 import Swal from "sweetalert2";
-import Cookies from 'js-cookie';
-import { isLogin, logout } from "../../utils";
-const AdminDashboard = () => {
-  // const encryptauth = decodeURIComponent(Cookies.get('auth'))
-  // const auth = JSON.parse(encryptauth)
-    // const auth = JSON.parse(Cookies.get("auth"))
+const Masterdashboard = () => {
     const [basicModal, setBasicModal] = useState(false);
     const toggleShow = () => setBasicModal(!basicModal);
     const [users, setUsers] = useState([]);
     const [unilevel, setUnilevel] = useState(0);
     const navigate = useNavigate()
-    let increment = 3;
+    const pircint = .30;
     const [request, setRequest] = useState(0);
     const [processed, setProcessed] = useState(0);
     const [done, setDone] = useState(0);
@@ -96,9 +87,8 @@ const AdminDashboard = () => {
 
     useEffect(() => {
       if (role) {
-        if (role !== "Administrator") {
-          Cookies.remove("auth", { path: '/' });;
-          navigate("/login");
+        if (role !== "Admin") {
+          navigate("/gamelogin");
         }
       }
     }, [role, navigate]);
@@ -128,8 +118,6 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
             window.location.replace("/login");
           }
         })
@@ -164,8 +152,6 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
             // localStorage.removeItem("auth");
             // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
@@ -202,8 +188,6 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
             // localStorage.removeItem("auth");
             // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
@@ -239,17 +223,15 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
       }
 
       if(data?.data !== null && !data.expired){
-        setAutoPayment(data?.data[0]?.amount)
+        let ap = data?.data[0]?.amount * pircint
+        ap = data?.data[0]?.amount - ap
+        setAutoPayment(ap)
       }
 
       
@@ -277,17 +259,15 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
       }
 
       if(data?.data !== null && !data.expired){
-        setManualPayment(data?.data[0]?.amount)
+        let mp = data?.data[0]?.amount * pircint
+        mp = data?.data[0]?.amount - mp
+        setManualPayment(mp)
       }
       
 
@@ -313,55 +293,62 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
       }
 
       if(data?.data !== null && !data.expired){
+        // let sla = data.data.softlaunchauto * pircint
+        // sla = data.data.softlaunchauto - sla
+
+        // let slm = data.data.softlaunchmanual * pircint
+        // slm = data.data.softlaunchmanual - slm
+
+        // let slt = data.data.softlaunchtotal * pircint
+        // slt = data.data.softlaunchtotal - slt
+        
         setSoftLaunchAuto(data.data.softlaunchauto)
         setSoftLaunchManual(data.data.softlaunchmanual)
         setSoftLaunchTotal(data.data.softlaunchtotal)
       }
     })
 
-    fetch(`${process.env.REACT_APP_API_URL}wallet/totalsalewallet`,{
-      method: "GET",
-      credentials: 'include',
-      headers: {
-        "Content-Type": "application/json",
-        // Authorization: `Bearer ${auth?.token}`,
-      },
-    }).then(result => result.json())
-    .then(data => {
-      if(data.expired){
-        Swal.fire({
-          icon: "error",
-          title: data.expired,
-          text: "You Will Redirect to Login",
-          allowOutsideClick: false,
-          allowEscapeKey: false
-        }).then(ok => {
-          if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
-            window.location.replace("/login");
-          }
-        })
-      }
+    // fetch(`${process.env.REACT_APP_API_URL}wallet/totalsalewallet`,{
+    //   method: "GET",
+    //   credentials: 'include',
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     // Authorization: `Bearer ${auth?.token}`,
+    //   },
+    // }).then(result => result.json())
+    // .then(data => {
+    //   if(data.expired){
+    //     Swal.fire({
+    //       icon: "error",
+    //       title: data.expired,
+    //       text: "You Will Redirect to Login",
+    //       allowOutsideClick: false,
+    //       allowEscapeKey: false
+    //     }).then(ok => {
+    //       if(ok.isConfirmed){
+            
+    //         window.location.replace("/login");
+    //       }
+    //     })
+    //   }
 
-      if(data?.data !== null && !data.expired){
-        setTotalAuto(data.data.totalauto)
-        setTotalManual(data.data.totalmanual)
-        setCombineTotal(data.data.combinetotal)
-      }
-    })
+    //   if(data?.data !== null && !data.expired){
+    //     // let ta = data.data.totalauto * pircint
+    //     // ta = data.data.totalauto - ta
+    //     // let tm = data.data.totalmanual * pircint
+    //     // tm = data.data.totalmanual - tm
+    //     // let ct = data.data.combinetotal * pircint
+    //     // ct = data.data.combinetotal - ct
+        
+    //   }
+    // })
 
     fetch(`${process.env.REACT_APP_API_URL}wallet/dragonpayoutwallet`,{
       method: "GET",
@@ -381,10 +368,7 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
@@ -438,10 +422,7 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
@@ -457,7 +438,6 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers:{
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({subsname: "ruby"})
     })
@@ -472,10 +452,7 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
@@ -491,7 +468,6 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers:{
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({subsname: "emerald"})
     })
@@ -506,10 +482,7 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
@@ -540,10 +513,7 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
@@ -557,6 +527,13 @@ const AdminDashboard = () => {
 
     const total =  pearlaccumulated + rubyaccumulated + emeraldaccumulated + diamondaccumulated
     setTotalAccumulated(total)
+    const ta = softlaunchauto +  autopayment
+    const tm = ManualPayment + softlaunchmanual
+    const ct = AutoAndManual + softlaunchtotal
+    
+    setTotalAuto(ta)
+    setTotalManual(tm)
+    setCombineTotal(ct)
   },[pearlaccumulated, rubyaccumulated, emeraldaccumulated,diamondaccumulated])
 
   useEffect(()=>{
@@ -580,10 +557,7 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
@@ -614,10 +588,7 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
@@ -648,10 +619,6 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
@@ -686,10 +653,7 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
@@ -698,49 +662,14 @@ const AdminDashboard = () => {
 
     })
 
-    // fetch(`${process.env.REACT_APP_API_URL}wallet/find`, {
-    //   method: "POST",
-    //   credentials: 'include',
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     // Authorization: `Bearer ${auth?.token}`,
-    //   },
-    //   // body: JSON.stringify({id: id})
-    // })
-    // .then(result => result.json())
-    // .then(data => {
-
-    //   if(data.expired){
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: data.expired,
-    //       text: "You Will Redirect to Login",
-    //       allowOutsideClick: false,
-    //       allowEscapeKey: false
-    //     }).then(ok => {
-    //       if(ok.isConfirmed){
-    //         Cookies.remove("auth", { path: '/' });;
-    //         Cookies.remove("playfabAdminAuthToken", { path: '/' });
-    //         // localStorage.removeItem("auth");
-    //         // localStorage.removeItem("playfabAdminAuthToken")
-    //         window.location.replace("/login");
-    //       }
-    //     })
-    //   }
-
-    //   setUnilevel(data?.data[0]?.commission)
-
-        
-    // })
+  
 
     fetch(`${process.env.REACT_APP_API_URL}withdrawfee/find`, {
       method: "POST",
       credentials: 'include',
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${auth?.token}`,
       },
-      // body: JSON.stringify({id: id})
     })
     .then(result => result.json())
     .then(data => {
@@ -754,10 +683,7 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
@@ -780,24 +706,42 @@ const AdminDashboard = () => {
     .then(result => result.json())
     .then(data => {
       if(data.message === "success"){
-        setLeaderboard(data.data.leaderboard)
-        setGrinding(data.data.grinding)
-        setQuest(data.data.quest)
-        setDiamondPool(data.data.diamondpools)
-        setDevsShare(data.data.devsshare)
-        setCompanyShare(data.data.companyshare)
-        setOfficer(data.data.officers)
-        setMarketing(data.data.marketing)
-        setIncentives(data.data.incentives)
-        setUnilevelMg(data.data.unilevelmonstergem)
-        setMonstergem(data.data.monstergem)
-        setTradepayin(data.data.tradepayin)
-        setTrademerchandise(data.data.trademerchandise)
-        setComplanpayin(data.data.complanpayin)
-        setComplanmerchandise(data.data.complanmerchandise)
-        setUnilevel(data.data.unilevelbonus)
-        setSponsorWallet(data.data.sponsorwallet)
-        setInvestorWallet(data.data.investorfunds)
+        const lb = data.data.leaderboard - (data.data.leaderboard * pircint)
+        const gd = data.data.grinding - (data.data.grinding * pircint)
+        const qst = data.data.quest - (data.data.quest * pircint)
+        const dp = data.data.diamondpools - (data.data.diamondpools * pircint)
+        const dv = data.data.devsshare - (data.data.devsshare * pircint)
+        const cs = data.data.companyshare - (data.data.companyshare * pircint)
+        const ofcr = data.data.officers - (data.data.officers * pircint)
+        const mrkt = data.data.marketing - (data.data.marketing * pircint)
+        const inct = data.data.incentives - (data.data.incentives * pircint)
+        const unimg = data.data.unilevelmonstergem - (data.data.unilevelmonstergem * pircint)
+        const mg = data.data.monstergem - (data.data.monstergem - pircint)
+        const tp = data.data.tradepayin - (data.data.tradepayin * pircint)
+        const tm = data.data.trademerchandise - (data.data.trademerchandise * pircint)
+        const cp = data.data.complanpayin - (data.data.complanpayin * pircint)
+        const cm = data.data.complanmerchandise - (data.data.complanmerchandise * pircint)
+        const unilvl = data.data.unilevelbonus - (data.data.unilevelbonus * pircint)
+        const sprw = data.data.sponsorwallet - (data.data.sponsorwallet * pircint)
+        const invw = data.data.investorfunds - (data.data.investorfunds * pircint)
+        setLeaderboard(lb)
+        setGrinding(gd)
+        setQuest(qst)
+        setDiamondPool(dp)
+        setDevsShare(dv)
+        setCompanyShare(cs)
+        setOfficer(ofcr)
+        setMarketing(mrkt)
+        setIncentives(inct)
+        setUnilevelMg(unimg)
+        setMonstergem(mg)
+        setTradepayin(tp)
+        setTrademerchandise(tm)
+        setComplanpayin(cp)
+        setComplanmerchandise(cm)
+        setUnilevel(unilvl)
+        setSponsorWallet(sprw)
+        setInvestorWallet(invw)
       }
     })
   },[])
@@ -819,11 +763,8 @@ const AdminDashboard = () => {
     setComplantotal(complanpayin + complanmerchandise)
     setTotalTrade(tradepayin + trademerchandise)
   },[complanpayin, complanmerchandise, tradepayin, trademerchandise])
-
-    return (
-      <>
+    return(
         <MDBContainer fluid>
-        <Breadcrumb title='Dashboard' paths={[]}/>
         {/* Cards */}
         <br/>
         <MDBTypography tag={`h2`}>Income Wallets</MDBTypography>
@@ -940,7 +881,7 @@ const AdminDashboard = () => {
               icon={`dollar-sign`}
               thtitle={`Total Admin Fee`}
               cardtoptext={adminfee.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-              // txtsup={`USDT`} 
+            //   txtsup={`USDT`} 
               td0={true}
               td0txttop={withdrawalfee ? `${withdrawalfee.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               td0txtbot={`Withdrawal Fee`} 
@@ -1011,7 +952,7 @@ const AdminDashboard = () => {
               td4txtbot={`Diamond`}
               />
           </MDBCol>
-          <MDBCol className="col-lg-4 my-2">
+          {/* <MDBCol className="col-lg-4 my-2">
             <DashCard 
               colSpan="4"
               icon={`chart-line`} 
@@ -1036,8 +977,8 @@ const AdminDashboard = () => {
               })}
               td2txtbot={`Merchandise`}
               />
-          </MDBCol>
-          <MDBCol className="col-lg-4 my-2">
+          </MDBCol> */}
+          {/* <MDBCol className="col-lg-4 my-2">
             <DashCard 
               colSpan="4"
               icon={`clipboard-list`} 
@@ -1062,10 +1003,10 @@ const AdminDashboard = () => {
               })}
               td2txtbot={`Merchandise`}
               />
-          </MDBCol>
+          </MDBCol> */}
         </MDBRow>
         <MDBRow>
-        <MDBCol className="col-lg-4 my-2">
+        {/* <MDBCol className="col-lg-4 my-2">
             <DashCard 
               colSpan="4"
               icon={`wallet`} 
@@ -1075,22 +1016,22 @@ const AdminDashboard = () => {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2
               })}
-              // td1={true}
-              // td1txttop={complanpayin?.toLocaleString('en-US', {
-              // style: 'decimal',
-              // minimumFractionDigits: 2,
-              // maximumFractionDigits: 2
-              // })}
-              // td1txtbot={`Payin`} 
-              // td2={true}
-              // td2txttop={complanmerchandise?.toLocaleString('en-US', {
-              // style: 'decimal',
-              // minimumFractionDigits: 2,
-              // maximumFractionDigits: 2
-              // })}
-              // td2txtbot={`Merchandise`}
+              td1={true}
+              td1txttop={complanpayin?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              td1txtbot={`Payin`} 
+              td2={true}
+              td2txttop={complanmerchandise?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              td2txtbot={`Merchandise`}
               />
-          </MDBCol>
+          </MDBCol> */}
         </MDBRow>
         <br/>
         <MDBTypography tag={`h2`}>Complan</MDBTypography>
@@ -1230,8 +1171,7 @@ const AdminDashboard = () => {
           </MDBCol> */}
         </MDBRow>
         </MDBContainer>
-    </>  
     )
 }
 
-export default AdminDashboard;
+export default Masterdashboard;

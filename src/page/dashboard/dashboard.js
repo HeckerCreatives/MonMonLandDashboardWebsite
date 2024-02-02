@@ -704,7 +704,7 @@ const Dashboard = () => {
       },
      ];
      break
-     default:
+    default:
     }
     
     

@@ -4,12 +4,13 @@ import { Link, json, useNavigate } from "react-router-dom";
 import { MDBContainer, MDBBtn, MDBRow, MDBCol,MDBIcon } from "mdb-react-ui-kit";
 import Sidebarnav from "../../../component/sidebarnav";
 import { Outlet } from "react-router-dom";
-import { isgamelogin } from "../../../component/utils";
+import { isgamelogin, isLogin } from "../../../component/utils";
 import TopNavbar from "../../../component/topnavbar";
 import Swal from "sweetalert2";
 const UserDashboard = () => {
   const [user, setuser] = useState('');
   const [uid, setuid] = useState('');
+  const [mtuser, setmtuser] = useState('');
   const [didToggle, setDidToggle] = useState(
     window.innerWidth > 768 ? false : true
   ),
@@ -23,136 +24,243 @@ const UserDashboard = () => {
     window.innerWidth > 768 ? false : true
   );
   const navigate = useNavigate() 
-  
+  let link;
   useEffect(()=> {
     isgamelogin()
     .then(data => {
       setuser(data.name)
       setuid(data.uid)
     })
-  },[])
-
-  // const pleaselogin = () => {
-  //   Swal.fire({
-  //     icon: "info",
-  //     title: "Need to Login",
-  //     text: "Hi Master we need to login first",
-  //     allowEscapeKey: false,
-  //     allowOutsideClick: false
-  //   }).then(ok => {
-  //     if(ok.isConfirmed){
-  //       navigate("/gamelogin")
-  //     }
-  //   })
+    // isLogin()
+    // .then(data => {
+    //   setmtuser(data.name)
+    // })
+  },[mtuser])
+  // switch(mtuser){
+  //   case "mastertita":
+  //     link = [
+  //       {
+  //         name: "DASHBOARD",
+  //         path: "/Dashboard/Admin/home",
+  //         icon: "home",
+  //         children: [],
+  //       }
+  //     ]
+  //     break;
+  //     default:
+  //       link = [
+  //         {
+  //           name: "DASHBOARD",
+  //           path: "/Dashboard/User/home",
+  //           icon: "home",
+  //           children: [],
+  //         },
+  //         {
+  //           name: "Network",
+  //           path: "/Dashboard/User/network",
+  //           icon: "bezier-curve",
+  //           children: [],
+  //         },
+  //         {
+  //           name: "Add Funds",
+  //           path: "",
+  //           icon: "credit-card",
+  //           children: [
+  //             {
+  //               name: "Automatic",
+  //               path: "/topup",
+  //             },
+  //             {
+  //               name: "Manual",
+  //               path: `/cashier?username=${user}&id=${uid}`,
+  //             },
+  //           ],
+  //         },
+  //         {
+  //           name: "Leaderboard",
+  //           path: "/Dashboard/User/leaderboard",
+  //           icon: "trophy",
+  //           children: [],
+  //         },
+  //         {
+  //           name: "Payout",
+  //           path: "",
+  //           icon: "money-bill-alt",
+  //           children: [
+  //             {
+  //               name: "Request Payout",
+  //               path: "/Dashboard/User/payoutrequest",
+  //             },
+  //             {
+  //               name: "Payout History",
+  //               path: "/Dashboard/User/payouthistory",
+  //             },
+  //           ],
+  //         },
+  //         {
+  //           name: "Mail",
+  //           path: "",
+  //           icon: "envelope",
+  //           children: [],
+  //         },
+  //         {
+  //           name: "News",
+  //           path: "/Dashboard/User/news",
+  //           icon: "newspaper",
+  //           children: [],
+  //         },
+  //         {
+  //           name: "Profile",
+  //           path: "/Dashboard/User/profile",
+  //           icon: "user-edit",
+  //           children: [],
+  //         },
+  //         // {
+  //         //   name: "Set up Refferer",
+  //         //   path: "/Dashboard/User/referral",
+  //         //   icon: "user-lock",
+  //         //   children: [],
+  //         // },
+  //         {
+  //           name: "History",
+  //           path: "",
+  //           icon: "history",
+  //           children: [
+  //             {
+  //               name: "Wallet History",
+  //               path: "/Dashboard/User/wallethistory",
+  //             },
+  //             {
+  //               name: "Transaction History",
+  //               path: "/Dashboard/User/transactionhistory",
+  //             },
+  //             {
+  //               name: "Grinding History",
+  //               path: "/Dashboard/User/grindinghistory",
+  //             },
+  //             // {
+  //             //   name: "Monster Gem Unilevel",
+  //             //   path: "/Dashboard/User/monstergemunilevel",
+  //             // },
+  //             // {
+  //             //   name: "Monster Gem Grind",
+  //             //   path: "/Dashboard/User/monstergemgrind",
+  //             // },
+  //           ],
+  //         },
+  //       ]
+  //       break;
   // }
   
-    const  link = [
+
+  link = [
+    {
+      name: "DASHBOARD",
+      path: "/Dashboard/User/home",
+      icon: "home",
+      children: [],
+    },
+    {
+      name: "Network",
+      path: "/Dashboard/User/network",
+      icon: "bezier-curve",
+      children: [],
+    },
+    {
+      name: "Add Funds",
+      path: "",
+      icon: "credit-card",
+      children: [
         {
-          name: "DASHBOARD",
-          path: "/Dashboard/User/home",
-          icon: "home",
-          children: [],
+          name: "Automatic",
+          path: "/topup",
         },
         {
-          name: "Network",
-          path: "/Dashboard/User/network",
-          icon: "bezier-curve",
-          children: [],
+          name: "Manual",
+          path: `/cashier?username=${user}&id=${uid}`,
+        },
+      ],
+    },
+    {
+      name: "Leaderboard",
+      path: "/Dashboard/User/leaderboard",
+      icon: "trophy",
+      children: [],
+    },
+    {
+      name: "Payout",
+      path: "",
+      icon: "money-bill-alt",
+      children: [
+        {
+          name: "Request Payout",
+          path: "/Dashboard/User/payoutrequest",
         },
         {
-          name: "Add Funds",
-          path: "",
-          icon: "credit-card",
-          children: [
-            {
-              name: "Automatic",
-              path: "/topup",
-            },
-            {
-              name: "Manual",
-              path: `/cashier?username=${user}&id=${uid}`,
-            },
-          ],
+          name: "Payout History",
+          path: "/Dashboard/User/payouthistory",
+        },
+      ],
+    },
+    {
+      name: "Mail",
+      path: "",
+      icon: "envelope",
+      children: [],
+    },
+    {
+      name: "News",
+      path: "/Dashboard/User/news",
+      icon: "newspaper",
+      children: [],
+    },
+    {
+      name: "Profile",
+      path: "/Dashboard/User/profile",
+      icon: "user-edit",
+      children: [],
+    },
+    // {
+    //   name: "Set up Refferer",
+    //   path: "/Dashboard/User/referral",
+    //   icon: "user-lock",
+    //   children: [],
+    // },
+    {
+      name: "History",
+      path: "",
+      icon: "history",
+      children: [
+        {
+          name: "Wallet History",
+          path: "/Dashboard/User/wallethistory",
         },
         {
-          name: "Leaderboard",
-          path: "/Dashboard/User/leaderboard",
-          icon: "trophy",
-          children: [],
+          name: "Transaction History",
+          path: "/Dashboard/User/transactionhistory",
         },
         {
-          name: "Payout",
-          path: "",
-          icon: "money-bill-alt",
-          children: [
-            {
-              name: "Request Payout",
-              path: "/Dashboard/User/payoutrequest",
-            },
-            {
-              name: "Payout History",
-              path: "/Dashboard/User/payouthistory",
-            },
-          ],
-        },
-        {
-          name: "Mail",
-          path: "",
-          icon: "envelope",
-          children: [],
-        },
-        {
-          name: "News",
-          path: "/Dashboard/User/news",
-          icon: "newspaper",
-          children: [],
-        },
-        {
-          name: "Profile",
-          path: "/Dashboard/User/profile",
-          icon: "user-edit",
-          children: [],
+          name: "Grinding History",
+          path: "/Dashboard/User/grindinghistory",
         },
         // {
-        //   name: "Set up Refferer",
-        //   path: "/Dashboard/User/referral",
-        //   icon: "user-lock",
-        //   children: [],
+        //   name: "Monster Gem Unilevel",
+        //   path: "/Dashboard/User/monstergemunilevel",
         // },
-        {
-          name: "History",
-          path: "",
-          icon: "history",
-          children: [
-            {
-              name: "Wallet History",
-              path: "/Dashboard/User/wallethistory",
-            },
-            {
-              name: "Transaction History",
-              path: "/Dashboard/User/transactionhistory",
-            },
-            {
-              name: "Grinding History",
-              path: "/Dashboard/User/grindinghistory",
-            },
-            // {
-            //   name: "Monster Gem Unilevel",
-            //   path: "/Dashboard/User/monstergemunilevel",
-            // },
-            // {
-            //   name: "Monster Gem Grind",
-            //   path: "/Dashboard/User/monstergemgrind",
-            // },
-          ],
-        },
-    ];
+        // {
+        //   name: "Monster Gem Grind",
+        //   path: "/Dashboard/User/monstergemgrind",
+        // },
+      ],
+    },
+  ]
+  
     
   
 
     return(
       <>
-        {user ? 
+        { user  ? 
         <MDBContainer fluid className="p-0">
         
         <Sidebarnav

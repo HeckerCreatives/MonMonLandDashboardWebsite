@@ -52,32 +52,45 @@ const IngameLogin = () =>{
       })
     }).then(result => result.json())
     .then(data =>{
-       if (data.message !== "success") {  
-        setLoading(false)      
-				Swal.fire({
-                title: data.message,
-                icon: "info",
-                text: data.data
-                })
-		} else {
-        if(data.message === "success"){
-          setLoading(false)
-          Swal.fire({
-            title: "Login Successfully",
-            icon: "success",
-            text: `Welcome Monmon`,
-            allowEscapeKey: false,
-            allowOutsideClick: false
-          })
-          .then(result1 => {
-            if(result1.isConfirmed)
-            window.location.href = `/Dashboard/User/home`
-          })
-        }
-        
+      if(data.message === "success"){
+        setLoading(false)
+        Swal.fire({
+          title: "Login Successfully",
+          icon: "success",
+          text: `Welcome Monmon`,
+          allowEscapeKey: false,
+          allowOutsideClick: false
+        })
+        .then(result1 => {
+          if(result1.isConfirmed)
+          window.location.href = `/Dashboard/User/home`
+        })
       }
-       
-    })
+
+      else if(data.message === "adminsuccess"){
+        setLoading(false)
+        Swal.fire({
+          title: "Login Successfully",
+          icon: "success",
+          text: `Welcome Admin`,
+          allowEscapeKey: false,
+          allowOutsideClick: false
+        })
+        .then(result1 => {
+          if(result1.isConfirmed)
+          window.location.href = `/Dashboard/Admin/home`
+        })
+      }
+
+      else {
+        Swal.fire({
+          title: data.message,
+          icon: "info",
+          text: data.data
+        })
+      }
+      
+        })
   }
 
   return(
