@@ -379,6 +379,18 @@ const Routers = () => {
         <Route path="process" element={<MasterAdminDragonPayoutProcess/>}/>
         <Route path="done" element={<MasterAdminDragonPayoutDone/>}/>
         </Route>
+
+        <Route path="gameannouncement" element={<GameAnnouncement/>}/>
+
+        <Route path="settings">
+          <Route path="updatesubs">
+            <Route path="pearl"element={<UpdatePearl/>}/>
+            <Route path="ruby"element={<UpdateRuby/>}/>
+            <Route path="emerald"element={<UpdateEmerald/>}/>
+            <Route path="diamond"element={<UpdateDiamond/>}/>
+            <Route path="free"element={<UpdateFree/>}/>
+          </Route>
+        </Route>
       </Route>
           
       </Route>

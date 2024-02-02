@@ -38,6 +38,14 @@ const MtDashboard = () => {
       children: [],
     },
     {
+      name: "Game Announcement",
+      path: "/Dashboard/Admin/gameannouncement",
+      icon: "bullhorn",
+      children: [
+       
+      ],
+    },
+    {
       name: "Leaderboard",
       path: "",
       icon: "trophy",
@@ -89,6 +97,29 @@ const MtDashboard = () => {
           path: "/Dashboard/Admin/dragonpayout/done",
         },
       ],
+    },
+    {
+      name: "Subscription",
+      path: "",
+      icon: "dice-d6",
+      children: [
+        {
+          name: "Pearl",
+          path: "/Dashboard/Admin/settings/updatesubs/pearl",
+        },
+        {
+          name: "Ruby",
+          path: "/Dashboard/Admin/settings/updatesubs/ruby",
+        },
+        {
+          name: "Emerald",
+          path: "/Dashboard/Admin/settings/updatesubs/emerald",
+        },
+        {
+          name: "Diamond",
+          path: "/Dashboard/Admin/settings/updatesubs/diamond",
+        },
+      ]
     },
   ]
 
