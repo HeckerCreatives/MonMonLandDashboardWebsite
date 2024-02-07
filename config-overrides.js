@@ -14,6 +14,12 @@ module.exports = function override(config) {
         "url": require.resolve("url"),
         // "process": require.resolve("process/browser"),
     })
+    config.module.rules.push({
+        test: /\.m?js$/,
+        resolve: {
+          fullySpecified: false,
+        },
+    });
     config.resolve.fallback = fallback;
     config.plugins.push(
         new webpack.ProvidePlugin({
