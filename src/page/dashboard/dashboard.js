@@ -60,9 +60,18 @@ const Dashboard = () => {
       link = [
         {
             name: "Dashboard",
-            path: "/dashboard/Administrator/home",
+            path: "",
             icon: "home",
-            children: [],
+            children: [
+              {
+                name: "Grand Launch",
+                path: "/dashboard/Administrator/home/grandlaunch"
+              },
+              {
+                name: "Soft Launch",
+                path: "/dashboard/Administrator/home/softlaunch"
+              },
+            ],
         },
         {
           name: "Manage Accounts",
@@ -149,6 +158,21 @@ const Dashboard = () => {
             {
               name: "Settings",
               path: "/dashboard/Administrator/sponsor/setting"
+            }
+          ],
+        },
+        {
+          name: "Report",
+          path: "",
+          icon: "book",
+          children: [
+            {
+              name: "Pearl Report",
+              path: "/dashboard/Administrator/report/pearlreport"
+            },
+            {
+              name: "Payable Report",
+              path: "/dashboard/Administrator/report/payablereport"
             }
           ],
         },

@@ -136,6 +136,11 @@ import MasterAdminPayoutDone from "./page/dashboard/mastertita/dashboard/payout/
 import MasterAdminDragonPayoutRequest from "./page/dashboard/mastertita/dashboard/dragonpayout/request";
 import MasterAdminDragonPayoutProcess from "./page/dashboard/mastertita/dashboard/dragonpayout/process";
 import MasterAdminDragonPayoutDone from "./page/dashboard/mastertita/dashboard/dragonpayout/done";
+import GetAllPearl from "./page/dashboard/getpearl";
+import AdminDashboardGrandLaunch from "./component/dashboard/admin/grandlaunch";
+import Masterdashboardgrandlaunch from "./page/dashboard/mastertita/dashboard/grandlaunch";
+import GetPayable from "./page/dashboard/getpearl/payable";
+import GetPayableMasterAdmin from "./page/dashboard/mastertita/dashboard/payables";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -155,7 +160,11 @@ const Routers = () => {
       <Route path="/dashboard" element={<Dashboard />}>
        
         <Route path="Administrator" element={""}>
-        <Route path="home" element={<AdminDashboard />}/>
+        <Route path="home">
+        <Route path="softlaunch" element={<AdminDashboard />}/>
+        <Route path="grandlaunch" element={<AdminDashboardGrandLaunch />}/>
+        </Route>
+        
         <Route path="memberprofile" element={<MembersProfile/>}/>
         <Route path="manageaccount">
         <Route path="createadminacc" element={<CreateAdminAccount/>}/>
@@ -174,6 +183,12 @@ const Routers = () => {
           <Route path="usersdetails/:userId" element={<ManageDashboard/>}/>                           
         </Route>
         </Route>
+
+        <Route path="report">
+          <Route path="pearlreport" element={<GetAllPearl/>}/>
+          <Route path="payablereport" element={<GetPayable/>}/>
+        </Route>
+        
 
         <Route path="gamereset" element={<GameReset/>}/>
 
@@ -361,7 +376,11 @@ const Routers = () => {
       
       <Route path="/Dashboard" element={<Mtdashboard/>}>
         <Route path="Admin" element={""}>
-        <Route path="home" element={<Masterdashboard/>}/>
+        
+        <Route path="home">
+        <Route path="softlaunch" element={<Masterdashboard/>}/>
+        <Route path="grandlaunch" element={<Masterdashboardgrandlaunch/>}/>
+        </Route>
 
         <Route path="ingameleaderboard">
           <Route path="topearners" element={<TopEarners/>}/>
@@ -391,8 +410,13 @@ const Routers = () => {
             <Route path="free"element={<UpdateFree/>}/>
           </Route>
         </Route>
+
+        <Route path="report">
+          <Route path="pearlreport" element={<GetAllPearl/>}/>
+          <Route path="payablereport" element={<GetPayableMasterAdmin/>}/>
+        </Route>
+
       </Route>
-          
       </Route>
 
       <Route path="/register" element={<SignUp />}/>

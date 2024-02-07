@@ -27,6 +27,10 @@ import diamond from "../../../../assets/subscription/diamond.png"
 
 const MembersAccount = () => {
     const [confirmpass, setConfirmPass] = useState(""),
+        [username, setUsername] = useState(""),
+        [email, setEmail] = useState(""),
+        [subs, setSubs] = useState(""),
+        [wallet, setWallet] = useState(""),
         [member, setMember] = useState([]),
         [checkedItems, setCheckedItems] = useState([]),
         [joined, setJoined] = useState([]),
@@ -34,28 +38,121 @@ const MembersAccount = () => {
         [isloading, setIsLoading] = useState(false),
         [total, setTotal] = useState(0);
       
-    useEffect(() => {
-          let totalPages = Math.floor(member.length / 10);
-          if (member.length % 10 > 0) totalPages += 1;
-          setTotal(totalPages);
-    }, [member]);
+    // useEffect(() => {
+    //       let totalPages = Math.floor(member.length / 10);
+    //       if (member.length % 10 > 0) totalPages += 1;
+    //       setTotal(totalPages);
+    // }, [member]);
   
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_API_URL}members/find`,{
-        credentials: 'include',
-        })
-        .then(result => result.json())
-        .then(data => {
-        setMember(data.data)
-        })
+        if(username == "" && email == "" && subs == "" && wallet == "" ){
+            setIsLoading(true)
+            fetch(`${process.env.REACT_APP_API_URL}members/find?page=${page-1}`,{
+            credentials: 'include',
+            })
+            .then(result => result.json())
+            .then(data => {
+                setMember(data.data)
+                setTotal(data.pages)
+                setIsLoading(false)
+            })
+        } 
 
-        fetch(`${process.env.REACT_APP_API_URL}members/joined`,{
-        credentials: 'include',
+        else if (subs !== ""){
+        setIsLoading(true)
+        fetch(`${process.env.REACT_APP_API_URL}members/filterbysubscription?page=${page-1}`,{
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                subscription: subs
+            })
         })
         .then(result => result.json())
         .then(data => {
-        setJoined(data.data)
+            setMember(data.data)
+            setTotal(data.pages)
+            // setPage(1)
+            setIsLoading(false)
         })
+        }
+
+        else if (username !== ""){
+            setIsLoading(true)
+            fetch(`${process.env.REACT_APP_API_URL}members/searchusername?page=${page-1}`,{
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    username: username
+                })
+            })
+            .then(result => result.json())
+            .then(data => {
+                
+                setMember(data.data)
+                setTotal(data.pages)
+                // setPage(1)
+                setIsLoading(false)
+            })
+        }
+
+        else if (email !== ""){
+            setIsLoading(true)
+            fetch(`${process.env.REACT_APP_API_URL}members/searchemail?page=${page-1}`,{
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    email: email
+                })
+            })
+            .then(result => result.json())
+            .then(data => {
+                setMember(data.data)
+                setTotal(data.pages)
+                // setPage(1)
+                setIsLoading(false)
+            })
+        }
+
+        else if (wallet !== ""){
+            setIsLoading(true)
+        fetch(`${process.env.REACT_APP_API_URL}members/filterbywallet?page=${page-1}`,{
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                wallet: wallet
+            })
+        })
+        .then(result => result.json())
+        .then(data => {
+            setMember(data.data)
+            setTotal(data.pages)
+            // setPage(1)
+            setIsLoading(false)
+        })
+        }
+        
+    },[page, username, email, subs, wallet])
+
+    useEffect(()=>{
+        fetch(`${process.env.REACT_APP_API_URL}members/joined`,{
+            credentials: 'include',
+            })
+            .then(result => result.json())
+            .then(data => {
+            setJoined(data.data)
+            })
     },[])
 
     const handleCheckboxChange = (itemId) => {
@@ -217,7 +314,8 @@ const MembersAccount = () => {
     const searchusername = (e) => {
         e.preventDefault();
         const { username } = e.target
-        fetch(`${process.env.REACT_APP_API_URL}members/searchusername`,{
+        setIsLoading(true)
+        fetch(`${process.env.REACT_APP_API_URL}members/searchusername?page=${page-1}`,{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -231,14 +329,17 @@ const MembersAccount = () => {
         .then(data => {
             
             setMember(data.data)
+            setTotal(data.pages)
             setPage(1)
+            setIsLoading(false)
         })
     }
 
     const searchemail = (e) => {
         e.preventDefault();
         const { email } = e.target
-        fetch(`${process.env.REACT_APP_API_URL}members/searchemail`,{
+        setIsLoading(true)
+        fetch(`${process.env.REACT_APP_API_URL}members/searchemail?page=${page-1}`,{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -251,13 +352,16 @@ const MembersAccount = () => {
         .then(result => result.json())
         .then(data => {
             setMember(data.data)
+            setTotal(data.pages)
             setPage(1)
+            setIsLoading(false)
         })
     }
 
     const searchsubs = (e, subs) => {
         e.preventDefault();
-        fetch(`${process.env.REACT_APP_API_URL}members/filterbysubscription`,{
+        setIsLoading(true)
+        fetch(`${process.env.REACT_APP_API_URL}members/filterbysubscription?page=${page-1}`,{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -270,13 +374,16 @@ const MembersAccount = () => {
         .then(result => result.json())
         .then(data => {
             setMember(data.data)
+            setTotal(data.pages)
             setPage(1)
+            setIsLoading(false)
         })
     }
 
     const searchwallet = (e, wallet) => {
         e.preventDefault();
-        fetch(`${process.env.REACT_APP_API_URL}members/filterbywallet`,{
+        setIsLoading(true)
+        fetch(`${process.env.REACT_APP_API_URL}members/filterbywallet?page=${page-1}`,{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -289,8 +396,73 @@ const MembersAccount = () => {
         .then(result => result.json())
         .then(data => {
             setMember(data.data)
+            setTotal(data.pages)
             setPage(1)
+            setIsLoading(false)
         })
+    }
+
+    const activateuser = async (username) => {
+        Swal.fire({
+            icon: "warning",
+            title: `Are you sure to do this?`,
+            text: "You won't be able to revert this",
+            showDenyButton: true,
+            confirmButtonText: "Activate",
+            denyButtonText: "Cancel",
+            }).then(result1 => {
+                if(result1.isConfirmed){
+                    fetch(`${process.env.REACT_APP_API_URL}members/makeactive`,{
+                        method: "POST",
+                        credentials: 'include',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            username: username,
+                        })
+                    }).then(result => result.json())
+                    .then(data => {
+                        if(data.expired){
+                        Swal.fire({
+                            icon: "error",
+                            title: data.expired,
+                            text: "You Will Redirect to Login",
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                            Cookies.remove("auth", { path: '/' });;
+                            Cookies.remove("playfabAdminAuthToken", { path: '/' });
+                            window.location.replace("/login");
+                            }
+                        })
+                        } else if(data.message === "success") {
+                            Swal.fire({
+                                icon: "success",
+                                title: 'Success',
+                                text: `You successfully activate ${username}`,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false
+                            }).then(() => {
+                                window.location.reload()
+                            })
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: data.message,
+                                text: data.error,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false
+                            }).then(() => {
+                                window.location.reload()
+                            })
+                        }
+                    })
+                    
+                }
+            })
+                
     }
 
       return(
@@ -302,13 +474,7 @@ const MembersAccount = () => {
           <MDBCol>
           
           <Breadcrumb title="Members List"/>
-          </MDBCol>        
-          {/* <MDBCol md={3} className="">
-              <MDBInput type="search"                
-              label="Search">
-              </MDBInput>        
-          <MDBIcon fas icon="search" />        
-          </MDBCol> */}
+          </MDBCol> 
           </MDBRow>
           <MDBRow>
             <MDBCol md={2}>
@@ -387,17 +553,29 @@ const MembersAccount = () => {
           <form onSubmit={searchusername}>
             <MDBInputGroup>
             
-                <MDBInput required name="username" label='Search by username'/>
+                <MDBInput required name="username" label='Search by username' 
+                onChange={(e) => {
+                    setUsername(e.target.value)
+                    setEmail("")
+                    setSubs("")
+                    setWallet("")
+                }}/>
                 <MDBBtn type="submit">Search <MDBIcon fas icon="search"/></MDBBtn>
             
             </MDBInputGroup>
           </form>
           </MDBCol>
           <MDBCol md={3}>
-          <form onSubmit={searchemail}>
+          <form onSubmit={(e) => searchemail(e)}>
           <MDBInputGroup>
             
-                <MDBInput required name="email" label='Search by email'/>
+                <MDBInput required name="email" label='Search by email' 
+                onChange={(e) => {
+                    setUsername("")
+                    setEmail(e.target.value)
+                    setSubs("")
+                    setWallet("")
+                }}/>
                 <MDBBtn type="submit">Search <MDBIcon fas icon="search"/></MDBBtn>
            
             </MDBInputGroup>
@@ -412,14 +590,27 @@ const MembersAccount = () => {
             size="sm"
             >Ban Multiple
             </MDBBtn>
-            <select className="mx-2" name="subscription" onChange={(e) => searchsubs(e, e.target.value)}>
+            <select className="mx-2" name="subscription" onChange={(e) => {
+                searchsubs(e, e.target.value)
+                setSubs(e.target.value)
+                setUsername("")
+                setEmail("")
+                setWallet("")
+            }}>
                 <option selected disabled value="">Select Subscription</option>
                 <option value="Pearl">Pearl</option>
                 <option value="Ruby">Ruby</option>
                 <option value="Emerald">Emerald</option>
                 <option value="Diamond">Diamond</option>
             </select>
-            <select className="mx-2" name="wallet" onChange={(e) => searchwallet(e, e.target.value)}>
+            <select className="mx-2" name="wallet" 
+            onChange={(e) => {
+            searchwallet(e, e.target.value)
+            setWallet(e.target.value)
+            setSubs("")
+            setUsername("")
+            setEmail("")
+            }}>
                  <option selected disabled value="">Select Wallet Type</option>
                 <option value="monstercoin">Monster Coin</option>
                 <option value="monstergemfarm">Monster Gem Farm</option>
@@ -455,100 +646,217 @@ const MembersAccount = () => {
                       </tr>
                   </MDBTableHead>
                   <MDBTableBody className="text-center">
-                  {member ?
-                    <>
-                  {handlePagination(member, page, 10)?.map((acc, i) =>(
-                  <tr key={`acc-${i}`}>
-                  <td>
-                    <input type="checkbox"
-                    checked={checkedItems.includes(acc.username)}
-                    onChange={() => handleCheckboxChange(acc.username)} 
-                    ></input>
-                  </td>
-                  
-                  <td>
-                    <div className="d-flex flex-column">
-                    
-                    <p className="m-0 p-0">{acc.username}</p> 
-                    <p className="m-0 p-0">{`(${acc.subscription})`}</p> 
-                    </div>
-                  </td>  
-                  <td>{acc.referral}</td> 
-                  <td>
-                  <div className="d-flex flex-column">
-                   <p>Email: {acc.email}</p> 
-                   <p>Phone: {acc.phone}</p> 
-                  </div>
-                  </td>            
-                  <td>{acc.status}</td> 
-                  <td>
-                    <div className="d-flex flex-column text-justify">
-                    <p>Wallet Balance: &nbsp;
-                    {acc.walletbalance?.toLocaleString('en-US', {
-                    style: 'decimal',
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                    })}
-                    </p> 
-                    <p>Total Income: &nbsp;
-                    {acc.totalincome?.toLocaleString('en-US', {
-                    style: 'decimal',
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                    })}
-                    </p> 
-                    <p>Monster Coin: &nbsp;
-                    {acc.monstercoin?.toLocaleString('en-US', {
-                    style: 'decimal',
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                    })}
-                    </p> 
-                    <p>Monster Gem: &nbsp;
-                    {acc.monstergem?.toLocaleString('en-US', {
-                    style: 'decimal',
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                    })}
-                    </p> 
-                    <p>Monster Gem Unilevel: &nbsp;
-                    {acc.monstergemunilevel?.toLocaleString('en-US', {
-                    style: 'decimal',
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                    })}
-                    </p> 
-                    </div>
-                  </td>
-                  <td>{new Date(acc.createdAt).toLocaleString()}</td>              
-                  <td>
-                      <MDBBtn 
-                      onClick={() => {
-                        const url = `${window.location.origin}/dashboard/Administrator/memberprofile?username=${acc.username}`;
-                        window.open(url, '_blank');
-                      }}
-                      >View</MDBBtn>
-                      <MDBBtn 
-                      className="mx-2 fw-bold" 
-                      type="button" 
-                      outline 
-                      color="dark" 
-                      onClick={() => deleteitem(acc.username)}>Ban</MDBBtn>
-                  </td>
-                  </tr>
-                  ))}
-                  </> 
-                   :
-                   <tr>
-                    <td>
-                    <span>No Data</span>
-                    </td>
-                   </tr> }
-                     
-                  </MDBTableBody>
+                    {member.length !== 0 ? (
+                        <>
+                        {username === "" && email === "" && subs === "" && wallet === "" ? (
+                            member.map((acc, i) => (
+                            <tr key={`acc-${i}`}>
+                                <td>
+                                <input
+                                    type="checkbox"
+                                    checked={checkedItems.includes(acc.username)}
+                                    onChange={() => handleCheckboxChange(acc.username)}
+                                />
+                                </td>
+
+                                <td>
+                                <div className="d-flex flex-column">
+                                    <p className="m-0 p-0">{acc.username}</p>
+                                    <p className="m-0 p-0">{`(${acc.subscription})`}</p>
+                                </div>
+                                </td>
+                                <td>{acc.referral}</td>
+                                <td>
+                                <div className="d-flex flex-column">
+                                    <p>Email: {acc.email}</p>
+                                    <p>Phone: {acc.phone}</p>
+                                </div>
+                                </td>
+                                <td>{acc.status}</td>
+                                <td>
+                                <div className="d-flex flex-column text-justify">
+                                    <p>Wallet Balance: &nbsp;
+                                    {acc.walletbalance?.toLocaleString('en-US', {
+                                    style: 'decimal',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                    })}
+                                    </p> 
+                                    <p>Total Income: &nbsp;
+                                    {acc.totalincome?.toLocaleString('en-US', {
+                                    style: 'decimal',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                    })}
+                                    </p> 
+                                    <p>Monster Coin: &nbsp;
+                                    {acc.monstercoin?.toLocaleString('en-US', {
+                                    style: 'decimal',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                    })}
+                                    </p> 
+                                    <p>Monster Gem: &nbsp;
+                                    {acc.monstergem?.toLocaleString('en-US', {
+                                    style: 'decimal',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                    })}
+                                    </p> 
+                                    <p>Monster Gem Unilevel: &nbsp;
+                                    {acc.monstergemunilevel?.toLocaleString('en-US', {
+                                    style: 'decimal',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                    })}
+                                    </p> 
+                                </div>
+                                </td>
+                                <td>{new Date(acc.createdAt).toLocaleString()}</td>
+                                <td>
+                                <MDBBtn
+                                    onClick={() => {
+                                    const url = `${window.location.origin}/dashboard/Administrator/memberprofile?username=${acc.username}`;
+                                    window.open(url, '_blank');
+                                    }}
+                                >
+                                    View
+                                </MDBBtn>
+                                <MDBBtn
+                                    className="mx-2 fw-bold"
+                                    type="button"
+                                    outline
+                                    color="dark"
+                                    onClick={() => deleteitem(acc.username)}
+                                >
+                                    Ban
+                                </MDBBtn>
+                                { acc.status == "expired" &&
+                                <MDBBtn
+                                    className="mx-2 fw-bold"
+                                    type="button"
+                                    color="info"
+                                    onClick={() => activateuser(acc.username)}
+                                >
+                                    Activate
+                                </MDBBtn>
+                                }
+                                </td>
+                            </tr>
+                            ))
+                        ) : (
+                            handlePagination(member, page, 10)?.map((acc, i) => (
+                            <tr key={`acc-${i}`}>
+                            <td>
+                                <input
+                                    type="checkbox"
+                                    checked={checkedItems.includes(acc.username)}
+                                    onChange={() => handleCheckboxChange(acc.username)}
+                                />
+                                </td>
+
+                                <td>
+                                <div className="d-flex flex-column">
+                                    <p className="m-0 p-0">{acc.username}</p>
+                                    <p className="m-0 p-0">{`(${acc.subscription})`}</p>
+                                </div>
+                                </td>
+                                <td>{acc.referral}</td>
+                                <td>
+                                <div className="d-flex flex-column">
+                                    <p>Email: {acc.email}</p>
+                                    <p>Phone: {acc.phone}</p>
+                                </div>
+                                </td>
+                                <td>{acc.status}</td>
+                                <td>
+                                <div className="d-flex flex-column text-justify">
+                                    <p>Wallet Balance: &nbsp;
+                                    {acc.walletbalance?.toLocaleString('en-US', {
+                                    style: 'decimal',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                    })}
+                                    </p> 
+                                    <p>Total Income: &nbsp;
+                                    {acc.totalincome?.toLocaleString('en-US', {
+                                    style: 'decimal',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                    })}
+                                    </p> 
+                                    <p>Monster Coin: &nbsp;
+                                    {acc.monstercoin?.toLocaleString('en-US', {
+                                    style: 'decimal',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                    })}
+                                    </p> 
+                                    <p>Monster Gem: &nbsp;
+                                    {acc.monstergem?.toLocaleString('en-US', {
+                                    style: 'decimal',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                    })}
+                                    </p> 
+                                    <p>Monster Gem Unilevel: &nbsp;
+                                    {acc.monstergemunilevel?.toLocaleString('en-US', {
+                                    style: 'decimal',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                    })}
+                                    </p> 
+                                </div>
+                                </td>
+                                <td>{new Date(acc.createdAt).toLocaleString()}</td>
+                                <td>
+                                <MDBBtn
+                                    onClick={() => {
+                                    const url = `${window.location.origin}/dashboard/Administrator/memberprofile?username=${acc.username}`;
+                                    window.open(url, '_blank');
+                                    }}
+                                >
+                                    View
+                                </MDBBtn>
+                                <MDBBtn
+                                    className="mx-2 fw-bold"
+                                    type="button"
+                                    outline
+                                    color="dark"
+                                    onClick={() => deleteitem(acc.username)}
+                                >
+                                    Ban
+                                </MDBBtn>
+                                { acc.status == "expired" &&
+                                <MDBBtn
+                                    className="mx-2 fw-bold"
+                                    type="button"
+                                    color="info"
+                                    onClick={() => activateuser(acc.username)}
+                                >
+                                    Activate
+                                </MDBBtn>
+                                }
+                                </td>
+                            </tr>
+                            ))
+                        )}
+                        </>
+                    ) : (
+                        <tr>
+                        <td>
+                            <span>No Data</span>
+                        </td>
+                        </tr>
+                    )}
+                    </MDBTableBody>
+
                   </MDBTable>
           <PaginationPager
-              total={total} page={page} setPage={setPage}
+              total={total} 
+              page={page} 
+              setPage={setPage}
+              isloading={isloading}
           />
           </MDBContainer>
           </>

@@ -256,7 +256,7 @@ const GrantItems = () => {
                         Swal.fire({
                             icon: 'success',
                             title: 'Success',
-                            text: `Clock Granted to ${username.value}`
+                            text: `Cosmetic Granted to ${username.value}`
                         }).then(ok => {
                             if(ok.isConfirmed){
                                 window.location.reload()

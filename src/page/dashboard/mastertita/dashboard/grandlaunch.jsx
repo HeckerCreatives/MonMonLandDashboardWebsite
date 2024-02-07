@@ -1,25 +1,16 @@
+import { MDBContainer, MDBRow, MDBCol, MDBTypography } from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
-import { MDBContainer, MDBBtn, MDBRow, MDBCol,MDBIcon, MDBTypography, } from "mdb-react-ui-kit";
-import DashCard from "../../cards/dashcard";
-import Graph from "../../graph";
-import MiniTableList from "../../minitablelist";
-import MiniDescription from "../../minidescription";
-import FullTable from "../../fulltablelist";
-import Breadcrumb from "../../breadcrumb";
 import { useNavigate } from "react-router-dom";
+import DashCard from "../../../../component/cards/dashcard/index"
+import { isLogin, logout } from "../../../../component/utils";
 import Swal from "sweetalert2";
-import Cookies from 'js-cookie';
-import { isLogin, logout } from "../../utils";
-const AdminDashboard = () => {
-  // const encryptauth = decodeURIComponent(Cookies.get('auth'))
-  // const auth = JSON.parse(encryptauth)
-    // const auth = JSON.parse(Cookies.get("auth"))
+const Masterdashboardgrandlaunch = () => {
     const [basicModal, setBasicModal] = useState(false);
     const toggleShow = () => setBasicModal(!basicModal);
     const [users, setUsers] = useState([]);
     const [unilevel, setUnilevel] = useState(0);
     const navigate = useNavigate()
-    let increment = 3;
+    const pircint = .30;
     const [request, setRequest] = useState(0);
     const [processed, setProcessed] = useState(0);
     const [done, setDone] = useState(0);
@@ -96,9 +87,8 @@ const AdminDashboard = () => {
 
     useEffect(() => {
       if (role) {
-        if (role !== "Administrator") {
-          Cookies.remove("auth", { path: '/' });;
-          navigate("/login");
+        if (role !== "Admin") {
+          navigate("/gamelogin");
         }
       }
     }, [role, navigate]);
@@ -128,8 +118,6 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
             window.location.replace("/login");
           }
         })
@@ -164,8 +152,6 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
             // localStorage.removeItem("auth");
             // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
@@ -202,8 +188,6 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
             // localStorage.removeItem("auth");
             // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
@@ -239,17 +223,15 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
       }
 
       if(data?.data !== null && !data.expired){
-        setAutoPayment(data?.data[0]?.amount)
+        let ap = data?.data[0]?.amount * pircint
+        ap = data?.data[0]?.amount - ap
+        setAutoPayment(ap)
       }
 
       
@@ -277,17 +259,15 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
       }
 
       if(data?.data !== null && !data.expired){
-        setManualPayment(data?.data[0]?.amount)
+        let mp = data?.data[0]?.amount * pircint
+        mp = data?.data[0]?.amount - mp
+        setManualPayment(mp)
       }
       
 
@@ -313,55 +293,62 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
       }
 
       if(data?.data !== null && !data.expired){
+        // let sla = data.data.softlaunchauto * pircint
+        // sla = data.data.softlaunchauto - sla
+
+        // let slm = data.data.softlaunchmanual * pircint
+        // slm = data.data.softlaunchmanual - slm
+
+        // let slt = data.data.softlaunchtotal * pircint
+        // slt = data.data.softlaunchtotal - slt
+        
         setSoftLaunchAuto(data.data.softlaunchauto)
         setSoftLaunchManual(data.data.softlaunchmanual)
         setSoftLaunchTotal(data.data.softlaunchtotal)
       }
     })
 
-    fetch(`${process.env.REACT_APP_API_URL}wallet/totalsalewallet`,{
-      method: "GET",
-      credentials: 'include',
-      headers: {
-        "Content-Type": "application/json",
-        // Authorization: `Bearer ${auth?.token}`,
-      },
-    }).then(result => result.json())
-    .then(data => {
-      if(data.expired){
-        Swal.fire({
-          icon: "error",
-          title: data.expired,
-          text: "You Will Redirect to Login",
-          allowOutsideClick: false,
-          allowEscapeKey: false
-        }).then(ok => {
-          if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
-            window.location.replace("/login");
-          }
-        })
-      }
+    // fetch(`${process.env.REACT_APP_API_URL}wallet/totalsalewallet`,{
+    //   method: "GET",
+    //   credentials: 'include',
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     // Authorization: `Bearer ${auth?.token}`,
+    //   },
+    // }).then(result => result.json())
+    // .then(data => {
+    //   if(data.expired){
+    //     Swal.fire({
+    //       icon: "error",
+    //       title: data.expired,
+    //       text: "You Will Redirect to Login",
+    //       allowOutsideClick: false,
+    //       allowEscapeKey: false
+    //     }).then(ok => {
+    //       if(ok.isConfirmed){
+            
+    //         window.location.replace("/login");
+    //       }
+    //     })
+    //   }
 
-      if(data?.data !== null && !data.expired){
-        setTotalAuto(data.data.totalauto)
-        setTotalManual(data.data.totalmanual)
-        setCombineTotal(data.data.combinetotal)
-      }
-    })
+    //   if(data?.data !== null && !data.expired){
+    //     // let ta = data.data.totalauto * pircint
+    //     // ta = data.data.totalauto - ta
+    //     // let tm = data.data.totalmanual * pircint
+    //     // tm = data.data.totalmanual - tm
+    //     // let ct = data.data.combinetotal * pircint
+    //     // ct = data.data.combinetotal - ct
+        
+    //   }
+    // })
 
     fetch(`${process.env.REACT_APP_API_URL}wallet/dragonpayoutwallet`,{
       method: "GET",
@@ -381,10 +368,7 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
@@ -438,10 +422,7 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
@@ -457,7 +438,6 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers:{
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({subsname: "ruby"})
     })
@@ -472,10 +452,7 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
@@ -491,7 +468,6 @@ const AdminDashboard = () => {
       credentials: 'include',
       headers:{
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${auth?.token}`,
       },
       body: JSON.stringify({subsname: "emerald"})
     })
@@ -506,10 +482,7 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
@@ -540,10 +513,7 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
@@ -557,7 +527,14 @@ const AdminDashboard = () => {
 
     const total =  pearlaccumulated + rubyaccumulated + emeraldaccumulated + diamondaccumulated
     setTotalAccumulated(total)
-  },[pearlaccumulated, rubyaccumulated, emeraldaccumulated,diamondaccumulated])
+    const ta = softlaunchauto +  autopayment
+    const tm = ManualPayment + softlaunchmanual
+    const ct = AutoAndManual + softlaunchtotal
+    
+    setTotalAuto(ta)
+    setTotalManual(tm)
+    setCombineTotal(ct)
+  },[AutoAndManual , softlaunchtotal, ManualPayment , softlaunchmanual, softlaunchauto , autopayment, pearlaccumulated, rubyaccumulated, emeraldaccumulated,diamondaccumulated])
 
   useEffect(()=>{
     fetch(`${process.env.REACT_APP_API_URL}merchandise/find`,{
@@ -580,10 +557,7 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
@@ -614,10 +588,7 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
@@ -648,10 +619,6 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
             window.location.replace("/login");
           }
         })
@@ -686,10 +653,7 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
@@ -698,49 +662,14 @@ const AdminDashboard = () => {
 
     })
 
-    // fetch(`${process.env.REACT_APP_API_URL}wallet/find`, {
-    //   method: "POST",
-    //   credentials: 'include',
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     // Authorization: `Bearer ${auth?.token}`,
-    //   },
-    //   // body: JSON.stringify({id: id})
-    // })
-    // .then(result => result.json())
-    // .then(data => {
-
-    //   if(data.expired){
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: data.expired,
-    //       text: "You Will Redirect to Login",
-    //       allowOutsideClick: false,
-    //       allowEscapeKey: false
-    //     }).then(ok => {
-    //       if(ok.isConfirmed){
-    //         Cookies.remove("auth", { path: '/' });;
-    //         Cookies.remove("playfabAdminAuthToken", { path: '/' });
-    //         // localStorage.removeItem("auth");
-    //         // localStorage.removeItem("playfabAdminAuthToken")
-    //         window.location.replace("/login");
-    //       }
-    //     })
-    //   }
-
-    //   setUnilevel(data?.data[0]?.commission)
-
-        
-    // })
+  
 
     fetch(`${process.env.REACT_APP_API_URL}withdrawfee/find`, {
       method: "POST",
       credentials: 'include',
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${auth?.token}`,
       },
-      // body: JSON.stringify({id: id})
     })
     .then(result => result.json())
     .then(data => {
@@ -754,10 +683,7 @@ const AdminDashboard = () => {
           allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            Cookies.remove("auth", { path: '/' });;
-            Cookies.remove("playfabAdminAuthToken", { path: '/' });
-            // localStorage.removeItem("auth");
-            // localStorage.removeItem("playfabAdminAuthToken")
+            
             window.location.replace("/login");
           }
         })
@@ -780,24 +706,42 @@ const AdminDashboard = () => {
     .then(result => result.json())
     .then(data => {
       if(data.message === "success"){
-        setLeaderboard(data.data.leaderboard)
-        setGrinding(data.data.grinding)
-        setQuest(data.data.quest)
-        setDiamondPool(data.data.diamondpools)
-        setDevsShare(data.data.devsshare)
-        setCompanyShare(data.data.companyshare)
-        setOfficer(data.data.officers)
-        setMarketing(data.data.marketing)
-        setIncentives(data.data.incentives)
-        setUnilevelMg(data.data.unilevelmonstergem)
-        setMonstergem(data.data.monstergem)
-        setTradepayin(data.data.tradepayin)
-        setTrademerchandise(data.data.trademerchandise)
-        setComplanpayin(data.data.complanpayin)
-        setComplanmerchandise(data.data.complanmerchandise)
-        setUnilevel(data.data.unilevelbonus)
-        setSponsorWallet(data.data.sponsorwallet)
-        setInvestorWallet(data.data.investorfunds)
+        const lb = data.data.leaderboard
+        const gd = data.data.grinding - (data.data.grinding * pircint)
+        const qst = data.data.quest - (data.data.quest * pircint)
+        const dp = data.data.diamondpools
+        const dv = data.data.devsshare - (data.data.devsshare * pircint)
+        const cs = data.data.companyshare - (data.data.companyshare * pircint)
+        const ofcr = data.data.officers - (data.data.officers * pircint)
+        const mrkt = data.data.marketing - (data.data.marketing * pircint)
+        const inct = data.data.incentives - (data.data.incentives * pircint)
+        const unimg = data.data.unilevelmonstergem - (data.data.unilevelmonstergem * pircint)
+        const mg = data.data.monstergem
+        const tp = data.data.tradepayin - (data.data.tradepayin * pircint)
+        const tm = data.data.trademerchandise - (data.data.trademerchandise * pircint)
+        const cp = data.data.complanpayin - (data.data.complanpayin * pircint)
+        const cm = data.data.complanmerchandise - (data.data.complanmerchandise * pircint)
+        const unilvl = data.data.unilevelbonus - (data.data.unilevelbonus * pircint)
+        const sprw = data.data.sponsorwallet - (data.data.sponsorwallet * pircint)
+        const invw = data.data.investorfunds - (data.data.investorfunds * pircint)
+        setLeaderboard(lb)
+        setGrinding(gd)
+        setQuest(qst)
+        setDiamondPool(dp)
+        setDevsShare(dv)
+        setCompanyShare(cs)
+        setOfficer(ofcr)
+        setMarketing(mrkt)
+        setIncentives(inct)
+        setUnilevelMg(unimg)
+        setMonstergem(mg)
+        setTradepayin(tp)
+        setTrademerchandise(tm)
+        setComplanpayin(cp)
+        setComplanmerchandise(cm)
+        setUnilevel(unilvl)
+        setSponsorWallet(sprw)
+        setInvestorWallet(invw)
       }
     })
   },[])
@@ -823,12 +767,15 @@ const AdminDashboard = () => {
     return (
       <>
         <MDBContainer fluid>
-        <Breadcrumb title='Dashboard' paths={[]}/>
         {/* Cards */}
         <br/>
+        <center>
+        <MDBTypography tag={`h4`}>This is Effectively Starting 'Date Here'</MDBTypography>
+        </center>
+        
         <MDBTypography tag={`h2`}>Topup</MDBTypography>
         <hr/><MDBRow className="my-2">
-          {/* <MDBCol lg={4} className="my-2">
+          <MDBCol lg={4} className="my-2">
             <DashCard 
               colSpan="4"
               icon={`dollar-sign`}
@@ -842,8 +789,8 @@ const AdminDashboard = () => {
               td2txttop={autopayment ? `${autopayment?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} `: "0 "}
               td2txtbot={`Automated`} 
               />
-          </MDBCol> */}
-          <MDBCol lg={4} className="my-2">
+          </MDBCol>
+          {/* <MDBCol className="my-2">
           <DashCard 
               colSpan="4"
               icon={`dollar-sign`}
@@ -857,7 +804,7 @@ const AdminDashboard = () => {
               td2txttop={softlaunchauto ? `${softlaunchauto?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} `: "0 "}
               td2txtbot={`Automated`} 
               />
-          </MDBCol>
+          </MDBCol> */}
           {/* <MDBCol className="my-2">
           <DashCard 
               colSpan="4"
@@ -884,10 +831,10 @@ const AdminDashboard = () => {
               colSpan="4"
               icon={`dollar-sign`}
               thtitle={`Total Admin Fee`}
-              cardtoptext={0}
+              cardtoptext={adminfee.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               // txtsup={`USDT`} 
               td0={true}
-              td0txttop={0}
+              td0txttop={withdrawalfee ? `${withdrawalfee.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               td0txtbot={`Withdrawal Fee`} 
               />
           </MDBCol>
@@ -940,80 +887,36 @@ const AdminDashboard = () => {
               td3txtbot={`Shop`}
               />
           </MDBCol>
+       
+        </MDBRow>
+        <MDBRow>
         {/* <MDBCol className="col-lg-4 my-2">
             <DashCard 
               colSpan="4"
-              icon={`user`} 
-              thtitle={`Subscription User`} 
-              cardtoptext={totalsubsuser}
-              td1={true}
-              td1txttop={pearl ? pearl : 0 }
-              td1txtbot={`Pearl`} 
-              td2={true}
-              td2txttop={ruby ? ruby : 0}
-              td2txtbot={`Ruby`} 
-              td3={true}
-              td3txttop={emerald ? emerald : 0}
-              td3txtbot={`Emerald`}
-              td4={true}
-              td4txttop={diamond ? diamond : 0}
-              td4txtbot={`Diamond`}
-              />
-          </MDBCol>
-          <MDBCol className="col-lg-4 my-2">
-            <DashCard 
-              colSpan="4"
-              icon={`chart-line`} 
-              thtitle={`Trade`}
-              cardtoptext={totaltrade?.toLocaleString('en-US', {
+              icon={`wallet`} 
+              thtitle={`Sponsor Wallet`}
+              cardtoptext={sponsorwallet?.toLocaleString('en-US', {
               style: 'decimal',
               minimumFractionDigits: 2,
               maximumFractionDigits: 2
               })}
-              td1={true}
-              td1txttop={tradepayin?.toLocaleString('en-US', {
-              style: 'decimal',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-              })}
-              td1txtbot={`Payin`} 
-              td2={true}
-              td2txttop={trademerchandise?.toLocaleString('en-US', {
-              style: 'decimal',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-              })}
-              td2txtbot={`Merchandise`}
-              />
-          </MDBCol> */}
-          {/* <MDBCol className="col-lg-4 my-2">
-            <DashCard 
-              colSpan="4"
-              icon={`clipboard-list`} 
-              thtitle={`Complan`}
-              cardtoptext={complantotal?.toLocaleString('en-US', {
-              style: 'decimal',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-              })}
-              td1={true}
-              td1txttop={complanpayin?.toLocaleString('en-US', {
-              style: 'decimal',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-              })}
-              td1txtbot={`Payin`} 
-              td2={true}
-              td2txttop={complanmerchandise?.toLocaleString('en-US', {
-              style: 'decimal',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-              })}
-              td2txtbot={`Merchandise`}
+              // td1={true}
+              // td1txttop={complanpayin?.toLocaleString('en-US', {
+              // style: 'decimal',
+              // minimumFractionDigits: 2,
+              // maximumFractionDigits: 2
+              // })}
+              // td1txtbot={`Payin`} 
+              // td2={true}
+              // td2txttop={complanmerchandise?.toLocaleString('en-US', {
+              // style: 'decimal',
+              // minimumFractionDigits: 2,
+              // maximumFractionDigits: 2
+              // })}
+              // td2txtbot={`Merchandise`}
               />
           </MDBCol> */}
         </MDBRow>
-        
         <br/>
         <MDBTypography tag={`h2`}>Payout</MDBTypography>
         <hr/>
@@ -1073,8 +976,92 @@ const AdminDashboard = () => {
               td3txtbot={`Done`}
               />
           </MDBCol>
+
+        {/* <MDBCol className="col-lg-4 my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`coins`}
+              thtitle={`Unilevel Bonus`}
+              cardtoptext={unilevel ? `${unilevel.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+        </MDBCol>
+        <MDBCol className="col-lg-4 my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`money-bill`}
+              thtitle={`Unilevel Monster Gem`}
+              cardtoptext={unilevelmonstergem ? `${unilevelmonstergem.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol>
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`chart-line`}
+              thtitle={`Leaderboard`}
+              cardtoptext={leaderboard ? `${leaderboard.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol>
+          
         </MDBRow>
-        <br/>
+        <MDBRow>
+        <MDBCol className="my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`gamepad`}
+              thtitle={`Grinding / Games`}
+              cardtoptext={grinding ? `${grinding.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol>   
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`trophy`}
+              thtitle={`Quest Reward`}
+              cardtoptext={quest ? `${quest.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol>
+       
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`gem`}
+              thtitle={`Diamond Pools`}
+              cardtoptext={diamondpool ? `${diamondpool.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol>
+          
+        </MDBRow>
+        <MDBRow>
+        <MDBCol className="my-2">
+          <DashCard 
+              colSpan="4"
+              icon={`chalkboard-teacher`}
+              thtitle={`Devs Share`}
+              cardtoptext={devsshare ? `${devsshare.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol>
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="3"
+              icon={`building`}
+              thtitle={`Company Share`}
+              cardtoptext={companyshare ? `${companyshare.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol>
+          <MDBCol className="my-2">
+          <DashCard 
+              colSpan="3"
+              icon={`users`}
+              thtitle={`Officers`}
+              cardtoptext={officer ? `${officer.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+          </MDBCol>
+           
+        </MDBRow>
+        
+           */}
+         
+        </MDBRow>
         <MDBTypography tag={`h2`}>Distribution</MDBTypography>
         <hr/>
         <MDBRow>
@@ -1083,12 +1070,24 @@ const AdminDashboard = () => {
               colSpan="4"
               icon={`clipboard-list`} 
               thtitle={`Player Complan`}
-              cardtoptext={0}
+              cardtoptext={complantotal?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
               td1={true}
-              td1txttop={0}
+              td1txttop={complanpayin?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
               td1txtbot={`Payin`} 
               td2={true}
-              td2txttop={0}
+              td2txttop={complanmerchandise?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
               td2txtbot={`Merchandise`}
               />
           </MDBCol>
@@ -1097,7 +1096,7 @@ const AdminDashboard = () => {
               colSpan="4"
               icon={`coins`}
               thtitle={`Unilevel Bonus`}
-              cardtoptext={0}
+              cardtoptext={unilevel ? `${unilevel.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
         </MDBCol>
         <MDBCol className="col-lg-4 my-2">
@@ -1105,7 +1104,7 @@ const AdminDashboard = () => {
               colSpan="4"
               icon={`money-bill`}
               thtitle={`Unilevel Monster Gem`}
-              cardtoptext={0}
+              cardtoptext={unilevelmonstergem ? `${unilevelmonstergem.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
           </MDBCol>
 
@@ -1117,7 +1116,7 @@ const AdminDashboard = () => {
               colSpan="4"
               icon={`gem`}
               thtitle={`Top Earner`}
-              cardtoptext={0}
+              cardtoptext={diamondpool ? `${diamondpool.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
           </MDBCol>
           <MDBCol lg={4} className="my-2">
@@ -1125,7 +1124,7 @@ const AdminDashboard = () => {
               colSpan="4"
               icon={`chart-line`}
               thtitle={`Leaderboard`}
-              cardtoptext={0}
+              cardtoptext={leaderboard ? `${leaderboard.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
           </MDBCol>
         </MDBRow>
@@ -1136,7 +1135,7 @@ const AdminDashboard = () => {
               colSpan="4"
               icon={`gamepad`}
               thtitle={`Grinding / Games`}
-              cardtoptext={0}
+              cardtoptext={grinding ? `${grinding.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
         </MDBCol>
         <MDBCol className="my-2">
@@ -1144,7 +1143,7 @@ const AdminDashboard = () => {
               colSpan="4"
               icon={`trophy`}
               thtitle={`Quest Reward`}
-              cardtoptext={0}
+              cardtoptext={quest ? `${quest.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
           </MDBCol>
           <MDBCol className="my-2">
@@ -1152,7 +1151,7 @@ const AdminDashboard = () => {
                 colSpan="3"
                 icon={`coins`}
                 thtitle={`Monster Gem`}
-                cardtoptext={0}
+                cardtoptext={monstergem ? `${monstergem.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
                 />
           </MDBCol>
         </MDBRow>
@@ -1164,7 +1163,7 @@ const AdminDashboard = () => {
               colSpan="4"
               icon={`chalkboard-teacher`}
               thtitle={`Devs Share`}
-              cardtoptext={0}
+              cardtoptext={devsshare ? `${devsshare.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
           </MDBCol>
           <MDBCol className="my-2">
@@ -1172,7 +1171,7 @@ const AdminDashboard = () => {
               colSpan="3"
               icon={`building`}
               thtitle={`Company Share`}
-              cardtoptext={0}
+              cardtoptext={companyshare ? `${companyshare.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
         </MDBCol>
         <MDBCol className="my-2">
@@ -1180,7 +1179,7 @@ const AdminDashboard = () => {
               colSpan="3"
               icon={`users`}
               thtitle={`Officers`}
-              cardtoptext={0}
+              cardtoptext={officer ? `${officer.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
         </MDBCol>
         
@@ -1191,7 +1190,7 @@ const AdminDashboard = () => {
               colSpan="3"
               icon={`pen-fancy`}
               thtitle={`Marketing Arm`}
-              cardtoptext={0}
+              cardtoptext={marketing ? `${marketing.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
         </MDBCol>
         <MDBCol lg={4} className="my-2">
@@ -1199,7 +1198,7 @@ const AdminDashboard = () => {
               colSpan="3"
               icon={`hand-holding-usd`}
               thtitle={`Investor Fund`}
-              cardtoptext={0}
+              cardtoptext={investorwallet ? `${investorwallet.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
           </MDBCol>
         <MDBCol className="my-2">
@@ -1207,7 +1206,7 @@ const AdminDashboard = () => {
               colSpan="3"
               icon={`plane-departure`}
               thtitle={`Travel / Incentives`}
-              cardtoptext={0}
+              cardtoptext={incentives ? `${incentives.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
         </MDBCol>
         </MDBRow>
@@ -1216,4 +1215,4 @@ const AdminDashboard = () => {
     )
 }
 
-export default AdminDashboard;
+export default Masterdashboardgrandlaunch;

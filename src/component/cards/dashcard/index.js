@@ -113,7 +113,7 @@ return(
 
                     <th className="fw-bold" scope='col'>Quest Reward</th>
 
-                    <th className="fw-bold" scope='col'>Diamond Pools Rewards</th>
+                    <th className="fw-bold" scope='col'>Top Earner Rewards</th>
                     
                     <th className="fw-bold" scope='col'>Developer Share</th>
 
@@ -134,40 +134,40 @@ return(
                         Payin
                      </td>
                      <td>
-                     40%
+                     40%  {/* complan */}
                      </td>
                      <td>
-                     2%
+                     2% {/* leaderboard */}
                      </td>
                      <td>
-                     20%
+                     20% {/* grinding */}
                      </td>
                      <td>
-                     0%
+                     0% {/* 0% quest */}
                      </td>
                      <td>
-                     1%
+                     1% {/* 1% diamond pool/top earner */}
                      </td>
                      <td>
-                     5%
+                     5% {/*  dev share */}
                      </td>
                      <td>
-                     2%
+                     2% {/* company share */}
                      </td>
                      <td>
-                     8%
+                     8% {/* officers */}
                      </td>
                      <td>
-                      2%
+                     2% {/* marketing arm */}
                      </td>
                      <td>
-                       3%
+                     3% {/* incentives */}
                      </td>  
                      <td>
-                       15%
+                     15% {/* monster gem */}
                      </td> 
                      <td>
-                       2%
+                     2% {/* investor fund */}
                      </td>   
                     </tr>
                     <tr>
@@ -175,40 +175,40 @@ return(
                         Merchandise
                      </td>
                      <td>
-                     30% 
+                     30% {/* complan */}
                      </td>
                      <td>
-                     3%
+                     2% {/* leaderboard */}
                      </td>
                      <td>
-                     20%
+                     20% {/* grinding */}
                      </td>
                      <td>
-                     0%
+                     0% {/* 0% quest */}
                      </td>
                      <td>
-                     2%
+                     2% {/* 1% diamond pool/top earner */}
                      </td>
                      <td>
-                     5%
+                     5% {/*  dev share */}
                      </td>
                      <td>
-                     2%
+                     2% {/* company share */}
                      </td>
                      <td>
-                     5%
+                     5% {/* officers */}
                      </td>
                      <td>
-                      1%
+                      1% {/* marketing arm */}
                      </td>
                      <td>
-                      2%
+                      2% {/* incentives */}
                      </td> 
                      <td>
-                      30%
+                      30% {/* monster gem */}
                      </td> 
                      <td>
-                     0%
+                     1% {/* investor fund */}
                      </td>   
                     </tr>
                     <tr>
@@ -216,41 +216,41 @@ return(
                         Tools
                      </td>
                      <td>
-                     30% 
+                     30% {/* complan */}
                      </td>
                      <td>
-                     3%
+                     2% {/* leaderboard */}
                      </td>
                      <td>
-                     20%
+                     20% {/* grinding */}
                      </td>
                      <td>
-                     0%
+                     0% {/* 0% quest */}
                      </td>
                      <td>
-                     2%
+                     2% {/* 1% diamond pool/top earner */}
                      </td>
                      <td>
-                     5%
+                     5% {/*  dev share */}
                      </td>
                      <td>
-                     2%
+                     2% {/* company share */}
                      </td>
                      <td>
-                     5%
+                     5% {/* officers */}
                      </td>
                      <td>
-                      1%
+                      1% {/* marketing arm */}
                      </td>
                      <td>
-                      2%
+                      2% {/* incentives */}
                      </td> 
                      <td>
-                      30%
+                      30% {/* monster gem */}
                      </td> 
                      <td>
-                     0%
-                     </td>
+                     1% {/* investor fund */}
+                     </td>   
                     </tr>
                     <tr>
                      <td className="fw-bold text-warning">
@@ -293,81 +293,81 @@ return(
                      0%
                      </td>        */}
                      <td>
-                     30% 
+                     30% {/* complan */}
                      </td>
                      <td>
-                     3%
+                     2% {/* leaderboard */}
                      </td>
                      <td>
-                     20%
+                     20% {/* grinding */}
                      </td>
                      <td>
-                     0%
+                     0% {/* 0% quest */}
                      </td>
                      <td>
-                     2%
+                     2% {/* 1% diamond pool/top earner */}
                      </td>
                      <td>
-                     5%
+                     5% {/*  dev share */}
                      </td>
                      <td>
-                     2%
+                     2% {/* company share */}
                      </td>
                      <td>
-                     5%
+                     5% {/* officers */}
                      </td>
                      <td>
-                      1%
+                      1% {/* marketing arm */}
                      </td>
                      <td>
-                      2%
+                      2% {/* incentives */}
                      </td> 
                      <td>
-                      30%
+                      30% {/* monster gem */}
                      </td> 
                      <td>
-                     0%
-                     </td>
+                     1% {/* investor fund */}
+                     </td>   
                     </tr>
                     <tr>
                      <td className="fw-bold text-warning">
                         Ads
                      </td>
                      <td>
-                     0%
+                     0% {/* complan */}
                      </td>
                      <td>
-                     0%
+                     0% {/* leaderboard */}
                      </td>
                      <td>
-                     35%
+                     35% {/* grinding */}
                      </td>
                      <td>
-                     0%
+                     0%  {/* 0% quest */}
                      </td>
                      <td>
-                     0%
+                     0% {/* 1% diamond pool/top earner */}
                      </td>
                      <td>
-                     5%
+                     5% {/*  dev share */}
                      </td>
                      <td>
-                     3%
+                     3% {/* company share */}
                      </td>
                      <td>
-                     10%
+                     10% {/* officers */}
                      </td>
                      <td>
-                      1%
+                      1% {/* marketing arm */}
                      </td>
                      <td>
-                      1%
+                      1% {/* incentives */}
                      </td>  
                      <td>
-                       35%
+                       35% {/* monster gem */}
                      </td> 
                      <td>
-                       10%
+                       10% {/* investor fund */}
                      </td>       
                     </tr>
                     {/* <tr>

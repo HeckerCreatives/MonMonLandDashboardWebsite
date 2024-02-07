@@ -306,7 +306,7 @@ const Header = () => {
       centerMode: true,
       infinite: true,
       centerPadding: "60px",
-      slidesToShow: 5,        
+      slidesToShow: 4,        
       adaptiveHeight: false,
       focusOnSelect: true,
       responsive: [
@@ -553,7 +553,7 @@ const Header = () => {
 
                 </MDBCol>
 
-                    <MDBCol  className="col-lg-2 text-center  ">
+                    {/* <MDBCol  className="col-lg-2 text-center  ">
                     <MDBCard alignment='center' className="moncoin mx-2">
                     
                     <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
@@ -573,7 +573,7 @@ const Header = () => {
                     <MDBCardFooter className='fw-bold p-4' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}></MDBCardFooter>
                     </MDBCard> 
 
-                    </MDBCol>
+                    </MDBCol> */}
                     <MDBCol  className="col-lg-2 text-center  ">
                     <MDBCard alignment='center' className="moncoin mx-2">
                     
@@ -602,7 +602,7 @@ const Header = () => {
                     <div className="d-flex align-items-center justify-content-center">
                     <img src={diamond} alt="" style={{width: "40px"}}/>
                     
-                    <span className="ms-2">Diamond Pools</span> 
+                    <span className="ms-2">Top Earner</span> 
                     </div>
                    
                     </MDBCardHeader>
@@ -616,7 +616,7 @@ const Header = () => {
 
                     </MDBCol>
                     
-                    <MDBCol  className="col-lg-2 text-center  ">
+                    {/* <MDBCol  className="col-lg-2 text-center  ">
                     <MDBCard alignment='center' className="moncoin mx-2">
                     
                     <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
@@ -635,7 +635,7 @@ const Header = () => {
                     <MDBCardFooter className='fw-bold p-4' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}></MDBCardFooter>
                     </MDBCard> 
 
-                    </MDBCol>
+                    </MDBCol> */}
 
                     <MDBCol  className="col-lg-2 text-center  ">
                     <MDBCard alignment='center' className="moncoin mx-2">

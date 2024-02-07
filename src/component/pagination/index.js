@@ -1,7 +1,7 @@
 import React from "react";
 import { MDBCol, MDBBtn, MDBIcon } from "mdb-react-ui-kit";
 
-const PaginationPager = ({ setPage, page, total }) => {
+const PaginationPager = ({ setPage, page, total, isloading }) => {
   const handlePage = action => {
     if (action) {
       page < total && setPage(prev => prev + 1);
@@ -18,7 +18,7 @@ const PaginationPager = ({ setPage, page, total }) => {
             style={{background:'#ECCC99'}}
             className={`py-1 page-link`}
             onClick={() => handlePage(false)}
-            disabled={page <= 1}
+            disabled={page <= 1 || isloading}
           >
             <MDBIcon fas icon="angle-double-left" />
           </MDBBtn>
@@ -37,7 +37,7 @@ const PaginationPager = ({ setPage, page, total }) => {
             style={{background:'#ECCC99'}}
             className={` py-1 page-link `}
             onClick={() => handlePage(true)}
-            disabled={page >= total}
+            disabled={page >= total || isloading}
           >
             <MDBIcon fas icon="angle-double-right" />
           </MDBBtn>

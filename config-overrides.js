@@ -11,7 +11,8 @@ module.exports = function override(config) {
         "http": require.resolve("stream-http"),
         "https": require.resolve("https-browserify"),
         "os": require.resolve("os-browserify"),
-        "url": require.resolve("url")
+        "url": require.resolve("url"),
+        // "process": require.resolve("process/browser"),
     })
     config.resolve.fallback = fallback;
     config.plugins.push(
@@ -57,7 +58,9 @@ module.exports = function override(config) {
               ie8: false,
               keep_fnames: false,
             },
-          }),
+        }),
+        
+          
     );
     return config;
 }

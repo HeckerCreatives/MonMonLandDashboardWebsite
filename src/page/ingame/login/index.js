@@ -78,7 +78,7 @@ const IngameLogin = () =>{
         })
         .then(result1 => {
           if(result1.isConfirmed)
-          window.location.href = `/Dashboard/Admin/home`
+          window.location.href = `/Dashboard/Admin/home/grandlaunch`
         })
       }
 

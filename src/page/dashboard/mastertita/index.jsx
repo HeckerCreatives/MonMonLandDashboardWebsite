@@ -33,9 +33,18 @@ const MtDashboard = () => {
   link = [
     {
       name: "DASHBOARD",
-      path: "/Dashboard/Admin/home",
+      path: "",
       icon: "home",
-      children: [],
+      children: [
+        {
+          name: "Grand Launch",
+          path: "/Dashboard/Admin/home/grandlaunch"
+        },
+        {
+          name: "Soft Launch",
+          path: "/Dashboard/Admin/home/softlaunch"
+        },
+      ],
     },
     {
       name: "Game Announcement",
@@ -120,6 +129,21 @@ const MtDashboard = () => {
           path: "/Dashboard/Admin/settings/updatesubs/diamond",
         },
       ]
+    },
+    {
+      name: "Report",
+      path: "",
+      icon: "book",
+      children: [
+        {
+          name: "Pearl Report",
+          path: "/Dashboard/Admin/report/pearlreport"
+        },
+        {
+          name: "Payable Report",
+          path: "/Dashboard/Admin/report/payablereport"
+        }
+      ],
     },
   ]
 

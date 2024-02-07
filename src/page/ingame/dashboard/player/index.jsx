@@ -46,7 +46,10 @@ import monies from "../../../../assets/Ingame/assetsdashboard/Monster Monies ico
 import income from "../../../../assets/Ingame/assetsdashboard/total Income icon.png"
 import './dash.css'
 import Swal from "sweetalert2";
+import FlipCountdown from '@rumess/react-flip-countdown';
 const PlayerDashboard = () => {
+    const [datejoin, setDateJoin] = useState(false);
+    const [end, setEnd] = useState('');
     const [wallets, setWallets] = useState([]);
     const [walletscutoff, setWalletsCutOff] = useState([]);
     const [totalpoints, setTotalPoints] = useState(0);
@@ -73,7 +76,15 @@ const PlayerDashboard = () => {
         const points = (data.data2.activitypoints + data.data2.adspoints + data.data2.recruitpoints + data.data2.taskpoints + data.data2.purchasepoints)
         setTotalPoints(points)
       }
-         
+      
+    })
+
+    isgamelogin()
+      .then(data => {
+        const joindate = new Date(data.joined);
+        const subsexp = new Date(joindate.getTime() + (3 * 24 * 60 * 60 * 1000)); // Adding 3 days in millisecondsz
+        setDateJoin(subsexp)
+        console.log(subsexp)
     })
         
     fetch(`${process.env.REACT_APP_API_URL}gameusers/gameannouncement`, {
@@ -219,6 +230,38 @@ const PlayerDashboard = () => {
         <MDBContainer fluid>
         <Breadcrumb title='Dashboard' paths={[]}/>
         {/* Cards */}
+        <MDBRow>
+        <MDBCol>
+        { !end ?
+          wallets.poolsubscription == "Pearl" &&
+          <div className="card bg-topbase py-3">
+          <center>
+          <h3 className="fw-bold">Pearl Subscription Expiration Timer</h3>
+          </center>
+          
+          <FlipCountdown
+            endAtZero
+            hideYear
+            hideMonth
+            // hideDay
+            size='small'
+            endAt={datejoin} // Date/Time
+            onTimeUp={() => setEnd(true)}
+        />
+          </div>
+          :
+          <div className="card bg-topbase py-3">
+          <center>
+          <h3 className="fw-bold">Pearl Subscription Expired</h3>
+          </center>
+          <center>
+          <h4 className="">Please subscribe to continue earning in monmonland. don't worry your earnings will still be saved.</h4>
+          </center>
+          </div>
+        }
+        </MDBCol>
+        
+        </MDBRow>
         <MDBRow className="my-3">
         <MDBCol className="">
         <MDBCard className='text-dark bg-topbase p-md-5' shadow="3">

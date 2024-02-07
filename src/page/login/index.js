@@ -73,7 +73,7 @@ const Login = () =>{
         })
         .then(result1 => {
           if(result1.isConfirmed)
-          window.location.href = `/dashboard/${data.data.roleId?.display_name}/home`
+          window.location.href = `/dashboard/${data.data.roleId?.display_name}/home/grandlaunch`
         })
       }  
       

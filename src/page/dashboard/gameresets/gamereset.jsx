@@ -649,12 +649,74 @@ const GameReset = () => {
         
     }
 
+    const resetpayables = () => {
+        setLoading(true)
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`${process.env.REACT_APP_API_URL}reset/runtaskpayablereset`,{
+                    method: "GET",
+                    credentials: 'include',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                .then(result => result.json())
+                .then(data => {
+                    if(data.message === "success"){
+                        setLoading(false)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: data.data
+                        })
+                    } else {
+                        setLoading(false)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: data.data
+                        })
+                    }
+                    
+                })
+            } else {
+                setLoading(false)
+            }
+            
+        });
+        
+    }
+
     return(
         <MDBContainer>
             <MDBRow className="mt-5">
             <h2>Monthly Reset</h2>
             <hr/>
                 <MDBCol lg={6}>
+                <div className="row m-2 border align-items-center">
+                    <div className="col-lg-9">
+                    <h5>Reset Payable's</h5>
+                    </div>
+                    <div className="col-lg-3">
+                        <MDBBtn type="button" size="sm" onClick={resetpayables}>
+                        {
+                            loading ?
+                            <MDBSpinner size="sm"/>
+                            :
+                            "Run Task"
+                        }
+                        </MDBBtn>
+                    </div>
+                </div>
+
                 <div className="row m-2 border align-items-center">
                     <div className="col-lg-9">
                     <h5>Palosebo Leaderboard Convertion</h5>
