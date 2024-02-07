@@ -80,6 +80,8 @@ const AdminDashboardGrandLaunch = () => {
     const [totaltrade, setTotalTrade] = useState(0)
     const [complanpayin, setComplanpayin] = useState(0)
     const [complanmerchandise, setComplanmerchandise] = useState(0)
+    const [complantools, setComplantools] = useState(0)
+    const [complancosmetics, setComplancosmetics] = useState(0)
     const [complantotal, setComplantotal] = useState(0)
     const [role, setrole]= useState('');
     const [name, setname]= useState('');
@@ -798,6 +800,8 @@ const AdminDashboardGrandLaunch = () => {
         setUnilevel(data.data.unilevelbonus)
         setSponsorWallet(data.data.sponsorwallet)
         setInvestorWallet(data.data.investorfunds)
+        setComplantools(data.data.complantools)
+        setComplancosmetics(data.data.complancosmetics)
       }
     })
   },[])
@@ -827,7 +831,7 @@ const AdminDashboardGrandLaunch = () => {
         {/* Cards */}
         <br/>
         <center>
-        <MDBTypography tag={`h4`}>This is Effectively Starting 'Date Here'</MDBTypography>
+        <MDBTypography tag={`h4`}>This is Effectively Starting '02/08/2024'</MDBTypography>
         </center>
         
         <MDBTypography tag={`h2`}>Topup</MDBTypography>
@@ -1034,90 +1038,7 @@ const AdminDashboardGrandLaunch = () => {
               />
           </MDBCol>
 
-        {/* <MDBCol className="col-lg-4 my-2">
-          <DashCard 
-              colSpan="4"
-              icon={`coins`}
-              thtitle={`Unilevel Bonus`}
-              cardtoptext={unilevel ? `${unilevel.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
-              />
-        </MDBCol>
-        <MDBCol className="col-lg-4 my-2">
-          <DashCard 
-              colSpan="4"
-              icon={`money-bill`}
-              thtitle={`Unilevel Monster Gem`}
-              cardtoptext={unilevelmonstergem ? `${unilevelmonstergem.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
-              />
-          </MDBCol>
-          <MDBCol className="my-2">
-          <DashCard 
-              colSpan="4"
-              icon={`chart-line`}
-              thtitle={`Leaderboard`}
-              cardtoptext={leaderboard ? `${leaderboard.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
-              />
-          </MDBCol>
-          
-        </MDBRow>
-        <MDBRow>
-        <MDBCol className="my-2">
-          <DashCard 
-              colSpan="4"
-              icon={`gamepad`}
-              thtitle={`Grinding / Games`}
-              cardtoptext={grinding ? `${grinding.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
-              />
-          </MDBCol>   
-          <MDBCol className="my-2">
-          <DashCard 
-              colSpan="4"
-              icon={`trophy`}
-              thtitle={`Quest Reward`}
-              cardtoptext={quest ? `${quest.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
-              />
-          </MDBCol>
        
-          <MDBCol className="my-2">
-          <DashCard 
-              colSpan="4"
-              icon={`gem`}
-              thtitle={`Diamond Pools`}
-              cardtoptext={diamondpool ? `${diamondpool.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
-              />
-          </MDBCol>
-          
-        </MDBRow>
-        <MDBRow>
-        <MDBCol className="my-2">
-          <DashCard 
-              colSpan="4"
-              icon={`chalkboard-teacher`}
-              thtitle={`Devs Share`}
-              cardtoptext={devsshare ? `${devsshare.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
-              />
-          </MDBCol>
-          <MDBCol className="my-2">
-          <DashCard 
-              colSpan="3"
-              icon={`building`}
-              thtitle={`Company Share`}
-              cardtoptext={companyshare ? `${companyshare.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
-              />
-          </MDBCol>
-          <MDBCol className="my-2">
-          <DashCard 
-              colSpan="3"
-              icon={`users`}
-              thtitle={`Officers`}
-              cardtoptext={officer ? `${officer.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
-              />
-          </MDBCol>
-           
-        </MDBRow>
-        
-           */}
-         
         </MDBRow>
         <MDBTypography tag={`h2`}>Distribution</MDBTypography>
         <hr/>
@@ -1146,6 +1067,20 @@ const AdminDashboardGrandLaunch = () => {
               maximumFractionDigits: 2
               })}
               td2txtbot={`Merchandise`}
+              td3={true}
+              td3txttop={complantools?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              td3txtbot={`Tools`}
+              td4={true}
+              td4txttop={complancosmetics?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              td4txtbot={`Cosmetics`}
               />
           </MDBCol>
         <MDBCol className="col-lg-4 my-2">

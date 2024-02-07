@@ -71,6 +71,8 @@ const Masterdashboardgrandlaunch = () => {
     const [totaltrade, setTotalTrade] = useState(0)
     const [complanpayin, setComplanpayin] = useState(0)
     const [complanmerchandise, setComplanmerchandise] = useState(0)
+    const [complantools, setComplantools] = useState(0)
+    const [complancosmetics, setComplancosmetics] = useState(0)
     const [complantotal, setComplantotal] = useState(0)
     const [role, setrole]= useState('');
     const [name, setname]= useState('');
@@ -724,6 +726,8 @@ const Masterdashboardgrandlaunch = () => {
         const unilvl = data.data.unilevelbonus - (data.data.unilevelbonus * pircint)
         const sprw = data.data.sponsorwallet - (data.data.sponsorwallet * pircint)
         const invw = data.data.investorfunds - (data.data.investorfunds * pircint)
+        const ct = data.data.complantools - (data.data.complantools * pircint)
+        const cc = data.data.complancosmetics - (data.data.complancosmetics * pircint)
         setLeaderboard(lb)
         setGrinding(gd)
         setQuest(qst)
@@ -742,6 +746,8 @@ const Masterdashboardgrandlaunch = () => {
         setUnilevel(unilvl)
         setSponsorWallet(sprw)
         setInvestorWallet(invw)
+        setComplantools(ct)
+        setComplancosmetics(cc)
       }
     })
   },[])
@@ -760,9 +766,9 @@ const Masterdashboardgrandlaunch = () => {
         setTotalSubsUser(data.data?.total.count)
       }
     })
-    setComplantotal(complanpayin + complanmerchandise)
+    setComplantotal(complanpayin + complanmerchandise + complancosmetics + complantools)
     setTotalTrade(tradepayin + trademerchandise)
-  },[complanpayin, complanmerchandise, tradepayin, trademerchandise])
+  },[complanpayin, complanmerchandise, tradepayin, trademerchandise, complancosmetics, complantools])
 
     return (
       <>
@@ -770,7 +776,7 @@ const Masterdashboardgrandlaunch = () => {
         {/* Cards */}
         <br/>
         <center>
-        <MDBTypography tag={`h4`}>This is Effectively Starting 'Date Here'</MDBTypography>
+        <MDBTypography tag={`h4`}>This is Effectively Starting '02/08/2024'</MDBTypography>
         </center>
         
         <MDBTypography tag={`h2`}>Topup</MDBTypography>
@@ -1089,6 +1095,20 @@ const Masterdashboardgrandlaunch = () => {
               maximumFractionDigits: 2
               })}
               td2txtbot={`Merchandise`}
+              td3={true}
+              td3txttop={complantools?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              td3txtbot={`Tools`}
+              td4={true}
+              td4txttop={complancosmetics?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              td4txtbot={`Cosmetics`}
               />
           </MDBCol>
         <MDBCol className="col-lg-4 my-2">

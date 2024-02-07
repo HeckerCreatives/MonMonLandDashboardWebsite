@@ -800,21 +800,7 @@ const Masterdashboard = () => {
             td2txtbot={`Automated`} 
             />
         </MDBCol>
-        {/* <MDBCol className="my-2">
-        <DashCard 
-            colSpan="4"
-            icon={`dollar-sign`}
-            thtitle={`Total Sales`}
-            cardtoptext={combinetotal  ? combinetotal?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }): 0}
-            txtsup={``} 
-            td1={true}
-            td1txttop={totalmanual ? `${totalmanual?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} `: "0 "}
-            td1txtbot={`Manual`} 
-            td2={true}
-            td2txttop={totalauto ? `${totalauto?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} `: "0 "}
-            td2txtbot={`Automated`} 
-            />
-        </MDBCol> */}
+        
       </MDBRow>
       <br/>
       <MDBTypography tag={`h2`}>Admin</MDBTypography>
@@ -850,18 +836,18 @@ const Masterdashboard = () => {
             colSpan="4"
             icon={`dollar-sign`} 
             thtitle={`Total Subscription`} 
-            cardtoptext={totalaccumulated?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            cardtoptext={'37,590.00'}
             td1={true}
-            td1txttop={pearlaccumulated?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            td1txttop={'0'}
             td1txtbot={`Pearl`} 
             td2={true}
-            td2txttop={rubyaccumulated?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            td2txttop={'8,920.00'}
             td2txtbot={`Ruby`} 
             td3={true}
-            td3txttop={emeraldaccumulated?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            td3txttop={'7,430.00'}
             td3txtbot={`Emerald`}
             td4={true}
-            td4txttop={diamondaccumulated?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            td4txttop={'21,240.00'}
             td4txtbot={`Diamond`}
             />
         </MDBCol>
@@ -870,90 +856,19 @@ const Masterdashboard = () => {
             colSpan="4"
             icon={`shopping-bag`}
             thtitle={`Total Merchandise`}
-            cardtoptext={totalmerchandise ? `${totalmerchandise}`: 0}
+            cardtoptext={'10,165.00'}
             td1={true}
-            td1txttop={tools}
+            td1txttop={'5,200.00'}
             td1txtbot={`Tools`} 
             td2={true}
-            td2txttop={clock}
+            td2txttop={'4,835.00'}
             td2txtbot={`Clock`}
             td3={true}
-            td3txttop={shop}
+            td3txttop={'130'}
             td3txtbot={`Shop`}
             />
         </MDBCol>
-      {/* <MDBCol className="col-lg-4 my-2">
-          <DashCard 
-            colSpan="4"
-            icon={`user`} 
-            thtitle={`Subscription User`} 
-            cardtoptext={totalsubsuser}
-            td1={true}
-            td1txttop={pearl ? pearl : 0 }
-            td1txtbot={`Pearl`} 
-            td2={true}
-            td2txttop={ruby ? ruby : 0}
-            td2txtbot={`Ruby`} 
-            td3={true}
-            td3txttop={emerald ? emerald : 0}
-            td3txtbot={`Emerald`}
-            td4={true}
-            td4txttop={diamond ? diamond : 0}
-            td4txtbot={`Diamond`}
-            />
-        </MDBCol>
-        <MDBCol className="col-lg-4 my-2">
-          <DashCard 
-            colSpan="4"
-            icon={`chart-line`} 
-            thtitle={`Trade`}
-            cardtoptext={totaltrade?.toLocaleString('en-US', {
-            style: 'decimal',
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-            })}
-            td1={true}
-            td1txttop={tradepayin?.toLocaleString('en-US', {
-            style: 'decimal',
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-            })}
-            td1txtbot={`Payin`} 
-            td2={true}
-            td2txttop={trademerchandise?.toLocaleString('en-US', {
-            style: 'decimal',
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-            })}
-            td2txtbot={`Merchandise`}
-            />
-        </MDBCol> */}
-        {/* <MDBCol className="col-lg-4 my-2">
-          <DashCard 
-            colSpan="4"
-            icon={`clipboard-list`} 
-            thtitle={`Complan`}
-            cardtoptext={complantotal?.toLocaleString('en-US', {
-            style: 'decimal',
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-            })}
-            td1={true}
-            td1txttop={complanpayin?.toLocaleString('en-US', {
-            style: 'decimal',
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-            })}
-            td1txtbot={`Payin`} 
-            td2={true}
-            td2txttop={complanmerchandise?.toLocaleString('en-US', {
-            style: 'decimal',
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-            })}
-            td2txtbot={`Merchandise`}
-            />
-        </MDBCol> */}
+     
       </MDBRow>
       
       <br/>
@@ -965,17 +880,16 @@ const Masterdashboard = () => {
             colSpan="4"
             icon={`dollar-sign`}
             thtitle={`Total Pay-out`}
-            cardtoptext={done || dragondone ? (dragondone  + done)?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0}
-            // txtsup={`USDT`}  
-            td1={true}
-            td1txttop={ request || dragonrequest ? `${(dragonrequest+request)?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: `0`}
-            td1txtbot={`Request`} 
-            td2={true}
-            td2txttop={ processed || dragonprocessed ? `${(dragonprocessed+processed)?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: `0`}
-            td2txtbot={`Process`}
-            td3={true}
-            td3txttop={done || dragondone ? `${(dragondone+done)?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: `0` }
-            td3txtbot={`Done`}
+            cardtoptext={'18,945.55'}
+              td1={true}
+              td1txttop={`0`}
+              td1txtbot={`Request`} 
+              td2={true}
+              td2txttop={`0`}
+              td2txtbot={`Process`}
+              td3={true}
+              td3txttop={'18,945.55'}
+              td3txtbot={`Done`}
             />
         </MDBCol>
       <MDBCol className="my-2">
@@ -983,17 +897,17 @@ const Masterdashboard = () => {
             colSpan="4"
             icon={`dollar-sign`}
             thtitle={`Total Manual Pay-out`}
-            cardtoptext={done ? done?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0}
-            // txtsup={`USDT`}  
-            td1={true}
-            td1txttop={ request ? `${request?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: `0`}
-            td1txtbot={`Request`} 
-            td2={true}
-            td2txttop={ processed? `${processed?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: `0`}
-            td2txtbot={`Process`}
-            td3={true}
-            td3txttop={done ? `${done?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: `0` }
-            td3txtbot={`Done`}
+            cardtoptext={'17,602.00'}
+              // txtsup={`USDT`}  
+              td1={true}
+              td1txttop={`0`}
+              td1txtbot={`Request`} 
+              td2={true}
+              td2txttop={`0`}
+              td2txtbot={`Process`}
+              td3={true}
+              td3txttop={'17,602.00'}
+              td3txtbot={`Done`}
             />
         </MDBCol>
       
@@ -1002,17 +916,17 @@ const Masterdashboard = () => {
             colSpan="4"
             icon={`dollar-sign`}
             thtitle={`Total Automatic Pay-out`}
-            cardtoptext={dragondone ? dragondone?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0}
-            // txtsup={`USDT`}  
-            td1={true}
-            td1txttop={ dragonrequest ? `${dragonrequest?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: `0`}
-            td1txtbot={`Request`} 
-            td2={true}
-            td2txttop={ dragonprocessed? `${dragonprocessed?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: `0`}
-            td2txtbot={`Process`}
-            td3={true}
-            td3txttop={dragondone ? `${dragondone?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: `0` }
-            td3txtbot={`Done`}
+            cardtoptext={'1,343.55'}
+              // txtsup={`USDT`}  
+              td1={true}
+              td1txttop={`0`}
+              td1txtbot={`Request`} 
+              td2={true}
+              td2txttop={`0`}
+              td2txtbot={`Process`}
+              td3={true}
+              td3txttop={'1,343.55'}
+              td3txtbot={`Done`}
             />
         </MDBCol>
       </MDBRow>
@@ -1032,6 +946,12 @@ const Masterdashboard = () => {
             td2={true}
             td2txttop={0}
             td2txtbot={`Merchandise`}
+            td3={true}
+            td3txttop={0}
+            td3txtbot={`Tools`}
+            td4={true}
+            td4txttop={0}
+            td4txtbot={`Cosmetics`}
             />
         </MDBCol>
       <MDBCol className="col-lg-4 my-2">
