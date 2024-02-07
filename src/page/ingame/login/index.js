@@ -83,6 +83,7 @@ const IngameLogin = () =>{
       }
 
       else {
+        setLoading(false)
         Swal.fire({
           title: data.message,
           icon: "info",
