@@ -88,7 +88,7 @@ const Maintenance = () => {
     return(
         <MDBContainer>
         <MDBRow className="mt-5 ">
-        <MDBCol md={2} className="offset-md-1">
+        <MDBCol md={2} className="my-2 offset-md-1">
         <MDBCard className="h-100">
         <MDBCardBody>
             <div className="d-flex justify-content-end align-items-end mb-2">
@@ -98,7 +98,7 @@ const Maintenance = () => {
         </MDBCardBody>
         </MDBCard>
         </MDBCol>
-        <MDBCol md={2}>
+        <MDBCol md={2} className="my-2">
         <MDBCard className="h-100">
         <MDBCardBody>
             <div className="d-flex justify-content-end align-items-end mb-2">
@@ -108,7 +108,7 @@ const Maintenance = () => {
         </MDBCardBody>
         </MDBCard>
         </MDBCol>
-        <MDBCol md={2}>
+        <MDBCol md={2} className="my-2">
         <MDBCard className="h-100">
         <MDBCardBody>
             <div className="d-flex justify-content-end align-items-end mb-2">
@@ -118,7 +118,7 @@ const Maintenance = () => {
         </MDBCardBody>
         </MDBCard>
         </MDBCol>
-        <MDBCol md={2}>
+        <MDBCol md={2} className="my-2">
         <MDBCard className="h-100">
         <MDBCardBody>
             <div className="d-flex justify-content-end align-items-end mb-2">
@@ -128,7 +128,7 @@ const Maintenance = () => {
         </MDBCardBody>
         </MDBCard>
         </MDBCol>
-        <MDBCol md={2}>
+        <MDBCol md={2} className="mt-2">
         <MDBCard className="h-100">
         <MDBCardBody>
             <div className="d-flex justify-content-end align-items-end mb-2">
@@ -142,7 +142,7 @@ const Maintenance = () => {
 
         <MDBRow className="mt-5">
        
-        <MDBCol md={2} className="offset-md-1">
+        <MDBCol md={2} className="mb-2 offset-md-1">
         <MDBCard className="h-100">
         <MDBCardBody>
             <div className="d-flex justify-content-end align-items-end mb-2">
@@ -153,7 +153,7 @@ const Maintenance = () => {
         </MDBCard>
         </MDBCol>
 
-        <MDBCol md={2}>
+        <MDBCol md={2} className="my-2">
         <MDBCard className="h-100">
         <MDBCardBody>
             <div className="d-flex justify-content-end align-items-end mb-2">
@@ -163,7 +163,7 @@ const Maintenance = () => {
         </MDBCardBody>
         </MDBCard>
         </MDBCol>
-        <MDBCol md={2}>
+        <MDBCol md={2} className="my-2">
         <MDBCard className="h-100">
         <MDBCardBody>
             <div className="d-flex justify-content-end align-items-end mb-2">
@@ -173,7 +173,7 @@ const Maintenance = () => {
         </MDBCardBody>
         </MDBCard>
         </MDBCol>
-        <MDBCol md={2}>
+        <MDBCol md={2} className="my-2">
         <MDBCard className="h-100">
         <MDBCardBody>
             <div className="d-flex justify-content-end align-items-end mb-2">
@@ -183,7 +183,7 @@ const Maintenance = () => {
         </MDBCardBody>
         </MDBCard>
         </MDBCol>
-        <MDBCol md={2}>
+        <MDBCol md={2} className="my-2">
         <MDBCard className="h-100">
         <MDBCardBody>
             <div className="d-flex justify-content-end align-items-end mb-2">

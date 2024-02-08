@@ -73,7 +73,7 @@ const SubAdminPayoutDragonRequest = () => {
             if(data.expired){
                 Swal.fire({
                   icon: "error",
-                  title: data.expired,
+                  title: data.expired == "duallogin" ? "Dual Login" : data.expired,
                   text: "You Will Redirect to Login",
                   allowOutsideClick: false,
                   allowEscapeKey: false
@@ -116,7 +116,7 @@ const SubAdminPayoutDragonRequest = () => {
                     if(data.expired){
                         Swal.fire({
                           icon: "error",
-                          title: data.expired,
+                          title: data.expired == "duallogin" ? "Dual Login" : data.expired,
                           text: "You Will Redirect to Login",
                           allowOutsideClick: false,
                           allowEscapeKey: false
@@ -182,7 +182,7 @@ const SubAdminPayoutDragonRequest = () => {
                     if(data.expired){
                         Swal.fire({
                           icon: "error",
-                          title: data.expired,
+                          title: data.expired == "duallogin" ? "Dual Login" : data.expired,
                           text: "You Will Redirect to Login",
                           allowOutsideClick: false,
                           allowEscapeKey: false

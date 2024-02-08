@@ -16,13 +16,24 @@
     .nav-link {
         padding: 10px !important;
     }      
-    .footerbg {
+    /* .footerbg {
         background-image: url("../../..//assets/BG/FOOTER\ bg.png");
         background-size: cover;
         background-repeat: no-repeat;
         height: 150vh !important;
-    }
+    } */
 }
+
+/* @media (min-width: 425px) and (max-width: 1440px) {
+
+    .footerbg {
+        background-image: url("../../..//assets/BG/FOOTER\ bg.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 200vh !important;
+    }
+      
+} */
 
 .zoom-socials {
     transition: transform 0.3s ease-in-out;

@@ -15,6 +15,20 @@ const PlayerMyProfile = ({user}) => {
         })
         .then(result => result.json())
         .then(data => {
+          if(data.message == "duallogin" || data.message == "banned" || data.message == "Unathorized"){
+            Swal.fire({
+              icon: "error",
+              title: data.message == "duallogin" ? "Dual Login" : data.message == "banned" ? "Account Banned." : data.message,
+              text: data.message == "duallogin" ? "Hi Master, it appears that your account has been accessed from a different device." : data.message == "banned" ? "Hi Master please contact admin" : "You Will Redirect to Login",
+              allowOutsideClick: false,
+              allowEscapeKey: false
+            }).then(ok => {
+              if(ok.isConfirmed){
+                window.location.replace("/gamelogin");
+              }
+            })
+          }
+
           if(data.message === "success"){
             setDetails(data.data) 
           }
@@ -39,6 +53,20 @@ const PlayerMyProfile = ({user}) => {
         })
         .then(result => result.json())
         .then(data => {
+          if(data.message == "duallogin" || data.message == "banned" || data.message == "Unathorized"){
+            Swal.fire({
+              icon: "error",
+              title: data.message == "duallogin" ? "Dual Login" : data.message == "banned" ? "Account Banned." : data.message,
+              text: data.message == "duallogin" ? "Hi Master, it appears that your account has been accessed from a different device." : data.message == "banned" ? "Hi Master please contact admin" : "You Will Redirect to Login",
+              allowOutsideClick: false,
+              allowEscapeKey: false
+            }).then(ok => {
+              if(ok.isConfirmed){
+                window.location.replace("/gamelogin");
+              }
+            })
+          }
+          
           if(data.message === "success"){
             Swal.fire({
               title: data.message,

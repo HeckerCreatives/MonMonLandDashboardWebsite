@@ -22,7 +22,7 @@ const Footer = ({links}) => {
         <img src={logowhite} alt="" className="img-fluid"/>
         
         <MDBRow>
-            <MDBCol className="d-md-flex flex-md-row align-items-center justify-content-center mt-5 p-0">
+            <MDBCol className="d-md-flex flex-md-row align-items-center justify-content-center mt-2 p-0">
 
             {links.map((link, index) => (
             <MDBNavbarItem key={`links-${index}`} style={{listStyleType:'none'}}>

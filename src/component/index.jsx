@@ -71,7 +71,7 @@ const Navbar = ({ links }) => {
   return (
     <>
     <MDBNavbar
-      expand="xl"
+      expand="xxl"
       className="custom-landing-navbar py-0 m-5 fixed-top"      
     > 
     <MDBContainer fluid className="d-sm-flex justify-sm-content-around px-0 px-md-0">
@@ -98,7 +98,7 @@ const Navbar = ({ links }) => {
           <MDBNavbarNav 
           
             className={`${
-              window.innerWidth > 1070
+              window.innerWidth > 1200  
                 ? "d-flex align-items-center justify-content-start"
                 : "text-center"
             }`}
@@ -122,14 +122,14 @@ const Navbar = ({ links }) => {
                   }}
                 >
                   <span 
-                  className={`fw-bold p-4 mb-2 navbar-link ${currentLink === link.path && "activenavlink"}`} 
+                  className={`fw-bold p-1 mb-2 navbar-link ${currentLink === link.path && "activenavlink"}`} 
                   style={link.name === "MEDIA" ? { color: "gray"} : { color: "white"}}
                   >{link.name}</span>
                 </MDBNavbarLink>
                 
               </MDBNavbarItem>
             ))}
-            <MDBNavbarItem className="ms-xl-auto text-center" >
+            <MDBNavbarItem className="ms-xxl-auto text-center" >
                   <MDBNavbarLink>
                   <div >
                   <img src={login} id="joinnow" alt="" className="zoom-playnow mb-2"  onClick={() => {
@@ -157,7 +157,7 @@ const Navbar = ({ links }) => {
                   
                   </MDBNavbarLink>
             </MDBNavbarItem>
-            <MDBNavbarItem className=" text-center pe-3" >
+            <MDBNavbarItem className=" text-center pe-xxl-3" >
                   <MDBNavbarLink>
                   <div >
                   <img src={migrate} id="joinnow" alt="" className=" zoom-playnow mb-2"  onClick={() => {

@@ -20,7 +20,7 @@ import
     MDBModalBody,
     MDBModalFooter, } 
 from "mdb-react-ui-kit";
-
+import Swal from "sweetalert2";
 const Dashboardstatistics = ({image, title, number, number1}) => {
     const [rate, setRate] = useState(0)
     const [mc, setMc] = useState(0)
@@ -35,6 +35,21 @@ const Dashboardstatistics = ({image, title, number, number1}) => {
     })
     .then(result => result.json())
     .then(data => {
+      if(data.message == "duallogin" || data.message == "banned" || data.message == "Unathorized"){
+        Swal.fire({
+          icon: "error",
+          title: data.message == "duallogin" ? "Dual Login" : data.message == "banned" ? "Account Banned." : data.message,
+          text: data.message == "duallogin" ? "Hi Master, it appears that your account has been accessed from a different device." : data.message == "banned" ? "Hi Master please contact admin" : "You Will Redirect to Login",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        }).then(ok => {
+          if(ok.isConfirmed){
+            window.location.replace("/gamelogin");
+          }
+        })
+      }
+      
+
       setRate(data.data)
     })
     fetch(`${process.env.REACT_APP_API_URL}communityactivy/mcvalue`, {
@@ -46,6 +61,20 @@ const Dashboardstatistics = ({image, title, number, number1}) => {
     })
     .then(result => result.json())
     .then(data => {
+      if(data.message == "duallogin" || data.message == "banned" || data.message == "Unathorized"){
+        Swal.fire({
+          icon: "error",
+          title: data.message == "duallogin" ? "Dual Login" : data.message == "banned" ? "Account Banned." : data.message,
+          text: data.message == "duallogin" ? "Hi Master, it appears that your account has been accessed from a different device." : data.message == "banned" ? "Hi Master please contact admin" : "You Will Redirect to Login",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        }).then(ok => {
+          if(ok.isConfirmed){
+            window.location.replace("/gamelogin");
+          }
+        })
+      }
+
       setMc(data.data)
     })
   },[])

@@ -242,12 +242,12 @@ const Header = () => {
         const qr = quest
         const tt = adsamount + investoramount + gg + qr + totalbar
         const emseeprice =  parseFloat(tt) / parseFloat(mc)
-        const emsetofarm = (adsamount + investoramount + gg + qr + totalbar + investorfundca) * 1000
+        const emsetofarm = (adsamount + investoramount + gg + qr + totalbar) * 1000
         setTotalPoolAccumulated(pool)
         setMcPrice(emseeprice)
         setMctofarm(emsetofarm)
         setMgPrice(mgprice)
-    },[quest,grinding, mc, totalaccumulated, totalbar, ads, investorfund, initialbar, monmongem, investorfundca])
+    },[quest,grinding, mc, totalaccumulated, totalbar, ads, investorfund, initialbar, monmongem,])
 
     // useEffect(()=>{
     //     if(initialbar){
@@ -501,7 +501,7 @@ const Header = () => {
             
             <MDBRow className="align-items-center justify-content-center">
                 <MDBCol lg={3} className="mb-5">
-                <div class="container"  style={{backgroundColor: "#FADDBF", borderRadius: "6px"}}>
+                <div class="container1"  style={{backgroundColor: "#FADDBF", borderRadius: "6px"}}>
                 <div className="card bg-transparent shadow-0" >
                     <MDBIcon fas icon="users" style={{color: "#238731"}} className="my-2" size="2x"/>
                 <div id="inputs" className="inputs pb-3"> 

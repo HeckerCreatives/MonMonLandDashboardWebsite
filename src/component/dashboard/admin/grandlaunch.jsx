@@ -124,7 +124,7 @@ const AdminDashboardGrandLaunch = () => {
       if(data.expired){
         Swal.fire({
           icon: "error",
-          title: data.expired,
+          title: data.expired == "duallogin" ? "Dual Login" : data.expired,
           text: "You Will Redirect to Login",
           allowOutsideClick: false,
           allowEscapeKey: false
@@ -160,7 +160,7 @@ const AdminDashboardGrandLaunch = () => {
       if(data.expired){
         Swal.fire({
           icon: "error",
-          title: data.expired,
+          title:  data.expired == "duallogin" ? "Dual Login" : data.expired,
           text: "You Will Redirect to Login",
           allowOutsideClick: false,
           allowEscapeKey: false
@@ -198,7 +198,7 @@ const AdminDashboardGrandLaunch = () => {
       if(data.expired){
         Swal.fire({
           icon: "error",
-          title: data.expired,
+          title:  data.expired == "duallogin" ? "Dual Login" : data.expired,
           text: "You Will Redirect to Login",
           allowOutsideClick: false,
           allowEscapeKey: false
@@ -235,7 +235,7 @@ const AdminDashboardGrandLaunch = () => {
       if(data.expired){
         Swal.fire({
           icon: "error",
-          title: data.expired,
+          title:  data.expired == "duallogin" ? "Dual Login" : data.expired,
           text: "You Will Redirect to Login",
           allowOutsideClick: false,
           allowEscapeKey: false
@@ -273,7 +273,7 @@ const AdminDashboardGrandLaunch = () => {
       if(data.expired){
         Swal.fire({
           icon: "error",
-          title: data.expired,
+          title:  data.expired == "duallogin" ? "Dual Login" : data.expired,
           text: "You Will Redirect to Login",
           allowOutsideClick: false,
           allowEscapeKey: false
@@ -309,7 +309,7 @@ const AdminDashboardGrandLaunch = () => {
       if(data.expired){
         Swal.fire({
           icon: "error",
-          title: data.expired,
+          title:  data.expired == "duallogin" ? "Dual Login" : data.expired,
           text: "You Will Redirect to Login",
           allowOutsideClick: false,
           allowEscapeKey: false
@@ -343,7 +343,7 @@ const AdminDashboardGrandLaunch = () => {
       if(data.expired){
         Swal.fire({
           icon: "error",
-          title: data.expired,
+          title:  data.expired == "duallogin" ? "Dual Login" : data.expired,
           text: "You Will Redirect to Login",
           allowOutsideClick: false,
           allowEscapeKey: false
@@ -377,7 +377,7 @@ const AdminDashboardGrandLaunch = () => {
       if(data.expired){
         Swal.fire({
           icon: "error",
-          title: data.expired,
+          title: data.expired == "duallogin" ? "Dual Login" : data.expired,
           text: "You Will Redirect to Login",
           allowOutsideClick: false,
           allowEscapeKey: false
@@ -434,7 +434,7 @@ const AdminDashboardGrandLaunch = () => {
       if(data.expired){
         Swal.fire({
           icon: "error",
-          title: data.expired,
+          title:  data.expired == "duallogin" ? "Dual Login" : data.expired,
           text: "You Will Redirect to Login",
           allowOutsideClick: false,
           allowEscapeKey: false
@@ -468,7 +468,7 @@ const AdminDashboardGrandLaunch = () => {
       if(data.expired){
         Swal.fire({
           icon: "error",
-          title: data.expired,
+          title:  data.expired == "duallogin" ? "Dual Login" : data.expired,
           text: "You Will Redirect to Login",
           allowOutsideClick: false,
           allowEscapeKey: false
@@ -502,7 +502,7 @@ const AdminDashboardGrandLaunch = () => {
       if(data.expired){
         Swal.fire({
           icon: "error",
-          title: data.expired,
+          title:  data.expired == "duallogin" ? "Dual Login" : data.expired,
           text: "You Will Redirect to Login",
           allowOutsideClick: false,
           allowEscapeKey: false
@@ -536,7 +536,7 @@ const AdminDashboardGrandLaunch = () => {
       if(data.expired){
         Swal.fire({
           icon: "error",
-          title: data.expired,
+          title:  data.expired == "duallogin" ? "Dual Login" : data.expired,
           text: "You Will Redirect to Login",
           allowOutsideClick: false,
           allowEscapeKey: false
@@ -576,7 +576,7 @@ const AdminDashboardGrandLaunch = () => {
       if(data.expired){
         Swal.fire({
           icon: "error",
-          title: data.expired,
+          title:  data.expired == "duallogin" ? "Dual Login" : data.expired,
           text: "You Will Redirect to Login",
           allowOutsideClick: false,
           allowEscapeKey: false
@@ -610,7 +610,7 @@ const AdminDashboardGrandLaunch = () => {
       if(data.expired){
         Swal.fire({
           icon: "error",
-          title: data.expired,
+          title: data.expired == "duallogin" ? "Dual Login" : data.expired,
           text: "You Will Redirect to Login",
           allowOutsideClick: false,
           allowEscapeKey: false
@@ -644,7 +644,7 @@ const AdminDashboardGrandLaunch = () => {
       if(data.expired){
         Swal.fire({
           icon: "error",
-          title: data.expired,
+          title:  data.expired == "duallogin" ? "Dual Login" : data.expired,
           text: "You Will Redirect to Login",
           allowOutsideClick: false,
           allowEscapeKey: false
@@ -682,7 +682,7 @@ const AdminDashboardGrandLaunch = () => {
       if(data.expired){
         Swal.fire({
           icon: "error",
-          title: data.expired,
+          title:  data.expired == "duallogin" ? "Dual Login" : data.expired,
           text: "You Will Redirect to Login",
           allowOutsideClick: false,
           allowEscapeKey: false
@@ -700,41 +700,7 @@ const AdminDashboardGrandLaunch = () => {
 
     })
 
-    // fetch(`${process.env.REACT_APP_API_URL}wallet/find`, {
-    //   method: "POST",
-    //   credentials: 'include',
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     // Authorization: `Bearer ${auth?.token}`,
-    //   },
-    //   // body: JSON.stringify({id: id})
-    // })
-    // .then(result => result.json())
-    // .then(data => {
-
-    //   if(data.expired){
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: data.expired,
-    //       text: "You Will Redirect to Login",
-    //       allowOutsideClick: false,
-    //       allowEscapeKey: false
-    //     }).then(ok => {
-    //       if(ok.isConfirmed){
-    //         Cookies.remove("auth", { path: '/' });;
-    //         Cookies.remove("playfabAdminAuthToken", { path: '/' });
-    //         // localStorage.removeItem("auth");
-    //         // localStorage.removeItem("playfabAdminAuthToken")
-    //         window.location.replace("/login");
-    //       }
-    //     })
-    //   }
-
-    //   setUnilevel(data?.data[0]?.commission)
-
-        
-    // })
-
+    
     fetch(`${process.env.REACT_APP_API_URL}withdrawfee/find`, {
       method: "POST",
       credentials: 'include',
@@ -750,7 +716,7 @@ const AdminDashboardGrandLaunch = () => {
       if(data.expired){
         Swal.fire({
           icon: "error",
-          title: data.expired,
+          title: data.expired == "duallogin" ? "Dual Login" : data.expired,
           text: "You Will Redirect to Login",
           allowOutsideClick: false,
           allowEscapeKey: false

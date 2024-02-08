@@ -1,6 +1,6 @@
 .roadmapbgcolor {
     background: #D2EEFF;
-    height: 100vh !important;
+    height: 100% !important;
 }
 
 .zoom-roadmap {
@@ -23,7 +23,7 @@
     font-size: 50px;
 }
 
-@media (min-width: 426px) and (max-width: 768px) {
+@media (min-width: 426px) and (max-width: 767px) {
     .roadmapbgcolor {
         background: #D2EEFF;
         height: 150vh !important;
@@ -61,7 +61,7 @@
         background-image: url("../../../assets/roadmap/roadmap holder.png") ;
         background-position: center;
         background-repeat: no-repeat;
-        background-size: 55vh;
+        background-size: 85%;
         height: 300px;
         transform: scaleX(-1);
     }
@@ -70,7 +70,7 @@
         background-image: url("../../../assets/roadmap/roadmap holder.png") ;
         background-position: center ;
         background-repeat: no-repeat;
-        background-size: 55vh;
+        background-size: 85%;
         height: 300px;
         transform: scaleX(-1);
     }
@@ -112,7 +112,7 @@
         height: 1200px;
         margin-top: 10rem;
         /* margin-left: 5rem; */
-        position: absolute;
+        /* position: absolute; */
         z-index: 99;
         
     }
@@ -185,10 +185,10 @@
        
 }
 
-@media (min-width: 769px) and (max-width: 1439px) {
+@media (min-width: 768px) and (max-width: 1439px) {
     .roadmapbgcolor {
         background: #D2EEFF;
-        height: 150vh !important;
+        height: 220vh !important;
     }
 
     .line {
@@ -205,17 +205,17 @@
     }
     .circle {
         background-image: url("../../../assets/roadmap/circle.png");
-        background-position: 2%;
+        background-position: 3%;
         background-repeat: no-repeat;
         background-size: 5vh;
     }
 
     .itemposition {
-        transform: translateX(73%) scaleX(-1);
+        transform: translateX(79%) scaleX(-1);
     }
     
     .itempositionright {
-        transform: translateX(73%) scaleX(-1);
+        transform: translateX(79%) scaleX(-1);
         /* transform: ; */
         
     }
@@ -224,7 +224,7 @@
         background-image: url("../../../assets/roadmap/roadmap holder.png") ;
         background-position: center;
         background-repeat: no-repeat;
-        background-size: 55vh;
+        background-size: 40%;
         height: 300px;
         transform: scaleX(-1);
     }
@@ -233,7 +233,7 @@
         background-image: url("../../../assets/roadmap/roadmap holder.png") ;
         background-position: center ;
         background-repeat: no-repeat;
-        background-size: 55vh;
+        background-size: 40%;
         height: 300px;
         transform: scaleX(-1);
     }
@@ -256,7 +256,7 @@
 
     .itemcolumn {
         height: 100%;
-        width: 40%;
+        width: 38%;
         margin-top: 5%;
     }
        
@@ -271,7 +271,7 @@
         /* background-size: 50vh 50vh; */
         height: 1200px;
         margin-top: 10rem;
-        position: absolute;
+        /* position: absolute; */
         z-index: 99;
         
     }

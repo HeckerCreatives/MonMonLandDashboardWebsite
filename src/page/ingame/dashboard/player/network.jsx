@@ -17,7 +17,7 @@ from "mdb-react-ui-kit";
 import "./dash.css"
 import PlayerPerlevel from "./network/index";
 import image from "../../../../assets/Ingame/assetsnetwork/total commission icon.png"
-
+import Swal from "sweetalert2";
 const Network = () => {
     const [basicActive, setBasicActive] = useState('1');
     const [network1, setNetwork1] = useState([])
@@ -45,6 +45,20 @@ const Network = () => {
         })
         .then(result => result.json())
         .then(data => {
+          if(data.message == "duallogin" || data.message == "banned" || data.message == "Unathorized"){
+            Swal.fire({
+              icon: "error",
+              title: data.message == "duallogin" ? "Dual Login" : data.message == "banned" ? "Account Banned." : data.message,
+              text: data.message == "duallogin" ? "Hi Master, it appears that your account has been accessed from a different device." : data.message == "banned" ? "Hi Master please contact admin" : "You Will Redirect to Login",
+              allowOutsideClick: false,
+              allowEscapeKey: false
+            }).then(ok => {
+              if(ok.isConfirmed){
+                window.location.replace("/gamelogin");
+              }
+            })
+          }
+
           if(data.message === "success"){
             setNetwork1(data.data.find(item => item._id === 1))
             setNetwork2(data.data.find(item => item._id === 2))

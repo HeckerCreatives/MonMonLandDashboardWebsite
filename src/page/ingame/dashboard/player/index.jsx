@@ -70,6 +70,20 @@ const PlayerDashboard = () => {
     })
     .then(result => result.json())
     .then(data => {
+      if(data.message == "duallogin" || data.message == "banned" || data.message == "Unathorized"){
+        Swal.fire({
+          icon: "error",
+          title: data.message == "duallogin" ? "Dual Login" : data.message == "banned" ? "Account Banned." : data.message,
+          text: data.message == "duallogin" ? "Hi Master, it appears that your account has been accessed from a different device." : data.message == "banned" ? "Hi Master please contact admin" : "You Will Redirect to Login",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        }).then(ok => {
+          if(ok.isConfirmed){
+            window.location.replace("/gamelogin");
+          }
+        })
+      }
+
       if(data.message === "success"){
         setWallets(data.data)
         setWalletsCutOff(data.data2)
@@ -84,7 +98,6 @@ const PlayerDashboard = () => {
         const joindate = new Date(data.joined);
         const subsexp = new Date(joindate.getTime() + (3 * 24 * 60 * 60 * 1000)); // Adding 3 days in millisecondsz
         setDateJoin(subsexp)
-        console.log(subsexp)
     })
         
     fetch(`${process.env.REACT_APP_API_URL}gameusers/gameannouncement`, {
@@ -96,44 +109,16 @@ const PlayerDashboard = () => {
     })
     .then(result => result.json())
     .then(data => {
-      if(data.message == "You are not authorized" || data.message == "Unathorized"){
+      if(data.message == "duallogin" || data.message == "banned" || data.message == "Unathorized"){
         Swal.fire({
-          icon: "info",
-          title: "Unathorized",
-          text: "Hi Master redirecting to login page",
-          allowEscapeKey: false,
-          allowOutsideClick: false
+          icon: "error",
+          title: data.message == "duallogin" ? "Dual Login" : data.message == "banned" ? "Account Banned." : data.message,
+          text: data.message == "duallogin" ? "Hi Master, it appears that your account has been accessed from a different device." : data.message == "banned" ? "Hi Master please contact admin" : "You Will Redirect to Login",
+          allowOutsideClick: false,
+          allowEscapeKey: false
         }).then(ok => {
           if(ok.isConfirmed){
-            window.location.href = "/gamelogin"
-          }
-        })
-      }
-
-      if(data.message == "duallogin"){
-        Swal.fire({
-          icon: "info",
-          title: "Dual Login",
-          text: "Hi Master redirecting to login page",
-          allowEscapeKey: false,
-          allowOutsideClick: false
-        }).then(ok => {
-          if(ok.isConfirmed){
-            window.location.href = "/gamelogin"
-          }
-        })
-      }
-
-      if(data.message == "banned"){
-        Swal.fire({
-          icon: "info",
-          title: "Your Account is Banned",
-          text: "Hi Master please contact admin",
-          allowEscapeKey: false,
-          allowOutsideClick: false
-        }).then(ok => {
-          if(ok.isConfirmed){
-            window.location.href = "/gamelogin"
+            window.location.replace("/gamelogin");
           }
         })
       }
@@ -156,6 +141,20 @@ const PlayerDashboard = () => {
     })
     .then(result => result.json())
     .then(data => {
+      if(data.message == "duallogin" || data.message == "banned" || data.message == "Unathorized"){
+        Swal.fire({
+          icon: "error",
+          title: data.message == "duallogin" ? "Dual Login" : data.message == "banned" ? "Account Banned." : data.message,
+          text: data.message == "duallogin" ? "Hi Master, it appears that your account has been accessed from a different device." : data.message == "banned" ? "Hi Master please contact admin" : "You Will Redirect to Login",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        }).then(ok => {
+          if(ok.isConfirmed){
+            window.location.replace("/gamelogin");
+          }
+        })
+      }
+      
       if(data.message === "success"){
         setCurrentRank(data.data)
       }

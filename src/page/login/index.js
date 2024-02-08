@@ -23,7 +23,6 @@ const Login = () =>{
   const [password, setPassword] = useState("");
   const [role, setrole]= useState('');
   const [name, setname]= useState('');
-  console.log(Cookies.get('sessionToken'))
 
   let auth = Cookies.get('sessionToken')
   // auth = auth !== undefined ? JSON.parse(auth) : null

@@ -43,22 +43,24 @@ const Roadmap = () => {
       },[])
       const sortedList = roadmap.sort((a, b) => a._id.localeCompare(b._id));
     return (
-        <div className="">
-        <MDBContainer fluid  className="d-flex justify-content-center roadmapbgcolor pt-5" id="roadmap">
-        
+        // <div className="">
+       
+        // </div>
+        <MDBContainer fluid  className=" roadmapbgcolor text-center pt-5" id="roadmap">
+        <div className="row">
+        <MDBTypography className="titlefontsize text-warning text-center fw-bold">
+        ROADMAP        
+        </MDBTypography>
+        </div>
         {isLoading ?
         <div className="text-center">
-        <MDBTypography className="titlefontsize text-warning fw-bold">
-        ROADMAP        
-        </MDBTypography> 
+        
         <MDBSpinner color="warning"></MDBSpinner>
         </div> 
         :
         <>
-        <MDBTypography className="titlefontsize text-warning text-center fw-bold">
-        ROADMAP        
-        </MDBTypography>
-        <MDBContainer className="line text-center">                
+        <center>
+        <MDBContainer className="place-item-center line text-center">                
         
         {sortedList.map((roadmaps,index) =>(
         <MDBRow className="circle">
@@ -97,6 +99,9 @@ const Roadmap = () => {
         
         
         </MDBContainer>
+        </center>
+        
+        
         </>
         }
         
@@ -134,8 +139,6 @@ const Roadmap = () => {
             </MDBModalDialog>
         </MDBModal>
         </MDBContainer>
-        </div>
-        
     )
 }
 

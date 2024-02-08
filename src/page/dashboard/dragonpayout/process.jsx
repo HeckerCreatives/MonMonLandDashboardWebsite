@@ -58,7 +58,7 @@ const AdminDragonPayoutProcess = () => {
             if(data.expired){
                 Swal.fire({
                   icon: "error",
-                  title: data.expired,
+                  title: data.expired == "duallogin" ? "Dual Login" : data.expired,
                   text: "You Will Redirect to Login",
                   allowOutsideClick: false,
                   allowEscapeKey: false
@@ -78,102 +78,7 @@ const AdminDragonPayoutProcess = () => {
         })
     },[])
 
-    // useEffect(()=>{
-    //     fetch(`${process.env.REACT_APP_API_URL}upgradesubscription/find`,{
-    //         credentials: 'include',
-    //     })
-    //     .then(result => result.json())
-    //     .then(data => {
-    //         if(data){
-    //             setCashier(data)
-    //         }
-    //     })
-    // },[])
-
-    // const handleCashierData = (id) => {
-    //     toggleShow()
-    //     setPayoutId(id)
-    // }
-
-    // const handleProcess = () => {
-    //     if(selectedcashier === ""){
-    //         Swal.fire({
-    //             icon: "warning",
-    //             title: "Please select cashier first",
-    //         })
-    //     } else {
-    //         setIsLoading(true)
-    //         Swal.fire({
-    //             icon: "warning",
-    //             title: "Are you sure you want to assign this payout to this cashier?",
-    //             text: "You won't be able to revert this",
-    //             showDenyButton: true,
-    //             confirmButtonText: "Confirm",
-    //             denyButtonText: "Cancel",
-    //         }).then(ok => {
-    //             if(ok.isConfirmed){
-    //                 fetch(`${process.env.REACT_APP_API_URL}payout/process/${payoutid}`, {
-    //                     method: "POST",
-    //                     credentials: 'include',
-    //                     headers: {
-    //                         "Content-Type": "application/json",
-    //                         // Authorization: `Bearer ${auth?.token}`,
-    //                     },
-    //                     body: JSON.stringify({
-    //                         admin: selectedcashier?.userId?.userName,
-    //                         adminId: selectedcashier._id,
-    //                         playfabToken: playfabToken
-    //                     })
-    //                 }).then(result => result.json())
-    //                 .then(data => {
-    //                     if(data.expired){
-    //                         Swal.fire({
-    //                           icon: "error",
-    //                           title: data.expired,
-    //                           text: "You Will Redirect to Login",
-    //                           allowOutsideClick: false,
-    //                           allowEscapeKey: false
-    //                         }).then(ok => {
-    //                           if(ok.isConfirmed){
-    //                             Cookies.remove("auth", { path: '/' });;
-    //                             Cookies.remove("playfabAdminAuthToken", { path: '/' });
-    //                             window.location.replace("/login");
-    //                           }
-    //                         })
-    //                     }
-
-    //                     if(data.message === "success" && !data.expired){
-    //                         setIsLoading(false)
-    //                         Swal.fire({
-    //                             icon: "success",
-    //                             title: "Payout is now in process",
-    //                         }).then(ok=> {
-    //                             if(ok.isConfirmed){
-    //                                 window.location.reload()
-    //                             }
-    //                         })
-    //                     } else {
-    //                         setIsLoading(false)
-    //                         Swal.fire({
-    //                             icon: "error",
-    //                             title: data.data,
-    //                         }).then(ok=> {
-    //                             if(ok.isConfirmed){
-    //                                 window.location.reload()
-    //                             }
-    //                         })
-    //                     }
-    //                 })
-    //             } else {
-    //                 setIsLoading(false)
-    //             }
-    //         })
-            
-    //     }
-       
-        
-    // }
-
+   
     // Define a function to calculate the time difference in hours
     function calculateTimeDifference(createdAt) {
         const createdAtDate = new Date(createdAt);

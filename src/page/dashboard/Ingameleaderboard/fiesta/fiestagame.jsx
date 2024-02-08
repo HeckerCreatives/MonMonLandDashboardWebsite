@@ -17,7 +17,7 @@ const FiestaGame = ({game, prizepool}) => {
 return(
     <>
     <MDBContainer>
-    <div className="col-md-4 offset-4">
+    <div className="col-lg-4 offset-lg-4">
     <MDBCard>
       <MDBCardBody className="d-flex justify-content-center">
       <div className="d-flex align-items-center">
