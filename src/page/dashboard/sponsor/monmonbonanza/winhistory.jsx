@@ -5,29 +5,32 @@ import
     MDBTableHead, 
     MDBTableBody,} 
 from "mdb-react-ui-kit";
-
+import PaginationPager from "../../../../component/pagination";
 const WinHistory = () => {
-    const [winhistory, setWinhistory] = useState([]);
+    const [winhistory, setWinhistory] = useState([]),
+        [page, setPage] = useState(1),
+        [isloading, setIsLoading] = useState(false),
+        [total, setTotal] = useState(0);
 
     useEffect(()=> {
-        fetch(`${process.env.REACT_APP_API_URL}members/sponsor`,{
+        setIsLoading(true)
+        fetch(`${process.env.REACT_APP_API_URL}members/sponsor?page=${page-1}`,{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
             credentials: 'include',
-            body: JSON.stringify({
-                type: 'monmonbonanza'
-            })
         })
         .then(result => result.json())
         .then(data => {
           if(data.message === "success"){
             setWinhistory(data.data) 
+            setTotal(data.pages)
+            setIsLoading(false)
           }
         })
             
-    },[]) 
+    },[page]) 
 
 return(
     <>
@@ -45,13 +48,13 @@ return(
                     winhistory.map((data, i) => (
                     <tr key={i} className="">
                         <td>
-                            {i+1}
+                            {new Date(data.createdAt).toLocaleString()}
                         </td>
                         <td>
                             {data.owner.username}
                         </td>
                         <td>
-                            {data.amount}
+                            {data.itemwon}
                         </td>
                     </tr>
                     ))
@@ -64,6 +67,12 @@ return(
                 }
                 </MDBTableBody>
             </MDBTable>
+            <PaginationPager
+              total={total} 
+              page={page} 
+              setPage={setPage}
+              isloading={isloading}
+            />
     </MDBContainer>
       </>
 )

@@ -599,6 +599,7 @@ const MembersAccount = () => {
             }}>
                 <option selected disabled value="">Select Subscription</option>
                 <option value="Pearl">Pearl</option>
+                <option value="Pearlplus">Pearl Plus</option>
                 <option value="Ruby">Ruby</option>
                 <option value="Emerald">Emerald</option>
                 <option value="Diamond">Diamond</option>

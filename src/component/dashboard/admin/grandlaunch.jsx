@@ -914,7 +914,18 @@ const AdminDashboardGrandLaunch = () => {
               td3txtbot={`Shop`}
               />
           </MDBCol>
-       
+          <MDBCol className="col-lg-4 my-2">
+            <DashCard 
+              colSpan="4"
+              icon={`wallet`} 
+              thtitle={`Sponsor Wallet`}
+              cardtoptext={sponsorwallet?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              />
+          </MDBCol>
         </MDBRow>
         <MDBRow>
         {/* <MDBCol className="col-lg-4 my-2">

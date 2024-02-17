@@ -23,11 +23,11 @@ return(
     <>
     <MDBContainer>
     <MDBTabs pills className='mb-3'>
-        <MDBTabsItem>
+        {/* <MDBTabsItem>
           <MDBTabsLink onClick={() => handleBasicClick('tab1')} active={basicActive === 'tab1'}>
             Prize Pool
           </MDBTabsLink>
-        </MDBTabsItem>
+        </MDBTabsItem> */}
         <MDBTabsItem>
           <MDBTabsLink onClick={() => handleBasicClick('tab2')} active={basicActive === 'tab2'}>
             Win History

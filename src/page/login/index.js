@@ -71,8 +71,15 @@ const Login = () =>{
           text: `Welcome Admin`
         })
         .then(result1 => {
-          if(result1.isConfirmed)
-          window.location.href = `/dashboard/${data.data.roleId?.display_name}/home/grandlaunch`
+          if(result1.isConfirmed){
+            if(data.data.roleId?.display_name == "Administrator"){
+              window.location.href = `/dashboard/${data.data.roleId?.display_name}/home/grandlaunch`
+            } else {
+              window.location.href = `/dashboard/${data.data.roleId?.display_name}/home`
+            }
+            
+          }
+          
         })
       }  
       
