@@ -29,7 +29,7 @@ return(
           </MDBTabsLink>
         </MDBTabsItem> */}
         <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleBasicClick('tab2')} active={basicActive === 'tab2'}>
+          <MDBTabsLink onClick={() => handleBasicClick('tab1')} active={basicActive === 'tab1'}>
             Win History
           </MDBTabsLink>
         </MDBTabsItem>
@@ -41,10 +41,10 @@ return(
       </MDBTabs>
 
       <MDBTabsContent>
-        <MDBTabsPane show={basicActive === 'tab1'}>
+        {/* <MDBTabsPane show={basicActive === 'tab1'}>
             <PrizePool/>
-        </MDBTabsPane>
-        <MDBTabsPane show={basicActive === 'tab2'}>
+        </MDBTabsPane> */}
+        <MDBTabsPane show={basicActive === 'tab1'}>
             <WinHistory/>
         </MDBTabsPane>
         {/* <MDBTabsPane show={basicActive === 'tab3'}>Tab 3 content</MDBTabsPane> */}
