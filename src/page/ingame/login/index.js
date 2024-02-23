@@ -16,12 +16,14 @@ import logo from "../../../assets/header/small logo for navi.png"
 import { isgamelogin } from "../../../component/utils";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
-import { PlayFabClient } from "playfab-sdk";
+import { useAccount, useDisconnect } from 'wagmi'
 const IngameLogin = () =>{
   const [user, setuser] = useState('');
   const [email, setEmail]= useState('');
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false)
+  const { address } = useAccount()
+  const { disconnect } = useDisconnect()
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -36,6 +38,49 @@ const IngameLogin = () =>{
       setuser(data.name)
     })
   },[user])
+
+  useEffect(()=> {
+    if(address){
+      setLoading(true)
+    fetch(`${process.env.REACT_APP_API_URL}gameauth/login`,{
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        address: address
+      })
+    }).then(result => result.json())
+    .then(data =>{
+      if(data.message === "success"){
+        setLoading(false)
+        Swal.fire({
+          title: "Login Successfully",
+          icon: "success",
+          text: `Welcome Monmon`,
+          allowEscapeKey: false,
+          allowOutsideClick: false
+        })
+        .then(result1 => {
+          if(result1.isConfirmed)
+          window.location.href = `/Dashboard/User/home`
+        })
+      }
+
+      else {
+        setLoading(false)
+        disconnect()
+        Swal.fire({
+          title: data.message,
+          icon: "info",
+          text: data.data
+        })
+      }
+      
+        })
+    }
+  },[address])
 
   const login = (e) =>{
     e.preventDefault()
@@ -159,19 +204,34 @@ const IngameLogin = () =>{
                 </MDBRow>
                 <MDBCol>
                 <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Keep me Login'/> 
-                </MDBCol>                
+                </MDBCol>  
+                <MDBCol className="col-3">
+                <MDBBtn className='ms-3' type="submit">
+                {loading ? <MDBSpinner/> : "Login"
+                }
+                </MDBBtn>
+                </MDBCol>              
             </MDBRow>
           </MDBCardBody>
         </MDBCard>
-
+        <div className="mt-2" style={{textAlign: "center"}}>
+          <span>
+          OR
+          </span>
+        </div>
+        <center className="mt-2" >
+        <w3m-connect-button 
+        size="md"
+        label="Login using wallet"
+        />
+        </center>
         
-        <MDBTypography className="d-flex align-items-center justify-content-end mt-4">
+        {/* <MDBTypography className="d-flex align-items-center justify-content-end mt-4">
           <a href="#">Recover password</a>
-        <MDBBtn className='ms-3' type="submit">
-          {loading ? <MDBSpinner/> : "Login to dashboard"
-          }
-        </MDBBtn>
-        </MDBTypography>
+       
+        
+        
+        </MDBTypography> */}
         </form>
         </MDBContainer>
       </MDBCol>

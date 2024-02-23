@@ -33,12 +33,13 @@ import DiamondPoolRequirements from "./poolrequirements";
 import { isgamelogin } from "../../../../component/utils";
 import ChooseReferrer from "./setreferrer";
 import PointDetails from "./pointdetail";
-import pointicon from "../../../../assets/Ingame/assetsdashboard/total points icon.png"
+import pointicon from "../../../../assets/Ingame/assetsdashboard/total points icon1.png"
 import walleticon from "../../../../assets/Ingame/assetsdashboard/wallet icon.png"
+import mcticon from "../../../../assets/Ingame/assetsdashboard/MML TOKEN.png"
 import mcicon from "../../../../assets/Ingame/assetsdashboard/total MC icon.png"
 import mgcomiicon from "../../../../assets/Ingame/assetsdashboard/total MG commission icon.png"
 import mgfarm from "../../../../assets/Ingame/assetsdashboard/total MG commission icon copy.png"
-import currentrank from "../../../../assets/Ingame/assetsdashboard/current rank.png"
+import currentrank from "../../../../assets/Ingame/assetsdashboard/current rank icon.png"
 import diamonpool from "../../../../assets/Ingame/assetsdashboard/Diamond pool req. title.png"
 import lbreq from "../../../../assets/Ingame/assetsdashboard/leaderboard req. title.png"
 import pointdetail from "../../../../assets/Ingame/assetsdashboard/piont details title.png"
@@ -47,8 +48,11 @@ import income from "../../../../assets/Ingame/assetsdashboard/total Income icon.
 import './dash.css'
 import Swal from "sweetalert2";
 import FlipCountdown from '@rumess/react-flip-countdown';
+import { useBalance, useAccount } from 'wagmi'
+import WithdrawToken from "./withdrawtoken";
 const PlayerDashboard = () => {
     const [datejoin, setDateJoin] = useState(false);
+    const { address, isDisconnected } = useAccount()
     const [end, setEnd] = useState('');
     const [wallets, setWallets] = useState([]);
     const [walletscutoff, setWalletsCutOff] = useState([]);
@@ -58,7 +62,17 @@ const PlayerDashboard = () => {
     const [image, setImage] = useState(0)
     const toggleOpen = () => setBasicModal(!basicModal);
     const [mycurrentrank, setCurrentRank] = useState(0);
+    const [mmt, setMMT] = useState(0)
+    const [mct, setMCT] = useState(0)
+    // const Mmt = useBalance({
+    //   address: address,
+    //   // token: "0x8162e18648de9D1856bc2192d3A09bb1430e2425"
+    // })
 
+    // const Mmc = useBalance({
+    //   address: address,
+    //   token: "0x1C7509C878b7d7044f085A053DABE9b40D68A444"
+    // })
 
   useEffect(()=> {
     fetch(`${process.env.REACT_APP_API_URL}gamewallet/find`, {
@@ -162,6 +176,37 @@ const PlayerDashboard = () => {
     })
   },[]) 
 
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}gamewallet/mytoken`, {
+      method: "GET",
+      credentials: 'include',
+      headers:{
+        "Content-Type": 'application/json'
+      }
+    })
+    .then(result => result.json())
+    .then(data => {
+      if(data.message == "duallogin" || data.message == "banned" || data.message == "Unathorized"){
+        Swal.fire({
+          icon: "error",
+          title: data.message == "duallogin" ? "Dual Login" : data.message == "banned" ? "Account Banned." : data.message,
+          text: data.message == "duallogin" ? "Hi Master, it appears that your account has been accessed from a different device." : data.message == "banned" ? "Hi Master please contact admin" : "You Will Redirect to Login",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        }).then(ok => {
+          if(ok.isConfirmed){
+            window.location.replace("/gamelogin");
+          }
+        })
+      }
+
+      if(data.message === "success"){
+        setMCT(data.data2)
+        setMMT(data.data)
+      }
+      
+    })
+  },[])
  
   
   const settings = {
@@ -277,88 +322,85 @@ const PlayerDashboard = () => {
 
             <MDBCol md={7} className="">
             <MDBRow className="justify-content-around align-items-center ">
-            <MDBCol md={4}>
+            
+            <MDBCol md={6}>
+            
             <MDBCard className="position-relative text-mute fw-bold my-4 "> 
-            <img className="corner-image" src={income} alt=""/>     
-                <MDBCardBody>
-                <div className="mt-3">
-                  <p className="text-start">Total Income</p>
-                  <h2 className="text-end">
-                  {wallets.totalincome?.toLocaleString('en-US', {
-                  style: 'decimal',
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                  })}
-                  </h2>
-                </div>
-                </MDBCardBody>
-            </MDBCard>
-            </MDBCol>
-            <MDBCol md={4}>
-            <MDBCard className="position-relative text-mute fw-bold my-4 "> 
+
             <img className="corner-image" src={monies} alt=""/>     
                 <MDBCardBody>
+                <div className="text-end">
+                <MDBBtn  size="sm" 
+                onClick={() => {
+                  window.location.href = `/Dashboard/User/withdrawtoken`
+                }}>
+                  Withdraw
+                </MDBBtn>
+                {/* <WithdrawToken tokenselected={"MMT"}/> */}
+                </div>
                 <div className="mt-3">
                   <p className="text-start">Monster Monies Token</p>
-                  <h2 className="text-end">0.00
-                  {/* {totalpoints?.toLocaleString('en-US', {
-                  style: 'decimal',
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                  })} */}
-                  </h2>
+                  {
+                    mmt ?
+                    
+                    <div className="row offset-lg-2">
+                    <div className="col-10">
+                    <h2>
+                    {mmt?.toLocaleString('en-US', {
+                    style: 'decimal',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                    })}
+                    </h2>
+                    </div>
+                    </div>
+                    :
+                    <h2 className="text-end">0</h2>
+                  }
                 </div>
+                
                 </MDBCardBody>
             </MDBCard>
             </MDBCol>
-            <MDBCol md={4}>
+            <MDBCol md={6}>
             <MDBCard className="position-relative text-mute fw-bold my-4 "> 
-            <img className="corner-image" src={pointicon} alt=""/>     
+            <img className="corner-image" src={mcticon} alt=""/>     
                 <MDBCardBody>
-                <div className="row mt-3">
-                <div className="col-8">
-                  <p className="text-start">Total Points</p>
-                </div>
-                <div className="col-4">
-                  <p className="text-end">
-                  {totalpoints?.toLocaleString('en-US', {
-                  style: 'decimal',
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                  })}
-                  </p>
-                </div>
-                <div className="col-4">
-                <p className="text-start">Rank</p>
-                </div>
-                <div className="col-8">
-                {walletscutoff.recruitpoints !== 0 ? 
-                  <p className="text-end">{mycurrentrank}</p>
-                  : 
-                  <p className="text-end">1 Direct point</p>
+                <div className="text-end">
+                <MDBBtn  size="sm" 
+                onClick={() => {
+                  window.location.href = `/Dashboard/User/withdrawtoken`
+                }}>
+                  Withdraw
+                </MDBBtn>
+                {/* <WithdrawToken tokenselected={"MCT"}/> */}
+                    </div>
+                <div className="mt-3">
+                  <p className="text-start">Monster Coin Token</p>
+                  
+                  {
+                    mct ?
+                    <div className="row offset-lg-2">
+                    <div className="col-10">
+                    <h2 >
+                    {mct?.toLocaleString('en-US', {
+                    style: 'decimal',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                    })}
+                    </h2>
+                    </div>
+                    </div>
+                    
+                    :
+                    <h2 className="text-end">0</h2>
                   }
-                </div>
                   
                 </div>
                 </MDBCardBody>
             </MDBCard>
             </MDBCol>
-            {/* <MDBCol md={4}>
-            <MDBCard className="position-relative text-mute fw-bold my-4">  
-            <img className="corner-image" src={currentrank} alt=""/>         
-                <MDBCardBody>
-                <div className="mt-3">
-                  <p className="text-start">Current Rank</p>
-                  {walletscutoff.recruitpoints !== 0 ? 
-                  <h2 className="text-end">{mycurrentrank}</h2>
-                  : 
-                  <p className="">1 Direct point required</p>
-                  }
-                  
-                </div>
-                </MDBCardBody>
-          </MDBCard>
-            </MDBCol> */}
+           
             </MDBRow>
             
             </MDBCol>
@@ -368,8 +410,36 @@ const PlayerDashboard = () => {
           
         </MDBCard>
         </MDBCol> 
-        
           
+        </MDBRow>
+
+        <MDBRow>
+        <p>OverAll Stats</p>
+        <MDBCol lg={4} className="my-2">
+            <Dashboardstatistics 
+              image={income}
+              title={'Total Income'}
+              txtonly1={wallets.totalincome?.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}
+              />
+          </MDBCol>
+          <MDBCol lg={4} className="my-2">
+            <Dashboardstatistics 
+              image={pointicon}
+              title={'Total Points'}
+              txtonly1={totalpoints}
+              />
+          </MDBCol>
+          <MDBCol lg={4} className="my-2">
+          <Dashboardstatistics 
+              image={currentrank}
+              title={'Current Rank'}
+              txtonly={walletscutoff.recruitpoints !== 0 ? mycurrentrank : '1 Direct point'}
+              />
+          </MDBCol>
         </MDBRow>
 
 

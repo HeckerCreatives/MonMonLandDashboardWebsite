@@ -21,7 +21,7 @@ import
     MDBModalFooter, } 
 from "mdb-react-ui-kit";
 import Swal from "sweetalert2";
-const Dashboardstatistics = ({image, title, number, number1}) => {
+const Dashboardstatistics = ({image, title, number, number1, txtonly, txtonly1}) => {
     const [rate, setRate] = useState(0)
     const [mc, setMc] = useState(0)
 
@@ -92,6 +92,18 @@ return(
               <MDBCol className="my-2 p-0">
               <div>
                 <p className="text-end">{title}</p>
+                {
+                  txtonly1 &&
+                  <h2 className="text-end">{txtonly1.toLocaleString('en-US', {
+                  style: 'decimal',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}</h2>
+                }
+                {
+                  txtonly &&
+                  <h2 className="text-end">{txtonly}</h2>
+                }
                 {
                   number &&
                   <h2 className="text-end">${number.toLocaleString('en-US', {

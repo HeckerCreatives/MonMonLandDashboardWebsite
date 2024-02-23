@@ -24,11 +24,11 @@
 
 .corner-image {
     position: absolute;
-    top: -20%;
+    top: -15%;
     left: 10%;
     /* Adjust the size as needed */
-    width: 50px;
-    height: 50px;
+    width: 65px;
+    height: 65px;
 }
 
 .network-nav-pills .network-nav-link.active, .network-nav-pills .show>.network-nav-link {
@@ -44,3 +44,10 @@
     text-transform: capitalize !important;
 }
 
+.tokenselect::before{
+    border: none;
+}
+
+:checked + .tokenselect::before {
+    border: 2px solid red;
+}

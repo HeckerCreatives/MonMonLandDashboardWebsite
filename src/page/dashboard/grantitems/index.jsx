@@ -497,6 +497,150 @@ const GrantItems = () => {
           });
     }
 
+    const monstermoniestoken = (e) => {
+        e.preventDefault();
+        setIsLoading(true)
+        const {username, tokentoreceive, description, addtoken} = e.target
+        const amount = (tokentoreceive.value / 200)
+        Swal.fire({ 
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, grant it!"
+        }).then(result => {
+            if(result.isConfirmed){
+                fetch(`${process.env.REACT_APP_API_URL}members/grantmmt`,{
+                    method: "POST",
+                    credentials: 'include',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        username: username.value,
+                        amount: amount,
+                        tokentoreceive: tokentoreceive.value,
+                        description: description.value,
+                        ischecked: addtoken.checked ? true : false
+                    })
+                })
+                .then(result => result.json())
+                .then(data => {
+                    if(data.message === "success"){
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: `${tokentoreceive.value} Monster Monies Token Granted to ${username.value}`
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    } else if (data.message === "failed"){
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: data.data
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    } else {
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: data.data
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    }
+                })
+            } else {
+                setIsLoading(false)
+            }
+        })
+    }
+
+    const monstercointoken = (e) => {
+        e.preventDefault();
+        setIsLoading(true)
+        const {username, tokentoreceive, description, addtoken} = e.target
+        const amount = (tokentoreceive.value / 2000)
+        Swal.fire({ 
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, grant it!"
+        }).then(result => {
+            if(result.isConfirmed){
+                fetch(`${process.env.REACT_APP_API_URL}members/grantmct`,{
+                    method: "POST",
+                    credentials: 'include',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        username: username.value,
+                        amount: amount,
+                        tokentoreceive: tokentoreceive.value,
+                        description: description.value,
+                        ischecked: addtoken.checked ? true : false
+                    })
+                })
+                .then(result => result.json())
+                .then(data => {
+                    if(data.message === "success"){
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: `${tokentoreceive.value} Monster Coin Token Granted to ${username.value}`
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    } else if (data.message === "failed"){
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: data.data
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    } else {
+                        setIsLoading(false)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: data.data
+                        }).then(ok => {
+                            if(ok.isConfirmed){
+                                window.location.reload()
+                            }
+                        })
+                    }
+                })
+            } else {
+                setIsLoading(false)
+            }
+        })
+    }
+
     return (
         <MDBContainer>
         <MDBRow>
@@ -686,6 +830,52 @@ const GrantItems = () => {
                     <MDBInput name="amount" className="mt-3" label='Input Amount To Be Granted' type="number" min={"1"} max={"999"} maxLength={"3"} required/>
                     <MDBTextArea name="description" className="mt-3" rows={5} label='Input Description Here' required/>
                     <MDBCheckbox name="addmg" label="check if you want to add to total monster gem farm"/>
+                    <MDBBtn type="submit" className="mt-3">
+                        {
+                            isloading ?
+                            <MDBSpinner size="sm"/>
+                            :
+                            "Grant"
+                        }
+                    </MDBBtn>
+                </MDBCardBody>
+            </MDBCard>
+            </form>
+            </MDBCol>
+        </MDBRow>
+        <MDBRow>
+            <MDBCol md={4} className=" my-5 ">
+            <form onSubmit={monstermoniestoken}>
+            <MDBCard>
+                <MDBCardBody>
+                    <MDBCardTitle className="text-center">Grant Monster Monies Token</MDBCardTitle>
+
+                    <MDBInput name="username" className="mt-3" label='Input Players Username' required/>
+                    <MDBInput name="tokentoreceive" className="mt-3" label='Input Amount To Be Granted' type="number" min={"1"}  required/>
+                    <MDBTextArea name="description" className="mt-3" rows={5} label='Input Description Here' required/>
+                    <MDBCheckbox name="addtoken" label="check if you want to add to total sold of monster monies token"/>
+                    <MDBBtn type="submit" className="mt-3">
+                        {
+                            isloading ?
+                            <MDBSpinner size="sm"/>
+                            :
+                            "Grant"
+                        }
+                    </MDBBtn>
+                </MDBCardBody>
+            </MDBCard>
+            </form>
+            </MDBCol>
+            <MDBCol md={4} className="my-5 ">
+            <form onSubmit={monstercointoken}>
+            <MDBCard>
+                <MDBCardBody>
+                    <MDBCardTitle className="text-center">Grant Monster Coin Token</MDBCardTitle>
+
+                    <MDBInput name="username" className="mt-3" label='Input Players Username' required/>
+                    <MDBInput name="tokentoreceive" className="mt-3" label='Input Amount To Be Granted' type="number" min={"1"} required/>
+                    <MDBTextArea name="description" className="mt-3" rows={5} label='Input Description Here' required/>
+                    <MDBCheckbox name="addtoken" label="check if you want to add to total sold of monster coin token"/>
                     <MDBBtn type="submit" className="mt-3">
                         {
                             isloading ?

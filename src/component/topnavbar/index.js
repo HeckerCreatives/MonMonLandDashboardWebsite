@@ -16,7 +16,8 @@ import Swal from "sweetalert2";
 import { ThemeContext, themes } from '../../component/theme/themecontext';
 import ReferralButton from "../../component/dashboard/referral/referral";
 import Cookies from 'js-cookie';
-import { logout } from "../utils";
+import { useDisconnect } from 'wagmi'
+import { logout, Toast } from "../utils";
 const TopNavbar = ({auth, didToggle, setDidToggle}) => {
     const [visibility, setVisibility] = useState(false),
     [word, setword] = useState(""),
@@ -24,6 +25,9 @@ const TopNavbar = ({auth, didToggle, setDidToggle}) => {
     navigate = useNavigate();
     const location = useLocation();
     const [darkMode, setDarkMode] = React.useState(true);
+    const { disconnect } = useDisconnect()
+
+
     // const [didToggle, setDidToggle] = useState(
     //   window.innerWidth > 768 ? false : true
     // );
@@ -42,14 +46,20 @@ const TopNavbar = ({auth, didToggle, setDidToggle}) => {
 
     const handleLogout = () => {
       
-        Swal.fire({
-            position: 'top-end',
-            icon: 'info',
-            title: 'See ya Later',
-            showConfirmButton: false,
-            timer: 5100
+        // Swal.fire({
+        //     position: 'top-end',
+        //     icon: 'info',
+        //     title: 'See ya Later',
+        //     showConfirmButton: false,
+        //     timer: 5100
+        // })
+        Toast.fire({
+          icon: 'info',
+          title: 'See ya later',
+          timer: 5100
         })
         logout()
+        disconnect()
         setVisibility(false);
         setTimeout(() => {
           window.location.reload()

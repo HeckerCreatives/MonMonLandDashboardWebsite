@@ -182,6 +182,31 @@ const UserDashboard = () => {
       ],
     },
     {
+      name: "Token",
+      path: "",
+      icon: "money-check",
+      children: [
+        {
+          name: "Buy",
+          path: "/Dashboard/User/buytoken"
+        },
+        {
+          name: "Deposit",
+          path: "/Dashboard/User/deposittoken"
+        },
+        {
+          name: "Withdraw",
+          path: "/Dashboard/User/withdrawtoken"
+        },
+      ],
+    },
+    {
+      name: "Buy Subscription",
+      path: "/Dashboard/User/buysubscription",
+      icon: "star",
+      children: [],
+    },
+    {
       name: "Leaderboard",
       path: "/Dashboard/User/leaderboard",
       icon: "trophy",

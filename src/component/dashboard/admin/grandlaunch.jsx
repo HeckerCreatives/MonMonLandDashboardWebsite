@@ -83,6 +83,10 @@ const AdminDashboardGrandLaunch = () => {
     const [complantools, setComplantools] = useState(0)
     const [complancosmetics, setComplancosmetics] = useState(0)
     const [complantotal, setComplantotal] = useState(0)
+    const [mmttoken, setMMTToken] = useState(0)
+    const [mcttoken, setMCTToken] = useState(0)
+    const [totalmmttoken, setTotalMMTToken] = useState(0)
+    const [totalmcttoken, setTotalMCTToken] = useState(0)
     const [role, setrole]= useState('');
     const [name, setname]= useState('');
     const [id, setid]= useState('');
@@ -768,6 +772,19 @@ const AdminDashboardGrandLaunch = () => {
         setInvestorWallet(data.data.investorfunds)
         setComplantools(data.data.complantools)
         setComplancosmetics(data.data.complancosmetics)
+        setMMTToken(data.data.mmt)
+        setMCTToken(data.data.mct)
+      }
+    })
+
+    fetch(`${process.env.REACT_APP_API_URL}token/totaltoken`,{
+      credentials: 'include',
+    })
+    .then(result => result.json())
+    .then(data => {
+      if(data.message === "success"){
+        setTotalMMTToken(data.data)
+        setTotalMCTToken(data.data2)
       }
     })
   },[])
@@ -786,9 +803,9 @@ const AdminDashboardGrandLaunch = () => {
         setTotalSubsUser(data.data?.total.count)
       }
     })
-    setComplantotal(complanpayin + complanmerchandise)
+    setComplantotal(complanpayin + complanmerchandise + complancosmetics)
     setTotalTrade(tradepayin + trademerchandise)
-  },[complanpayin, complanmerchandise, tradepayin, trademerchandise])
+  },[complanpayin, complanmerchandise, tradepayin, trademerchandise, complancosmetics])
 
     return (
       <>
@@ -928,32 +945,36 @@ const AdminDashboardGrandLaunch = () => {
           </MDBCol>
         </MDBRow>
         <MDBRow>
-        {/* <MDBCol className="col-lg-4 my-2">
+        <MDBCol className="col-lg-4 my-2">
             <DashCard 
               colSpan="4"
               icon={`wallet`} 
-              thtitle={`Sponsor Wallet`}
-              cardtoptext={sponsorwallet?.toLocaleString('en-US', {
+              thtitle={`Monster Monies Token Wallet`}
+              cardtoptext={mmttoken?.toLocaleString('en-US', {
               style: 'decimal',
               minimumFractionDigits: 2,
               maximumFractionDigits: 2
               })}
-              // td1={true}
-              // td1txttop={complanpayin?.toLocaleString('en-US', {
-              // style: 'decimal',
-              // minimumFractionDigits: 2,
-              // maximumFractionDigits: 2
-              // })}
-              // td1txtbot={`Payin`} 
-              // td2={true}
-              // td2txttop={complanmerchandise?.toLocaleString('en-US', {
-              // style: 'decimal',
-              // minimumFractionDigits: 2,
-              // maximumFractionDigits: 2
-              // })}
-              // td2txtbot={`Merchandise`}
+              td0={true}
+              td0txttop={totalmmttoken ? `${totalmmttoken.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              td0txtbot={`Total Monster Monies Token`} 
               />
-          </MDBCol> */}
+          </MDBCol>
+          <MDBCol className="col-lg-4 my-2">
+            <DashCard 
+              colSpan="4"
+              icon={`wallet`} 
+              thtitle={`Monster Coin Token Wallet`}
+              cardtoptext={mcttoken?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              td0={true}
+              td0txttop={totalmcttoken ? `${totalmcttoken.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              td0txtbot={`Total Monster Coin Token`} 
+              />
+          </MDBCol>
         </MDBRow>
         <br/>
         <MDBTypography tag={`h2`}>Payout</MDBTypography>

@@ -141,6 +141,10 @@ import AdminDashboardGrandLaunch from "./component/dashboard/admin/grandlaunch";
 import Masterdashboardgrandlaunch from "./page/dashboard/mastertita/dashboard/grandlaunch";
 import GetPayable from "./page/dashboard/getpearl/payable";
 import GetPayableMasterAdmin from "./page/dashboard/mastertita/dashboard/payables";
+import BuyToken from "./page/ingame/dashboard/player/buytoken";
+import BuySubscription from "./page/ingame/dashboard/buysubscription";
+import DepositToken from "./page/ingame/dashboard/player/deposittoken";
+import WithdrawTokenIndex from "./page/ingame/dashboard/player/withdrawindex";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -370,6 +374,10 @@ const Routers = () => {
             <Route path="payoutrequest" element={<PlayerRequestPayout/>}/>
             <Route path="transactionhistory" element={<PlayerTransactionHistory/>}/>
             <Route path="grindinghistory" element={<PlayerGrindingHistory/>}/>
+            <Route path="buytoken" element={<BuyToken/>}/>
+            <Route path="buysubscription" element={<BuySubscription/>}/>
+            <Route path="deposittoken" element={<DepositToken/>}/>
+            <Route path="withdrawtoken" element={<WithdrawTokenIndex/>}/>
         </Route>
         
       </Route>
