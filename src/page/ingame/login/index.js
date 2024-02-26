@@ -26,62 +26,6 @@ const IngameLogin = () =>{
   const { disconnect } = useDisconnect()
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    if(user){
-      window.location.href = `/Dashboard/User/home`
-    } 
-  },[user])
-
-  useEffect(()=> {
-    isgamelogin()
-    .then(data => {
-      setuser(data.name)
-    })
-  },[user])
-
-  useEffect(()=> {
-    if(address){
-      setLoading(true)
-    fetch(`${process.env.REACT_APP_API_URL}gameauth/login`,{
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        address: address
-      })
-    }).then(result => result.json())
-    .then(data =>{
-      if(data.message === "success"){
-        setLoading(false)
-        Swal.fire({
-          title: "Login Successfully",
-          icon: "success",
-          text: `Welcome Monmon`,
-          allowEscapeKey: false,
-          allowOutsideClick: false
-        })
-        .then(result1 => {
-          if(result1.isConfirmed)
-          window.location.href = `/Dashboard/User/home`
-        })
-      }
-
-      else {
-        setLoading(false)
-        disconnect()
-        Swal.fire({
-          title: data.message,
-          icon: "info",
-          text: data.data
-        })
-      }
-      
-        })
-    }
-  },[address])
-
   useEffect(() => {
     const url = new URL(window.location.href);
     const params = new URLSearchParams(url.search)
@@ -133,6 +77,64 @@ const IngameLogin = () =>{
     }
     
   },[])
+
+  // useEffect(()=>{
+  //   if(user){
+  //     window.location.href = `/Dashboard/User/home`
+  //   } 
+  // },[user])
+
+  useEffect(()=> {
+    isgamelogin()
+    .then(data => {
+      setuser(data.name)
+    })
+  },[user])
+
+  useEffect(()=> {
+    if(address){
+      setLoading(true)
+    fetch(`${process.env.REACT_APP_API_URL}gameauth/login`,{
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        address: address
+      })
+    }).then(result => result.json())
+    .then(data =>{
+      if(data.message === "success"){
+        setLoading(false)
+        Swal.fire({
+          title: "Login Successfully",
+          icon: "success",
+          text: `Welcome Monmon`,
+          allowEscapeKey: false,
+          allowOutsideClick: false
+        })
+        .then(result1 => {
+          if(result1.isConfirmed)
+          window.location.href = `/Dashboard/User/home`
+        })
+      }
+
+      else {
+        setLoading(false)
+        disconnect()
+        Swal.fire({
+          title: data.message,
+          icon: "info",
+          text: data.data
+        })
+      }
+      
+        })
+    }
+  },[address])
+
+  
 
   const login = (e) =>{
     e.preventDefault()
