@@ -947,6 +947,9 @@ const AdminDashboardGrandLaunch = () => {
         <MDBRow>
         <MDBCol className="col-lg-4 my-2">
             <DashCard 
+              flipbtn1={true}
+              flipbtn1icon={'donate'}
+              tokenkind={'MMT'}
               colSpan="4"
               icon={`wallet`} 
               thtitle={`Monster Monies Token Wallet`}
@@ -962,6 +965,9 @@ const AdminDashboardGrandLaunch = () => {
           </MDBCol>
           <MDBCol className="col-lg-4 my-2">
             <DashCard 
+              flipbtn1={true}
+              flipbtn1icon={'donate'}
+              tokenkind={'MCT'}
               colSpan="4"
               icon={`wallet`} 
               thtitle={`Monster Coin Token Wallet`}

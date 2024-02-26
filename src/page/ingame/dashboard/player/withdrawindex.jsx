@@ -60,28 +60,50 @@ const WithdrawTokenIndex = () => {
         <MDBContainer>
             <MDBRow>
                 <MDBCol lg={4} className="offset-lg-4 mt-5">
-                    <MDBCard>
+                    <MDBCard style={{background: "#EDCAB4"}}>
                         <MDBCardBody>
-                            <div className="text-center">
-                                <img src={tokenselected == "MMT" ? mmticon : mcticon} alt="" style={{height: "65px", width: "65px"}}/>
-                            </div>
-                            <MDBCardText className="mt-2 text-center fw-bold">Select Token to Withdraw</MDBCardText>
-                            <div className="mt-2 text-center">
-                            <select id="tokentype" name="tokentype" required 
-                            onChange={(e) => setTokenSelected(e.target.value)}
-                            > 
-                                <option selected value="MMT">
-                                MMT
-                                </option>
+                        <div className="row text-center">
+                        <input 
+                        type="checkbox" 
+                        id="mmt" 
+                        value='MMT'
+                        checked={tokenselected == "MMT"} 
+                        onChange={(e) => setTokenSelected(e.target.value)}
+                        style={{display: "none"}}
+                        />
 
-                                <option value="MCT">
-                                MCT
-                                </option>
-                            </select>
-                            </div>
-                            <div className="text-end mt-3">
-                            <WithdrawToken tokenselected={tokenselected}/>
-                            </div>    
+                        <input 
+                        type="checkbox" 
+                        id="mct" 
+                        checked={tokenselected == "MCT"} 
+                        value='MCT'
+                        onChange={(e) => setTokenSelected(e.target.value)}
+                        style={{display: "none"}}
+                        />
+
+                        <MDBCol lg={6}>
+                        <div className={tokenselected == "MMT" ? `tokenselect my-2 py-2` : "border my-2 py-2"} style={{ borderRadius: "10px"}}>
+                        <label htmlFor="mmt" className="d-flex flex-column justify-content-center align-items-center">
+                        <img alt="" src={mmticon} style={{height: "65px", width: "65px"}}/>
+                        <span>Monster Monies Token</span>
+                        </label>
+                        </div>
+                        </MDBCol>
+                        <MDBCol lg={6}>
+                        <div className={tokenselected == "MCT" ? `tokenselect my-2 py-2` : "border my-2 py-2"} style={{ borderRadius: "10px"}}>
+                        <label htmlFor="mct" className="d-flex flex-column justify-content-center align-items-center">
+                        <img alt="" src={mcticon} style={{height: "65px", width: "65px"}}/>
+                        <span className="px-2">Monster Coin Token</span>
+                        {/* Monster Coin Token */}
+                        </label>
+                        
+                        </div>
+                        </MDBCol>
+                        </div>
+
+                        <div className="text-center mt-3">
+                        <WithdrawToken tokenselected={tokenselected}/>
+                        </div>    
                            
                         </MDBCardBody>
                     </MDBCard>

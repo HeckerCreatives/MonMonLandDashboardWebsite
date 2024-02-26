@@ -45,11 +45,14 @@ createWeb3Modal({
   wagmiConfig: config,
   projectId,
   chains, // Optional - defaults to your Cloud configuration
-  allWallets: 'ONLY_MOBILE',
+  allWallets: 'HIDE',
   tokens: {
     97: {
         address: "0x8162e18648de9D1856bc2192d3A09bb1430e2425"
     },
+    // 56: {
+    //   address: "0x8162e18648de9D1856bc2192d3A09bb1430e2425"
+    // },
   }
 })
 

@@ -44,10 +44,8 @@
     text-transform: capitalize !important;
 }
 
-.tokenselect::before{
-    border: none;
-}
 
-:checked + .tokenselect::before {
+
+.tokenselect{
     border: 2px solid red;
 }

@@ -82,6 +82,58 @@ const IngameLogin = () =>{
     }
   },[address])
 
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search)
+
+    const user = params.get("username")
+    const pass = params.get("password")
+    const path = params.get("path")
+    if(user && pass && path){
+      setLoading(true)
+
+      fetch(`${process.env.REACT_APP_API_URL}gameauth/login`,{
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: user,
+          password: pass
+        })
+      }).then(result => result.json())
+      .then(data =>{
+        if(data.message === "success"){
+          setLoading(false)
+          Swal.fire({
+            title: "Login Successfully",
+            icon: "success",
+            text: `Welcome Monmon`,
+            allowEscapeKey: false,
+            allowOutsideClick: false
+          })
+          .then(result1 => {
+            if(result1.isConfirmed)
+            window.location.href = path
+          })
+        }
+  
+        else {
+          setLoading(false)
+          disconnect()
+          Swal.fire({
+            title: data.message,
+            icon: "info",
+            text: data.data
+          })
+        }
+        
+      })
+    }
+    
+  },[])
+
   const login = (e) =>{
     e.preventDefault()
     setLoading(true)
@@ -192,6 +244,7 @@ const IngameLogin = () =>{
                 className=""
                 onChange={e => setEmail(e.target.value)} 
                 required
+                disabled={loading}
                 />
                 </MDBCol>                
                 <MDBRow className="mx-0 my-3">
@@ -199,14 +252,14 @@ const IngameLogin = () =>{
                   <MDBTypography className="mb-0">
                   Password        
                   </MDBTypography>
-                    <MDBInput label={<span className="">Password</span>} type="password" onChange={e => setPassword(e.target.value)} required/>
+                    <MDBInput label={<span className="">Password</span>} type="password" onChange={e => setPassword(e.target.value)} required disabled={loading}/>
                   </MDBCol>
                 </MDBRow>
                 <MDBCol>
                 <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Keep me Login'/> 
                 </MDBCol>  
                 <MDBCol className="col-3">
-                <MDBBtn className='ms-3' type="submit">
+                <MDBBtn className='ms-3' type="submit" disabled={loading}>
                 {loading ? <MDBSpinner/> : "Login"
                 }
                 </MDBBtn>

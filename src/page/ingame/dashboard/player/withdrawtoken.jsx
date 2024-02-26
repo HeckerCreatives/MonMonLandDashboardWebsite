@@ -1,20 +1,16 @@
 import { MDBBtn, MDBContainer } from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
-import { useBalance, useAccount, useSendTransaction, useWriteContract, useTransactionReceipt, useTransactionCount, usePrepareTransactionRequest } from 'wagmi'
+import { useBalance, useAccount, useSendTransaction,} from 'wagmi'
 import { parseEther , parseGwei} from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import { bscTestnet } from 'wagmi/chains' 
-import { abi } from "../../../../component/utils"
-import { SendTransactionReturnType, getTransactionReceipt } from '@wagmi/core'
+import { abi , isgamelogin} from "../../../../component/utils"
 import Web3 from "web3";
-import { Chain, Common, Hardfork } from '@ethereumjs/common'
-import { LegacyTransaction } from '@ethereumjs/tx'
-// const LegacyTransaction = require("ethereumjs-tx").Transaction;
 import { encodeFunctionData, createWalletClient, http, createPublicClient } from 'viem'
-import { writeContract } from "viem/actions";
 import Swal from "sweetalert2";
 const WithdrawToken = ({tokenselected}) => {
     const [isloading, setIsLoading] = useState(false)
+    const [dbwallet, setDbWallet] = useState('')
     const [mmt, setMMT] = useState(0)
     const [mct, setMCT] = useState(0)
     const { address } = useAccount();
@@ -41,6 +37,13 @@ const WithdrawToken = ({tokenselected}) => {
       address: address,
       chainId: 97
     })
+
+    useEffect(()=> {
+      isgamelogin()
+      .then(data => {
+        setDbWallet(data.walletaddress)
+      })
+    },[])
 
     useEffect(() => {
       fetch(`${process.env.REACT_APP_API_URL}gamewallet/mytoken`, {
@@ -77,6 +80,27 @@ const WithdrawToken = ({tokenselected}) => {
     
     const handleWithdraw = async () => {
       setIsLoading(true)
+
+      if(dbwallet != address){
+        setIsLoading(false)
+        Swal.fire({
+          icon: "warning",
+          title: "Warning",
+          text: "Attention: The wallet address you're using now does not match your wallet address in your account"
+        })
+        return
+      }
+
+      if(dbwallet == undefined){
+        setIsLoading(false)
+        Swal.fire({
+          icon: "warning",
+          title: "Warning",
+          text: "Attention: Please connect your account to your wallet address first"
+        })
+        return
+      }
+
       const inputValue = ""
       const { value: tokenamount } = await Swal.fire({
         title: "Enter your desired amount to withdraw",
@@ -127,7 +151,7 @@ const WithdrawToken = ({tokenselected}) => {
             // setIsLoading(false)
             handleKopit()
           } else {
-            // setIsLoading(false)
+            setIsLoading(false)
             Swal.fire({
               icon: "error",
               title: "Oops..",
@@ -234,13 +258,13 @@ const WithdrawToken = ({tokenselected}) => {
 
     const jemme = async () => {
       const tokencontract = tokenselected == "MMT" ? Mmtaddress : mctaddress
-      const amountvalue = tokenselected == "MMT" ? parseEther(tokentowithdraw.toString()) : parseGwei(tokentowithdraw.toString())
+      // const amountvalue = tokenselected == "MMT" ? parseEther(tokentowithdraw.toString()) : parseGwei(tokentowithdraw.toString())
       const encodedata = await encodeFunctionData({
         abi: abi,
         functionName: 'transfer',
         args: [
           address,
-          amountvalue,
+          parseEther(tokentowithdraw.toString()),
         ],
       })
 
@@ -329,95 +353,14 @@ const WithdrawToken = ({tokenselected}) => {
             }
         })
 
-        // Swal.fire({
-        //   icon: 'success',
-        //   title: "Success!",
-        //   text: hashes
-        // })
       }
       
 
     }
     
-    // const handleClaim = async () => {
-    //     // let claimable = parseFloat(transaction.vnt) * percentage;
-    //     // let remaining = parseFloat(transaction.remaining) - claimable;
-    
-    //     const hexPrivateKey = new Buffer.from(privateKey, "hex");
-    //     const MmtAmount = parseGwei("200");
-    //     const contract = new window.web3.eth.Contract(abi, Mmtaddress);
-    //     console.log(window.web3.utils.toHex(window.web3.utils.toWei("0.001", "ether")))
-    //     const data = await contract.methods
-    //       .transfer(
-    //         address,
-    //         window.web3.utils.toHex(MmtAmount)
-    //       )
-    //       .encodeABI();
-    //     console.log(data)
-    //     await window.web3.eth.getTransactionCount(
-    //       craetorwallet, "latest",
-    //       async (error, txCount) => {
-    //         console.log(txCount)
-    //         const txObject = {
-    //           nonce: window.web3.utils.toHex(txCount),
-    //           gasLimit: window.web3.utils.toHex(800000),
-    //           gasPrice: window.web3.utils.toHex(
-    //             window.web3.utils.toWei("10", "gwei")
-    //           ),
-    //           to: Mmtaddress,
-    //           data: data,
-    //         };
-
-    //         const customCommon = new Common.forCustomChain(
-    //           "mainnet",
-    //           {
-    //             name: "Smart chain Testnet",
-    //             chainId: 97,
-    //             networkId: 97,
-    //           },
-    //         //   {
-    //         //     name: "Binance Smart chain",
-    //         //     chainId: 56,
-    //         //     networkId: 56,
-    //         //   },
-    //           "petersburg"
-    //         );
-    
-    //         const tx = LegacyTransaction.fromTxData(txObject, { common: customCommon });
-    //         tx.sign(hexPrivateKey);
-    
-    //         const serializedTx = tx.serialize();
-    //         const raw = `0x${serializedTx.toString("hex")}`;
-    //         console.log(tx)  
-    //         console.log(serializedTx)
-    //         console.log(raw)
-    //         await window.web3.eth.getBalance(craetorwallet).then(bal => {
-    //           if (bal < 0.01) {
-    //             alert("Insufficient gas fee from owner.");
-    //             // setClaim(false);
-    //             // setLoading(false);
-    //           } else {
-    //             window.web3.eth.sendSignedTransaction(raw).then(() => {
-    //                 console.log("SUCCESS NICE")
-    //             //   dispatch(
-    //             //     UPDATE({
-    //             //       id: transaction._id,
-    //             //       data: {
-    //             //         remaining,
-    //             //         claimedAt: new Date().toLocaleDateString(),
-    //             //       },
-    //             //     })
-    //             //   );
-    //             //   setLoading(false);
-    //             });
-    //           }
-    //         });
-    //       }
-    //     );
-    //   };
-
     return(
         <MDBBtn type="button" size="sm"
+        color="warning"
         disabled={isloading} 
         onClick={handleWithdraw}
         >

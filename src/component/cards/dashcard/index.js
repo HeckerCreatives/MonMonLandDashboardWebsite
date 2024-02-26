@@ -21,8 +21,27 @@ import
     MDBModalFooter, } 
 from "mdb-react-ui-kit";
 
-const DashCard = ({txtsup, icon, cardtoptext, colSpan, thtitle, td1, td1txttop, td1txtbot, td2, td2txttop, td2txtbot,td3, td3txttop, td3txtbot, td4, td4txttop, td4txtbot, td0, td0txttop, td0txtbot, flipbtn, basicModal, setBasicModal,distri, leaderboard, grinding, quest}) => {
-   
+const DashCard = ({txtsup, icon, cardtoptext, colSpan, thtitle, td1, td1txttop, td1txtbot, td2, td2txttop, td2txtbot,td3, td3txttop, td3txtbot, td4, td4txttop, td4txtbot, td0, td0txttop, td0txtbot, flipbtn, basicModal, setBasicModal,tokenkind, flipbtn1, flipbtn1icon}) => {
+  const [mmttoken, setMmtToken] = useState([])
+  const [mcttoken, setMctToken] = useState([])
+  const [basicModal1, setBasicModal1] = useState(false);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}token/totaltokenpertype`,{
+      method: "GET",
+      credentials: 'include',
+      headers: {
+        "Content-Type": "application/json",
+      }
+    }).then(result => result.json())
+    .then(data => {
+      if(data.message == "success"){
+        setMmtToken(data.data)
+        setMctToken(data.data2)
+      }
+    })
+  },[])
+
 return(
     <>
     <MDBCard className="text-center text-light fw-bold" style={{background: "linear-gradient(to right, #fd9566 , #feb697)"}}>          
@@ -31,6 +50,13 @@ return(
             <div className="d-flex justify-content-end">
                 <MDBBtn onClick={() => setBasicModal(true)}>
                 <MDBIcon fas icon="book-open" size="2x"/>
+                </MDBBtn>
+            </div>
+          }
+          { flipbtn1 &&
+            <div className="d-flex justify-content-end">
+                <MDBBtn onClick={() => setBasicModal1(!basicModal1)}>
+                <MDBIcon fas icon={flipbtn1icon} size="2x"/>
                 </MDBBtn>
             </div>
           }
@@ -90,7 +116,7 @@ return(
           </MDBCardBody>
     </MDBCard>
 
-    <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
+      <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
         <MDBModalDialog size="xl">
           <MDBModalContent>
             <MDBModalHeader>
@@ -419,6 +445,128 @@ return(
                 Close
               </MDBBtn> */}
             </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+
+      <MDBModal show={basicModal1} setShow={setBasicModal1} tabIndex='-1'>
+        <MDBModalDialog size="xl">
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>Token Distribution</MDBModalTitle>
+            </MDBModalHeader>
+            <MDBModalBody>
+            <MDBTable hover bordered small responsive className="text-center mb-0">
+                <MDBTableHead >
+                    <tr>
+                    <th className="fw-bold" scope='col'>Token Name</th>
+                    <th className="fw-bold" scope='col'>Wallet Balance</th>
+                    <th className="fw-bold" scope='col'>Monster Gem</th>
+                    <th className="fw-bold" scope='col'>BNB</th>
+                    <th className="fw-bold" scope='col'>USDT</th>
+                    <th className="fw-bold" scope='col'>BUSD</th>
+                    <th className="fw-bold" scope='col'>USDC</th>
+                    <th className="fw-bold" scope='col'>XRP</th>
+                    <th className="fw-bold" scope='col'>DOGE</th>
+                    </tr>
+                </MDBTableHead>
+                <MDBTableBody className="text-center">
+                {
+                  tokenkind == "MMT" && 
+                  <tr>
+                      <th>Monster Monies Token</th>
+                      <td>${mmttoken.walletbalance != undefined ? mmttoken.walletbalance?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }) : 0}</td>
+                      <td>${mmttoken.monstergem != undefined ? mmttoken.monstergem?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mmttoken.bnb != undefined ? mmttoken.bnb?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mmttoken.usdt != undefined ? mmttoken.usdt?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mmttoken.busd != undefined ? mmttoken.busd?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }) : 0}</td>
+                      <td>${mmttoken.usdc != undefined ? mmttoken.usdc?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mmttoken.xrp != undefined ? mmttoken.xrp?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mmttoken.doge != undefined ? mmttoken.doge?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                    </tr>
+                }
+                 {
+                  tokenkind == "MCT" && 
+                  <tr>
+                      <th>Monster Coin Token</th>
+                      <td>${mcttoken.walletbalance != undefined ? mcttoken.walletbalance?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }) : 0}</td>
+                      <td>${mcttoken.monstergem != undefined ? mcttoken.monstergem?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mcttoken.bnb != undefined ? mcttoken.bnb?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mcttoken.usdt != undefined ? mcttoken.usdt?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mcttoken.busd != undefined ? mcttoken.busd?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }) : 0}</td>
+                      <td>${mcttoken.usdc != undefined ? mcttoken.usdc?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mcttoken.xrp != undefined ? mcttoken.xrp?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mcttoken.doge != undefined ? mcttoken.doge?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                    </tr>
+                 }   
+                    
+               </MDBTableBody>
+            </MDBTable>
+            </MDBModalBody>
           </MDBModalContent>
         </MDBModalDialog>
       </MDBModal>

@@ -145,6 +145,7 @@ import BuyToken from "./page/ingame/dashboard/player/buytoken";
 import BuySubscription from "./page/ingame/dashboard/buysubscription";
 import DepositToken from "./page/ingame/dashboard/player/deposittoken";
 import WithdrawTokenIndex from "./page/ingame/dashboard/player/withdrawindex";
+// import AirDrop from "./page/ingame/dashboard/player/airdrop";
 const Routers = () => {
   const navigate = useNavigate();
   useEffect(()=> {
@@ -378,6 +379,7 @@ const Routers = () => {
             <Route path="buysubscription" element={<BuySubscription/>}/>
             <Route path="deposittoken" element={<DepositToken/>}/>
             <Route path="withdrawtoken" element={<WithdrawTokenIndex/>}/>
+            {/* <Route path="airdrop" element={<AirDrop/>}/> */}
         </Route>
         
       </Route>

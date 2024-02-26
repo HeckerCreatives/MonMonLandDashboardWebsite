@@ -51,6 +51,7 @@ import FlipCountdown from '@rumess/react-flip-countdown';
 import { useBalance, useAccount } from 'wagmi'
 import WithdrawToken from "./withdrawtoken";
 const PlayerDashboard = () => {
+    const [playstatus, setPlayStatus] = useState('')
     const [datejoin, setDateJoin] = useState(false);
     const { address, isDisconnected } = useAccount()
     const [end, setEnd] = useState('');
@@ -64,6 +65,10 @@ const PlayerDashboard = () => {
     const [mycurrentrank, setCurrentRank] = useState(0);
     const [mmt, setMMT] = useState(0)
     const [mct, setMCT] = useState(0)
+
+    const [basicModal1, setBasicModal1] = useState(false);
+    const toggleOpen1 = () => setBasicModal1(!basicModal1);
+
     // const Mmt = useBalance({
     //   address: address,
     //   // token: "0x8162e18648de9D1856bc2192d3A09bb1430e2425"
@@ -112,6 +117,7 @@ const PlayerDashboard = () => {
         const joindate = new Date(data.joined);
         const subsexp = new Date(joindate.getTime() + (3 * 24 * 60 * 60 * 1000)); // Adding 3 days in millisecondsz
         setDateJoin(subsexp)
+        setPlayStatus(data.playstatus)
     })
         
     fetch(`${process.env.REACT_APP_API_URL}gameusers/gameannouncement`, {
@@ -537,8 +543,8 @@ const PlayerDashboard = () => {
                 <MDBCard className="text-center">
                   <MDBCardBody>
                   <MDBIcon fas icon="star" size="2x"/>
-                  <p>Pool Status</p>
-                  <h2>{wallets.poolstatus}</h2>
+                  <p>Account Status</p>
+                  <h2>{playstatus}</h2>
                   </MDBCardBody>
                 </MDBCard>
                 </div>
@@ -755,25 +761,51 @@ const PlayerDashboard = () => {
         
         </MDBContainer>
         <MDBModal show={basicModal} staticBackdrop  tabIndex='-1'>
-        <MDBModalDialog centered>
-          <MDBModalContent>
-            <MDBModalHeader className="justify-content-center seamless">
-              <MDBModalTitle className="text-white fw-bold">{announcement.title}</MDBModalTitle>
-            </MDBModalHeader>
-            <MDBModalBody className="text-center">
-              <MDBCardText className="fw-bold">
-                {announcement.description}
-              </MDBCardText>
-            </MDBModalBody>
+          <MDBModalDialog centered>
+            <MDBModalContent>
+              <MDBModalHeader className="justify-content-center seamless">
+                <MDBModalTitle className="text-white fw-bold">{announcement.title}</MDBModalTitle>
+              </MDBModalHeader>
+              <MDBModalBody className="text-center">
+                <MDBCardText className="fw-bold">
+                  {announcement.description}
+                </MDBCardText>
+              </MDBModalBody>
 
-            <MDBModalFooter className="seamless">
-              <MDBBtn color='secondary' onClick={toggleOpen}>
-                Close
-              </MDBBtn>
-            </MDBModalFooter>
-          </MDBModalContent>
-        </MDBModalDialog>
-      </MDBModal>
+              <MDBModalFooter className="seamless">
+                <MDBBtn color='secondary' 
+                onClick={() => {
+                  toggleOpen()
+                  if(playstatus == 'inactive'){
+                    toggleOpen1()
+                  }
+                }}>
+                  Close
+                </MDBBtn>
+              </MDBModalFooter>
+            </MDBModalContent>
+          </MDBModalDialog>
+        </MDBModal>
+        <MDBModal show={basicModal1} staticBackdrop  tabIndex='-1'>
+          <MDBModalDialog centered>
+            <MDBModalContent>
+              <MDBModalHeader className="justify-content-center seamless">
+                <MDBModalTitle className="text-white fw-bold">Activate Account</MDBModalTitle>
+              </MDBModalHeader>
+              <MDBModalBody className="text-center">
+                <MDBCardText className="fw-bold">
+                  Hi Master!, your account has been inactive for so long to activate your account again click Activate
+                </MDBCardText>
+              </MDBModalBody>
+
+              <MDBModalFooter className="seamless">
+                <MDBBtn color='secondary' onClick={toggleOpen1}>
+                  Activate
+                </MDBBtn>
+              </MDBModalFooter>
+            </MDBModalContent>
+          </MDBModalDialog>
+        </MDBModal>
       </>
     )
 }
