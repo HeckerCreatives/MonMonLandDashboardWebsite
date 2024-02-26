@@ -44,12 +44,17 @@ import { abort } from "process";
 import { isgamelogin } from "../../../../component/utils";
 const BuyToken = () => {
     const { address } = useAccount();
-    const usdtcontract = "0x55d398326f99059fF775485246999027B3197955"
-    const busdcontract = "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56"
-    const usdccontract = "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d"
-    const xrpcontract = "0x1D2F0da169ceB9fC7B3144628dB156f3F6c60dBE"
-    const dogecontract = "0xba2ae424d960c26247dd6c32edc70b295c744c43"
-    
+    // const usdtcontract = "0x55d398326f99059fF775485246999027B3197955"
+    // const busdcontract = "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56"
+    // const usdccontract = "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d"
+    // const xrpcontract = "0x1D2F0da169ceB9fC7B3144628dB156f3F6c60dBE"
+    // const dogecontract = "0xba2ae424d960c26247dd6c32edc70b295c744c43"
+
+    const usdtcontract = process.env.REACT_APP_MMTADDRESS
+    const busdcontract = process.env.REACT_APP_MMTADDRESS
+    const usdccontract = process.env.REACT_APP_MMTADDRESS
+    const xrpcontract = process.env.REACT_APP_MMTADDRESS
+    const dogecontract = process.env.REACT_APP_MCTADDRESS
     const userbnbbalance = useBalance({
       address: address,
     })
