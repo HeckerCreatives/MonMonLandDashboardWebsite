@@ -33,6 +33,8 @@ const IngameLogin = () =>{
     const user = params.get("username")
     const pass = params.get("password")
     const path = params.get("path")
+    setEmail(user)
+    setPassword(pass)
     if(user && pass && path){
       setLoading(true)
 
@@ -244,6 +246,7 @@ const IngameLogin = () =>{
                 } 
                 type="text"
                 className=""
+                value={email != undefined ? email : ""}
                 onChange={e => setEmail(e.target.value)} 
                 required
                 disabled={loading}
@@ -254,7 +257,7 @@ const IngameLogin = () =>{
                   <MDBTypography className="mb-0">
                   Password        
                   </MDBTypography>
-                    <MDBInput label={<span className="">Password</span>} type="password" onChange={e => setPassword(e.target.value)} required disabled={loading}/>
+                    <MDBInput label={<span className="">Password</span>} value={password != undefined ? password : ""} type="password" onChange={e => setPassword(e.target.value)} required disabled={loading}/>
                   </MDBCol>
                 </MDBRow>
                 <MDBCol>
