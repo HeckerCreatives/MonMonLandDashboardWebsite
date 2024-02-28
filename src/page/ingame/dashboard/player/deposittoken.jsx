@@ -9,7 +9,8 @@ import {
     MDBRow,
     MDBTable,
     MDBTableBody,
-    MDBTableHead
+    MDBTableHead,
+    MDBTypography
  } from "mdb-react-ui-kit";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
@@ -234,6 +235,10 @@ const DepositToken = () => {
 
     return(
         <MDBContainer>
+        {
+            isloading &&
+            <MDBTypography tag={'h2'} className="text-danger mt-2 text-center">Please do not refresh while processing</MDBTypography>
+        }
             <MDBRow>
                 <MDBCol lg={4} className="offset-lg-4 mt-5">
                     <MDBCard style={{background: "#EDCAB4"}}>
@@ -277,8 +282,8 @@ const DepositToken = () => {
                         </MDBCol>
                         </div>
                             <div className="text-center mt-3" >
-                            <MDBBtn size="sm" type="button" onClick={deposittoken}>
-                                Deposit
+                            <MDBBtn disabled={isloading} size="sm" type="button" onClick={deposittoken}>
+                                {isloading ? "Processing..." : "Deposit"}
                             </MDBBtn>
                             </div>    
                            

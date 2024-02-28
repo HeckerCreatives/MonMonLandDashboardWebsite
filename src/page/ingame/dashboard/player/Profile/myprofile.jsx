@@ -69,7 +69,7 @@ const PlayerMyProfile = ({user}) => {
 
         }
       })
-    },[]) 
+    },[address]) 
 
     useEffect(()=>{
       if(details.walletaddress){

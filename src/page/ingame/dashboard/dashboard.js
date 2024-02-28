@@ -78,10 +78,10 @@ const UserDashboard = () => {
           name: "Withdraw",
           path: "/Dashboard/User/withdrawtoken"
         },
-        // {
-        //   name: "Airdrop",
-        //   path: "/Dashboard/User/airdrop"
-        // },
+        {
+          name: "Airdrop",
+          path: "/Dashboard/User/airdrop"
+        },
       ],
     },
     {

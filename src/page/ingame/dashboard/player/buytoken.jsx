@@ -17,8 +17,9 @@ import {
     MDBCheckbox,
     MDBRadio,
     MDBBtnGroup,
+    MDBTypography,
  } from "mdb-react-ui-kit";
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import Swal from "sweetalert2";
 import PaginationPager from "../../../../component/pagination";
 import mmticon from "../../../../assets/Ingame/assetsdashboard/Monster Monies icon.png"
@@ -92,6 +93,7 @@ const BuyToken = () => {
     const [soldmct, setSoldMct] = useState(0);
     const [balance, setBalance] = useState(0);
     const [amawnt, setAmawnt] = useState(0);
+    const [tokenamawntconversion, setTokenAmawnt] = useState(0);
     const [tokenhistory, setTokenHistory] = useState([]);
     const [isloading, setIsLoading] = useState(false),
           [checkedItems, setCheckedItems] = useState("walletbalance"),
@@ -102,8 +104,6 @@ const BuyToken = () => {
     const { writeContract, isError } = useWriteContract() 
     const userWallet = address;
     const craetorwallet = process.env.REACT_APP_DEVWALLET
-    const mmtconversion = 200;
-    const mctconversion = 2000;
     
     const handleCheckboxChange = (itemId) => {
       setCheckedItems(itemId.target.value)
@@ -251,7 +251,11 @@ const BuyToken = () => {
     // console.log((amawnt / price)  * mmtconversion)
     // console.log(amawnt * bnbpricetoday)
 
-    let amountconversion = 0;
+    let amountconversion = useRef(0);
+    const sample = 5000001;
+    let mmtconversion = (soldmmt + amountconversion) <= 5000000 ? 200 : 100;
+    const mctconversion = 2000
+    
     if(checkedItems == "walletbalance" || checkedItems == "monstergem"){
       if(tokenselected == "MMT"){
         amountconversion = amawnt * mmtconversion
@@ -295,6 +299,61 @@ const BuyToken = () => {
         amountconversion = (amawnt / ( usdcpricetoday/ dogepricetoday)) * mctconversion
       }
     }
+
+   
+
+    mmtconversion = (soldmmt + amountconversion) <= 5000000 ? 200 : 100;
+
+    const handlerecompute = () => {
+      if(checkedItems == "walletbalance" || checkedItems == "monstergem"){
+        if(tokenselected == "MMT"){
+          amountconversion = amawnt * mmtconversion
+        } else if (tokenselected == "MCT"){
+          amountconversion = amawnt * mctconversion
+        }
+      } else if (checkedItems == "usdt"){
+        if(tokenselected == "MMT"){
+          amountconversion = (amawnt / usdtpricetoday) * mmtconversion
+        } else if (tokenselected == "MCT"){
+          amountconversion = (amawnt / usdtpricetoday) * mctconversion
+        }
+      } else if (checkedItems == "busd"){
+        if(tokenselected == "MMT"){
+          amountconversion = (amawnt / busdpricetoday) * mmtconversion
+        } else if (tokenselected == "MCT"){
+          amountconversion = (amawnt / busdpricetoday) * mctconversion
+        }
+      } else if(checkedItems == "bnb"){
+        if(tokenselected == "MMT"){
+          amountconversion = (amawnt / price) * mmtconversion
+        } else if (tokenselected == "MCT"){
+          amountconversion = (amawnt / price) * mctconversion
+        }
+      } else if(checkedItems == "usdc"){
+        if(tokenselected == "MMT"){
+          amountconversion = (amawnt / usdcpricetoday) * mmtconversion
+        } else if (tokenselected == "MCT"){
+          amountconversion = (amawnt / usdcpricetoday) * mctconversion
+        }
+      } else if(checkedItems == "xrp"){
+        if(tokenselected == "MMT"){
+          amountconversion = (amawnt / (usdtpricetoday / xrppricetoday)) * mmtconversion
+        } else if (tokenselected == "MCT"){
+          amountconversion = (amawnt / (usdtpricetoday / xrppricetoday)) * mctconversion
+        }
+      } else if(checkedItems == "doge"){
+        if(tokenselected == "MMT"){
+          amountconversion = (amawnt / ( usdcpricetoday/ dogepricetoday)) * mmtconversion
+        } else if (tokenselected == "MCT"){
+          amountconversion = (amawnt / ( usdcpricetoday/ dogepricetoday)) * mctconversion
+        }
+      }
+    }
+
+    if((soldmmt + amountconversion) <= 5000000){
+      handlerecompute()
+    }
+    
 
     const buymmtoken = async () => {
       return await fetch(`${process.env.REACT_APP_API_URL}gamewallet/buymmt`, {
@@ -1744,6 +1803,10 @@ const BuyToken = () => {
 
     return (
         <MDBContainer fluid>
+        {
+            isloading &&
+            <MDBTypography tag={'h2'} className="text-danger mt-2 text-center">Please do not refresh while processing</MDBTypography>
+        }
         <MDBRow>
           <MDBCol lg={5} className="offset-lg-1 mt-5">
           <MDBCard>
@@ -1821,17 +1884,15 @@ const BuyToken = () => {
               <div className="row text-center my-2">
               {
                 tokenselected == "MMT" &&
-              <p>$1 = 200 MMT</p>
+              <p>$1 = {mmtconversion} MMT</p>
               }
               {
-
                 tokenselected == "MCT" &&
-
-                <p>$1 = 2000 MCT</p>
+                <p>$1 = {mctconversion} MCT</p>
               }
               {
                 tokenselected == "" &&
-                <p> $1 = 200 MMT</p>
+                <p> $1 = {mmtconversion} MMT</p>
               }
               </div>
               <form onSubmit={buyToken}>

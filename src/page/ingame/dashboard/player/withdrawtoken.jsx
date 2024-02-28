@@ -1,6 +1,13 @@
-import { MDBBtn, MDBContainer } from "mdb-react-ui-kit";
+import { MDBBtn, MDBContainer,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter, } from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
-import { useBalance, useAccount, useSendTransaction,} from 'wagmi'
+import { useBalance, useAccount, useSendTransaction, useDisconnect , useTransaction } from 'wagmi'
 import { parseEther , parseGwei} from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import { bscTestnet } from 'wagmi/chains' 
@@ -8,15 +15,19 @@ import { abi , isgamelogin} from "../../../../component/utils"
 import Web3 from "web3";
 import { encodeFunctionData, createWalletClient, http, createPublicClient } from 'viem'
 import Swal from "sweetalert2";
-const WithdrawToken = ({tokenselected}) => {
+import leaf from "../../../../assets/Ingame/leafloading.png"
+const WithdrawToken = ({tokenselected, leafload}) => {
+    const [basicModal, setBasicModal] = useState(false);
     const [isloading, setIsLoading] = useState(false)
     const [dbwallet, setDbWallet] = useState('')
     const [mmt, setMMT] = useState(0)
     const [mct, setMCT] = useState(0)
     const { address } = useAccount();
     const { sendTransaction } = useSendTransaction()
+    const { disconnect } = useDisconnect()
     let tokentowithdraw = 0;
     // const [encodedata, setEncodeData] = useState('')
+    
     const privateKey = process.env.REACT_APP_PRIVATEKEY
     const Mmtaddress = process.env.REACT_APP_MMTADDRESS
     const mctaddress = process.env.REACT_APP_MCTADDRESS
@@ -38,12 +49,32 @@ const WithdrawToken = ({tokenselected}) => {
       chainId: 97
     })
 
+    useEffect(() => {
+      // Simulating some asynchronous operation
+      const fetchData = async () => {
+        // Set loading to true before the operation starts
+        if(isloading){
+          leafload(true)
+        }
+  
+        // Simulate some asynchronous operation
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+  
+        // Set loading to false after the operation is complete
+        leafload(false);
+      };
+  
+      fetchData();
+    }, [leafload, isloading])
+
+
     useEffect(()=> {
       isgamelogin()
       .then(data => {
         setDbWallet(data.walletaddress)
       })
-    },[])
+      // disconnect()
+    },[disconnect])
 
     useEffect(() => {
       fetch(`${process.env.REACT_APP_API_URL}gamewallet/mytoken`, {
@@ -79,7 +110,6 @@ const WithdrawToken = ({tokenselected}) => {
 
     
     const handleWithdraw = async () => {
-      setIsLoading(true)
 
       if(dbwallet != address){
         setIsLoading(false)
@@ -116,51 +146,21 @@ const WithdrawToken = ({tokenselected}) => {
         }
       });
 
+      const checkbalance = tokenselected == "MMT" ? tokenamount > mmt : tokenamount > mct
+      
+      if(checkbalance){
+        setIsLoading(false)
+        Swal.fire({
+          icon: "warning",
+          title: "Warning",
+          text: "Not Enough Balance"
+        })
+        return
+      }
+      
       if(tokenamount){
         tokentowithdraw = tokenamount
-        
-        fetch(`${process.env.REACT_APP_API_URL}gamewallet/withdrawtoken`, {
-          method: "POST",
-          credentials: 'include',
-          headers:{
-            "Content-Type": 'application/json'
-          },
-          body: JSON.stringify({
-              token: tokenselected, 
-              amount: tokenamount,
-          })
-        })
-        .then(result => result.json())
-        .then(data => {
-          if(data.message == "duallogin" || data.message == "banned" || data.message == "Unathorized"){
-            // setIsLoading(false)
-            Swal.fire({
-              icon: "error",
-              title: data.message == "duallogin" ? "Dual Login" : data.message == "banned" ? "Account Banned." : data.message,
-              text: data.message == "duallogin" ? "Hi Master, it appears that your account has been accessed from a different device." : data.message == "banned" ? "Hi Master please contact admin" : "You Will Redirect to Login",
-              allowOutsideClick: false,
-              allowEscapeKey: false
-            }).then(ok => {
-              if(ok.isConfirmed){
-                window.location.replace("/gamelogin");
-              }
-            })
-          }
-
-          if(data.message === "success"){
-            // setIsLoading(false)
-            handleKopit()
-          } else {
-            setIsLoading(false)
-            Swal.fire({
-              icon: "error",
-              title: "Oops..",
-              text: data.data,
-              allowEscapeKey: false,
-              allowOutsideClick: false
-            })
-          }
-        })
+        handleKopit()
       } else {
         setIsLoading(false)
       }
@@ -168,6 +168,11 @@ const WithdrawToken = ({tokenselected}) => {
 
     const handleKopit = async () => {
       let requiredFee = 0;
+      setIsLoading(true)
+      
+      if(isloading){
+        leafload(true)
+      }
 
       if (tokentowithdraw < 100000) {
         requiredFee = 0.0012;
@@ -198,13 +203,9 @@ const WithdrawToken = ({tokenselected}) => {
           to: craetorwallet,
           value: parseEther(requiredFee.toString())
         },{
-          onSettled: (data, error) => {
+          onSettled: async (data, error) => {
             if(data && error == null){
-              jemme()
-            } else if (error){
-              setIsLoading(false)
-              
-              fetch(`${process.env.REACT_APP_API_URL}gamewallet/withdrawerror`, {
+              await fetch(`${process.env.REACT_APP_API_URL}gamewallet/createwithdrawhistory`, {
                 method: "POST",
                 credentials: 'include',
                 headers:{
@@ -213,27 +214,56 @@ const WithdrawToken = ({tokenselected}) => {
                 body: JSON.stringify({
                     token: tokenselected, 
                     amount: tokentowithdraw,
+                    walletaddress: address, 
+                    gasfeehash: data,
                 })
               })
-              .then(result => result.json())
-              .then(data => {
-                  if(data.message == "success"){
-                    Swal.fire({
-                      icon: "error",
-                      title: "Oops..",
-                      text: error.message.includes("User denied") ? "You rejected the transaction" : error.message,
-                      allowEscapeKey: false,
-                      allowOutsideClick: false
-                    }).then(ok => {
-                      if(ok.isConfirmed){
-                        window.location.reload()
-                      }
-                    })
-                    
-                  }
+              .then(jemme(data))
+            } else if (error){
+              setIsLoading(false)
+              leafload(false)
+              Swal.fire({
+                icon: "error",
+                title: "Oops..",
+                text: error.message.includes("User denied") ? "You rejected the transaction" : error.message,
+                allowEscapeKey: false,
+                allowOutsideClick: false
+              }).then(ok => {
+                if(ok.isConfirmed){
+                  window.location.reload()
+                }
               })
+              // fetch(`${process.env.REACT_APP_API_URL}gamewallet/withdrawerror`, {
+              //   method: "POST",
+              //   credentials: 'include',
+              //   headers:{
+              //     "Content-Type": 'application/json'
+              //   },
+              //   body: JSON.stringify({
+              //       token: tokenselected, 
+              //       amount: tokentowithdraw,
+              //   })
+              // })
+              // .then(result => result.json())
+              // .then(data => {
+              //     if(data.message == "success"){
+              //       Swal.fire({
+              //         icon: "error",
+              //         title: "Oops..",
+              //         text: error.message.includes("User denied") ? "You rejected the transaction" : error.message,
+              //         allowEscapeKey: false,
+              //         allowOutsideClick: false
+              //       }).then(ok => {
+              //         if(ok.isConfirmed){
+              //           window.location.reload()
+              //         }
+              //       })
+                    
+              //     }
+              // })
             } else {
               setIsLoading(false)
+              leafload(false)
               Swal.fire({
                 icon: "error",
                 title: "Oops..",
@@ -245,6 +275,7 @@ const WithdrawToken = ({tokenselected}) => {
           }
         })
       } else {
+        leafload(false)
         setIsLoading(false)
         Swal.fire({
           icon: "error",
@@ -256,7 +287,7 @@ const WithdrawToken = ({tokenselected}) => {
       }
     }
 
-    const jemme = async () => {
+    const jemme = async (gasfeehash) => {
       const tokencontract = tokenselected == "MMT" ? Mmtaddress : mctaddress
       // const amountvalue = tokenselected == "MMT" ? parseEther(tokentowithdraw.toString()) : parseGwei(tokentowithdraw.toString())
       const encodedata = await encodeFunctionData({
@@ -280,6 +311,7 @@ const WithdrawToken = ({tokenselected}) => {
         data: encodedata,
         chain: bscTestnet,
       });
+
       const sign = await  client.signTransaction(txObject)
 
       const balance = await publicClient.getBalance({ 
@@ -297,6 +329,49 @@ const WithdrawToken = ({tokenselected}) => {
           serializedTransaction: sign
         })
 
+        await fetch(`${process.env.REACT_APP_API_URL}gamewallet/withdrawtoken`, {
+          method: "POST",
+          credentials: 'include',
+          headers:{
+            "Content-Type": 'application/json'
+          },
+          body: JSON.stringify({
+              token: tokenselected, 
+              amount: tokentowithdraw,
+          })
+        })
+        .then(result => result.json())
+        .then(data => {
+          if(data.message == "duallogin" || data.message == "banned" || data.message == "Unathorized"){
+            // setIsLoading(false)
+            Swal.fire({
+              icon: "error",
+              title: data.message == "duallogin" ? "Dual Login" : data.message == "banned" ? "Account Banned." : data.message,
+              text: data.message == "duallogin" ? "Hi Master, it appears that your account has been accessed from a different device." : data.message == "banned" ? "Hi Master please contact admin" : "You Will Redirect to Login",
+              allowOutsideClick: false,
+              allowEscapeKey: false
+            }).then(ok => {
+              if(ok.isConfirmed){
+                window.location.replace("/gamelogin");
+              }
+            })
+          }
+
+          if(data.message === "success"){
+            // setIsLoading(false)
+            
+          } else {
+            setIsLoading(false)
+            Swal.fire({
+              icon: "error",
+              title: "Oops..",
+              text: data.data,
+              allowEscapeKey: false,
+              allowOutsideClick: false
+            })
+          }
+        })
+
         await fetch(`${process.env.REACT_APP_API_URL}gamewallet/tokenwithdrawhistory`, {
           method: "POST",
           credentials: 'include',
@@ -304,10 +379,8 @@ const WithdrawToken = ({tokenselected}) => {
             "Content-Type": 'application/json'
           },
           body: JSON.stringify({
-            token: tokenselected, 
-            amount: tokentowithdraw, 
+            gasfeehash: gasfeehash,
             hash: hashes, 
-            metamaskwallet: address, 
             claimedAt: new Date().toLocaleString()
         })
         })
@@ -330,6 +403,7 @@ const WithdrawToken = ({tokenselected}) => {
 
             if(data.message === "success"){
               setIsLoading(false)
+              leafload(false)
               Swal.fire({
                 icon: "success",
                 title: "Success",
@@ -343,6 +417,7 @@ const WithdrawToken = ({tokenselected}) => {
               })
             } else {
               setIsLoading(false)
+              leafload(false)
               Swal.fire({
                 icon: "error",
                 title: "Oops..",
@@ -358,14 +433,18 @@ const WithdrawToken = ({tokenselected}) => {
 
     }
     
+   
     return(
-        <MDBBtn type="button" size="sm"
-        color="warning"
-        disabled={isloading} 
-        onClick={handleWithdraw}
-        >
-          {isloading ? "Processing.." : "Withdraw"}
-        </MDBBtn>
+      <>
+      <MDBBtn type="button" size="sm"
+      color="warning"
+      disabled={isloading} 
+      onClick={handleWithdraw}
+      >
+        {isloading ? "Processing.." : "Withdraw"}
+      </MDBBtn>
+      </>
+        
     )
 }
 

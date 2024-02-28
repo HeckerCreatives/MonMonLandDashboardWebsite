@@ -7,7 +7,8 @@ import {
     MDBCardText,
     MDBTable,
     MDBTableHead,
-    MDBTableBody
+    MDBTableBody,
+    MDBTypography
 } from "mdb-react-ui-kit";
 import React, {useState, useEffect} from "react";
 import PaginationPager from "../../../../component/pagination";
@@ -15,9 +16,12 @@ import mmticon from "../../../../assets/Ingame/assetsdashboard/Monster Monies ic
 import mcticon from "../../../../assets/Ingame/assetsdashboard/MML TOKEN.png"
 import Swal from "sweetalert2";
 import WithdrawToken from "./withdrawtoken";
+import leaf from "../../../../assets/Ingame/leafloading.png"
+import "./dash.css"
 const WithdrawTokenIndex = () => {
     const [tokenselected, setTokenSelected] = useState("MMT")
     const [withdrawhistory, setWithdrawHistory] = useState([])
+    const [leafisloading, setLeafIsLoading] = useState(false)
     const [isloading, setIsLoading] = useState(false),
           [page, setPage] = useState(1),
           [total, setTotal] = useState(0);
@@ -56,8 +60,20 @@ const WithdrawTokenIndex = () => {
             })
         },[page])
 
+        const handleCustomEvent = (data) => {
+            console.log('Custom event triggered with data:', data);
+            // Handle the data as needed
+            setLeafIsLoading(data)
+        }
+
     return (
-        <MDBContainer>
+        <>
+        <MDBContainer className="">
+        {
+            leafisloading &&
+            <MDBTypography tag={'h2'} className="text-danger mt-2 text-center">Please do not refresh while processing</MDBTypography>
+        }
+            
             <MDBRow>
                 <MDBCol lg={4} className="offset-lg-4 mt-5">
                     <MDBCard style={{background: "#EDCAB4"}}>
@@ -102,7 +118,7 @@ const WithdrawTokenIndex = () => {
                         </div>
 
                         <div className="text-center mt-3">
-                        <WithdrawToken tokenselected={tokenselected}/>
+                        <WithdrawToken tokenselected={tokenselected} leafload={handleCustomEvent}/>
                         </div>    
                            
                         </MDBCardBody>
@@ -125,7 +141,7 @@ const WithdrawTokenIndex = () => {
                         return(
                         <tr key={`request-${i}`}>
                             
-                            <td>{data.hash}</td>
+                            <td>{data.mmthash ? data.mmthash : data.hash}</td>
                             <td>{data.type == "MMT" ? "Monster Monies Token" : "Monster Coin Token"}</td>
                             <td>{new Date(data.claimedAt).toLocaleString()}</td>
                             <td>
@@ -149,7 +165,19 @@ const WithdrawTokenIndex = () => {
               setPage={setPage}
               isloading={isloading}
             />
+             <div className="">
+            {
+                leafisloading &&
+                <>
+                {/* <div className="overlayleaf"></div> */}
+                <img alt="" src={leaf} className="leaf-image"/>
+                </>
+            }
+            </div>
         </MDBContainer>
+        
+       
+        </>
     )
 }
 
