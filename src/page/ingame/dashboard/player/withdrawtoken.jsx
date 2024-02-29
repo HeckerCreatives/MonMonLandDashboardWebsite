@@ -46,7 +46,6 @@ const WithdrawToken = ({tokenselected, leafload}) => {
 
     const userbnbbalance = useBalance({
       address: address,
-      chainId: 97
     })
 
     useEffect(() => {
