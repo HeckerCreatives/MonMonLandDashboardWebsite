@@ -281,7 +281,7 @@ const PlayerMyProfile = ({user}) => {
           </MDBCol>
           
       </MDBRow>
-      <MDBRow>
+      {/* <MDBRow>
           <MDBCol>
           <div>
           <MDBTypography tag={'h2'} className="my-2">
@@ -316,7 +316,7 @@ const PlayerMyProfile = ({user}) => {
           
           </MDBCol>
           
-      </MDBRow>
+      </MDBRow> */}
       </MDBCardBody>
     </MDBCard>
      

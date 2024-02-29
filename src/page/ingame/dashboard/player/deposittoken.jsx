@@ -32,7 +32,7 @@ const DepositToken = () => {
     const [dbwallet, setDbWallet] = useState('')
     const mmtcontract = process.env.REACT_APP_MMTADDRESS
     const mctcontract = process.env.REACT_APP_MCTADDRESS
-    const craetorwallet = process.env.REACT_APP_DEVWALLET
+    const craetorwallet = process.env.REACT_APP_MARKETING
     const usermmtbalance = useBalance({
         address: address,
         token: mmtcontract
@@ -307,7 +307,7 @@ const DepositToken = () => {
                         return(
                         <tr key={`request-${i}`}>
                             
-                            <td>{data.hash}</td>
+                            <td>{data.mmthash ? data.mmthash : data.hash}</td>
                             <td>{data.type == "MMT" ? "Monster Monies Token" : "Monster Coin Token"}</td>
                             <td>{new Date(data.depositAt).toLocaleString()}</td>
                             <td>

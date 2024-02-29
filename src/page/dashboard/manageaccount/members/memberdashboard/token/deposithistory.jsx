@@ -1,0 +1,79 @@
+import { MDBContainer, MDBTable, MDBTableHead, MDBTableBody } from "mdb-react-ui-kit";
+import React, {useState, useEffect} from "react";
+import PaginationPager from "../../../../../../component/pagination";
+
+const DepositTokenHistory = ({username}) => {
+    const [deposithistory, setDepositHistory] = useState([]),
+    [isloading, setIsLoading] = useState(false),
+    [page, setPage] = useState(1),
+    [total, setTotal] = useState(0);
+
+    useEffect(() => {
+        setIsLoading(true)
+        fetch(`${process.env.REACT_APP_API_URL}members/memberdeposittokenhistory?page=${page-1}`, {
+            method: "POST",
+            credentials: 'include',
+            headers:{
+              "Content-Type": 'application/json'
+            },
+            body: JSON.stringify({
+              username: username
+            })
+          })
+          .then(result => result.json())
+          .then(data => {
+                if(data.message == "success"){
+                    setIsLoading(false)
+                    setDepositHistory(data.data)
+                    setTotal(data.pages)
+                }
+          })
+    },[page])
+
+    return (
+        <MDBContainer>
+            <MDBTable small responsive className="text-mute mt-5 mb-0">
+                <MDBTableHead>
+                    <tr className="text-center">
+                    <th className="fw-bold" scope='col'>Txn Hash</th>
+                    <th className="fw-bold" scope='col'>Token Name</th>
+                    <th className="fw-bold" scope='col'>Date</th>
+                    <th className="fw-bold" scope='col'>Quantity</th>
+                    </tr>
+                </MDBTableHead>
+                <MDBTableBody className="fw-bold text-center">
+                { deposithistory.length !== 0 ?
+                    deposithistory.map((data,i) => {
+                        return(
+                        <tr key={`request-${i}`}>
+                            
+                            <td>{data.mmthash ? data.mmthash : data.hash}</td>
+                            <td>{data.type == "MMT" ? "Monster Monies Token" : "Monster Coin Token"}</td>
+                            <td>{new Date(data.depositAt).toLocaleString()}</td>
+                            <td>
+                            {data.amount}
+                            </td>
+                        </tr>
+                        )
+                })
+                :
+                    <tr>
+                        <td colSpan={4}>
+                            No Data
+                        </td>
+                    </tr>
+                }
+                    
+                </MDBTableBody>
+            </MDBTable>
+            <PaginationPager
+                total={total} 
+                page={page} 
+                setPage={setPage}
+                isloading={isloading}
+            />
+        </MDBContainer>
+    )
+}
+
+export default DepositTokenHistory;

@@ -17,7 +17,7 @@ const AirDropTabEmerald = ({usersubscription}) => {
         address: address,
     })
     const { sendTransaction } = useSendTransaction()
-    const craetorwallet = process.env.REACT_APP_DEVWALLET
+    const craetorwallet = process.env.REACT_APP_MARKETING
 
     useEffect(()=> {
         isgamelogin()
@@ -123,63 +123,152 @@ const AirDropTabEmerald = ({usersubscription}) => {
         return
         }
 
-        if(parseFloat(userbnbbalance.data.formatted) > requiredFee){
-            sendTransaction({
-              to: craetorwallet,
-              value: parseEther(requiredFee.toString())
-            },{
-              onSettled: (data, error) => {
-                if(data && error == null){
-                    fetch(`${process.env.REACT_APP_API_URL}gamewallet/claimquest`, {
-                        method: "POST",
-                        credentials: 'include',
-                        headers:{
-                          "Content-Type": 'application/json'
-                        },
-                        body: JSON.stringify({
-                            questid: id,
-                            claimedAt: new Date().toLocaleString()
-                        })
-                    })
-                    .then(result => result.json())
-                    .then(data => {
-                        if(data.message == "success"){
-                            Swal.fire({
-                                icon: "success",
-                                title: "Successfully",
-                                text: "Airdrop successfully claim"
-                            }).then(ok => {
-                                if(ok.isConfirmed){
-                                    window.location.reload()
-                                }
-                            })
-                        }
-                    })
-                } else if (error){
-                  setIsLoading(false)
-                  console.log(error)
-                } else {
-                  setIsLoading(false)
-                  Swal.fire({
-                    icon: "error",
-                    title: "Oops..",
-                    text: "Please try again later",
-                    allowEscapeKey: false,
-                    allowOutsideClick: false
-                  })
-                }
-              }
-            })
-          } else {
+        if(mmtairdrop >= 1000000 && mctairdrop >= 10000000){
             setIsLoading(false)
             Swal.fire({
-              icon: "error",
-              title: "Oops..",
-              text: "Insufficient funds, at least 0.0008 BNB Required!",
-              allowEscapeKey: false,
-              allowOutsideClick: false
+                icon: "warning",
+                title: "Warning",
+                text: "Attention: Can't Claim Rewards Airdrop Already Full"
             })
-          }
+            return
+        }
+
+        if(mmtairdrop >= 1000000 && mctairdrop < 10000000){
+            Swal.fire({
+                icon: "warning",
+                title: "Warning",
+                text: "Attention: Some Rewards Can't be claim do you want to proceed?"
+            })
+            Swal.fire({
+                title: "Warning!",
+                text: "Attention: Some Rewards Can't be claim do you want to proceed?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    if(parseFloat(userbnbbalance.data.formatted) > requiredFee){
+                        sendTransaction({
+                          to: craetorwallet,
+                          value: parseEther(requiredFee.toString())
+                        },{
+                          onSettled: (data, error) => {
+                            if(data && error == null){
+                                fetch(`${process.env.REACT_APP_API_URL}gamewallet/claimquest`, {
+                                    method: "POST",
+                                    credentials: 'include',
+                                    headers:{
+                                      "Content-Type": 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        questid: id,
+                                        claimedAt: new Date().toLocaleString()
+                                    })
+                                })
+                                .then(result => result.json())
+                                .then(data => {
+                                    if(data.message == "success"){
+                                        Swal.fire({
+                                            icon: "success",
+                                            title: "Successfully",
+                                            text: "Airdrop successfully claim"
+                                        }).then(ok => {
+                                            if(ok.isConfirmed){
+                                                window.location.reload()
+                                            }
+                                        })
+                                    }
+                                })
+                            } else if (error){
+                              setIsLoading(false)
+                              console.log(error)
+                            } else {
+                              setIsLoading(false)
+                              Swal.fire({
+                                icon: "error",
+                                title: "Oops..",
+                                text: "Please try again later",
+                                allowEscapeKey: false,
+                                allowOutsideClick: false
+                              })
+                            }
+                          }
+                        })
+                    } else {
+                    setIsLoading(false)
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops..",
+                        text: "Insufficient funds, at least 0.0008 BNB Required!",
+                        allowEscapeKey: false,
+                        allowOutsideClick: false
+                    })
+                    }
+                }
+              });
+        } else {
+            if(parseFloat(userbnbbalance.data.formatted) > requiredFee){
+                sendTransaction({
+                  to: craetorwallet,
+                  value: parseEther(requiredFee.toString())
+                },{
+                  onSettled: (data, error) => {
+                    if(data && error == null){
+                        fetch(`${process.env.REACT_APP_API_URL}gamewallet/claimquest`, {
+                            method: "POST",
+                            credentials: 'include',
+                            headers:{
+                              "Content-Type": 'application/json'
+                            },
+                            body: JSON.stringify({
+                                questid: id,
+                                claimedAt: new Date().toLocaleString()
+                            })
+                        })
+                        .then(result => result.json())
+                        .then(data => {
+                            if(data.message == "success"){
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Successfully",
+                                    text: "Airdrop successfully claim"
+                                }).then(ok => {
+                                    if(ok.isConfirmed){
+                                        window.location.reload()
+                                    }
+                                })
+                            }
+                        })
+                    } else if (error){
+                      setIsLoading(false)
+                      console.log(error)
+                    } else {
+                      setIsLoading(false)
+                      Swal.fire({
+                        icon: "error",
+                        title: "Oops..",
+                        text: "Please try again later",
+                        allowEscapeKey: false,
+                        allowOutsideClick: false
+                      })
+                    }
+                  }
+                })
+              } else {
+                setIsLoading(false)
+                Swal.fire({
+                  icon: "error",
+                  title: "Oops..",
+                  text: "Insufficient funds, at least 0.0008 BNB Required!",
+                  allowEscapeKey: false,
+                  allowOutsideClick: false
+                })
+              }
+        }
+
+        
 
        
     }
@@ -227,10 +316,7 @@ const AirDropTabEmerald = ({usersubscription}) => {
                         <MDBCardText className="text-center fw-bold">Account Status Must Be Active</MDBCardText>
                         <MDBCardText>Quest Duration: 3 Days</MDBCardText>
                         <MDBCardText>Claimable Token: &nbsp;
-                        {usersubscription == "Pearlplus" && "100 MMT + 200 MCT"}
-                        {usersubscription == "Ruby" && "200 MMT + 400 MCT"}
-                        {usersubscription == "Emerald" && "500 MMT + 1000 MCT"}
-                        {usersubscription == "Diamond" && "1000 MMT + 2000 MCT"}
+                        500 MMT + 1000 MCT
                         </MDBCardText>
                         
                         </MDBCardBody>
@@ -255,10 +341,7 @@ const AirDropTabEmerald = ({usersubscription}) => {
                         <MDBCardText className="text-center fw-bold">Get total of 20 Direct Points</MDBCardText>
                         <MDBCardText>Quest Duration: 30 Days</MDBCardText>
                         <MDBCardText>Claimable Token: &nbsp;
-                        {usersubscription == "Pearlplus" && "200 MMT + 400 MCT"}
-                        {usersubscription == "Ruby" && "500 MMT + 1000 MCT"}
-                        {usersubscription == "Emerald" && "1000 MMT + 2000 MCT"}
-                        {usersubscription == "Diamond" && "2000 MMT + 4000 MCT"}
+                        1000 MMT + 2000 MCT
                         </MDBCardText>
                         
                         </MDBCardBody>
@@ -278,10 +361,7 @@ const AirDropTabEmerald = ({usersubscription}) => {
                         <MDBCardText className="text-center fw-bold">Get 10k Account Total Points</MDBCardText>
                         <MDBCardText>Quest Duration: 30 Days</MDBCardText>
                         <MDBCardText>Claimable Token: &nbsp;
-                        {usersubscription == "Pearlplus" && "200 MMT + 400 MCT"}
-                        {usersubscription == "Ruby" && "500 MMT + 1000 MCT"}
-                        {usersubscription == "Emerald" && "1000 MMT + 2000 MCT"}
-                        {usersubscription == "Diamond" && "2000 MMT + 4000 MCT"}
+                        1000 MMT + 2000 MCT
                         </MDBCardText>
                         
                         </MDBCardBody>

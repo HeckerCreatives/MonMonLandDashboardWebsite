@@ -157,20 +157,20 @@ const Navbar = ({ links }) => {
                   
                   </MDBNavbarLink>
             </MDBNavbarItem>
-            <MDBNavbarItem className=" text-center pe-xxl-3" >
+            {/* <MDBNavbarItem className=" text-center pe-xxl-3" >
                   <MDBNavbarLink>
                   <div >
                   <img src={migrate} id="joinnow" alt="" className=" zoom-playnow mb-2"  onClick={() => {
                     window.location.href = `${window.location.origin}/migrateph1?username=monmonland`;
                     // toggleShow()
                   }} ></img>
-                  {/* <MDBBtn  onClick={() => {
+                  <MDBBtn  onClick={() => {
                     window.location.href = `${window.location.origin}/register?id=${process.env.REACT_APP_MONMONID}`;
-                  }} >Register</MDBBtn> */}
+                  }} >Register</MDBBtn>
                   </div>
                   
                   </MDBNavbarLink>
-            </MDBNavbarItem>
+            </MDBNavbarItem> */}
           </MDBNavbarNav>
         </MDBCollapse> 
               

@@ -128,7 +128,32 @@ const MembersDashboard = ({username}) => {
           </MDBCol>
           
         </MDBRow>
-
+        <MDBRow>
+        <MDBCol lg={3} className="my-2">
+            <Dashboardstatistics 
+              colSpan="4"
+              // icon={`dollar-sign`}
+              cardtoptext={'Monster Monies Token'}
+              txtsup={wallets.mmt?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              />
+          </MDBCol>
+          <MDBCol lg={3} className="my-2">
+            <Dashboardstatistics 
+              colSpan="4"
+              // icon={`dollar-sign`}
+              cardtoptext={'Monster Coin Token'}
+              txtsup={wallets.mct?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              />
+          </MDBCol>
+        </MDBRow>
         <MDBRow className="my-2">
 
           <MDBCol md={4} className="my-2">

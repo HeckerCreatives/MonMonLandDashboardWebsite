@@ -20,38 +20,38 @@ import Swal from "sweetalert2";
 import logins from "../../../assets/header/login BUTTON1.png"
 const MigrateLogin = ({basicModal, setBasicModal}) => {
     const [loading, setLoading] = useState(false)
-    const login = (e) => {
-        e.preventDefault();
-        setLoading(true)
-        const { username, password } = e.target
+    // const login = (e) => {
+    //     e.preventDefault();
+    //     setLoading(true)
+    //     const { username, password } = e.target
 
-        const userdata = {
-            username: username.value,
-            password: password.value
-        }
+    //     const userdata = {
+    //         username: username.value,
+    //         password: password.value
+    //     }
 
-        PlayFabClient.LoginWithPlayFab(userdata, (error, result) => {
-            if(result){
-                setLoading(false)
-                const user = {
-                    name: username.value,
-                    code: btoa(password.value),
-                    session: result.data.SessionTicket
-                }
+    //     PlayFabClient.LoginWithPlayFab(userdata, (error, result) => {
+    //         if(result){
+    //             setLoading(false)
+    //             const user = {
+    //                 name: username.value,
+    //                 code: btoa(password.value),
+    //                 session: result.data.SessionTicket
+    //             }
 
-                localStorage.setItem("uid", JSON.stringify(user))
-                window.location.href = '/migrateph1?username=monmonland'
+    //             localStorage.setItem("uid", JSON.stringify(user))
+    //             window.location.href = '/migrateph1?username=monmonland'
 
-            } else {
-                setLoading(false)
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Login Failed',
-                    text: "Username or Password is incorrect please try again."
-                })
-            }
-        })
-    }
+    //         } else {
+    //             setLoading(false)
+    //             Swal.fire({
+    //                 icon: 'error',
+    //                 title: 'Login Failed',
+    //                 text: "Username or Password is incorrect please try again."
+    //             })
+    //         }
+    //     })
+    // }
 
     return (
         <>

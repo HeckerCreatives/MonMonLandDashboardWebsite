@@ -640,7 +640,7 @@ const MembersAccount = () => {
                       <th className="fw-bold" scope='col'>Username</th>
                       <th className="fw-bold" scope='col'>Sponsor</th>
                       <th className="fw-bold" scope='col'>Details</th>
-                      <th className="fw-bold" scope='col'>Status</th>
+                      <th className="fw-bold" scope='col'>Account Status</th>
                       <th className="fw-bold" scope='col'>Wallets</th>
                       <th className="fw-bold" scope='col'>Date Joined</th>
                       <th className="fw-bold" scope='col'>Action</th>
@@ -673,7 +673,7 @@ const MembersAccount = () => {
                                     <p>Phone: {acc.phone}</p>
                                 </div>
                                 </td>
-                                <td>{acc.status}</td>
+                                <td>{acc.playstatus}</td>
                                 <td>
                                 <div className="d-flex flex-column text-justify">
                                     <p>Wallet Balance: &nbsp;

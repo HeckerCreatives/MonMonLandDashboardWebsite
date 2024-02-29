@@ -21,6 +21,9 @@ import Task from './task';
 import MemberPaymentdetails from './paymentdetails';
 import MemberTransactionHistory from './transactionhistory';
 import MemberGrindingHistory from './grindinghistory';
+import BuyTokenHistory from './token/buyhistory';
+import DepositTokenHistory from './token/deposithistory';
+import WithdrawTokenHistory from './token/withdrawhistory';
 const MembersProfile = () => {
     const [iconsActive, setIconsActive] = useState('pill1');
     const [searchParams] = useSearchParams();
@@ -86,6 +89,22 @@ return (
             <MDBIcon fas icon='history' className='me-2' /> Grinding History
             </MDBTabsLink>
         </MDBTabsItem>
+        <MDBTabsItem>
+            <MDBTabsLink onClick={() => handleIconsClick('pill10')} active={iconsActive === 'pill10'}>
+            <MDBIcon fas icon='donate' className='me-2' /> Buy Token History
+            </MDBTabsLink>
+        </MDBTabsItem>
+        <MDBTabsItem>
+            <MDBTabsLink onClick={() => handleIconsClick('pill11')} active={iconsActive === 'pill11'}>
+            <MDBIcon fas icon='arrow-alt-circle-down' className='me-2' /> Deposit Token History
+            </MDBTabsLink>
+        </MDBTabsItem>
+        <MDBTabsItem>
+            <MDBTabsLink onClick={() => handleIconsClick('pill12')} active={iconsActive === 'pill12'}>
+            
+            <MDBIcon fas icon='arrow-alt-circle-up' className='me-2' /> Withdraw Token History
+            </MDBTabsLink>
+        </MDBTabsItem>
         </MDBTabs>
 
         <MDBTabsContent>
@@ -115,6 +134,15 @@ return (
         </MDBTabsPane>
         <MDBTabsPane show={iconsActive === 'pill9'}>
             <MemberGrindingHistory username={username}/>
+        </MDBTabsPane>
+        <MDBTabsPane show={iconsActive === 'pill10'}>
+            <BuyTokenHistory username={username}/>
+        </MDBTabsPane>
+        <MDBTabsPane show={iconsActive === 'pill11'}>
+            <DepositTokenHistory username={username}/>
+        </MDBTabsPane>
+        <MDBTabsPane show={iconsActive === 'pill12'}>
+            <WithdrawTokenHistory username={username}/>
         </MDBTabsPane>
         </MDBTabsContent>
     </MDBContainer>

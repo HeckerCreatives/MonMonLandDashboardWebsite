@@ -53,7 +53,7 @@ const Groupchat = () =>{
                     <MDBCardHeader style={{background: "#8D5513", color: "white"}}>Facebook Messenger Group Chat's</MDBCardHeader>
                 <MDBCardBody>
                     <MDBRow >
-                    <MDBCol lg={3} className="my-2">
+                    {/* <MDBCol lg={3} className="my-2">
                         <MDBCard alignment="center" >
                         <MDBCardHeader className="fw-bold" style={{background: "#FADDBF"}}>Team Leader: earlxyz</MDBCardHeader>
                         <MDBCardBody className="bundlesbdy p-0">
@@ -80,7 +80,7 @@ const Groupchat = () =>{
                         </MDBBtn>
                         </MDBCardFooter>
                         </MDBCard>
-                        </MDBCol>
+                        </MDBCol> */}
 
                         <MDBCol lg={3} className="my-2">
                         <MDBCard alignment="center" >

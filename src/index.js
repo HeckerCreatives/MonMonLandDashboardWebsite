@@ -18,12 +18,9 @@ import { WagmiProvider } from 'wagmi'
 import {  bsc, bscTestnet,} from 'wagmi/chains'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-// 0. Setup queryClient
 const queryClient = new QueryClient()
-// 1. Get projectId at https://cloud.walletconnect.com
-const projectId = '37ab97f76d08c02a0d7024d96661cc37'
+const projectId = process.env.REACT_APP_WALLETCONNECTID
 
-// 2. Create wagmiConfig
 const metadata = {
   name: 'Monmonland',
   description: 'Monmonland',
@@ -31,12 +28,13 @@ const metadata = {
   icons: ['https://avatars.githubusercontent.com/u/37784886']
 }
 
-const chains = [bscTestnet]
+const chains = [bsc]
 
 const config = defaultWagmiConfig({
   chains, // required
   projectId, // required
   metadata,
+  enableCoinbase: false
   
 })
 
@@ -47,12 +45,12 @@ createWeb3Modal({
   chains, // Optional - defaults to your Cloud configuration
   allWallets: 'HIDE',
   tokens: {
-    97: {
-        address: "0x8162e18648de9D1856bc2192d3A09bb1430e2425"
-    },
-    // 56: {
-    //   address: "0x8162e18648de9D1856bc2192d3A09bb1430e2425"
+    // 97: {
+    //     address: "0x8162e18648de9D1856bc2192d3A09bb1430e2425"
     // },
+    56: {
+      address: "0x22f9CF3E1EF734644b29b17Dfc0f65bdc05B6080"
+    },
   }
 })
 
@@ -66,9 +64,9 @@ if (process.env.NODE_ENV === 'production') {
 root.render(
   <ThemeContextWrapper>
   <WagmiProvider config={config}>
-  <QueryClientProvider client={queryClient}>
-  <App />
-  </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
   </WagmiProvider>
   {/* <React.StrictMode>
   </React.StrictMode> */}
