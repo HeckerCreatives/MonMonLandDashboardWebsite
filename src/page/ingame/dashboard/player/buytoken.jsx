@@ -2099,7 +2099,7 @@ const BuyToken = () => {
             <MDBCardBody>
               <div className="text-center border py-3" style={{background: "#EDCAB4", borderRadius: "10px"}}>
                 <h4>Monster Monies Token Official Contract Address</h4>
-                <p>0x8162e18648de9D1856bc2192d3A09bb1430e2425</p>
+                <p>0x22f9CF3E1EF734644b29b17Dfc0f65bdc05B6080</p>
               </div>
               <MDBTable align="middle" responsive className="mt-3 text-center">
                 <MDBTableBody className="">
@@ -2155,7 +2155,7 @@ const BuyToken = () => {
             <MDBCardBody>
               <div className="text-center border py-3" style={{background: "#EDCAB4", borderRadius: "10px"}}>
                 <h4>Monster Coin Token Official Contract Address</h4>
-                <p>0x8162e18648de9D1856bc2192d3A09bb1430e2425</p>
+                <p>0x5C6511F77Ff12a8959D0ffC5a53Bd32442477374</p>
               </div>
               <MDBTable align="middle" responsive className="mt-3 text-center">
                 <MDBTableBody className="">
