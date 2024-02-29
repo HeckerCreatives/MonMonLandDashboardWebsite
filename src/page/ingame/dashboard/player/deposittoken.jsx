@@ -44,6 +44,14 @@ const DepositToken = () => {
 
     const { writeContract,  isError, } = useWriteContract() 
 
+    const popup = () => {
+      Swal.fire({
+        icon: "info",
+        title: "Attention!",
+        text: "Deposit Token will be available after token presale"
+      })
+    }
+
     useEffect(()=> {
       isgamelogin()
       .then(data => {
@@ -282,7 +290,7 @@ const DepositToken = () => {
                         </MDBCol>
                         </div>
                             <div className="text-center mt-3" >
-                            <MDBBtn disabled={isloading} size="sm" type="button" onClick={deposittoken}>
+                            <MDBBtn disabled={isloading} size="sm" type="button" onClick={popup}>
                                 {isloading ? "Processing..." : "Deposit"}
                             </MDBBtn>
                             </div>    

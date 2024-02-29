@@ -432,13 +432,20 @@ const WithdrawToken = ({tokenselected, leafload}) => {
 
     }
     
-   
+    const popup = () => {
+        Swal.fire({
+          icon: "info",
+          title: "Attention!",
+          text: "Withdraw Token will be available after token presale"
+        })
+    }
+
     return(
       <>
       <MDBBtn type="button" size="sm"
       color="warning"
       disabled={isloading} 
-      onClick={handleWithdraw}
+      onClick={popup}
       >
         {isloading ? "Processing.." : "Withdraw"}
       </MDBBtn>
