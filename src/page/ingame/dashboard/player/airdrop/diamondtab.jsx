@@ -334,7 +334,7 @@ const AirDropTabDiamond = ({usersubscription}) => {
                         <div className="">
                             {
                                 quest != "noquest" && usersubscription == "Diamond" && questclaim.Quest1 == "claimable"?
-                                <MDBBtn disabled={quest[0]?.claimedAt != null} color="warning" onClick={(e) => handleClaimQuest(e,1)}>Claim</MDBBtn>
+                                <MDBBtn disabled={quest[0]?.claimedAt != null} color="warning" onClick={(e) => handleClaimQuest(e,1)}>{quest[0]?.claimedAt != null ? "Claimed" : "Claim"}</MDBBtn>
                                 :
                                 <MDBBtn disabled={usersubscription != "Diamond"} color="warning" onClick={(e) => handleAcceptQuest(e,1)}>Accept</MDBBtn>
                             }
@@ -477,7 +477,7 @@ const AirDropTabDiamond = ({usersubscription}) => {
                         {/* <div>
                             <img src={pearlicon} alt="" style={{height: "65px", width: "65px"}}/>
                         </div> */}
-                        <MDBCardText className="text-center fw-bold">Buy 200k MCT Token</MDBCardText>
+                        <MDBCardText className="text-center fw-bold">Buy 100k MCT Token</MDBCardText>
                         <MDBCardText>Quest Duration: 2 Days</MDBCardText>
                         <MDBCardText>Claimable Token: &nbsp;
                         3,000 MMT
@@ -501,7 +501,7 @@ const AirDropTabDiamond = ({usersubscription}) => {
                         {/* <div>
                             <img src={pearlicon} alt="" style={{height: "65px", width: "65px"}}/>
                         </div> */}
-                        <MDBCardText className="text-center fw-bold">Owned atleast 100k MMT Token</MDBCardText>
+                        <MDBCardText className="text-center fw-bold">Owned atleast 500k MMT Token</MDBCardText>
                         <MDBCardText>Quest Duration: 7 Days</MDBCardText>
                         <MDBCardText>Claimable Token: &nbsp;
                         10,000 MCT
@@ -521,7 +521,7 @@ const AirDropTabDiamond = ({usersubscription}) => {
                         {/* <div>
                             <img src={pearlicon} alt="" style={{height: "65px", width: "65px"}}/>
                         </div> */}
-                        <MDBCardText className="text-center fw-bold">Owned atleast 100k MCT Token</MDBCardText>
+                        <MDBCardText className="text-center fw-bold">Owned atleast 500k MCT Token</MDBCardText>
                         <MDBCardText>Quest Duration: 7 Days</MDBCardText>
                         <MDBCardText>Claimable Token: &nbsp;
                         10,000 MMT

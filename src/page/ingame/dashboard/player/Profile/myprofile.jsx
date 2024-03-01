@@ -59,10 +59,18 @@ const PlayerMyProfile = ({user}) => {
               })
               .then(result => result.json())
               .then(data => {
-                Toast.fire({
-                  icon: 'success',
-                  title: 'Wallet Save successfully'
-                })
+                if(data.message == "success"){
+                  Toast.fire({
+                    icon: 'success',
+                    title: 'Wallet Save successfully'
+                  })
+                } else {
+                  Toast.fire({
+                    icon: 'error',
+                    title: data.data
+                  })
+                }
+                
               })
             }
           }
