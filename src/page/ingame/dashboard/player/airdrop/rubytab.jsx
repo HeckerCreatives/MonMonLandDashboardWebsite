@@ -323,7 +323,7 @@ const AirDropTabRuby = ({usersubscription}) => {
                         <MDBCardFooter>
                         <div className="">
                             {
-                                questclaim?.Quest1 == "claimable" && usersubscription == "Ruby"?
+                                quest != "noquest" && usersubscription == "Ruby" && questclaim.Quest1 == "claimable" ?
                                 <MDBBtn disabled={quest[0]?.claimedAt != null} color="warning" onClick={(e) => handleClaimQuest(e,1)}>Claim</MDBBtn>
                                 :
                                 <MDBBtn disabled={usersubscription != "Ruby"} color="warning" onClick={(e) => handleAcceptQuest(e,1)}>Accept</MDBBtn>

@@ -323,7 +323,7 @@ const AirDropTabEmerald = ({usersubscription}) => {
                         <MDBCardFooter>
                         <div className="">
                             {
-                                questclaim?.Quest1 == "claimable" && usersubscription == "Emerald"?
+                                quest != "noquest" && usersubscription == "Emerald" && questclaim.Quest1 == "claimable"?
                                 <MDBBtn disabled={quest[0]?.claimedAt != null} color="warning" onClick={(e) => handleClaimQuest(e,1)}>Claim</MDBBtn>
                                 :
                                 <MDBBtn disabled={usersubscription != "Emerald"} color="warning" onClick={(e) => handleAcceptQuest(e,1)}>Accept</MDBBtn>
