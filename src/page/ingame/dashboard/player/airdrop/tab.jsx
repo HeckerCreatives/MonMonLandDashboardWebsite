@@ -8,7 +8,15 @@ import { parseEther , parseGwei} from 'viem'
 const AirDropTab = ({usersubscription}) => {
     const [mmtairdrop, setMmtAirDrop] = useState(0)
     const [mctairdrop, setMctAirDrop] = useState(0)
-    const [quest, setQuest] = useState([])
+    const [quest1, setQuest1] = useState([])
+    const [quest2, setQuest2] = useState([])
+    const [quest3, setQuest3] = useState([])
+
+    const [quest6, setQuest6] = useState([])
+    const [quest7, setQuest7] = useState([])
+    const [quest8, setQuest8] = useState([])
+    const [quest9, setQuest9] = useState([])
+    const [quest10, setQuest10] = useState([])
     const [isloading, setIsLoading] = useState(false)
     const [questclaim, setQuestClaimable] = useState([])
     const { address } = useAccount();
@@ -37,7 +45,22 @@ const AirDropTab = ({usersubscription}) => {
         .then(result => result.json())
         .then(data => {
             if(data.message == "success"){
-                setQuest(data.data)
+                const quest1 = data.data.filter(e => e.questid == 1)
+                const quest2 = data.data.filter(e => e.questid == 2)
+                const quest3 = data.data.filter(e => e.questid == 3)
+                const quest6 = data.data.filter(e => e.questid == 6)
+                const quest7 = data.data.filter(e => e.questid == 7)
+                const quest8 = data.data.filter(e => e.questid == 8)
+                const quest9 = data.data.filter(e => e.questid == 9)
+                const quest10 = data.data.filter(e => e.questid == 10)
+                setQuest1(quest1)
+                setQuest2(quest2)
+                setQuest3(quest3)
+                setQuest6(quest6)
+                setQuest7(quest7)
+                setQuest8(quest8)
+                setQuest9(quest9)
+                setQuest10(quest10)
                 setQuestClaimable(data.data2)
             }
         })
@@ -80,6 +103,62 @@ const AirDropTab = ({usersubscription}) => {
                 mcttokenreward: usersubscription == "Pearlplus" ? 400 : usersubscription == "Ruby" ? 1000 : usersubscription == "Emerald" ? 2000 : 4000,
                 acceptAt: new Date().toLocaleString(),
                 expiredAt: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000).toLocaleString(),
+            }
+            break;
+            case 3:
+            acceptquest = {
+                questid: 3,
+                questtitle: "Get 10k Account Total Points",
+                mmttokenreward: usersubscription == "Pearlplus" ? 200 : usersubscription == "Ruby" ? 500 : usersubscription == "Emerald" ? 1000 : 2000,
+                mcttokenreward: usersubscription == "Pearlplus" ? 400 : usersubscription == "Ruby" ? 1000 : usersubscription == "Emerald" ? 2000 : 4000,
+                acceptAt: new Date().toLocaleString(),
+                expiredAt: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000).toLocaleString(),
+            }
+            break;
+            case 6:
+            acceptquest = {
+                questid: 6,
+                questtitle: "Buy Ring of Energy",
+                mmttokenreward: 1000 ,
+                mcttokenreward:  2000 ,
+                acceptAt: new Date().toLocaleString(),
+                expiredAt: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000).toLocaleString(),
+            }
+            break;
+            case 7:
+            acceptquest = {
+                questid: 7,
+                questtitle: "Buy 100k MMT Token",
+                mcttokenreward:  10000,
+                acceptAt: new Date().toLocaleString(),
+                expiredAt: new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000).toLocaleString(),
+            }
+            break;
+            case 8:
+            acceptquest = {
+                questid: 8,
+                questtitle: "Buy 100k MCT Token",
+                mmttokenreward:  3000,
+                acceptAt: new Date().toLocaleString(),
+                expiredAt: new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000).toLocaleString(),
+            }
+            break;
+            case 9:
+            acceptquest = {
+                questid: 9,
+                questtitle: "Owned atleast 500k MMT Token",
+                mcttokenreward:  10000,
+                acceptAt: new Date().toLocaleString(),
+                expiredAt: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleString(),
+            }
+            break;
+            case 10:
+            acceptquest = {
+                questid: 10,
+                questtitle: "Owned atleast 500k MCT Token",
+                mmttokenreward:  10000,
+                acceptAt: new Date().toLocaleString(),
+                expiredAt: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleString(),
             }
             break;
             default:
@@ -211,7 +290,7 @@ const AirDropTab = ({usersubscription}) => {
                     Swal.fire({
                         icon: "error",
                         title: "Oops..",
-                        text: "Insufficient funds, at least 0.0008 BNB Required!",
+                        text: "Insufficient funds, at least 0.0018 BNB Required!",
                         allowEscapeKey: false,
                         allowOutsideClick: false
                     })
@@ -271,7 +350,7 @@ const AirDropTab = ({usersubscription}) => {
                 Swal.fire({
                   icon: "error",
                   title: "Oops..",
-                  text: "Insufficient funds, at least 0.0008 BNB Required!",
+                  text: "Insufficient funds, at least 0.0018 BNB Required!",
                   allowEscapeKey: false,
                   allowOutsideClick: false
                 })
@@ -285,6 +364,7 @@ const AirDropTab = ({usersubscription}) => {
 
     const mmtair = mmtairdrop < 1000000 ? (mmtairdrop / 1000000) * 100 : 100
     const mctair = mctairdrop < 10000000 ? (mctairdrop / 10000000) * 100 : 100
+    const currentDateTime = new Date();
     return(
         <MDBContainer>
 
@@ -317,7 +397,6 @@ const AirDropTab = ({usersubscription}) => {
             </MDBRow>
             <MDBTypography  tag={"h1"} className="mt-5 text-center">Airdrop Quest</MDBTypography>
             <MDBRow>
-                
                 <MDBCol lg={3} className="my-2">
                     <MDBCard alignment="center">
                         <MDBCardBody>
@@ -327,15 +406,36 @@ const AirDropTab = ({usersubscription}) => {
                         <MDBCardText className="text-center fw-bold">Account Status Must Be Active</MDBCardText>
                         <MDBCardText>Quest Duration: 3 Days</MDBCardText>
                         <MDBCardText>Claimable Token: &nbsp;
-                        100 MMT + 200 MCT
+                        200 MMT + 400 MCT
                         </MDBCardText>
-                        
+                        {   usersubscription == "Pearlplus" ?
+
+                            quest1.length != 0 && questclaim.Quest1 == "notclaimable" && currentDateTime < new Date(quest1[0].expiredAt) && usersubscription == "Pearlplus" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-primary">On Going</span>
+                            </MDBCardText>
+                            :
+                            quest1.length != 0 && questclaim.Quest1 == "claimable" && currentDateTime < new Date(quest1[0].expiredAt) && usersubscription == "Pearlplus" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-success">Claimable</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText>Status: &nbsp;
+                            <span className={quest1.length != 0 && usersubscription == "Pearlplus" ? "text-danger" : "text-warning"}>{quest1.length != 0 && usersubscription == "Pearlplus" ? "Expired" : "Not Accepted"}</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText className="text-info">For Pearlplus Users Only</MDBCardText>
+                        }
+                        {
+                            quest1[0]?.claimedAt == null && usersubscription == "Pearlplus" &&
+                            <MDBCardText className="text-info">Claim Before: {quest1[0]?.expiredAt}</MDBCardText>
+                        }
                         </MDBCardBody>
                         <MDBCardFooter>
                         <div className="">
                             {
-                                quest != "noquest" && usersubscription == "Pearlplus" && questclaim.Quest1 == "claimable" ?
-                                <MDBBtn disabled={quest[0]?.claimedAt != null} color="warning" onClick={(e) => handleClaimQuest(e,1)}>{quest[0]?.claimedAt != null ? "Claimed" : "Claim"}</MDBBtn>
+                                quest1.length != 0 && usersubscription == "Pearlplus" ?
+                                <MDBBtn disabled={quest1[0].claimedAt != null || currentDateTime > new Date(quest1[0].expiredAt) || questclaim.Quest1 == "notclaimable"} color="warning" onClick={(e) => handleClaimQuest(e,1)}>{quest1[0].claimedAt != null ? "Claimed" : currentDateTime > new Date(quest1[0].expiredAt) ? "Expired" : questclaim.Quest1 == "notclaimable" ? "On Going": "Claim Now"}</MDBBtn>
                                 :
                                 <MDBBtn disabled={usersubscription != "Pearlplus"} color="warning" onClick={(e) => handleAcceptQuest(e,1)}>Accept</MDBBtn>
                             }
@@ -352,13 +452,40 @@ const AirDropTab = ({usersubscription}) => {
                         <MDBCardText className="text-center fw-bold">Get total of 20 Direct Points</MDBCardText>
                         <MDBCardText>Quest Duration: 30 Days</MDBCardText>
                         <MDBCardText>Claimable Token: &nbsp;
-                        200 MMT + 400 MCT
+                        500 MMT + 1000 MCT
                         </MDBCardText>
-                        
+                        {   usersubscription == "Pearlplus" ?
+
+                            quest2.length != 0 && questclaim.Quest2 == "notclaimable" && currentDateTime < new Date(quest2[0].expiredAt) && usersubscription == "Pearlplus" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-primary">On Going</span>
+                            </MDBCardText>
+                            :
+                            quest2.length != 0 && questclaim.Quest2 == "claimable" && currentDateTime < new Date(quest2[0].expiredAt) && usersubscription == "Pearlplus" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-success">Claimable</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText>Status: &nbsp;
+                            <span className={quest2.length != 0 && usersubscription == "Pearlplus" ? "text-danger" : "text-warning"}>{quest2.length != 0 && usersubscription == "Pearlplus" ? "Expired" : "Not Accepted"}</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText className="text-info">For Pearlplus Users Only</MDBCardText>
+                        }
+                        {
+                            quest2[0]?.claimedAt == null && usersubscription == "Pearlplus" && 
+                            <MDBCardText className="text-info">Claim Before: {quest2[0]?.expiredAt}</MDBCardText>
+                        }
                         </MDBCardBody>
                         <MDBCardFooter>
                         <div>
-                            <MDBBtn color="warning" disabled>Accept</MDBBtn>
+                            {/* <MDBBtn color="warning" disabled>Accept</MDBBtn> */}
+                            {
+                                quest2.length != 0 && usersubscription == "Pearlplus" ?
+                                <MDBBtn disabled={quest2[0].claimedAt != null || currentDateTime > new Date(quest2[0].expiredAt) || questclaim.Quest2 == "notclaimable"} color="warning" onClick={(e) => handleClaimQuest(e,2)}>{quest2[0].claimedAt != null ? "Claimed" : currentDateTime > new Date(quest2[0].expiredAt) ? "Expired" : questclaim.Quest2 == "notclaimable" ? "On Going": "Claim Now"}</MDBBtn>
+                                :
+                                <MDBBtn disabled={usersubscription != "Pearlplus"} color="warning" onClick={(e) => handleAcceptQuest(e,2)}>Accept</MDBBtn>
+                            }
                         </div>
                         </MDBCardFooter>
                     </MDBCard>
@@ -372,17 +499,45 @@ const AirDropTab = ({usersubscription}) => {
                         <MDBCardText className="text-center fw-bold">Get 10k Account Total Points</MDBCardText>
                         <MDBCardText>Quest Duration: 30 Days</MDBCardText>
                         <MDBCardText>Claimable Token: &nbsp;
-                        200 MMT + 400 MCT
+                        500 MMT + 1000 MCT
                         </MDBCardText>
-                        
+                        {   usersubscription == "Pearlplus" ?
+
+                            quest3.length != 0 && questclaim.Quest3 == "notclaimable" && currentDateTime < new Date(quest3[0].expiredAt) && usersubscription == "Pearlplus" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-primary">On Going</span>
+                            </MDBCardText>
+                            :
+                            quest3.length != 0 && questclaim.Quest3 == "claimable" && currentDateTime < new Date(quest3[0].expiredAt) && usersubscription == "Pearlplus" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-success">Claimable</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText>Status: &nbsp;
+                            <span className={quest3.length != 0 && usersubscription == "Pearlplus" ? "text-danger" : "text-warning"}>{quest3.length != 0 && usersubscription == "Pearlplus" ? "Expired" : "Not Accepted"}</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText className="text-info">For Pearlplus Users Only</MDBCardText>
+                        }
+                        {
+                            quest3[0]?.claimedAt == null && usersubscription == "Pearlplus" && 
+                            <MDBCardText className="text-info">Claim Before: {quest3[0]?.expiredAt}</MDBCardText>
+                        }
                         </MDBCardBody>
                         <MDBCardFooter>
                         <div>
-                            <MDBBtn color="warning" disabled>Accept</MDBBtn>
+                            {/* <MDBBtn color="warning" disabled>Accept</MDBBtn> */}
+                            {
+                                quest3.length != 0 && usersubscription == "Pearlplus" ?
+                                <MDBBtn disabled={quest3[0].claimedAt != null || currentDateTime > new Date(quest3[0].expiredAt) || questclaim.Quest3 == "notclaimable"} color="warning" onClick={(e) => handleClaimQuest(e,3)}>{quest3[0].claimedAt != null ? "Claimed" : currentDateTime > new Date(quest3[0].expiredAt) ? "Expired" : questclaim.Quest3 == "notclaimable" ? "On Going": "Claim Now"}</MDBBtn>
+                                :
+                                <MDBBtn disabled={usersubscription != "Pearlplus"} color="warning" onClick={(e) => handleAcceptQuest(e,3)}>Accept</MDBBtn>
+                            }
                         </div>
                         </MDBCardFooter>
                     </MDBCard>
                 </MDBCol>
+
                 <MDBCol lg={3} className="my-2">
                     <MDBCard alignment="center">
                         <MDBCardBody>
@@ -401,7 +556,7 @@ const AirDropTab = ({usersubscription}) => {
                         </MDBCardBody>
                         <MDBCardFooter>
                         <div>
-                            <MDBBtn color="warning" disabled>Accept</MDBBtn>
+                            <MDBBtn color="warning" disabled>Coming Soon</MDBBtn>
                         </div>
                         </MDBCardFooter>
                     </MDBCard>
@@ -427,7 +582,7 @@ const AirDropTab = ({usersubscription}) => {
                         </MDBCardBody>
                         <MDBCardFooter>
                         <div>
-                            <MDBBtn color="warning" disabled>Accept</MDBBtn>
+                            <MDBBtn color="warning" disabled>Coming Soon</MDBBtn>
                         </div>
                         </MDBCardFooter>
                     </MDBCard>
@@ -443,11 +598,38 @@ const AirDropTab = ({usersubscription}) => {
                         <MDBCardText>Claimable Token: &nbsp;
                         1,000 MMT + 2,000 MCT
                         </MDBCardText>
-                        
+                        {   usersubscription == "Pearlplus" ?
+
+                            quest6.length != 0 && questclaim.Quest6 == "notclaimable" && currentDateTime < new Date(quest6[0].expiredAt) && usersubscription == "Pearlplus" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-primary">On Going</span>
+                            </MDBCardText>
+                            :
+                            quest6.length != 0 && questclaim.Quest6 == "claimable" && currentDateTime < new Date(quest6[0].expiredAt) && usersubscription == "Pearlplus" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-success">Claimable</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText>Status: &nbsp;
+                            <span className={quest6.length != 0 && usersubscription == "Pearlplus" ? "text-danger" : "text-warning"}>{quest6.length != 0 && usersubscription == "Pearlplus" ? "Expired" : "Not Accepted"}</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText className="text-info">For Pearlplus Users Only</MDBCardText>
+                        }
+                        {
+                            quest6[0]?.claimedAt == null && usersubscription == "Pearlplus" && 
+                            <MDBCardText className="text-info">Claim Before: {quest6[0]?.expiredAt}</MDBCardText>
+                        }
                         </MDBCardBody>
                         <MDBCardFooter>
                         <div>
-                            <MDBBtn color="warning" disabled>Accept</MDBBtn>
+                            {/* <MDBBtn color="warning" disabled>Accept</MDBBtn> */}
+                            {
+                                quest6.length != 0 && usersubscription == "Pearlplus" ?
+                                <MDBBtn disabled={quest6[0]?.claimedAt != null || currentDateTime > new Date(quest6[0]?.expiredAt) || questclaim.Quest6 == "notclaimable"} color="warning" onClick={(e) => handleClaimQuest(e,6)}>{quest6[0]?.claimedAt != null ? "Claimed" : currentDateTime > new Date(quest6[0]?.expiredAt) ? "Expired" : questclaim.Quest6 == "notclaimable" ? "On Going" : "Claim Now"}</MDBBtn>
+                                :
+                                <MDBBtn disabled={usersubscription != "Pearlplus"} color="warning" onClick={(e) => handleAcceptQuest(e,6)}>Accept</MDBBtn>
+                            }
                         </div>
                         </MDBCardFooter>
                     </MDBCard>
@@ -463,11 +645,38 @@ const AirDropTab = ({usersubscription}) => {
                         <MDBCardText>Claimable Token: &nbsp;
                         10,000 MCT
                         </MDBCardText>
-                        
+                        {   usersubscription == "Pearlplus" ?
+
+                            quest7.length != 0 && questclaim.Quest7 == "notclaimable" && currentDateTime < new Date(quest7[0].expiredAt) && usersubscription == "Pearlplus" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-primary">On Going</span>
+                            </MDBCardText>
+                            :
+                            quest7.length != 0 && questclaim.Quest7 == "claimable" && currentDateTime < new Date(quest7[0].expiredAt) && usersubscription == "Pearlplus" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-success">Claimable</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText>Status: &nbsp;
+                            <span className={quest7.length != 0 && usersubscription == "Pearlplus" ? "text-danger" : "text-warning"}>{quest7.length != 0 && usersubscription == "Pearlplus" ? "Expired" : "Not Accepted"}</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText className="text-info">For Pearlplus Users Only</MDBCardText>
+                        }
+                        {
+                            quest7[0]?.claimedAt == null && usersubscription == "Pearlplus" && 
+                            <MDBCardText className="text-info">Claim Before: {quest7[0]?.expiredAt}</MDBCardText>
+                        }
                         </MDBCardBody>
                         <MDBCardFooter>
                         <div>
-                            <MDBBtn color="warning" disabled>Accept</MDBBtn>
+                            {/* <MDBBtn color="warning" disabled>Accept</MDBBtn> */}
+                            {
+                                quest7.length != 0 && usersubscription == "Pearlplus" ?
+                                <MDBBtn disabled={quest7[0]?.claimedAt != null || currentDateTime > new Date(quest7[0]?.expiredAt) || questclaim.Quest7 == "notclaimable"} color="warning" onClick={(e) => handleClaimQuest(e,7)}>{quest7[0]?.claimedAt != null ? "Claimed" : currentDateTime > new Date(quest7[0]?.expiredAt) ? "Expired" : questclaim.Quest7 == "notclaimable" ? "On Going" : "Claim Now"}</MDBBtn>
+                                :
+                                <MDBBtn disabled={usersubscription != "Pearlplus"} color="warning" onClick={(e) => handleAcceptQuest(e,7)}>Accept</MDBBtn>
+                            }
                         </div>
                         </MDBCardFooter>
                     </MDBCard>
@@ -483,11 +692,38 @@ const AirDropTab = ({usersubscription}) => {
                         <MDBCardText>Claimable Token: &nbsp;
                         3,000 MMT
                         </MDBCardText>
-                        
+                        {   usersubscription == "Pearlplus" ?
+
+                            quest8.length != 0 && questclaim.Quest8 == "notclaimable" && currentDateTime < new Date(quest8[0].expiredAt) && usersubscription == "Pearlplus" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-primary">On Going</span>
+                            </MDBCardText>
+                            :
+                            quest8.length != 0 && questclaim.Quest8 == "claimable" && currentDateTime < new Date(quest8[0].expiredAt) && usersubscription == "Pearlplus" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-success">Claimable</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText>Status: &nbsp;
+                            <span className={quest8.length != 0 && usersubscription == "Pearlplus" ? "text-danger" : "text-warning"}>{quest8.length != 0 && usersubscription == "Pearlplus" ? "Expired" : "Not Accepted"}</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText className="text-info">For Pearlplus Users Only</MDBCardText>
+                        }
+                        {
+                            quest8[0]?.claimedAt == null && usersubscription == "Pearlplus" && 
+                            <MDBCardText className="text-info">Claim Before: {quest8[0]?.expiredAt}</MDBCardText>
+                        }
                         </MDBCardBody>
                         <MDBCardFooter>
                         <div>
-                            <MDBBtn color="warning" disabled>Accept</MDBBtn>
+                            {/* <MDBBtn color="warning" disabled>Accept</MDBBtn> */}
+                            {
+                                quest8.length != 0 && usersubscription == "Pearlplus" ?
+                                <MDBBtn disabled={quest8[0]?.claimedAt != null || currentDateTime > new Date(quest8[0]?.expiredAt) || questclaim.Quest8 == "notclaimable"} color="warning" onClick={(e) => handleClaimQuest(e,8)}>{quest8[0]?.claimedAt != null ? "Claimed" : currentDateTime > new Date(quest8[0]?.expiredAt) ? "Expired" : questclaim.Quest8 == "notclaimable" ? "On Going" : "Claim Now"}</MDBBtn>
+                                :
+                                <MDBBtn disabled={usersubscription != "Pearlplus"} color="warning" onClick={(e) => handleAcceptQuest(e,8)}>Accept</MDBBtn>
+                            }
                         </div>
                         </MDBCardFooter>
                     </MDBCard>
@@ -507,11 +743,38 @@ const AirDropTab = ({usersubscription}) => {
                         <MDBCardText>Claimable Token: &nbsp;
                         10,000 MCT
                         </MDBCardText>
-                        
+                        {   usersubscription == "Pearlplus" ?
+
+                            quest9.length != 0 && questclaim.Quest9 == "notclaimable" && currentDateTime < new Date(quest9[0].expiredAt) && usersubscription == "Pearlplus" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-primary">On Going</span>
+                            </MDBCardText>
+                            :
+                            quest9.length != 0 && questclaim.Quest9 == "claimable" && currentDateTime < new Date(quest9[0].expiredAt) && usersubscription == "Pearlplus" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-success">Claimable</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText>Status: &nbsp;
+                            <span className={quest9.length != 0 && usersubscription == "Pearlplus" ? "text-danger" : "text-warning"}>{quest9.length != 0 && usersubscription == "Pearlplus" ? "Expired" : "Not Accepted"}</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText className="text-info">For Pearlplus Users Only</MDBCardText>
+                        }
+                        {
+                            quest9[0]?.claimedAt == null && usersubscription == "Pearlplus" && 
+                            <MDBCardText className="text-info">Claim Before: {quest9[0]?.expiredAt}</MDBCardText>
+                        }
                         </MDBCardBody>
                         <MDBCardFooter>
                         <div>
-                            <MDBBtn color="warning" disabled>Accept</MDBBtn>
+                            {/* <MDBBtn color="warning" disabled>Accept</MDBBtn> */}
+                            {
+                                quest9.length != 0 && usersubscription == "Pearlplus" ?
+                                <MDBBtn disabled={quest9[0]?.claimedAt != null || currentDateTime > new Date(quest9[0]?.expiredAt) || questclaim.Quest9 == "notclaimable"} color="warning" onClick={(e) => handleClaimQuest(e,9)}>{quest9[0]?.claimedAt != null ? "Claimed" : currentDateTime > new Date(quest9[0]?.expiredAt) ? "Expired" : questclaim.Quest9 == "notclaimable" ? "On Going" : "Claim Now"}</MDBBtn>
+                                :
+                                <MDBBtn disabled={usersubscription != "Pearlplus"} color="warning" onClick={(e) => handleAcceptQuest(e,9)}>Accept</MDBBtn>
+                            }
                         </div>
                         </MDBCardFooter>
                     </MDBCard>
@@ -527,10 +790,38 @@ const AirDropTab = ({usersubscription}) => {
                         <MDBCardText>Claimable Token: &nbsp;
                         10,000 MMT
                         </MDBCardText>
+                        {   usersubscription == "Pearlplus" ?
+
+                            quest10.length != 0 && questclaim.Quest10 == "notclaimable" && currentDateTime < new Date(quest10[0].expiredAt) && usersubscription == "Pearlplus" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-primary">On Going</span>
+                            </MDBCardText>
+                            :
+                            quest10.length != 0 && questclaim.Quest10 == "claimable" && currentDateTime < new Date(quest10[0].expiredAt) && usersubscription == "Pearlplus" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-success">Claimable</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText>Status: &nbsp;
+                            <span className={quest10.length != 0 && usersubscription == "Pearlplus" ? "text-danger" : "text-warning"}>{quest10.length != 0 && usersubscription == "Pearlplus" ? "Expired" : "Not Accepted"}</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText className="text-info">For Pearlplus Users Only</MDBCardText>
+                        }
+                        {
+                            quest10[0]?.claimedAt == null && usersubscription == "Pearlplus" && 
+                            <MDBCardText className="text-info">Claim Before: {quest10[0]?.expiredAt}</MDBCardText>
+                        }
                         </MDBCardBody>
                         <MDBCardFooter>
                         <div>
-                            <MDBBtn color="warning" disabled>Accept</MDBBtn>
+                            {/* <MDBBtn color="warning" disabled>Accept</MDBBtn> */}
+                            {
+                                quest10.length != 0 && usersubscription == "Pearlplus" ?
+                                <MDBBtn disabled={quest10[0]?.claimedAt != null || currentDateTime > new Date(quest10[0]?.expiredAt) || questclaim.Quest10 == "notclaimable"} color="warning" onClick={(e) => handleClaimQuest(e,10)}>{quest10[0]?.claimedAt != null ? "Claimed" : currentDateTime > new Date(quest10[0]?.expiredAt) ? "Expired" : questclaim.Quest10 == "notclaimable" ? "On Going" : "Claim Now"}</MDBBtn>
+                                :
+                                <MDBBtn disabled={usersubscription != "Pearlplus"} color="warning" onClick={(e) => handleAcceptQuest(e,10)}>Accept</MDBBtn>
+                            }
                         </div>
                         </MDBCardFooter>
                     </MDBCard>
@@ -550,7 +841,7 @@ const AirDropTab = ({usersubscription}) => {
                         </MDBCardBody>
                         <MDBCardFooter>
                         <div>
-                            <MDBBtn color="warning" disabled>Accept</MDBBtn>
+                            <MDBBtn color="warning" disabled>Coming Soon</MDBBtn>
                         </div>
                         </MDBCardFooter>
                     </MDBCard>
@@ -570,7 +861,7 @@ const AirDropTab = ({usersubscription}) => {
                         </MDBCardBody>
                         <MDBCardFooter>
                         <div>
-                            <MDBBtn color="warning" disabled>Accept</MDBBtn>
+                            <MDBBtn color="warning" disabled>Coming Soon</MDBBtn>
                         </div>
                         </MDBCardFooter>
                     </MDBCard>
