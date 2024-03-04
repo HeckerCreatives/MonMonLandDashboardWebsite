@@ -11,13 +11,15 @@ const AirDropTabRuby = ({usersubscription}) => {
     const [quest1, setQuest1] = useState([])
     const [quest2, setQuest2] = useState([])
     const [quest3, setQuest3] = useState([])
-
+    const [quest4, setQuest4] = useState([])
+    const [quest5, setQuest5] = useState([])
     const [quest6, setQuest6] = useState([])
     const [quest7, setQuest7] = useState([])
     const [quest8, setQuest8] = useState([])
     const [quest9, setQuest9] = useState([])
     const [quest10, setQuest10] = useState([])
-
+    const [quest11, setQuest11] = useState([])
+    const [quest12, setQuest12] = useState([])
     const [isloading, setIsLoading] = useState(false)
     const [questclaim, setQuestClaimable] = useState([])
     const { address } = useAccount();
@@ -49,19 +51,27 @@ const AirDropTabRuby = ({usersubscription}) => {
                 const quest1 = data.data.filter(e => e.questid == 1)
                 const quest2 = data.data.filter(e => e.questid == 2)
                 const quest3 = data.data.filter(e => e.questid == 3)
+                const quest4 = data.data.filter(e => e.questid == 4)
+                const quest5 = data.data.filter(e => e.questid == 5)
                 const quest6 = data.data.filter(e => e.questid == 6)
                 const quest7 = data.data.filter(e => e.questid == 7)
                 const quest8 = data.data.filter(e => e.questid == 8)
                 const quest9 = data.data.filter(e => e.questid == 9)
                 const quest10 = data.data.filter(e => e.questid == 10)
+                const quest11 = data.data.filter(e => e.questid == 11)
+                const quest12 = data.data.filter(e => e.questid == 12)
                 setQuest1(quest1)
                 setQuest2(quest2)
                 setQuest3(quest3)
+                setQuest4(quest4)
+                setQuest5(quest5)
                 setQuest6(quest6)
                 setQuest7(quest7)
                 setQuest8(quest8)
                 setQuest9(quest9)
                 setQuest10(quest10)
+                setQuest11(quest11)
+                setQuest12(quest12)
                 setQuestClaimable(data.data2)
             }
         })
@@ -116,6 +126,26 @@ const AirDropTabRuby = ({usersubscription}) => {
                 expiredAt: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000).toLocaleString(),
             }
             break;
+            case 4:
+            acceptquest = {
+                questid: 4,
+                questtitle: "Buy any Clock Merchandies",
+                mmttokenreward: 0,
+                mcttokenreward: 0,
+                acceptAt: new Date().toLocaleString(),
+                expiredAt: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000).toLocaleString(),
+            }
+            break;
+            case 5:
+            acceptquest = {
+                questid: 5,
+                questtitle: "Buy any Tools Merchandies",
+                mmttokenreward: 0,
+                mcttokenreward: 0,
+                acceptAt: new Date().toLocaleString(),
+                expiredAt: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000).toLocaleString(),
+            }
+            break;
             case 6:
             acceptquest = {
                 questid: 6,
@@ -160,6 +190,26 @@ const AirDropTabRuby = ({usersubscription}) => {
                 mmttokenreward:  10000,
                 acceptAt: new Date().toLocaleString(),
                 expiredAt: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleString(),
+            }
+            break;
+            case 11:
+            acceptquest = {
+                questid: 11,
+                questtitle: "Top 1 Leaderboard (end of the month)",
+                mmttokenreward:  5000,
+                mcttokenreward:  10000,
+                acceptAt: new Date().toLocaleString(),
+                // expiredAt: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleString(),
+            }
+            break;
+            case 12:
+            acceptquest = {
+                questid: 12,
+                questtitle: "Top 1 Leaderboard for Fiesta (end of the month)",
+                mmttokenreward:  500,
+                mcttokenreward:  1000,
+                acceptAt: new Date().toLocaleString(),  
+                // expiredAt: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleString(),
             }
             break;
             default:
@@ -418,7 +468,7 @@ const AirDropTabRuby = ({usersubscription}) => {
                             :
                             quest1.length != 0 && questclaim.Quest1 == "claimable" && currentDateTime < new Date(quest1[0].expiredAt) && usersubscription == "Ruby" ?
                             <MDBCardText>Status: &nbsp;
-                            <span className="text-success">Claimable</span>
+                            <span className="text-success">{quest1[0]?.claimedAt != null ? "Claimed" : "Claimable"}</span>
                             </MDBCardText>
                             :
                             <MDBCardText>Status: &nbsp;
@@ -464,7 +514,7 @@ const AirDropTabRuby = ({usersubscription}) => {
                             :
                             quest2.length != 0 && questclaim.Quest2 == "claimable" && currentDateTime < new Date(quest2[0].expiredAt) && usersubscription == "Ruby" ?
                             <MDBCardText>Status: &nbsp;
-                            <span className="text-success">Claimable</span>
+                            <span className="text-success">{quest2[0]?.claimedAt != null ? "Claimed" : "Claimable"}</span>
                             </MDBCardText>
                             :
                             <MDBCardText>Status: &nbsp;
@@ -511,7 +561,7 @@ const AirDropTabRuby = ({usersubscription}) => {
                             :
                             quest3.length != 0 && questclaim.Quest3 == "claimable" && currentDateTime < new Date(quest3[0].expiredAt) && usersubscription == "Ruby" ?
                             <MDBCardText>Status: &nbsp;
-                            <span className="text-success">Claimable</span>
+                            <span className="text-success">{quest3[0]?.claimedAt != null ? "Claimed" : "Claimable"}</span>
                             </MDBCardText>
                             :
                             <MDBCardText>Status: &nbsp;
@@ -553,11 +603,38 @@ const AirDropTabRuby = ({usersubscription}) => {
                         <p style={{fontSize: "10px"}}>Master: 1000 MMT + 2000 MCT</p>
                         <p style={{fontSize: "10px"}}>Advance: 2000 MMT + 4000 MCT</p>
                         </MDBCardText>
-                        
+                        {   usersubscription == "Ruby" ?
+
+                            quest4.length != 0 && questclaim.Quest4 == "notclaimable" && currentDateTime < new Date(quest4[0].expiredAt) && usersubscription == "Ruby" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-primary">On Going</span>
+                            </MDBCardText>
+                            :
+                            quest4.length != 0 && questclaim.Quest4 == "claimable" && currentDateTime < new Date(quest4[0].expiredAt) && usersubscription == "Ruby" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-success">{quest4[0]?.claimedAt != null ? "Claimed" : "Claimable"}</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText>Status: &nbsp;
+                            <span className={quest4.length != 0 && usersubscription == "Ruby" ? "text-danger" : "text-warning"}>{quest4.length != 0 && usersubscription == "Ruby" ? "Expired" : "Not Accepted"}</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText className="text-info">For Ruby Users Only</MDBCardText>
+                        }
+                        {
+                            quest4[0]?.claimedAt == null && usersubscription == "Ruby" && 
+                            <MDBCardText className="text-info">Claim Before: {quest4[0]?.expiredAt}</MDBCardText>
+                        }
                         </MDBCardBody>
                         <MDBCardFooter>
                         <div>
-                            <MDBBtn color="warning" disabled>Coming Soon</MDBBtn>
+                            {/* <MDBBtn color="warning" disabled>Coming Soon</MDBBtn> */}
+                            {
+                                quest4.length != 0 && usersubscription == "Ruby" ?
+                                <MDBBtn disabled={quest4[0].claimedAt != null || currentDateTime > new Date(quest4[0].expiredAt) || questclaim.Quest4 == "notclaimable"} color="warning" onClick={(e) => handleClaimQuest(e,4)}>{quest4[0].claimedAt != null ? "Claimed" : currentDateTime > new Date(quest4[0].expiredAt) ? "Expired" : questclaim.Quest4 == "notclaimable" ? "On Going": "Claim Now"}</MDBBtn>
+                                :
+                                <MDBBtn disabled={usersubscription != "Ruby"} color="warning" onClick={(e) => handleAcceptQuest(e,4)}>Accept</MDBBtn>
+                            }
                         </div>
                         </MDBCardFooter>
                     </MDBCard>
@@ -579,11 +656,38 @@ const AirDropTabRuby = ({usersubscription}) => {
                         <p style={{fontSize: "10px"}}>Mithril: 1000 MMT + 2000 MCT</p>
                         <p style={{fontSize: "10px"}}>Adamant: 2000 MMT + 4000 MCT</p>
                         </MDBCardText>
-                        
+                        {   usersubscription == "Ruby" ?
+
+                            quest5.length != 0 && questclaim.Quest5 == "notclaimable" && currentDateTime < new Date(quest5[0].expiredAt) && usersubscription == "Ruby" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-primary">On Going</span>
+                            </MDBCardText>
+                            :
+                            quest5.length != 0 && questclaim.Quest5 == "claimable" && currentDateTime < new Date(quest5[0].expiredAt) && usersubscription == "Ruby" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-success">{quest5[0]?.claimedAt != null ? "Claimed" : "Claimable"}</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText>Status: &nbsp;
+                            <span className={quest5.length != 0 && usersubscription == "Ruby" ? "text-danger" : "text-warning"}>{quest5.length != 0 && usersubscription == "Ruby" ? "Expired" : "Not Accepted"}</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText className="text-info">For Ruby Users Only</MDBCardText>
+                        }
+                        {
+                            quest5[0]?.claimedAt == null && usersubscription == "Ruby" && 
+                            <MDBCardText className="text-info">Claim Before: {quest5[0]?.expiredAt}</MDBCardText>
+                        }
                         </MDBCardBody>
                         <MDBCardFooter>
                         <div>
-                            <MDBBtn color="warning" disabled>Coming Soon</MDBBtn>
+                            {/* <MDBBtn color="warning" disabled>Coming Soon</MDBBtn> */}
+                            {
+                                quest5.length != 0 && usersubscription == "Ruby" ?
+                                <MDBBtn disabled={quest5[0].claimedAt != null || currentDateTime > new Date(quest5[0].expiredAt) || questclaim.Quest5 == "notclaimable"} color="warning" onClick={(e) => handleClaimQuest(e,5)}>{quest5[0].claimedAt != null ? "Claimed" : currentDateTime > new Date(quest5[0].expiredAt) ? "Expired" : questclaim.Quest5 == "notclaimable" ? "On Going": "Claim Now"}</MDBBtn>
+                                :
+                                <MDBBtn disabled={usersubscription != "Ruby"} color="warning" onClick={(e) => handleAcceptQuest(e,5)}>Accept</MDBBtn>
+                            }
                         </div>
                         </MDBCardFooter>
                     </MDBCard>
@@ -608,7 +712,7 @@ const AirDropTabRuby = ({usersubscription}) => {
                             :
                             quest6.length != 0 && questclaim.Quest6 == "claimable" && currentDateTime < new Date(quest6[0].expiredAt) && usersubscription == "Ruby" ?
                             <MDBCardText>Status: &nbsp;
-                            <span className="text-success">Claimable</span>
+                            <span className="text-success">{quest6[0]?.claimedAt != null ? "Claimed" : "Claimable"}</span>
                             </MDBCardText>
                             :
                             <MDBCardText>Status: &nbsp;
@@ -655,7 +759,7 @@ const AirDropTabRuby = ({usersubscription}) => {
                             :
                             quest7.length != 0 && questclaim.Quest7 == "claimable" && currentDateTime < new Date(quest7[0].expiredAt) && usersubscription == "Ruby" ?
                             <MDBCardText>Status: &nbsp;
-                            <span className="text-success">Claimable</span>
+                            <span className="text-success">{quest7[0]?.claimedAt != null ? "Claimed" : "Claimable"}</span>
                             </MDBCardText>
                             :
                             <MDBCardText>Status: &nbsp;
@@ -702,7 +806,7 @@ const AirDropTabRuby = ({usersubscription}) => {
                             :
                             quest8.length != 0 && questclaim.Quest8 == "claimable" && currentDateTime < new Date(quest8[0].expiredAt) && usersubscription == "Ruby" ?
                             <MDBCardText>Status: &nbsp;
-                            <span className="text-success">Claimable</span>
+                            <span className="text-success">{quest8[0]?.claimedAt != null ? "Claimed" : "Claimable"}</span>
                             </MDBCardText>
                             :
                             <MDBCardText>Status: &nbsp;
@@ -753,7 +857,7 @@ const AirDropTabRuby = ({usersubscription}) => {
                             :
                             quest9.length != 0 && questclaim.Quest9 == "claimable" && currentDateTime < new Date(quest9[0].expiredAt) && usersubscription == "Ruby" ?
                             <MDBCardText>Status: &nbsp;
-                            <span className="text-success">Claimable</span>
+                            <span className="text-success">{quest9[0]?.claimedAt != null ? "Claimed" : "Claimable"}</span>
                             </MDBCardText>
                             :
                             <MDBCardText>Status: &nbsp;
@@ -800,7 +904,7 @@ const AirDropTabRuby = ({usersubscription}) => {
                             :
                             quest10.length != 0 && questclaim.Quest10 == "claimable" && currentDateTime < new Date(quest10[0].expiredAt) && usersubscription == "Ruby" ?
                             <MDBCardText>Status: &nbsp;
-                            <span className="text-success">Claimable</span>
+                            <span className="text-success">{quest10[0]?.claimedAt != null ? "Claimed" : "Claimable"}</span>
                             </MDBCardText>
                             :
                             <MDBCardText>Status: &nbsp;
@@ -833,16 +937,39 @@ const AirDropTabRuby = ({usersubscription}) => {
                         {/* <div>
                             <img src={pearlicon} alt="" style={{height: "65px", width: "65px"}}/>
                         </div> */}
-                        <MDBCardText className="text-center fw-bold">Leaderboard (end of the month)</MDBCardText>
+                        <MDBCardText className="text-center fw-bold">Top 1 Leaderboard (end of the month)</MDBCardText>
                         {/* <MDBCardText>Quest Duration: 2 Days</MDBCardText> */}
                         <MDBCardText>Claimable Token: &nbsp;
                         5,000 MMT + 10,000 MCT
                         </MDBCardText>
-                      
+                        {   usersubscription == "Ruby" ?
+
+                            quest11.length != 0 && questclaim.Quest11 == "notclaimable"  && usersubscription == "Ruby" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-primary">On Going</span>
+                            </MDBCardText>
+                            :
+                            quest11.length != 0 && questclaim.Quest11 == "claimable"  && usersubscription == "Ruby" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-success">{quest11[0]?.claimedAt != null ? "Claimed" : "Claimable"}</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText>Status: &nbsp;
+                            <span className={quest11.length != 0 && usersubscription == "Ruby" ? "text-danger" : "text-warning"}>{quest11.length != 0 && usersubscription == "Ruby" ? "Expired" : "Not Accepted"}</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText className="text-info">For Ruby Users Only</MDBCardText>
+                        }
                         </MDBCardBody>
                         <MDBCardFooter>
                         <div>
-                            <MDBBtn color="warning" disabled>Coming Soon</MDBBtn>
+                            {/* <MDBBtn color="warning" disabled>Coming Soon</MDBBtn> */}
+                            {
+                                quest11.length != 0 && usersubscription == "Ruby" ?
+                                <MDBBtn disabled={quest11[0]?.claimedAt != null || questclaim.Quest11 == "notclaimable"} color="warning" onClick={(e) => handleClaimQuest(e,11)}>{quest11[0]?.claimedAt != null ? "Claimed" : questclaim.Quest11 == "notclaimable" ? "On Going" : "Claim Now"}</MDBBtn>
+                                :
+                                <MDBBtn disabled={usersubscription != "Ruby"} color="warning" onClick={(e) => handleAcceptQuest(e,11)}>Accept</MDBBtn>
+                            }
                         </div>
                         </MDBCardFooter>
                     </MDBCard>
@@ -853,16 +980,39 @@ const AirDropTabRuby = ({usersubscription}) => {
                         {/* <div>
                             <img src={pearlicon} alt="" style={{height: "65px", width: "65px"}}/>
                         </div> */}
-                        <MDBCardText className="text-center fw-bold">Top Leaderboard for Fiesta (end of the month)</MDBCardText>
+                        <MDBCardText className="text-center fw-bold">Top 1 Leaderboard for Fiesta (end of the month)</MDBCardText>
                         {/* <MDBCardText>Quest Duration: 7 Days</MDBCardText> */}
                         <MDBCardText>Claimable Token: &nbsp;
                         500 MMT + 1,000 MCT
                         </MDBCardText>
-                       
+                        {   usersubscription == "Ruby" ?
+
+                            quest12.length != 0 && questclaim.Quest12 == "notclaimable"  && usersubscription == "Ruby" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-primary">On Going</span>
+                            </MDBCardText>
+                            :
+                            quest12.length != 0 && questclaim.Quest12 == "claimable"  && usersubscription == "Ruby" ?
+                            <MDBCardText>Status: &nbsp;
+                            <span className="text-success">{quest12[0]?.claimedAt != null ? "Claimed" : "Claimable"}</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText>Status: &nbsp;
+                            <span className={quest12.length != 0 && usersubscription == "Ruby" ? "text-danger" : "text-warning"}>{quest12.length != 0 && usersubscription == "Ruby" ? "Expired" : "Not Accepted"}</span>
+                            </MDBCardText>
+                            :
+                            <MDBCardText className="text-info">For Ruby Users Only</MDBCardText>
+                        }
                         </MDBCardBody>
                         <MDBCardFooter>
-                        <div>
-                            <MDBBtn color="warning" disabled>Coming Soon</MDBBtn>
+                        <div>   
+                            {/* <MDBBtn color="warning" disabled>Coming Soon</MDBBtn> */}
+                            {
+                                quest12.length != 0 && usersubscription == "Ruby" ?
+                                <MDBBtn disabled={quest12[0]?.claimedAt != null || questclaim.Quest12 == "notclaimable"} color="warning" onClick={(e) => handleClaimQuest(e,12)}>{quest12[0]?.claimedAt != null ? "Claimed" : questclaim.Quest12 == "notclaimable" ? "On Going" : "Claim Now"}</MDBBtn>
+                                :
+                                <MDBBtn disabled={usersubscription != "Ruby"} color="warning" onClick={(e) => handleAcceptQuest(e,12)}>Accept</MDBBtn>
+                            }
                         </div>
                         </MDBCardFooter>
                     </MDBCard>
