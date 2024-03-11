@@ -44,6 +44,9 @@ createWeb3Modal({
   projectId,
   chains, // Optional - defaults to your Cloud configuration
   allWallets: 'HIDE',
+  includeWalletIds: [
+    'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96'
+  ],
   tokens: {
     // 97: {
     //     address: "0x8162e18648de9D1856bc2192d3A09bb1430e2425"
