@@ -306,7 +306,7 @@ const Header = () => {
       centerMode: true,
       infinite: true,
       centerPadding: "60px",
-      slidesToShow: 4,        
+      slidesToShow: 3,        
       adaptiveHeight: false,
       focusOnSelect: true,
       responsive: [
@@ -514,7 +514,7 @@ const Header = () => {
                 <MDBRow className="align-items-center justify-content-center">
                 {/* <div> */}
                 <Slider {...settings}>
-                <MDBCol className="col-lg-2 text-center ">
+                {/* <MDBCol className="col-lg-2 text-center ">
                     <MDBCard alignment='center' className=" mt-0 moncoin mx-2">
                     
                     <MDBCardHeader className='fw-bold px-0 py-1' style={{backgroundColor: "#FADDBF",}}>
@@ -551,7 +551,7 @@ const Header = () => {
                     <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Coins: {mc.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</MDBCardFooter>
                     </MDBCard> 
 
-                </MDBCol>
+                </MDBCol> */}
 
                     {/* <MDBCol  className="col-lg-2 text-center  ">
                     <MDBCard alignment='center' className="moncoin mx-2">

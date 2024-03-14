@@ -769,7 +769,7 @@ const MembersAccount = () => {
                                     <p>Phone: {acc.phone}</p>
                                 </div>
                                 </td>
-                                <td>{acc.status}</td>
+                                <td>{acc.playstatus}</td>
                                 <td>
                                 <div className="d-flex flex-column text-justify">
                                     <p>Wallet Balance: &nbsp;

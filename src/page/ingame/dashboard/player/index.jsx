@@ -462,7 +462,7 @@ const PlayerDashboard = () => {
           <Dashboardstatistics 
               image={mcicon}
               title={'Total Monster Coin'}
-              number1={wallets.monstercoin?.toLocaleString('en-US', {
+              txtonly1={wallets.monstercoin?.toLocaleString('en-US', {
               style: 'decimal',
               minimumFractionDigits: 2,
               maximumFractionDigits: 2
