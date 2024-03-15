@@ -590,7 +590,7 @@ const Header = () => {
                     
                     <MDBTypography className="fw-bold d-flex align-items-center" style={{fontSize: "2rem", color: "white"}}>$ {Mgprice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</MDBTypography> 
                     </MDBCardBody>
-                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Gem Farmed: {mgaccumulated.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</MDBCardFooter>
+                    <MDBCardFooter className='fw-bold' style={{backgroundColor: "#FADDBF", fontSize: "1rem", }}>Total Gem Farmed: {Mgprice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</MDBCardFooter>
                     </MDBCard> 
 
                     </MDBCol>
