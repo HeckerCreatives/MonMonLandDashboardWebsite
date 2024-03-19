@@ -160,7 +160,7 @@ return(
                         Payin
                      </td>
                      <td>
-                     40%  {/* complan */}
+                     19%  {/* complan */}
                      </td>
                      <td>
                      2% {/* leaderboard */}
@@ -190,7 +190,7 @@ return(
                      3% {/* incentives */}
                      </td>  
                      <td>
-                     15% {/* monster gem */}
+                     36% {/* monster gem */}
                      </td> 
                      <td>
                      2% {/* investor fund */}
@@ -201,7 +201,7 @@ return(
                         Merchandise
                      </td>
                      <td>
-                     30% {/* complan */}
+                     19% {/* complan */}
                      </td>
                      <td>
                      2% {/* leaderboard */}
@@ -231,7 +231,7 @@ return(
                       2% {/* incentives */}
                      </td> 
                      <td>
-                      30% {/* monster gem */}
+                      41% {/* monster gem */}
                      </td> 
                      <td>
                      1% {/* investor fund */}
@@ -242,7 +242,7 @@ return(
                         Tools
                      </td>
                      <td>
-                     30% {/* complan */}
+                     19% {/* complan */}
                      </td>
                      <td>
                      2% {/* leaderboard */}
@@ -272,7 +272,7 @@ return(
                       2% {/* incentives */}
                      </td> 
                      <td>
-                      30% {/* monster gem */}
+                      41% {/* monster gem */}
                      </td> 
                      <td>
                      1% {/* investor fund */}
@@ -319,7 +319,7 @@ return(
                      0%
                      </td>        */}
                      <td>
-                     30% {/* complan */}
+                     19% {/* complan */}
                      </td>
                      <td>
                      2% {/* leaderboard */}
@@ -349,7 +349,7 @@ return(
                       2% {/* incentives */}
                      </td> 
                      <td>
-                      30% {/* monster gem */}
+                      41% {/* monster gem */}
                      </td> 
                      <td>
                      1% {/* investor fund */}
