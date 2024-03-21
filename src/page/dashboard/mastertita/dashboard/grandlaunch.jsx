@@ -77,6 +77,11 @@ const Masterdashboardgrandlaunch = () => {
     const [role, setrole]= useState('');
     const [name, setname]= useState('');
     const [id, setid]= useState('');
+    const [totalmmttoken, setTotalMMTToken] = useState(0)
+    const [totalmcttoken, setTotalMCTToken] = useState(0)
+    const [mmttoken, setMMTToken] = useState(0)
+    const [mcttoken, setMCTToken] = useState(0)
+    const [systemfund, setSystemfund] = useState(0)
 
     useEffect(() => {
       isLogin()
@@ -381,6 +386,17 @@ const Masterdashboardgrandlaunch = () => {
         setDragonProcessed(data.data.dragonprocess)
         setDragonDone(data.data.dragondone)
         setDragonTotal(data.data.dragontotal)
+      }
+    })
+
+    fetch(`${process.env.REACT_APP_API_URL}token/totaltoken`,{
+      credentials: 'include',
+    })
+    .then(result => result.json())
+    .then(data => {
+      if(data.message === "success"){
+        setTotalMMTToken(data.data - (data.data * pircint))
+        setTotalMCTToken(data.data2 - (data.data2 * pircint))
       }
     })
 
@@ -728,6 +744,9 @@ const Masterdashboardgrandlaunch = () => {
         const invw = data.data.investorfunds - (data.data.investorfunds * pircint)
         const ct = data.data.complantools - (data.data.complantools * pircint)
         const cc = data.data.complancosmetics - (data.data.complancosmetics * pircint)
+        const mmt = data.data.mmt - (data.data.mmt * pircint)
+        const mct = data.data.mct - (data.data.mct * pircint)
+        const sf = data.data.systemfund - (data.data.systemfund * pircint)
         setLeaderboard(lb)
         setGrinding(gd)
         setQuest(qst)
@@ -748,6 +767,9 @@ const Masterdashboardgrandlaunch = () => {
         setInvestorWallet(invw)
         setComplantools(ct)
         setComplancosmetics(cc)
+        setMMTToken(mmt)
+        setMCTToken(mct)
+        setSystemfund(sf)
       }
     })
   },[])
@@ -849,7 +871,7 @@ const Masterdashboardgrandlaunch = () => {
         <MDBTypography tag={`h2`}>Sales</MDBTypography>
         <hr/>
         <MDBRow>
-        <MDBCol lg={4} className="my-2">
+          <MDBCol lg={4} className="my-2">
             <DashCard
               flipbtn={true}
               basicModal={basicModal}
@@ -893,7 +915,44 @@ const Masterdashboardgrandlaunch = () => {
               td3txtbot={`Shop`}
               />
           </MDBCol>
-       
+          <MDBCol className="col-lg-4 my-2">
+            <DashCard 
+              ismasteradmin={true}
+              flipbtn1={true}
+              flipbtn1icon={'donate'}
+              tokenkind={'MMT'}
+              colSpan="4"
+              icon={`wallet`} 
+              thtitle={`Monster Monies Token Wallet`}
+              cardtoptext={mmttoken?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              td0={true}
+              td0txttop={totalmmttoken ? `${totalmmttoken.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              td0txtbot={`Total Monster Monies Token`} 
+              />
+          </MDBCol>
+          <MDBCol className="col-lg-4 my-2">
+            <DashCard 
+              ismasteradmin={true}
+              flipbtn1={true}
+              flipbtn1icon={'donate'}
+              tokenkind={'MCT'}
+              colSpan="4"
+              icon={`wallet`} 
+              thtitle={`Monster Coin Token Wallet`}
+              cardtoptext={mcttoken?.toLocaleString('en-US', {
+              style: 'decimal',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+              })}
+              td0={true}
+              td0txttop={totalmcttoken ? `${totalmcttoken.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              td0txtbot={`Total Monster Coin Token`} 
+              />
+          </MDBCol>
         </MDBRow>
         <MDBRow>
         {/* <MDBCol className="col-lg-4 my-2">
@@ -1227,6 +1286,16 @@ const Masterdashboardgrandlaunch = () => {
               icon={`plane-departure`}
               thtitle={`Travel / Incentives`}
               cardtoptext={incentives ? `${incentives.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+        </MDBCol>
+        </MDBRow>
+        <MDBRow>
+        <MDBCol lg={4} className="my-2">
+          <DashCard 
+              colSpan="3"
+              icon={`pen-fancy`}
+              thtitle={`System Fund`}
+              cardtoptext={systemfund ? `${systemfund.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
         </MDBCol>
         </MDBRow>

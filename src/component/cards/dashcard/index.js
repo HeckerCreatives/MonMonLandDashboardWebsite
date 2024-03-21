@@ -21,7 +21,7 @@ import
     MDBModalFooter, } 
 from "mdb-react-ui-kit";
 
-const DashCard = ({txtsup, icon, cardtoptext, colSpan, thtitle, td1, td1txttop, td1txtbot, td2, td2txttop, td2txtbot,td3, td3txttop, td3txtbot, td4, td4txttop, td4txtbot, td0, td0txttop, td0txtbot, flipbtn, basicModal, setBasicModal,tokenkind, flipbtn1, flipbtn1icon}) => {
+const DashCard = ({txtsup, icon, cardtoptext, colSpan, thtitle, td1, td1txttop, td1txtbot, td2, td2txttop, td2txtbot,td3, td3txttop, td3txtbot, td4, td4txttop, td4txtbot, td0, td0txttop, td0txtbot, flipbtn, basicModal, setBasicModal, tokenkind, flipbtn1, flipbtn1icon, ismasteradmin}) => {
   const [mmttoken, setMmtToken] = useState([])
   const [mcttoken, setMctToken] = useState([])
   const [basicModal1, setBasicModal1] = useState(false);
@@ -152,6 +152,7 @@ return(
                     <th className="fw-bold" scope='col'>Travel / Special Incentives</th>
                     <th className="fw-bold" scope='col'>Monster Gem</th>
                     <th className="fw-bold" scope='col'>Investor Fund</th>
+                    <th className="fw-bold" scope='col'>System Fund</th>
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody className="text-center">
@@ -160,7 +161,51 @@ return(
                         Payin
                      </td>
                      <td>
-                     19%  {/* complan */}
+                     40%  {/* complan */}
+                     </td>
+                     <td>
+                     0% {/* leaderboard */}
+                     </td>
+                     <td>
+                     20% {/* grinding */}
+                     </td>
+                     <td>
+                     0% {/* 0% quest */}
+                     </td>
+                     <td>
+                     5% {/* 1% diamond pool/top earner */}
+                     </td>
+                     <td>
+                     5% {/*  dev share */}
+                     </td>
+                     <td>
+                     2% {/* company share */}
+                     </td>
+                     <td>
+                     15% {/* officers */}
+                     </td>
+                     <td>
+                     3% {/* marketing arm */}
+                     </td>
+                     <td>
+                     5% {/* incentives */}
+                     </td>  
+                     <td>
+                     0% {/* monster gem */}
+                     </td> 
+                     <td>
+                     2% {/* investor fund */}
+                     </td> 
+                     <td>
+                     3% {/* system fund */}
+                     </td>  
+                    </tr>
+                    <tr>
+                     <td className="fw-bold text-warning">
+                        Merchandise
+                     </td>
+                     <td>
+                     19% {/* complan */}
                      </td>
                      <td>
                      2% {/* leaderboard */}
@@ -181,47 +226,6 @@ return(
                      2% {/* company share */}
                      </td>
                      <td>
-                     8% {/* officers */}
-                     </td>
-                     <td>
-                     2% {/* marketing arm */}
-                     </td>
-                     <td>
-                     3% {/* incentives */}
-                     </td>  
-                     <td>
-                     36% {/* monster gem */}
-                     </td> 
-                     <td>
-                     2% {/* investor fund */}
-                     </td>   
-                    </tr>
-                    <tr>
-                     <td className="fw-bold text-warning">
-                        Merchandise
-                     </td>
-                     <td>
-                     19% {/* complan */}
-                     </td>
-                     <td>
-                     2% {/* leaderboard */}
-                     </td>
-                     <td>
-                     20% {/* grinding */}
-                     </td>
-                     <td>
-                     0% {/* 0% quest */}
-                     </td>
-                     <td>
-                     2% {/* 1% diamond pool/top earner */}
-                     </td>
-                     <td>
-                     5% {/*  dev share */}
-                     </td>
-                     <td>
-                     2% {/* company share */}
-                     </td>
-                     <td>
                      5% {/* officers */}
                      </td>
                      <td>
@@ -231,10 +235,13 @@ return(
                       2% {/* incentives */}
                      </td> 
                      <td>
-                      41% {/* monster gem */}
+                      40% {/* monster gem */}
                      </td> 
                      <td>
                      1% {/* investor fund */}
+                     </td>  
+                     <td>
+                     2% {/* system fund */}
                      </td>   
                     </tr>
                     <tr>
@@ -254,7 +261,7 @@ return(
                      0% {/* 0% quest */}
                      </td>
                      <td>
-                     2% {/* 1% diamond pool/top earner */}
+                     1% {/* 1% diamond pool/top earner */}
                      </td>
                      <td>
                      5% {/*  dev share */}
@@ -272,11 +279,14 @@ return(
                       2% {/* incentives */}
                      </td> 
                      <td>
-                      41% {/* monster gem */}
+                      40% {/* monster gem */}
                      </td> 
                      <td>
                      1% {/* investor fund */}
-                     </td>   
+                     </td>  
+                     <td>
+                     2% {/* system fund */}
+                     </td>    
                     </tr>
                     <tr>
                      <td className="fw-bold text-warning">
@@ -331,7 +341,7 @@ return(
                      0% {/* 0% quest */}
                      </td>
                      <td>
-                     2% {/* 1% diamond pool/top earner */}
+                     1% {/* 1% diamond pool/top earner */}
                      </td>
                      <td>
                      5% {/*  dev share */}
@@ -349,11 +359,14 @@ return(
                       2% {/* incentives */}
                      </td> 
                      <td>
-                      41% {/* monster gem */}
+                      40% {/* monster gem */}
                      </td> 
                      <td>
                      1% {/* investor fund */}
-                     </td>   
+                     </td>  
+                     <td>
+                     2% {/* system fund */}
+                     </td>  
                     </tr>
                     <tr>
                      <td className="fw-bold text-warning">
@@ -471,8 +484,102 @@ return(
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody className="text-center">
+                  {/* for masteradmin */}
+                  {
+                  tokenkind == "MMT" && ismasteradmin &&
+                  <tr>
+                      <th>Monster Monies Token</th>
+                      <td>${mmttoken.walletbalance != undefined ? (mmttoken.walletbalance - (mmttoken.walletbalance * .30))?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }) : 0}</td>
+                      <td>${mmttoken.monstergem != undefined ? (mmttoken.monstergem - (mmttoken.monstergem * .30))?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mmttoken.bnb != undefined ? (mmttoken.bnb - (mmttoken.bnb * .30))?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mmttoken.usdt != undefined ? (mmttoken.usdt - (mmttoken.usdt * .30))?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mmttoken.busd != undefined ? (mmttoken.busd - (mmttoken.busd * .30))?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }) : 0}</td>
+                      <td>${mmttoken.usdc != undefined ? (mmttoken.usdc - (mmttoken.usdc * .30))?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mmttoken.xrp != undefined ? (mmttoken.xrp - (mmttoken.xrp * .30))?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mmttoken.doge != undefined ? (mmttoken.doge - (mmttoken.doge * .30))?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                  </tr>
+                  }
+                  {
+                  tokenkind == "MCT" && ismasteradmin &&
+                  <tr>
+                      <th>Monster Monies Token</th>
+                      <td>${mcttoken.walletbalance != undefined ? (mcttoken.walletbalance - (mcttoken.walletbalance * .30))?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }) : 0}</td>
+                      <td>${mcttoken.monstergem != undefined ? (mcttoken.monstergem - (mcttoken.monstergem * .30))?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mcttoken.bnb != undefined ? (mcttoken.bnb - (mcttoken.bnb * .30))?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mcttoken.usdt != undefined ? (mcttoken.usdt - (mcttoken.usdt * .30))?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mcttoken.busd != undefined ? (mcttoken.busd - (mcttoken.busd * .30))?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }) : 0}</td>
+                      <td>${mcttoken.usdc != undefined ? (mcttoken.usdc - (mcttoken.usdc * .30))?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mcttoken.xrp != undefined ? (mcttoken.xrp - (mcttoken.xrp * .30))?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                      <td>${mcttoken.doge != undefined ? (mcttoken.doge - (mcttoken.doge * .30))?.toLocaleString('en-US', {
+                      style: 'decimal',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                      }): 0}</td>
+                  </tr>
+                  }
+                  {/* end of masteradmin */}
                 {
-                  tokenkind == "MMT" && 
+                  tokenkind == "MMT" && !ismasteradmin &&
                   <tr>
                       <th>Monster Monies Token</th>
                       <td>${mmttoken.walletbalance != undefined ? mmttoken.walletbalance?.toLocaleString('en-US', {
@@ -518,7 +625,7 @@ return(
                     </tr>
                 }
                  {
-                  tokenkind == "MCT" && 
+                  tokenkind == "MCT" && !ismasteradmin &&
                   <tr>
                       <th>Monster Coin Token</th>
                       <td>${mcttoken.walletbalance != undefined ? mcttoken.walletbalance?.toLocaleString('en-US', {

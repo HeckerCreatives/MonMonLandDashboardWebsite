@@ -47,7 +47,7 @@ const MembersAccount = () => {
     useEffect(()=>{
         if(username == "" && email == "" && subs == "" && wallet == "" ){
             setIsLoading(true)
-            fetch(`${process.env.REACT_APP_API_URL}members/find?page=${page-1}`,{
+            fetch(`${process.env.REACT_APP_API_URL}members/find?page=${page-1}&limit=10`,{
             credentials: 'include',
             })
             .then(result => result.json())
@@ -58,30 +58,9 @@ const MembersAccount = () => {
             })
         } 
 
-        else if (subs !== ""){
-        setIsLoading(true)
-        fetch(`${process.env.REACT_APP_API_URL}members/filterbysubscription?page=${page-1}`,{
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include',
-            body: JSON.stringify({
-                subscription: subs
-            })
-        })
-        .then(result => result.json())
-        .then(data => {
-            setMember(data.data)
-            setTotal(data.pages)
-            // setPage(1)
-            setIsLoading(false)
-        })
-        }
-
         else if (username !== ""){
             setIsLoading(true)
-            fetch(`${process.env.REACT_APP_API_URL}members/searchusername?page=${page-1}`,{
+            fetch(`${process.env.REACT_APP_API_URL}members/searchusername?page=${page-1}&limit=10`,{
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -101,9 +80,32 @@ const MembersAccount = () => {
             })
         }
 
+        else if (subs !== ""){
+        setIsLoading(true)
+        fetch(`${process.env.REACT_APP_API_URL}members/filterbysubscription?page=${page-1}&limit=10`,{
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                subscription: subs
+            })
+        })
+        .then(result => result.json())
+        .then(data => {
+            setMember(data.data)
+            setTotal(data.pages)
+            // setPage(1)
+            setIsLoading(false)
+        })
+        }
+
+        
+
         else if (email !== ""){
             setIsLoading(true)
-            fetch(`${process.env.REACT_APP_API_URL}members/searchemail?page=${page-1}`,{
+            fetch(`${process.env.REACT_APP_API_URL}members/searchemail?page=${page-1}&limit=10`,{
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -124,7 +126,7 @@ const MembersAccount = () => {
 
         else if (wallet !== ""){
             setIsLoading(true)
-        fetch(`${process.env.REACT_APP_API_URL}members/filterbywallet?page=${page-1}`,{
+        fetch(`${process.env.REACT_APP_API_URL}members/filterbywallet?page=${page-1}&limit=10`,{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -315,7 +317,7 @@ const MembersAccount = () => {
         e.preventDefault();
         const { username } = e.target
         setIsLoading(true)
-        fetch(`${process.env.REACT_APP_API_URL}members/searchusername?page=${page-1}`,{
+        fetch(`${process.env.REACT_APP_API_URL}members/searchusername?page=${page-1}&limit=10`,{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -339,7 +341,7 @@ const MembersAccount = () => {
         e.preventDefault();
         const { email } = e.target
         setIsLoading(true)
-        fetch(`${process.env.REACT_APP_API_URL}members/searchemail?page=${page-1}`,{
+        fetch(`${process.env.REACT_APP_API_URL}members/searchemail?page=${page-1}&limit=10`,{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -361,7 +363,7 @@ const MembersAccount = () => {
     const searchsubs = (e, subs) => {
         e.preventDefault();
         setIsLoading(true)
-        fetch(`${process.env.REACT_APP_API_URL}members/filterbysubscription?page=${page-1}`,{
+        fetch(`${process.env.REACT_APP_API_URL}members/filterbysubscription?page=${page-1}&limit=10`,{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -383,7 +385,7 @@ const MembersAccount = () => {
     const searchwallet = (e, wallet) => {
         e.preventDefault();
         setIsLoading(true)
-        fetch(`${process.env.REACT_APP_API_URL}members/filterbywallet?page=${page-1}`,{
+        fetch(`${process.env.REACT_APP_API_URL}members/filterbywallet?page=${page-1}&limit=10`,{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -746,7 +748,7 @@ const MembersAccount = () => {
                             </tr>
                             ))
                         ) : (
-                            handlePagination(member, page, 10)?.map((acc, i) => (
+                            member.map((acc, i) => (
                             <tr key={`acc-${i}`}>
                             <td>
                                 <input

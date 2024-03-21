@@ -90,7 +90,7 @@ const AdminDashboardGrandLaunch = () => {
     const [role, setrole]= useState('');
     const [name, setname]= useState('');
     const [id, setid]= useState('');
-
+    const [systemfund, setSystemfund] = useState(0)
     useEffect(() => {
       isLogin()
         .then(data => {
@@ -774,6 +774,7 @@ const AdminDashboardGrandLaunch = () => {
         setComplancosmetics(data.data.complancosmetics)
         setMMTToken(data.data.mmt)
         setMCTToken(data.data.mct)
+        setSystemfund(data.data.systemfund)
       }
     })
 
@@ -1203,6 +1204,16 @@ const AdminDashboardGrandLaunch = () => {
               icon={`plane-departure`}
               thtitle={`Travel / Incentives`}
               cardtoptext={incentives ? `${incentives.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
+              />
+        </MDBCol>
+        </MDBRow>
+        <MDBRow>
+        <MDBCol lg={4} className="my-2">
+          <DashCard 
+              colSpan="3"
+              icon={`pen-fancy`}
+              thtitle={`System Fund`}
+              cardtoptext={systemfund ? `${systemfund.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`: 0}
               />
         </MDBCol>
         </MDBRow>
